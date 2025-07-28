@@ -1,7 +1,9 @@
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./IntroSection.css";
-import heroImage from "../assets/kreupasanammother.png";
+import heroImage from "../assets/kreupasanammother1.png";
+
+// Example translations object (you should replace this with your actual one)
 
 export default function IntroSection({ lang = 'en' }) {
   const navigate = useNavigate();
@@ -10,7 +12,7 @@ export default function IntroSection({ lang = 'en' }) {
   const t = translations[lang] || translations['en']; // fallback to English
 
   return (
-    <section className="intro-box animated-glow">
+    <section className="introBox animated-glow">
       <Container>
         <Row className="d-flex align-items-center justify-content-between flex-wrap">
           <Col xs={12} md={6} className="image-wrapper order-1 order-md-1">
@@ -22,10 +24,14 @@ export default function IntroSection({ lang = 'en' }) {
           </Col>
 
           <Col xs={12} md={6} className="text-content order-2 order-md-2">
-            <h1 className="title">{t.title.split('\n').map((line, i) => <span key={i}>{line}<br /></span>)}</h1>
-            <p className="intro-text">{t.introText}</p>
+            <h1 className="title">
+              {t.title.split('\n').map((line, i) => (
+                <span key={i}>{line}<br /></span>
+              ))}
+            </h1>
+            <p className="introText">{t.introText}</p>
 
-            <Button className="intro-btn shimmer-button" onClick={handleCardClick}>
+            <Button className="introBtn shimmer-button" onClick={handleCardClick}>
               <span>{t.button}</span>
               <span className="arrow"> ➔</span>
             </Button>
