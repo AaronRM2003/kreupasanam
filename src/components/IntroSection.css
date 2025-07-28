@@ -1,0 +1,155 @@
+.intro-box {
+  margin: 120px auto 60px;
+  padding: 30px 20px;
+  border-radius: 32px;
+  max-width: 1000px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(36, 107, 253, 0.08);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1), 0 0 12px rgba(36, 107, 253, 0.08);
+  text-align: center;
+  transition: all 0.4s ease;
+  animation: floatBox 8s ease-in-out infinite;
+}
+
+/* Title styling */
+.title {
+  font-size: 2.7rem;
+  font-weight: 800;
+  color: #123f7c;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  position: relative;
+}
+
+.title::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #246bfd, #4a7bff);
+  margin: 12px auto 0;
+  border-radius: 2px;
+  animation: pulseLine 2.5s infinite;
+}
+
+/* Text block */
+.intro-text {
+  font-size: 1.2rem;
+  font-weight: 400;
+  font-family: 'Open Sans', sans-serif;
+  color: #444;
+  line-height: 1.8;
+  max-width: 760px;
+  margin: 0 auto 30px;
+  opacity: 0.85;
+  padding: 0 10px;
+}
+
+/* Call-to-action button */
+.intro-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 220px;
+  padding: 14px 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: #3b82f6; /* blue 500 */
+  border: none;
+  border-radius: 5s0px;
+  box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4);
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.intro-btn:hover {
+  background-color: #2563eb; /* blue 600 */
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.5);
+  transform: translateY(-3px);
+}
+
+.intro-btn:active {
+  background-color: #1d4ed8; /* blue 700 */
+  box-shadow: 0 4px 10px rgba(29, 78, 216, 0.5);
+  transform: translateY(0);
+}
+
+
+.intro-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 15px 40px rgba(36, 107, 253, 0.45);
+}
+
+.intro-btn .arrow {
+  font-size: 1.2rem;
+  animation: pulseArrow 1s infinite ease-in-out;
+}
+
+/* Responsive Mobile Styles */
+@media (max-width: 768px) {
+  .intro-box {
+    margin: 110px 16px 24px;
+    padding: 20px 8px;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  .title {
+    font-size: 2rem;
+    margin-bottom: 16px;
+  }
+
+  .intro-text {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    padding: 0 6px;
+  }
+
+  .intro-btn {
+    width: 90%;
+    max-width: 320px;
+    padding: 14px 0;
+    font-size: 1.05rem;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(36, 107, 253, 0.25);
+    animation: none;
+  }
+
+  .intro-btn:hover {
+    transform: none;
+    box-shadow: 0 6px 18px rgba(36, 107, 253, 0.3);
+  }
+
+  .intro-btn .arrow {
+    font-size: 1.2rem;
+    animation: none;
+  }
+}
+
+/* Subtle floating box animation */
+@keyframes floatBox {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* Animated underline pulse */
+@keyframes pulseLine {
+  0%, 100% { transform: scaleX(1); opacity: 1; }
+  50% { transform: scaleX(1.4); opacity: 0.6; }
+}
+
+/* Background wave shimmer */
+@keyframes waveBackground {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Arrow gentle pulse */
+@keyframes pulseArrow {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.75; }
+}

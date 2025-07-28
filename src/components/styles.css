@@ -1,0 +1,109 @@
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  color: #2c3e50;
+  min-height: 100%;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Add blurred background using pseudo-element */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: url('../assets/back3.png') no-repeat center center / cover;
+  z-index: -2;
+}
+
+/* Optional: Add a semi-transparent overlay for contrast */
+/* Keep your existing styles for desktop intact */
+
+/* Mobile-only fixes */
+@media (max-width: 768px) {
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;   /* Use min-height instead of fixed height */
+    overflow-x: hidden;
+    font-family: sans-serif;
+    position: relative;
+  }
+
+  body::before {
+    content: "";
+    position: absolute;           /* changed from fixed to absolute */
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%;             /* allows background to grow with content */
+    background: url('../assets/back4.png') no-repeat center top / contain;
+    z-index: -2;
+    background-attachment: scroll; /* explicitly scrollable */
+  }
+}
+
+
+
+.floating-logo {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  height: 122px;
+  width: auto;
+  z-index: 10000;
+  pointer-events: none; /* allow clicks to go through */
+  user-select: none;
+}
+@media (max-width: 1280px) {
+  .floating-logo {
+    height: 0px;
+  }
+}
+
+
+
+/* Container for main content with glass effect */
+.glass-container {
+  background: rgba(255, 255, 255, 0.4);       /* semi-transparent white */
+  backdrop-filter: blur(15px);                 /* background blur */
+  -webkit-backdrop-filter: blur(15px);         /* Safari support */
+  border-radius: 20px;                          /* rounded corners */
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37); /* subtle shadow */
+  border: 1px solid rgba(255, 255, 255, 0.18);    /* light border */
+  padding: 2rem;
+  margin: 3rem auto;
+  max-width: 1100px;
+  color: #1a1a1a; /* darker text for contrast */
+}
+
+/* Example section title */
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #123f7c; /* deep blue accent */
+}
+
+/* Testimony cards with subtle shadow and hover */
+
+
+main {
+  padding-top: 80px; /* approximate height of AppBar */
+}
+
+
+.section {
+  padding: 2rem;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+

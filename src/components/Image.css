@@ -1,0 +1,46 @@
+.image-spacer-wrapper {
+  position: relative;
+  display: inline-block;
+  perspective: 800px;
+}
+
+.image-spacer {
+  transition: transform 0.4s ease, filter 0.4s ease;
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 16px;
+}
+
+/* GLOW + GROUND SHADOW on hover */
+.image-spacer:hover {
+  transform: scale(1.03) translateY(-2px);
+  filter: drop-shadow(0 0 15px rgba(255, 230, 150, 0.7))
+          drop-shadow(0 0 30px rgba(255, 255, 200, 0.4));
+  animation: glowPulse 1.8s ease-in-out infinite;
+}
+
+/* Glowing Pulse Animation */
+@keyframes glowPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 15px rgba(255, 230, 150, 0.7))
+            drop-shadow(0 0 30px rgba(255, 255, 200, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 25px rgba(255, 245, 190, 0.8))
+            drop-shadow(0 0 45px rgba(255, 255, 210, 0.5));
+  }
+}
+
+/* Ground shadow element */
+.image-ground-shadow {
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  height: 20px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.695) 0%, transparent 40%);
+  filter: blur(4px);
+  z-index: -1;
+}

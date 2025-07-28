@@ -1,0 +1,806 @@
+.testimonyPage {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 1rem;
+  position: relative;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ➤ Top Header: Back Button + Title + Language Dropdown */
+.testimonyHeader {
+  width: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 1rem;
+  position: fixed;
+ z-index: 1000;
+  background: linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0));
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08), 0 0 8px rgba(36,107,253,0.15);
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.testimonyBack,
+.testimonyLang {
+  flex: 0 0 auto;
+}
+
+.testimonyCenter {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.25rem;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.videoButtonWrapper {
+  display: flex;
+  justify-content: center;
+
+  width: 100%;
+}
+
+.videoButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  background: rgb(255, 142, 142);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 16px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  transition: all 0.35s ease;
+}
+
+.videoButton:hover {
+  transform: translateY(-4px) scale(1.05);
+  background: rgb(255, 142, 142);
+  box-shadow: 0 10px 30px rgba(255, 0, 0, 0.35);
+}
+
+.youtubeIcon {
+  color: #FF0000;
+  font-size: 1.5rem;
+}
+
+.videoText {
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .videoButton {
+    padding: 0.85rem 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .youtubeIcon {
+    font-size: 1.3rem;
+  }
+}
+
+/* Back Button Left */
+.backButton {
+  background: rgb(255, 255, 255);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 50px;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #246bfd;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.07);
+  transition: all 0.3s ease;
+  user-select: none;
+  text-decoration: none;
+  z-index: 2;
+  margin-left: auto;
+}
+
+.backButton:hover {
+  background: rgba(36, 107, 253, 0.1);
+  transform: translateY(-2px);
+  color: #1a1a1a;
+}
+
+.backText {
+  margin-left: 0.5rem;
+  display: inline;
+}
+
+/* Centered Title */
+.testimonyTitleBox {
+  grid-column: 3;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+}
+
+.testimonyHeading {
+  font-size: 2.8rem;
+  font-weight: 900;
+  background: linear-gradient(90deg, #246bfd, #00b3ff);
+  -webkit-background-clip: text;
+  color: transparent;
+  margin: 0;
+  width: 100%;
+  user-select: none;
+}
+
+/* Language Dropdown Right */
+.languageDropdown {
+
+  background: #fff;
+  font-weight: 600;
+  color: #333;
+  width: 100%;
+  margin-top: 0.5rem;
+  cursor: pointer;
+}
+
+
+
+/* Dropdown Toggle Button Styling */
+.dropdownToggle {
+  background: rgba(255, 255, 255, 0.6) !important;
+  border: none !important;
+  border-radius: 14px !important;
+  color: #246bfd !important;
+  padding: 0.6rem 1.4rem !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 18px rgba(36, 107, 253, 0.1) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.3s ease !important;
+}
+
+.dropdownToggle:hover,
+.dropdownToggle:focus {
+  background: rgba(255, 255, 255, 0.8) !important;
+  color: #0051cc !important;
+  box-shadow: 0 6px 24px rgba(36, 107, 253, 0.2) !important;
+  transform: translateY(-2px) scale(1.02);
+}
+
+/* Dropdown Menu */
+
+
+
+/* Main Content Container */
+.testimonyContainer {
+  max-width: 850px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 28px;
+  padding: 2rem 2rem;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1);
+  border: 4px solid rgba(36, 107, 253, 0.15);
+  position: relative;
+  z-index: 1;
+  transition: all 0.4s ease;
+  margin: 6rem auto 0rem auto;
+}
+
+.testimonyContainer:hover {
+  border-color: rgba(36, 107, 253, 0.35);
+  box-shadow: 0 14px 40px rgba(36, 107, 253, 0.15);
+}
+
+/* Testimony Title inside container */
+.testimonyTitle {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+/* Date */
+.testimonyDate {
+  font-size: 1rem;
+  color: #777;
+  margin-bottom: 2rem;
+}
+
+/* Content Text */
+.testimonyContent {
+  font-size: 1.15rem;
+  line-height: 1.75;
+  color: #333;
+  text-align: justify;
+  font-family: 'Open Sans', sans-serif;
+  white-space: pre-wrap;
+}
+
+/* Floating Images */
+.floatingImage {
+  position: fixed;
+  width: 50%;
+  height: 30%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.75;
+  z-index: 1;
+
+  /* Key changes here */
+  filter: drop-shadow(0 50px 30px rgba(171, 171, 171, 0.2)); /* soft shadow underneath */
+  transition: filter 0.4s ease, transform 0.4s ease;
+}
+
+
+.left {
+  top: 30%;
+  right: 65%;
+  background-image: url('/assets/angel3.png');
+  animation: float 6s ease-in-out infinite;
+}
+
+.right {
+  top: 30%;
+  left: 65%;
+  background-image: url('/assets/angel3.png');
+  animation: floatFlipped 6s ease-in-out infinite;
+}
+
+.bottom {
+  top:10%;
+  background-image: url('/assets/cloud.png');
+}
+.floatingImage:hover {
+filter: drop-shadow(0 0 12px rgba(255, 223, 93, 0.7)) drop-shadow(0 0 24px rgba(255, 223, 93, 0.4));
+  transform: scale(1.05);
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.thumbnailImg {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  border-radius: 24px;
+  user-select: none;
+}
+
+/* Play Button */
+@keyframes pulse {
+  0% {
+    transform: translateY(-50%) scale(1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    transform: translateY(-50%) scale(1.08);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  }
+  100% {
+    transform: translateY(-50%) scale(1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.thumbnailWrapper {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.thumbnailImage {
+  width: 100%;
+  border-radius: 18px;
+  display: block;
+}
+
+.smallPlayIcon {
+  position: absolute;
+  right: 12px;
+  top: 80%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  color: #ff0000;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  /* Add animation */
+  animation: wavePulse 2.5s ease-in-out infinite;
+}
+
+/* Keyframes for wave animation (scale pulse) */
+@keyframes wavePulse {
+  0%, 100% {
+    transform: translateY(-50%) scale(1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Responsive for smaller devices */
+@media (max-width: 480px) {
+  .smallPlayIcon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.4rem;
+    right: 8px;         /* Slightly less right spacing */
+    top: 75%;           /* Adjust vertical position if needed */
+  }
+}
+
+@media (max-width: 320px) {
+  .smallPlayIcon {
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
+    right: 6px;
+    top: 70%;
+  }
+}
+
+
+.smallPlayIcon:hover {
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+
+/* Optional Cloud */
+.floatingCloud {
+  position: fixed;
+  width: 120%;
+  height: 200%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.95;
+  z-index: 0;
+  transform: rotate(180deg);
+}
+
+/* Bottom Decorations */
+.decorativeRow {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 1rem 0;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  z-index: 2;
+}
+
+.decorativeItem {
+  width: 60px;
+  height: 60px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.15;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.decorativeItem:hover {
+  transform: scale(1.2);
+  opacity: 0.25;
+}
+
+/* Floating Animations */
+@keyframes float {
+  0% {
+    transform: translateY(0) scaleX(1);
+  }
+  50% {
+    transform: translateY(8px) scaleX(1);
+  }
+  100% {
+    transform: translateY(0) scaleX(1);
+  }
+}
+
+@keyframes floatFlipped {
+  0% {
+    transform: translateY(0) scaleX(-1);
+  }
+  50% {
+    transform: translateY(8px) scaleX(-1);
+  }
+  100% {
+    transform: translateY(0) scaleX(-1);
+  }
+}
+
+/* Tablet & Large Mobile */
+@media (max-width: 1368px) {
+  .floatingImage,
+  .floatingCloud {
+    display: none;
+  }
+
+  .testimonyPage {
+    background: rgb(255, 255, 255);
+    padding: 1%;
+    padding-bottom: 10%;
+  }
+
+}
+
+/* Mobile */
+@media (max-width: 1368px) {
+  .testimonyHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    margin: 0.4rem 0.4rem;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    padding: 1rem;
+ box-shadow: none;
+ backdrop-filter: none;
+
+}
+
+
+
+
+  .backButton {
+    position: relative;
+    align-self: flex-start;
+    padding: 0.3rem 1rem;
+    min-width: auto;
+  }
+
+  .backText {
+    display: none;
+  }
+  .testimonyRight{
+    margin-top: 1rem;
+  }
+
+  .testimonyTitleBox {
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+
+  
+
+.testimonyHeading {
+  background: rgba(36, 107, 253, 0.1);
+  display: inline-block;
+  padding: 0.25rem 1rem;
+  border-radius: 30px;
+  font-weight: 700;
+  color: #246bfd;
+  font-size: 2.2rem;
+  
+}
+
+  
+
+  .languageDropdown {
+    width: 100%;
+    max-width: 160px;
+    margin-bottom: 1rem;
+  }
+
+  .dropdownToggle {
+    padding: 0.3rem 0.8rem !important;
+    font-size: 0.9rem !important;
+  }
+
+  .testimonyContainer {
+    padding: 0rem 1rem;
+    border-radius: 16px;
+    margin-top: 0rem;
+    border: none;
+  }
+
+  .testimonyContainer:hover {
+    box-shadow: none;
+  }
+
+  .testimonyContent {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+.backButton {
+  display: none;
+}
+
+  .decorativeRow {
+    display: none;
+  }
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.7);
+  border: none;
+  color: white;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.floatingVideoWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(8px);
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.floatingVideo {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.floatingVideo iframe,
+.floatingVideo #yt-player {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* SUBTITLE STYLING */
+.subtitleBox {
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 800px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 8px 16px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 12px;
+  pointer-events: none;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.7);
+  border: none;
+  color: white;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* ---------------------- RESPONSIVE FIXES ---------------------- */
+
+/* Portrait Mobile */
+@media (max-width: 768px) and (orientation: portrait) {
+  .floatingVideo {
+    width: 100%;
+    border-radius: 8px;
+  }
+
+  .subtitleBox {
+    position: absolute;
+    top: 55%; /* Start subtitle box from 60% height and grow downward */
+    left: 50%;
+    bottom: auto;
+    transform: translateX(-50%);
+    font-size: 0.85rem;
+    padding: 1px 1px;
+    width: 90%;
+    overflow-y: auto; /* Allow scrolling if it overflows */
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 6px;
+    box-sizing: border-box;
+  }
+}
+
+/* Landscape Mobile (Critical Fix for Your Problem) */
+@media (max-height: 500px) and (orientation: landscape) {
+  .floatingVideoWrapper {
+    padding: 0.5rem;
+  }
+
+  .floatingVideo {
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: auto;
+    height: 100%;              /* ✅ Video takes full height */
+    border-radius: 6px;
+  }
+
+  .floatingVideo iframe,
+  .floatingVideo #yt-player {
+    width: 100%;
+    height: 100%;              /* ✅ No cutoff top/bottom */
+  }
+
+  .subtitleBox {
+    font-size: 0.85rem;         /* ✅ Slightly smaller font */
+    width: 95%;                 /* ✅ Stretch almost full width */
+    bottom: 40px;               /* ✅ Move upward */
+    padding: 4px 10px;
+  }
+}
+
+/* Tablet and small laptops */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .floatingVideo {
+    width: 95%;
+  }
+
+  .subtitleBox {
+    font-size: 1rem;
+    width: 95%;
+    bottom: 25px;
+  }
+}
+
+
+.shareMainButton {
+  background-color: #246bfd;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 4px 12px rgba(36, 107, 253, 0.2);
+}
+
+.shareMainButton:hover {
+  background-color: #1b50cc;
+}
+
+.shareOption {
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  line-height: 1.3;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.shareOption:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+.shareOption i {
+  font-size: 1rem;
+}
+
+/* Platform-specific colors with lighter modern feel */
+.shareOption.whatsapp {
+  background-color: #e2f7ec;
+  color: #25D366;
+}
+.shareOption.whatsapp:hover {
+  background-color: #c1f2dd;
+}
+
+.shareOption.facebook {
+  background-color: #e3ecfc;
+  color: #1877f2;
+}
+.shareOption.facebook:hover {
+  background-color: #c7ddfb;
+}
+
+.shareOption.telegram {
+  background-color: #e0f0fb;
+  color: #0088cc;
+}
+.shareOption.telegram:hover {
+  background-color: #c6e4f7;
+}
+
+.shareOption.email {
+  background-color: #fcebea;
+  color: #D14836;
+}
+
+.shareOption.email:hover {
+  background-color: #f9d3cf;
+}
+
+
+.shareOption.copy {
+  background-color: #eeeeee;
+  color: #555;
+}
+.shareOption.copy:hover {
+  background-color: #ddd;
+}
+
+.shareOptionsGrid {
+  margin-top: 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.75rem;
+}
+ 
