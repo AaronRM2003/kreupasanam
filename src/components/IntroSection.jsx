@@ -12,7 +12,7 @@ export default function IntroSection({ lang = 'en' }) {
   const t = translations[lang] || translations['en']; // fallback to English
 
   return (
-    <section className="introBox animated-glow">
+    <section className="introBox1 animated-glow">
       <Container>
         <Row className="d-flex align-items-center justify-content-between flex-wrap">
           <Col xs={12} md={6} className="image-wrapper order-1 order-md-1">
