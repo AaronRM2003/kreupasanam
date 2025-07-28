@@ -17,14 +17,14 @@ const languageMap = {
   fr: 'Français',
   es: 'Español',
   mr: 'मराठी',
-  kn: 'ಕನ್ನಡ'
+  kn: 'ಕನ್ನಡ',
 };
 
 export default function Oracles({ lang: initialLang }) {
-  // Initialize lang state with the received prop or fallback
   const [lang, setLang] = useState(initialLang || 'en');
+  const [imagesLoaded, setImagesLoaded] = useState(0);
+  const [allImagesLoaded, setAllImagesLoaded] = useState(false);
 
-  // If the initialLang prop changes (rare, but possible), update lang state
   useEffect(() => {
     if (initialLang && initialLang !== lang) {
       setLang(initialLang);
@@ -33,7 +33,9 @@ export default function Oracles({ lang: initialLang }) {
 
   const getYouTubeThumbnail = (url) => {
     try {
-      const videoIdMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([\w-]{11})/);
+      const videoIdMatch = url.match(
+        /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([\w-]{11})/
+      );
       const videoId = videoIdMatch ? videoIdMatch[1] : null;
       if (videoId) {
         return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
@@ -43,6 +45,25 @@ export default function Oracles({ lang: initialLang }) {
       return null;
     }
   };
+
+  // Get all thumbnails first
+  const thumbnails = oracles.map(({ video }) => getYouTubeThumbnail(video)).filter(Boolean);
+
+  // Increment loaded count on each image load
+  const handleImageLoad = () => {
+    setImagesLoaded((prev) => prev + 1);
+  };
+
+  // When all images are loaded, mark complete
+  useEffect(() => {
+    if (thumbnails.length > 0 && imagesLoaded === thumbnails.length) {
+      setAllImagesLoaded(true);
+    }
+    // Handle case no images at all
+    if (thumbnails.length === 0) {
+      setAllImagesLoaded(true);
+    }
+  }, [imagesLoaded, thumbnails.length]);
 
   return (
     <section
@@ -97,48 +118,93 @@ export default function Oracles({ lang: initialLang }) {
           </div>
         </div>
 
-        <div className={styles.testimoniesGrid}>
-          {oracles.length > 0 ? (
-            oracles
-              .slice()
-              .sort((a, b) => new Date(b.date) - new Date(a.date))
-              .map(({ id, title, video, date }) => {
-                const thumbnail = getYouTubeThumbnail(video);
-                return (
-                  <TestimonyCard
-                    key={id}
-                    id={id}
-                    title={title}
-                    image={thumbnail || ''}
-                    date={date}
-                    lang={lang}
-                    path={`${lang}/oracles`}
-                  />
-                );
-              })
-          ) : (
+        {/* Loading screen */}
+        {!allImagesLoaded && (
+          <div
+            style={{
+              height: '300px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+              color: '#246bfd',
+              fontSize: '1.2rem',
+            }}
+          >
             <div
-              className={styles.testimoniesCard}
               style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '3rem 1rem',
-                border: '2px dashed #a2c4ff',
-                borderRadius: '20px',
-                backgroundColor: 'rgba(240, 245, 255, 0.5)',
-                maxWidth: '600px',
-                margin: '3rem auto',
-                textAlign: 'center',
-                boxShadow: '0 8px 24px rgba(36, 107, 253, 0.08)',
-                backdropFilter: 'blur(8px)',
+                width: '40px',
+                height: '40px',
+                border: '4px solid #d3e3ff',
+                borderTop: '4px solid #246bfd',
+                borderRadius: '50%',
+                animation: 'spin 1s linear infinite',
+                marginBottom: '1rem',
               }}
-            >
-              <HiOutlineEmojiSad size={50} color="#246bfd" style={{ marginBottom: '1rem' }} />
-              <h3 style={{ color: '#246bfd', fontWeight: '600', fontSize: '1.4rem' }}>No Oracles Available</h3>
-            </div>
-          )}
+            ></div>
+            Loading Oracles...
+            <style>{`
+              @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+              }
+            `}</style>
+          </div>
+        )}
+
+        {/* Show content only after images loaded */}
+        {allImagesLoaded && (
+          <div className={styles.testimoniesGrid}>
+            {oracles.length > 0 ? (
+              oracles
+                .slice()
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .map(({ id, title, video, date }) => {
+                  const thumbnail = getYouTubeThumbnail(video);
+                  return (
+                    <TestimonyCard
+                      key={id}
+                      id={id}
+                      title={title}
+                      image={thumbnail || ''}
+                      date={date}
+                      lang={lang}
+                      path={`${lang}/oracles`}
+                      onImageLoad={handleImageLoad}
+                    />
+                  );
+                })
+            ) : (
+              <div
+                className={styles.testimoniesCard}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '3rem 1rem',
+                  border: '2px dashed #a2c4ff',
+                  borderRadius: '20px',
+                  backgroundColor: 'rgba(240, 245, 255, 0.5)',
+                  maxWidth: '600px',
+                  margin: '3rem auto',
+                  textAlign: 'center',
+                  boxShadow: '0 8px 24px rgba(36, 107, 253, 0.08)',
+                  backdropFilter: 'blur(8px)',
+                }}
+              >
+                <HiOutlineEmojiSad size={50} color="#246bfd" style={{ marginBottom: '1rem' }} />
+                <h3 style={{ color: '#246bfd', fontWeight: '600', fontSize: '1.4rem' }}>No Oracles Available</h3>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Hidden images for preloading */}
+        <div style={{ display: 'none' }}>
+          {thumbnails.map((src, idx) => (
+            <img key={idx} src={src} alt="" onLoad={handleImageLoad} />
+          ))}
         </div>
       </div>
     </section>

@@ -54,7 +54,7 @@ export default function Home({ lang }) {
   ></div>
 
   {/* Loading Text */}
-  <div style={{ fontSize: '1.2rem', fontWeight: 500 }}>Loading introduction...</div>
+  <div style={{ fontSize: '1.2rem', fontWeight: 500 }}>Guided by grace…</div>
 
   {/* Spinner Keyframes */}
   <style>

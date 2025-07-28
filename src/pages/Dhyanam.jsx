@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import dhyanam from '../assets/dhyanam-content.json';
 import styles from '../components/Testimonies.module.css';
 import { TestimonyCard } from '../components/Testimonies';
@@ -8,29 +8,30 @@ import { HiOutlineEmojiSad } from 'react-icons/hi';
 import backstyle from './TestimonyPage.module.css';
 
 export default function Dhyanam({ lang: initialLang }) {
-  // Initialize lang state with the received prop or fallback
   const [lang, setLang] = useState(initialLang || 'en');
+  const [imagesLoaded, setImagesLoaded] = useState(0);
+  const [allImagesLoaded, setAllImagesLoaded] = useState(false);
+
   const languageMap = {
-  en: 'English',
-  hi: 'हिन्दी',
-  zh: '中文',
-  bn: 'বাংলা',
-  ta: 'தமிழ்',
-  te: 'తెలుగు',
-  fr: 'Français',
-  es: 'Español',
-  mr: 'मराठी',
-  kn: 'ಕನ್ನಡ'
+    en: 'English',
+    hi: 'हिन्दी',
+    zh: '中文',
+    bn: 'বাংলা',
+    ta: 'தமிழ்',
+    te: 'తెలుగు',
+    fr: 'Français',
+    es: 'Español',
+    mr: 'मराठी',
+    kn: 'ಕನ್ನಡ',
+  };
 
-};
-
-  // Helper function to extract YouTube video ID from URL and get thumbnail URL
   const getYouTubeThumbnail = (url) => {
     try {
-      const videoIdMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([\w-]{11})/);
+      const videoIdMatch = url.match(
+        /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([\w-]{11})/
+      );
       const videoId = videoIdMatch ? videoIdMatch[1] : null;
       if (videoId) {
-        // Use standard maxresdefault thumbnail, fallback to hqdefault if needed
         return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
       }
       return null;
@@ -39,10 +40,29 @@ export default function Dhyanam({ lang: initialLang }) {
     }
   };
 
+  // Extract all valid thumbnail URLs
+  const thumbnails = dhyanam.map(({ video }) => getYouTubeThumbnail(video)).filter(Boolean);
+
+  // Called on each image load
+  const handleImageLoad = () => {
+    setImagesLoaded((prev) => prev + 1);
+  };
+
+  // Check if all images loaded
+  useEffect(() => {
+    if (thumbnails.length > 0 && imagesLoaded === thumbnails.length) {
+      setAllImagesLoaded(true);
+    }
+    // If no images, consider loaded
+    if (thumbnails.length === 0) {
+      setAllImagesLoaded(true);
+    }
+  }, [imagesLoaded, thumbnails.length]);
+
   return (
     <section
       className={styles.testimoniesSection}
-      style={{ marginTop: '0', backgroundColor: window.innerWidth <= 768 ? '#fff' : 'transparent' }}
+      style={{ marginTop: 0, backgroundColor: window.innerWidth <= 768 ? '#fff' : 'transparent' }}
     >
       <div className={styles.testimoniesSectionContainer} style={{ margin: '0 1rem' }}>
         <div className={styles.testimoniesHeader}>
@@ -55,7 +75,7 @@ export default function Dhyanam({ lang: initialLang }) {
                 left: 0,
                 top: '50%',
                 transform: 'translateY(-50%)',
-                display: window.innerWidth <= 768 ? 'none' : 'block', // Hide on small screens
+                display: window.innerWidth <= 768 ? 'none' : 'block',
               }}
             >
               &#8592; <span>Back</span>
@@ -77,61 +97,106 @@ export default function Dhyanam({ lang: initialLang }) {
               gap: '1rem',
             }}
           >
-<Dropdown onSelect={(e) => setLang(e)}>
-  <Dropdown.Toggle variant="outline-secondary" id="dropdown-lang">
-    {languageMap[lang] || lang}
-  </Dropdown.Toggle>
-  <Dropdown.Menu>
-    {Object.entries(languageMap).map(([key, label]) => (
-      <Dropdown.Item key={key} eventKey={key}>
-        {label}
-      </Dropdown.Item>
-    ))}
-  </Dropdown.Menu>
-</Dropdown>
-
+            <Dropdown onSelect={(e) => setLang(e)}>
+              <Dropdown.Toggle variant="outline-secondary" id="dropdown-lang">
+                {languageMap[lang] || lang}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                {Object.entries(languageMap).map(([key, label]) => (
+                  <Dropdown.Item key={key} eventKey={key}>
+                    {label}
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
         </div>
 
-        <div className={styles.testimoniesGrid}>
-          {dhyanam.length > 0 ? (
-            dhyanam.map(({ id, title, video, date }) => {
-              const thumbnail = getYouTubeThumbnail(video);
-              return (
-                <TestimonyCard
-                  key={id}
-                  id={id}
-                  title={title}
-                  image={thumbnail || ''} // pass the thumbnail URL as image prop
-                  date={date}
-                  lang={lang}
-                  path={`${lang}/dhyanam`}
-                />
-              );
-            })
-          ) : (
+        {/* Loading Screen */}
+        {!allImagesLoaded && (
+          <div
+            style={{
+              height: 300,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+              color: '#246bfd',
+              fontSize: '1.2rem',
+            }}
+          >
             <div
-              className={styles.testimoniesCard}
               style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '3rem 1rem',
-                border: '2px dashed #a2c4ff',
-                borderRadius: '20px',
-                backgroundColor: 'rgba(240, 245, 255, 0.5)',
-                maxWidth: '600px',
-                margin: '3rem auto',
-                textAlign: 'center',
-                boxShadow: '0 8px 24px rgba(36, 107, 253, 0.08)',
-                backdropFilter: 'blur(8px)',
+                width: 40,
+                height: 40,
+                border: '4px solid #d3e3ff',
+                borderTop: '4px solid #246bfd',
+                borderRadius: '50%',
+                animation: 'spin 1s linear infinite',
+                marginBottom: 16,
               }}
-            >
-              <HiOutlineEmojiSad size={50} color="#246bfd" style={{ marginBottom: '1rem' }} />
-              <h3 style={{ color: '#246bfd', fontWeight: '600', fontSize: '1.4rem' }}>No dhyanam Available</h3>
-            </div>
-          )}
+            ></div>
+            Loading Dhyanam...
+            <style>{`
+              @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+              }
+            `}</style>
+          </div>
+        )}
+
+        {/* Show content only after images loaded */}
+        {allImagesLoaded && (
+          <div className={styles.testimoniesGrid}>
+            {dhyanam.length > 0 ? (
+              dhyanam.map(({ id, title, video, date }) => {
+                const thumbnail = getYouTubeThumbnail(video);
+                return (
+                  <TestimonyCard
+                    key={id}
+                    id={id}
+                    title={title}
+                    image={thumbnail || ''}
+                    date={date}
+                    lang={lang}
+                    path={`${lang}/dhyanam`}
+                  />
+                );
+              })
+            ) : (
+              <div
+                className={styles.testimoniesCard}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '3rem 1rem',
+                  border: '2px dashed #a2c4ff',
+                  borderRadius: 20,
+                  backgroundColor: 'rgba(240, 245, 255, 0.5)',
+                  maxWidth: 600,
+                  margin: '3rem auto',
+                  textAlign: 'center',
+                  boxShadow: '0 8px 24px rgba(36, 107, 253, 0.08)',
+                  backdropFilter: 'blur(8px)',
+                }}
+              >
+                <HiOutlineEmojiSad size={50} color="#246bfd" style={{ marginBottom: 16 }} />
+                <h3 style={{ color: '#246bfd', fontWeight: 600, fontSize: '1.4rem' }}>
+                  No dhyanam Available
+                </h3>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Hidden images to preload */}
+        <div style={{ display: 'none' }}>
+          {thumbnails.map((src, idx) => (
+            <img key={idx} src={src} alt="" onLoad={handleImageLoad} />
+          ))}
         </div>
       </div>
     </section>

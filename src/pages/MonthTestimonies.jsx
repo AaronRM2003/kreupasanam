@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';  // added useEffect import
+import React, { useState, useEffect } from 'react'; // already imported
 import testimonies from '../assets/testimony-content.json';
 import styles from '../components/Testimonies.module.css';
 import { TestimonyCard } from '../components/Testimonies';
@@ -28,6 +28,10 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
   const [lang, setLang] = useState(initialLang || 'en');
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
   const [selectedYear, setSelectedYear] = useState(currentYear);
+
+  // New states to track image loading
+  const [imagesLoaded, setImagesLoaded] = useState(0);
+  const [allImagesLoaded, setAllImagesLoaded] = useState(false);
 
   useEffect(() => {
     if (initialLang && initialLang !== lang) {
@@ -68,6 +72,31 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
 
     return monthMatch && yearMatch;
   });
+
+  // Extract all thumbnail URLs of filtered testimonies (skip nulls)
+  const thumbnails = filteredTestimonies
+    .map(({ video }) => getYouTubeThumbnail(video))
+    .filter(Boolean);
+
+  // Image load handler
+  const handleImageLoad = () => {
+    setImagesLoaded((prev) => prev + 1);
+  };
+
+  // Set allImagesLoaded when all filtered images have loaded or if none
+   useEffect(() => {
+    setImagesLoaded(0);
+    setAllImagesLoaded(false);
+  }, [selectedMonth, selectedYear, lang]);
+
+  useEffect(() => {
+    if (thumbnails.length > 0 && imagesLoaded === thumbnails.length) {
+      setAllImagesLoaded(true);
+    }
+    if (thumbnails.length === 0) {
+      setAllImagesLoaded(true);
+    }
+  }, [imagesLoaded, thumbnails.length]);
 
   return (
     <section
@@ -138,7 +167,7 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
               </Dropdown.Menu>
             </Dropdown>
 
-            {/* Month Dropdown (added since your filter uses month) */}
+            {/* Month Dropdown */}
             <Dropdown onSelect={(e) => setSelectedMonth(e)}>
               <Dropdown.Toggle variant="outline-secondary" id="dropdown-month">
                 {selectedMonth}
@@ -154,52 +183,95 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
           </div>
         </div>
 
-        <div className={styles.testimoniesGrid}>
-          {filteredTestimonies.length > 0 ? (
-            filteredTestimonies.map(({ id, title, video, date }) => {
-              // Use 'image' as the YouTube URL or thumbnail URL
-              const thumbnail = getYouTubeThumbnail(video);
-              return (
-                <TestimonyCard
-                  key={id}
-                  id={id}
-                  title={title}
-                  image={thumbnail}
-                  date={date}
-                  lang={lang}
-                  path={`${lang}/testimony`}
-                />
-              );
-            })
-          ) : (
+        {/* Loading screen */}
+        {!allImagesLoaded && (
+          <div
+            style={{
+              height: 300,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+              color: '#246bfd',
+              fontSize: '1.2rem',
+            }}
+          >
             <div
-              className={styles.testimoniesCard}
               style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '3rem 1rem',
-                border: '2px dashed #a2c4ff',
-                borderRadius: '20px',
-                backgroundColor: 'rgba(240, 245, 255, 0.5)',
-                maxWidth: '600px',
-                margin: '3rem auto',
-                textAlign: 'center',
-                boxShadow: '0 8px 24px rgba(36, 107, 253, 0.08)',
-                backdropFilter: 'blur(8px)',
+                width: 40,
+                height: 40,
+                border: '4px solid #d3e3ff',
+                borderTop: '4px solid #246bfd',
+                borderRadius: '50%',
+                animation: 'spin 1s linear infinite',
+                marginBottom: 16,
               }}
-            >
-              <HiOutlineEmojiSad size={50} color="#246bfd" style={{ marginBottom: '1rem' }} />
-              <h3 style={{ color: '#246bfd', fontWeight: '600', fontSize: '1.4rem' }}>
-                No Testimonies Available
-              </h3>
-              <p style={{ color: '#444', marginTop: '0.5rem', fontSize: '1rem' }}>
-                We couldn’t find any testimonies for <strong>{selectedMonth}</strong>{' '}
-                {selectedYear}.
-              </p>
-            </div>
-          )}
+            />
+            Loading Testimonies...
+            <style>{`
+              @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+              }
+            `}</style>
+          </div>
+        )}
+
+        {/* Render testimonies only after all images loaded */}
+        {allImagesLoaded && (
+          <div className={styles.testimoniesGrid}>
+            {filteredTestimonies.length > 0 ? (
+              filteredTestimonies.map(({ id, title, video, date }) => {
+                const thumbnail = getYouTubeThumbnail(video);
+                return (
+                  <TestimonyCard
+                    key={id}
+                    id={id}
+                    title={title}
+                    image={thumbnail}
+                    date={date}
+                    lang={lang}
+                    path={`${lang}/testimony`}
+                  />
+                );
+              })
+            ) : (
+              <div
+                className={styles.testimoniesCard}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '3rem 1rem',
+                  border: '2px dashed #a2c4ff',
+                  borderRadius: '20px',
+                  backgroundColor: 'rgba(240, 245, 255, 0.5)',
+                  maxWidth: '600px',
+                  margin: '3rem auto',
+                  textAlign: 'center',
+                  boxShadow: '0 8px 24px rgba(36, 107, 253, 0.08)',
+                  backdropFilter: 'blur(8px)',
+                }}
+              >
+                <HiOutlineEmojiSad size={50} color="#246bfd" style={{ marginBottom: '1rem' }} />
+                <h3 style={{ color: '#246bfd', fontWeight: '600', fontSize: '1.4rem' }}>
+                  No Testimonies Available
+                </h3>
+                <p style={{ color: '#444', marginTop: '0.5rem', fontSize: '1rem' }}>
+                  We couldn’t find any testimonies for <strong>{selectedMonth}</strong>{' '}
+                  {selectedYear}.
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Hidden images to preload and track onLoad */}
+        <div style={{ display: 'none' }}>
+          {thumbnails.map((src, idx) => (
+            <img key={idx} src={src} alt="" onLoad={handleImageLoad} />
+          ))}
         </div>
       </div>
     </section>
