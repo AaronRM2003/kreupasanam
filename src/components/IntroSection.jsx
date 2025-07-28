@@ -1,15 +1,22 @@
+import { useEffect, useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./IntroSection.css";
 import heroImage from "../assets/kreupasanammother.webp";
 
-// Example translations object (you should replace this with your actual one)
-
-export default function IntroSection({ lang = 'en' }) {
+export default function IntroSection({ lang = 'en', onReady }) {
+  const [imageLoaded, setImageLoaded] = useState(false);
   const navigate = useNavigate();
   const handleCardClick = () => navigate(`/testimonies`);
 
-  const t = translations[lang] || translations['en']; // fallback to English
+  const t = translations[lang] || translations['en'];
+
+  // Notify parent only once when image is loaded
+  useEffect(() => {
+    if (imageLoaded && typeof onReady === "function") {
+      onReady();
+    }
+  }, [imageLoaded, onReady]);
 
   return (
     <section className="introBox1 animated-glow">
@@ -20,6 +27,8 @@ export default function IntroSection({ lang = 'en' }) {
               src={heroImage}
               alt="Testimony intro"
               className="img-fluid rounded-4 shadow-lg"
+              onLoad={() => setImageLoaded(true)}
+              onError={() => setImageLoaded(true)} // Treat error as loaded to avoid infinite wait
             />
           </Col>
 
@@ -41,7 +50,6 @@ export default function IntroSection({ lang = 'en' }) {
     </section>
   );
 }
-
 const translations = {
   en: {
     title: "Witness the Power\nof Faith in Action",

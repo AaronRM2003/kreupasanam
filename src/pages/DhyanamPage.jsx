@@ -40,6 +40,23 @@ export default function DhyanamPage({ lang: initialLang }) {
     }
   }, [dhyanams]);
 
+  const [imagesLoadedCount, setImagesLoadedCount] = useState(0);
+    const totalImages = 3;
+  
+    const cssBackgroundImages = [
+    '/assets/angel3.webp',
+    '/assets/angel3.webp',
+    '/assets/cloud.webp',
+    ];
+  
+    useEffect(() => {
+    cssBackgroundImages.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => setImagesLoadedCount((prev) => prev + 1);
+      img.onerror = () => setImagesLoadedCount((prev) => prev + 1); // fallback
+    });
+    }, []);
   const { title, date, content, video } = dhyanams || {};
 
   // Extract YouTube video ID from URL
@@ -169,6 +186,15 @@ export default function DhyanamPage({ lang: initialLang }) {
   const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
   const emailShareUrl = `mailto:?subject=${encodeURIComponent(title[lang] || title['en'])}&body=${encodeURIComponent(shareText)}`;
 
+   if (imagesLoadedCount < totalImages) {
+    return (
+      <div className={styles.loadingOverlay}>
+        <div className={styles.spinner}></div>
+        <p>Loading visuals...</p>
+      </div>
+    );
+  }
+  
   if (!dhyanams) {
     return (
       <div className={styles.testimonyPage}>

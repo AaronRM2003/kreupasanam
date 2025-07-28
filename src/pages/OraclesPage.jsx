@@ -27,7 +27,24 @@ export default function OraclesPage({ lang: initialLang }) {
   // Share modal state
   const [showShareModal, setShowShareModal] = useState(false);
   const [shareText, setShareText] = useState('');
+  const [imagesLoadedCount, setImagesLoadedCount] = useState(0);
+  const totalImages = 3;
 
+  const cssBackgroundImages = [
+  '/assets/angel3.webp',
+  '/assets/angel3.webp',
+  '/assets/cloud.webp',
+  ];
+
+  useEffect(() => {
+  cssBackgroundImages.forEach((src) => {
+    const img = new Image();
+    img.src = src;
+    img.onload = () => setImagesLoadedCount((prev) => prev + 1);
+    img.onerror = () => setImagesLoadedCount((prev) => prev + 1); // fallback
+  });
+  }, []);
+  
   useEffect(() => {
     if (oracle && oracle.subtitles) {
       fetch(oracle.subtitles)
@@ -166,7 +183,14 @@ export default function OraclesPage({ lang: initialLang }) {
   const waShareUrl = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
   const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
   const emailShareUrl = `mailto:?subject=${encodeURIComponent(title?.[lang] || title?.['en'] || '')}&body=${encodeURIComponent(shareText)}`;
-
+ if (imagesLoadedCount < totalImages) {
+  return (
+    <div className={styles.loadingOverlay}>
+      <div className={styles.spinner}></div>
+      <p>Loading visuals...</p>
+    </div>
+  );
+}
   if (!oracle) {
     return (
       <div className={styles.testimonyPage}>
@@ -180,7 +204,7 @@ export default function OraclesPage({ lang: initialLang }) {
   }
 
   return (
-    <div className={styles.testimonyPage} style={{ backgroundColor: window.innerWidth <= 768 ? '#fff' : 'transparent' }}>
+    <div className={styles.testimonyPage} >
       <div className={styles.testimonyHeader}>
         <div className={styles.testimonyLeft}>
           <button className={styles.backButton} onClick={() => window.history.back()}>
