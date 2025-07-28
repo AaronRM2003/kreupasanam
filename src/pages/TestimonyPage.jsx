@@ -7,10 +7,10 @@ import { FaFacebookF, FaWhatsapp, FaTelegramPlane, FaEnvelope, FaRegCopy  } from
 
 
 
-export default function TestimonyPage() {
+export default function TestimonyPage({lang:initialLang}) {
   const { id } = useParams();
   const testimony = testimonies.find(item => item.id === parseInt(id));
-  const [lang, setLang] = useState('en');
+  const [lang, setLang] = useState(initialLang || 'en');
   const [showVideo, setShowVideo] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [subtitles, setSubtitles] = useState([]);
