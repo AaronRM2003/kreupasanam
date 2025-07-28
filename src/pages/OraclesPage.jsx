@@ -180,7 +180,7 @@ export default function OraclesPage({ lang: initialLang }) {
   }
 
   return (
-    <div className={styles.testimonyPage}>
+    <div className={styles.testimonyPage} style={{ backgroundColor: window.innerWidth <= 768 ? '#fff' : 'transparent' }}>
       <div className={styles.testimonyHeader}>
         <div className={styles.testimonyLeft}>
           <button className={styles.backButton} onClick={() => window.history.back()}>

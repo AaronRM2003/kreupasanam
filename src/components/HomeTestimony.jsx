@@ -114,9 +114,10 @@ const { title = {}, content = {}, date, video } = testimony || {};
      <h3 className="testimony-title">{title[lang] || title['en']}</h3>
 <p className="testimony-content">{truncateWords(content[lang] || content['en'], 50)}</p>
 
-        <Button variant="primary" className="explore-btn" href="/testimony/1">
-          Let's Read!
-        </Button>
+       <Button variant="primary" className="explore-btn" href={`/${lang}/testimony/1`}>
+  Let's Read!
+</Button>
+
       </div>
     </section>
   );

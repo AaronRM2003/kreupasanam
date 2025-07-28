@@ -4,8 +4,8 @@
   flex-direction: column;
   align-items: center;
   padding: 1rem 1rem;
-  position: relative;
   font-family: 'Poppins', sans-serif;
+  
 }
 
 /* ➤ Top Header: Back Button + Title + Language Dropdown */
@@ -16,7 +16,7 @@
   justify-content: space-between;
   padding: 0.6rem 1rem;
   position: fixed;
- z-index: 1000;
+  z-index: 1000;
   background: linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0));
   border: 1px solid rgba(255, 255, 255, 0.25);
   box-shadow: 0 8px 24px rgba(0,0,0,0.08), 0 0 8px rgba(36,107,253,0.15);
@@ -42,7 +42,6 @@
 .videoButtonWrapper {
   display: flex;
   justify-content: center;
-
   width: 100%;
 }
 
@@ -266,6 +265,33 @@
 .floatingImage:hover {
 filter: drop-shadow(0 0 12px rgba(255, 223, 93, 0.7)) drop-shadow(0 0 24px rgba(255, 223, 93, 0.4));
   transform: scale(1.05);
+}
+.loadingOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.spinner {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #246bfd;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 .imageWrapper {

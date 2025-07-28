@@ -20,6 +20,26 @@ export default function TestimonyPage({lang:initialLang}) {
   const [showShareModal, setShowShareModal] = useState(false);
   const [shareText, setShareText] = useState('');
 
+  const [imagesLoadedCount, setImagesLoadedCount] = useState(0);
+  const totalImages = 3;
+
+  const cssBackgroundImages = [
+  '/assets/angel3.webp',
+  '/assets/angel3.webp',
+  '/assets/cloud.webp',
+  ];
+
+  useEffect(() => {
+  cssBackgroundImages.forEach((src) => {
+    const img = new Image();
+    img.src = src;
+    img.onload = () => setImagesLoadedCount((prev) => prev + 1);
+    img.onerror = () => setImagesLoadedCount((prev) => prev + 1); // fallback
+  });
+  }, []);
+
+
+
   const { title, date, content, video } = testimony || {};
 
   // Generates a rich share text for WhatsApp, Telegram, Email
@@ -41,6 +61,8 @@ export default function TestimonyPage({lang:initialLang}) {
 🔗 ${url}`;
   };
 
+
+  
   // Update share text when testimony or language changes
   useEffect(() => {
     if (testimony) {
@@ -179,6 +201,15 @@ export default function TestimonyPage({lang:initialLang}) {
       .then(() => alert('Message copied to clipboard!'))
       .catch(() => alert('Failed to copy!'));
   };
+ if (imagesLoadedCount < totalImages) {
+  return (
+    <div className={styles.loadingOverlay}>
+      <div className={styles.spinner}></div>
+      <p>Loading visuals...</p>
+    </div>
+  );
+}
+
 
   return (
     <div className={styles.testimonyPage}>
