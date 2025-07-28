@@ -15,7 +15,7 @@ body::before {
   left: 0;
   height: 100%;
   width: 100%;
-  background: url('../assets/back3.png') no-repeat center center / cover;
+  background: url('../assets/back3.webp') no-repeat center center / cover;
   z-index: -2;
 }
 
@@ -41,7 +41,7 @@ body::before {
     left: 0;
     width: 100%;
     min-height: 100%;             /* allows background to grow with content */
-    background: url('../assets/back4.png') no-repeat center top / contain;
+    background: url('../assets/back4.webp') no-repeat center top / contain;
     z-index: -2;
     background-attachment: scroll; /* explicitly scrollable */
   }

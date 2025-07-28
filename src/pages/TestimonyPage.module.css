@@ -248,20 +248,20 @@
 .left {
   top: 30%;
   right: 65%;
-  background-image: url('/assets/angel3.png');
+  background-image: url('/assets/angel3.webp');
   animation: float 6s ease-in-out infinite;
 }
 
 .right {
   top: 30%;
   left: 65%;
-  background-image: url('/assets/angel3.png');
+  background-image: url('/assets/angel3.webp');
   animation: floatFlipped 6s ease-in-out infinite;
 }
 
 .bottom {
   top:10%;
-  background-image: url('/assets/cloud.png');
+  background-image: url('/assets/cloud.webp');
 }
 .floatingImage:hover {
 filter: drop-shadow(0 0 12px rgba(255, 223, 93, 0.7)) drop-shadow(0 0 24px rgba(255, 223, 93, 0.4));

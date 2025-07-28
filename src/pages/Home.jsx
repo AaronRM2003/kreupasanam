@@ -2,11 +2,11 @@ import AppBar from '../components/AppBar';
 import Testimonies from '../components/Testimonies';
 import IntroSection from '../components/IntroSection';
 import IntroTestimony from '../components/IntroTestimony';
-import logo from "../assets/logo.png";
+import logo from "../assets/logo.webp";
 import FeaturedTestimonySection from '../components/HomeTestimony';
 import ImageSpacer from "../components/Image";  // Adjust path as needed
-import heroImage from "../assets/mother.png";
-import heroImage1 from "../assets/lamb.png";
+import heroImage from "../assets/mother.webp";
+import heroImage1 from "../assets/lamb.webp";
 import Footer from '../components/Footer';
 import FadeInOnScroll from '../framer';
 

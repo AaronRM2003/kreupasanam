@@ -1,7 +1,7 @@
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./IntroSection.css";
-import heroImage from "../assets/kreupasanammother1.webp";
+import heroImage from "../assets/kreupasanammother.webp";
 
 // Example translations object (you should replace this with your actual one)
 
