@@ -10,7 +10,10 @@ export default function DhyanamPage({ lang: initialLang }) {
   // Initialize lang state with the received prop or fallback
   const [lang, setLang] = useState(initialLang || 'en');
   const { id } = useParams();
-  const dhyanams = dhyanam.find(item => item.id === parseInt(id));
+
+  // NOTE: dhyanam is an array, .find returns one object, so rename to singular to avoid confusion
+  const dhyanamItem = dhyanam.find(item => item.id === parseInt(id));
+
   const [showVideo, setShowVideo] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [subtitles, setSubtitles] = useState([]);
@@ -22,10 +25,66 @@ export default function DhyanamPage({ lang: initialLang }) {
   const [showShareModal, setShowShareModal] = useState(false);
   const [shareText, setShareText] = useState('');
 
-  // Fetch subtitles JSON when dhyanams changes
+  // Preload background images + thumbnail, use boolean loaded state
+  const [allAssetsLoaded, setAllAssetsLoaded] = useState(false);
+
+  const cssBackgroundImages = [
+    '/assets/angel3.webp',
+    '/assets/angel3.webp',
+    '/assets/cloud.webp',
+  ];
+
+  const { title, date, content, video } = dhyanamItem || {};
+
+  // Extract YouTube video ID from URL
+  const getYouTubeVideoID = (url) => {
+    if (!url) return null;
+    const match = url.match(/(?:v=|\/)([0-9A-Za-z_-]{11})/);
+    return match ? match[1] : null;
+  };
+
+  const videoId = getYouTubeVideoID(video);
+  const defaultThumbnail = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
+
+  // Use state for thumbnailSrc so we can change on error fallback
+  const [thumbnailSrc, setThumbnailSrc] = useState(defaultThumbnail);
+
+  // Reset thumbnailSrc when videoId changes
   useEffect(() => {
-    if (dhyanams && dhyanams.subtitles) {
-      fetch(dhyanams.subtitles)
+    setThumbnailSrc(defaultThumbnail);
+  }, [defaultThumbnail]);
+
+  // Preload images + thumbnail and track loading status
+  useEffect(() => {
+    const allImages = [...cssBackgroundImages];
+    if (defaultThumbnail) allImages.push(defaultThumbnail);
+
+    let loadedCount = 0;
+    const totalToLoad = allImages.length;
+
+    if (totalToLoad === 0) {
+      setAllAssetsLoaded(true);
+      return;
+    }
+
+    allImages.forEach(src => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => {
+        loadedCount++;
+        if (loadedCount === totalToLoad) setAllAssetsLoaded(true);
+      };
+      img.onerror = () => {
+        loadedCount++;
+        if (loadedCount === totalToLoad) setAllAssetsLoaded(true);
+      };
+    });
+  }, [defaultThumbnail]);
+
+  // Fetch subtitles JSON when dhyanamItem changes
+  useEffect(() => {
+    if (dhyanamItem && dhyanamItem.subtitles) {
+      fetch(dhyanamItem.subtitles)
         .then(res => {
           if (!res.ok) throw new Error('Failed to load subtitles');
           return res.json();
@@ -38,36 +97,7 @@ export default function DhyanamPage({ lang: initialLang }) {
     } else {
       setSubtitles([]);
     }
-  }, [dhyanams]);
-
-  const [imagesLoadedCount, setImagesLoadedCount] = useState(0);
-    const totalImages = 3;
-  
-    const cssBackgroundImages = [
-    '/assets/angel3.webp',
-    '/assets/angel3.webp',
-    '/assets/cloud.webp',
-    ];
-  
-    useEffect(() => {
-    cssBackgroundImages.forEach((src) => {
-      const img = new Image();
-      img.src = src;
-      img.onload = () => setImagesLoadedCount((prev) => prev + 1);
-      img.onerror = () => setImagesLoadedCount((prev) => prev + 1); // fallback
-    });
-    }, []);
-  const { title, date, content, video } = dhyanams || {};
-
-  // Extract YouTube video ID from URL
-  const getYouTubeVideoID = (url) => {
-    if (!url) return null;
-    const match = url.match(/(?:v=|\/)([0-9A-Za-z_-]{11})/);
-    return match ? match[1] : null;
-  };
-
-  const videoId = getYouTubeVideoID(video);
-  const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
+  }, [dhyanamItem]);
 
   // Find current subtitle text based on currentTime and selected language
   const currentSubtitle = (() => {
@@ -113,8 +143,8 @@ export default function DhyanamPage({ lang: initialLang }) {
           autoplay: 1,
           controls: 1,
           modestbranding: 1,
-          cc_load_policy: 0, // disable native subtitles
-          fs: 0,             // disable fullscreen button
+          cc_load_policy: 0,
+          fs: 0,
         },
         events: {
           onReady: () => {
@@ -123,7 +153,7 @@ export default function DhyanamPage({ lang: initialLang }) {
                 setCurrentTime(playerRef.current.getCurrentTime());
               }
             }, 500);
-          },
+          }
         },
       });
     };
@@ -149,10 +179,10 @@ export default function DhyanamPage({ lang: initialLang }) {
 
   // Generate share text
   const generateShareText = () => {
-    if (!dhyanams) return '';
-    const t = title[lang] || title['en'];
+    if (!dhyanamItem) return '';
+    const t = (title && (title[lang] || title['en'])) || 'Meditation';
     const d = date || '';
-    const cRaw = content[lang] || content['en'] || '';
+    const cRaw = (content && (content[lang] || content['en'])) || '';
     const cPreview = cRaw.split(' ').slice(0, 60).join(' ') + (cRaw.split(' ').length > 60 ? '...' : '');
     const url = window.location.href;
     return `A Spiritual Meditation
@@ -165,12 +195,12 @@ export default function DhyanamPage({ lang: initialLang }) {
 🔗 ${url}`;
   };
 
-  // Update share text when lang or dhyanams changes
+  // Update share text when lang or dhyanamItem changes
   useEffect(() => {
-    if (dhyanams) {
+    if (dhyanamItem) {
       setShareText(generateShareText());
     }
-  }, [lang, dhyanams]);
+  }, [lang, dhyanamItem]);
 
   // Copy text helper
   const copyToClipboard = () => {
@@ -184,9 +214,9 @@ export default function DhyanamPage({ lang: initialLang }) {
   const fbShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
   const waShareUrl = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
   const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
-  const emailShareUrl = `mailto:?subject=${encodeURIComponent(title[lang] || title['en'])}&body=${encodeURIComponent(shareText)}`;
+  const emailShareUrl = `mailto:?subject=${encodeURIComponent(title?.[lang] || title?.['en'] || '')}&body=${encodeURIComponent(shareText)}`;
 
-   if (imagesLoadedCount < totalImages) {
+  if (!allAssetsLoaded) {
     return (
       <div className={styles.loadingOverlay}>
         <div className={styles.spinner}></div>
@@ -194,8 +224,8 @@ export default function DhyanamPage({ lang: initialLang }) {
       </div>
     );
   }
-  
-  if (!dhyanams) {
+
+  if (!dhyanamItem) {
     return (
       <div className={styles.testimonyPage}>
         <div className={styles.testimonyTitleBox}>
@@ -239,7 +269,7 @@ export default function DhyanamPage({ lang: initialLang }) {
                 transition: 'all 0.3s ease',
               }}
             >
-              {{
+              { {
                 en: 'English',
                 hi: 'हिन्दी',
                 zh: '中文',
@@ -250,13 +280,13 @@ export default function DhyanamPage({ lang: initialLang }) {
                 es: 'Español',
                 mr: 'मराठी',
                 kn: 'ಕನ್ನಡ',
-              }[lang] || lang}
+              }[lang] || lang }
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
               {['en', 'zh', 'bn', 'hi', 'ta', 'te', 'fr', 'es', 'mr', 'kn'].map((key) => (
                 <Dropdown.Item key={key} eventKey={key}>
-                  {{
+                  { {
                     en: 'English',
                     hi: 'हिन्दी',
                     zh: '中文',
@@ -267,7 +297,7 @@ export default function DhyanamPage({ lang: initialLang }) {
                     es: 'Español',
                     mr: 'मराठी',
                     kn: 'ಕನ್ನಡ',
-                  }[key]}
+                  }[key] }
                 </Dropdown.Item>
               ))}
             </Dropdown.Menu>
@@ -282,7 +312,18 @@ export default function DhyanamPage({ lang: initialLang }) {
       <div className={styles.testimonyContainer}>
         {videoId && !showVideo && (
           <div className={styles.thumbnailWrapper}>
-            <img src={thumbnailUrl} alt="Video Thumbnail" className={styles.thumbnailImage} />
+            <img
+              src={thumbnailSrc}
+              alt="Video Thumbnail"
+              className={styles.thumbnailImage}
+              onError={() => {
+                if (thumbnailSrc.endsWith('maxresdefault.jpg')) {
+                  setThumbnailSrc(`https://img.youtube.com/vi/${videoId}/sddefault.jpg`);
+                } else if (thumbnailSrc.endsWith('sddefault.jpg')) {
+                  setThumbnailSrc(`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`);
+                }
+              }}
+            />
             <div className={styles.smallPlayIcon} onClick={() => setShowVideo(true)}>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ff0000" width="60%" height="60%">
                 <path d="M8 5v14l11-7z" />
@@ -378,6 +419,7 @@ export default function DhyanamPage({ lang: initialLang }) {
   );
 }
 
+// Utility function to convert subtitle time strings (HH:MM:SS or MM:SS) to seconds
 function timeStringToSeconds(timeStr) {
   if (typeof timeStr !== 'string') return 0;
   const parts = timeStr.split(':').map(Number);

@@ -27,24 +27,61 @@ export default function OraclesPage({ lang: initialLang }) {
   // Share modal state
   const [showShareModal, setShowShareModal] = useState(false);
   const [shareText, setShareText] = useState('');
-  const [imagesLoadedCount, setImagesLoadedCount] = useState(0);
-  const totalImages = 3;
 
+  // Instead of imagesLoadedCount, we use a boolean for all assets loaded
+  const [allAssetsLoaded, setAllAssetsLoaded] = useState(false);
+
+  // CSS background images to preload
   const cssBackgroundImages = [
-  '/assets/angel3.webp',
-  '/assets/angel3.webp',
-  '/assets/cloud.webp',
+    '/assets/angel3.webp',
+    '/assets/angel3.webp',
+    '/assets/cloud.webp',
   ];
 
+  const { title, date, content, video } = oracle || {};
+
+  // Extract YouTube video ID
+  const getYouTubeVideoID = (url) => {
+    if (!url) return null;
+    const match = url.match(/(?:v=|\/)([0-9A-Za-z_-]{11})/);
+    return match ? match[1] : null;
+  };
+
+  const videoId = getYouTubeVideoID(video);
+  const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
+
+  // Preload all background images + thumbnail, then set allAssetsLoaded = true
   useEffect(() => {
-  cssBackgroundImages.forEach((src) => {
-    const img = new Image();
-    img.src = src;
-    img.onload = () => setImagesLoadedCount((prev) => prev + 1);
-    img.onerror = () => setImagesLoadedCount((prev) => prev + 1); // fallback
-  });
-  }, []);
-  
+    const allImages = [...cssBackgroundImages];
+    if (thumbnailUrl) allImages.push(thumbnailUrl);
+
+    let loadedCount = 0;
+    const totalToLoad = allImages.length;
+
+    if (totalToLoad === 0) {
+      setAllAssetsLoaded(true);
+      return;
+    }
+
+    allImages.forEach(src => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => {
+        loadedCount++;
+        if (loadedCount === totalToLoad) {
+          setAllAssetsLoaded(true);
+        }
+      };
+      img.onerror = () => {
+        // Count errors as loaded so loading does not stall
+        loadedCount++;
+        if (loadedCount === totalToLoad) {
+          setAllAssetsLoaded(true);
+        }
+      };
+    });
+  }, [thumbnailUrl]);
+
   useEffect(() => {
     if (oracle && oracle.subtitles) {
       fetch(oracle.subtitles)
@@ -61,17 +98,6 @@ export default function OraclesPage({ lang: initialLang }) {
       setSubtitles([]);
     }
   }, [oracle]);
-
-  const { title, date, content, video } = oracle || {};
-
-  const getYouTubeVideoID = (url) => {
-    if (!url) return null;
-    const match = url.match(/(?:v=|\/)([0-9A-Za-z_-]{11})/);
-    return match ? match[1] : null;
-  };
-
-  const videoId = getYouTubeVideoID(video);
-  const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
 
   const currentSubtitle = (() => {
     if (!subtitles.length) return '';
@@ -124,7 +150,7 @@ export default function OraclesPage({ lang: initialLang }) {
                 setCurrentTime(playerRef.current.getCurrentTime());
               }
             }, 500);
-          },
+          }
         },
       });
     };
@@ -183,14 +209,16 @@ export default function OraclesPage({ lang: initialLang }) {
   const waShareUrl = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
   const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
   const emailShareUrl = `mailto:?subject=${encodeURIComponent(title?.[lang] || title?.['en'] || '')}&body=${encodeURIComponent(shareText)}`;
- if (imagesLoadedCount < totalImages) {
-  return (
-    <div className={styles.loadingOverlay}>
-      <div className={styles.spinner}></div>
-      <p>Loading visuals...</p>
-    </div>
-  );
-}
+
+  if (!allAssetsLoaded) {
+    return (
+      <div className={styles.loadingOverlay}>
+        <div className={styles.spinner}></div>
+        <p>Loading visuals...</p>
+      </div>
+    );
+  }
+
   if (!oracle) {
     return (
       <div className={styles.testimonyPage}>
@@ -234,7 +262,7 @@ export default function OraclesPage({ lang: initialLang }) {
               onMouseEnter={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(36, 107, 253, 0.3)'}
               onMouseLeave={e => e.currentTarget.style.boxShadow = '0 2px 8px rgba(36, 107, 253, 0.15)'}
             >
-              {{
+              { {
                 en: 'English',
                 hi: 'हिन्दी',
                 zh: '中文',
@@ -276,7 +304,7 @@ export default function OraclesPage({ lang: initialLang }) {
                     e.currentTarget.style.color = 'inherit';
                   }}
                 >
-                  {{
+                  { {
                     en: 'English',
                     hi: 'हिन्दी',
                     zh: '中文',
@@ -303,7 +331,14 @@ export default function OraclesPage({ lang: initialLang }) {
         {videoId && !showVideo && (
           <div className={styles.thumbnailWrapper}>
             <img src={thumbnailUrl} alt="Video Thumbnail" className={styles.thumbnailImage} />
-            <div className={styles.smallPlayIcon} onClick={() => setShowVideo(true)}>
+            <div
+              className={styles.smallPlayIcon}
+              onClick={() => setShowVideo(true)}
+              style={{ cursor: 'pointer' }}
+              role="button"
+              tabIndex={0}
+              onKeyPress={e => { if (e.key === 'Enter') setShowVideo(true); }}
+            >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ff0000" width="60%" height="60%">
                 <path d="M8 5v14l11-7z" />
               </svg>
