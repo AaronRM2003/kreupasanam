@@ -1,6 +1,7 @@
+/* Keep these unchanged */
 .footer {
-  background: linear-gradient(135deg, #c5dcff, #e0e9ff); /* soft bright blue gradient */
-  color: #0e1a3a; /* dark navy text for good contrast on light background */
+  background: linear-gradient(135deg, #c5dcff, #e0e9ff);
+  color: #0e1a3a;
   padding: 4rem 2rem 2rem;
   font-family: 'Poppins', sans-serif;
   width: 100vw;
@@ -25,38 +26,28 @@
 .footerTop {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 2rem;
-  max-width: 1400px;
+  justify-content: center;
+  max-width: 1000px;
   margin: 0 auto;
   width: 100%;
+  text-align: center;
 }
 
 .section {
-  flex: 1 1 280px;
+  flex: 1 1 100%;
+  max-width: 500px;
 }
 
 .section h3 {
   font-size: 1.2rem;
   margin-bottom: 1rem;
-  color: #0e1a3a; /* darker heading */
+  color: #0e1a3a;
 }
 
-.section p,
-.section li {
-  font-size: 0.95rem;
-  color: #123f7c; /* medium dark blue for readability */
-  margin-bottom: 0.5rem;
-}
-
-.section a {
-  color: #2a52be; /* blue links */
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.section a:hover {
-  color: #1e40af; /* darker blue hover */
+.section p {
+  font-size: 1rem;
+  color: #123f7c;
+  margin-bottom: 0.75rem;
 }
 
 .newsletter {
@@ -97,22 +88,6 @@
   background-color: #1e40af;
 }
 
-.socials {
-  display: flex;
-  gap: 1.25rem;
-  margin-top: 1rem;
-}
-
-.socials a {
-  color: #2a52be;
-  font-size: 1.4rem;
-  transition: color 0.3s ease;
-}
-
-.socials a:hover {
-  color: #1e40af;
-}
-
 .footerBottom {
   text-align: center;
   margin-top: 2rem;
@@ -122,20 +97,8 @@
   padding-top: 1.5rem;
 }
 
-/* Responsive tweaks */
+/* Responsive */
 @media (max-width: 768px) {
-   .footerTop {
-    flex-direction: column;
-    text-align: center;
-    gap: 0;           /* No gap between flex children */
-    margin-bottom: 0;
-  }
-
-  .section {
-    margin-bottom: 0;  /* Remove any bottom margin on sections */
-    padding-bottom: 0; /* Remove bottom padding if any */
-  }
-
   .newsletter {
     flex-direction: column;
     align-items: center;
@@ -148,22 +111,81 @@
     margin: 0.3rem 0;
   }
 
-  .socials {
-    justify-content: center;
-    gap: 1.5rem;
-  }
-
   .section h3 {
     font-size: 1.4rem;
   }
-.section ul, 
-.section ol {
-  list-style: none;
-  padding-left: 0; /* remove default indentation */
-  margin-left: 0;  /* optional: remove left margin */
+
+  .section p {
+    font-size: 1.1rem;
+  }
 }
-  .section p,
-  .section li {
+
+/* Keep your existing styles unchanged */
+
+/* Additions below */
+
+.footer {
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 8px 24px rgba(36, 107, 253, 0.15);
+  position: relative;
+  z-index: 10;
+}
+
+.newsletter input {
+  box-shadow: inset 0 0 6px rgba(36, 107, 253, 0.1);
+  font-weight: 500;
+  color: #0e1a3a;
+}
+
+.newsletter input::placeholder {
+  color: #8aa4e6;
+  font-style: italic;
+}
+
+.newsletter input:focus {
+  box-shadow: 0 0 8px 2px #246bfd;
+}
+
+.newsletter button {
+  box-shadow: 0 3px 8px rgba(36, 107, 253, 0.4);
+  font-weight: 700;
+}
+
+.newsletter button:hover {
+  box-shadow: 0 5px 14px rgba(30, 64, 175, 0.7);
+}
+
+.newsletter button:disabled,
+.newsletter button[disabled] {
+  background-color: #a1c4fd;
+  cursor: not-allowed;
+  box-shadow: none;
+  color: #e0e9ff;
+}
+
+.section p.thankYouMessage {
+  color: #1e40af;
+  font-weight: 600;
+  margin-top: 1rem;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+/* Animate fade-in for thank you message */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive font size bump */
+@media (max-width: 768px) {
+  .newsletter input,
+  .newsletter button {
     font-size: 1.1rem;
   }
 }

@@ -7,7 +7,7 @@ import heroImage from "../assets/kreupasanammother.webp";
 export default function IntroSection({ lang = 'en', onReady }) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const navigate = useNavigate();
-  const handleCardClick = () => navigate(`/testimonies`);
+  const handleCardClick = () => navigate(`/${lang}/testimonies`);
 
   const t = translations[lang] || translations['en'];
 
