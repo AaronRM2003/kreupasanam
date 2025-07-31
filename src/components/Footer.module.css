@@ -68,7 +68,6 @@
 }
 
 .newsletter input:focus {
-  border-color: #246bfd;
   background: white;
 }
 
@@ -143,7 +142,7 @@
 }
 
 .newsletter input:focus {
-  box-shadow: 0 0 8px 2px #246bfd;
+  box-shadow: 0 0 8px 2px #aac7ff;
 }
 
 .newsletter button {

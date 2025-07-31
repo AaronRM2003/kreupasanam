@@ -10,6 +10,7 @@ import Dhyanam from './pages/Dhyanam';
 import DhyanamPage from './pages/DhyanamPage';
 import LangSelectorPage from './pages/LangSelectorPage'; // You need to create this page
 import { useParams } from 'react-router-dom';
+import TranslationDisclaimer from './TranslationDisclaimer';
 
 const supportedLangs = ['en', 'hi', 'zh', 'bn', 'ta', 'te', 'fr', 'es', 'mr', 'kn'];
 
@@ -40,6 +41,7 @@ function App() {
   return (
     <>
       <ScrollToTop />
+      <TranslationDisclaimer />
      <Routes>
   {/* Language selection page at root */}
   <Route path="/" element={<LangSelectorPage setLang={setLang} />} />

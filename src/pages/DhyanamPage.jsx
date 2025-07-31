@@ -1,32 +1,49 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Dropdown, Modal, Button } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import dhyanam from '../assets/dhyanam-content.json';
-import styles from './TestimonyPage.module.css'; // reuse your existing styles
 
-import { FaFacebookF, FaWhatsapp, FaTelegramPlane, FaEnvelope, FaRegCopy } from 'react-icons/fa';
+import dhyanam from '../assets/dhyanam-content.json';
+import styles from './TestimonyPage.module.css';
+
+import {
+  getYouTubeVideoID,
+  generateShareText,
+  preloadImages,
+  LanguageDropdown,
+  ShareModal,
+  addEndTimesToSubtitles
+} from '../components/utils/Utils';
+
+import { useYouTubePlayer } from '../components/hooks/useYoutubePlayer';
+import { getSubtitles, useSubtitles } from '../components/hooks/useSubtitles';
+import SubtitleVoiceControls from '../components/utils/SpeakerButton';
+
+import { useSpeechSync } from '../components/hooks/useSpeechSync';
+import FloatingVideoPlayer from '../components/utils/FloatingVideoPlayer';
+import LangHelpOverlay from '../components/utils/LangHelpOverlay';
 
 export default function DhyanamPage({ lang: initialLang }) {
-  // Initialize lang state with the received prop or fallback
-  const [lang, setLang] = useState(initialLang || 'en');
   const { id } = useParams();
-
-  // NOTE: dhyanam is an array, .find returns one object, so rename to singular to avoid confusion
   const dhyanamItem = dhyanam.find(item => item.id === parseInt(id));
-
+  const [lang, setLang] = useState(initialLang || 'en');
   const [showVideo, setShowVideo] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [subtitles, setSubtitles] = useState([]);
-
-  const playerRef = useRef(null);
-  const intervalRef = useRef(null);
-
-  // Share modal state
-  const [showShareModal, setShowShareModal] = useState(false);
-  const [shareText, setShareText] = useState('');
-
-  // Preload background images + thumbnail, use boolean loaded state
   const [allAssetsLoaded, setAllAssetsLoaded] = useState(false);
+  const [shareText, setShareText] = useState('');
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [showLangHelp, setShowLangHelp] = useState(false);
+
+  if (!dhyanamItem) {
+    return (
+      <div className={styles.testimonyPage}>
+        <div className={styles.testimonyTitleBox}>
+          <h2 className={styles.testimonyHeading}>Dhyanam</h2>
+        </div>
+        <h2 className={styles.errorTitle}>Dhyanam Not Found</h2>
+        <p className={styles.errorText}>The meditation you are looking for does not exist.</p>
+      </div>
+    );
+  }
+
+  const { title, date, content, video, subtitles: subtitlesUrl } = dhyanamItem;
 
   const cssBackgroundImages = [
     '/assets/angel3.webp',
@@ -34,187 +51,64 @@ export default function DhyanamPage({ lang: initialLang }) {
     '/assets/cloud.webp',
   ];
 
-  const { title, date, content, video } = dhyanamItem || {};
-
-  // Extract YouTube video ID from URL
-  const getYouTubeVideoID = (url) => {
-    if (!url) return null;
-    const match = url.match(/(?:v=|\/)([0-9A-Za-z_-]{11})/);
-    return match ? match[1] : null;
-  };
-
   const videoId = getYouTubeVideoID(video);
-  const defaultThumbnail = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
+  const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
 
-  // Use state for thumbnailSrc so we can change on error fallback
-  const [thumbnailSrc, setThumbnailSrc] = useState(defaultThumbnail);
-
-  // Reset thumbnailSrc when videoId changes
-  useEffect(() => {
-    setThumbnailSrc(defaultThumbnail);
-  }, [defaultThumbnail]);
-
-  // Preload images + thumbnail and track loading status
+  // Preload background + thumbnail images
   useEffect(() => {
     const allImages = [...cssBackgroundImages];
-    if (defaultThumbnail) allImages.push(defaultThumbnail);
+    if (thumbnailUrl) allImages.push(thumbnailUrl);
+    preloadImages(allImages, () => setAllAssetsLoaded(true));
+  }, [thumbnailUrl]);
 
-    let loadedCount = 0;
-    const totalToLoad = allImages.length;
-
-    if (totalToLoad === 0) {
-      setAllAssetsLoaded(true);
-      return;
-    }
-
-    allImages.forEach(src => {
-      const img = new Image();
-      img.src = src;
-      img.onload = () => {
-        loadedCount++;
-        if (loadedCount === totalToLoad) setAllAssetsLoaded(true);
-      };
-      img.onerror = () => {
-        loadedCount++;
-        if (loadedCount === totalToLoad) setAllAssetsLoaded(true);
-      };
-    });
-  }, [defaultThumbnail]);
-
-  // Fetch subtitles JSON when dhyanamItem changes
   useEffect(() => {
-    if (dhyanamItem && dhyanamItem.subtitles) {
-      fetch(dhyanamItem.subtitles)
-        .then(res => {
-          if (!res.ok) throw new Error('Failed to load subtitles');
-          return res.json();
-        })
-        .then(data => setSubtitles(data))
-        .catch(err => {
-          console.error('Subtitle loading failed:', err);
-          setSubtitles([]);
-        });
+    if (lang === 'other') {
+      setShowLangHelp(true);
     } else {
-      setSubtitles([]);
+      setShowLangHelp(false);
     }
-  }, [dhyanamItem]);
-
-  // Find current subtitle text based on currentTime and selected language
-  const currentSubtitle = (() => {
-    if (!subtitles.length) return '';
-    for (let i = 0; i < subtitles.length; i++) {
-      const startSec = timeStringToSeconds(subtitles[i].start);
-      const endSec = i + 1 < subtitles.length ? timeStringToSeconds(subtitles[i + 1].start) : startSec + 5;
-      if (currentTime >= startSec && currentTime < endSec) {
-        return subtitles[i].text[lang] || subtitles[i].text['en'] || '';
-      }
-    }
-    return '';
-  })();
-
-  // Load YouTube IFrame API
-  useEffect(() => {
-    if (!window.YT) {
-      const tag = document.createElement('script');
-      tag.src = "https://www.youtube.com/iframe_api";
-      document.body.appendChild(tag);
-    }
-  }, []);
-
-  // Initialize or destroy YouTube player based on showVideo
-  useEffect(() => {
-    if (!showVideo) {
-      if (playerRef.current) {
-        playerRef.current.destroy();
-        playerRef.current = null;
-      }
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
-      setCurrentTime(0);
-      return;
-    }
-
-    const onYouTubeIframeAPIReady = () => {
-      playerRef.current = new window.YT.Player('yt-player', {
-        videoId: videoId,
-        playerVars: {
-          autoplay: 1,
-          controls: 1,
-          modestbranding: 1,
-          cc_load_policy: 0,
-          fs: 0,
-        },
-        events: {
-          onReady: () => {
-            intervalRef.current = setInterval(() => {
-              if (playerRef.current && playerRef.current.getCurrentTime) {
-                setCurrentTime(playerRef.current.getCurrentTime());
-              }
-            }, 500);
-          }
-        },
-      });
-    };
-
-    if (window.YT && window.YT.Player) {
-      onYouTubeIframeAPIReady();
-    } else {
-      window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
-    }
-
-    return () => {
-      if (playerRef.current) {
-        playerRef.current.destroy();
-        playerRef.current = null;
-      }
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
-      setCurrentTime(0);
-    };
-  }, [showVideo, videoId]);
+  }, [lang]);
 
   // Generate share text
-  const generateShareText = () => {
-    if (!dhyanamItem) return '';
-    const t = (title && (title[lang] || title['en'])) || 'Meditation';
-    const d = date || '';
-    const cRaw = (content && (content[lang] || content['en'])) || '';
-    const cPreview = cRaw.split(' ').slice(0, 60).join(' ') + (cRaw.split(' ').length > 60 ? '...' : '');
-    const url = window.location.href;
-    return `A Spiritual Meditation
-
-📖 ${t}
-📅 ${d}
-
-"${cPreview}"
-
-🔗 ${url}`;
-  };
-
-  // Update share text when lang or dhyanamItem changes
   useEffect(() => {
-    if (dhyanamItem) {
-      setShareText(generateShareText());
-    }
+    setShareText(generateShareText(dhyanamItem, lang, window.location.href, "Dhyanam meditation"));
   }, [lang, dhyanamItem]);
 
-  // Copy text helper
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(shareText)
-      .then(() => alert('Message copied to clipboard!'))
-      .catch(() => alert('Failed to copy!'));
-  };
+  // YouTube player hook
+  const { currentTime, playerRef, duration: totalDuration } = useYouTubePlayer(videoId, showVideo);
+
+  // Subtitles & current subtitle
+  const currentSubtitle = useSubtitles(subtitlesUrl, lang, currentTime);
+  const rawSubtitles = getSubtitles(subtitlesUrl);
+  const subtitles = addEndTimesToSubtitles(rawSubtitles);
+
+  // Speech sync & volume control hook
+  const {
+    isSpeaking,
+    toggleSpeaking,
+    volume,
+    handleVolumeChange,
+  } = useSpeechSync({ playerRef, showVideo, subtitles, currentSubtitle, currentTime, lang });
+
+  // Auto-disable speaking when video is closed
+  useEffect(() => {
+    if (!showVideo && isSpeaking) {
+      window.speechSynthesis.cancel();
+    }
+  }, [showVideo, isSpeaking]);
 
   // Share URLs
   const shareUrl = window.location.href;
   const fbShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
   const waShareUrl = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
   const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
-  const emailShareUrl = `mailto:?subject=${encodeURIComponent(title?.[lang] || title?.['en'] || '')}&body=${encodeURIComponent(shareText)}`;
+  const emailShareUrl = `mailto:?subject=${encodeURIComponent(title[lang] || title['en'])}&body=${encodeURIComponent(shareText)}`;
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(shareText)
+      .then(() => alert('Message copied to clipboard!'))
+      .catch(() => alert('Failed to copy!'));
+  };
 
   if (!allAssetsLoaded) {
     return (
@@ -225,205 +119,120 @@ export default function DhyanamPage({ lang: initialLang }) {
     );
   }
 
-  if (!dhyanamItem) {
-    return (
-      <div className={styles.testimonyPage}>
-        <div className={styles.testimonyTitleBox}>
-          <h2 className={styles.testimonyHeading}>Dhyanam</h2>
-        </div>
-        <h2 className={styles.errorTitle}>Dhyanam Not Found</h2>
-        <p className={styles.errorText}>The episode you are looking for does not exist.</p>
-      </div>
-    );
-  }
-
   return (
     <div className={styles.testimonyPage}>
+      {/* Header */}
       <div className={styles.testimonyHeader}>
-        {/* Left-aligned Back Button */}
-        <div className={styles.testimonyBack}>
+        <div className={styles.testimonyLeft}>
           <button className={styles.backButton} onClick={() => window.history.back()}>
             &#8592; <span className={styles.backText}>Back</span>
           </button>
         </div>
 
-        {/* Centered Heading */}
         <div className={styles.testimonyCenter}>
-          <h2 className={styles.testimonyHeading}>Covenant Worship</h2>
+          <div className={styles.animatedLineLeft}></div>
+          <h2 className={styles.testimonyHeading}>Dhyanam</h2>
+          <div className={styles.animatedLineRight}></div>
         </div>
 
-        {/* Right-aligned Language Dropdown */}
         <div className={styles.testimonyRight}>
-          <Dropdown onSelect={setLang}>
-            <Dropdown.Toggle
-              variant="outline-secondary"
-              id="dropdown-lang"
-              style={{
-                backgroundColor: 'white',
-                color: '#246bfd',
-                borderColor: '#ccc',
-                boxShadow: '0 2px 8px rgba(36, 107, 253, 0.15)',
-                borderRadius: '30px',
-                padding:'0.5rem 2rem',
-                fontWeight: '600',
-                transition: 'all 0.3s ease',
-              }}
-            >
-              { {
-                en: 'English',
-                hi: 'हिन्दी',
-                zh: '中文',
-                bn: 'বাংলা',
-                ta: 'தமிழ்',
-                te: 'తెలుగు',
-                fr: 'Français',
-                es: 'Español',
-                mr: 'मराठी',
-                kn: 'ಕನ್ನಡ',
-              }[lang] || lang }
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu>
-              {['en', 'zh', 'bn', 'hi', 'ta', 'te', 'fr', 'es', 'mr', 'kn'].map((key) => (
-                <Dropdown.Item key={key} eventKey={key}>
-                  { {
-                    en: 'English',
-                    hi: 'हिन्दी',
-                    zh: '中文',
-                    bn: 'বাংলা',
-                    ta: 'தமிழ்',
-                    te: 'తెలుగు',
-                    fr: 'Français',
-                    es: 'Español',
-                    mr: 'मराठी',
-                    kn: 'ಕನ್ನಡ',
-                  }[key] }
-                </Dropdown.Item>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <LanguageDropdown lang={lang} onSelect={setLang} />
+          </div>
         </div>
       </div>
 
+      {showLangHelp && (
+        <LangHelpOverlay onClose={() => {
+          setLang('en');
+          setShowLangHelp(false);
+        }} />
+      )}
+
+      {/* Background floating images */}
       <div className={`${styles.floatingImage} ${styles.left}`}></div>
       <div className={`${styles.floatingImage} ${styles.right}`}></div>
       <div className={`${styles.floatingCloud} ${styles.bottom}`}></div>
 
+      {/* Main content */}
       <div className={styles.testimonyContainer}>
-        {videoId && !showVideo && (
-          <div className={styles.thumbnailWrapper}>
-            <img
-              src={thumbnailSrc}
-              alt="Video Thumbnail"
-              className={styles.thumbnailImage}
-              onError={() => {
-                if (thumbnailSrc.endsWith('maxresdefault.jpg')) {
-                  setThumbnailSrc(`https://img.youtube.com/vi/${videoId}/sddefault.jpg`);
-                } else if (thumbnailSrc.endsWith('sddefault.jpg')) {
-                  setThumbnailSrc(`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`);
-                }
-              }}
-            />
-            <div className={styles.smallPlayIcon} onClick={() => setShowVideo(true)}>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ff0000" width="60%" height="60%">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </div>
-          </div>
-        )}
-
-        <h1 className={styles.testimonyTitle}>{title[lang] || title['en']}</h1>
-        <p className={styles.testimonyDate}>{date}</p>
-        <div className={styles.testimonyContent}>{content[lang] || content['en']}</div>
-
-        {/* Share Button and Modal */}
-        <div className={styles.shareSection}>
-          <p style={{ fontWeight: '600' }}>Share this meditation:</p>
-
-          <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-            <button className={styles.shareMainButton} onClick={() => setShowShareModal(true)}>
-              🔗 Share
-            </button>
-          </div>
-
-          <Modal show={showShareModal} onHide={() => setShowShareModal(false)} centered>
-            <Modal.Header closeButton>
-              <Modal.Title>Share this Meditation</Modal.Title>
-            </Modal.Header>
-
-            <Modal.Body>
-              <label style={{ fontWeight: 600, marginBottom: '0.5rem', display: 'block' }}>
-                Message:
-              </label>
-              <textarea
-                rows={5}
-                value={shareText}
-                onChange={(e) => setShareText(e.target.value)}
-                placeholder="Write something personal before sharing..."
-                style={{
-                  width: '100%',
-                  padding: '1rem',
-                  borderRadius: '12px',
-                  border: '1px solid #ccc',
-                  fontSize: '1rem',
-                  resize: 'vertical',
-                }}
+        <div className={styles.testimonyInner}>
+          {videoId && !showVideo ? (
+            <div
+              className={styles.thumbnailWrapper}
+              onClick={() => setShowVideo(true)}
+              style={{ cursor: 'pointer' }}
+            >
+              <img
+                src={thumbnailUrl}
+                alt="Video Thumbnail"
+                className={styles.thumbnailImage}
               />
-
-              {/* Share Buttons */}
-              <div className={styles.shareOptionsGrid}>
-                <a href={fbShareUrl} target="_blank" rel="noopener noreferrer" className={`${styles.shareOption} ${styles.facebook}`}>
-                  <FaFacebookF /> Facebook
-                </a>
-
-                <a href={waShareUrl} target="_blank" rel="noopener noreferrer" className={`${styles.shareOption} ${styles.whatsapp}`}>
-                  <FaWhatsapp /> WhatsApp
-                </a>
-
-                <a href={telegramShareUrl} target="_blank" rel="noopener noreferrer" className={`${styles.shareOption} ${styles.telegram}`}>
-                  <FaTelegramPlane /> Telegram
-                </a>
-
-                <a href={emailShareUrl} target="_blank" rel="noopener noreferrer" className={`${styles.shareOption} ${styles.email}`}>
-                  <FaEnvelope /> Gmail
-                </a>
-
-                <button onClick={copyToClipboard} className={`${styles.shareOption} ${styles.copy}`} type="button">
-                  <FaRegCopy /> Copy
-                </button>
+              <div className={styles.smallPlayIcon}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="#ff0000"
+                  width="60%"
+                  height="60%"
+                >
+                  <path d="M8 5v14l11-7z" />
+                </svg>
               </div>
-            </Modal.Body>
+            </div>
+          ) : (
+            <div className={styles.thumbnailWrapper}>
+              <img
+                src={thumbnailUrl}
+                alt="Video Thumbnail"
+                className={styles.thumbnailImage}
+              />
+            </div>
+          )}
 
-            <Modal.Footer>
-              <Button variant="secondary" onClick={() => setShowShareModal(false)}>
-                Close
-              </Button>
-            </Modal.Footer>
-          </Modal>
+          <div className={styles.testimonyText}>
+            <h1 className={styles.testimonyTitle}>{title[lang] || title['en']}</h1>
+            <p className={styles.testimonyDate}>{date}</p>
+            <div className={styles.testimonyContent}>{content[lang] || content['en']}</div>
+          </div>
+
+          <div className={styles.shareSection}>
+            <p style={{ fontWeight: '600' }}>Share this meditation:</p>
+            <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+              <button className={styles.shareMainButton} onClick={() => setShowShareModal(true)}>
+                🔗 Share
+              </button>
+            </div>
+
+            <ShareModal
+              show={showShareModal}
+              onHide={() => setShowShareModal(false)}
+              title="Dhyanam"
+              shareText={shareText}
+              setShareText={setShareText}
+              fbShareUrl={fbShareUrl}
+              waShareUrl={waShareUrl}
+              telegramShareUrl={telegramShareUrl}
+              emailShareUrl={emailShareUrl}
+              copyToClipboard={copyToClipboard}
+              styles={styles}
+            />
+          </div>
         </div>
       </div>
 
+      {/* Video player and subtitles */}
       {showVideo && (
-        <div className={styles.floatingVideoWrapper}>
-          <div className={styles.floatingVideo}>
-            <div id="yt-player" style={{ width: '100%' }}></div>
-            <button className={styles.closeButton} onClick={() => setShowVideo(false)}>✕</button>
-          </div>
-
-          <div className={styles.subtitleBox}>
-            {currentSubtitle}
-          </div>
-        </div>
+        <FloatingVideoPlayer
+          isSpeaking={isSpeaking}
+          volume={volume}
+          toggleSpeaking={toggleSpeaking}
+          handleVolumeChange={handleVolumeChange}
+          playerRef={playerRef}
+          currentSubtitle={currentSubtitle}
+          onClose={() => setShowVideo(false)}
+        />
       )}
     </div>
   );
-}
-
-// Utility function to convert subtitle time strings (HH:MM:SS or MM:SS) to seconds
-function timeStringToSeconds(timeStr) {
-  if (typeof timeStr !== 'string') return 0;
-  const parts = timeStr.split(':').map(Number);
-  if (parts.length === 2) return parts[0] * 60 + parts[1];
-  if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
-  return 0;
 }

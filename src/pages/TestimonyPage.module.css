@@ -681,6 +681,146 @@ filter: drop-shadow(0 0 12px rgba(255, 223, 93, 0.7)) drop-shadow(0 0 24px rgba(
   z-index: 1;
 }
 /* ---------------------- RESPONSIVE FIXES ---------------------- */
+.speakerButton {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  font-size: 1.5rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+  z-index: 20;
+}
+
+.speakerButton:hover {
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.speakerButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.volumeSlider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 5px;
+  background: #ddd;
+  outline: none;
+  transition: opacity 0.2s;
+  cursor: pointer;
+}
+.volumeSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #007BFF;
+  cursor: pointer;
+}
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: #ddd;
+  height: 6px;
+  border-radius: 4px;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  background: #007BFF;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  background-color: #0056b3;
+}
+/* Dark translucent overlay behind the tooltip */
+/* Full-screen dark overlay */
+.overlayBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;   /* full viewport width */
+  height: 100vh;  /* full viewport height */
+  background-color: rgba(0, 0, 0, 0.5);  /* slightly darker */
+  z-index: 9998;
+
+  /* Make sure it stretches fully */
+  pointer-events: auto;
+}
+
+/* Centered tooltip box */
+.fixedTooltipBox {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 25px 30px;
+  width: 90vw;         /* default smaller width for mobile */
+  max-width: 350px;    /* max width on mobile */
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  z-index: 9999;
+  font-size: 15px;
+  line-height: 1.5;
+  text-align: center;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Bigger box for desktop screens */
+@media (min-width: 768px) {
+  .fixedTooltipBox {
+    width: 500px;      /* bigger width on desktop */
+    max-width: 80vw;   /* max width relative to viewport */
+    padding: 30px 40px;
+    font-size: 16px;   /* slightly bigger font */
+  }
+}
+
+.fixedTooltipBox a {
+  display: inline-block;
+  margin-top: 12px;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.fixedTooltipBox a:hover {
+  text-decoration: underline;
+}
+
+/* Reuse your existing OK button styles */
+.okButton {
+  margin-top: 16px;
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.okButton:hover {
+  background-color: #0056b3;
+}
+
 
 /* Portrait Mobile */
 @media (max-width: 768px) and (orientation: portrait) {
