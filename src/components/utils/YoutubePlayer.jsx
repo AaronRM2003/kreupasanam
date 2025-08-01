@@ -19,7 +19,7 @@ export default function YouTubePlayer({ videoId, isPlaying = true }) {
 
   return (
     <div style={{ position: 'relative', padding: 20 }}>
-      <div id="yt-player" style={{ width: '100%', height: '360px' }}></div>
+      <div id="yt-player" ref={playerRef} style={{ width: '100%', height: '360px' }}></div>
 
       <button
         onClick={toggleVolumeSlider}

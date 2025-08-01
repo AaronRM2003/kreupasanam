@@ -1,4 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
+import { enhanceWithSsml } from './useSsml';
+import { useIsGoogleTTS } from './useIsGoogleTts';
+import { useSSMLSupportTest } from './useIsSsmlSupport';
 
 export function useSpeechSync({
   playerRef,
@@ -12,37 +15,38 @@ export function useSpeechSync({
   const [volume, setVolume] = useState(100);
   const hasStartedSpeakingRef = useRef(false);
   const lastSpokenRef = useRef(null);
-
-  // Track if player is ready to accept commands
   const [playerReady, setPlayerReady] = useState(false);
 
-  // Detect when playerRef.current becomes available
-  useEffect(() => {
-    if (playerRef.current) {
-      setPlayerReady(true);
-    } else {
-      setPlayerReady(false);
-    }
-  }, [playerRef.current]);
+  const isSSMLSupported = useSSMLSupportTest(); // ✅ use hook at top level
 
-  // Sync volume state to player when player is ready or volume changes
+  // Sync volume once player is available
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const player = playerRef.current;
+      if (player?.setVolume instanceof Function) {
+        player.setVolume(volume);
+        setPlayerReady(true);
+        clearInterval(interval);
+      }
+    }, 200);
+
+    return () => clearInterval(interval);
+  }, [volume, playerRef]);
+
   useEffect(() => {
     if (playerReady && playerRef.current?.setVolume instanceof Function) {
       playerRef.current.setVolume(volume);
     }
   }, [volume, playerReady, playerRef]);
 
-  // Reset speech synthesis when stopped or video hidden
   useEffect(() => {
     if (!isSpeaking || !showVideo) {
       window.speechSynthesis.cancel();
       hasStartedSpeakingRef.current = false;
       lastSpokenRef.current = '';
-      return;
     }
   }, [isSpeaking, showVideo]);
 
-  // Sync speech with current subtitle & video time
   useEffect(() => {
     if (
       !isSpeaking ||
@@ -54,80 +58,55 @@ export function useSpeechSync({
 
     if (!hasStartedSpeakingRef.current) {
       hasStartedSpeakingRef.current = true;
-      lastSpokenRef.current = ''; // Allow first subtitle
+      lastSpokenRef.current = '';
     }
 
-    if (!hasStartedSpeakingRef.current) return;
     if (lastSpokenRef.current === currentSubtitle) return;
-
     lastSpokenRef.current = currentSubtitle;
 
-    // Find subtitle duration for speech rate
     const currentSub = subtitles.find(
       (sub) => currentTime >= sub.startSeconds && currentTime < sub.endSeconds
     );
+
     const subtitleDuration = currentSub?.duration || 3;
     const wordCount = currentSubtitle.trim().split(/\s+/).length;
     const rawRate = wordCount / subtitleDuration;
-    const speechRate = Math.min(Math.max(rawRate, 0.7), 1.1);
+    const speechRate = Math.min(Math.max(rawRate, 1), 1.1);
 
-    // Adjust video playback speed to sync with speech rate
     if (playerRef.current?.setPlaybackRate) {
-      const adjustedRate = Math.max(0.8, Math.min(1, 1.4 / rawRate));
-      console.log(wordCount, subtitleDuration, speechRate, adjustedRate);
+      const adjustedRate = Math.max(0.7, Math.min(1, 1 / rawRate));
       playerRef.current.setPlaybackRate(adjustedRate);
     }
 
-    // Speak subtitle text
-    const utterance = new SpeechSynthesisUtterance(currentSubtitle);
-
-    let selectedLang = 'en-US'; // default fallback
-
-    switch (lang) {
-      case 'ml':
-        selectedLang = 'ml-IN'; // Malayalam
-        break;
-      case 'ta':
-        selectedLang = 'ta-IN'; // Tamil
-        break;
-      case 'hi':
-        selectedLang = 'hi-IN'; // Hindi
-        break;
-      case 'bn':
-        selectedLang = 'bn-IN'; // Bengali
-        break;
-      case 'te':
-        selectedLang = 'te-IN'; // Telugu
-        break;
-      case 'kn':
-        selectedLang = 'kn-IN'; // Kannada
-        break;
-      case 'gu':
-        selectedLang = 'gu-IN'; // Gujarati
-        break;
-      case 'mr':
-        selectedLang = 'mr-IN'; // Marathi
-        break;
-      case 'ur':
-        selectedLang = 'ur-IN'; // Urdu
-        break;
-      case 'en-uk':
-        selectedLang = 'en-GB'; // English (UK)
-        break;
-      case 'en':
-      default:
-        selectedLang = 'en-US'; // English (US)
-        break;
+    let textToSpeak = currentSubtitle;
+    if (isSSMLSupported) {
+      console.log("supported");
+      textToSpeak = enhanceWithSsml(textToSpeak);
     }
 
-    utterance.lang = selectedLang;
+    const utterance = new SpeechSynthesisUtterance(textToSpeak);
+
+    const langMap = {
+      ml: 'ml-IN',
+      ta: 'ta-IN',
+      hi: 'hi-IN',
+      bn: 'bn-IN',
+      te: 'te-IN',
+      kn: 'kn-IN',
+      gu: 'gu-IN',
+      mr: 'mr-IN',
+      ur: 'ur-IN',
+      'en-uk': 'en-GB',
+      en: 'en-US',
+    };
+
+    utterance.lang = langMap[lang] || 'en-US';
     utterance.rate = speechRate;
 
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(utterance);
-  }, [isSpeaking, showVideo, currentSubtitle, currentTime, subtitles, lang, playerRef]);
+  }, [isSpeaking, showVideo, currentSubtitle, currentTime, subtitles, lang, playerRef, isSSMLSupported]);
 
-  // Reset playback rate and volume when speech stops
   useEffect(() => {
     if (!isSpeaking && playerRef.current) {
       playerRef.current.setPlaybackRate?.(1);
@@ -136,24 +115,15 @@ export function useSpeechSync({
     }
   }, [isSpeaking, playerRef]);
 
-  // Volume control handler
   const handleVolumeChange = (e) => {
     const newVol = Number(e.target.value);
     setVolume(newVol);
-    // The volume syncing useEffect will handle setting this on the player
   };
 
-  // Toggle speaking state
   const toggleSpeaking = () => {
     setIsSpeaking((prev) => {
       const newSpeaking = !prev;
-
-      if (newSpeaking) {
-        // when turning ON speaking, set internal volume state to 20
-        setVolume(20);
-        // player volume will be set by the syncing useEffect when player is ready
-      }
-
+      if (newSpeaking) setVolume(20);
       return newSpeaking;
     });
   };
