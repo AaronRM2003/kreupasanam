@@ -71,14 +71,14 @@ export function useSpeechSync({
     const subtitleDuration = currentSub?.duration || 3;
     const wordCount = currentSubtitle.trim().split(/\s+/).length;
     const rawRate = wordCount / subtitleDuration;
-    const speechRate = Math.min(Math.max(rawRate, 1), 1.1);
+    const speechRate = Math.min(Math.max(rawRate, 0.7), 1.1);
 
     if (playerRef.current?.setPlaybackRate) {
-      const adjustedRate = Math.max(0.7, Math.min(1, 1 / rawRate));
+      const adjustedRate = Math.max(0.8, Math.min(1, 1.4 / rawRate));
       playerRef.current.setPlaybackRate(adjustedRate);
     }
 
-    let textToSpeak = currentSubtitle;
+    let textToSpeak = currentSubtitle.replace(/\[[^\]]*\]/g, '').trim();
     if (isSSMLSupported) {
       console.log("supported");
       textToSpeak = enhanceWithSsml(textToSpeak);

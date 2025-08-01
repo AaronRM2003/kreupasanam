@@ -13,7 +13,7 @@ import {
 } from '../components/utils/Utils';
 
 import { useYouTubePlayer } from '../components/hooks/useYoutubePlayer';
-import { getSubtitles, useSubtitles } from '../components/hooks/useSubtitles';
+import { useSubtitles } from '../components/hooks/useSubtitles';
 import SubtitleVoiceControls from '../components/utils/SpeakerButton';
 
 import { useSpeechSync } from '../components/hooks/useSpeechSync';
@@ -77,9 +77,10 @@ export default function OraclesPage({ lang: initialLang }) {
   const { currentTime, playerRef, duration: totalDuration } = useYouTubePlayer(videoId, showVideo);
 
   // Subtitles with end times
-  const currentSubtitle = useSubtitles(subtitlesUrl, lang, currentTime);
-  const rawSubtitles = getSubtitles(subtitlesUrl);
-  const subtitles = addEndTimesToSubtitles(rawSubtitles);
+  const {
+    subtitles,            // With end times
+    currentSubtitle       // Filtered for time/lang
+  } = useSubtitles(subtitlesUrl, lang, currentTime);
 
   // Speech sync & volume control hook
   const {
