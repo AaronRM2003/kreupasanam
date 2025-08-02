@@ -7,6 +7,8 @@ export default function AppBar({ lang }) {
   const [scrolled, setScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const navRef = useRef(null);
+  const isLandscape = window.matchMedia("(orientation: landscape)").matches;
+
 
   const toggleNav = () => setNavOpen(prev => !prev);
 
@@ -48,25 +50,27 @@ export default function AppBar({ lang }) {
   );
 
   return (
-    <div className="app-bar-wrapper">
-      <header className={`app-bar ${scrolled ? "scrolled" : ""}`}>
-        <h1 className={`logo ${scrolled ? "scrolled" : ""}`}>
-          Kreupasanam Testimonies
-        </h1>
+  <div className="app-bar-wrapper">
+  <header className={`app-bar ${scrolled ? "scrolled" : ""}`}>
+    <h1 className={`logo ${scrolled ? "scrolled" : ""}`}>
+      Kreupasanam Testimonies
+    </h1>
 
-        <button
-          className={`menu-toggle ${navOpen ? "active" : ""}`}
-          onClick={toggleNav}
-          aria-label="Toggle navigation"
-        >
-          ☰
-        </button>
+    <button
+      className={`menu-toggle ${navOpen ? "active" : ""}`}
+      onClick={toggleNav}
+      aria-label="Toggle navigation"
+    >
+      ☰
+    </button>
 
-        {!isMobile && navJSX}
-      </header>
+    {/* Always show nav inline in landscape/desktop */}
+    {(!isMobile || isLandscape) && navJSX}
+  </header>
 
-      {/* Render nav OUTSIDE header only if mobile */}
-      {isMobile && navJSX}
-    </div>
+  {/* Mobile portrait nav rendered outside for dropdown */}
+  {isMobile && !isLandscape && navJSX}
+</div>
+
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams,Link } from 'react-router-dom';
 
 import testimonies from '../assets/testimony-content.json';
 import styles from './TestimonyPage.module.css';
@@ -35,16 +35,23 @@ export default function TestimonyPage({ lang: initialLang }) {
 
 
   if (!testimony) {
-    return (
-      <div className={styles.testimonyPage}>
-        <div className={styles.testimonyTitleBox}>
-          <h2 className={styles.testimonyHeading}>Testimony</h2>
-        </div>
-        <h2 className={styles.errorTitle}>Testimony Not Found</h2>
-        <p className={styles.errorText}>The testimony you are looking for does not exist.</p>
+  return (
+    <div className={styles.notFoundPage}>
+      <div className={styles.notFoundContainer}>
+        <span className={styles.notFoundCode}>404</span>
+        <h1 className={styles.notFoundTitle}>Testimony Not Found</h1>
+        <p className={styles.notFoundText}>
+          Oops! The testimony you're looking for doesn’t exist or may have been removed.
+        </p>
+        <Link to={`/${lang || 'en'}/testimonies`} className={styles.notFoundButton}>
+          Browse More
+        </Link>
       </div>
-    );
-  }
+    </div>
+  );
+}
+
+
 
   const { title, date, content, video, subtitles: subtitlesUrl } = testimony;
 

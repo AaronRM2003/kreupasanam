@@ -12,17 +12,28 @@ export default function ImageSpacer({
   hideOnMobile = false,
 }) {
   const wrapperRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisibleMobile, setIsVisibleMobile] = useState(true);
+  const [isVisibleWrap, setIsVisibleWrap] = useState(true);
 
-  // Hide on mobile if specified
+  // Mobile visibility logic (portrait + landscape)
   useEffect(() => {
-    const checkMobile = () => {
-      if (hideOnMobile || window.innerWidth < 1724) {
-        setIsVisible(false);
-      } else {
-        setIsVisible(true);
-      }
-    };
+   const checkMobile = () => {
+  const isUserAgentMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  );
+
+  const isSmallViewport = window.innerWidth <= 812 || window.innerHeight <= 500;
+
+  const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+
+  if (hideOnMobile && (isUserAgentMobile || isSmallViewport || isTouchDevice)) {
+    setIsVisibleMobile(false);
+  } else {
+    setIsVisibleMobile(true);
+  }
+};
+
+
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
@@ -37,8 +48,8 @@ export default function ImageSpacer({
     const checkWrap = () => {
       const wrapperTop = wrapper.getBoundingClientRect().top;
       const parentTop = parent.getBoundingClientRect().top;
-      const isWrapped = wrapperTop > parentTop + 10; // allow small margin
-      setIsVisible(!isWrapped);
+      const isWrapped = wrapperTop > parentTop + 10;
+      setIsVisibleWrap(!isWrapped);
     };
 
     const observer = new ResizeObserver(checkWrap);
@@ -46,7 +57,7 @@ export default function ImageSpacer({
     observer.observe(parent);
     window.addEventListener("resize", checkWrap);
 
-    checkWrap(); // initial check
+    checkWrap();
 
     return () => {
       observer.disconnect();
@@ -54,6 +65,7 @@ export default function ImageSpacer({
     };
   }, []);
 
+  const isVisible = isVisibleMobile && isVisibleWrap;
   if (!isVisible) return null;
 
   return (
@@ -76,8 +88,10 @@ export default function ImageSpacer({
           width: "100%",
           height: "auto",
           display: "block",
+          objectFit: "contain", // ✅ add this
         }}
       />
+
       <div className="image-ground-shadow"></div>
     </div>
   );

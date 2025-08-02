@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams,Link } from 'react-router-dom';
 import oracles from '../assets/oracles-content.json';
 import styles from './TestimonyPage.module.css';
 
@@ -31,16 +31,21 @@ export default function OraclesPage({ lang: initialLang }) {
   const [showLangHelp, setShowLangHelp] = useState(false);
 
   if (!oracle) {
-    return (
-      <div className={styles.testimonyPage}>
-        <div className={styles.testimonyTitleBox}>
-          <h2 className={styles.testimonyHeading}>Living ORACLES</h2>
-        </div>
-        <h2 className={styles.errorTitle}>ORACLE Not Found</h2>
-        <p className={styles.errorText}>The episode you are looking for does not exist.</p>
+  return (
+    <div className={styles.notFoundPage}>
+      <div className={styles.notFoundContainer}>
+        <h1 className={styles.notFoundCode}>404</h1>
+        <h2 className={styles.notFoundTitle}>ORACLE Not Found</h2>
+        <p className={styles.notFoundText}>
+          The episode you’re looking for doesn’t exist or has been removed.
+        </p>
+        <Link to={`/${lang || 'en'}/oracles`} className={styles.notFoundButton}>
+          Browse Oracles
+        </Link>
       </div>
-    );
-  }
+    </div>
+  );
+}
 
   const { title, date, content, video, subtitles: subtitlesUrl } = oracle;
 

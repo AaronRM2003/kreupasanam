@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styles from './Footer.module.css';
 import { FaEnvelope } from 'react-icons/fa';
+import { GiDove } from 'react-icons/gi'; // Game Icons library has a dove icon
+
 
 export default function Footer() {
   const [submitted, setSubmitted] = useState(false);
@@ -50,7 +52,7 @@ export default function Footer() {
         <div className={styles.footerTop}>
           <div className={styles.section}>
             <h3>Contact Us</h3>
-            <p><FaEnvelope /> dailygrace@example.com</p>
+            <p><FaEnvelope /> kreupasanamtestimonies@gmail.com</p>
 
             <h3 style={{ marginTop: '1.5rem' }}>Stay Updated</h3>
 
@@ -77,8 +79,10 @@ export default function Footer() {
         </div>
 
         <div className={styles.footerBottom}>
-          <p>&copy; {new Date().getFullYear()} Daily Grace. All rights reserved.</p>
-        </div>
+ <p>
+      <GiDove style={{ color: '#fff', fontSize: '1.2rem', verticalAlign: 'middle', marginRight: '0.3rem' }} />
+      {new Date().getFullYear()} Kreupasanam Testimonies. Shared with love. Not affiliated with the official shrine.
+    </p>        </div>
       </footer>
     </div>
   );

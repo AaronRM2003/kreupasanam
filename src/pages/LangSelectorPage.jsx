@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const LANGUAGES = {
   en: 'English',
@@ -11,7 +11,7 @@ const LANGUAGES = {
   fr: 'Français',
   es: 'Español',
   mr: 'मराठी',
-  kn: 'ಕನ್ನಡ'
+  kn: 'ಕನ್ನಡ',
 };
 
 export default function LangSelectorPage({ setLang }) {
@@ -25,33 +25,40 @@ export default function LangSelectorPage({ setLang }) {
   return (
     <div
       style={{
-        height: '100vh',
-        background: 'linear-gradient(to bottom right, #f5f7fa, #c3cfe2)',
+        minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '2rem',
+        background: 'linear-gradient(to bottom right, #e0eafc, #cfdef3)',
+        padding: '1rem',
+        fontFamily: `'Poppins', sans-serif`,
       }}
     >
       <div
         style={{
-          background: 'white',
-          borderRadius: '16px',
+          backgroundColor: 'white',
+          borderRadius: '24px',
           padding: '2rem',
-          boxShadow: '0 8px 24px rgba(0,0,0,0.1)',
-          maxWidth: '600px',
+          maxWidth: '500px',
           width: '100%',
+          boxShadow: '0 12px 40px rgba(0, 0, 0, 0.1)',
           textAlign: 'center',
         }}
       >
-        <h2 style={{ marginBottom: '1.5rem', fontSize: '1.5rem' }}>
-          Please select your language:
+        <h2
+          style={{
+            fontSize: '1.8rem',
+            marginBottom: '1.5rem',
+            color: '#333',
+          }}
+        >
+          🌐 Choose Your Language
         </h2>
+
         <div
           style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
             gap: '1rem',
           }}
         >
@@ -60,16 +67,27 @@ export default function LangSelectorPage({ setLang }) {
               key={code}
               onClick={() => handleSelect(code)}
               style={{
-                padding: '0.75rem 1.5rem',
+                padding: '0.75rem 1rem',
                 fontSize: '1rem',
-                borderRadius: '8px',
-                border: '1px solid #ccc',
-                backgroundColor: '#f8f9fa',
+                borderRadius: '12px',
+                border: 'none',
+                backgroundColor: '#f0f4f8',
                 cursor: 'pointer',
-                transition: 'background 0.2s ease',
+                transition: 'all 0.2s ease-in-out',
+                boxShadow: '0 2px 6px rgba(0, 0, 0, 0.06)',
               }}
-              onMouseOver={(e) => (e.currentTarget.style.backgroundColor = '#e2e6ea')}
-              onMouseOut={(e) => (e.currentTarget.style.backgroundColor = '#f8f9fa')}
+              onMouseOver={(e) =>
+                (e.currentTarget.style.backgroundColor = '#dbeafe')
+              }
+              onMouseOut={(e) =>
+                (e.currentTarget.style.backgroundColor = '#f0f4f8')
+              }
+              onFocus={(e) =>
+                (e.currentTarget.style.outline = '2px solid #60a5fa')
+              }
+              onBlur={(e) =>
+                (e.currentTarget.style.outline = 'none')
+              }
             >
               {label}
             </button>

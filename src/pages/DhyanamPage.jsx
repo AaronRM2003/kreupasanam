@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams,Link } from 'react-router-dom';
 
 import dhyanam from '../assets/dhyanam-content.json';
 import styles from './TestimonyPage.module.css';
@@ -32,16 +32,22 @@ export default function DhyanamPage({ lang: initialLang }) {
   const [showLangHelp, setShowLangHelp] = useState(false);
 
   if (!dhyanamItem) {
-    return (
-      <div className={styles.testimonyPage}>
-        <div className={styles.testimonyTitleBox}>
-          <h2 className={styles.testimonyHeading}>Dhyanam</h2>
-        </div>
-        <h2 className={styles.errorTitle}>Dhyanam Not Found</h2>
-        <p className={styles.errorText}>The meditation you are looking for does not exist.</p>
+  return (
+    <div className={styles.notFoundPage}>
+      <div className={styles.notFoundContainer}>
+        <span className={styles.notFoundCode}>404</span>
+        <h1 className={styles.notFoundTitle}>Dhyanam Not Found</h1>
+        <p className={styles.notFoundText}>
+          The episode you’re looking for doesn’t exist or may have been removed.
+        </p>
+        <Link to={`/${lang || 'en'}/dhyanam`} className={styles.notFoundButton}>
+          Browse More
+        </Link>
       </div>
-    );
-  }
+    </div>
+  );
+}
+
 
   const { title, date, content, video, subtitles: subtitlesUrl } = dhyanamItem;
 

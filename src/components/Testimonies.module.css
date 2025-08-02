@@ -91,13 +91,19 @@
 .testimoniesGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
+  gap: 1rem;
   padding: 0 1rem;
 }
 
 @media (max-width: 480px) {
   .testimoniesGrid {
     padding: 0;
+  }
+}
+
+@media (max-width: 320px) {
+  .testimoniesGrid {
+    justify-content: center; /* centers single item */
   }
 }
 
@@ -112,7 +118,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 1.3rem 1.5rem 2rem;
+  padding: 1rem 1rem 1rem;
 }
 
 .testimoniesCard:hover {
@@ -123,7 +129,7 @@
 /* Image */
 .testimoniesImageWrapper {
   width: 100%;
-  aspect-ratio: 5 / 3;
+  aspect-ratio: 5.3 / 3;
   overflow: hidden;
   border-radius: 20px 20px 0 0;
   background: #f0f5ff;

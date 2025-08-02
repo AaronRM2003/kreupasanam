@@ -24,7 +24,7 @@ body::before {
 /* Keep your existing styles for desktop intact */
 
 /* Mobile-only fixes */
-@media (max-width: 768px) {
+@media (max-width: 768px){
   html, body {
     margin: 0;
     padding: 0;
@@ -65,6 +65,29 @@ body::before {
     height: 0px;
   }
 }
+@media (orientation: landscape) and (max-width: 1024px) and (max-height: 768px) {
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;   /* Use min-height instead of fixed height */
+    overflow-x: hidden;
+    font-family: sans-serif;
+    position: relative;
+  }
+  body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
+    background: url('../assets/back3.webp') no-repeat center top / contain;
+    z-index: -2;
+    background-attachment: scroll;
+  }
+}
+
 
 
 
@@ -99,7 +122,7 @@ main {
 
 
 .section {
-  padding: 2rem;
+  padding: 1rem;
 }
 
 .section-title {
