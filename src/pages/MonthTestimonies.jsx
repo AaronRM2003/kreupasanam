@@ -6,6 +6,8 @@ import { Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { HiOutlineEmojiSad } from 'react-icons/hi';
 import backstyle from './TestimonyPage.module.css';
+import { useMemo } from 'react';
+
 
 const languageMap = {
   en: 'English',
@@ -32,6 +34,20 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
   // New states to track image loading
   const [imagesLoaded, setImagesLoaded] = useState(0);
   const [allImagesLoaded, setAllImagesLoaded] = useState(false);
+  const [fade, setFade] = useState(true);
+
+  useEffect(() => {
+    // Start fade-out
+    setFade(false);
+
+    // After fade-out duration, set fade-in
+    const timer = setTimeout(() => {
+      setFade(true);
+    }, 300); // 300ms fade duration
+
+    return () => clearTimeout(timer);
+  }, [selectedMonth, selectedYear]);
+
 
   useEffect(() => {
     if (initialLang && initialLang !== lang) {
@@ -44,7 +60,7 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
     'July', 'August', 'September', 'October', 'November', 'December',
   ];
 
-  const years = ['All', '2024', '2023', '2022', '2021', '2020'];
+  const years = ['All', '2025', '2024', '2023', '2022', '2021', '2020'];
 
   const getYouTubeThumbnail = (url) => {
     try {
@@ -62,9 +78,11 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
   };
 
   // Filter testimonies by month and year
-  const filteredTestimonies = testimonies.filter(({ date }) => {
+
+const filteredTestimonies = useMemo(() => {
+  return testimonies.filter(({ date }) => {
     const testimonyDate = new Date(date);
-    const monthName = testimonyDate.toLocaleString('default', { month: 'long' });
+    const monthName = testimonyDate.toLocaleString('en', { month: 'long' }); // FIXED
     const year = testimonyDate.getFullYear().toString();
 
     const monthMatch = selectedMonth === 'All' || monthName === selectedMonth;
@@ -72,11 +90,16 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
 
     return monthMatch && yearMatch;
   });
+}, [selectedMonth, selectedYear]);
+
 
   // Extract all thumbnail URLs of filtered testimonies (skip nulls)
-  const thumbnails = filteredTestimonies
+  const thumbnails = useMemo(() => {
+  return filteredTestimonies
     .map(({ video }) => getYouTubeThumbnail(video))
     .filter(Boolean);
+}, [filteredTestimonies]);
+
 
   // Image load handler
   const handleImageLoad = () => {
@@ -84,19 +107,19 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
   };
 
   // Set allImagesLoaded when all filtered images have loaded or if none
-   useEffect(() => {
-    setImagesLoaded(0);
-    setAllImagesLoaded(false);
-  }, [selectedMonth, selectedYear, lang]);
+  // Reset image counters when thumbnails change
+useEffect(() => {
+  setImagesLoaded(0);
+  setAllImagesLoaded(thumbnails.length === 0); // If there are no images, loading is done
+}, [thumbnails]);
 
-  useEffect(() => {
-    if (thumbnails.length > 0 && imagesLoaded === thumbnails.length) {
-      setAllImagesLoaded(true);
-    }
-    if (thumbnails.length === 0) {
-      setAllImagesLoaded(true);
-    }
-  }, [imagesLoaded, thumbnails.length]);
+// Set allImagesLoaded once imagesLoaded count matches thumbnails
+useEffect(() => {
+  if (imagesLoaded === thumbnails.length && thumbnails.length > 0) {
+    setAllImagesLoaded(true);
+  }
+}, [imagesLoaded, thumbnails.length]);
+
 
   return (
     <section
@@ -106,6 +129,7 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
         backgroundColor: window.innerWidth <= 768 ? '#fff' : 'transparent',
       }}
     >
+      
       <div className={styles.testimoniesSectionContainer} style={{ margin: '0 1rem' }}>
         <div className={styles.testimoniesHeader}>
           <div style={{ position: 'relative', textAlign: 'center' }}>
@@ -140,7 +164,10 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
             }}
           >
             {/* Language Dropdown */}
-            <Dropdown onSelect={(e) => setLang(e)}>
+            <Dropdown onSelect={(e) => {
+                if (e !== lang) setLang(e);
+              }}>
+
               <Dropdown.Toggle variant="outline-secondary" id="dropdown-lang">
                 {languageMap[lang] ?? languageMap['en']}
               </Dropdown.Toggle>
@@ -154,7 +181,9 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
             </Dropdown>
 
             {/* Year Dropdown */}
-            <Dropdown onSelect={(e) => setSelectedYear(e)}>
+            <Dropdown onSelect={(e) => {
+                if (e !== selectedYear) setSelectedYear(e);
+              }}>
               <Dropdown.Toggle variant="outline-secondary" id="dropdown-year">
                 {selectedYear}
               </Dropdown.Toggle>
@@ -168,7 +197,11 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
             </Dropdown>
 
             {/* Month Dropdown */}
-            <Dropdown onSelect={(e) => setSelectedMonth(e)}>
+            <Dropdown
+                onSelect={(e) => {
+                  if (e !== selectedMonth) setSelectedMonth(e);
+                }}
+              >
               <Dropdown.Toggle variant="outline-secondary" id="dropdown-month">
                 {selectedMonth}
               </Dropdown.Toggle>
@@ -268,11 +301,18 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
         )}
 
         {/* Hidden images to preload and track onLoad */}
-        <div style={{ display: 'none' }}>
-          {thumbnails.map((src, idx) => (
-            <img key={idx} src={src} alt="" onLoad={handleImageLoad} />
-          ))}
-        </div>
+       <div style={{ display: 'none' }}>
+  {thumbnails.map((src, idx) => (
+    <img
+      key={`${src}-${selectedMonth}-${selectedYear}-${lang}`}
+      src={src}
+      alt=""
+      onLoad={handleImageLoad}
+      onError={handleImageLoad}
+    />
+  ))}
+</div>
+
       </div>
     </section>
   );

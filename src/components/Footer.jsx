@@ -52,7 +52,13 @@ export default function Footer() {
         <div className={styles.footerTop}>
           <div className={styles.section}>
             <h3>Contact Us</h3>
-            <p><FaEnvelope /> kreupasanamtestimonies@gmail.com</p>
+           <p className={styles.emailText}>
+  <FaEnvelope style={{ marginRight: '0.5rem', color: '#d93025' }} />
+  <a href="mailto:kreupasanamtestimonies@gmail.com" target="_blank" rel="noopener noreferrer" className={styles.emailLink}>
+    kreupasanamtestimonies@gmail.com
+  </a>
+</p>
+
 
             <h3 style={{ marginTop: '1.5rem' }}>Stay Updated</h3>
 
@@ -71,9 +77,10 @@ export default function Footer() {
                 </button>
               </form>
             ) : (
-              <p style={{ color: '#fff', marginTop: '1rem' }}>
-                Thank you for subscribing!
-              </p>
+              <p className={`${styles.thankYouMessage}`}>
+                  Thank you for subscribing!
+                  </p>
+
             )}
           </div>
         </div>

@@ -79,7 +79,10 @@ export function useSpeechSync({
     }
 
     let textToSpeak = currentSubtitle.replace(/\[[^\]]*\]/g, '').trim();
+    textToSpeak = textToSpeak.replace(/\b(V\.P\.)\b/g, 'VP');
+
     if (isSSMLSupported) {
+      speechRate = Math.min(Math.max(rawRate, 0.4), 0.6);
       console.log("supported");
       textToSpeak = enhanceWithSsml(textToSpeak);
     }

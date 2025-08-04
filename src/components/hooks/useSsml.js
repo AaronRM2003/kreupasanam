@@ -4,91 +4,137 @@ export function enhanceWithSsml(text) {
   const escapeXml = (input) =>
     input.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-  // Random pitch helper, +- range around basePitch
-  const randomPitch = (basePitch, range = 2) => {
-    const min = basePitch - range;
-    const max = basePitch + range;
-    const val = (Math.random() * (max - min)) + min;
-    return `${val.toFixed(1)}%`;
-  };
+  // Helpers for randomizing within ranges
+  const randomBetween = (min, max) => Math.random() * (max - min) + min;
+  const randomChoice = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-  // Wrap word with prosody, pitch + optional rate
-  const wrapProsody = (word, pitch, rate) => {
-    let tag = `<prosody pitch="${pitch}"`;
+  // Wrap word with prosody including pitch, rate, volume
+  const wrapProsody = (word, { pitch, rate, volume }) => {
+    let tag = `<prosody`;
+    if (pitch) tag += ` pitch="${pitch}"`;
     if (rate) tag += ` rate="${rate}"`;
+    if (volume) tag += ` volume="${volume}"`;
     tag += `>${word}</prosody>`;
     return tag;
   };
 
-  // Wrap word with emphasis sometimes
-  const wrapEmphasis = (word, level = "moderate") =>
-    `<emphasis level="${level}">${word}</emphasis>`;
+  // Wrap with emphasis with variable levels
+  const wrapEmphasis = (word) => {
+    const levels = ['strong', 'moderate', 'reduced'];
+    const level = randomChoice(levels);
+    return `<emphasis level="${level}">${word}</emphasis>`;
+  };
 
-  const words = text.trim().split(/\s+/);
-  const len = words.length;
+  // Wrap with whisper effect sometimes
+  const wrapWhisper = (word) => `<amazon:effect name="whispered">${word}</amazon:effect>`;
 
-  // Choose some words to emphasize randomly (about 20%)
-  const emphasizeIndices = new Set();
-  for (let i = 0; i < len; i++) {
-    if (Math.random() < 0.2) emphasizeIndices.add(i);
+  // Detect simple punctuation marks to split sentences/phrases for better phrasing
+  const phraseSplitRegex = /([.!?])/g;
+  const rawPhrases = text
+    .split(phraseSplitRegex)
+    .reduce((acc, val, i, arr) => {
+      if (phraseSplitRegex.test(val)) {
+        acc[acc.length - 1] += val;
+      } else if (val.trim()) {
+        acc.push(val.trim());
+      }
+      return acc;
+    }, []);
+
+  // Parameters for speech rate and pitch base ranges
+  const baseRateRange = [30, 45]; // overall slower speech rate range (30% to 45%)
+  const basePitchRange = [-5, 5]; // percent
+
+  // Function to generate prosody params for a word, influenced by position & phrase length
+  function getProsodyParams(wordIndex, phraseLength) {
+    const rate = `${randomBetween(...baseRateRange).toFixed(1)}%`;
+
+    const pitchShift =
+      wordIndex < 2 ? randomBetween(2, 6) :
+      wordIndex > phraseLength - 3 ? randomBetween(-6, -2) :
+      randomBetween(-2, 2);
+    const pitch = `${pitchShift.toFixed(1)}%`;
+
+    const volumes = ['medium', 'x-loud', 'loud', 'soft', 'x-soft'];
+    const volume = randomChoice(volumes);
+
+    return { pitch, rate, volume };
   }
 
-  for (let i = 0; i < len; i++) {
-    const word = escapeXml(words[i]);
+  // Main processing per phrase
+  let processedPhrases = rawPhrases.map(phrase => {
+    const words = phrase.split(/\s+/);
+    const len = words.length;
 
-    // Vary pitch more dynamically, with base pitch depending on word position
-    let basePitch;
-    if (len >= 5) {
-      if (i === 0) basePitch = 5;
-      else if (i === 1) basePitch = 3;
-      else if (i >= 2 && i < len - 2) basePitch = -2;
-      else basePitch = 3;
-    } else if (len === 4) {
-      basePitch = i === 0 || i === 3 ? 5 : 3;
-    } else if (len === 3) {
-      basePitch = i === 0 || i === 2 ? 5 : 1;
-    } else if (len === 2) {
-      basePitch = 3;
-    } else {
-      basePitch = 3;
+    // Choose words to emphasize (~25%)
+    const emphasizeIndices = new Set();
+    for (let i = 0; i < len; i++) {
+      if (Math.random() < 0.25) emphasizeIndices.add(i);
     }
 
-    // Randomize pitch +- 2%
-    const pitch = randomPitch(basePitch, 2);
-
-    // Optional: slow down some words for natural pacing (randomly)
-    const rate = Math.random() < 0.15 ? "90%" : undefined;
-
-    let wrappedWord = wrapProsody(word, pitch, rate);
-
-    // Emphasize some words randomly for human effect
-    if (emphasizeIndices.has(i)) {
-      wrappedWord = wrapEmphasis(wrappedWord);
+    // Some words get whispered (~5%)
+    const whisperIndices = new Set();
+    for (let i = 0; i < len; i++) {
+      if (Math.random() < 0.05) whisperIndices.add(i);
     }
 
-    words[i] = wrappedWord;
+    // Wrap words with prosody/emphasis/whisper
+    const wrappedWords = words.map((wordRaw, i) => {
+      const word = escapeXml(wordRaw);
+
+      let prosodyParams = getProsodyParams(i, len);
+
+      let wrapped = wrapProsody(word, prosodyParams);
+
+      if (whisperIndices.has(i)) {
+        wrapped = wrapWhisper(wrapped);
+      } else if (emphasizeIndices.has(i)) {
+        wrapped = wrapEmphasis(wrapped);
+      }
+
+      return wrapped;
+    });
+
+    // Insert breaks naturally:
+    // - Insert a 350ms break after every 4 or 5 words (randomly chosen), except the last word
+    // - Longer breaks after conjunctions
+    // Insert commas naturally:
+// - Insert a comma after every 4 or 5 words (randomly chosen), except last word
+// - Optionally keep commas after conjunctions for natural phrasing
+
+const conjunctions = new Set(['and', 'but', 'or', 'because', 'however', 'so', 'then']);
+let result = [];
+
+let commaInterval = 4 + Math.floor(Math.random() * 2); // randomly 4 or 5
+
+for (let i = 0; i < wrappedWords.length; i++) {
+  result.push(wrappedWords[i]);
+
+  if (i === wrappedWords.length - 1) break; // no comma after last word
+
+  const lowerWord = words[i].toLowerCase();
+
+  if (conjunctions.has(lowerWord)) {
+    // Insert a comma after conjunctions
+    result.push(',');
+  } else if ((i + 1) % commaInterval === 0) {
+    // Insert a comma after every 4 or 5 words
+    result.push(',');
+    // re-randomize commaInterval for variation
+    commaInterval = 4 + Math.floor(Math.random() * 2);
   }
+  // else: no comma inserted here
+}
 
-  let processed = words.join(' ');
 
-  // Add varied breaks:
-  //  - after punctuation (.!?): 300-500ms
-  //  - after commas: 150-300ms
-  //  - after conjunctions: 150ms (for simple words like "and", "but", "or")
-  processed = processed.replace(/([.!?])(\s|$)/g, (match, p1, p2) => {
-    const breakTime = 300 + Math.floor(Math.random() * 200); // 300-500ms
-    return `${p1}<break time="${breakTime}ms"/>${p2}`;
+    return result.join(' ');
   });
 
-  processed = processed.replace(/(,)(\s)/g, (match, p1, p2) => {
-    const breakTime = 150 + Math.floor(Math.random() * 150); // 150-300ms
-    return `${p1}<break time="${breakTime}ms"/>${p2}`;
+  // Join phrases with a slightly longer break (700-900ms) for sentence boundary
+  const finalSsml = processedPhrases.join(() => {
+    const pause = 700 + Math.floor(Math.random() * 200);
+    return `<break time="${pause}ms"/>`;
   });
 
-  // Optional: insert a break after simple conjunctions (and, but, or)
-  processed = processed.replace(/\b(and|but|or)\b(\s)/gi, (match, p1, p2) => {
-    return `${p1}<break time="150ms"/>${p2}`;
-  });
-
-  return `<speak>${processed}</speak>`;
+  return `<speak>${finalSsml}</speak>`;
 }

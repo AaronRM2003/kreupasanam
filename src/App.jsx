@@ -11,6 +11,7 @@ import DhyanamPage from './pages/DhyanamPage';
 import LangSelectorPage from './pages/LangSelectorPage';
 import TranslationDisclaimer from './TranslationDisclaimer';
 import NotFoundPage from './NotFoundPage';
+import About from './AboutPage';
 
 const supportedLangs = ['en', 'hi', 'zh', 'bn', 'ta', 'te', 'fr', 'es', 'mr', 'kn'];
 
@@ -54,7 +55,9 @@ function App() {
 
         {/* Language-prefixed routes */}
         <Route path=":lang">
+          <Route path="about" element={<LangRoute element={About} />} />
           <Route index element={<Navigate to="home" replace />} />
+
           <Route path="home" element={<LangRoute element={Home} />} />
           <Route path="testimony/:id" element={<LangRoute element={TestimonyPage} />} />
           <Route path="testimonies" element={<LangRoute element={MonthlyTestimonies} />} />
