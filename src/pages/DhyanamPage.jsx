@@ -30,6 +30,7 @@ export default function DhyanamPage({ lang: initialLang }) {
   const [shareText, setShareText] = useState('');
   const [showShareModal, setShowShareModal] = useState(false);
   const [showLangHelp, setShowLangHelp] = useState(false);
+  const [includeSummary, setIncludeSummary] = useState(false);
 
   if (!dhyanamItem) {
   return (
@@ -77,8 +78,8 @@ export default function DhyanamPage({ lang: initialLang }) {
 
   // Generate share text
   useEffect(() => {
-    setShareText(generateShareText(dhyanamItem, lang, window.location.href, "Dhyanam meditation"));
-  }, [lang, dhyanamItem]);
+    setShareText(generateShareText(dhyanamItem, lang, window.location.href, "Dhyanam meditation",includeSummary,video));
+  }, [lang, dhyanamItem,includeSummary]);
 
   // YouTube player hook
   const { currentTime, playerRef, duration: totalDuration } = useYouTubePlayer(videoId, showVideo);
@@ -111,11 +112,6 @@ export default function DhyanamPage({ lang: initialLang }) {
   const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
   const emailShareUrl = `mailto:?subject=${encodeURIComponent(title[lang] || title['en'])}&body=${encodeURIComponent(shareText)}`;
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(shareText)
-      .then(() => alert('Message copied to clipboard!'))
-      .catch(() => alert('Failed to copy!'));
-  };
 
   if (!allAssetsLoaded) {
     return (
@@ -221,8 +217,9 @@ export default function DhyanamPage({ lang: initialLang }) {
               waShareUrl={waShareUrl}
               telegramShareUrl={telegramShareUrl}
               emailShareUrl={emailShareUrl}
-              copyToClipboard={copyToClipboard}
               styles={styles}
+              includeSummary={includeSummary}
+                setIncludeSummary={setIncludeSummary}
             />
           </div>
         </div>

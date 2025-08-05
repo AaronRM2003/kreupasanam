@@ -20,34 +20,35 @@ export default function IntroSection({ lang = 'en', onReady }) {
 
   return (
     <section className="introBox1 animated-glow">
-      <Container>
-        <Row className="d-flex align-items-center justify-content-between flex-wrap">
-          <Col xs={12} md={6} className="image-wrapper order-1 order-md-1">
-            <img
-              src={heroImage}
-              alt="Testimony intro"
-              className="img-fluid rounded-4 shadow-lg"
-              onLoad={() => setImageLoaded(true)}
-              onError={() => setImageLoaded(true)} // Treat error as loaded to avoid infinite wait
-            />
-          </Col>
+  <Container>
+    <Row className="d-flex align-items-center justify-content-between flex-wrap">
+      <Col xs={12} md={6} className="image-wrapper order-1">
+        <img
+          src={heroImage}
+          alt="Testimony intro"
+          className="img-fluid rounded-4 shadow-md"
+          onLoad={() => setImageLoaded(true)}
+          onError={() => setImageLoaded(true)}
+        />
+      </Col>
 
-          <Col xs={12} md={6} className="text-content order-2 order-md-2">
-            <h1 className="title">
-              {t.title.split('\n').map((line, i) => (
-                <span key={i}>{line}<br /></span>
-              ))}
-            </h1>
-            <p className="introText">{t.introText}</p>
+      <Col xs={12} md={6} className="text-content order-2">
+        <h1 className="title">
+          {t.title.split('\n').map((line, i) => (
+            <span key={i}>{line}<br /></span>
+          ))}
+        </h1>
+        <p className="introText">{t.introText}</p>
 
-            <Button className="introBtn shimmer-button" onClick={handleCardClick}>
-              <span>{t.button}</span>
-              <span className="arrow"> ➔</span>
-            </Button>
-          </Col>
-        </Row>
-      </Container>
-    </section>
+        <Button className="introBtn shimmer-button" onClick={handleCardClick}>
+          <span>{t.button}</span>
+          <span className="arrow"> ➔</span>
+        </Button>
+      </Col>
+    </Row>
+  </Container>
+</section>
+
   );
 }
 const translations = {

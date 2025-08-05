@@ -1,11 +1,13 @@
 import { Dropdown } from 'react-bootstrap';
 import { Modal, Button } from 'react-bootstrap';
+import { useState } from 'react';
 import {
   FaFacebookF,
   FaWhatsapp,
   FaTelegramPlane,
   FaEnvelope,
   FaRegCopy,
+  FaCheck
 } from 'react-icons/fa';
 
 export function ShareModal({
@@ -18,9 +20,21 @@ export function ShareModal({
   waShareUrl,
   telegramShareUrl,
   emailShareUrl,
-  copyToClipboard,
   styles,
+  includeSummary,
+  setIncludeSummary,
 }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(shareText)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 5000); // Reset after 2 seconds
+      });
+    // ❌ no alert or error needed
+  };
+
   return (
     <Modal show={show} onHide={onHide} title={title} centered>
       <Modal.Header closeButton>
@@ -43,59 +57,57 @@ export function ShareModal({
             border: '1px solid #ccc',
             fontSize: '1rem',
             resize: 'vertical',
+            height: '300px',
           }}
         />
 
-        {/* Share Buttons */}
+        <div style={{ margin: '1rem 0' }}>
+          <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <input
+              type="checkbox"
+              checked={includeSummary}
+              onChange={(e) => setIncludeSummary(e.target.checked)}
+            />
+            Include full testimony in share text
+          </label>
+        </div>
+
         <div className={styles.shareOptionsGrid}>
-          <a
-            href={fbShareUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`${styles.shareOption} ${styles.facebook}`}
-          >
+          <a href={fbShareUrl} target="_blank" rel="noopener noreferrer" className={`${styles.shareOption} ${styles.facebook}`}>
             <FaFacebookF />
             Facebook
           </a>
 
-          <a
-            href={waShareUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`${styles.shareOption} ${styles.whatsapp}`}
-          >
+          <a href={waShareUrl} target="_blank" rel="noopener noreferrer" className={`${styles.shareOption} ${styles.whatsapp}`}>
             <FaWhatsapp />
             WhatsApp
           </a>
 
-          <a
-            href={telegramShareUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`${styles.shareOption} ${styles.telegram}`}
-          >
+          <a href={telegramShareUrl} target="_blank" rel="noopener noreferrer" className={`${styles.shareOption} ${styles.telegram}`}>
             <FaTelegramPlane />
             Telegram
           </a>
 
-          <a
-            href={emailShareUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`${styles.shareOption} ${styles.email}`}
-          >
+          <a href={emailShareUrl} target="_blank" rel="noopener noreferrer" className={`${styles.shareOption} ${styles.email}`}>
             <FaEnvelope />
             Gmail
           </a>
 
-          <button
-            onClick={copyToClipboard}
-            className={`${styles.shareOption} ${styles.copy}`}
-            type="button"
-          >
-            <FaRegCopy />
-            Copy
-          </button>
+         <button
+  onClick={handleCopy}
+  className={`${styles.shareOption} ${styles.copy}`}
+  type="button"
+  style={{
+    backgroundColor: copied ? 'green' : '',
+    color: copied ? 'white' : 'initial',
+    transition: 'background-color 0.3s ease, color 0.3s ease',
+  }}
+>
+  <FaRegCopy style={{ marginRight: '8px' }} />
+  {copied ? 'Copied!' : 'Copy'}
+</button>
+
+
         </div>
       </Modal.Body>
 
@@ -107,6 +119,7 @@ export function ShareModal({
     </Modal>
   );
 }
+
 
 // utils/testimonyUtils.js
 
@@ -199,22 +212,27 @@ export function timeStringToSeconds(timeStr) {
 }
 
 // Generate share text snippet for testimony preview
-export function generateShareText(testimony, lang, currentUrl,text) {
+export function generateShareText(testimony, lang, currentUrl, text, includeFullContent = false,youtubeLink) {
   if (!testimony) return '';
-  const { title, date, content } = testimony;
+  const { title, date, content, video } = testimony;
   const t = title[lang] || title['en'];
   const d = date || '';
   const cRaw = content[lang] || content['en'] || '';
   const cPreview = cRaw.split(' ').slice(0, 60).join(' ') + (cRaw.split(' ').length > 60 ? '...' : '');
+
   return `${text}
 
 📖 ${t}
 📅 ${d}
 
-"${cPreview}"
+"${includeFullContent ? cRaw : cPreview}"
 
-🔗 ${currentUrl}`;
+🔗 ${currentUrl}
+
+Kreupasanam Official - ${youtubeLink}`;
 }
+
+
 
 // Preload an array of image URLs, call callback when all done
 export function preloadImages(imageUrls, onAllLoaded) {

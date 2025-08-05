@@ -18,7 +18,7 @@ export default function ImageSpacer({
   // Mobile visibility logic (portrait + landscape)
   useEffect(() => {
    const checkMobile = () => {
-  const isUserAgentMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+  const isUserAgentMobile = /Mobi|Android|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
     navigator.userAgent
   );
 

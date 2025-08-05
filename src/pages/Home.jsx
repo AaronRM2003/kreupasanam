@@ -20,7 +20,7 @@ export default function Home({ lang }) {
   // Mobile visibility check for both ImageSpacers
   useEffect(() => {
     const checkVisibility = () => {
-      const isMobile = window.innerWidth <= 812 || window.innerHeight <= 500;
+      const isMobile = window.innerWidth <= 1312 || window.innerHeight <= 500;
 
       // If it's mobile and hideOnMobile is true, hide both
       setIsHero1Visible(!isMobile);

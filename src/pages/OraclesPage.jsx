@@ -29,6 +29,7 @@ export default function OraclesPage({ lang: initialLang }) {
   const [shareText, setShareText] = useState('');
   const [showShareModal, setShowShareModal] = useState(false);
   const [showLangHelp, setShowLangHelp] = useState(false);
+  const [includeSummary, setIncludeSummary] = useState(false);
 
   if (!oracle) {
   return (
@@ -75,8 +76,8 @@ export default function OraclesPage({ lang: initialLang }) {
 
   // Generate share text
   useEffect(() => {
-    setShareText(generateShareText(oracle, lang, window.location.href, 'A Spiritual Oracle'));
-  }, [lang, oracle]);
+    setShareText(generateShareText(oracle, lang, window.location.href, 'A Spiritual Oracle', includeSummary,video));
+  }, [lang, oracle,includeSummary]);
 
   // YouTube player hook
   const { currentTime, playerRef, duration: totalDuration } = useYouTubePlayer(videoId, showVideo);
@@ -108,12 +109,6 @@ export default function OraclesPage({ lang: initialLang }) {
   const waShareUrl = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
   const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
   const emailShareUrl = `mailto:?subject=${encodeURIComponent(title[lang] || title['en'])}&body=${encodeURIComponent(shareText)}`;
-
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(shareText)
-      .then(() => alert('Message copied to clipboard!'))
-      .catch(() => alert('Failed to copy!'));
-  };
 
   if (!allAssetsLoaded) {
     return (
@@ -217,8 +212,9 @@ export default function OraclesPage({ lang: initialLang }) {
               waShareUrl={waShareUrl}
               telegramShareUrl={telegramShareUrl}
               emailShareUrl={emailShareUrl}
-              copyToClipboard={copyToClipboard}
               styles={styles}
+              includeSummary={includeSummary}
+                setIncludeSummary={setIncludeSummary}
             />
           </div>
         </div>

@@ -32,6 +32,9 @@ export default function TestimonyPage({ lang: initialLang }) {
   const [shareText, setShareText] = useState('');
   const [showShareModal, setShowShareModal] = useState(false);
   const [showLangHelp, setShowLangHelp] = useState(false);
+  const [show,setShow] = useState(false);
+  const [includeSummary, setIncludeSummary] = useState(false);
+
 
 
   if (!testimony) {
@@ -82,8 +85,9 @@ export default function TestimonyPage({ lang: initialLang }) {
 
   // Generate share text
   useEffect(() => {
-    setShareText(generateShareText(testimony, lang, window.location.href, "A power testimony of Faith"));
-  }, [lang, testimony]);
+    setShareText(generateShareText(testimony, lang, window.location.href, "A powerful testimony of Faith", includeSummary,video));
+  }, [lang, testimony, includeSummary]);
+
 
   // YouTube player hook
   const { currentTime, playerRef, duration: totalDuration } = useYouTubePlayer(videoId, showVideo);
@@ -118,11 +122,6 @@ const {
   const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
   const emailShareUrl = `mailto:?subject=${encodeURIComponent(title[lang] || title['en'])}&body=${encodeURIComponent(shareText)}`;
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(shareText)
-      .then(() => alert('Message copied to clipboard!'))
-      .catch(() => alert('Failed to copy!'));
-  };
 
   if (!allAssetsLoaded) {
     return (
@@ -225,18 +224,22 @@ const {
             </div>
 
             <ShareModal
-              show={showShareModal}
-              onHide={() => setShowShareModal(false)}
-              title="Testimony"
-              shareText={shareText}
-              setShareText={setShareText}
-              fbShareUrl={fbShareUrl}
-              waShareUrl={waShareUrl}
-              telegramShareUrl={telegramShareUrl}
-              emailShareUrl={emailShareUrl}
-              copyToClipboard={copyToClipboard}
-              styles={styles}
-            />
+                show={showShareModal}
+                onHide={() => setShowShareModal(false)}
+                title="Testimony"
+                shareText={shareText}
+                setShareText={setShareText}
+                fbShareUrl={fbShareUrl}
+                waShareUrl={waShareUrl}
+                telegramShareUrl={telegramShareUrl}
+                emailShareUrl={emailShareUrl}
+                styles={styles}
+                defaultShareText={generateShareText(testimony, lang, window.location.href, "A power testimony of Faith")}
+                includeSummary={includeSummary}
+                setIncludeSummary={setIncludeSummary}
+              />
+
+
           </div>
         </div>
       </div>

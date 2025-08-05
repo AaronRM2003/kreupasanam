@@ -78,9 +78,48 @@
   font-size: 1.2rem;
   animation: pulseArrow 1s infinite ease-in-out;
 }
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .introBox1 {
+    margin: 100px auto 50px;
+    padding: 30px 24px;
+    max-width: 940px;
+    border-radius: 28px;
+  }
+
+  .introBox1 .title {
+    font-size: 2.4rem;
+    margin-bottom: 18px;
+  }
+
+  .introBox1 .introText {
+    font-size: 1.15rem;
+    line-height: 1.75;
+    padding: 0 12px;
+  }
+
+  .introBox1 .introBtn {
+    font-size: 1.1rem;
+    padding: 12px 0;
+    max-width: 280px;
+    width: 85%;
+    border-radius: 24px;
+  }
+
+  .introBox1 .image-wrapper img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .introBox1 .text-content {
+    padding: 0 1rem;
+  }
+}
 
 /* Portrait Mobile */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .introBox1 {
     margin: 110px 16px 24px;
     padding: 20px 8px;
@@ -177,7 +216,7 @@
  
 }
 
-@media (orientation: landscape) and (max-width: 767px) {
+@media (orientation: landscape) and (max-width: 777px) {
   .introBox1 .row {
     flex-wrap: nowrap !important;
     flex-direction: row !important;
@@ -186,7 +225,7 @@
   .introBox1 .image-wrapper,
   .introBox1 .text-content {
     flex: 1 1 50% !important;
-    max-width: 50% !important;
+    text-align: center;
   }
 
   .introBox1 .text-content {
