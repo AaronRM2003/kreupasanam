@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'; // already imported
-import testimonies from '../assets/testimony-content.json';
 import styles from '../components/Testimonies.module.css';
 import { TestimonyCard } from '../components/Testimonies';
 import { Dropdown } from 'react-bootstrap';
@@ -35,6 +34,14 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
   const [imagesLoaded, setImagesLoaded] = useState(0);
   const [allImagesLoaded, setAllImagesLoaded] = useState(false);
   const [fade, setFade] = useState(true);
+  const [testimonies, setTestimonies] = useState([]);
+
+  useEffect(() => {
+    fetch('/assets/testimony-content.json')
+      .then((res) => res.json())
+      .then((data) => setTestimonies(data))
+      .catch((err) => console.error('Failed to load testimonies:', err));
+  }, []);
 
   useEffect(() => {
     // Start fade-out

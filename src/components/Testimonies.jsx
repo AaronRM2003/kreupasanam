@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import testimonies from '../assets/testimony-content.json';
 import styles from './Testimonies.module.css';
 import { Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -55,6 +54,14 @@ export function TestimonyCard({ id, title, image, date, lang, path }) {
 
 export default function Testimonies({lang:initialLang}) {
   const [lang, setLang] = useState(initialLang||'en');
+  const [testimonies, setTestimonies] = useState([]);
+
+  useEffect(() => {
+    fetch('/assets/testimony-content.json')
+      .then((res) => res.json())
+      .then((data) => setTestimonies(data))
+      .catch((err) => console.error('Failed to load testimonies:', err));
+  }, []);
 
   return (
     <section className={styles.testimoniesSection}>

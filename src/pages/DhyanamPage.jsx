@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useParams,Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
-import dhyanam from '../assets/dhyanam-content.json';
 import styles from './TestimonyPage.module.css';
 
 import {
@@ -10,7 +9,7 @@ import {
   preloadImages,
   LanguageDropdown,
   ShareModal,
-  addEndTimesToSubtitles
+  addEndTimesToSubtitles,
 } from '../components/utils/Utils';
 
 import { useYouTubePlayer } from '../components/hooks/useYoutubePlayer';
@@ -23,7 +22,11 @@ import LangHelpOverlay from '../components/utils/LangHelpOverlay';
 
 export default function DhyanamPage({ lang: initialLang }) {
   const { id } = useParams();
-  const dhyanamItem = dhyanam.find(item => item.id === parseInt(id));
+
+  const [dhyanam, setDhyanam] = useState(null);
+  const [loadingData, setLoadingData] = useState(true);
+  const [errorLoading, setErrorLoading] = useState(false);
+
   const [lang, setLang] = useState(initialLang || 'en');
   const [showVideo, setShowVideo] = useState(false);
   const [allAssetsLoaded, setAllAssetsLoaded] = useState(false);
@@ -32,31 +35,41 @@ export default function DhyanamPage({ lang: initialLang }) {
   const [showLangHelp, setShowLangHelp] = useState(false);
   const [includeSummary, setIncludeSummary] = useState(false);
 
-  if (!dhyanamItem) {
-  return (
-    <div className={styles.notFoundPage}>
-      <div className={styles.notFoundContainer}>
-        <span className={styles.notFoundCode}>404</span>
-        <h1 className={styles.notFoundTitle}>Dhyanam Not Found</h1>
-        <p className={styles.notFoundText}>
-          The episode you’re looking for doesn’t exist or may have been removed.
-        </p>
-        <Link to={`/${lang || 'en'}/dhyanam`} className={styles.notFoundButton}>
-          Browse More
-        </Link>
-      </div>
-    </div>
-  );
-}
+  // Fetch dhyanam content JSON dynamically
+  useEffect(() => {
+    setLoadingData(true);
+    setErrorLoading(false);
+    fetch('/assets/dhyanam-content.json')
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch data');
+        return res.json();
+      })
+      .then((data) => {
+        setDhyanam(data);
+        setLoadingData(false);
+      })
+      .catch((err) => {
+        console.error('Error loading dhyanam content:', err);
+        setErrorLoading(true);
+        setLoadingData(false);
+      });
+  }, []);
 
+  // Find the dhyanam item by id from fetched data
+  const dhyanamItem = dhyanam?.find((item) => item.id === parseInt(id));
 
-  const { title, date, content, video, subtitles: subtitlesUrl } = dhyanamItem;
+  // Provide safe fallback object for hooks even if dhyanamItem not ready
+  const safeDhyanamItem = dhyanamItem || {
+    title: {},
+    date: '',
+    content: {},
+    video: '',
+    subtitles: '',
+  };
 
-  const cssBackgroundImages = [
-    '/assets/angel3.webp',
-    '/assets/angel3.webp',
-    '/assets/cloud.webp',
-  ];
+  const { title, date, content, video, subtitles: subtitlesUrl } = safeDhyanamItem;
+
+  const cssBackgroundImages = ['/assets/angel3.webp', '/assets/angel3.webp', '/assets/cloud.webp'];
 
   const videoId = getYouTubeVideoID(video);
   const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
@@ -68,35 +81,33 @@ export default function DhyanamPage({ lang: initialLang }) {
     preloadImages(allImages, () => setAllAssetsLoaded(true));
   }, [thumbnailUrl]);
 
+  // Show language help overlay for special lang
   useEffect(() => {
-    if (lang === 'other') {
-      setShowLangHelp(true);
-    } else {
-      setShowLangHelp(false);
-    }
+    setShowLangHelp(lang === 'other');
   }, [lang]);
 
-  // Generate share text
+  // Generate share text on dependencies change
   useEffect(() => {
-    setShareText(generateShareText(dhyanamItem, lang, window.location.href, "Dhyanam meditation",includeSummary,video));
-  }, [lang, dhyanamItem,includeSummary]);
+    setShareText(
+      generateShareText(safeDhyanamItem, lang, window.location.href, 'Dhyanam meditation', includeSummary, video)
+    );
+  }, [lang, safeDhyanamItem, includeSummary, video]);
 
-  // YouTube player hook
+  // YouTube player hook - ALWAYS call hooks before conditionals
   const { currentTime, playerRef, duration: totalDuration } = useYouTubePlayer(videoId, showVideo);
 
   // Subtitles & current subtitle
-  const {
-    subtitles,            // With end times
-    currentSubtitle       // Filtered for time/lang
-  } = useSubtitles(subtitlesUrl, lang, currentTime);
+  const { subtitles, currentSubtitle } = useSubtitles(subtitlesUrl, lang, currentTime);
 
   // Speech sync & volume control hook
-  const {
-    isSpeaking,
-    toggleSpeaking,
-    volume,
-    handleVolumeChange,
-  } = useSpeechSync({ playerRef, showVideo, subtitles, currentSubtitle, currentTime, lang });
+  const { isSpeaking, toggleSpeaking, volume, handleVolumeChange } = useSpeechSync({
+    playerRef,
+    showVideo,
+    subtitles,
+    currentSubtitle,
+    currentTime,
+    lang,
+  });
 
   // Auto-disable speaking when video is closed
   useEffect(() => {
@@ -109,9 +120,57 @@ export default function DhyanamPage({ lang: initialLang }) {
   const shareUrl = window.location.href;
   const fbShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
   const waShareUrl = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
-  const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
-  const emailShareUrl = `mailto:?subject=${encodeURIComponent(title[lang] || title['en'])}&body=${encodeURIComponent(shareText)}`;
+  const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(
+    shareText
+  )}`;
+  const emailShareUrl = `mailto:?subject=${encodeURIComponent(title[lang] || title['en'])}&body=${encodeURIComponent(
+    shareText
+  )}`;
 
+  // Conditional renderings AFTER hooks:
+
+  if (loadingData) {
+    return (
+      <div className={styles.loadingOverlay}>
+        <div className={styles.spinner}></div>
+        <p>Loading content...</p>
+      </div>
+    );
+  }
+
+  if (errorLoading || !dhyanam) {
+    return (
+      <div className={styles.notFoundPage}>
+        <div className={styles.notFoundContainer}>
+          <span className={styles.notFoundCode}>500</span>
+          <h1 className={styles.notFoundTitle}>Error Loading Dhyanam</h1>
+          <p className={styles.notFoundText}>
+            There was a problem loading the content. Please try again later.
+          </p>
+          <Link to={`/${lang || 'en'}/dhyanam`} className={styles.notFoundButton}>
+            Go Back
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (!dhyanamItem) {
+    return (
+      <div className={styles.notFoundPage}>
+        <div className={styles.notFoundContainer}>
+          <span className={styles.notFoundCode}>404</span>
+          <h1 className={styles.notFoundTitle}>Dhyanam Not Found</h1>
+          <p className={styles.notFoundText}>
+            The episode you’re looking for doesn’t exist or may have been removed.
+          </p>
+          <Link to={`/${lang || 'en'}/dhyanam`} className={styles.notFoundButton}>
+            Browse More
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   if (!allAssetsLoaded) {
     return (
@@ -146,10 +205,12 @@ export default function DhyanamPage({ lang: initialLang }) {
       </div>
 
       {showLangHelp && (
-        <LangHelpOverlay onClose={() => {
-          setLang('en');
-          setShowLangHelp(false);
-        }} />
+        <LangHelpOverlay
+          onClose={() => {
+            setLang('en');
+            setShowLangHelp(false);
+          }}
+        />
       )}
 
       {/* Background floating images */}
@@ -166,30 +227,16 @@ export default function DhyanamPage({ lang: initialLang }) {
               onClick={() => setShowVideo(true)}
               style={{ cursor: 'pointer' }}
             >
-              <img
-                src={thumbnailUrl}
-                alt="Video Thumbnail"
-                className={styles.thumbnailImage}
-              />
+              <img src={thumbnailUrl} alt="Video Thumbnail" className={styles.thumbnailImage} />
               <div className={styles.smallPlayIcon}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="#ff0000"
-                  width="60%"
-                  height="60%"
-                >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ff0000" width="60%" height="60%">
                   <path d="M8 5v14l11-7z" />
                 </svg>
               </div>
             </div>
           ) : (
             <div className={styles.thumbnailWrapper}>
-              <img
-                src={thumbnailUrl}
-                alt="Video Thumbnail"
-                className={styles.thumbnailImage}
-              />
+              <img src={thumbnailUrl} alt="Video Thumbnail" className={styles.thumbnailImage} />
             </div>
           )}
 
@@ -219,7 +266,7 @@ export default function DhyanamPage({ lang: initialLang }) {
               emailShareUrl={emailShareUrl}
               styles={styles}
               includeSummary={includeSummary}
-                setIncludeSummary={setIncludeSummary}
+              setIncludeSummary={setIncludeSummary}
             />
           </div>
         </div>

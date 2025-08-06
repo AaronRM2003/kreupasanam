@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useParams,Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
-import testimonies from '../assets/testimony-content.json';
 import styles from './TestimonyPage.module.css';
 
 import {
@@ -10,105 +9,88 @@ import {
   preloadImages,
   LanguageDropdown,
   ShareModal,
-  addEndTimesToSubtitles
 } from '../components/utils/Utils';
 
 import { useYouTubePlayer } from '../components/hooks/useYoutubePlayer';
 import { useSubtitles } from '../components/hooks/useSubtitles';
-import SubtitleVoiceControls from '../components/utils/SpeakerButton';
-
 import { useSpeechSync } from '../components/hooks/useSpeechSync';
 import FloatingVideoPlayer from '../components/utils/FloatingVideoPlayer';
 import LangHelpOverlay from '../components/utils/LangHelpOverlay';
 
-
-
 export default function TestimonyPage({ lang: initialLang }) {
   const { id } = useParams();
-  const testimony = testimonies.find(item => item.id === parseInt(id));
   const [lang, setLang] = useState(initialLang || 'en');
   const [showVideo, setShowVideo] = useState(false);
   const [allAssetsLoaded, setAllAssetsLoaded] = useState(false);
   const [shareText, setShareText] = useState('');
   const [showShareModal, setShowShareModal] = useState(false);
   const [showLangHelp, setShowLangHelp] = useState(false);
-  const [show,setShow] = useState(false);
   const [includeSummary, setIncludeSummary] = useState(false);
+  const [testimonies, setTestimonies] = useState([]);
 
+  // Fetch testimonies on mount
+  useEffect(() => {
+    fetch('/assets/testimony-content.json')
+      .then((res) => res.json())
+      .then((data) => setTestimonies(data))
+      .catch((err) => console.error('Failed to load testimonies:', err));
+  }, []);
 
+  // Find the current testimony (may be undefined initially)
+  const testimony = testimonies.find(item => item.id === parseInt(id));
 
-  if (!testimony) {
-  return (
-    <div className={styles.notFoundPage}>
-      <div className={styles.notFoundContainer}>
-        <span className={styles.notFoundCode}>404</span>
-        <h1 className={styles.notFoundTitle}>Testimony Not Found</h1>
-        <p className={styles.notFoundText}>
-          Oops! The testimony you're looking for doesn’t exist or may have been removed.
-        </p>
-        <Link to={`/${lang || 'en'}/testimonies`} className={styles.notFoundButton}>
-          Browse More
-        </Link>
-      </div>
-    </div>
-  );
-}
+  // Safe destructuring with fallback values to avoid errors before data loads
+  const title = testimony?.title || {};
+  const date = testimony?.date || '';
+  const content = testimony?.content || {};
+  const video = testimony?.video || '';
+  const subtitlesUrl = testimony?.subtitles || '';
 
+  // Get videoId and thumbnail URL
+  const videoId = getYouTubeVideoID(video);
+  const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
 
-
-  const { title, date, content, video, subtitles: subtitlesUrl } = testimony;
-
+  // Preload images (background + thumbnail)
   const cssBackgroundImages = [
     '/assets/angel3.webp',
     '/assets/angel3.webp',
     '/assets/cloud.webp',
   ];
-
-  const videoId = getYouTubeVideoID(video);
-  const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
-
-  // Preload background + thumbnail images
   useEffect(() => {
     const allImages = [...cssBackgroundImages];
     if (thumbnailUrl) allImages.push(thumbnailUrl);
     preloadImages(allImages, () => setAllAssetsLoaded(true));
   }, [thumbnailUrl]);
 
-
+  // Show language help overlay for special lang value
   useEffect(() => {
-    if (lang === 'other') {
-      setShowLangHelp(true);
-    } else {
-      setShowLangHelp(false);
-    }
+    setShowLangHelp(lang === 'other');
   }, [lang]);
 
-  // Generate share text
+  // Generate share text when dependencies change
   useEffect(() => {
-    setShareText(generateShareText(testimony, lang, window.location.href, "A powerful testimony of Faith", includeSummary,video));
-  }, [lang, testimony, includeSummary]);
-
+    if (testimony) {
+      setShareText(generateShareText(testimony, lang, window.location.href, "A powerful testimony of Faith", includeSummary, video));
+    }
+  }, [lang, testimony, includeSummary, video]);
 
   // YouTube player hook
   const { currentTime, playerRef, duration: totalDuration } = useYouTubePlayer(videoId, showVideo);
 
-  // Subtitles & current subtitle
-  const {
-  subtitles,            // With end times
-  currentSubtitle       // Filtered for time/lang
-} = useSubtitles(subtitlesUrl, lang, currentTime);
-
+  // Subtitles & current subtitle hook
+  const { subtitles, currentSubtitle } = useSubtitles(subtitlesUrl, lang, currentTime);
 
   // Speech sync & volume control hook
-const {
-  isSpeaking,
-  toggleSpeaking,
-  volume,
-  handleVolumeChange,
-} = useSpeechSync({ playerRef, showVideo, subtitles, currentSubtitle, currentTime, lang });
+  const { isSpeaking, toggleSpeaking, volume, handleVolumeChange } = useSpeechSync({
+    playerRef,
+    showVideo,
+    subtitles,
+    currentSubtitle,
+    currentTime,
+    lang,
+  });
 
-
-  // Auto-disable speaking when video is closed
+  // Auto-disable speech when video closes
   useEffect(() => {
     if (!showVideo && isSpeaking) {
       window.speechSynthesis.cancel();
@@ -122,12 +104,30 @@ const {
   const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
   const emailShareUrl = `mailto:?subject=${encodeURIComponent(title[lang] || title['en'])}&body=${encodeURIComponent(shareText)}`;
 
-
+  // Show loading if assets or testimony not ready
   if (!allAssetsLoaded) {
     return (
       <div className={styles.loadingOverlay}>
         <div className={styles.spinner}></div>
         <p>Loading visuals...</p>
+      </div>
+    );
+  }
+
+  // Show 404 if testimony not found after loading
+  if (!testimony) {
+    return (
+      <div className={styles.notFoundPage}>
+        <div className={styles.notFoundContainer}>
+          <span className={styles.notFoundCode}>404</span>
+          <h1 className={styles.notFoundTitle}>Testimony Not Found</h1>
+          <p className={styles.notFoundText}>
+            Oops! The testimony you're looking for doesn’t exist or may have been removed.
+          </p>
+          <Link to={`/${lang || 'en'}/testimonies`} className={styles.notFoundButton}>
+            Browse More
+          </Link>
+        </div>
       </div>
     );
   }
@@ -149,24 +149,20 @@ const {
         </div>
 
         <div className={styles.testimonyRight}>
-  <div style={{ display: 'flex', flexDirection: 'column', alignItems:'center'}}>
-    <LanguageDropdown lang={lang} onSelect={setLang} />
-
-{/* ... your main component JSX ... */}
-
-
-
-  </div>
-</div>
-
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <LanguageDropdown lang={lang} onSelect={setLang} />
+          </div>
+        </div>
       </div>
-      {showLangHelp && (
-  <LangHelpOverlay onClose={() => {
-    setLang('en');
-    setShowLangHelp(false);
-  }} />
-)}
 
+      {showLangHelp && (
+        <LangHelpOverlay
+          onClose={() => {
+            setLang('en');
+            setShowLangHelp(false);
+          }}
+        />
+      )}
 
       {/* Background floating images */}
       <div className={`${styles.floatingImage} ${styles.left}`}></div>
@@ -182,30 +178,16 @@ const {
               onClick={() => setShowVideo(true)}
               style={{ cursor: 'pointer' }}
             >
-              <img
-                src={thumbnailUrl}
-                alt="Video Thumbnail"
-                className={styles.thumbnailImage}
-              />
+              <img src={thumbnailUrl} alt="Video Thumbnail" className={styles.thumbnailImage} />
               <div className={styles.smallPlayIcon}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="#ff0000"
-                  width="60%"
-                  height="60%"
-                >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ff0000" width="60%" height="60%">
                   <path d="M8 5v14l11-7z" />
                 </svg>
               </div>
             </div>
           ) : (
             <div className={styles.thumbnailWrapper}>
-              <img
-                src={thumbnailUrl}
-                alt="Video Thumbnail"
-                className={styles.thumbnailImage}
-              />
+              <img src={thumbnailUrl} alt="Video Thumbnail" className={styles.thumbnailImage} />
             </div>
           )}
 
@@ -224,39 +206,36 @@ const {
             </div>
 
             <ShareModal
-                show={showShareModal}
-                onHide={() => setShowShareModal(false)}
-                title="Testimony"
-                shareText={shareText}
-                setShareText={setShareText}
-                fbShareUrl={fbShareUrl}
-                waShareUrl={waShareUrl}
-                telegramShareUrl={telegramShareUrl}
-                emailShareUrl={emailShareUrl}
-                styles={styles}
-                defaultShareText={generateShareText(testimony, lang, window.location.href, "A power testimony of Faith")}
-                includeSummary={includeSummary}
-                setIncludeSummary={setIncludeSummary}
-              />
-
-
+              show={showShareModal}
+              onHide={() => setShowShareModal(false)}
+              title="Testimony"
+              shareText={shareText}
+              setShareText={setShareText}
+              fbShareUrl={fbShareUrl}
+              waShareUrl={waShareUrl}
+              telegramShareUrl={telegramShareUrl}
+              emailShareUrl={emailShareUrl}
+              styles={styles}
+              defaultShareText={generateShareText(testimony, lang, window.location.href, "A powerful testimony of Faith")}
+              includeSummary={includeSummary}
+              setIncludeSummary={setIncludeSummary}
+            />
           </div>
         </div>
       </div>
 
       {/* Video player and subtitles */}
-     {showVideo && (
-  <FloatingVideoPlayer
-    isSpeaking={isSpeaking}
-    volume={volume}
-    toggleSpeaking={toggleSpeaking}
-    handleVolumeChange={handleVolumeChange}
-    playerRef={playerRef}
-    currentSubtitle={currentSubtitle}
-    onClose={() => setShowVideo(false)}
-  />
-)}
-
+      {showVideo && (
+        <FloatingVideoPlayer
+          isSpeaking={isSpeaking}
+          volume={volume}
+          toggleSpeaking={toggleSpeaking}
+          handleVolumeChange={handleVolumeChange}
+          playerRef={playerRef}
+          currentSubtitle={currentSubtitle}
+          onClose={() => setShowVideo(false)}
+        />
+      )}
     </div>
   );
 }

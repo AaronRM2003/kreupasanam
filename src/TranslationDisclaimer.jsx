@@ -110,17 +110,18 @@ const styles = {
   },
 
   modal: {
-    backgroundColor: "#fff",
-    borderRadius: "16px",
-    padding: "2rem",
-    maxWidth: "90vw",
-    width: "100%",
-    maxHeight: "85vh",
-    overflowY: "auto",
-    boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
-    textAlign: "center",
-    animation: "fadeInScale 0.4s ease-out",
-  },
+  backgroundColor: "#fff",
+  borderRadius: "16px",
+  padding: "2rem",
+  maxWidth: "600px",  // fixed max width for desktop
+  width: "90vw",      // width relative to viewport on smaller screens
+  maxHeight: "85vh",
+  overflowY: "auto",
+  boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
+  textAlign: "center",
+  animation: "fadeInScale 0.4s ease-out",
+},
+
 
   title: {
     fontSize: "clamp(1.2rem, 2vw, 1.75rem)",

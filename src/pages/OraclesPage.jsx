@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useParams,Link } from 'react-router-dom';
-import oracles from '../assets/oracles-content.json';
+import { useParams, Link } from 'react-router-dom';
+
 import styles from './TestimonyPage.module.css';
 
 import {
@@ -9,20 +9,16 @@ import {
   preloadImages,
   LanguageDropdown,
   ShareModal,
-  addEndTimesToSubtitles
 } from '../components/utils/Utils';
 
 import { useYouTubePlayer } from '../components/hooks/useYoutubePlayer';
 import { useSubtitles } from '../components/hooks/useSubtitles';
-import SubtitleVoiceControls from '../components/utils/SpeakerButton';
-
 import { useSpeechSync } from '../components/hooks/useSpeechSync';
 import FloatingVideoPlayer from '../components/utils/FloatingVideoPlayer';
 import LangHelpOverlay from '../components/utils/LangHelpOverlay';
 
 export default function OraclesPage({ lang: initialLang }) {
   const { id } = useParams();
-  const oracle = oracles.find(item => item.id === parseInt(id));
   const [lang, setLang] = useState(initialLang || 'en');
   const [showVideo, setShowVideo] = useState(false);
   const [allAssetsLoaded, setAllAssetsLoaded] = useState(false);
@@ -30,85 +26,117 @@ export default function OraclesPage({ lang: initialLang }) {
   const [showShareModal, setShowShareModal] = useState(false);
   const [showLangHelp, setShowLangHelp] = useState(false);
   const [includeSummary, setIncludeSummary] = useState(false);
+  const [oracles, setOracles] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  if (!oracle) {
-  return (
-    <div className={styles.notFoundPage}>
-      <div className={styles.notFoundContainer}>
-        <h1 className={styles.notFoundCode}>404</h1>
-        <h2 className={styles.notFoundTitle}>ORACLE Not Found</h2>
-        <p className={styles.notFoundText}>
-          The episode you’re looking for doesn’t exist or has been removed.
-        </p>
-        <Link to={`/${lang || 'en'}/oracles`} className={styles.notFoundButton}>
-          Browse Oracles
-        </Link>
-      </div>
-    </div>
-  );
-}
+  // Fetch oracles data on mount
+  useEffect(() => {
+    fetch('/assets/oracles-content.json')
+      .then((res) => res.json())
+      .then((data) => {
+        setOracles(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('Failed to load oracles:', err);
+        setLoading(false);
+      });
+  }, []);
 
-  const { title, date, content, video, subtitles: subtitlesUrl } = oracle;
+  // Sync initialLang changes to state
+  useEffect(() => {
+    if (initialLang && initialLang !== lang) {
+      setLang(initialLang);
+    }
+  }, [initialLang, lang]);
 
-  const cssBackgroundImages = [
-    '/assets/angel3.webp',
-    '/assets/angel3.webp',
-    '/assets/cloud.webp',
-  ];
+  // Find current oracle by id
+  const oracle = oracles.find((item) => item.id === parseInt(id));
+
+  // Provide safe fallback to avoid undefined errors in hooks
+  const safeOracle = oracle || {
+    title: {},
+    date: '',
+    content: {},
+    video: '',
+    subtitles: '',
+  };
+
+  const { title, date, content, video, subtitles: subtitlesUrl } = safeOracle;
 
   const videoId = getYouTubeVideoID(video);
   const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
 
-  // Preload background + thumbnail images
+  const cssBackgroundImages = ['/assets/angel3.webp', '/assets/angel3.webp', '/assets/cloud.webp'];
+
+  // Preload all necessary images (background + thumbnail)
   useEffect(() => {
     const allImages = [...cssBackgroundImages];
     if (thumbnailUrl) allImages.push(thumbnailUrl);
     preloadImages(allImages, () => setAllAssetsLoaded(true));
   }, [thumbnailUrl]);
 
+  // Show language help overlay for specific language key
   useEffect(() => {
-    if (lang === 'other') {
-      setShowLangHelp(true);
-    } else {
-      setShowLangHelp(false);
-    }
+    setShowLangHelp(lang === 'other');
   }, [lang]);
 
-  // Generate share text
+  // Generate share text when dependencies change
   useEffect(() => {
-    setShareText(generateShareText(oracle, lang, window.location.href, 'A Spiritual Oracle', includeSummary,video));
-  }, [lang, oracle,includeSummary]);
+    setShareText(generateShareText(safeOracle, lang, window.location.href, 'A Spiritual Oracle', includeSummary, video));
+  }, [lang, safeOracle, includeSummary, video]);
 
-  // YouTube player hook
+  // Hooks always called unconditionally
   const { currentTime, playerRef, duration: totalDuration } = useYouTubePlayer(videoId, showVideo);
+  const { subtitles, currentSubtitle } = useSubtitles(subtitlesUrl, lang, currentTime);
+  const { isSpeaking, toggleSpeaking, volume, handleVolumeChange } = useSpeechSync({
+    playerRef,
+    showVideo,
+    subtitles,
+    currentSubtitle,
+    currentTime,
+    lang,
+  });
 
-  // Subtitles with end times
-  const {
-    subtitles,            // With end times
-    currentSubtitle       // Filtered for time/lang
-  } = useSubtitles(subtitlesUrl, lang, currentTime);
-
-  // Speech sync & volume control hook
-  const {
-    isSpeaking,
-    toggleSpeaking,
-    volume,
-    handleVolumeChange,
-  } = useSpeechSync({ playerRef, showVideo, subtitles, currentSubtitle, currentTime, lang });
-
-  // Auto-disable speaking when video is closed
   useEffect(() => {
     if (!showVideo && isSpeaking) {
       window.speechSynthesis.cancel();
     }
   }, [showVideo, isSpeaking]);
 
-  // Share URLs
+  // Share URLs for social media
   const shareUrl = window.location.href;
   const fbShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
   const waShareUrl = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
   const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
   const emailShareUrl = `mailto:?subject=${encodeURIComponent(title[lang] || title['en'])}&body=${encodeURIComponent(shareText)}`;
+
+  // Show loading while fetching or assets loading
+  if (loading) {
+    return (
+      <div className={styles.loadingOverlay}>
+        <div className={styles.spinner}></div>
+        <p>Loading oracle content...</p>
+      </div>
+    );
+  }
+
+  if (!oracle) {
+    return (
+      <div className={styles.notFoundPage}>
+        <div className={styles.notFoundContainer}>
+          <h1 className={styles.notFoundCode}>404</h1>
+          <h2 className={styles.notFoundTitle}>ORACLE Not Found</h2>
+          <p className={styles.notFoundText}>
+            The oracle episode you’re looking for doesn’t exist or has been removed.
+          </p>
+          <Link to={`/${lang || 'en'}/oracles`} className={styles.notFoundButton}>
+            Browse Oracles
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   if (!allAssetsLoaded) {
     return (
@@ -141,10 +169,12 @@ export default function OraclesPage({ lang: initialLang }) {
       </div>
 
       {showLangHelp && (
-        <LangHelpOverlay onClose={() => {
-          setLang('en');
-          setShowLangHelp(false);
-        }} />
+        <LangHelpOverlay
+          onClose={() => {
+            setLang('en');
+            setShowLangHelp(false);
+          }}
+        />
       )}
 
       {/* Background floating images */}
@@ -161,11 +191,7 @@ export default function OraclesPage({ lang: initialLang }) {
               onClick={() => setShowVideo(true)}
               style={{ cursor: 'pointer' }}
             >
-              <img
-                src={thumbnailUrl}
-                alt="Video Thumbnail"
-                className={styles.thumbnailImage}
-              />
+              <img src={thumbnailUrl} alt="Video Thumbnail" className={styles.thumbnailImage} />
               <div className={styles.smallPlayIcon}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -180,11 +206,7 @@ export default function OraclesPage({ lang: initialLang }) {
             </div>
           ) : (
             <div className={styles.thumbnailWrapper}>
-              <img
-                src={thumbnailUrl}
-                alt="Video Thumbnail"
-                className={styles.thumbnailImage}
-              />
+              <img src={thumbnailUrl} alt="Video Thumbnail" className={styles.thumbnailImage} />
             </div>
           )}
 
@@ -214,7 +236,7 @@ export default function OraclesPage({ lang: initialLang }) {
               emailShareUrl={emailShareUrl}
               styles={styles}
               includeSummary={includeSummary}
-                setIncludeSummary={setIncludeSummary}
+              setIncludeSummary={setIncludeSummary}
             />
           </div>
         </div>

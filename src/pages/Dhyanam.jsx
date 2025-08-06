@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import dhyanam from '../assets/dhyanam-content.json';
 import styles from '../components/Testimonies.module.css';
 import { TestimonyCard } from '../components/Testimonies';
 import { Dropdown } from 'react-bootstrap';
@@ -9,6 +8,9 @@ import backstyle from './TestimonyPage.module.css';
 
 export default function Dhyanam({ lang: initialLang }) {
   const [lang, setLang] = useState(initialLang || 'en');
+  const [dhyanam, setDhyanam] = useState([]);
+  const [loadingData, setLoadingData] = useState(true);
+  const [errorLoading, setErrorLoading] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState(0);
   const [allImagesLoaded, setAllImagesLoaded] = useState(false);
 
@@ -25,6 +27,26 @@ export default function Dhyanam({ lang: initialLang }) {
     kn: 'ಕನ್ನಡ',
   };
 
+  // Fetch dhyanam-content.json on mount
+  useEffect(() => {
+    setLoadingData(true);
+    setErrorLoading(false);
+    fetch('/assets/dhyanam-content.json')
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch data');
+        return res.json();
+      })
+      .then((data) => {
+        setDhyanam(data);
+        setLoadingData(false);
+      })
+      .catch((err) => {
+        console.error('Error loading dhyanam content:', err);
+        setErrorLoading(true);
+        setLoadingData(false);
+      });
+  }, []);
+
   const getYouTubeThumbnail = (url) => {
     try {
       const videoIdMatch = url.match(
@@ -40,7 +62,7 @@ export default function Dhyanam({ lang: initialLang }) {
     }
   };
 
-  // Extract all valid thumbnail URLs
+  // Extract all valid thumbnail URLs once dhyanam data is loaded
   const thumbnails = dhyanam.map(({ video }) => getYouTubeThumbnail(video)).filter(Boolean);
 
   // Called on each image load
@@ -58,6 +80,30 @@ export default function Dhyanam({ lang: initialLang }) {
       setAllImagesLoaded(true);
     }
   }, [imagesLoaded, thumbnails.length]);
+
+  if (loadingData) {
+    return (
+      <div className={styles.loadingOverlay}>
+        <div className={styles.spinner}></div>
+        <p>Loading content...</p>
+      </div>
+    );
+  }
+
+  if (errorLoading) {
+    return (
+      <div className={styles.notFoundPage}>
+        <div className={styles.notFoundContainer}>
+          <span className={styles.notFoundCode}>500</span>
+          <h1 className={styles.notFoundTitle}>Error Loading Dhyanam</h1>
+          <p className={styles.notFoundText}>
+            There was a problem loading the content. Please try again later.
+          </p>
+          {/* Optional: Add a refresh or go back button here */}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <section
@@ -185,7 +231,7 @@ export default function Dhyanam({ lang: initialLang }) {
               >
                 <HiOutlineEmojiSad size={50} color="#246bfd" style={{ marginBottom: 16 }} />
                 <h3 style={{ color: '#246bfd', fontWeight: 600, fontSize: '1.4rem' }}>
-                  No dhyanam Available
+                  No Dhyanam Available
                 </h3>
               </div>
             )}

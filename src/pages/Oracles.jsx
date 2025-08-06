@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import oracles from '../assets/oracles-content.json';
 import styles from '../components/Testimonies.module.css';
 import { TestimonyCard } from '../components/Testimonies';
 import { Dropdown } from 'react-bootstrap';
@@ -22,6 +21,9 @@ const languageMap = {
 
 export default function Oracles({ lang: initialLang }) {
   const [lang, setLang] = useState(initialLang || 'en');
+  const [oracles, setOracles] = useState([]);
+  const [loadingData, setLoadingData] = useState(true);
+  const [errorLoading, setErrorLoading] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState(0);
   const [allImagesLoaded, setAllImagesLoaded] = useState(false);
 
@@ -30,6 +32,26 @@ export default function Oracles({ lang: initialLang }) {
       setLang(initialLang);
     }
   }, [initialLang]);
+
+  // Fetch oracles-content.json on mount
+  useEffect(() => {
+    setLoadingData(true);
+    setErrorLoading(false);
+    fetch('/assets/oracles-content.json')
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch oracles content');
+        return res.json();
+      })
+      .then((data) => {
+        setOracles(data);
+        setLoadingData(false);
+      })
+      .catch((err) => {
+        console.error('Error loading oracles content:', err);
+        setErrorLoading(true);
+        setLoadingData(false);
+      });
+  }, []);
 
   const getYouTubeThumbnail = (url) => {
     try {
@@ -46,29 +68,51 @@ export default function Oracles({ lang: initialLang }) {
     }
   };
 
-  // Get all thumbnails first
+  // Extract thumbnails when oracles data changes
   const thumbnails = oracles.map(({ video }) => getYouTubeThumbnail(video)).filter(Boolean);
 
-  // Increment loaded count on each image load
+  // Called on each image load
   const handleImageLoad = () => {
     setImagesLoaded((prev) => prev + 1);
   };
 
-  // When all images are loaded, mark complete
+  // When all images loaded, mark complete
   useEffect(() => {
     if (thumbnails.length > 0 && imagesLoaded === thumbnails.length) {
       setAllImagesLoaded(true);
     }
-    // Handle case no images at all
     if (thumbnails.length === 0) {
       setAllImagesLoaded(true);
     }
   }, [imagesLoaded, thumbnails.length]);
 
+  if (loadingData) {
+    return (
+      <div className={styles.loadingOverlay}>
+        <div className={styles.spinner}></div>
+        <p>Loading oracles content...</p>
+      </div>
+    );
+  }
+
+  if (errorLoading) {
+    return (
+      <div className={styles.notFoundPage}>
+        <div className={styles.notFoundContainer}>
+          <span className={styles.notFoundCode}>500</span>
+          <h1 className={styles.notFoundTitle}>Error Loading Oracles</h1>
+          <p className={styles.notFoundText}>
+            There was a problem loading the content. Please try again later.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <section
       className={styles.testimoniesSection}
-      style={{ marginTop: '0', backgroundColor: window.innerWidth <= 768 ? '#fff' : 'transparent' }}
+      style={{ marginTop: 0, backgroundColor: window.innerWidth <= 768 ? '#fff' : 'transparent' }}
     >
       <div className={styles.testimoniesSectionContainer} style={{ margin: '0 1rem' }}>
         <div className={styles.testimoniesHeader}>
@@ -122,7 +166,7 @@ export default function Oracles({ lang: initialLang }) {
         {!allImagesLoaded && (
           <div
             style={{
-              height: '300px',
+              height: 300,
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
@@ -133,13 +177,13 @@ export default function Oracles({ lang: initialLang }) {
           >
             <div
               style={{
-                width: '40px',
-                height: '40px',
+                width: 40,
+                height: 40,
                 border: '4px solid #d3e3ff',
                 borderTop: '4px solid #246bfd',
                 borderRadius: '50%',
                 animation: 'spin 1s linear infinite',
-                marginBottom: '1rem',
+                marginBottom: 16,
               }}
             ></div>
             Loading Oracles...
@@ -194,7 +238,9 @@ export default function Oracles({ lang: initialLang }) {
                 }}
               >
                 <HiOutlineEmojiSad size={50} color="#246bfd" style={{ marginBottom: '1rem' }} />
-                <h3 style={{ color: '#246bfd', fontWeight: '600', fontSize: '1.4rem' }}>No Oracles Available</h3>
+                <h3 style={{ color: '#246bfd', fontWeight: 600, fontSize: '1.4rem' }}>
+                  No Oracles Available
+                </h3>
               </div>
             )}
           </div>

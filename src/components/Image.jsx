@@ -16,28 +16,23 @@ export default function ImageSpacer({
   const [isVisibleWrap, setIsVisibleWrap] = useState(true);
 
   // Mobile visibility logic (portrait + landscape)
-  useEffect(() => {
-   const checkMobile = () => {
-  const isUserAgentMobile = /Mobi|Android|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent
-  );
+ useEffect(() => {
+  const checkMobile = () => {
+    const isSmallViewport = window.innerWidth < 1200;
 
-  const isSmallViewport = window.innerWidth <= 812 || window.innerHeight <= 500;
+    if (hideOnMobile && isSmallViewport) {
+      setIsVisibleMobile(false);
+    } else {
+      setIsVisibleMobile(true);
+    }
+  };
 
-  const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+  checkMobile(); // Initial check on mount
+  window.addEventListener("resize", checkMobile); // Re-check on resize
 
-  if (hideOnMobile && (isUserAgentMobile || isSmallViewport || isTouchDevice)) {
-    setIsVisibleMobile(false);
-  } else {
-    setIsVisibleMobile(true);
-  }
-};
+  return () => window.removeEventListener("resize", checkMobile); // Cleanup
+}, [hideOnMobile]);
 
-
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, [hideOnMobile]);
 
   // Hide if wrapped onto a new line
   useEffect(() => {

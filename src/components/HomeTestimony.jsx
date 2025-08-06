@@ -1,7 +1,6 @@
 import { useState ,useEffect} from "react";
 import { Button, Dropdown } from "react-bootstrap";
 import "./FeaturedTestimonySection.css";
-import testimonies from "../assets/testimony-content.json";
 
 const testimonyData = {
   en: {
@@ -19,6 +18,7 @@ const testimonyData = {
 };
 
 function truncateWords(text, wordLimit) {
+  if (!text || typeof text !== "string") return '';
   const words = text.split(" ");
   if (words.length <= wordLimit) {
     return text;
@@ -26,8 +26,18 @@ function truncateWords(text, wordLimit) {
   return words.slice(0, wordLimit).join(" ") + "...";
 }
 
+
 export default function FeaturedTestimonySection( {lang:initialLang}) {
   const [lang, setLang] = useState(initialLang||"en");
+  const [testimonies, setTestimonies] = useState([]);
+
+  useEffect(() => {
+    fetch('/assets/testimony-content.json')
+      .then((res) => res.json())
+      .then((data) => setTestimonies(data))
+      .catch((err) => console.error('Failed to load testimonies:', err));
+    }, []);
+
   useEffect(() => {
     if (initialLang && initialLang !== lang) {
       setLang(initialLang);

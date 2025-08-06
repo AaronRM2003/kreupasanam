@@ -100,8 +100,7 @@ export default function Home({ lang }) {
               <div
                 className="d-flex align-items-center"
                 style={{
-                  maxWidth: '1400px',
-                  margin: '0 3%'
+                 maxWidth: '1400px', margin: '0 auto', padding: '0 3%'
                 }}
               >
                 <div style={{ flex: '1 1 600px', minWidth: '300px' }}>
@@ -126,8 +125,7 @@ export default function Home({ lang }) {
               <div
                 className="d-flex align-items-center"
                 style={{
-                     maxWidth: '1400px',
-                  margin: '0 3%'
+                     maxWidth: '1400px', margin: '0 auto', padding: '0 3%'
                 }}
               >
                 {isHero2Visible && (
