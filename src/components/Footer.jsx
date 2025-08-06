@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Footer.module.css';
 import { FaEnvelope } from 'react-icons/fa';
 import { GiDove } from 'react-icons/gi';
 
 export default function Footer() {
+  const [loading, setLoading] = useState(false);
+
   const handlePushSubscribe = async () => {
     if (!window.OneSignal) {
       alert('OneSignal is not loaded yet.');
@@ -16,17 +18,21 @@ export default function Footer() {
       return;
     }
 
-    const permission = await window.OneSignal.getNotificationPermission();
-    if (permission !== 'granted') {
-      try {
+    try {
+      setLoading(true);
+
+      const permission = await window.OneSignal.getNotificationPermission();
+      if (permission !== 'granted') {
         await window.OneSignal.subscribe();
         alert('You are now subscribed to push notifications!');
-      } catch (error) {
-        console.error('Subscription failed:', error);
-        alert('Subscription failed. Please try again.');
+      } else {
+        alert('You are already subscribed to notifications.');
       }
-    } else {
-      alert('You are already subscribed to notifications.');
+    } catch (error) {
+      console.error('Subscription failed:', error);
+      alert('Subscription failed. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -61,9 +67,10 @@ export default function Footer() {
             <button
               type="button"
               onClick={handlePushSubscribe}
+              disabled={loading}
               className={styles.subscribeButton}
             >
-              Subscribe to Notifications
+              {loading ? 'Loading...' : 'Subscribe to Notifications'}
             </button>
           </div>
         </div>
