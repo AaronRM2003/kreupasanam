@@ -18,39 +18,34 @@ export default function Footer() {
     });
   }, []);
 
-  const handlePushSubscribe = () => {
-    if (!window.OneSignal || !isOneSignalReady) {
-      alert('OneSignal is not loaded yet.');
-      return;
-    }
+  const handlePushSubscribe = async () => {
+  if (!window.OneSignalDeferred) {
+    alert('OneSignal is not available.');
+    return;
+  }
 
-    setLoading(true);
-
-    // Use OneSignal.push() to ensure SDK is ready for async calls
-    window.OneSignal.push(async () => {
-      try {
-        const isSupported = await window.OneSignal.isPushNotificationsSupported();
-        if (!isSupported) {
-          alert('Push notifications are not supported in this browser.');
-          setLoading(false);
-          return;
-        }
-
-        const permission = await window.OneSignal.getNotificationPermission();
-        if (permission !== 'granted') {
-          await window.OneSignal.subscribe();
-          alert('You are now subscribed to push notifications!');
-        } else {
-          alert('You are already subscribed to notifications.');
-        }
-      } catch (error) {
-        console.error('Subscription failed:', error);
-        alert('Subscription failed. Please try again.');
-      } finally {
-        setLoading(false);
+  window.OneSignalDeferred.push(async function (OneSignal) {
+    try {
+      const isSupported = await OneSignal.isPushNotificationsSupported();
+      if (!isSupported) {
+        alert('Push notifications are not supported in this browser.');
+        return;
       }
-    });
-  };
+
+      const permission = await OneSignal.getNotificationPermission();
+      if (permission !== 'granted') {
+        await OneSignal.subscribe();
+        alert('You are now subscribed to push notifications!');
+      } else {
+        alert('You are already subscribed to notifications.');
+      }
+    } catch (error) {
+      console.error('Subscription failed:', error);
+      alert('Subscription failed. Please try again.');
+    }
+  });
+};
+
 
   return (
     <div>
