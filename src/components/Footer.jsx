@@ -70,8 +70,10 @@ export default function Footer() {
               disabled={loading}
               className={styles.subscribeButton}
             >
-              {loading ? 'Loading...' : 'Subscribe to Notifications'}
+              {loading && <div className={styles.spinner} aria-label="loading spinner"></div>}
+              {loading ? 'Subscribing...' : 'Subscribe to Notifications'}
             </button>
+
           </div>
         </div>
 

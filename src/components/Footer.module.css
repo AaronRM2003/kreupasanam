@@ -107,12 +107,41 @@
   cursor: pointer;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 10px rgba(36, 107, 253, 0.3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
-.subscribeButton:hover {
+.subscribeButton:hover:not(:disabled) {
   background-color: #1e40af;
   box-shadow: 0 6px 16px rgba(30, 64, 175, 0.6);
 }
+
+.subscribeButton:disabled {
+  background-color: #a1c4fd;
+  cursor: not-allowed;
+  box-shadow: none;
+  color: #e0e9ff;
+}
+
+/* Spinner styles */
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 3px solid rgba(255, 255, 255, 0.4);
+  border-top: 3px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Spinner animation */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 
 /* Responsive styles */
 @media (max-width: 768px) {
