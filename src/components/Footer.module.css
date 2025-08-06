@@ -127,20 +127,23 @@
 
 /* Spinner styles */
 .spinner {
-  width: 18px;
-  height: 18px;
-  border: 3px solid rgba(255, 255, 255, 0.4);
-  border-top: 3px solid white;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
   border-radius: 50%;
-  animation: spin 1s linear infinite;
+  animation: spin 0.6s linear infinite;
+  display: inline-block;
+  margin-right: 0.5rem;
+  vertical-align: middle;
 }
 
-/* Spinner animation */
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
 }
+
 
 
 /* Responsive styles */
