@@ -8,45 +8,48 @@ export default function Footer() {
   const [isOneSignalReady, setIsOneSignalReady] = useState(false);
 
   useEffect(() => {
-    const waitForOneSignal = async () => {
-      if (window.OneSignalDeferred) {
-        window.OneSignalDeferred.push(function (OneSignal) {
-          setIsOneSignalReady(true);
-        });
-      } else {
-        console.warn('OneSignal is not available.');
-      }
-    };
-    waitForOneSignal();
+    if (!window.OneSignal) {
+      console.warn('OneSignal SDK not loaded');
+      return;
+    }
+    // Wait until OneSignal SDK is ready:
+    window.OneSignal.push(() => {
+      setIsOneSignalReady(true);
+    });
   }, []);
 
-  const handlePushSubscribe = async () => {
+  const handlePushSubscribe = () => {
     if (!window.OneSignal || !isOneSignalReady) {
       alert('OneSignal is not loaded yet.');
       return;
     }
 
-    const isSupported = await window.OneSignal.isPushNotificationsSupported();
-    if (!isSupported) {
-      alert('Push notifications are not supported in this browser.');
-      return;
-    }
+    setLoading(true);
 
-    try {
-      setLoading(true);
-      const permission = await window.OneSignal.getNotificationPermission();
-      if (permission !== 'granted') {
-        await window.OneSignal.subscribe();
-        alert('You are now subscribed to push notifications!');
-      } else {
-        alert('You are already subscribed to notifications.');
+    // Use OneSignal.push() to ensure SDK is ready for async calls
+    window.OneSignal.push(async () => {
+      try {
+        const isSupported = await window.OneSignal.isPushNotificationsSupported();
+        if (!isSupported) {
+          alert('Push notifications are not supported in this browser.');
+          setLoading(false);
+          return;
+        }
+
+        const permission = await window.OneSignal.getNotificationPermission();
+        if (permission !== 'granted') {
+          await window.OneSignal.subscribe();
+          alert('You are now subscribed to push notifications!');
+        } else {
+          alert('You are already subscribed to notifications.');
+        }
+      } catch (error) {
+        console.error('Subscription failed:', error);
+        alert('Subscription failed. Please try again.');
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error('Subscription failed:', error);
-      alert('Subscription failed. Please try again.');
-    } finally {
-      setLoading(false);
-    }
+    });
   };
 
   return (
