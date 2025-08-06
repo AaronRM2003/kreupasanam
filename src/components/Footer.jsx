@@ -8,44 +8,51 @@ export default function Footer() {
   const [isOneSignalReady, setIsOneSignalReady] = useState(false);
 
   useEffect(() => {
-    if (!window.OneSignal) {
-      console.warn('OneSignal SDK not loaded');
+    if (!window.OneSignalDeferred) {
+      console.warn('OneSignal SDK not yet loaded.');
       return;
     }
-    // Wait until OneSignal SDK is ready:
-    window.OneSignal.push(() => {
-      setIsOneSignalReady(true);
+
+    // Wait for OneSignal SDK to be initialized
+    window.OneSignalDeferred.push(async (OneSignal) => {
+      const isInitialized = await OneSignal.isInitialized();
+      if (isInitialized) {
+        setIsOneSignalReady(true);
+      }
     });
   }, []);
 
-  const handlePushSubscribe = async () => {
-  if (!window.OneSignalDeferred) {
-    alert('OneSignal is not available.');
-    return;
-  }
-
-  window.OneSignalDeferred.push(async function (OneSignal) {
-    try {
-      const isSupported = await OneSignal.isPushNotificationsSupported();
-      if (!isSupported) {
-        alert('Push notifications are not supported in this browser.');
-        return;
-      }
-
-      const permission = await OneSignal.getNotificationPermission();
-      if (permission !== 'granted') {
-        await OneSignal.subscribe();
-        alert('You are now subscribed to push notifications!');
-      } else {
-        alert('You are already subscribed to notifications.');
-      }
-    } catch (error) {
-      console.error('Subscription failed:', error);
-      alert('Subscription failed. Please try again.');
+  const handlePushSubscribe = () => {
+    if (!window.OneSignalDeferred) {
+      alert('OneSignal SDK is not loaded yet.');
+      return;
     }
-  });
-};
 
+    setLoading(true);
+
+    window.OneSignalDeferred.push(async (OneSignal) => {
+      try {
+        const isSupported = await OneSignal.Notifications.isPushSupported();
+        if (!isSupported) {
+          alert('Push notifications are not supported on this browser.');
+          return;
+        }
+
+        const permission = await OneSignal.Notifications.permissionNative();
+        if (permission !== 'granted') {
+          await OneSignal.Notifications.requestPermission();
+          alert('You are now subscribed to push notifications!');
+        } else {
+          alert('You are already subscribed to notifications.');
+        }
+      } catch (error) {
+        console.error('Subscription failed:', error);
+        alert('Something went wrong. Please try again.');
+      } finally {
+        setLoading(false);
+      }
+    });
+  };
 
   return (
     <div>
