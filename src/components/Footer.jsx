@@ -1,13 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Footer.module.css';
 import { FaEnvelope } from 'react-icons/fa';
 import { GiDove } from 'react-icons/gi';
 
 export default function Footer() {
   const [loading, setLoading] = useState(false);
+  const [isOneSignalReady, setIsOneSignalReady] = useState(false);
+
+  useEffect(() => {
+    const waitForOneSignal = async () => {
+      if (window.OneSignalDeferred) {
+        window.OneSignalDeferred.push(function (OneSignal) {
+          setIsOneSignalReady(true);
+        });
+      } else {
+        console.warn('OneSignal is not available.');
+      }
+    };
+    waitForOneSignal();
+  }, []);
 
   const handlePushSubscribe = async () => {
-    if (!window.OneSignal) {
+    if (!window.OneSignal || !isOneSignalReady) {
       alert('OneSignal is not loaded yet.');
       return;
     }
@@ -20,7 +34,6 @@ export default function Footer() {
 
     try {
       setLoading(true);
-
       const permission = await window.OneSignal.getNotificationPermission();
       if (permission !== 'granted') {
         await window.OneSignal.subscribe();
@@ -67,13 +80,12 @@ export default function Footer() {
             <button
               type="button"
               onClick={handlePushSubscribe}
-              disabled={loading}
+              disabled={loading || !isOneSignalReady}
               className={styles.subscribeButton}
             >
               {loading && <div className={styles.spinner} aria-label="loading spinner"></div>}
               {loading ? 'Subscribing...' : 'Subscribe to Notifications'}
             </button>
-
           </div>
         </div>
 
