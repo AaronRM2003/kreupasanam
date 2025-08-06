@@ -11,7 +11,7 @@
   box-shadow: 0 8px 24px rgba(36, 107, 253, 0.15);
   position: relative;
   z-index: 10;
-  min-height: 280px; /* keeps footer from feeling too short */
+  min-height: 280px;
 }
 
 .waveTop {
@@ -33,7 +33,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  max-width: 1400px; /* increased from 1200 */
+  max-width: 1400px;
   margin: 0 auto;
   width: 100%;
   text-align: center;
@@ -41,9 +41,9 @@
 
 /* Wider sections with more padding */
 .section {
-  flex: 1 1 320px; /* larger base flex-basis */
+  flex: 1 1 320px;
   padding: 1.5rem;
-  max-width: 600px; /* increased from 500 */
+  max-width: 600px;
   box-sizing: border-box;
 }
 
@@ -59,66 +59,6 @@
   margin-bottom: 0.75rem;
 }
 
-/* Newsletter form layout — flex with gap, prevent input shrinking */
-.newsletter {
-  display: flex;
-  flex-wrap: nowrap;
-  margin-top: 0.5rem;
-  justify-content: center;
-  gap: 0.5rem;
-}
-
-.newsletter input {
-  flex: 1; /* fill remaining space */
-  min-width: 200px;
-  padding: 0.6rem 1rem;
-  border-radius: 20px 0 0 20px;
-  border: 1.5px solid #a1c4fd;
-  outline: none;
-  font-size: 1rem;
-  font-weight: 500;
-  color: #0e1a3a;
-  background: #f0f6ff;
-  transition: border-color 0.3s ease;
-  box-shadow: inset 0 0 6px rgba(36, 107, 253, 0.1);
-}
-
-.newsletter input::placeholder {
-  color: #8aa4e6;
-  font-style: italic;
-}
-
-.newsletter input:focus {
-  background: white;
-  box-shadow: 0 0 8px 2px #aac7ff;
-}
-
-.newsletter button {
-  flex-shrink: 0;
-  padding: 0.6rem 1.5rem;
-  background-color: #246bfd;
-  color: white;
-  border: none;
-  border-radius: 0 20px 20px 0;
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
-  box-shadow: 0 3px 8px rgba(36, 107, 253, 0.4);
-}
-
-.newsletter button:hover {
-  background-color: #1e40af;
-  box-shadow: 0 5px 14px rgba(30, 64, 175, 0.7);
-}
-
-.newsletter button:disabled {
-  background-color: #a1c4fd;
-  cursor: not-allowed;
-  box-shadow: none;
-  color: #e0e9ff;
-}
-
 /* Email link styling */
 .emailText {
   display: flex;
@@ -126,12 +66,12 @@
   justify-content: center;
   font-size: 1rem;
   font-weight: 500;
-  color: #202124; /* Gmail-like dark text */
+  color: #202124;
   margin: 0.3rem 0;
 }
 
 .emailLink {
-  color: #1967d2; /* Gmail link blue */
+  color: #1967d2;
   text-decoration: none;
   font-weight: 600;
   transition: color 0.2s ease;
@@ -139,27 +79,8 @@
 
 .emailLink:hover,
 .emailLink:focus {
-  color: #0b47a1; /* Darker blue on hover/focus */
+  color: #0b47a1;
   text-decoration: underline;
-}
-
-.section p.thankYouMessage {
-  color: #1e40af;
-  font-weight: 600;
-  margin-top: 1rem;
-  animation: fadeIn 0.5s ease forwards;
-}
-
-/* Animation for thank you */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .footerBottom {
@@ -173,6 +94,26 @@
   word-break: break-word;
 }
 
+/* Push notification subscribe button */
+.subscribeButton {
+  margin-top: 1rem;
+  padding: 0.6rem 1.5rem;
+  background-color: #246bfd;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 10px rgba(36, 107, 253, 0.3);
+}
+
+.subscribeButton:hover {
+  background-color: #1e40af;
+  box-shadow: 0 6px 16px rgba(30, 64, 175, 0.6);
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
   .footer {
@@ -182,7 +123,7 @@
   .footerTop {
     flex-direction: column;
     align-items: center;
-    padding: 0 2rem; /* added more horizontal padding */
+    padding: 0 2rem;
   }
 
   .section {
@@ -190,16 +131,8 @@
     padding: 1.5rem 1rem;
   }
 
-  .newsletter {
-    flex-direction: column;
+  .subscribeButton {
     width: 100%;
-    gap: 0.75rem;
-  }
-
-  .newsletter input,
-  .newsletter button {
-    width: 100%;
-    border-radius: 20px;
     font-size: 1.1rem;
     padding: 0.7rem 1.2rem;
   }

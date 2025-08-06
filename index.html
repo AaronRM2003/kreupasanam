@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
 
   <!-- Title & Favicon -->
   <title>Kreupasanam Testimonies</title>
@@ -33,7 +34,17 @@
   <meta name="twitter:title" content="Kreupasanam Testimonies" />
   <meta name="twitter:description" content="Explore content from Kreupasanam Marian Shrine in all languages – testimonies, oracles, covenant worship" />
   <meta name="twitter:image" content="https://kreupasanamtestimonies.netlify.app/assets/preview.jpg" />
-  
+  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function (OneSignal) {
+    await OneSignal.init({
+      appId: 'd653d5f7-8e05-4bd6-b634-1f47dc6c3a03',
+      autoRegister: false, // Important: Only subscribe on button click
+    });
+  });
+</script>
+
 </head>
 
 <body>
@@ -41,6 +52,7 @@
 
   <!-- YouTube iframe API -->
   <script src="https://www.youtube.com/iframe_api"></script>
+
 
   <!-- Main App Script -->
   <script type="module" src="/src/main.jsx"></script>

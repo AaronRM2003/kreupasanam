@@ -21,7 +21,7 @@ html, body {
 .container {
   width: 100%;
   max-width: 100%;
-  margin: 1.5rem auto;
+  margin: 1rem auto;
   padding: 0 1rem;
 }
 
@@ -58,7 +58,7 @@ html, body {
 
 
 .container {
-  margin: 1.5rem auto;
+  margin: 1rem auto;
   padding:  1rem;
   max-width: 1200px;
 }
@@ -102,7 +102,7 @@ html, body {
 /* Optional: enhanced spacing and scaling for larger screens */
 @media (min-width: 1024px) {
   .wrapper {
-    padding: 3rem 6rem;
+    padding: 1rem 6rem;
   }
   .heading{
     font-size: 3rem;

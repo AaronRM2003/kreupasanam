@@ -1,39 +1,32 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './Footer.module.css';
 import { FaEnvelope } from 'react-icons/fa';
-import { GiDove } from 'react-icons/gi'; // Game Icons library has a dove icon
-
+import { GiDove } from 'react-icons/gi';
 
 export default function Footer() {
-  const [submitted, setSubmitted] = useState(false);
-  const [email, setEmail] = useState('');
-  const [loading, setLoading] = useState(false);
+  const handlePushSubscribe = async () => {
+    if (!window.OneSignal) {
+      alert('OneSignal is not loaded yet.');
+      return;
+    }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    const isSupported = await window.OneSignal.isPushNotificationsSupported();
+    if (!isSupported) {
+      alert('Push notifications are not supported in this browser.');
+      return;
+    }
 
-    setLoading(true);
-    try {
-      const response = await fetch('https://formspree.io/f/mzzvgyaa', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      if (response.ok) {
-        setSubmitted(true);
-        setEmail('');
-      } else {
-        alert('Submission failed. Please try again.');
+    const permission = await window.OneSignal.getNotificationPermission();
+    if (permission !== 'granted') {
+      try {
+        await window.OneSignal.subscribe();
+        alert('You are now subscribed to push notifications!');
+      } catch (error) {
+        console.error('Subscription failed:', error);
+        alert('Subscription failed. Please try again.');
       }
-    } catch (error) {
-      console.error('Form submission error:', error);
-      alert('An error occurred. Please try again later.');
-    } finally {
-      setLoading(false);
+    } else {
+      alert('You are already subscribed to notifications.');
     }
   };
 
@@ -52,44 +45,43 @@ export default function Footer() {
         <div className={styles.footerTop}>
           <div className={styles.section}>
             <h3>Contact Us</h3>
-           <p className={styles.emailText}>
-  <FaEnvelope style={{ marginRight: '0.5rem', color: '#d93025' }} />
-  <a href="mailto:kreupasanamtestimonies@gmail.com" target="_blank" rel="noopener noreferrer" className={styles.emailLink}>
-    kreupasanamtestimonies@gmail.com
-  </a>
-</p>
+            <p className={styles.emailText}>
+              <FaEnvelope style={{ marginRight: '0.5rem', color: '#d93025' }} />
+              <a
+                href="mailto:kreupasanamtestimonies@gmail.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.emailLink}
+              >
+                kreupasanamtestimonies@gmail.com
+              </a>
+            </p>
 
-
-            <h3 style={{ marginTop: '1.5rem' }}>Stay Updated</h3>
-
-            {!submitted ? (
-              <form onSubmit={handleSubmit} className={styles.newsletter}>
-                <input
-                  type="email"
-                  placeholder="Your email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  disabled={loading}
-                />
-                <button type="submit" disabled={loading}>
-                  {loading ? 'Loading...' : 'Subscribe'}
-                </button>
-              </form>
-            ) : (
-              <p className={`${styles.thankYouMessage}`}>
-                  Thank you for subscribing!
-                  </p>
-
-            )}
+            <h3 style={{ marginTop: '1.5rem' }}>Get Notifications</h3>
+            <button
+              type="button"
+              onClick={handlePushSubscribe}
+              className={styles.subscribeButton}
+            >
+              Subscribe to Notifications
+            </button>
           </div>
         </div>
 
         <div className={styles.footerBottom}>
- <p>
-      <GiDove style={{ color: '#fff', fontSize: '1.2rem', verticalAlign: 'middle', marginRight: '0.3rem' }} />
-      {new Date().getFullYear()} Kreupasanam Testimonies. Shared with love. Not affiliated with the official shrine.
-    </p>        </div>
+          <p>
+            <GiDove
+              style={{
+                color: '#fff',
+                fontSize: '1.2rem',
+                verticalAlign: 'middle',
+                marginRight: '0.3rem',
+              }}
+            />
+            {new Date().getFullYear()} Kreupasanam Testimonies. Shared with love.
+            Not affiliated with the official shrine.
+          </p>
+        </div>
       </footer>
     </div>
   );
