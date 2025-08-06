@@ -82,28 +82,85 @@ export default function Dhyanam({ lang: initialLang }) {
   }, [imagesLoaded, thumbnails.length]);
 
   if (loadingData) {
-    return (
-      <div className={styles.loadingOverlay}>
-        <div className={styles.spinner}></div>
-        <p>Loading content...</p>
-      </div>
-    );
-  }
+  return (
+    <div
+      style={{
+        position: 'fixed',
+        inset: 0,
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 9999,
+      }}
+    >
+      <div
+        style={{
+          border: '6px solid #f3f3f3',
+         borderTop: '4px solid #246bfd',
+          borderRadius: '50%',
+          width: '48px',
+          height: '48px',
+          animation: 'spin 1s linear infinite',
+          marginBottom: '1rem',
+        }}
+      />
+      <p style={{ fontSize: '1.25rem', color: '#333' }}>Loading content...</p>
 
-  if (errorLoading) {
-    return (
-      <div className={styles.notFoundPage}>
-        <div className={styles.notFoundContainer}>
-          <span className={styles.notFoundCode}>500</span>
-          <h1 className={styles.notFoundTitle}>Error Loading Dhyanam</h1>
-          <p className={styles.notFoundText}>
-            There was a problem loading the content. Please try again later.
-          </p>
-          {/* Optional: Add a refresh or go back button here */}
-        </div>
-      </div>
-    );
-  }
+      {/* Add the keyframes for spin animation */}
+      <style>
+        {`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}
+      </style>
+    </div>
+  );
+}
+
+if (errorLoading) {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        height: '100vh',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fefefe',
+        flexDirection: 'column',
+        padding: '1rem',
+        textAlign: 'center',
+      }}
+    >
+      <span
+        style={{
+          fontSize: '6rem',
+          fontWeight: 'bold',
+          color: '#e74c3c',
+          marginBottom: '1rem',
+        }}
+      >
+        500
+      </span>
+      <h1
+        style={{
+          fontSize: '2rem',
+          marginBottom: '0.5rem',
+          color: '#333',
+        }}
+      >
+        Error Loading Dhyanam
+      </h1>
+      <p style={{ fontSize: '1.125rem', color: '#666', marginBottom: '1rem' }}>
+        There was a problem loading the content. Please try again later.
+      </p>
+      {/* Optional: Add a refresh or go back button here */}
+    </div>
+  );
+}
 
   return (
     <section
