@@ -1,57 +1,41 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './Footer.module.css';
 import { FaEnvelope } from 'react-icons/fa';
 import { GiDove } from 'react-icons/gi';
 
 export default function Footer() {
+  const [submitted, setSubmitted] = useState(false);
+  const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
-  const [isOneSignalReady, setIsOneSignalReady] = useState(false);
 
-  useEffect(() => {
-    if (!window.OneSignalDeferred) {
-      console.warn('OneSignal SDK not yet loaded.');
-      return;
-    }
-
-    // Wait for OneSignal SDK to be initialized
-    window.OneSignalDeferred.push(async (OneSignal) => {
-      const isInitialized = await OneSignal.isInitialized();
-      if (isInitialized) {
-        setIsOneSignalReady(true);
-      }
-    });
-  }, []);
-
-  const handlePushSubscribe = () => {
-    if (!window.OneSignalDeferred) {
-      alert('OneSignal SDK is not loaded yet.');
-      return;
-    }
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setLoading(true);
 
-    window.OneSignalDeferred.push(async (OneSignal) => {
-      try {
-        const isSupported = await OneSignal.Notifications.isPushSupported();
-        if (!isSupported) {
-          alert('Push notifications are not supported on this browser.');
-          return;
-        }
+    try {
+      const formData = new FormData();
+      formData.append('EMAIL', email);
 
-        const permission = await OneSignal.Notifications.permissionNative();
-        if (permission !== 'granted') {
-          await OneSignal.Notifications.requestPermission();
-          alert('You are now subscribed to push notifications!');
-        } else {
-          alert('You are already subscribed to notifications.');
+      const response = await fetch(
+        'https://f76d4e2e.sibforms.com/serve/MUIFAALPErxokGnIY8ArQQCeygOstn6mlgtUjcu9TY_vLgyv-Mn9oM6IGP9KUT_H_LpNGWBmUttw62T0ZX9MEAjIkLDHoalxTka2euEN66qPJ9Dnxb9YgL9-3o4n_adm0HyfuJfIaWWePOoPT8Bp7UKNmlwUR4zPWMrlCCAj8lrDq6jgbcKraUqEb4jYU3uvZvUy4vqe2hJ3LQCZ',
+        {
+          method: 'POST',
+          body: formData,
         }
-      } catch (error) {
-        console.error('Subscription failed:', error);
-        alert('Something went wrong. Please try again.');
-      } finally {
-        setLoading(false);
+      );
+
+      if (response.ok) {
+        setSubmitted(true);
+        setEmail('');
+      } else {
+        alert('Subscription failed. Please try again.');
       }
-    });
+    } catch (error) {
+      console.error('Subscription error:', error);
+      alert('An error occurred. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -70,7 +54,7 @@ export default function Footer() {
           <div className={styles.section}>
             <h3>Contact Us</h3>
             <p className={styles.emailText}>
-              <FaEnvelope style={{ marginRight: '0.5rem', color: '#d93025' }} />
+              <FaEnvelope style={{ marginRight: 8, color: '#d93025' }} />
               <a
                 href="mailto:kreupasanamtestimonies@gmail.com"
                 target="_blank"
@@ -81,31 +65,34 @@ export default function Footer() {
               </a>
             </p>
 
-            <h3 style={{ marginTop: '1.5rem' }}>Get Notifications</h3>
-            <button
-              type="button"
-              onClick={handlePushSubscribe}
-              disabled={loading || !isOneSignalReady}
-              className={styles.subscribeButton}
-            >
-              {loading && <div className={styles.spinner} aria-label="loading spinner"></div>}
-              {loading ? 'Subscribing...' : 'Subscribe to Notifications'}
-            </button>
+            <h3 style={{ marginTop: 24 }}>Stay Updated</h3>
+
+            {!submitted ? (
+              <form onSubmit={handleSubmit} className={styles.newsletter}>
+                <input
+                  type="email"
+                  placeholder="Your email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={loading}
+                />
+                <button type="submit" disabled={loading}>
+                  {loading ? 'Loading...' : 'Subscribe'}
+                </button>
+              </form>
+            ) : (
+              <p className={styles.thankYouMessage}>Thank you for subscribing!</p>
+            )}
           </div>
         </div>
 
         <div className={styles.footerBottom}>
           <p>
             <GiDove
-              style={{
-                color: '#fff',
-                fontSize: '1.2rem',
-                verticalAlign: 'middle',
-                marginRight: '0.3rem',
-              }}
+              style={{ color: '#fff', fontSize: 18, verticalAlign: 'middle', marginRight: 6 }}
             />
-            {new Date().getFullYear()} Kreupasanam Testimonies. Shared with love.
-            Not affiliated with the official shrine.
+            {new Date().getFullYear()} Kreupasanam Testimonies. Shared with love. Not affiliated with the official shrine.
           </p>
         </div>
       </footer>
