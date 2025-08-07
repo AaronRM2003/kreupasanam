@@ -18,16 +18,7 @@
       "collapseWhitespace": true
     },
     "include": [
-      "/en/home",
-      "/hi/home",
-      "/zh/home",
-      "/bn/home",
-      "/ta/home",
-      "/te/home",
-      "/fr/home",
-      "/es/home",
-      "/mr/home",
-      "/kn/home"
+      "/en/home"
     ]
   },
   "dependencies": {
