@@ -10,10 +10,13 @@ export default function ImageSpacer({
   className = "",
   maxWidth = "50%",
   hideOnMobile = false,
+  onReady
 }) {
   const wrapperRef = useRef(null);
   const [isVisibleMobile, setIsVisibleMobile] = useState(true);
   const [isVisibleWrap, setIsVisibleWrap] = useState(true);
+  const [imageLoaded, setImageLoaded] = useState(false);
+
 
   // Mobile visibility logic (portrait + landscape)
  useEffect(() => {
@@ -27,13 +30,18 @@ export default function ImageSpacer({
     }
   };
 
+
   checkMobile(); // Initial check on mount
   window.addEventListener("resize", checkMobile); // Re-check on resize
 
   return () => window.removeEventListener("resize", checkMobile); // Cleanup
 }, [hideOnMobile]);
 
-
+useEffect(() => {
+    if (imageLoaded && typeof onReady === "function") {
+      onReady();
+    }
+  }, [imageLoaded, onReady]);
   // Hide if wrapped onto a new line
   useEffect(() => {
     const wrapper = wrapperRef.current;
@@ -85,6 +93,8 @@ export default function ImageSpacer({
           display: "block",
           objectFit: "contain", // ✅ add this
         }}
+         onLoad={() => setImageLoaded(true)}
+        onError={() => setImageLoaded(true)}
       />
 
       <div className="image-ground-shadow"></div>

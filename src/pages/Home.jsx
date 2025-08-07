@@ -16,7 +16,14 @@ export default function Home({ lang }) {
   const [introReady, setIntroReady] = useState(false);
   const [isHero1Visible, setIsHero1Visible] = useState(true);
   const [isHero2Visible, setIsHero2Visible] = useState(true);
+  const [readyCount, setReadyCount] = useState(0);
 
+  useEffect(() => {
+    if (readyCount >= 3) {
+      setIntroReady(true);
+    }
+  }, [readyCount]);
+  const handleReady = () => setReadyCount((count) => count + 1);
   // Mobile visibility check for both ImageSpacers
   useEffect(() => {
     const checkVisibility = () => {
@@ -84,7 +91,7 @@ export default function Home({ lang }) {
             </div>
 
             <div style={{ display: 'none' }}>
-              <IntroSection lang={lang} onReady={() => setIntroReady(true)} />
+              <IntroSection lang={lang} onReady={handleReady} />
             </div>
           </>
         ) : (
@@ -114,6 +121,7 @@ export default function Home({ lang }) {
                       marginSize="5%"
                       position="right"
                       hideOnMobile={true}
+                      onReady={handleReady}
                     />
                   </div>
                 )}
@@ -136,6 +144,7 @@ export default function Home({ lang }) {
                       marginSize="4%"
                       position="left"
                       hideOnMobile={true}
+                      onReady={handleReady}
                     />
                   </div>
                 )}
