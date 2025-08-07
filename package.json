@@ -4,12 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "postbuild": "react-snap"
-  },
+  "dev": "vite",
+  "lint": "eslint .",
+  "preview": "vite preview",
+  "prebuild": "rimraf dist",
+  "build": "vite build",
+  "postbuild": "react-snap"
+},
   "reactSnap": {
   "source": "dist",
   "inlineCss": true,
