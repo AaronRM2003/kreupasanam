@@ -23,7 +23,9 @@ export default function Home({ lang }) {
       setIntroReady(true);
     }
   }, [readyCount]);
+
   const handleReady = () => setReadyCount((count) => count + 1);
+
   // Mobile visibility check for both ImageSpacers
   useEffect(() => {
     const checkVisibility = () => {
@@ -52,6 +54,7 @@ export default function Home({ lang }) {
 
         {!introReady ? (
           <>
+            {/* Loading screen */}
             <div
               style={{
                 height: '100vh',
@@ -90,8 +93,25 @@ export default function Home({ lang }) {
               </style>
             </div>
 
+            {/* Hidden preloading components to trigger onReady */}
             <div style={{ display: 'none' }}>
               <IntroSection lang={lang} onReady={handleReady} />
+              <ImageSpacer
+                src={heroImage1}
+                maxWidth="80%"
+                marginSize="5%"
+                position="right"
+                hideOnMobile={true}
+                onReady={handleReady}
+              />
+              <ImageSpacer
+                src={heroImage}
+                maxWidth="100%"
+                marginSize="4%"
+                position="left"
+                hideOnMobile={true}
+                onReady={handleReady}
+              />
             </div>
           </>
         ) : (
@@ -121,7 +141,6 @@ export default function Home({ lang }) {
                       marginSize="5%"
                       position="right"
                       hideOnMobile={true}
-                      onReady={handleReady}
                     />
                   </div>
                 )}
@@ -144,7 +163,6 @@ export default function Home({ lang }) {
                       marginSize="4%"
                       position="left"
                       hideOnMobile={true}
-                      onReady={handleReady}
                     />
                   </div>
                 )}
