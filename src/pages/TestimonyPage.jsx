@@ -81,7 +81,7 @@ export default function TestimonyPage({ lang: initialLang }) {
   const { subtitles, currentSubtitle } = useSubtitles(subtitlesUrl, lang, currentTime);
 
   // Speech sync & volume control hook
-  const { isSpeaking, toggleSpeaking, volume, handleVolumeChange } = useSpeechSync({
+  const { isSpeaking, toggleSpeaking,stopSpeaking, volume, handleVolumeChange } = useSpeechSync({
     playerRef,
     showVideo,
     subtitles,
@@ -92,10 +92,10 @@ export default function TestimonyPage({ lang: initialLang }) {
 
   // Auto-disable speech when video closes
   useEffect(() => {
-    if (!showVideo && isSpeaking) {
-      window.speechSynthesis.cancel();
-    }
-  }, [showVideo, isSpeaking]);
+  if (!showVideo && isSpeaking) {
+    stopSpeaking();
+  }
+}, [showVideo, isSpeaking, stopSpeaking]);
 
   // Share URLs
   const shareUrl = window.location.href;

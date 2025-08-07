@@ -29,7 +29,7 @@ const getYouTubeThumbnail = (url) => {
   };
 
 
-export function TestimonyCard({ id, title, image, date, lang, path }) {
+export function TestimonyCard({ id, title, image, date, lang, path, onImageLoad }) {
   const navigate = useNavigate();
   const handleCardClick = () => navigate(`/${path}/${id}`);
   const translatedTitle = title[lang] || title.en;
@@ -37,7 +37,12 @@ export function TestimonyCard({ id, title, image, date, lang, path }) {
   return (
     <div className={styles.testimoniesCard}>
       <div className={styles.testimoniesImageWrapper}>
-        <img src={image} alt={translatedTitle} />
+        <img
+          src={image}
+          alt={translatedTitle}
+          onLoad={onImageLoad}
+          onError={onImageLoad} // fallback on error to avoid hanging spinner
+        />
       </div>
       <h3 className={styles.testimoniesCardTitle}>{translatedTitle}</h3>
       <p className={styles.testimoniesDate}>{date}</p>
@@ -51,6 +56,7 @@ export function TestimonyCard({ id, title, image, date, lang, path }) {
     </div>
   );
 }
+
 
 export default function Testimonies({lang:initialLang}) {
   const [lang, setLang] = useState(initialLang||'en');

@@ -157,7 +157,7 @@ if (errorLoading) {
           color: '#333',
         }}
       >
-        Error Loading Dhyanam
+        Error Loading Oracles
       </h1>
       <p style={{ fontSize: '1.125rem', color: '#666', marginBottom: '1rem' }}>
         There was a problem loading the content. Please try again later.

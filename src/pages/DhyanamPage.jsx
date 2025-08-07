@@ -100,22 +100,23 @@ export default function DhyanamPage({ lang: initialLang }) {
   const { subtitles, currentSubtitle } = useSubtitles(subtitlesUrl, lang, currentTime);
 
   // Speech sync & volume control hook
-  const { isSpeaking, toggleSpeaking, volume, handleVolumeChange } = useSpeechSync({
-    playerRef,
-    showVideo,
-    subtitles,
-    currentSubtitle,
-    currentTime,
-    lang,
-  });
-
-  // Auto-disable speaking when video is closed
-  useEffect(() => {
+  const { isSpeaking, toggleSpeaking,stopSpeaking, volume, handleVolumeChange } = useSpeechSync({
+      playerRef,
+      showVideo,
+      subtitles,
+      currentSubtitle,
+      currentTime,
+      lang,
+    });
+  
+    // Auto-disable speech when video closes
+    useEffect(() => {
     if (!showVideo && isSpeaking) {
-      window.speechSynthesis.cancel();
+      stopSpeaking();
     }
-  }, [showVideo, isSpeaking]);
+  }, [showVideo, isSpeaking, stopSpeaking]);
 
+  
   // Share URLs
   const shareUrl = window.location.href;
   const fbShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;

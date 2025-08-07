@@ -74,7 +74,7 @@ export function useSpeechSync({
     const speechRate = Math.min(Math.max(rawRate, 0.7), 1.1);
 
     if (playerRef.current?.setPlaybackRate) {
-      const adjustedRate = Math.max(0.8, Math.min(1, 1.4 / rawRate));
+      const adjustedRate = Math.max(0.7, Math.min(1, 1.4 / rawRate));
       playerRef.current.setPlaybackRate(adjustedRate);
     }
 
@@ -130,10 +130,22 @@ export function useSpeechSync({
       return newSpeaking;
     });
   };
+  const stopSpeaking = () => {
+    setIsSpeaking(false);
+    window.speechSynthesis.cancel();
+    // reset your refs if needed:
+    hasStartedSpeakingRef.current = false;
+    lastSpokenRef.current = '';
+    setVolume(100);
+    if (playerRef.current?.setVolume) {
+      playerRef.current.setVolume(100);
+    }
+  };
 
   return {
     isSpeaking,
     toggleSpeaking,
+    stopSpeaking,
     volume,
     handleVolumeChange,
   };

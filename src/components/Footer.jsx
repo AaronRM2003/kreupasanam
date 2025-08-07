@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styles from './Footer.module.css';
 import { FaEnvelope } from 'react-icons/fa';
-import { GiDove } from 'react-icons/gi';
+import { GiDove } from 'react-icons/gi'; // Game Icons library has a dove icon
+
 
 export default function Footer() {
   const [submitted, setSubmitted] = useState(false);
@@ -10,28 +11,26 @@ export default function Footer() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     setLoading(true);
-
     try {
-      const formData = new FormData();
-      formData.append('EMAIL', email);
-
-      const response = await fetch(
-        'https://f76d4e2e.sibforms.com/serve/MUIFAALPErxokGnIY8ArQQCeygOstn6mlgtUjcu9TY_vLgyv-Mn9oM6IGP9KUT_H_LpNGWBmUttw62T0ZX9MEAjIkLDHoalxTka2euEN66qPJ9Dnxb9YgL9-3o4n_adm0HyfuJfIaWWePOoPT8Bp7UKNmlwUR4zPWMrlCCAj8lrDq6jgbcKraUqEb4jYU3uvZvUy4vqe2hJ3LQCZ',
-        {
-          method: 'POST',
-          body: formData,
-        }
-      );
+      const response = await fetch('https://formspree.io/f/mzzvgyaa', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
 
       if (response.ok) {
         setSubmitted(true);
         setEmail('');
       } else {
-        alert('Subscription failed. Please try again.');
+        alert('Submission failed. Please try again.');
       }
     } catch (error) {
-      console.error('Subscription error:', error);
+      console.error('Form submission error:', error);
       alert('An error occurred. Please try again later.');
     } finally {
       setLoading(false);
@@ -53,19 +52,15 @@ export default function Footer() {
         <div className={styles.footerTop}>
           <div className={styles.section}>
             <h3>Contact Us</h3>
-            <p className={styles.emailText}>
-              <FaEnvelope style={{ marginRight: 8, color: '#d93025' }} />
-              <a
-                href="mailto:kreupasanamtestimonies@gmail.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.emailLink}
-              >
-                kreupasanamtestimonies@gmail.com
-              </a>
-            </p>
+           <p className={styles.emailText}>
+  <FaEnvelope style={{ marginRight: '0.5rem', color: '#d93025' }} />
+  <a href="mailto:kreupasanamtestimonies@gmail.com" target="_blank" rel="noopener noreferrer" className={styles.emailLink}>
+    kreupasanamtestimonies@gmail.com
+  </a>
+</p>
 
-            <h3 style={{ marginTop: 24 }}>Stay Updated</h3>
+
+            <h3 style={{ marginTop: '1.5rem' }}>Stay Updated</h3>
 
             {!submitted ? (
               <form onSubmit={handleSubmit} className={styles.newsletter}>
@@ -82,19 +77,19 @@ export default function Footer() {
                 </button>
               </form>
             ) : (
-              <p className={styles.thankYouMessage}>Thank you for subscribing!</p>
+              <p className={`${styles.thankYouMessage}`}>
+                  Thank you for subscribing!
+                  </p>
+
             )}
           </div>
         </div>
 
         <div className={styles.footerBottom}>
-          <p>
-            <GiDove
-              style={{ color: '#fff', fontSize: 18, verticalAlign: 'middle', marginRight: 6 }}
-            />
-            {new Date().getFullYear()} Kreupasanam Testimonies. Shared with love. Not affiliated with the official shrine.
-          </p>
-        </div>
+ <p>
+      <GiDove style={{ color: '#fff', fontSize: '1.2rem', verticalAlign: 'middle', marginRight: '0.3rem' }} />
+      {new Date().getFullYear()} Kreupasanam Testimonies. Shared with love. Not affiliated with the official shrine.
+    </p>        </div>
       </footer>
     </div>
   );

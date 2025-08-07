@@ -89,20 +89,21 @@ export default function OraclesPage({ lang: initialLang }) {
   // Hooks always called unconditionally
   const { currentTime, playerRef, duration: totalDuration } = useYouTubePlayer(videoId, showVideo);
   const { subtitles, currentSubtitle } = useSubtitles(subtitlesUrl, lang, currentTime);
-  const { isSpeaking, toggleSpeaking, volume, handleVolumeChange } = useSpeechSync({
-    playerRef,
-    showVideo,
-    subtitles,
-    currentSubtitle,
-    currentTime,
-    lang,
-  });
-
-  useEffect(() => {
+  const { isSpeaking, toggleSpeaking,stopSpeaking, volume, handleVolumeChange } = useSpeechSync({
+      playerRef,
+      showVideo,
+      subtitles,
+      currentSubtitle,
+      currentTime,
+      lang,
+    });
+  
+    // Auto-disable speech when video closes
+    useEffect(() => {
     if (!showVideo && isSpeaking) {
-      window.speechSynthesis.cancel();
+      stopSpeaking();
     }
-  }, [showVideo, isSpeaking]);
+  }, [showVideo, isSpeaking, stopSpeaking]);
 
   // Share URLs for social media
   const shareUrl = window.location.href;
