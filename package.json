@@ -7,8 +7,16 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "postbuild": "react-snap"
   },
+  "reactSnap": {
+  "source": "dist",
+  "inlineCss": true,
+  "minifyHtml": {
+    "collapseWhitespace": true
+  }
+},
   "dependencies": {
     "@formspree/react": "^3.0.0",
     "bootstrap": "^5.3.7",
@@ -19,6 +27,7 @@
     "react-icons": "^5.5.0",
     "react-intersection-observer": "^9.16.0",
     "react-router-dom": "^7.6.3",
+    "react-snap": "^1.23.0",
     "react-youtube": "^10.1.0"
   },
   "devDependencies": {
