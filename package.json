@@ -4,32 +4,32 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-  "dev": "vite",
-  "lint": "eslint .",
-  "preview": "vite preview",
-  "prebuild": "rimraf dist",
-  "build": "vite build",
-  "postbuild": "react-snap"
-},
-  "reactSnap": {
-  "source": "dist",
-  "inlineCss": true,
-  "minifyHtml": {
-    "collapseWhitespace": true
+    "dev": "vite",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "prebuild": "rimraf dist",
+    "build": "vite build",
+    "postbuild": "react-snap"
   },
-  "include": [
-    "/en/home",
-    "/hi/home",
-    "/zh/home",
-    "/bn/home",
-    "/ta/home",
-    "/te/home",
-    "/fr/home",
-    "/es/home",
-    "/mr/home",
-    "/kn/home"
-  ]
-},
+  "reactSnap": {
+    "source": "dist",
+    "inlineCss": true,
+    "minifyHtml": {
+      "collapseWhitespace": true
+    },
+    "include": [
+      "/en/home",
+      "/hi/home",
+      "/zh/home",
+      "/bn/home",
+      "/ta/home",
+      "/te/home",
+      "/fr/home",
+      "/es/home",
+      "/mr/home",
+      "/kn/home"
+    ]
+  },
   "dependencies": {
     "@formspree/react": "^3.0.0",
     "bootstrap": "^5.3.7",
@@ -54,6 +54,7 @@
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.2.0",
     "postcss": "^8.5.6",
+    "rimraf": "^6.0.1",
     "tailwindcss": "^4.1.11",
     "vite": "^7.0.0"
   }
