@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import styles from '../components/Testimonies.module.css';
 import { TestimonyCard } from '../components/Testimonies';
 import { Dropdown } from 'react-bootstrap';
@@ -27,13 +27,14 @@ export default function Oracles({ lang: initialLang }) {
   const [imagesLoaded, setImagesLoaded] = useState(0);
   const [allImagesLoaded, setAllImagesLoaded] = useState(false);
 
+  // Sync language with props
   useEffect(() => {
     if (initialLang && initialLang !== lang) {
       setLang(initialLang);
     }
   }, [initialLang]);
 
-  // Fetch oracles-content.json on mount
+  // Fetch oracles data
   useEffect(() => {
     setLoadingData(true);
     setErrorLoading(false);
@@ -55,117 +56,110 @@ export default function Oracles({ lang: initialLang }) {
 
   const getYouTubeThumbnail = (url) => {
     try {
-      const videoIdMatch = url.match(
+      const match = url.match(
         /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([\w-]{11})/
       );
-      const videoId = videoIdMatch ? videoIdMatch[1] : null;
-      if (videoId) {
-        return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-      }
-      return null;
+      return match ? `https://img.youtube.com/vi/${match[1]}/maxresdefault.jpg` : null;
     } catch {
       return null;
     }
   };
 
-  // Extract thumbnails when oracles data changes
-  const thumbnails = oracles.map(({ video }) => getYouTubeThumbnail(video)).filter(Boolean);
+  // Memoized thumbnails
+  const thumbnails = useMemo(() => {
+    return oracles.map(({ video }) => getYouTubeThumbnail(video)).filter(Boolean);
+  }, [oracles]);
 
-  // Called on each image load
-  const handleImageLoad = () => {
-    setImagesLoaded((prev) => prev + 1);
-  };
-
-  // When all images loaded, mark complete
+  // Reset image load counter only when thumbnails count changes
   useEffect(() => {
-    if (thumbnails.length > 0 && imagesLoaded === thumbnails.length) {
+    if (thumbnails.length > 0) {
+      setImagesLoaded(0);
+      setAllImagesLoaded(false);
+    } else {
       setAllImagesLoaded(true);
     }
-    if (thumbnails.length === 0) {
+  }, [thumbnails.length]);
+
+  // Count loaded images and mark when all done
+  useEffect(() => {
+    if (thumbnails.length > 0 && imagesLoaded >= thumbnails.length) {
       setAllImagesLoaded(true);
     }
   }, [imagesLoaded, thumbnails.length]);
 
+  const handleImageLoad = () => {
+    setImagesLoaded((prev) => prev + 1);
+  };
+
+  // Memoized sorted oracles
+  const sortedOracles = useMemo(() => {
+    return oracles.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
+  }, [oracles]);
+
   if (loadingData) {
-  return (
-    <div
-      style={{
-        position: 'fixed',
-        inset: 0,
-        backgroundColor: 'rgba(255, 255, 255, 0.9)',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: 9999,
-      }}
-    >
+    return (
       <div
         style={{
-          border: '6px solid #f3f3f3',
-         borderTop: '4px solid #246bfd',
-          borderRadius: '50%',
-          width: '48px',
-          height: '48px',
-          animation: 'spin 1s linear infinite',
-          marginBottom: '1rem',
-        }}
-      />
-      <p style={{ fontSize: '1.25rem', color: '#333' }}>Loading content...</p>
-
-      {/* Add the keyframes for spin animation */}
-      <style>
-        {`
-          @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-          }
-        `}
-      </style>
-    </div>
-  );
-}
-
-if (errorLoading) {
-  return (
-    <div
-      style={{
-        display: 'flex',
-        height: '100vh',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#fefefe',
-        flexDirection: 'column',
-        padding: '1rem',
-        textAlign: 'center',
-      }}
-    >
-      <span
-        style={{
-          fontSize: '6rem',
-          fontWeight: 'bold',
-          color: '#e74c3c',
-          marginBottom: '1rem',
+          position: 'fixed',
+          inset: 0,
+          backgroundColor: 'rgba(255, 255, 255, 0.9)',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 9999,
         }}
       >
-        500
-      </span>
-      <h1
+        <div
+          style={{
+            border: '6px solid #f3f3f3',
+            borderTop: '4px solid #246bfd',
+            borderRadius: '50%',
+            width: '48px',
+            height: '48px',
+            animation: 'spin 1s linear infinite',
+            marginBottom: '1rem',
+          }}
+        />
+        <p style={{ fontSize: '1.25rem', color: '#333' }}>Loading content...</p>
+        <style>
+          {`
+            @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+          `}
+        </style>
+      </div>
+    );
+  }
+
+  if (errorLoading) {
+    return (
+      <div
         style={{
-          fontSize: '2rem',
-          marginBottom: '0.5rem',
-          color: '#333',
+          display: 'flex',
+          height: '100vh',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#fefefe',
+          flexDirection: 'column',
+          padding: '1rem',
+          textAlign: 'center',
         }}
       >
-        Error Loading Oracles
-      </h1>
-      <p style={{ fontSize: '1.125rem', color: '#666', marginBottom: '1rem' }}>
-        There was a problem loading the content. Please try again later.
-      </p>
-      {/* Optional: Add a refresh or go back button here */}
-    </div>
-  );
-}
+        <span style={{ fontSize: '6rem', fontWeight: 'bold', color: '#e74c3c', marginBottom: '1rem' }}>
+          500
+        </span>
+        <h1 style={{ fontSize: '2rem', marginBottom: '0.5rem', color: '#333' }}>
+          Error Loading Oracles
+        </h1>
+        <p style={{ fontSize: '1.125rem', color: '#666', marginBottom: '1rem' }}>
+          There was a problem loading the content. Please try again later.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <section
@@ -188,7 +182,6 @@ if (errorLoading) {
             >
               &#8592; <span>Back</span>
             </button>
-
             <h2 className={styles.testimoniesTitle} style={{ margin: 0 }}>
               Oracles
             </h2>
@@ -220,7 +213,6 @@ if (errorLoading) {
           </div>
         </div>
 
-        {/* Loading screen */}
         {!allImagesLoaded && (
           <div
             style={{
@@ -254,28 +246,24 @@ if (errorLoading) {
           </div>
         )}
 
-        {/* Show content only after images loaded */}
         {allImagesLoaded && (
           <div className={styles.testimoniesGrid}>
-            {oracles.length > 0 ? (
-              oracles
-                .slice()
-                .sort((a, b) => new Date(b.date) - new Date(a.date))
-                .map(({ id, title, video, date }) => {
-                  const thumbnail = getYouTubeThumbnail(video);
-                  return (
-                    <TestimonyCard
-                      key={id}
-                      id={id}
-                      title={title}
-                      image={thumbnail || ''}
-                      date={date}
-                      lang={lang}
-                      path={`${lang}/oracles`}
-                      onImageLoad={handleImageLoad}
-                    />
-                  );
-                })
+            {sortedOracles.length > 0 ? (
+              sortedOracles.map(({ id, title, video, date }) => {
+                const thumbnail = getYouTubeThumbnail(video);
+                return (
+                  <TestimonyCard
+                    key={id}
+                    id={id}
+                    title={title}
+                    image={thumbnail || ''}
+                    date={date}
+                    lang={lang}
+                    path={`${lang}/oracles`}
+                    onImageLoad={handleImageLoad}
+                  />
+                );
+              })
             ) : (
               <div
                 className={styles.testimoniesCard}
@@ -304,10 +292,10 @@ if (errorLoading) {
           </div>
         )}
 
-        {/* Hidden images for preloading */}
+        {/* Hidden image preloaders */}
         <div style={{ display: 'none' }}>
           {thumbnails.map((src, idx) => (
-            <img key={idx} src={src} alt="" onLoad={handleImageLoad} />
+            <img key={idx} src={src} alt="" onLoad={handleImageLoad} onError={handleImageLoad} />
           ))}
         </div>
       </div>

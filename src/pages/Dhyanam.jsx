@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect ,useMemo} from 'react';
 import styles from '../components/Testimonies.module.css';
 import { TestimonyCard } from '../components/Testimonies';
 import { Dropdown } from 'react-bootstrap';
@@ -63,23 +63,29 @@ export default function Dhyanam({ lang: initialLang }) {
   };
 
   // Extract all valid thumbnail URLs once dhyanam data is loaded
-  const thumbnails = dhyanam.map(({ video }) => getYouTubeThumbnail(video)).filter(Boolean);
+  const thumbnails = useMemo(() => {
+  return dhyanam.map(({ video }) => getYouTubeThumbnail(video)).filter(Boolean);
+}, [dhyanam]);
 
-  // Called on each image load
-  const handleImageLoad = () => {
-    setImagesLoaded((prev) => prev + 1);
-  };
+useEffect(() => {
+  if (thumbnails.length > 0) {
+    setImagesLoaded(0);
+    setAllImagesLoaded(false);
+  } else {
+    setAllImagesLoaded(true);
+  }
+}, [thumbnails.length]);
 
-  // Check if all images loaded
-  useEffect(() => {
-    if (thumbnails.length > 0 && imagesLoaded === thumbnails.length) {
-      setAllImagesLoaded(true);
-    }
-    // If no images, consider loaded
-    if (thumbnails.length === 0) {
-      setAllImagesLoaded(true);
-    }
-  }, [imagesLoaded, thumbnails.length]);
+const handleImageLoad = () => {
+  setImagesLoaded((prev) => prev + 1);
+};
+
+useEffect(() => {
+  if (imagesLoaded === thumbnails.length && thumbnails.length > 0) {
+    setAllImagesLoaded(true);
+  }
+}, [imagesLoaded, thumbnails.length]);
+
 
   if (loadingData) {
   return (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'; // already imported
+import  { useState, useEffect } from 'react'; // already imported
 import styles from '../components/Testimonies.module.css';
 import { TestimonyCard } from '../components/Testimonies';
 import { Dropdown } from 'react-bootstrap';
@@ -43,17 +43,7 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
       .catch((err) => console.error('Failed to load testimonies:', err));
   }, []);
 
-  useEffect(() => {
-    // Start fade-out
-    setFade(false);
-
-    // After fade-out duration, set fade-in
-    const timer = setTimeout(() => {
-      setFade(true);
-    }, 300); // 300ms fade duration
-
-    return () => clearTimeout(timer);
-  }, [selectedMonth, selectedYear]);
+  
 
 
   useEffect(() => {
