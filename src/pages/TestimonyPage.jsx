@@ -31,18 +31,38 @@ export default function TestimonyPage({ lang: initialLang }) {
   const [errorLoading, setErrorLoading] = useState(false);
 
   // Parse id and slug from idSlug param
-  let id;
-  let slug;
+  // Assuming idSlug is from useParams()
+  let id = null;
+  let slug = '';
+
   if (idSlug) {
     const separatorIndex = idSlug.indexOf('-');
     if (separatorIndex === -1) {
-      id = idSlug;
-      slug = '';
+      id = idSlug;    // no slug part
     } else {
       id = idSlug.substring(0, separatorIndex);
       slug = idSlug.substring(separatorIndex + 1);
     }
   }
+
+  // Find testimony by id
+  const testimonysearch = testimonies.find(item => item.id === Number(id));
+
+  // Function to slugify text (you already have this)
+  function slugify(text) {
+    return text
+      .toString()
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w\-]+/g, '')
+      .replace(/\-\-+/g, '-');
+  }
+ 
+  // If testimony exists, verify slug matches
+  const testimony = testimonysearch && slug === slugify(testimonysearch.title['en']) ? testimonysearch : null;
+
+
 
   // Fetch testimonies on mount
   useEffect(() => {
@@ -63,9 +83,6 @@ export default function TestimonyPage({ lang: initialLang }) {
         setLoadingData(false);
       });
   }, []);
-
-  // Find the current testimony by id (as number)
-  const testimony = testimonies.find(item => item.id === Number(id));
 
   // Safe destructuring with fallback values to avoid errors before data loads
   const title = testimony?.title || {};

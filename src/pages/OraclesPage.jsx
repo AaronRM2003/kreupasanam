@@ -59,8 +59,21 @@ export default function OraclesPage({ lang: initialLang }) {
   }
 
   // Find current oracle by id (convert id to number if needed)
-  const oracle = oracles.find((item) => item.id === Number(id));
+  const oraclesearch = oracles.find(item => item.id === Number(id));
 
+  // Function to slugify text (you already have this)
+  function slugify(text) {
+    return text
+      .toString()
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w\-]+/g, '')
+      .replace(/\-\-+/g, '-');
+  }
+ 
+  // If oracle exists, verify slug matches
+  const oracle = oraclesearch && slug === slugify(oraclesearch.title['en']) ? oraclesearch : null;
   // Provide safe fallback to avoid undefined errors in hooks
   const safeOracle = oracle || {
     title: {},

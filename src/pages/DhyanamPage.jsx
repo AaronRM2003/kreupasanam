@@ -68,8 +68,21 @@ export default function DhyanamPage({ lang: initialLang }) {
   }, []);
 
   // Find the dhyanam item by id (converted to number)
-  const dhyanamItem = dhyanam?.find((item) => item.id === Number(id));
+  const dhyanamItemsearch = dhyanam?.find(item => item.id === Number(id));
 
+  // Function to slugify text (you already have this)
+  function slugify(text) {
+    return text
+      .toString()
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w\-]+/g, '')
+      .replace(/\-\-+/g, '-');
+  }
+ 
+  // If dhyanamItem exists, verify slug matches
+  const dhyanamItem = dhyanamItemsearch && slug === slugify(dhyanamItemsearch.title['en']) ? dhyanamItemsearch : null;
   // Provide safe fallback object for hooks even if dhyanamItem not ready
   const safeDhyanamItem = dhyanamItem || {
     title: {},
