@@ -29,10 +29,29 @@ const getYouTubeThumbnail = (url) => {
   };
 
 
+function slugify(text) {
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')         // Replace spaces with -
+    .replace(/[^\w\-]+/g, '')     // Remove all non-word chars
+    .replace(/\-\-+/g, '-');      // Replace multiple - with single -
+}
+
 export function TestimonyCard({ id, title, image, date, lang, path, onImageLoad }) {
   const navigate = useNavigate();
-  const handleCardClick = () => navigate(`/${path}/${id}`);
+
+  // Pick title based on lang or fallback to English
   const translatedTitle = title[lang] || title.en;
+
+  // Create slug from translated title
+  const slug = slugify(translatedTitle);
+
+  // On click, navigate to /path/id-slug
+  const handleCardClick = () => {
+    navigate(`/${path}/${id}-${slug}`);
+  };
 
   return (
     <div className={styles.testimoniesCard}>

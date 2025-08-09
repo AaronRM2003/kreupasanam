@@ -9,19 +9,17 @@ import {
   preloadImages,
   LanguageDropdown,
   ShareModal,
-  addEndTimesToSubtitles,
 } from '../components/utils/Utils';
 
 import { useYouTubePlayer } from '../components/hooks/useYoutubePlayer';
 import { useSubtitles } from '../components/hooks/useSubtitles';
-import SubtitleVoiceControls from '../components/utils/SpeakerButton';
 
 import { useSpeechSync } from '../components/hooks/useSpeechSync';
 import FloatingVideoPlayer from '../components/utils/FloatingVideoPlayer';
 import LangHelpOverlay from '../components/utils/LangHelpOverlay';
 
 export default function DhyanamPage({ lang: initialLang }) {
-  const { id } = useParams();
+  const { idSlug } = useParams();  // changed from id to idSlug
 
   const [dhyanam, setDhyanam] = useState(null);
   const [loadingData, setLoadingData] = useState(true);
@@ -34,6 +32,20 @@ export default function DhyanamPage({ lang: initialLang }) {
   const [showShareModal, setShowShareModal] = useState(false);
   const [showLangHelp, setShowLangHelp] = useState(false);
   const [includeSummary, setIncludeSummary] = useState(false);
+
+  // Parse id and slug from idSlug param
+  let id;
+  let slug;
+  if (idSlug) {
+    const separatorIndex = idSlug.indexOf('-');
+    if (separatorIndex === -1) {
+      id = idSlug;
+      slug = '';
+    } else {
+      id = idSlug.substring(0, separatorIndex);
+      slug = idSlug.substring(separatorIndex + 1);
+    }
+  }
 
   // Fetch dhyanam content JSON dynamically
   useEffect(() => {
@@ -55,8 +67,8 @@ export default function DhyanamPage({ lang: initialLang }) {
       });
   }, []);
 
-  // Find the dhyanam item by id from fetched data
-  const dhyanamItem = dhyanam?.find((item) => item.id === parseInt(id));
+  // Find the dhyanam item by id (converted to number)
+  const dhyanamItem = dhyanam?.find((item) => item.id === Number(id));
 
   // Provide safe fallback object for hooks even if dhyanamItem not ready
   const safeDhyanamItem = dhyanamItem || {
@@ -281,6 +293,7 @@ export default function DhyanamPage({ lang: initialLang }) {
           toggleSpeaking={toggleSpeaking}
           handleVolumeChange={handleVolumeChange}
           playerRef={playerRef}
+          lang={lang}
           currentSubtitle={currentSubtitle}
           onClose={() => setShowVideo(false)}
         />

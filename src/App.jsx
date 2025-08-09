@@ -59,12 +59,12 @@ function App() {
           <Route index element={<Navigate to="home" replace />} />
 
           <Route path="home" element={<LangRoute element={Home} />} />
-          <Route path="testimony/:id" element={<LangRoute element={TestimonyPage} />} />
+          <Route path="testimony/:idSlug" element={<LangRoute element={TestimonyPage} />} />
           <Route path="testimonies" element={<LangRoute element={MonthlyTestimonies} />} />
           <Route path="oracles" element={<LangRoute element={Oracles} />} />
-          <Route path="oracles/:id" element={<LangRoute element={OraclesPage} />} />
+          <Route path="oracles/:idSlug" element={<LangRoute element={OraclesPage} />} />
           <Route path="dhyanam" element={<LangRoute element={Dhyanam} />} />
-          <Route path="dhyanam/:id" element={<LangRoute element={DhyanamPage} />} />
+          <Route path="dhyanam/:idSlug" element={<LangRoute element={DhyanamPage} />} />
 
           {/* ✅ Catch invalid paths like /en/invalid or /ml/xyz */}
           <Route path="*" element={<NotFoundPage />} />

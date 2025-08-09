@@ -650,87 +650,56 @@ filter: drop-shadow(0 0 12px rgba(255, 223, 93, 0.7)) drop-shadow(0 0 24px rgba(
 .closeButton {
   position: absolute;
   top: 10px;
-  right: 10px;
-  background: rgba(0,0,0,0.7);
-  border: none;
-  color: white;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.floatingVideoWrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0,0,0,0.85);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  backdrop-filter: blur(8px);
-  padding: 1rem;
-  box-sizing: border-box;
-}
-
-.floatingVideo {
-  position: relative;
-  width: 100%;
-  max-width: 960px;
-  aspect-ratio: 16 / 9;
-  background: #000;
-  border-radius: 12px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.floatingVideo iframe,
-.floatingVideo #yt-player {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-/* SUBTITLE STYLING */
-.subtitleBox {
-  position: absolute;
-  bottom: 20%;
   left: 50%;
   transform: translateX(-50%);
-  width: 90%;
-  max-width: 800px;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  padding: 8px 16px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  text-align: center;
-  border-radius: 12px;
-  pointer-events: none;
-  text-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
-  font-family: 'Poppins', sans-serif;
-  box-sizing: border-box;
-  transition: all 0.3s ease;
-}
-
-.closeButton {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.75);
   border: none;
   color: white;
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  font-size: 16px;
+  width: 48px;
+  height: 48px;
+  font-size: 24px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s ease;
+
+  z-index: 1100;  /* Add this */
 }
+
+.closeButton:hover {
+  background: rgba(255, 0, 0, 0.85);
+}
+
+.closeButtonLandscape {
+  display: none; /* hidden by default */
+  position: fixed;
+  right: 6%;
+  top: 5px;
+  background: rgba(0, 0, 0, 0.75);
+  border: none;
+  color: white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  z-index: 1200;
+}
+
+/* Show the landscape button only in landscape */
+@media (orientation: landscape) {
+  .closeButtonLandscape {
+    display: flex;
+  }
+}
+
+
 .visibleSubtitle {
   position: relative;
   z-index: 2;
@@ -888,69 +857,179 @@ input[type="range"]::-webkit-slider-thumb:hover {
   background-color: #0056b3;
 }
 
-
-/* Portrait Mobile */
-@media (max-width: 768px) and (orientation: portrait) {
-  .floatingVideo {
-    width: 100%;
-    border-radius: 8px;
+.floatingVideoWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  flex-direction: column;  /* Add this line */
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(8px);
+  padding: 0rem;
+  box-sizing: border-box;
+}
+@media (orientation: landscape) {
+  .floatingVideoWrapper {
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
   }
+}
+@media (orientation: portrait) {
+  .subtitleBox {
+    position: fixed !important; 
+    left: 50%;
+    top: 60%;
+    transform: translateX(-50%);
+    width: 100vw;
+    max-width: 960px;  /* Limit max width for symmetry */
+    margin: 0;         /* Reset margin to zero for no offset */
+    padding: 8px 16px; /* Equal horizontal padding */
+    pointer-events: none;
+    z-index: 10;
+    box-sizing: border-box; /* Include padding inside width */
+    text-align: center;     /* Center text inside */
+  }
+}
 
+
+
+.floatingVideo {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+@media (orientation: landscape) {
+  .floatingVideo {
+    width: 100vw;
+    height: 100vh;
+    max-width: none;
+    max-height: none;
+    aspect-ratio: auto; /* ignore fixed ratio for full coverage */
+    border-radius: 0;
+  }
+}
+
+.floatingVideo iframe,
+.floatingVideo #yt-player {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Remove absolute positioning for subtitle box */
+.subtitleBox {
+  position: relative; /* stack below video */
+  margin-top: 1rem;   /* spacing below the video */
+  max-width: 960px;
+  width: 90vw;        /* responsive width */
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 8px 16px;
+  font-size: clamp(0.85rem, 1.5vw, 1.2rem); /* responsive font size */
+  font-weight: 600;
+  text-align: center;
+  border-radius: 12px;
+  pointer-events: none;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+@media (orientation: landscape) {
   .subtitleBox {
     position: absolute;
-    top: 55%; /* Start subtitle box from 60% height and grow downward */
+    bottom: 5%;
     left: 50%;
-    bottom: auto;
     transform: translateX(-50%);
-    font-size: 0.85rem;
-    padding: 1px 1px;
     width: 90%;
-    overflow-y: auto; /* Allow scrolling if it overflows */
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border-radius: 6px;
+    max-width: none;
+    margin-top: 0;      /* remove margin */
+    padding: 8px 16px;
+    font-size: clamp(0.85rem, 1.5vw, 1.2rem);
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 12px;
+    pointer-events: none;
+    white-space: normal;
     box-sizing: border-box;
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
+    z-index: 10;
   }
 }
 
-/* Landscape Mobile (Critical Fix for Your Problem) */
-@media (max-height: 500px) and (orientation: landscape) {
-  .floatingVideoWrapper {
-    padding: 0.5rem;
-  }
-
-  .floatingVideo {
-    width: 100%;
-    max-width: 100%;
-    aspect-ratio: auto;
-    height: 100%;              /* ✅ Video takes full height */
-    border-radius: 6px;
-  }
-
-  .floatingVideo iframe,
-  .floatingVideo #yt-player {
-    width: 100%;
-    height: 100%;              /* ✅ No cutoff top/bottom */
-  }
-
+/* Mobile portrait */
+@media (max-width: 768px) and (orientation: portrait) {
   .subtitleBox {
-    font-size: 0.85rem;         /* ✅ Slightly smaller font */
-    width: 95%;                 /* ✅ Stretch almost full width */
-    bottom: 40px;               /* ✅ Move upward */
-    padding: 4px 10px;
+    width: 95vw;
+    max-width: none;
+    font-size: clamp(0.75rem, 3vw, 1rem);
+    margin-top: 0.75rem;
+    padding: 6px 10px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.6);
   }
 }
 
-/* Tablet and small laptops */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .floatingVideo {
-    width: 95%;
-  }
-
+/* Mobile landscape */
+@media (max-height: 500px) and (orientation: landscape) and (max-width: 768px) {
   .subtitleBox {
-    font-size: 1rem;
-    width: 95%;
-    bottom: 25px;
+    width: 95vw;
+    font-size: clamp(0.75rem, 2vw, 0.9rem);
+    margin-top: 0.5rem;
+    padding: 6px 12px;
+  }
+}
+
+/* Tablet portrait */
+@media (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
+  .subtitleBox {
+    max-width: 720px;
+    width: 85vw;
+    font-size: clamp(0.85rem, 1.8vw, 1.1rem);
+    margin-top: 1rem;
+    padding: 8px 14px;
+    background-color: rgba(0, 0, 0, 0.65);
+    border-radius: 10px;
+  }
+}
+
+/* Tablet landscape */
+@media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
+  .subtitleBox {
+    max-width: 900px;
+    width: 85vw;
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    margin-top: 1rem;
+    padding: 10px 16px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 12px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1025px) {
+  .subtitleBox {
+    max-width: 960px;
+    width: 70vw;
+    font-size: clamp(1rem, 1vw, 1.2rem);
+    margin-top: 1.25rem;
+    padding: 12px 20px;
+    background-color: rgba(0, 0, 0, 0.75);
+    border-radius: 14px;
   }
 }
 

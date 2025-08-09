@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getCurrentSubtitle } from '../utils/Utils';
+import { addEndTimesToSubtitles, getCurrentSubtitle } from '../utils/Utils';
 
 export function useSubtitles(subtitlesUrl, lang, currentTime) {
   const [subtitles, setSubtitles] = useState([]);
@@ -15,7 +15,10 @@ export function useSubtitles(subtitlesUrl, lang, currentTime) {
         if (!res.ok) throw new Error('Failed to load subtitles');
         return res.json();
       })
-      .then(data => setSubtitles(data))
+      .then(data => {
+        const subsWithEnd = addEndTimesToSubtitles(data);
+        setSubtitles(subsWithEnd);
+      })
       .catch(() => setSubtitles([]));
   }, [subtitlesUrl]);
 

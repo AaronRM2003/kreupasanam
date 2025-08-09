@@ -18,7 +18,7 @@ import FloatingVideoPlayer from '../components/utils/FloatingVideoPlayer';
 import LangHelpOverlay from '../components/utils/LangHelpOverlay';
 
 export default function OraclesPage({ lang: initialLang }) {
-  const { id } = useParams();
+  const { idSlug } = useParams(); // changed from id to idSlug
   const [lang, setLang] = useState(initialLang || 'en');
   const [showVideo, setShowVideo] = useState(false);
   const [allAssetsLoaded, setAllAssetsLoaded] = useState(false);
@@ -43,15 +43,23 @@ export default function OraclesPage({ lang: initialLang }) {
       });
   }, []);
 
-  // Sync initialLang changes to state
-  useEffect(() => {
-    if (initialLang && initialLang !== lang) {
-      setLang(initialLang);
+  // Parse id and slug from idSlug param
+  let id;
+  let slug;
+  if (idSlug) {
+    const separatorIndex = idSlug.indexOf('-');
+    if (separatorIndex === -1) {
+      // No slug provided
+      id = idSlug;
+      slug = '';
+    } else {
+      id = idSlug.substring(0, separatorIndex);
+      slug = idSlug.substring(separatorIndex + 1);
     }
-  }, [initialLang, lang]);
+  }
 
-  // Find current oracle by id
-  const oracle = oracles.find((item) => item.id === parseInt(id));
+  // Find current oracle by id (convert id to number if needed)
+  const oracle = oracles.find((item) => item.id === Number(id));
 
   // Provide safe fallback to avoid undefined errors in hooks
   const safeOracle = oracle || {
@@ -251,6 +259,7 @@ export default function OraclesPage({ lang: initialLang }) {
           toggleSpeaking={toggleSpeaking}
           handleVolumeChange={handleVolumeChange}
           playerRef={playerRef}
+          lang={lang}
           currentSubtitle={currentSubtitle}
           onClose={() => setShowVideo(false)}
         />

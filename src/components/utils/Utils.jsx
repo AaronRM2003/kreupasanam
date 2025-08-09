@@ -269,13 +269,6 @@ export function getCurrentSubtitle(subtitles, currentTime, lang) {
   return '';
 }
 
-export function countWordsInSubtitles(subtitles, lang) {
-  if (!Array.isArray(subtitles)) return 0;
-  return subtitles.reduce((count, entry) => {
-    const text = entry?.text?.[lang] || entry?.text?.en || '';
-    return count + text.trim().split(/\s+/).filter(Boolean).length;
-  }, 0);
-}
 
 export function addEndTimesToSubtitles(subtitles) {
   return subtitles.map((sub, i) => {
@@ -283,23 +276,17 @@ export function addEndTimesToSubtitles(subtitles) {
     const nextStartSeconds =
       i < subtitles.length - 1
         ? timeStringToSeconds(subtitles[i + 1].start)
-        : startSeconds + 2.5; // or some default duration
+        : startSeconds + 5; // fallback duration for last subtitle
 
     return {
       ...sub,
       startSeconds,
       endSeconds: nextStartSeconds,
+      duration: nextStartSeconds - startSeconds,  // add this line
     };
   });
 }
 
 
-// Get duration of subtitle at given time
-export function getSubtitleDuration(subtitles, currentTime) {
-  for (const sub of subtitles) {
-    if (currentTime >= sub.startSeconds && currentTime < sub.endSeconds) {
-      return sub.endSeconds - sub.startSeconds;
-    }
-  }
-  return 0;
-}
+
+

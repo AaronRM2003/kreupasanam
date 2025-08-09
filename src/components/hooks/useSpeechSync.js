@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { enhanceWithSsml } from './useSsml';
 import { useIsGoogleTTS } from './useIsGoogleTts';
 import { useSSMLSupportTest } from './useIsSsmlSupport';
+import { useSelectedVoice } from './useSelectedVoice';
+import { addEndTimesToSubtitles } from '../utils/Utils';
 
 export function useSpeechSync({
   playerRef,
@@ -14,10 +16,10 @@ export function useSpeechSync({
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [volume, setVolume] = useState(100);
   const hasStartedSpeakingRef = useRef(false);
-  const lastSpokenRef = useRef(null);
+  const lastSpokenRef = useRef('');
   const [playerReady, setPlayerReady] = useState(false);
 
-  const isSSMLSupported = useSSMLSupportTest(); // ✅ use hook at top level
+  const isSSMLSupported = useSSMLSupportTest();
 
   // Sync volume once player is available
   useEffect(() => {
@@ -47,68 +49,130 @@ export function useSpeechSync({
     }
   }, [isSpeaking, showVideo]);
 
+const margin = 0.05;   // your safe margin
+const maxStepUp = 0.15;
+
+const lastAdjustedRateRef = useRef(1);
+
+function adjustedRateFixedSpeech(wps, rawRate) {
+  const k = rawRate / wps;
+  const speechRate = 1;
+  let adjustedRate = speechRate / k;
+  adjustedRate -= margin;
+  if (adjustedRate > 1) adjustedRate = 1;
+  if (adjustedRate < 0) adjustedRate = 0;
+  return adjustedRate;
+}
+
+function getSmoothedAdjustedRate(wps, rawRate) {
+  const targetAdjustedRate = adjustedRateFixedSpeech(wps, rawRate);
+  const lastAdj = lastAdjustedRateRef.current;
+
+  if (targetAdjustedRate < lastAdj) {
+    // Decreasing: jump immediately
+    lastAdjustedRateRef.current = targetAdjustedRate;
+    return parseFloat(targetAdjustedRate.toFixed(4));
+  } else if (targetAdjustedRate > lastAdj) {
+    // Increasing: increase gradually by maxStepUp
+    let newAdjRate = lastAdj + maxStepUp;
+    if (newAdjRate > targetAdjustedRate) newAdjRate = targetAdjustedRate;
+    console.log(targetAdjustedRate,newAdjRate);
+    lastAdjustedRateRef.current = newAdjRate;
+    return parseFloat(newAdjRate.toFixed(4));
+  } else {
+    // Equal
+    return parseFloat(lastAdj.toFixed(4));
+  }
+}
+
+
+
+
+  const voice = useSelectedVoice(lang);
   useEffect(() => {
-    if (
-      !isSpeaking ||
-      !showVideo ||
-      !currentSubtitle ||
-      !subtitles.length
-    )
-      return;
+  if (!isSpeaking || !showVideo || !currentSubtitle || subtitles.length === 0) return;
 
-    if (!hasStartedSpeakingRef.current) {
-      hasStartedSpeakingRef.current = true;
-      lastSpokenRef.current = '';
+  if (!hasStartedSpeakingRef.current) {
+    hasStartedSpeakingRef.current = true;
+    lastSpokenRef.current = '';
+  }
+
+  if (lastSpokenRef.current === currentSubtitle) return;
+  lastSpokenRef.current = currentSubtitle;
+
+  const currentSub = subtitles.find(
+  (sub) => currentTime >= sub.startSeconds && currentTime < sub.endSeconds
+);
+
+const subtitleDuration = currentSub?.duration ?? 3;
+
+  const wordCount = currentSubtitle.trim().split(/\s+/).length;
+
+  // Get the utterance voice if possible
+  let wps = 2; // default fallback
+
+  // Prepare the text first to create utterance and get voice
+  let textToSpeak = currentSubtitle
+  // Remove content inside square brackets (already done)
+  .replace(/\[[^\]]*\]/g, '')  
+  // Remove ellipses or multiple dots
+  .replace(/\.{2,}/g, '')      
+  // Remove standalone punctuation like -- or ***
+  .replace(/[-*]{2,}/g, '')    
+  // Replace V.P. with VP as before
+  .replace(/\b(V\.P\.)\b/g, 'VP')
+  // Trim whitespace
+  .trim();
+
+
+  const utterance = new SpeechSynthesisUtterance(textToSpeak);
+
+  // Set utterance lang as before
+  
+  const savedVoiceName = localStorage.getItem(`${lang}`);
+  const voices = window.speechSynthesis.getVoices();
+  const matchedVoice = voices.find(v => v.voiceURI === savedVoiceName);
+  utterance.voice = matchedVoice || voice || null;
+  console.log(voice, matchedVoice, savedVoiceName);
+  utterance.lang=lang || 'en-US';
+
+
+  // Get the voice if available (can be async, so be careful)
+  // We do this synchronously here assuming voices are loaded
+  if (utterance.voice?.name) {
+    const savedWps = localStorage.getItem(`voice_${utterance.voice.name}_tested`);
+    if (savedWps) {
+      wps = parseFloat(savedWps);
+
     }
+  }
 
-    if (lastSpokenRef.current === currentSubtitle) return;
-    lastSpokenRef.current = currentSubtitle;
+  console.log(wps,`voice_${utterance.voice.name}_tested`);
+  const rawRate = wordCount / subtitleDuration;
+  console.log(wordCount, subtitleDuration);
 
-    const currentSub = subtitles.find(
-      (sub) => currentTime >= sub.startSeconds && currentTime < sub.endSeconds
-    );
+  let speechRate = 1; // fallback
+  let adjustedRate = 1;
 
-    const subtitleDuration = currentSub?.duration || 3;
-    const wordCount = currentSubtitle.trim().split(/\s+/).length;
-    const rawRate = wordCount / subtitleDuration;
-    const speechRate = Math.min(Math.max(rawRate, 0.7), 1.1);
-
-    if (playerRef.current?.setPlaybackRate) {
-      const adjustedRate = Math.max(0.7, Math.min(1, 1.4 / rawRate));
+  if (playerRef.current?.setPlaybackRate) {
+    console.log(`Raw rate: ${rawRate}, WPS: ${wps}`);
+    const rates = getSmoothedAdjustedRate(wps, rawRate);
+    if (rates) {
+      adjustedRate = rates;
       playerRef.current.setPlaybackRate(adjustedRate);
     }
+  }
+  console.log(`Speech rate: ${speechRate}, Adjusted rate: ${adjustedRate}`);
+  if (isSSMLSupported) {
+    textToSpeak = enhanceWithSsml(textToSpeak);
+  }
 
-    let textToSpeak = currentSubtitle.replace(/\[[^\]]*\]/g, '').trim();
-    textToSpeak = textToSpeak.replace(/\b(V\.P\.)\b/g, 'VP');
+  utterance.rate = speechRate;
 
-    if (isSSMLSupported) {
-    //  speechRate  = Math.min(Math.max(rawRate, 0.4), 0.6);
-      console.log("supported");
-      textToSpeak = enhanceWithSsml(textToSpeak);
-    }
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utterance);
+}, [isSpeaking, showVideo, currentSubtitle, currentTime, subtitles, lang, playerRef, isSSMLSupported]);
 
-    const utterance = new SpeechSynthesisUtterance(textToSpeak);
-
-    const langMap = {
-      ml: 'ml-IN',
-      ta: 'ta-IN',
-      hi: 'hi-IN',
-      bn: 'bn-IN',
-      te: 'te-IN',
-      kn: 'kn-IN',
-      gu: 'gu-IN',
-      mr: 'mr-IN',
-      ur: 'ur-IN',
-      'en-uk': 'en-GB',
-      en: 'en-US',
-    };
-
-    utterance.lang = langMap[lang] || 'en-US';
-    utterance.rate = speechRate;
-
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(utterance);
-  }, [isSpeaking, showVideo, currentSubtitle, currentTime, subtitles, lang, playerRef, isSSMLSupported]);
 
   useEffect(() => {
     if (!isSpeaking && playerRef.current) {
@@ -126,14 +190,14 @@ export function useSpeechSync({
   const toggleSpeaking = () => {
     setIsSpeaking((prev) => {
       const newSpeaking = !prev;
-      if (newSpeaking) setVolume(20);
+      if (newSpeaking) setVolume(10);
       return newSpeaking;
     });
   };
+
   const stopSpeaking = () => {
     setIsSpeaking(false);
     window.speechSynthesis.cancel();
-    // reset your refs if needed:
     hasStartedSpeakingRef.current = false;
     lastSpokenRef.current = '';
     setVolume(100);

@@ -18,7 +18,7 @@ import FloatingVideoPlayer from '../components/utils/FloatingVideoPlayer';
 import LangHelpOverlay from '../components/utils/LangHelpOverlay';
 
 export default function TestimonyPage({ lang: initialLang }) {
-  const { id } = useParams();
+  const { idSlug } = useParams();  // Changed from id to idSlug
   const [lang, setLang] = useState(initialLang || 'en');
   const [showVideo, setShowVideo] = useState(false);
   const [allAssetsLoaded, setAllAssetsLoaded] = useState(false);
@@ -27,17 +27,45 @@ export default function TestimonyPage({ lang: initialLang }) {
   const [showLangHelp, setShowLangHelp] = useState(false);
   const [includeSummary, setIncludeSummary] = useState(false);
   const [testimonies, setTestimonies] = useState([]);
+  const [loadingData, setLoadingData] = useState(true);
+  const [errorLoading, setErrorLoading] = useState(false);
+
+  // Parse id and slug from idSlug param
+  let id;
+  let slug;
+  if (idSlug) {
+    const separatorIndex = idSlug.indexOf('-');
+    if (separatorIndex === -1) {
+      id = idSlug;
+      slug = '';
+    } else {
+      id = idSlug.substring(0, separatorIndex);
+      slug = idSlug.substring(separatorIndex + 1);
+    }
+  }
 
   // Fetch testimonies on mount
   useEffect(() => {
+    setLoadingData(true);
+    setErrorLoading(false);
     fetch('/assets/testimony-content.json')
-      .then((res) => res.json())
-      .then((data) => setTestimonies(data))
-      .catch((err) => console.error('Failed to load testimonies:', err));
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch data');
+        return res.json();
+      })
+      .then((data) => {
+        setTestimonies(data);
+        setLoadingData(false);
+      })
+      .catch((err) => {
+        console.error('Error loading testimony content:', err);
+        setErrorLoading(true);
+        setLoadingData(false);
+      });
   }, []);
 
-  // Find the current testimony (may be undefined initially)
-  const testimony = testimonies.find(item => item.id === parseInt(id));
+  // Find the current testimony by id (as number)
+  const testimony = testimonies.find(item => item.id === Number(id));
 
   // Safe destructuring with fallback values to avoid errors before data loads
   const title = testimony?.title || {};
@@ -79,6 +107,7 @@ export default function TestimonyPage({ lang: initialLang }) {
 
   // Subtitles & current subtitle hook
   const { subtitles, currentSubtitle } = useSubtitles(subtitlesUrl, lang, currentTime);
+  
 
   // Speech sync & volume control hook
   const { isSpeaking, toggleSpeaking,stopSpeaking, volume, handleVolumeChange } = useSpeechSync({
@@ -105,6 +134,15 @@ export default function TestimonyPage({ lang: initialLang }) {
   const emailShareUrl = `mailto:?subject=${encodeURIComponent(title[lang] || title['en'])}&body=${encodeURIComponent(shareText)}`;
 
   // Show loading if assets or testimony not ready
+  if (loadingData) {
+      return (
+        <div className={styles.loadingOverlay}>
+          <div className={styles.spinner}></div>
+          <p>Loading content...</p>
+        </div>
+      );
+    }
+  
   if (!allAssetsLoaded) {
     return (
       <div className={styles.loadingOverlay}>
@@ -134,6 +172,7 @@ export default function TestimonyPage({ lang: initialLang }) {
 
   return (
     <div className={styles.testimonyPage}>
+     
       {/* Header */}
       <div className={styles.testimonyHeader}>
         <div className={styles.testimonyLeft}>
@@ -232,6 +271,7 @@ export default function TestimonyPage({ lang: initialLang }) {
           toggleSpeaking={toggleSpeaking}
           handleVolumeChange={handleVolumeChange}
           playerRef={playerRef}
+          lang={lang}
           currentSubtitle={currentSubtitle}
           onClose={() => setShowVideo(false)}
         />
