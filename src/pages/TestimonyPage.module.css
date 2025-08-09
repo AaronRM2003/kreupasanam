@@ -666,7 +666,7 @@ filter: drop-shadow(0 0 12px rgba(255, 223, 93, 0.7)) drop-shadow(0 0 24px rgba(
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
   transition: background-color 0.3s ease;
 
-  z-index: 1100;  /* Add this */
+  z-index: 100;  /* Add this */
 }
 
 .closeButton:hover {
