@@ -118,7 +118,9 @@ export default function FloatingVideoPlayer({
         </div>
       </div>
 
-      <div className={styles.subtitleBox}>{currentSubtitle}</div>
+{currentSubtitle && (
+  <div className={styles.subtitleBox}>{currentSubtitle}</div>
+)}
     </div>
   );
 }
