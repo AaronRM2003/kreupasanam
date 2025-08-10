@@ -53,7 +53,7 @@ export default function Footer() {
           <div className={styles.section}>
             <h3>Contact Us</h3>
            <p className={styles.emailText}>
-  <FaEnvelope style={{ marginRight: '0.5rem', color: '#d93025' }} />
+  <FaEnvelope style={{ color: '#d93025' }} />
   <a href="mailto:kreupasanamtestimonies@gmail.com" target="_blank" rel="noopener noreferrer" className={styles.emailLink}>
     kreupasanamtestimonies@gmail.com
   </a>
@@ -94,3 +94,4 @@ export default function Footer() {
     </div>
   );
 }
+

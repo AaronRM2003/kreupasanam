@@ -124,23 +124,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 0.4rem; /* small spacing between icon/text */
   font-size: 1rem;
   font-weight: 500;
   color: #202124; /* Gmail-like dark text */
   margin: 0.3rem 0;
+  line-height: 1.4;
 }
 
 .emailLink {
   color: #1967d2; /* Gmail link blue */
   text-decoration: none;
   font-weight: 600;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+  text-decoration-color: transparent; /* makes underline animate in */
 }
+
 
 .emailLink:hover,
 .emailLink:focus {
   color: #0b47a1; /* Darker blue on hover/focus */
-  text-decoration: underline;
+  text-decoration-color: currentColor;
 }
 
 .section p.thankYouMessage {
@@ -164,7 +168,7 @@
 
 .footerBottom {
   text-align: center;
-  margin-top: 2rem;
+  margin-top: 0.5rem;
   font-size: 0.9rem;
   color: #123f7c;
   border-top: 1px solid rgba(18, 63, 124, 0.2);
@@ -203,4 +207,8 @@
     font-size: 1.1rem;
     padding: 0.7rem 1.2rem;
   }
+  .emailLink{
+    font-size: 0.9rem;
+  }
 }
+
