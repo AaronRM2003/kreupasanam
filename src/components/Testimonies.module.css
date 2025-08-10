@@ -29,6 +29,7 @@
 
 @media (max-width: 768px) {
   .testimoniesSection {
+    background-color: white;
     padding: 2rem 0;
   }
   .testimoniesSectionContainer {
