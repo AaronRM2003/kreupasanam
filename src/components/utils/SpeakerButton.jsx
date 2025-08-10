@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { FaVolumeUp, FaVolumeDown } from 'react-icons/fa';
 import { useSelectedVoice } from '../hooks/useSelectedVoice';
+import './speakerControl.css'; // Import your styles
 
 export default function SubtitleVoiceControls({
   isSpeaking,
@@ -399,233 +400,119 @@ export default function SubtitleVoiceControls({
 
   return (
     <>
-      {/* Floating Voice Controls */}
-      <div
-        style={{
-          position: 'fixed',
-          zIndex: 9999,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          ...positionStyle,
-        }}
+  {/* Floating Voice Controls */}
+  <div className="floating-voice-controls" style={positionStyle}>
+    {!showControls && (
+      <button
+        onClick={toggleControls}
+        className="toggle-button"
+        style={{ width: `${buttonSize}px`, height: `${buttonSize}px` }}
+        aria-label="Toggle Voice Controls"
       >
-        {!showControls && (
-          <button
-            onClick={toggleControls}
-            style={{
-              width: `${buttonSize}px`,
-              height: `${buttonSize}px`,
-              background: '#222',
-              borderRadius: '50%',
-              border: 'none',
-              color: '#00f2fe',
-              boxShadow: '0 0 10px #00f2feaa',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'all 0.3s ease',
-            }}
-            aria-label="Toggle Voice Controls"
-          >
-            {isSpeaking ? (
-              <FaVolumeUp size={Math.floor(buttonSize * 0.5)} />
-            ) : (
-              <FaVolumeDown size={Math.floor(buttonSize * 0.5)} />
-            )}
-          </button>
+        {isSpeaking ? (
+          <FaVolumeUp size={Math.floor(buttonSize * 0.5)} />
+        ) : (
+          <FaVolumeDown size={Math.floor(buttonSize * 0.5)} />
         )}
+      </button>
+    )}
 
-        {showControls && (
-          <div
-            onMouseEnter={startInteraction}
-            onMouseLeave={endInteraction}
-            onTouchStart={startInteraction}
-            onTouchEnd={endInteraction}
-            style={{
-              marginTop: '10px',
-              background: 'rgba(20,20,20,0.95)',
-              padding: '14px 18px',
-              borderRadius: '14px',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              backdropFilter: 'blur(6px)',
-              opacity: controlsVisible ? 1 : 0,
-              visibility: controlsVisible ? 'visible' : 'hidden',
-              transition: 'opacity 0.3s ease, visibility 0.3s ease',
-              boxShadow: '0 0 15px #00f2fe88',
-            }}
-          >
-            {/* Toggle Subtitles Switch */}
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                marginBottom: '18px',
-                cursor: 'pointer',
-                userSelect: 'none',
-                color: '#fff',
-                fontSize: '0.95rem',
-              }}
-              onClick={handleReadSubtitlesClick}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') handleReadSubtitlesClick();
-              }}
-              aria-pressed={isSpeaking}
-              aria-label="Toggle read subtitles"
-            >
-              <span>Read Subtitles</span>
-              <div
-                style={{
-                  width: '44px',
-                  height: '24px',
-                  borderRadius: '24px',
-                  backgroundColor: isSpeaking ? '#007BFF' : '#ccc',
-                  position: 'relative',
-                  transition: 'background-color 0.3s ease',
-                }}
-              >
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: '2px',
-                    left: isSpeaking ? '22px' : '2px',
-                    width: '20px',
-                    height: '20px',
-                    borderRadius: '50%',
-                    backgroundColor: '#fff',
-                    transition: 'left 0.3s ease',
-                    boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
-                  }}
-                />
-              </div>
-            </div>
-
-            {/* Volume Control */}
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '6px',
-                color: '#fff',
-                fontSize: '0.85rem',
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <FaVolumeUp />
-                <span>Volume: {volume}%</span>
-              </div>
-
-              <input
-                type="range"
-                min="0"
-                max="100"
-                value={volume}
-                onChange={handleVolumeChange}
-                onMouseDown={() => setIsInteracting(true)}
-                onMouseUp={endInteraction}
-                onTouchStart={() => setIsInteracting(true)}
-                onTouchEnd={endInteraction}
-                style={{
-                  width: '140px',
-                  accentColor: '#007BFF',
-                  borderRadius: '4px',
-                  height: '16px',
-                }}
-                aria-label="Volume control"
-              />
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Floating Test WPS Screen */}
-      {showTestScreen && (
+    {showControls && (
+      <div
+        onMouseEnter={startInteraction}
+        onMouseLeave={endInteraction}
+        onTouchStart={startInteraction}
+        onTouchEnd={endInteraction}
+        className={`controls-panel ${controlsVisible ? 'visible' : 'hidden'}`}
+      >
+        {/* Toggle Subtitles Switch */}
         <div
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            background: 'rgba(0,0,0,0.85)',
-            zIndex: 10000,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: '#fff',
-            padding: '20px',
-            textAlign: 'center',
+          className="toggle-subtitles"
+          onClick={handleReadSubtitlesClick}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') handleReadSubtitlesClick();
           }}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="voice-test-title"
+          aria-pressed={isSpeaking}
+          aria-label="Toggle read subtitles"
         >
-          <h2 id="voice-test-title" style={{ marginBottom: '16px' }}>
-            Voice Test: {voice?.name || 'Default'}
-          </h2>
-          {lang && <p style={{ marginBottom: '8px' }}>Language: {lang.toUpperCase()}</p>}
-          <p style={{ maxWidth: '500px', marginBottom: '24px' }}>
-            {testSentences[lang] ||
-              'This is a quick test to ensure subtitles are read correctly in your selected voice.'}
-          </p>
-
-          <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
-            <button
-              onClick={startAccurateVoiceTest}
-              style={{
-                padding: '10px 20px',
-                background: '#007BFF',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '8px',
-                cursor: isLoadingTest ? 'default' : 'pointer',
-                fontSize: '1rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                minWidth: '140px',
-                opacity: isLoadingTest ? 0.8 : 1,
-              }}
-              aria-label="Start voice test reading"
-              disabled={isLoadingTest}
-            >
-              {isLoadingTest ? (
-                <>
-                  <Spinner />
-                  Loading...
-                </>
-              ) : (
-                'Start Reading'
-              )}
-            </button>
-
-            <button
-              onClick={cancelVoiceTest}
-              style={{
-                padding: '10px 20px',
-                background: '#444',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '8px',
-                cursor: isLoadingTest ? 'default' : 'pointer',
-                fontSize: '1rem',
-              }}
-              aria-label="Cancel voice test"
-              disabled={isLoadingTest}
-            >
-              Cancel
-            </button>
+          <span>Read Subtitles</span>
+          <div className={`toggle-switch ${isSpeaking ? 'active' : ''}`}>
+            <div className="toggle-switch-circle" />
           </div>
         </div>
-      )}
-    </>
+
+        {/* Volume Control */}
+        <div className="volume-control">
+          <div className="volume-label">
+            <FaVolumeUp />
+            <span>Volume: {volume}%</span>
+          </div>
+
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={volume}
+            onChange={handleVolumeChange}
+            onMouseDown={() => setIsInteracting(true)}
+            onMouseUp={endInteraction}
+            onTouchStart={() => setIsInteracting(true)}
+            onTouchEnd={endInteraction}
+            className="volume-slider"
+            aria-label="Volume control"
+          />
+        </div>
+      </div>
+    )}
+  </div>
+
+  {/* Floating Test WPS Screen */}
+  {showTestScreen && (
+    <div
+      className="floating-test-screen"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="voice-test-title"
+    >
+      <h2 id="voice-test-title" className="voice-test-title">
+        Voice Test: {voice?.name || 'Default'}
+      </h2>
+      {lang && <p className="voice-test-lang">Language: {lang.toUpperCase()}</p>}
+      <p className="voice-test-text">
+        {testSentences[lang] ||
+          'This is a quick test to ensure subtitles are read correctly in your selected voice.'}
+      </p>
+
+      <div className="voice-test-buttons">
+        <button
+          onClick={startAccurateVoiceTest}
+          className="voice-test-button primary"
+          aria-label="Start voice test reading"
+          disabled={isLoadingTest}
+        >
+          {isLoadingTest ? (
+            <>
+              <Spinner />
+              Loading...
+            </>
+          ) : (
+            'Start Reading'
+          )}
+        </button>
+
+        <button
+          onClick={cancelVoiceTest}
+          className="voice-test-button cancel"
+          aria-label="Cancel voice test"
+          disabled={isLoadingTest}
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  )}
+</>
   );
 }

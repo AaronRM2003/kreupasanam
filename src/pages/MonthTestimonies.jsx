@@ -127,7 +127,7 @@ useEffect(() => {
       }}
     >
       
-      <div className={styles.testimoniesSectionContainer} style={{ margin: '0 1rem' }}>
+      <div className={styles.testimoniesSectionContainer} style={{ margin: '0 0.5rem' }}>
         <div className={styles.testimoniesHeader}>
           <div style={{ position: 'relative', textAlign: 'center' }}>
             <button
@@ -214,7 +214,7 @@ useEffect(() => {
         </div>
 
         {/* Loading screen */}
-        {!allImagesLoaded && (
+        {!allImagesLoaded ? (
           <div
             style={{
               height: 300,
@@ -245,10 +245,7 @@ useEffect(() => {
               }
             `}</style>
           </div>
-        )}
-
-        {/* Render testimonies only after all images loaded */}
-        {allImagesLoaded && (
+        ): (
           <div className={styles.testimoniesGrid}>
             {filteredTestimonies.length > 0 ? (
               filteredTestimonies.map(({ id, title, video, date }) => {

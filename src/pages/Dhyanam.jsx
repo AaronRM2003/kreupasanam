@@ -173,7 +173,7 @@ if (errorLoading) {
       className={styles.testimoniesSection}
       style={{ marginTop: 0, backgroundColor: window.innerWidth <= 768 ? '#fff' : 'transparent' }}
     >
-      <div className={styles.testimoniesSectionContainer} style={{ margin: '0 1rem' }}>
+      <div className={styles.testimoniesSectionContainer} style={{ margin: '0 0.5rem' }}>
         <div className={styles.testimoniesHeader}>
           <div style={{ position: 'relative', textAlign: 'center' }}>
             <button
