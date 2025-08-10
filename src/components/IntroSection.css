@@ -54,7 +54,7 @@
   font-size: 1.2rem;
   font-weight: 600;
   color: #fff;
-  background-color: #3b82f6;
+  background: linear-gradient(90deg, #246bfd, #00b3ff);
   border: none;
   border-radius: 50px;
   box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4);

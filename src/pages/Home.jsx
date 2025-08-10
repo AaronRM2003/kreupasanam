@@ -3,7 +3,6 @@ import AppBar from '../components/AppBar';
 import Testimonies from '../components/Testimonies';
 import IntroSection from '../components/IntroSection';
 import IntroTestimony from '../components/IntroTestimony';
-import logo from "../assets/logo.webp";
 import FeaturedTestimonySection from '../components/HomeTestimony';
 import ImageSpacer from "../components/Image";
 import heroImage from "../assets/mother.webp";
@@ -50,7 +49,7 @@ export default function Home({ lang }) {
     <div>
       {introReady && <AppBar lang={lang} />}
       <div className="page">
-        <img src={logo} alt="Logo" className="floating-logo" />
+        <img src="/assets/logo.webp" alt="Logo" className="floating-logo" />
 
         {!introReady ? (
           <>
