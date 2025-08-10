@@ -15,13 +15,25 @@ import About from './AboutPage';
 
 const supportedLangs = ['en', 'hi', 'zh', 'bn', 'ta', 'te', 'fr', 'es', 'mr', 'kn'];
 
-function LangRoute({ element: Element }) {
+function LangRoute({ element: Element, redirectToRootIfNotVisited = false }) {
   const { lang } = useParams();
+
   if (!supportedLangs.includes(lang)) {
     return <Navigate to="/invalid" replace />;
   }
+
+  if (
+    redirectToRootIfNotVisited &&
+    lang === 'en' &&
+    localStorage.getItem('hasVisitedRoot') !== 'true'
+  ) {
+    console.log('Redirecting to root');
+    return <Navigate to="/" replace />;
+  }
+
   return <Element lang={lang} />;
 }
+
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -58,7 +70,7 @@ function App() {
           <Route path="about" element={<LangRoute element={About} />} />
           <Route index element={<Navigate to="home" replace />} />
 
-          <Route path="home" element={<LangRoute element={Home} />} />
+          <Route path="home" element={<LangRoute element={Home} redirectToRootIfNotVisited />} />
           <Route path="testimony/:idSlug" element={<LangRoute element={TestimonyPage} />} />
           <Route path="testimonies" element={<LangRoute element={MonthlyTestimonies} />} />
           <Route path="oracles" element={<LangRoute element={Oracles} />} />

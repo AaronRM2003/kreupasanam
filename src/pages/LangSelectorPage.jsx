@@ -1,4 +1,4 @@
-import React from 'react';
+import {useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const LANGUAGES = {
@@ -21,6 +21,9 @@ export default function LangSelectorPage({ setLang }) {
     setLang(code);
     navigate(`/${code}/home`);
   };
+  useEffect(() => {
+    localStorage.setItem('hasVisitedRoot', 'true');
+  }, []);
 
   return (
     <div
