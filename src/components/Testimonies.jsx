@@ -43,10 +43,10 @@ export function TestimonyCard({ id, title, image, date, lang, path, onImageLoad 
   const navigate = useNavigate();
 
   // Pick title based on lang or fallback to English
-  const translatedTitle = title[lang] || title.en;
-
+  const sluggedTitle = title['en'];
+  console.log(title);
   // Create slug from translated title
-  const slug = slugify(translatedTitle);
+  const slug = slugify(sluggedTitle);
 
   // On click, navigate to /path/id-slug
   const handleCardClick = () => {
@@ -58,12 +58,12 @@ export function TestimonyCard({ id, title, image, date, lang, path, onImageLoad 
       <div className={styles.testimoniesImageWrapper}>
         <img
           src={image}
-          alt={translatedTitle}
+          alt={title[lang]}
           onLoad={onImageLoad}
           onError={onImageLoad} // fallback on error to avoid hanging spinner
         />
       </div>
-      <h3 className={styles.testimoniesCardTitle}>{translatedTitle}</h3>
+      <h3 className={styles.testimoniesCardTitle}>{title[lang]}</h3>
       <p className={styles.testimoniesDate}>{date}</p>
       <button
         style={{ border: 'none' }}

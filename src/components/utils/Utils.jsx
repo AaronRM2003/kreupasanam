@@ -9,6 +9,7 @@ import {
   FaRegCopy,
   FaCheck
 } from 'react-icons/fa';
+import "./speakerControl.css"
 
 export function ShareModal({
   show,
@@ -143,6 +144,7 @@ export function LanguageDropdown({ lang, onSelect }) {
       <Dropdown.Toggle
         variant="outline-secondary"
         id="dropdown-lang"
+        className="lang-dropdown-menu"
         style={{
           backgroundColor: 'white',
           color: '#246bfd',
