@@ -129,23 +129,30 @@ const subtitleDuration = currentSub?.duration ?? 3;
 
   // Set utterance lang as before
   
-  const savedVoiceName = localStorage.getItem(`${lang}`);
-  const voices = window.speechSynthesis.getVoices();
-  const matchedVoice = voices.find(v => v.voiceURI === savedVoiceName);
-  utterance.voice = matchedVoice || voice || null;
-  console.log(voice, matchedVoice, savedVoiceName);
-  utterance.lang=lang || 'en-US';
+ const savedVoiceName = localStorage.getItem(`${lang}`);
+const voices = window.speechSynthesis.getVoices();
+const matchedVoice = voices.find(v => v.name === savedVoiceName);
+utterance.voice = matchedVoice || voice || null;
+console.log(voice, matchedVoice, savedVoiceName);
+utterance.lang = lang || 'en-US';
 
+if (utterance.voice?.name) {
+  const testKey = `voice_test_data_${lang}`;
+  const storedData = localStorage.getItem(testKey);
 
-  // Get the voice if available (can be async, so be careful)
-  // We do this synchronously here assuming voices are loaded
-  if (utterance.voice?.name) {
-    const savedWps = localStorage.getItem(`voice_${utterance.voice.name}_tested`);
-    if (savedWps) {
-      wps = parseFloat(savedWps);
-
+  if (storedData) {
+    try {
+      const allTestData = JSON.parse(storedData);
+      const voiceData = allTestData[utterance.voice.name];
+      if (voiceData && voiceData.wps) {
+        wps = parseFloat(voiceData.wps);
+      }
+    } catch (e) {
+      console.error("Failed to parse voice test data:", e);
     }
   }
+}
+
 
   console.log(wps,`voice_${utterance.voice.name}_tested`);
   const rawRate = wordCount / subtitleDuration;

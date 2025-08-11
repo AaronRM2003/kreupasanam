@@ -1,15 +1,16 @@
 import { useState, useEffect, useRef } from 'react';
 import { FaVolumeUp, FaVolumeDown } from 'react-icons/fa';
 import { useSelectedVoice } from '../hooks/useSelectedVoice';
-import './speakerControl.css'; // Import your styles
+import './speakerControl.css';
+import VoiceTestScreen from './VoiceTestScreen';
 
 export default function SubtitleVoiceControls({
   isSpeaking,
   volume,
   toggleSpeaking,
   handleVolumeChange,
-  playerRef, // for pausing/resuming video
-  lang, // optional, used to pick voice and show language UI
+  playerRef,
+  lang,
 }) {
   const [showControls, setShowControls] = useState(false);
   const [isInteracting, setIsInteracting] = useState(false);
@@ -21,11 +22,63 @@ export default function SubtitleVoiceControls({
   const [showTestScreen, setShowTestScreen] = useState(false);
   const [isLoadingTest, setIsLoadingTest] = useState(false);
 
-  // Ref to track current utterance for cancellation
-  const utteranceRef = useRef(null);
+  // Keep all available voices from system
+  const [systemVoices, setSystemVoices] = useState([]);
+  // Voice selected in dropdown for test (defaults to voice from hook)
+  const [testVoice, setTestVoice] = useState(null);
+  // Track if the currently selected testVoice is already tested
+  const [alreadyTested, setAlreadyTested] = useState(false);
 
-  // To track pause requests if player not ready yet
+  const utteranceRef = useRef(null);
   const pauseCheckInterval = useRef(null);
+
+  const voiceFromHook = useSelectedVoice(lang);
+
+  // Load system voices on mount and when voices changed
+  useEffect(() => {
+  function loadVoices() {
+    const allVoices = window.speechSynthesis.getVoices();
+    const filteredVoices = allVoices.filter(voice =>
+      voice.lang.toLowerCase().startsWith(lang.toLowerCase())
+    );
+    setSystemVoices(filteredVoices);
+  }
+
+  loadVoices();
+  window.speechSynthesis.onvoiceschanged = loadVoices;
+}, [lang]);
+
+  // When voiceFromHook or systemVoices change, update testVoice and tested state
+  useEffect(() => {
+    if (!voiceFromHook) return;
+
+    // Try to find the exact voiceFromHook in system voices
+    const savedVoiceName = localStorage.getItem(`${lang}`);
+    const voices = window.speechSynthesis.getVoices();
+    const matchedVoice = voices.find(v => v.voiceURI === savedVoiceName);
+    console.log("matched voice",matchedVoice,savedVoiceName);
+    const match = matchedVoice || systemVoices.find(v => v.name === voiceFromHook.name) || voiceFromHook;
+    setTestVoice(match);
+
+    // Check if tested
+    const testKey = `voice_test_data_${lang}`;
+    const storedData = localStorage.getItem(testKey);
+    let tested = false;
+    if (storedData) {
+      try {
+        const parsed = JSON.parse(storedData);
+        const voiceTestData = parsed[testVoice.voiceURI];
+        if (
+          voiceTestData &&
+          voiceTestData.voiceName === testVoice.name &&
+          voiceTestData.lang === testVoice.lang
+        ) {
+          tested = true;
+        }
+      } catch {}
+    }
+    setAlreadyTested(tested);
+  }, [voiceFromHook, systemVoices, lang]);
 
   const updatePosition = () => {
     const width = window.innerWidth;
@@ -93,7 +146,6 @@ export default function SubtitleVoiceControls({
 
 
   // Load voice matching the lang code (e.g. "en" matches "en-US", etc)
-  const voice = useSelectedVoice(lang);
 
   useEffect(() => {
     setShowControls(true);
@@ -217,8 +269,8 @@ export default function SubtitleVoiceControls({
   };
 
   // Handle Read Subtitles click - show test screen if not tested
-  const handleReadSubtitlesClick = () => {
-    if (!('speechSynthesis' in window)) {
+const handleReadSubtitlesClick = (forceTest = false) => {
+  if (!('speechSynthesis' in window)) {
     alert("Text-to-Speech is not supported by your browser/device.");
     return;
   }
@@ -229,13 +281,13 @@ export default function SubtitleVoiceControls({
     return;
   }
 
-  if (!voice) {
+  if (!testVoice) {
     alert("No suitable voice found for your language. Please check your device's Text-to-Speech settings.");
     return;
   }
 
-  // Check if voice from hook is really available in system voices (edge case)
-  const voiceAvailable = voices.some(v => v.name === voice.name);
+  // Check if testVoice is really available in system voices (edge case)
+  const voiceAvailable = voices.some(v => v.name === testVoice.name);
   if (!voiceAvailable) {
     const userAgent = navigator.userAgent.toLowerCase();
     let instructions = "Please check your device's Text-to-Speech settings to install or enable voices.";
@@ -266,27 +318,47 @@ export default function SubtitleVoiceControls({
     return;
   }
 
-    const testKey = `voice_${voice?.name}_tested`;
-    const alreadyTested = localStorage.getItem(testKey);
+  const testKey = `voice_test_data_${lang}`;
+  const storedData = localStorage.getItem(testKey);
+  let needsTest = true;
 
-    if (!alreadyTested) {
-      setShowTestScreen(true);
-      pauseVideo();
-      return;
+if (storedData) {
+  try {
+    const parsed = JSON.parse(storedData);
+    const voiceTestData = parsed[testVoice.voiceURI];
+    if (
+      voiceTestData &&
+      voiceTestData.voiceName === testVoice.name &&
+      voiceTestData.lang === testVoice.lang
+    ) {
+      needsTest = false;
     }
+  } catch {
+    needsTest = true;
+  }
+}
+  
 
-    toggleSpeaking();
-  };
+  // Now show test screen only if needsTest AND forceTest argument is true
+  if (needsTest || forceTest) {
+    setShowTestScreen(true);
+    pauseVideo();
+    return;
+  }
+
+  toggleSpeaking();
+};
+
 
   // Start the voice test reading and measure speed
   const startAccurateVoiceTest = () => {
-    if (!voice) return;
+    if (!testVoice) return;
 
     setIsLoadingTest(true);
 
     const sentence = testSentences[lang] || "This is a quick test to ensure subtitles are read correctly in your selected voice.";
     const utterance = new SpeechSynthesisUtterance(sentence);
-    utterance.voice = voice;
+    utterance.voice = testVoice;
     utterance.lang = lang;
 
     utteranceRef.current = utterance;
@@ -306,7 +378,6 @@ export default function SubtitleVoiceControls({
     };
 
     utterance.onpause = () => {
-      // Treat pause as cancellation — hide UI and reset state
       setIsLoadingTest(false);
       setShowTestScreen(false);
       playVideo();
@@ -314,46 +385,101 @@ export default function SubtitleVoiceControls({
     };
 
     utterance.onend = () => {
-      if (!utteranceRef.current) return; // Cancelled, ignore onend
+      if (!utteranceRef.current) return;
 
       const speechEndTime = performance.now();
       const elapsedSeconds = (speechEndTime - speechStartTime) / 1000;
       const wordCount = sentence.trim().split(/\s+/).length;
       const wps = wordCount / elapsedSeconds;
 
-      console.log(`Accurate WPS for "${voice.name}": ${wps.toFixed(2)} (time=${elapsedSeconds.toFixed(2)}s)`);
+      console.log(`Accurate WPS for "${testVoice.name}": ${wps.toFixed(2)} (time=${elapsedSeconds.toFixed(2)}s)`);
 
-      localStorage.setItem(`voice_${voice.name}_tested`, wps.toFixed(2));
-      localStorage.setItem(`${lang}`, `${voice.voiceURI}`);
+      const testData = {
+        wps: wps.toFixed(2),
+        voiceName: testVoice.name,
+        voiceURI: testVoice.voiceURI,
+        lang: testVoice.lang,
+      };
+      const testKey = `voice_test_data_${lang}`;
+      const storedData = localStorage.getItem(testKey);
+      let allTestData = {};
 
+      if (storedData) {
+        try {
+          allTestData = JSON.parse(storedData);
+        } catch {
+          allTestData = {};
+        }
+      }
+
+      allTestData[testVoice.voiceURI] = testData;
+
+      localStorage.setItem(testKey, JSON.stringify(allTestData));
+      localStorage.setItem(`${lang}`,testVoice.voiceURI);
+      console.log("accuratetest - ", localStorage.getItem(`voice_test_data_${lang}`), "langitem-",localStorage.getItem(`${lang}`));
+      setAlreadyTested(true); // Mark tested after success
       setShowTestScreen(false);
       setIsLoadingTest(false);
 
       playVideo();
-      toggleSpeaking();
+      if(!isSpeaking)
+        toggleSpeaking();
 
       utteranceRef.current = null;
     };
-
-    speechSynthesis.cancel(); // Cancel any ongoing speech before starting new
+    speechSynthesis.cancel();
     speechSynthesis.speak(utterance);
   };
 
-  // Cancel voice test: stop speech, hide test UI, resume video
   const cancelVoiceTest = () => {
     if (utteranceRef.current) {
       speechSynthesis.pause();
       speechSynthesis.cancel();
 
-      // Remove handlers so no onend fires after cancel
       utteranceRef.current.onend = null;
       utteranceRef.current.onerror = null;
       utteranceRef.current.onpause = null;
       utteranceRef.current = null;
     }
     setShowTestScreen(false);
+     setAlreadyTested(false);
     setIsLoadingTest(false);
-    playVideo();
+    if (!isSpeaking)
+      playVideo();
+  };
+
+  // Handle user changing voice from dropdown in test screen
+  const onVoiceChange = (e) => {
+    const selectedName = e.target.value;
+    const newVoice = systemVoices.find(v => v.voiceURI === selectedName);
+    setTestVoice(newVoice);
+    console.log("alreadytested",alreadyTested);
+    if(alreadyTested){
+      localStorage.setItem(`${lang}`, newVoice.voiceURI);
+      if(!isSpeaking)
+        toggleSpeaking();
+    }
+
+    // On voice change, check if this voice is already tested
+    const testKey = `voice_test_data_${lang}`;
+    const storedData = localStorage.getItem(testKey);
+    console.log("handleread - ", storedData);
+
+    let tested = false;
+    if (storedData) {
+      try {
+        const parsed = JSON.parse(storedData);
+        const voiceTestData = parsed[newVoice.voiceURI];
+        if (
+          voiceTestData &&
+          voiceTestData.voiceName === newVoice.name &&
+          voiceTestData.lang === newVoice.lang
+        ) {
+          tested = true;
+        }
+      } catch {}
+    }
+    setAlreadyTested(tested);
   };
 
   // Spinner component for inline loading animation
@@ -428,11 +554,11 @@ export default function SubtitleVoiceControls({
         {/* Toggle Subtitles Switch */}
         <div
           className="toggle-subtitles"
-          onClick={handleReadSubtitlesClick}
+          onClick={() => handleReadSubtitlesClick(false)}
           role="button"
           tabIndex={0}
           onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') handleReadSubtitlesClick();
+            if (e.key === 'Enter' || e.key === ' ') handleReadSubtitlesClick(false);
           }}
           aria-pressed={isSpeaking}
           aria-label="Toggle read subtitles"
@@ -464,55 +590,35 @@ export default function SubtitleVoiceControls({
             aria-label="Volume control"
           />
         </div>
+        {/* Change Voice Button */}
+<div className="change-voice-container" style={{ marginTop: '12px' }}>
+  <button
+    onClick={() => handleReadSubtitlesClick(true)}
+    className="voice-test-button secondary"
+    aria-label="Change voice and test"
+  >
+    Change Voice
+  </button>
+</div>
+
       </div>
     )}
   </div>
 
   {/* Floating Test WPS Screen */}
-  {showTestScreen && (
-    <div
-      className="floating-test-screen"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="voice-test-title"
-    >
-      <h2 id="voice-test-title" className="voice-test-title">
-        Voice Test: {voice?.name || 'Default'}
-      </h2>
-      {lang && <p className="voice-test-lang">Language: {lang.toUpperCase()}</p>}
-      <p className="voice-test-text">
-        {testSentences[lang] ||
-          'This is a quick test to ensure subtitles are read correctly in your selected voice.'}
-      </p>
-
-      <div className="voice-test-buttons">
-        <button
-          onClick={startAccurateVoiceTest}
-          className="voice-test-button primary"
-          aria-label="Start voice test reading"
-          disabled={isLoadingTest}
-        >
-          {isLoadingTest ? (
-            <>
-              <Spinner />
-              Loading...
-            </>
-          ) : (
-            'Start Reading'
-          )}
-        </button>
-
-        <button
-          onClick={cancelVoiceTest}
-          className="voice-test-button cancel"
-          aria-label="Cancel voice test"
-          disabled={isLoadingTest}
-        >
-          Cancel
-        </button>
-      </div>
-    </div>
-  )}
+   {showTestScreen && (
+        <VoiceTestScreen
+          voice={testVoice}
+          lang={lang}
+          testSentences={testSentences}
+          isLoadingTest={isLoadingTest}
+          startAccurateVoiceTest={startAccurateVoiceTest}
+          cancelVoiceTest={cancelVoiceTest}
+          onVoiceChange={onVoiceChange}
+          voices={systemVoices}
+          alreadyTested={alreadyTested}
+        />
+      )}
 </>
   );
 }
