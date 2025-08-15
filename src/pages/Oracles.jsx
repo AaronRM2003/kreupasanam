@@ -166,7 +166,7 @@ export default function Oracles({ lang: initialLang }) {
       className={styles.testimoniesSection}
       style={{ marginTop: 0, backgroundColor: window.innerWidth <= 768 ? '#fff' : 'transparent' }}
     >
-      <div className={styles.testimoniesSectionContainer} style={{ margin: '0 0.5rem' }}>
+      <div className={styles.testimoniesSectionContainer} style={{ margin: '0 1rem' }}>
         <div className={styles.testimoniesHeader}>
           <div style={{ position: 'relative', textAlign: 'center' }}>
             <button
@@ -213,7 +213,7 @@ export default function Oracles({ lang: initialLang }) {
           </div>
         </div>
 
-        {!allImagesLoaded ? (
+        {!allImagesLoaded && (
           <div
             style={{
               height: 300,
@@ -244,7 +244,9 @@ export default function Oracles({ lang: initialLang }) {
               }
             `}</style>
           </div>
-        ): (
+        )}
+
+        {allImagesLoaded && (
           <div className={styles.testimoniesGrid}>
             {sortedOracles.length > 0 ? (
               sortedOracles.map(({ id, title, video, date }) => {

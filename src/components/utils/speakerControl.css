@@ -116,7 +116,7 @@
   max-width: 420px;
   width: 90vw;
   max-height: 90vh; /* limit container height to 90% of viewport height */
-  overflow-y: auto; /* enable vertical scroll inside container if needed */
+  overflow-y: scroll; /* enable vertical scroll inside container if needed */
   padding: 32px 28px;
   background: #ffffff;
   color: #222;
@@ -130,6 +130,37 @@
   -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
 }
 
+.voice-test-container {
+  -webkit-mask-image: linear-gradient(to bottom,
+    rgba(0,0,0,1) 96%,
+    rgba(0,0,0,0.3) 99%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(to bottom,
+    rgba(0,0,0,1) 96%,
+    rgba(0,0,0,0.3) 99%,
+    transparent 100%
+  );
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+
+.voice-test-container {
+  overflow-y: scroll; /* not auto */
+  scrollbar-width: thin;
+  scrollbar-color: #246bfd #f0f0f0;
+}
+.voice-test-container::-webkit-scrollbar {
+  width: 6px;
+}
+.voice-test-container::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+.voice-test-container::-webkit-scrollbar-thumb {
+  background-color: #246bfd;
+  border-radius: 3px;
+}
 
 .voice-test-title {
   font-weight: 700;

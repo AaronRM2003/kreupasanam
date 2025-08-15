@@ -259,7 +259,9 @@ if (errorLoading) {
         {allImagesLoaded && (
           <div className={styles.testimoniesGrid}>
             {dhyanam.length > 0 ? (
-              dhyanam.map(({ id, title, video, date }) => {
+             dhyanam
+              .sort((a, b) => new Date(b.date) - new Date(a.date)) // Sort by date descending
+              .map(({ id, title, video, date }) => {
                 const thumbnail = getYouTubeThumbnail(video);
                 return (
                   <TestimonyCard

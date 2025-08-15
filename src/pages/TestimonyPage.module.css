@@ -271,11 +271,13 @@
 
 /* Testimony Title inside container */
 .testimonyTitle {
-  font-size: 2.4rem;
+  font-size: 2.2rem;
   font-weight: 800;
   color: #1a1a1a;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 1rem;
+  word-break: break-word;      /* Breaks long words if needed */
+  overflow-wrap: break-word;
 }
 
 /* Date */
