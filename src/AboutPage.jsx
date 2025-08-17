@@ -2,6 +2,7 @@ import React, { useState, useEffect,useRef } from 'react';
 import styles from './About.module.css';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import AppBar from './components/AppBar';
 
 const translations = {
   hi: {
@@ -453,6 +454,10 @@ export default function About({ lang = 'en' }) {
   };
 
   return (
+    <div >
+          <AppBar lang={lang}/>
+          <img src="/assets/logo.webp" alt="Logo" className="floating-logo" />
+
     <div className={styles.wrapper}>
       <section className={styles.sectionWrapper}>
         <div className={styles.container}>
@@ -521,6 +526,7 @@ export default function About({ lang = 'en' }) {
           {/* New grid wrapper ends */}
         </div>
       </section>
+    </div>
     </div>
   );
 }

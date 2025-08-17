@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { FaShareAlt, FaCompass } from 'react-icons/fa';
 
 import styles from './TestimonyPage.module.css';
 
@@ -118,7 +120,10 @@ export default function OraclesPage({ lang: initialLang }) {
       currentTime,
       lang,
     });
-  
+    const navigate = useNavigate();
+ const handleClick = () => {
+    navigate(`/${lang}/oracles`);
+  };
     // Auto-disable speech when video closes
     useEffect(() => {
     if (!showVideo && isSpeaking) {
@@ -240,11 +245,18 @@ export default function OraclesPage({ lang: initialLang }) {
 
           <div className={styles.shareSection}>
             <p style={{ fontWeight: '600' }}>Share this Oracle:</p>
-            <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-              <button className={styles.shareMainButton} onClick={() => setShowShareModal(true)}>
-                🔗 Share
-              </button>
-            </div>
+           <div className={styles.actionRow}>
+           
+             <button className={`${styles.actionButton} ${styles.share}`} onClick={() => setShowShareModal(true)}>
+               <FaShareAlt />
+               <span>Share</span>
+             </button>
+           
+             <button className={`${styles.actionButton} ${styles.explore}`} onClick={handleClick}>
+               <FaCompass />
+               <span>Explore More</span>
+             </button>
+           </div>
 
             <ShareModal
               show={showShareModal}

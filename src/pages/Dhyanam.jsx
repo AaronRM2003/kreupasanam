@@ -5,6 +5,7 @@ import { Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { HiOutlineEmojiSad } from 'react-icons/hi';
 import backstyle from './TestimonyPage.module.css';
+import AppBar from '../components/AppBar';
 
 export default function Dhyanam({ lang: initialLang }) {
   const [lang, setLang] = useState(initialLang || 'en');
@@ -169,11 +170,14 @@ if (errorLoading) {
 }
 
   return (
-    <section
+    <div >
+      <AppBar lang={lang}/>
+          <section
       className={styles.testimoniesSection}
-      style={{ marginTop: 0, backgroundColor: window.innerWidth <= 768 ? '#fff' : 'transparent' }}
+      style={{ marginTop: '7rem', backgroundColor: window.innerWidth <= 768 ? '#fbfeffff' : 'transparent' }}
     >
-      <div className={styles.testimoniesSectionContainer} style={{ margin: '0 0.5rem' }}>
+                <img src="/assets/logo.webp" alt="Logo" className="floating-logo" />
+      <div className={styles.testimoniesSectionContainer} style={{ margin: '0 0rem' }}>
         <div className={styles.testimoniesHeader}>
           <div style={{ position: 'relative', textAlign: 'center' }}>
             <button
@@ -232,6 +236,7 @@ if (errorLoading) {
               flexDirection: 'column',
               color: '#246bfd',
               fontSize: '1.2rem',
+              marginBottom:'12rem'
             }}
           >
             <div
@@ -311,5 +316,6 @@ if (errorLoading) {
         </div>
       </div>
     </section>
+    </div>
   );
 }

@@ -27,14 +27,19 @@ export function ShareModal({
 }) {
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(shareText)
-      .then(() => {
-        setCopied(true);
-        setTimeout(() => setCopied(false), 5000); // Reset after 2 seconds
-      });
-    // ❌ no alert or error needed
-  };
+  const handleCopy = async () => {
+  try {
+    await navigator.clipboard.writeText(shareText);
+    setCopied(true);
+
+    // Reset after 5 seconds
+    setTimeout(() => setCopied(false), 5000);
+  } catch (err) {
+    console.error("Failed to copy:", err);
+    setCopied(false);
+  }
+};
+
 
   return (
     <Modal show={show} onHide={onHide} title={title} centered>

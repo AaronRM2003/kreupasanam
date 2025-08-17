@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useParams, Link } from 'react-router-dom';
-
+import { FaShareAlt, FaCompass } from 'react-icons/fa';
 import styles from './TestimonyPage.module.css';
 
 import {
@@ -90,7 +91,7 @@ export default function TestimonyPage({ lang: initialLang }) {
   const content = testimony?.content || {};
   const video = testimony?.video || '';
   const subtitlesUrl = testimony?.subtitles || '';
-
+const navigate = useNavigate();
   // Get videoId and thumbnail URL
   const videoId = getYouTubeVideoID(video);
   const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
@@ -143,6 +144,9 @@ export default function TestimonyPage({ lang: initialLang }) {
   }
 }, [showVideo, isSpeaking, stopSpeaking]);
 
+const handleClick = () => {
+    navigate(`/${lang}/testimonies`);
+  };
   // Share URLs
   const shareUrl = window.location.href;
   const fbShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
@@ -255,11 +259,20 @@ export default function TestimonyPage({ lang: initialLang }) {
 
           <div className={styles.shareSection}>
             <p style={{ fontWeight: '600' }}>Share this testimony:</p>
-            <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-              <button className={styles.shareMainButton} onClick={() => setShowShareModal(true)}>
-                🔗 Share
-              </button>
-            </div>
+           <div className={styles.actionRow}>
+
+  <button className={`${styles.actionButton} ${styles.share}`} onClick={() => setShowShareModal(true)}>
+    <FaShareAlt />
+    <span>Share</span>
+  </button>
+
+  <button className={`${styles.actionButton} ${styles.explore}`} onClick={handleClick}>
+    <FaCompass />
+    <span>Explore More</span>
+  </button>
+</div>
+
+
 
             <ShareModal
               show={showShareModal}
@@ -278,6 +291,7 @@ export default function TestimonyPage({ lang: initialLang }) {
             />
           </div>
         </div>
+        
       </div>
 
       {/* Video player and subtitles */}

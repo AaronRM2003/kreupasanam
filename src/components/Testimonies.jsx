@@ -89,7 +89,7 @@ export default function Testimonies({lang:initialLang}) {
   }, []);
 
   return (
-    <section className={styles.testimoniesSection}>
+    <section style={{}} className={styles.testimoniesSection}>
       <div className={styles.testimoniesSectionContainer}>
         <div className={styles.testimoniesHeader}>
           <h2 className={styles.testimoniesTitle}>More Powerful Testimonies</h2>

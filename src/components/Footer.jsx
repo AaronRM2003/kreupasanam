@@ -40,12 +40,21 @@ export default function Footer() {
   return (
     <div>
       <div className={styles.waveTop}>
-        <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
-          <path
-            fill="#3949ab"
-            d="M0,192L48,181.3C96,171,192,149,288,154.7C384,160,480,192,576,181.3C672,171,768,117,864,117.3C960,117,1056,171,1152,165.3C1248,160,1344,96,1392,64L1440,32L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
-          />
-        </svg>
+       
+  <svg viewBox="0 0 1440 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0091ffff"/>
+      <stop offset="100%" stop-color="hsla(218, 100%, 30%, 1.00)"/>
+    </linearGradient>
+  </defs>
+  <path
+    fill="url(#waveGradient)"
+    d="M0,192L48,181.3C96,171,192,149,288,154.7C384,160,480,192,576,181.3C672,171,768,117,864,117.3C960,117,1056,171,1152,165.3C1248,160,1344,96,1392,64L1440,32L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
+  />
+</svg>
+
+
       </div>
 
       <footer className={styles.footer}>

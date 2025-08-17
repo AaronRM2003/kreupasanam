@@ -10,6 +10,7 @@
   justify-content: center;
   pointer-events: none;
   z-index: 9999;
+  
 }
 @media (hover: none) {
   .nav-links a::after {
@@ -21,7 +22,7 @@
 .app-bar {
   pointer-events: auto;
   width: 100vw;
-  height: 120px;
+  height: 140px;
   padding: 1rem 4rem 2rem;
   color: #1a1a1a;
   display: flex;
@@ -82,13 +83,16 @@
 .logo {
   font-size: 2rem;
   font-weight: 900;
-  color: #123f7c;
+  background: linear-gradient(90deg, hsl(218, 100%, 27%), #0095ff);
+    -webkit-background-clip: text;
+    color: transparent;
   letter-spacing: 0.5px;
   user-select: none;
   flex: none;
   z-index: 2;
   margin: 0 auto;
   transition: all 0.3s ease;
+  line-height: 1;
 }
 
 .logo:hover {
@@ -110,7 +114,7 @@
   position: relative;
   color: inherit;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 600;
   padding-bottom: 2px;
 }
@@ -180,13 +184,13 @@
     pointer-events: auto;
     top: 0;
     width: 100vw;
-    height: 120px;
+    height: 130px;
     padding: 10px 1.5rem 2rem;
     color: #1a1a1a;
     display: flex;
     align-items: center;
     position: relative;
-    margin: 10px 5px 0 5px;
+    margin: 6px 5px 0 5px;
     border-radius: 20px;
     border: 1.5px solid #0091c2;
   }
@@ -250,7 +254,11 @@
     display: block !important;
     margin-left: auto;
   }
-
+.mobile-nav {
+  position: relative; /* needed for absolute .nav-links */
+  z-index: 1000;      /* ensure it floats above content */
+  top: 50px;
+}
   .nav-links {
     position: absolute;
     top: 100%;
@@ -378,7 +386,7 @@
 
   .logo {
     flex: 0 0 auto;
-    font-size: 1.3rem;
+    font-size: clamp(0.8rem, 3vw, 2.3rem);
     margin-right: 2rem;
   }
 
@@ -409,7 +417,7 @@
 
 @media (max-width: 1068px) and (orientation: landscape) {
   .app-bar {
-    height: 100px; /* taller than scrolled variant */
+    height: 120px; /* taller than scrolled variant */
     padding: 1rem 2rem;
     background: rgba(255, 255, 255, 0.9);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
@@ -441,4 +449,19 @@
   .menu-toggle {
     display: none !important;
   }
+}
+
+@media (max-width: 1068px) and (orientation: landscape) {
+  .nav-links {
+    gap: 0.3rem;
+  }
+.nav-links a {
+  flex: 1;
+  text-align: center;
+  padding: 0.4rem 0;
+
+  font-size: clamp(0.4rem, 1.7vw, 1rem);
+}
+
+  
 }

@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { HiOutlineEmojiSad } from 'react-icons/hi';
 import backstyle from './TestimonyPage.module.css';
 import { useMemo } from 'react';
+import AppBar from '../components/AppBar';
 
 
 const languageMap = {
@@ -119,15 +120,16 @@ useEffect(() => {
 
 
   return (
-    <section
-      className={styles.testimoniesSection}
-      style={{
-        marginTop: '0',
-        backgroundColor: window.innerWidth <= 768 ? '#fff' : 'transparent',
-      }}
-    >
+    <div >
+          <AppBar lang={lang}/>
+          <img src="/assets/logo.webp" alt="Logo" className="floating-logo" />
+
+              <section
+          className={styles.testimoniesSection}
+          style={{ marginTop: '7rem', backgroundColor: window.innerWidth <= 768 ? '#fff' : 'transparent' }}
+        >
       
-      <div className={styles.testimoniesSectionContainer} style={{ margin: '0 1rem' }}>
+      <div className={styles.testimoniesSectionContainer} style={{ margin: '0 0rem' }}>
         <div className={styles.testimoniesHeader}>
           <div style={{ position: 'relative', textAlign: 'center' }}>
             <button
@@ -158,6 +160,7 @@ useEffect(() => {
               flexWrap: 'wrap',
               justifyContent: 'center',
               gap: '1rem',
+              margin:'0.5rem'
             }}
           >
             {/* Language Dropdown */}
@@ -224,6 +227,8 @@ useEffect(() => {
               flexDirection: 'column',
               color: '#246bfd',
               fontSize: '1.2rem',
+              marginBottom: '10rem',
+              
             }}
           >
             <div
@@ -278,10 +283,13 @@ useEffect(() => {
                   borderRadius: '20px',
                   backgroundColor: 'rgba(240, 245, 255, 0.5)',
                   maxWidth: '600px',
-                  margin: '3rem auto',
+                  margin: '4rem auto',
+                  marginBottom: '8rem',
                   textAlign: 'center',
                   boxShadow: '0 8px 24px rgba(36, 107, 253, 0.08)',
                   backdropFilter: 'blur(8px)',
+                 
+
                 }}
               >
                 <HiOutlineEmojiSad size={50} color="#246bfd" style={{ marginBottom: '1rem' }} />
@@ -312,5 +320,6 @@ useEffect(() => {
 
       </div>
     </section>
+    </div>
   );
 }

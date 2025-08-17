@@ -5,6 +5,7 @@ import { Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { HiOutlineEmojiSad } from 'react-icons/hi';
 import backstyle from './TestimonyPage.module.css';
+import AppBar from '../components/AppBar';
 
 const languageMap = {
   en: 'English',
@@ -162,11 +163,15 @@ export default function Oracles({ lang: initialLang }) {
   }
 
   return (
+     <div >
+          <AppBar lang={lang}/>
+          <img src="/assets/logo.webp" alt="Logo" className="floating-logo" />
+
     <section
       className={styles.testimoniesSection}
-      style={{ marginTop: 0, backgroundColor: window.innerWidth <= 768 ? '#fff' : 'transparent' }}
+      style={{ marginTop: '7rem', backgroundColor: window.innerWidth <= 768 ? '#fff' : 'transparent' }}
     >
-      <div className={styles.testimoniesSectionContainer} style={{ margin: '0 1rem' }}>
+      <div className={styles.testimoniesSectionContainer} style={{ margin: '0 0rem' }}>
         <div className={styles.testimoniesHeader}>
           <div style={{ position: 'relative', textAlign: 'center' }}>
             <button
@@ -223,6 +228,41 @@ export default function Oracles({ lang: initialLang }) {
               flexDirection: 'column',
               color: '#246bfd',
               fontSize: '1.2rem',
+              marginBottom: '10rem',
+            }}
+          >
+            <div
+              style={{
+                width: 40,
+                height: 40,
+                border: '4px solid #d3e3ff',
+                borderTop: '4px solid #246bfd',
+                borderRadius: '50%',
+                animation: 'spin 1s linear infinite',
+                marginBottom: 16,
+              }}
+            ></div>
+            Loading Oracles...
+            <style>{`
+              @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+              }
+            `}</style>
+          </div>
+        )}
+
+        {!allImagesLoaded && (
+          <div
+            style={{
+              height: 300,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+              color: '#246bfd',
+              fontSize: '1.2rem',
+              marginBottom: '12rem',
             }}
           >
             <div
@@ -300,5 +340,6 @@ export default function Oracles({ lang: initialLang }) {
         </div>
       </div>
     </section>
+    </div>
   );
 }

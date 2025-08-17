@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
+import { FaShareAlt, FaCompass } from 'react-icons/fa';
 import styles from './TestimonyPage.module.css';
 
 import {
@@ -32,7 +33,10 @@ export default function DhyanamPage({ lang: initialLang }) {
   const [showShareModal, setShowShareModal] = useState(false);
   const [showLangHelp, setShowLangHelp] = useState(false);
   const [includeSummary, setIncludeSummary] = useState(false);
-
+  const navigate = useNavigate();
+  const handleClick = () => {
+      navigate(`/${lang}/dhyanam`);
+    };
   // Parse id and slug from idSlug param
   let id;
   let slug;
@@ -274,11 +278,18 @@ export default function DhyanamPage({ lang: initialLang }) {
 
           <div className={styles.shareSection}>
             <p style={{ fontWeight: '600' }}>Share this meditation:</p>
-            <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-              <button className={styles.shareMainButton} onClick={() => setShowShareModal(true)}>
-                🔗 Share
-              </button>
-            </div>
+             <div className={styles.actionRow}>
+                     
+                       <button className={`${styles.actionButton} ${styles.share}`} onClick={() => setShowShareModal(true)}>
+                         <FaShareAlt />
+                         <span>Share</span>
+                       </button>
+                     
+                       <button className={`${styles.actionButton} ${styles.explore}`} onClick={handleClick}>
+                         <FaCompass />
+                         <span>Explore More</span>
+                       </button>
+                     </div>
 
             <ShareModal
               show={showShareModal}

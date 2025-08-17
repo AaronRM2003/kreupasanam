@@ -1,10 +1,9 @@
 /* Section Container and Layout */
 .testimoniesSection {
-  padding: 1rem; 
+  padding: 0rem; 
   max-width: 1400px;
   margin: 0 auto;
 }
-
 .testimoniesSectionContainer {
   background: rgba(255, 255, 255, 0.95);
   border-radius: 40px;
@@ -28,10 +27,67 @@
 }
 
 @media (max-width: 768px) {
-  .testimoniesSection {
-    background-color: white;
-    padding: 2rem 0;
+.testimoniesSection {
+  position: relative;
+  background-color: #fff;
+  border-radius: 30px;
+  padding-top: 2rem;
+  margin: 0.7rem;
+  box-shadow: 0 8px 24px rgba(36, 107, 253, 0.08);
+  overflow: hidden;
+}
+
+/* Fading border */
+.testimoniesSection {
+  position: relative;
+  background-color: #fff;
+  border-radius: 30px;
+  padding-top: 2rem;
+  margin: 0.7rem;
+  box-shadow: 0 8px 24px rgba(36, 107, 253, 0.08);
+  overflow: hidden;
+
+  /* Floating animation */
+  animation: floatUpDown 8s ease-in-out infinite alternate;
+}
+
+/* Fading border */
+.testimoniesSection::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 30px;
+  pointer-events: none;
+
+  border: 3px solid rgba(36, 148, 253, 0.6);
+
+  -webkit-mask-image: linear-gradient(to bottom, black 10%, transparent 30%);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-clip: border-box;
+  -webkit-mask-composite: destination-in;
+
+  mask-image: linear-gradient(to bottom, black 10%, transparent 30%);
+  mask-repeat: no-repeat;
+  mask-clip: border-box;
+  mask-composite: intersect;
+}
+
+/* Floating animation keyframes */
+@keyframes floatUpDown {
+  0% {
+    transform: translateY(0);
   }
+  50% {
+    transform: translateY(-3px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
   .testimoniesSectionContainer {
     background: transparent;
     border-radius: 0;
@@ -40,7 +96,7 @@
     margin: 0;
   }
   .testimoniesTitle {
-    font-size: 2.3rem !important;
+    font-size: 2rem !important;
   }
 }
 
@@ -121,17 +177,28 @@
 /* Grid Container */
 .testimoniesGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
   gap: 1rem;
   padding: 0 1rem;
+
+  /* max 3 cards per row */
+  grid-template-columns: repeat(3, minmax(280px, 1fr));
+  justify-content: center; /* center if less than 3 items */
+  margin: 0 auto;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 1024px) {
   .testimoniesGrid {
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    padding: 0;
+    grid-template-columns: repeat(2, minmax(240px, 1fr)); /* 2 cards per row */
   }
 }
+
+@media (max-width: 768px) {
+  .testimoniesGrid {
+    grid-template-columns: 1fr; /* 1 card per row */
+    padding: 0.5rem;
+  }
+}
+
 
 @media (max-width: 320px) {
   .testimoniesGrid {
@@ -184,7 +251,7 @@
 
 /* Card Title */
 .testimoniesCardTitle {
-  font-size: 1.5rem;
+  font-size: clamp(1rem, 3vw, 1.5rem);
   font-weight: 700;
   color: #1e2b5a;
   margin-top: 1.2rem;
@@ -212,7 +279,7 @@
     padding: 0.5rem 0.5rem 1rem;
   }
   .testimoniesCardTitle {
-    font-size: 1.3rem;
+    font-size: clamp(1.2rem, 3vw, 1.3rem);
     margin-top: 0.5rem;
   }
 }
