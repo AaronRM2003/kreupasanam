@@ -259,6 +259,61 @@ html, body {
   text-align: center;
   margin-bottom: 2rem;
 }
+@media (max-width: 768px) {
+  /* Existing testimoniesSection styles */
+
+  /* sectionWrapper with same mobile-only border & floating effect */
+  .wrapper {
+  position: relative;
+  border-radius: 30px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #fafcff, #d6e8ff);
+  /* Remove border here */
+  padding: 0rem;
+  margin-left: 0.7rem;
+  margin-right: 0.7rem;
+  margin-top: 7rem;
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.08);
+  animation: floatUpDown 8s ease-in-out infinite alternate;
+}
+
+.wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 30px;
+  pointer-events: none;
+  border: 3px solid rgba(36, 148, 253, 0.6);
+
+  -webkit-mask-image: linear-gradient(to bottom, black 10%, transparent 30%);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-clip: border-box;
+  -webkit-mask-composite: destination-in;
+
+  mask-image: linear-gradient(to bottom, black 10%, transparent 30%);
+  mask-repeat: no-repeat;
+  mask-clip: border-box;
+  mask-composite: intersect;
+}
+
+
+/* Floating animation keyframes */
+@keyframes floatUpDown {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+}
 
 .backButton {
   position: absolute;

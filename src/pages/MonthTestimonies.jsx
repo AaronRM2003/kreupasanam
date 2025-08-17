@@ -121,12 +121,12 @@ useEffect(() => {
 
   return (
     <div >
-          <AppBar lang={lang}/>
+          <AppBar lang={initialLang || 'en'}/>
           <img src="/assets/logo.webp" alt="Logo" className="floating-logo" />
 
               <section
           className={styles.testimoniesSection}
-          style={{ marginTop: '7rem', backgroundColor: window.innerWidth <= 768 ? '#fff' : 'transparent' }}
+          style={{ marginTop: '7rem',marginBottom:'2rem', backgroundColor: window.innerWidth <= 768 ? '#fff' : 'transparent' }}
         >
       
       <div className={styles.testimoniesSectionContainer} style={{ margin: '0 0rem' }}>
@@ -254,56 +254,56 @@ useEffect(() => {
 
         {/* Render testimonies only after all images loaded */}
         {allImagesLoaded && (
-          <div className={styles.testimoniesGrid}>
-            {filteredTestimonies.length > 0 ? (
-              filteredTestimonies.map(({ id, title, video, date }) => {
-                const thumbnail = getYouTubeThumbnail(video);
-                return (
-                  <TestimonyCard
-                    key={id}
-                    id={id}
-                    title={title}
-                    image={thumbnail}
-                    date={date}
-                    lang={lang}
-                    path={`${lang}/testimony`}
-                  />
-                );
-              })
-            ) : (
-              <div
-                className={styles.testimoniesCard}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '3rem 1rem',
-                  border: '2px dashed #a2c4ff',
-                  borderRadius: '20px',
-                  backgroundColor: 'rgba(240, 245, 255, 0.5)',
-                  maxWidth: '600px',
-                  margin: '4rem auto',
-                  marginBottom: '8rem',
-                  textAlign: 'center',
-                  boxShadow: '0 8px 24px rgba(36, 107, 253, 0.08)',
-                  backdropFilter: 'blur(8px)',
-                 
+  <>
+    {filteredTestimonies.length > 0 ? (
+      <div className={styles.testimoniesGrid}>
+        {filteredTestimonies.map(({ id, title, video, date }) => {
+          const thumbnail = getYouTubeThumbnail(video);
+          return (
+            <TestimonyCard
+              key={id}
+              id={id}
+              title={title}
+              image={thumbnail}
+              date={date}
+              lang={lang}
+              path={`${lang}/testimony`}
+            />
+          );
+        })}
+      </div>
+    ) : (
+      <div
+        className={styles.testimoniesCard}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '3rem 1rem',
+          border: '2px dashed #a2c4ff',
+          borderRadius: '20px',
+          backgroundColor: 'rgba(240, 245, 255, 0.5)',
+          maxWidth: '600px',
+          margin: '4rem auto 8rem auto',
+          textAlign: 'center',
+          boxShadow: '0 8px 24px rgba(36, 107, 253, 0.08)',
+          marginBottom: '12rem',
+        }}
+      >
+        <HiOutlineEmojiSad size={50} color="#246bfd" style={{ marginBottom: '1rem' }} />
+        <h3 style={{ color: '#246bfd', fontWeight: '600', fontSize: '1.4rem' }}>
+          No Testimonies Available
+        </h3>
+        <p style={{ color: '#444', marginTop: '0.5rem', fontSize: '1rem' }}>
+          We couldn’t find any testimonies for <strong>{selectedMonth}</strong>{' '}
+          {selectedYear}.
+        </p>
+      </div>
+    )}
+  </>
+)}
 
-                }}
-              >
-                <HiOutlineEmojiSad size={50} color="#246bfd" style={{ marginBottom: '1rem' }} />
-                <h3 style={{ color: '#246bfd', fontWeight: '600', fontSize: '1.4rem' }}>
-                  No Testimonies Available
-                </h3>
-                <p style={{ color: '#444', marginTop: '0.5rem', fontSize: '1rem' }}>
-                  We couldn’t find any testimonies for <strong>{selectedMonth}</strong>{' '}
-                  {selectedYear}.
-                </p>
-              </div>
-            )}
-          </div>
-        )}
 
         {/* Hidden images to preload and track onLoad */}
        <div style={{ display: 'none' }}>
