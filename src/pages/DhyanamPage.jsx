@@ -250,6 +250,8 @@ export default function DhyanamPage({ lang: initialLang }) {
 
       {/* Main content */}
       <div className={styles.testimonyContainer}>
+               <img src="/assets/logo.png" alt="Logo" className="floating-logo" />
+
         <div className={styles.testimonyInner}>
           {videoId && !showVideo ? (
             <div

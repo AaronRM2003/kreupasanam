@@ -165,7 +165,7 @@ export default function Oracles({ lang: initialLang }) {
   return (
      <div >
           <AppBar lang={lang}/>
-          <img src="/assets/logo.webp" alt="Logo" className="floating-logo" />
+          <img src="/assets/logo.png" alt="Logo" className="floating-logo" />
 
     <section
       className={styles.testimoniesSection}

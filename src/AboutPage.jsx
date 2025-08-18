@@ -456,7 +456,7 @@ export default function About({ lang = 'en' }) {
   return (
     <div >
           <AppBar lang={lang}/>
-          <img src="/assets/logo.webp" alt="Logo" className="floating-logo" />
+          <img src="/assets/logo.png" alt="Logo" className="floating-logo" />
 
     <div className={styles.wrapper}>
       <section className={styles.sectionWrapper}>

@@ -49,7 +49,7 @@ export default function Home({ lang }) {
     <div>
       {introReady && <AppBar lang={lang} />}
       <div className="page">
-        <img src="/assets/logo.webp" alt="Logo" className="floating-logo" />
+        <img src="/assets/logo.png" alt="Logo" className="floating-logo" />
 
         {!introReady ? (
           <>

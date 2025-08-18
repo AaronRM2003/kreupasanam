@@ -176,7 +176,7 @@ if (errorLoading) {
       className={styles.testimoniesSection}
       style={{ marginTop: '7rem', backgroundColor: window.innerWidth <= 768 ? '#fbfeffff' : 'transparent' }}
     >
-                <img src="/assets/logo.webp" alt="Logo" className="floating-logo" />
+                <img src="/assets/logo.png" alt="Logo" className="floating-logo" />
       <div className={styles.testimoniesSectionContainer} style={{ margin: '0 0rem' }}>
         <div className={styles.testimoniesHeader}>
           <div style={{ position: 'relative', textAlign: 'center' }}>
