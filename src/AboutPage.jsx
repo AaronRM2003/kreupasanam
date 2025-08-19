@@ -507,20 +507,22 @@ export default function About({ lang = 'en' }) {
             <ScrollHoverCard className={styles.card}>
               <h2>{t.faqHeading}</h2>
               <div className={styles.faqList}>
-                {t.faq.map(({ question, answer }, idx) => (
-                  <div key={idx} className={styles.faqItem}>
-                    <button
-                      className={styles.faqQuestion}
-                      onClick={() => toggleFAQ(idx)}
-                    >
-                      {question}
-                    </button>
-                    {openFAQ === idx && (
-                      <div className={styles.faqAnswer}>{answer}</div>
-                    )}
-                  </div>
-                ))}
-              </div>
+  {t.faq.map(({ question, answer }, idx) => (
+    <div
+      key={idx}
+      className={`${styles.faqItem} ${openFAQ === idx ? styles.open : ''}`}
+    >
+      <button
+        className={styles.faqQuestion}
+        onClick={() => toggleFAQ(idx)}
+      >
+        {question}
+      </button>
+      <div className={styles.faqAnswer}>{answer}</div>
+    </div>
+  ))}
+</div>
+
             </ScrollHoverCard>
           </div>
           {/* New grid wrapper ends */}

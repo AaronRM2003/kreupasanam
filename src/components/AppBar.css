@@ -296,7 +296,7 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
   align-items: center;
   justify-content: flex-start;
   gap: 12px;
-  padding: 0.9rem 1.2rem;
+  padding: 0.7rem 1.2rem;
   
   /* Typography */
   font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;

@@ -53,54 +53,64 @@ export default function IntroSection({ lang = 'en', onReady }) {
 }
 const translations = {
   en: {
-    title: "Witness the Power\nof Faith in Action",
-    introText: "Our Lady of Kreupasanam, venerated at the Marian Shrine in Alappuzha, Kerala, has been a beacon of healing, peace, and miraculous intercession for thousands. Through the Marian Covenant, the faithful experience profound spiritual renewal and divine intervention.",
-    button: "Explore Stories",
-  },
-  hi: {
-    title: "क्रिया में विश्वास की शक्ति का साक्षी बनें",
-    introText: "केरल के अलप्पुझा में स्थित मेरीयन श्राइन में वंदनीय क्रेउपासनम माता हजारों लोगों के लिए उपचार, शांति और चमत्कारिक मध्यस्थता की एक प्रकाशस्तम्भ रही हैं। मेरीयन संधि के माध्यम से श्रद्धालु गहरे आध्यात्मिक नवीनीकरण और दिव्य हस्तक्षेप का अनुभव करते हैं।",
-    button: "कहानियाँ खोजें",
-  },
-  zh: {
-    title: "见证信仰的力量\n付诸行动",
-    introText: "我们的克鲁帕萨南圣母，受人尊敬于喀拉拉邦阿拉普扎的玛利亚圣地，是成千上万人康复、和平与奇迹般代祷的灯塔。通过玛利亚圣约，信徒们经历深刻的灵性更新与神圣的介入。",
-    button: "探索故事",
-  },
-  bn: {
-    title: "বিশ্বাসের শক্তির সাক্ষী হন\nকার্যকর বিশ্বাসের",
-    introText: "আমাদের করূপসানম মা, যিনি কেরালার আলাপুজার মেরিয়ান শ্রাইন-এ পূজিত, হাজার হাজার মানুষের জন্য আরোগ্য, শান্তি এবং অলৌকিক মধ্যস্থতার আলো। মেরিয়ান চুক্তির মাধ্যমে ভক্তরা গভীর আধ্যাত্মিক পুনর্জন্ম এবং ঈশ্বরীয় হস্তক্ষেপ অনুভব করেন।",
-    button: "গল্প অন্বেষণ করুন",
-  },
-  ta: {
-    title: "நம்பிக்கையின் சக்தியை\nசெயலில் காணுங்கள்",
-    introText: "அலப்புழா, கேரளாவில் உள்ள மரியான் திருத்தலத்தில் வணங்கப்படும் எங்கள் கிருபாசனம் அன்னை ஆயிரக்கணக்கான மக்களுக்கு குணமடைதல், அமைதி மற்றும் அதிசயப் பணி வழங்கும் ஒளியாயிருக்கிறார். மரியான் ஒப்பந்தத்தின் மூலம் விசுவாசிகள் ஆழ்ந்த ஆன்மீக புதுப்பிப்பு மற்றும் தெய்வீக தலையீட்டை அனுபவிக்கிறார்கள்.",
-    button: "கதைகளை ஆராயுங்கள்",
-  },
-  te: {
-    title: "విశ్వాస శక్తిని\nక్రియలో చూడండి",
-    introText: "అలప్పుజా, కేరళలోని మేరియన్ పుణ్యక్షేత్రంలో పూజించబడే మా క్రూపాసనం అమ్మాయి వేల మందికి ఆరోగ్యం, శాంతి మరియు అద్భుత మద్యస్థతకు దీపస్తంభంగా నిలుస్తోంది. మేరియన్ ఒప్పందం ద్వారా భక్తులు లోతైన ఆధ్యాత్మిక పునరుత్పత్తి మరియు దివ్య జోక్యం అనుభవిస్తారు.",
-    button: "కథలను అన్వేషించండి",
-  },
-  fr: {
-    title: "Découvrez la puissance\nde la foi en action",
-    introText: "Notre Dame de Kreupasanam, vénérée au sanctuaire marial d’Alappuzha, Kerala, est un phare de guérison, de paix et d’intercession miraculeuse pour des milliers de personnes. Grâce à l’Alliance Mariale, les fidèles vivent un profond renouveau spirituel et une intervention divine.",
-    button: "Explorer les témoignages",
-  },
-  es: {
-    title: "Sé testigo del poder\nde la fe en acción",
-    introText: "Nuestra Señora de Kreupasanam, venerada en el Santuario Mariano de Alappuzha, Kerala, ha sido un faro de sanación, paz e intercesión milagrosa para miles de personas. A través del Pacto Mariano, los fieles experimentan una profunda renovación espiritual e intervención divina.",
-    button: "Explorar historias",
-  },
-  mr: {
-    title: "विश्वासाच्या शक्तीचा साक्षीदार बना\nकार्यात विश्वासाचा प्रभाव",
-    introText: "आमची क्रुपासनम माता, केरळमधील अलापुझा येथील मेरीयन मंदिरात पूजल्या जातात, हजारो लोकांसाठी उपचार, शांतता आणि चमत्कारिक मध्यस्थतेचा प्रकाशस्तंभ आहेत. मेरीयन कराराद्वारे भक्तांना खोल आध्यात्मिक नूतनीकरण आणि दैवी हस्तक्षेप अनुभवता येतो.",
-    button: "कथा शोधा",
-  },
-  kn: {
-    title: "ನಂಬಿಕೆಯ ಶಕ್ತಿಯನ್ನು\nಕರ್ಮದಲ್ಲಿ ಸಾಕ್ಷಿಯಾಗಿರಿ",
-    introText: "ಕೇರಳದ ಅಲ್ಪುಜ್ಜಾ ಜಿಲ್ಲೆಯ ಮೇರಿ ಶ್ರೈನ್‌ನಲ್ಲಿ ಪೂಜಿಸಲ್ಪಡುವ ನಮ್ಮ ಕೃಪಾಸನಮ್ಮ ಅನೇಕ ಜನರಿಗೆ ಗುಣಮುಖತೆ, ಶಾಂತಿ ಮತ್ತು ಅದ್ಭುತ ಮಧ್ಯಸ್ಥಿಕೆಗಳ ದೀಪಸ್ತಂಭವಾಗಿದ್ದಾರೆ. ಮೇರಿ ಒಪ್ಪಂದದ ಮೂಲಕ ಭಕ್ತರು ಆಳವಾದ ಆಧ್ಯಾತ್ಮಿಕ ನವೀಕರಣ ಮತ್ತು ದಿವ್ಯ ಹಸ್ತಕ್ಷೇಪವನ್ನು ಅನುಭವಿಸುತ್ತಾರೆ.",
-    button: "ಕಥೆಗಳನ್ನು ಅನ್ವೇಷಿಸಿ",
-  },
+  title: "Witness the Power\nof Faith in Action",
+  introText: "At the Marian Shrine in Alappuzha, Kerala, the faithful honor Our Lady of Kreupasanam, experiencing healing, peace, and divine grace through the Marian Covenant.",
+  button: "Explore Stories",
+},
+
+hi: {
+  title: "आस्था की शक्ति का साक्षी बनें",
+  introText: "केरल के अलप्पुझा स्थित मरियम श्राइन में श्रद्धालु क्रुपासनम माता की उपासना करते हैं और मेरीयन वाचा के माध्यम से उपचार, शांति और ईश्वर की कृपा का अनुभव करते हैं।",
+  button: "कहानियाँ देखें",
+},
+
+zh: {
+  title: "见证信仰的力量",
+  introText: "在印度喀拉拉邦阿拉普扎的玛利亚圣地，信徒们敬奉克鲁帕萨纳姆圣母，并通过圣母圣约体验治愈、平安与神圣恩典。",
+  button: "探索见证",
+},
+
+bn: {
+  title: "বিশ্বাসের শক্তির সাক্ষী হন",
+  introText: "কেরলের আলাপুজা অবস্থিত ম্যারিয়ান তীর্থক্ষেত্রে ভক্তরা ক্রুপাসানম মাতার উপাসনা করেন এবং মেরিয়ান চুক্তির মাধ্যমে চিকিৎসা, শান্তি ও ঈশ্বরীয় কৃপা অনুভব করেন।",
+  button: "গল্পগুলো অন্বেষণ করুন",
+},
+
+ta: {
+  title: "நம்பிக்கையின் சக்தியை அனுபவியுங்கள்",
+  introText: "கேரளாவின் ஆலப்புழாவில் உள்ள மரியன் திருக்கோயிலில் பக்தர்கள் க்ருபாசனம் மாதாவை வணங்கி, மரியன் ஒப்பந்தத்தின் மூலம் குணம், அமைதி மற்றும் இறைவனின் அருளை அனுபவிக்கிறார்கள்.",
+  button: "கதைகளை காண்க",
+},
+
+te: {
+  title: "నమ్మక శక్తిని సాక్ష్యంగా చూడండి",
+  introText: "కెరళా, అలప్పుజా లోని మేరియ‌న్ పుణ్యక్షేత్రంలో భక్తులు క్రుపాసనమ్ మాతను గౌరవిస్తూ, మేరియ‌న్ ఒప్పందం ద్వారా వైద్యం, శాంతి మరియు దైవిక కృపను అనుభవిస్తున్నారు.",
+  button: "కథనాలను అన్వేషించండి",
+},
+
+fr: {
+  title: "Témoignez de la puissance\nde la foi en action",
+  introText: "Au sanctuaire marial d'Alappuzha, au Kerala, les fidèles vénèrent Notre-Dame de Kreupasanam et vivent la guérison, la paix et la grâce divine grâce au Pacte Marian.",
+  button: "Explorer les témoignages",
+},
+
+es: {
+  title: "Sé testigo del poder\nde la fe en acción",
+  introText: "En el Santuario Mariano de Alappuzha, Kerala, los fieles veneran a Nuestra Señora de Kreupasanam y experimentan sanación, paz y gracia divina a través del Pacto Mariano.",
+  button: "Explorar historias",
+},
+
+mr: {
+  title: "विश्वासाच्या शक्तीचा साक्षीदार व्हा",
+  introText: "केरळमधील अलप्पुझा येथील मेरीयन तीर्थक्षेत्रात भक्त क्रुपासनम माताची उपासना करतात आणि मेरीयन कराराद्वारे उपचार, शांती आणि दैवी कृपेचा अनुभव घेतात.",
+  button: "कथा शोधा",
+},
+
+kn: {
+  title: "ಧರ್ಮದ ಶಕ್ತಿಗೆ ಸಾಕ್ಷಿಯಾದಿರಿ",
+  introText: "ಕೇರಳದ ಅಲ್ಪುಜಾದಲ್ಲಿ ಇರುವ ಕ್ರುಪಾಸನಮ್ ಮೆರಿಯನ್ ಧಾರ್ಮಿಕ ಕ್ಷೇತ್ರದಲ್ಲಿ ಭಕ್ತರು ಮೆರಿಯನನ್ನು ಪೂಜಿಸುತ್ತಾರೆ ಮತ್ತು ಮೆರಿಯನ್ ಒಪ್ಪಂದದ ಮೂಲಕ ಚಿಕಿತ್ಸೆ, ಶಾಂತಿ ಮತ್ತು ದೈವಿಕ ಅನುಗ್ರಹವನ್ನು ಅನುಭವಿಸುತ್ತಾರೆ.",
+  button: "ಕಥೆಗಳನ್ನು ಅನ್ವೇಷಿಸಿ",
+}
+
 };
 

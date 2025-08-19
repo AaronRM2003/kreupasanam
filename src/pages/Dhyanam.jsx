@@ -86,7 +86,15 @@ useEffect(() => {
     setAllImagesLoaded(true);
   }
 }, [imagesLoaded, thumbnails.length]);
+const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   if (loadingData) {
   return (
@@ -171,11 +179,15 @@ if (errorLoading) {
 
   return (
     <div >
-      <AppBar lang={lang}/>
-          <section
-      className={styles.testimoniesSection}
-      style={{ marginTop: '7rem', backgroundColor: window.innerWidth <= 768 ? '#fbfeffff' : 'transparent' }}
-    >
+          <AppBar lang={initialLang || 'en'}/>
+             <section
+    className={styles.testimoniesSection}
+    style={{ 
+      marginTop: '7rem',
+      marginBottom:'2rem', 
+      backgroundColor: windowWidth <= 768 ? '#fff' : 'transparent' 
+    }}
+  >
                 <img src="/assets/logo.png" alt="Logo" className="floating-logo" />
       <div className={styles.testimoniesSectionContainer} style={{ margin: '0 0rem' }}>
         <div className={styles.testimoniesHeader}>

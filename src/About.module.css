@@ -9,6 +9,7 @@
   max-width: 100%;
   margin-top: 6rem;
 }
+
 /* Universal fixes */
 html, body {
   max-width: 100%;
@@ -21,16 +22,19 @@ html, body {
 /* Container */
 .container {
   width: 100%;
-  max-width: 100%;
+  max-width: 1200px;
   margin: 1rem auto;
-  padding: 0 1rem;
+  padding: 1rem;
 }
 
-/* Grid wrapper fix */
+/* Grid wrapper */
 .gridWrapper {
-  max-width: 100%;
-  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
   padding: 0 0.75rem;
+  width: 100%;
+  max-width: 100%;
 }
 
 /* Optional: prevent layout shift */
@@ -50,18 +54,11 @@ html, body {
 .sectionWrapper {
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(135deg, #fafcff, #d6e8ff);
-  border-radius: 20px;
+  border-radius: 30px;
   border: 1px solid rgba(255, 255, 255, 0.4);
   padding: 0rem;
   box-shadow: 0 20px 30px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
-}
-
-
-.container {
-  margin: 1rem auto;
-  padding:  1rem;
-  max-width: 1200px;
 }
 
 /* 2. Heading */
@@ -79,18 +76,7 @@ html, body {
   transform: scale(1.03);
 }
 
-/* 3. Grid layout - Mobile first */
-/* 3. Grid layout - Mobile first */
-.gridWrapper {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-  padding: 0;
-  width: 100%;
-  max-width: 100%;
-}
-
-/* 4. Grid for tablet and up */
+/* 3. Grid for tablet and up */
 @media (min-width: 600px) {
   .gridWrapper {
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -100,46 +86,34 @@ html, body {
   }
 }
 
-/* Optional: enhanced spacing and scaling for larger screens */
+/* 4. Enhanced for large screens */
 @media (min-width: 1024px) {
-  .wrapper {
-    padding: 1rem 6rem;
-  }
-  .heading{
-    font-size: 3rem;
-  }
+  .wrapper { padding: 1rem 6rem; }
+  .heading { font-size: 3rem; }
   .gridWrapper {
     gap: 2rem;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* slightly larger min width */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     max-width: 1200px;
     margin: 0 auto;
   }
-
   .gridWrapper > .card:first-child {
-    grid-column: span 2; /* spanning 2 columns */
+    grid-column: span 2;
     font-size: 1.1rem;
     padding: 2.5rem;
   }
-
   .gridWrapper > .card:first-child h1,
-  .gridWrapper > .card:first-child h2 {
-    font-size: 2.2rem;
-  }
-
+  .gridWrapper > .card:first-child h2 { font-size: 2.2rem; }
   .gridWrapper > .card:first-child h2,
   .gridWrapper > .card:first-child p,
-  .gridWrapper > .card:first-child li {
-    font-size: 1.15rem;
-  }
+  .gridWrapper > .card:first-child li { font-size: 1.15rem; }
 }
-
-
 
 /* 5. FAQ List */
 .faqList {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.25rem;
+  padding-bottom: 3rem; /* breathing room for last answer */
 }
 
 @media (min-width: 768px) {
@@ -152,82 +126,79 @@ html, body {
 }
 
 /* 6. Cards & FAQ Items */
-
-.card,
-.faqItem {
+.card, .faqItem {
   background: rgba(255, 255, 255, 0.75);
   border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 20px 30px rgba(0,0,0,0.08);
   transition: all 0.3s ease;
   border-radius: 24px;
   padding: 2rem;
   margin-bottom: 1rem;
+  position: relative; /* required for faq answer absolute */
+  transition: height 0.3s ease;
 }
 
-
-.card:hover,
-.faqItem:hover {
-  transform: translateY(-8px) scale(1.01);
+.card:hover, .faqItem:hover {
   background: rgba(255, 255, 255, 0.88);
-  box-shadow: 0 25px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 25px 40px rgba(0,0,0,0.15);
 }
 
 /* Hover ripple effect */
-.card::after,
-.faqItem::after {
+.card::after, .faqItem::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle, rgba(85, 156, 255, 0.045) 10%, transparent 10.01%);
+  background: radial-gradient(circle, rgba(85,156,255,0.045) 10%, transparent 10.01%);
   opacity: 0;
   transition: opacity 0.4s ease;
   pointer-events: none;
+  z-index: -1; /* ensures FAQ answers stay on top */
 }
-.card:hover::after,
-.faqItem:hover::after {
-  opacity: 1;
-}
+.card:hover::after, .faqItem:hover::after { opacity: 1; }
 
-/* 7. Typography inside card/faq */
-.card h1, .card h2 {
-  color: #1a3b7c;
-  font-weight: 700;
-  letter-spacing: -0.5px;
-}
+/* 7. Typography */
+.card h1, .card h2 { color: #1a3b7c; font-weight: 700; letter-spacing: -0.5px; }
+.card p, .faqItem p, .faqAnswer { color: #333; font-size: 1.05rem; line-height: 1.75; }
 
-.card p, .faqItem p, .faqAnswer {
-  color: #333;
-  font-size: 1.05rem;
-  line-height: 1.75;
-}
-
-.faqQuestion {
-  font-size: 1.05rem;
-  color: #204ecf;
-  font-weight: 600;
-}
-
-
-/* 8. Buttons inside card/faq */
-.card button,
-.faqItem button {
-  margin-top: 0rem;
+/* 8. Buttons */
+.card button, .faqItem button {
+  margin-top: 0;
   padding: 0.6rem 1.25rem;
   background: linear-gradient(90deg, #007cf0, #00dfd8);
   border: none;
-  border-radius: 50px;
-  color: white;
+  border-radius: 30px;
+  color: #fff;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.3s ease, transform 0.2s ease;
 }
-.card button:hover,
-.faqItem button:hover {
+.card button:hover, .faqItem button:hover {
   background: linear-gradient(90deg, #0059d1, #00b3aa);
   transform: scale(1.03);
 }
 
-/* 9. FAQ Styles */
+/* 9. FAQ Answer overlay */
+.faqAnswer {
+  position: absolute;
+  left: 0;
+  top: 90%; /* immediately below question */
+  width: 100%;
+  background: rgba(255,255,255,0.95);
+  border-radius: 0 0 24px 24px;
+  padding: 1rem 0.75rem;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 10;
+  overflow-y: visible;
+}
+/* Show when open */
+.faqItem.open .faqAnswer { opacity: 1; visibility: visible; transform: translateY(0); }
+
+
+/* FAQ Question */
 .faqQuestion {
   background: none;
   border: none;
@@ -239,104 +210,75 @@ html, body {
   color: #2a4d9e;
   transition: color 0.3s ease;
 }
-.faqAnswer {
-  margin-top: 0.5rem;
-  padding-left: 0.75rem;
-  color: #4b4b4b;
-  font-size: 0.95rem;
-  line-height: 1.6;
-}
 
 /* 10. Lists */
-.list {
-  padding-left: 1.25rem;
-  color: #333;
-}
+.list { padding-left: 1.25rem; color: #333; }
 
-/* 11. Header and back button */
-.headerWrapper {
-  position: relative;
-  text-align: center;
-  margin-bottom: 2rem;
-}
-@media (max-width: 768px) {
-  /* Existing testimoniesSection styles */
-
-  /* sectionWrapper with same mobile-only border & floating effect */
-  .wrapper {
-  position: relative;
-  border-radius: 30px;
-  overflow: hidden;
-  background: linear-gradient(135deg, #fafcff, #d6e8ff);
-  /* Remove border here */
-  padding: 0rem;
-  margin-left: 0.7rem;
-  margin-right: 0.7rem;
-  margin-top: 7rem;
-  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.08);
-  animation: floatUpDown 8s ease-in-out infinite alternate;
-}
-
-.wrapper::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 30px;
-  pointer-events: none;
-  border: 3px solid rgba(36, 148, 253, 0.6);
-
-  -webkit-mask-image: linear-gradient(to bottom, black 10%, transparent 30%);
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-clip: border-box;
-  -webkit-mask-composite: destination-in;
-
-  mask-image: linear-gradient(to bottom, black 10%, transparent 30%);
-  mask-repeat: no-repeat;
-  mask-clip: border-box;
-  mask-composite: intersect;
-}
-
-
-/* Floating animation keyframes */
-@keyframes floatUpDown {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-3px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-}
-
+/* 11. Header & Back Button */
+.headerWrapper { position: relative; text-align: center; margin-bottom: 2rem; }
 .backButton {
   position: absolute;
   left: 0;
   top: 50%;
   transform: translateY(-50%);
   background: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0,0,0,0.08);
   border-radius: 50px;
   padding: 0.5rem 1.25rem;
   font-size: 1rem;
   font-weight: 600;
   color: #246bfd;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.07);
   transition: all 0.3s ease;
   user-select: none;
   text-decoration: none;
   z-index: 2;
 }
-.backButton:hover {
-  background: rgba(36, 107, 253, 0.1);
-  transform: translateY(-50%) translateY(-2px);
-  color: #1a1a1a;
+.backButton:hover { background: rgba(36,107,253,0.1); transform: translateY(-50%) translateY(-2px); color: #1a1a1a; }
+
+/* 12. Mobile floating wrapper */
+@media (max-width: 768px) {
+  .wrapper {
+    position: relative;
+    border-radius: 30px;
+    overflow: visible;
+    background: linear-gradient(135deg,#fafcff,#d6e8ff);
+    padding: 0rem;
+    margin: 7rem 0.7rem 2rem 0.7rem;
+    box-shadow: 0 20px 30px rgba(0,0,0,0.08);
+  }
+
+  .wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border-radius: 30px;
+    pointer-events: none;
+    border: 3px solid rgba(36,148,253,0.6);
+    -webkit-mask-image: linear-gradient(to bottom, black 10%, transparent 30%);
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-clip: border-box;
+    -webkit-mask-composite: destination-in;
+    mask-image: linear-gradient(to bottom, black 10%, transparent 30%);
+    mask-repeat: no-repeat;
+    mask-clip: border-box;
+    mask-composite: intersect;
+  }
+.faqAnswer {
+  max-height: 0;           /* collapsed by default */
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.35s ease;
+  background: rgba(255,255,255,0.95);
+  border-radius: 0 0 24px 24px;
+  padding: 0 0.75rem;      /* no padding when collapsed */
 }
 
+/* When open */
+.open .faqAnswer {
+  max-height: 500px;       /* large enough to fit your content */
+  padding: 1rem 0.75rem;   /* restore padding */
+}
+
+}

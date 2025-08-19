@@ -96,6 +96,15 @@ export default function Oracles({ lang: initialLang }) {
   const sortedOracles = useMemo(() => {
     return oracles.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
   }, [oracles]);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   if (loadingData) {
     return (
@@ -162,15 +171,19 @@ export default function Oracles({ lang: initialLang }) {
     );
   }
 
-  return (
-     <div >
-          <AppBar lang={lang}/>
-          <img src="/assets/logo.png" alt="Logo" className="floating-logo" />
 
-    <section
-      className={styles.testimoniesSection}
-      style={{ marginTop: '7rem', backgroundColor: window.innerWidth <= 768 ? '#fff' : 'transparent' }}
-    >
+
+  return (
+    <div >
+          <AppBar lang={initialLang || 'en'}/>
+             <section
+    className={styles.testimoniesSection}
+    style={{ 
+      marginTop: '7rem',
+      marginBottom:'2rem', 
+      backgroundColor: windowWidth <= 768 ? '#fff' : 'transparent' 
+    }}
+  >
       <div className={styles.testimoniesSectionContainer} style={{ margin: '0 0rem' }}>
         <div className={styles.testimoniesHeader}>
           <div style={{ position: 'relative', textAlign: 'center' }}>

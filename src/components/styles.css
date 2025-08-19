@@ -52,9 +52,9 @@ body::before {
 
 .floating-logo {
   position: fixed;
-  top: 10px;
-  left: 10px;
-  height: 122px;
+  top: 20px;
+  left: 20px;
+  height: 92px;
   width: auto;
   z-index: 10000;
   pointer-events: none; /* allow clicks to go through */
