@@ -95,7 +95,7 @@ useEffect(() => {
       const match = url.match(
         /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([\w-]{11})/
       );
-      return match ? `https://img.youtube.com/vi/${match[1]}/maxresdefault.jpg` : null;
+      return match ? `https://img.youtube.com/vi/${match[1]}/sddefault.jpg` : null;
     } catch {
       return null;
     }

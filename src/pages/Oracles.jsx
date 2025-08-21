@@ -59,7 +59,7 @@ export default function Oracles({ lang: initialLang }) {
       const match = url.match(
         /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([\w-]{11})/
       );
-      return match ? `https://img.youtube.com/vi/${match[1]}/maxresdefault.jpg` : null;
+      return match ? `https://img.youtube.com/vi/${match[1]}/sddefault.jpg` : null;
     } catch {
       return null;
     }
@@ -175,6 +175,7 @@ export default function Oracles({ lang: initialLang }) {
   return (
     <div >
           <AppBar lang={initialLang || 'en'}/>
+           <img src="/assets/logo.png" alt="Logo" className="floating-logo" />
              <section
     className={styles.testimoniesSection}
     style={{ 

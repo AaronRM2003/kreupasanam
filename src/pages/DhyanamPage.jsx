@@ -281,7 +281,7 @@ export default function DhyanamPage({ lang: initialLang }) {
             </div>
           )}
              {isMobileOrTablet && (
-                    <div style={{ marginBottom: '1rem', textAlign: '' }}>
+                    <div>
                       <LanguageDropdown lang={lang} onSelect={setLang} />
                     </div>
                   )}

@@ -54,7 +54,7 @@ export default function Dhyanam({ lang: initialLang }) {
       );
       const videoId = videoIdMatch ? videoIdMatch[1] : null;
       if (videoId) {
-        return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+        return `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
       }
       return null;
     } catch {
