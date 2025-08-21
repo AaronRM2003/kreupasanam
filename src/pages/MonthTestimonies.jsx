@@ -33,31 +33,42 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   // Fetch testimonies JSON
- useEffect(() => {
+useEffect(() => {
   setLoadingTestimonies(true);
   fetch('/assets/testimony-content.json')
     .then(res => res.json())
     .then(async (data) => {
-      // Preload all YouTube thumbnails
+      setTestimonies(data);
+
+      // Filter based on initial month/year
+      const filtered = data.filter(({ date }) => {
+        const d = new Date(date);
+        const monthName = d.toLocaleString('en', { month: 'long' });
+        const year = d.getFullYear().toString();
+        return (selectedMonth === 'All' || monthName === selectedMonth)
+            && (selectedYear === 'All' || year === selectedYear);
+      });
+
+      // Preload only filtered thumbnails
       const preloadImage = (src) =>
-        new Promise((resolve) => {
+        new Promise(resolve => {
           if (!src) return resolve();
           const img = new Image();
           img.src = src;
           img.onload = img.onerror = resolve;
         });
 
-      const thumbnails = data.map(({ video }) => getYouTubeThumbnail(video));
+      const thumbnails = filtered.map(({ video }) => getYouTubeThumbnail(video));
       await Promise.all(thumbnails.map(preloadImage));
 
-      setTestimonies(data);
       setLoadingTestimonies(false);
     })
-    .catch((err) => {
+    .catch(err => {
       console.error('Failed to load testimonies:', err);
       setLoadingTestimonies(false);
     });
-}, []);
+}, [selectedMonth, selectedYear]);
+
 
 
   // Update language if initialLang changes
