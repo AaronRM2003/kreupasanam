@@ -113,7 +113,7 @@ export default function Testimonies({lang:initialLang}) {
 
         <div className={styles.testimoniesGrid}>
          {testimonies
-  .filter(({ id }) => [1, 4, 8].includes(id))
+  .filter(({ id }) => [16, 17, 8].includes(id))
   .map(({ id, title, video, date }) => (
     <TestimonyCard
       key={id}

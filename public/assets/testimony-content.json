@@ -340,7 +340,7 @@
 ,
   "subtitles": "/assets/testimony/20jul.json"
 },{
-  "id": 13,
+  "id": 12,
   "title": {
 "en": "Blessed Guidance",
 "bn": "ধন্য দিকনির্দেশনা",
@@ -371,7 +371,7 @@
   "subtitles": "/assets/testimony/03aug.json"
 }
 ,{
-  "id": 14,
+  "id": 13,
   "title": {
   "en": "Always With Us",
 "bn": "সদা আমাদের সঙ্গে",
@@ -402,7 +402,7 @@
   "subtitles": "/assets/testimony/06aug.json"
 }
 ,{
-  "id": 15,
+  "id": 14,
   "title": {
   "en": "Despair to Blessing",
   "bn": "নিরাশা থেকে আশীর্বাদ",
@@ -434,7 +434,7 @@
   "subtitles": "/assets/testimony/07aug.json"
 }
 ,{
-  "id": 16,
+  "id": 15,
   "title": {
  "en": "Endless Blessings",
 "bn": "অশেষ আশীর্বাদ",
@@ -465,7 +465,7 @@
   "subtitles": "/assets/testimony/08aug.json"
 }
 ,{
-  "id": 17,
+  "id": 16,
   "title": {
 "en": "Covenant Makes Possible",
 "bn": "প্রতিজ্ঞা সম্ভব করে",
@@ -496,7 +496,7 @@
   "subtitles": "/assets/testimony/09aug.json"
 }
 ,{
-  "id": 18,
+  "id": 17,
   "title": {
 "en": "Faith That Moves Heaven",
 "bn": "আস্থা যা স্বর্গকে সরায়",
@@ -527,7 +527,7 @@
   "subtitles": "/assets/testimony/10aug.json"
 }
 ,{
-  "id": 19,
+  "id": 18,
   "title": {
   "en": "Mother's Guiding Hand",
   "bn": "মায়ের পথপ্রদর্শক হাত",
@@ -558,7 +558,7 @@
   "subtitles": "/assets/testimony/11aug.json"
 }
 ,{
-  "id": 20,
+  "id": 19,
   "title": {
   "en": "Covenant of Justice",
   "bn": "ন্যায়ের চুক্তি",
