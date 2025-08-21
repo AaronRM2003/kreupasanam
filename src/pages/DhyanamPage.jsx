@@ -35,7 +35,7 @@ export default function DhyanamPage({ lang: initialLang }) {
   const [includeSummary, setIncludeSummary] = useState(false);
   const navigate = useNavigate();
   const handleClick = () => {
-      navigate(`/${lang}/dhyanam`);
+      navigate(`/${initialLang || 'en'}/dhyanam`);
     };
   // Parse id and slug from idSlug param
   let id;
@@ -156,7 +156,15 @@ export default function DhyanamPage({ lang: initialLang }) {
   const emailShareUrl = `mailto:?subject=${encodeURIComponent(title[lang] || title['en'])}&body=${encodeURIComponent(
     shareText
   )}`;
-
+  const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
+  
+    useEffect(() => {
+      const checkScreen = () => setIsMobileOrTablet(window.innerWidth <= 1368);
+      checkScreen(); // initial check
+  
+      window.addEventListener('resize', checkScreen);
+      return () => window.removeEventListener('resize', checkScreen);
+    }, []);
   // Conditional renderings AFTER hooks:
 
   if (loadingData) {
@@ -229,8 +237,9 @@ export default function DhyanamPage({ lang: initialLang }) {
 
         <div className={styles.testimonyRight}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+ {!isMobileOrTablet && (
             <LanguageDropdown lang={lang} onSelect={setLang} />
-          </div>
+          )}          </div>
         </div>
       </div>
 
@@ -271,7 +280,11 @@ export default function DhyanamPage({ lang: initialLang }) {
               <img src={thumbnailUrl} alt="Video Thumbnail" className={styles.thumbnailImage} />
             </div>
           )}
-
+             {isMobileOrTablet && (
+                    <div style={{ marginBottom: '1rem', textAlign: '' }}>
+                      <LanguageDropdown lang={lang} onSelect={setLang} />
+                    </div>
+                  )}
           <div className={styles.testimonyText}>
             <h1 className={styles.testimonyTitle}>{title[lang] || title['en']}</h1>
             <p className={styles.testimonyDate}>{date}</p>

@@ -206,6 +206,7 @@
   user-select: none;
 }
 
+
 /* Language Dropdown Right */
 .languageDropdown {
 
@@ -279,6 +280,69 @@
   word-break: break-word;      /* Breaks long words if needed */
   overflow-wrap: break-word;
 }
+/* ================== Mobile Adjustments ================== */
+@media (max-width: 768px) {
+
+  /* Header */
+  .testimonyHeader {
+    width: 95%; /* take more screen width */
+    padding: 0.5rem 0.8rem;
+    border-radius: 16px;
+  }
+
+  /* Back button */
+  .backButton {
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+  }
+
+  
+
+  /* Centered title */
+  .testimonyHeading {
+    font-size: 2rem;
+  }
+
+  /* Container */
+  .testimonyContainer {
+    width: 95%;
+    padding: 1.5rem 1rem;
+    border-radius: 20px;
+    margin-top: 5.5rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    border: 3px solid rgba(36, 107, 253, 0.1);
+  }
+
+  .testimonyContainer:hover {
+    border-color: rgba(36, 107, 253, 0.25);
+    box-shadow: 0 12px 30px rgba(36, 107, 253, 0.12);
+  }
+
+  /* Language Dropdown */
+  .dropdownToggle {
+    font-size: 1rem !important;
+    padding: 0.7rem 1.2rem !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 18px rgba(36, 107, 253, 0.15) !important;
+  }
+
+  /* Dropdown items */
+
+  /* Video Button */
+  .videoButton {
+    padding: 0.85rem 1.5rem;
+    font-size: 0.95rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .youtubeIcon {
+    font-size: 1.3rem;
+  }
+
+}
+/* Mobile Styles */
+
 
 /* Date */
 .testimonyDate {
@@ -401,7 +465,7 @@ filter: drop-shadow(0 0 12px rgba(255, 223, 93, 0.7)) drop-shadow(0 0 24px rgba(
   position: relative;
   border-radius: 18px;
   overflow: hidden;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .thumbnailImage {
@@ -563,8 +627,8 @@ filter: drop-shadow(0 0 12px rgba(255, 223, 93, 0.7)) drop-shadow(0 0 24px rgba(
   .testimonyHeader {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 3rem;
+    align-items: flex-start;
+    gap: 2rem;
     margin: 0.4rem 0.4rem;
     width: 100%;
     max-width: 100%;
@@ -575,7 +639,10 @@ filter: drop-shadow(0 0 12px rgba(255, 223, 93, 0.7)) drop-shadow(0 0 24px rgba(
 
 }
 
-
+  .testimonyTitle{
+    padding-top: 1rem;
+    font-size: 2rem;
+  }
 
 
   .backButton {
@@ -598,19 +665,76 @@ filter: drop-shadow(0 0 12px rgba(255, 223, 93, 0.7)) drop-shadow(0 0 24px rgba(
     border: none;
     box-shadow: none;
   }
+.testimonyText {
+  padding-top: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonyText > * {
+  transition: 
+    opacity 1s cubic-bezier(0.22, 1, 0.36, 1);
+  opacity: 1;
+  will-change: opacity;
+}
+
+/* Fade-out: slide upward, slight shrink, blur */
+.fade-out {
+  opacity: 0;
+}
+
+/* Fade-in: slide from top, slight grow, sharpen */
+.fade-in {
+  opacity: 1;
+}
+
+
+
+
 
   
+
 
 .testimonyHeading {
-  background: rgba(36, 107, 253, 0.1);
-  display: inline-block;
-  padding: 0.25rem 1.5rem;
-  border-radius: 30px;
-  font-weight: 700;
-  color: #246bfd;
-  font-size: 2.2rem;
-  
+  font-size: 2rem;
+  text-align: center;
+  font-weight: 900;
+  background: linear-gradient(90deg, #246bfd, #00b3ff, #ff6b6b);
+  -webkit-background-clip: text;
+  color: transparent;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  position: relative;
+  font-family: 'Poppins', sans-serif;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: default;
+  background-size: 200% 200%;
 }
+
+/* Animated underline effect */
+.testimonyHeading::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #ff6b6b, #5f27cd, #ff6b6b);
+  background-size: 200% 100%;
+  animation: underlineMove 3s linear infinite;
+}
+
+/* Animate the underline gradient */
+@keyframes underlineMove {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
+}
+
+
+
 
   
 
@@ -625,13 +749,30 @@ filter: drop-shadow(0 0 12px rgba(255, 223, 93, 0.7)) drop-shadow(0 0 24px rgba(
     font-size: 0.9rem !important;
   }
 
-  .testimonyContainer {
-    padding: 0rem 0.8rem;
-    padding-bottom: 1rem;
-    border-radius: 16px;
-    margin-top: 0rem;
-    border: none;
-  }
+ .testimonyContainer {
+  padding: 0.8rem 0.8rem; /* slightly more padding for comfort */
+  border-radius: 16px;
+  margin-top: 0rem;
+  border: none;
+
+  /* Background gradient for a soft highlight */
+  background: linear-gradient(145deg, #f9f9f9, #e6f1ff);
+
+  /* Soft shadow for a lifted card effect */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  /* Smooth transition for hover effects */
+
+  /* Optional: subtle border */
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Hover effect */
+.testimonyContainer:hover {
+  transform: translateY(-4px); /* lift on hover */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
 
   .testimonyContainer:hover {
     box-shadow: none;

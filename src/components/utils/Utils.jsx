@@ -1,6 +1,6 @@
 import { Dropdown } from 'react-bootstrap';
 import { Modal, Button } from 'react-bootstrap';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import {
   FaFacebookF,
   FaWhatsapp,
@@ -144,56 +144,87 @@ export const supportedLanguages = {
 };
 
 export function LanguageDropdown({ lang, onSelect }) {
+const [isMobile, setIsMobile] = useState(window.innerWidth <= 1368);
+
+useEffect(() => {
+  const handleResize = () => setIsMobile(window.innerWidth <= 1368);
+  window.addEventListener('resize', handleResize);
+  return () => window.removeEventListener('resize', handleResize);
+}, []);
+
+  // Mobile-specific button style
+const mobileButtonStyle = {
+  width: "auto",
+  background: "none",
+  color: "#0887f7",
+  border: "1px solid #003768ff",
+  borderRadius: "20px",
+  padding: "0.4rem 1rem",
+  fontWeight: "600",
+  fontSize: "1rem",
+  textAlign: "center",
+  cursor: "pointer",
+  boxShadow: "0 2px 5px rgba(0, 55, 104, 0.15)", // soft shadow
+};
+
+
+
+
+
+  // Desktop/default button style
+  const desktopButtonStyle = {
+    width: 'auto',
+    backgroundColor: 'white',
+    color: '#246bfd',
+    borderColor: '#ccc',
+    borderRadius: '30px',
+    padding: '0.5rem 1rem',
+    fontWeight: '600',
+    fontSize: '1rem',
+    boxShadow: '0 2px 8px rgba(36, 107, 253, 0.15)',
+  };
+
   return (
-    <Dropdown onSelect={onSelect}>
+    <Dropdown onSelect={onSelect} className={isMobile ? "mobile-dropdown" : ""} drop={isMobile ? "down" : "auto"}>
       <Dropdown.Toggle
         variant="outline-secondary"
         id="dropdown-lang"
-        className="lang-dropdown-menu"
-        style={{
-          backgroundColor: 'white',
-          color: '#246bfd',
-          borderColor: '#ccc',
-          boxShadow: '0 2px 8px rgba(36, 107, 253, 0.15)',
-          borderRadius: '30px',
-          padding: '0.5rem 1.5rem',
-          fontWeight: '600',
-          transition: 'all 0.3s ease',
-        }}
-        onMouseEnter={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(36, 107, 253, 0.3)'}
-        onMouseLeave={e => e.currentTarget.style.boxShadow = '0 2px 8px rgba(36, 107, 253, 0.15)'}
+        style={isMobile ? mobileButtonStyle : desktopButtonStyle}
       >
         {supportedLanguages[lang] || lang}
       </Dropdown.Toggle>
 
-      <Dropdown.Menu
-        style={{
-          backgroundColor: 'white',
-          borderRadius: '12px',
-          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.1)',
-          padding: '0.25rem 0',
-          minWidth: '150px',
-        }}
-      >
+   <Dropdown.Menu
+  popperConfig={{ modifiers: [{ name: 'computeStyles', options: { adaptive: false } }] }}
+  style={{
+    position: 'absolute',
+    top: isMobile ? '60px' : undefined,
+    left: isMobile ? '0' : undefined,
+    width: isMobile ? '100%' : 'auto',
+    borderRadius: isMobile ? '10px' : '12px',
+    boxShadow: isMobile ? '0 8px 32px rgba(0,0,0,0.15)' : '0 8px 24px rgba(0,0,0,0.1)',
+    padding: isMobile ? '1rem 0' : '0.25rem 0',
+    margin: 0,
+    zIndex: 1050,
+  }}
+>
+
+
         {Object.entries(supportedLanguages).map(([key, label]) => (
           <Dropdown.Item
             key={key}
             eventKey={key}
             style={{
-              borderRadius: '8px',
-              transition: 'background-color 0.25s ease, color 0.25s ease',
+              width: isMobile ? '100%' : 'auto',
+              padding: isMobile ? '1.25rem 2rem' : '1rem 1.5rem',
+              fontSize: isMobile ? '1.05rem' : '0.95rem',
               fontWeight: '600',
-              padding: '1rem 1.5rem',
+              borderRadius: isMobile ? '0' : '8px',
               cursor: 'pointer',
+              transition: 'background-color 0.25s ease',
             }}
-            onMouseEnter={e => {
-              e.currentTarget.style.backgroundColor = 'rgba(36, 107, 253, 0.1)';
-              e.currentTarget.style.color = '#246bfd';
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.backgroundColor = 'transparent';
-              e.currentTarget.style.color = 'inherit';
-            }}
+            onMouseEnter={e => !isMobile && ((e.currentTarget.style.backgroundColor = 'rgba(36,107,253,0.1)'), (e.currentTarget.style.color = '#246bfd'))}
+            onMouseLeave={e => !isMobile && ((e.currentTarget.style.backgroundColor = 'transparent'), (e.currentTarget.style.color = 'inherit'))}
           >
             {label}
           </Dropdown.Item>
@@ -202,6 +233,7 @@ export function LanguageDropdown({ lang, onSelect }) {
     </Dropdown>
   );
 }
+
 // Extract YouTube video ID from URL
 export function getYouTubeVideoID(url) {
   if (!url) return null;

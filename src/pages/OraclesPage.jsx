@@ -122,7 +122,7 @@ export default function OraclesPage({ lang: initialLang }) {
     });
     const navigate = useNavigate();
  const handleClick = () => {
-    navigate(`/${lang}/oracles`);
+    navigate(`/${initialLang || 'en'}/oracles`);
   };
     // Auto-disable speech when video closes
     useEffect(() => {
@@ -137,7 +137,15 @@ export default function OraclesPage({ lang: initialLang }) {
   const waShareUrl = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
   const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
   const emailShareUrl = `mailto:?subject=${encodeURIComponent(title[lang] || title['en'])}&body=${encodeURIComponent(shareText)}`;
+  const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
 
+  useEffect(() => {
+    const checkScreen = () => setIsMobileOrTablet(window.innerWidth <= 1368);
+    checkScreen(); // initial check
+
+    window.addEventListener('resize', checkScreen);
+    return () => window.removeEventListener('resize', checkScreen);
+  }, []);
   // Show loading while fetching or assets loading
   if (loading) {
     return (
@@ -191,8 +199,9 @@ export default function OraclesPage({ lang: initialLang }) {
         </div>
 
         <div className={styles.testimonyRight}>
-          <LanguageDropdown lang={lang} onSelect={setLang} />
-        </div>
+ {!isMobileOrTablet && (
+            <LanguageDropdown lang={lang} onSelect={setLang} />
+          )}        </div>
       </div>
 
       {showLangHelp && (
@@ -238,7 +247,11 @@ export default function OraclesPage({ lang: initialLang }) {
               <img src={thumbnailUrl} alt="Video Thumbnail" className={styles.thumbnailImage} />
             </div>
           )}
-
+           {isMobileOrTablet && (
+          <div style={{ marginBottom: '1rem', textAlign: '' }}>
+            <LanguageDropdown lang={lang} onSelect={setLang} />
+          </div>
+        )}
           <div className={styles.testimonyText}>
             <h1 className={styles.testimonyTitle}>{title[lang] || title['en']}</h1>
             <p className={styles.testimonyDate}>{date}</p>

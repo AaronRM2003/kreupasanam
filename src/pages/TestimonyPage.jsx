@@ -63,8 +63,6 @@ export default function TestimonyPage({ lang: initialLang }) {
   // If testimony exists, verify slug matches
   const testimony = testimonysearch && slug === slugify(testimonysearch.title['en']) ? testimonysearch : null;
 
-
-
   // Fetch testimonies on mount
   useEffect(() => {
     setLoadingData(true);
@@ -102,6 +100,7 @@ const navigate = useNavigate();
     '/assets/angel3.webp',
     '/assets/cloud.webp',
   ];
+  
   useEffect(() => {
     const allImages = [...cssBackgroundImages];
     if (thumbnailUrl) allImages.push(thumbnailUrl);
@@ -145,7 +144,7 @@ const navigate = useNavigate();
 }, [showVideo, isSpeaking, stopSpeaking]);
 
 const handleClick = () => {
-    navigate(`/${lang}/testimonies`);
+    navigate(`/${initialLang || 'en'}/testimonies`);
   };
   // Share URLs
   const shareUrl = window.location.href;
@@ -153,8 +152,17 @@ const handleClick = () => {
   const waShareUrl = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
   const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
   const emailShareUrl = `mailto:?subject=${encodeURIComponent(title[lang] || title['en'])}&body=${encodeURIComponent(shareText)}`;
-
   // Show loading if assets or testimony not ready
+  const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
+
+  useEffect(() => {
+    const checkScreen = () => setIsMobileOrTablet(window.innerWidth <= 1368);
+    checkScreen(); // initial check
+
+    window.addEventListener('resize', checkScreen);
+    return () => window.removeEventListener('resize', checkScreen);
+  }, []);
+  
   if (loadingData) {
       return (
         <div className={styles.loadingOverlay}>
@@ -195,6 +203,7 @@ const handleClick = () => {
     <div className={styles.testimonyPage}>
      
       {/* Header */}
+      
       <div className={styles.testimonyHeader}>
         <div className={styles.testimonyLeft}>
           <button className={styles.backButton} onClick={() => window.history.back()}>
@@ -210,7 +219,10 @@ const handleClick = () => {
 
         <div className={styles.testimonyRight}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                      {!isMobileOrTablet && (
             <LanguageDropdown lang={lang} onSelect={setLang} />
+          )}
+
           </div>
         </div>
       </div>
@@ -232,8 +244,8 @@ const handleClick = () => {
       {/* Main content */}
       <div className={styles.testimonyContainer}>
                <img src="/assets/logo.png" alt="Logo" className="floating-logo" />
-
-        <div className={styles.testimonyInner}>
+     
+        <div className={styles.testimonyInner} >
           {videoId && !showVideo ? (
             <div
               className={styles.thumbnailWrapper}
@@ -252,8 +264,12 @@ const handleClick = () => {
               <img src={thumbnailUrl} alt="Video Thumbnail" className={styles.thumbnailImage} />
             </div>
           )}
-
-          <div className={styles.testimonyText}>
+           {isMobileOrTablet && (
+          <div>
+            <LanguageDropdown lang={lang} onSelect={setLang} />
+          </div>
+        )}
+          <div className={styles.testimonyText} >
             <h1 className={styles.testimonyTitle}>{title[lang] || title['en']}</h1>
             <p className={styles.testimonyDate}>{date}</p>
             <div className={styles.testimonyContent}>{content[lang] || content['en']}</div>

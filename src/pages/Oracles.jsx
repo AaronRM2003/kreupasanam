@@ -4,7 +4,6 @@ import { TestimonyCard } from '../components/Testimonies';
 import { Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { HiOutlineEmojiSad } from 'react-icons/hi';
-import backstyle from './TestimonyPage.module.css';
 import AppBar from '../components/AppBar';
 
 const languageMap = {
@@ -188,7 +187,7 @@ export default function Oracles({ lang: initialLang }) {
         <div className={styles.testimoniesHeader}>
           <div style={{ position: 'relative', textAlign: 'center' }}>
             <button
-              className={backstyle.backButton}
+              className={styles.backButton}
               onClick={() => window.history.back()}
               style={{
                 position: 'absolute',

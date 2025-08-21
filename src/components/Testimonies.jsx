@@ -14,6 +14,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
   fr: 'Français',
   es: 'Español',
   mr: 'मराठी',
+  kn: 'ಕನ್ನಡ',
 };
 const getYouTubeThumbnail = (url) => {
     try {
