@@ -91,7 +91,7 @@ export default function OraclesPage({ lang: initialLang }) {
   const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
 
   const cssBackgroundImages = ['/assets/angel3.webp', '/assets/angel3.webp', '/assets/cloud.webp'];
-
+    const ttsSupported = typeof window !== 'undefined' && !!window.speechSynthesis;
   // Preload all necessary images (background + thumbnail)
   useEffect(() => {
     const allImages = [...cssBackgroundImages];
@@ -112,14 +112,22 @@ export default function OraclesPage({ lang: initialLang }) {
   // Hooks always called unconditionally
   const { currentTime, playerRef, duration: totalDuration } = useYouTubePlayer(videoId, showVideo);
   const { subtitles, currentSubtitle } = useSubtitles(subtitlesUrl, lang, currentTime);
-  const { isSpeaking, toggleSpeaking,stopSpeaking, volume, handleVolumeChange } = useSpeechSync({
+  const {
+  isSpeaking = false,
+  toggleSpeaking = () => {},
+  stopSpeaking = () => {},
+  volume = 100,
+  handleVolumeChange = () => {},
+} = ttsSupported
+  ? useSpeechSync({
       playerRef,
       showVideo,
       subtitles,
       currentSubtitle,
       currentTime,
       lang,
-    });
+    })
+  : {};
     const navigate = useNavigate();
  const handleClick = () => {
     navigate(`/${initialLang || 'en'}/oracles`);
@@ -301,6 +309,7 @@ export default function OraclesPage({ lang: initialLang }) {
           playerRef={playerRef}
           lang={lang}
           currentSubtitle={currentSubtitle}
+          ttsSupported={ttsSupported}
           onClose={() => setShowVideo(false)}
         />
       )}

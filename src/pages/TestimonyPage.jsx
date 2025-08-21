@@ -84,11 +84,11 @@ export default function TestimonyPage({ lang: initialLang }) {
   }, []);
 
   // Safe destructuring with fallback values to avoid errors before data loads
-  const title = testimony?.title || {};
-  const date = testimony?.date || '';
-  const content = testimony?.content || {};
-  const video = testimony?.video || '';
-  const subtitlesUrl = testimony?.subtitles || '';
+  const title = (testimony && testimony.title) || {};
+  const date = (testimony && testimony.date) || '';
+  const content = (testimony && testimony.content) || {};
+  const video = (testimony && testimony.video) || '';
+  const subtitlesUrl = (testimony && testimony.subtitles) || '';
 const navigate = useNavigate();
   // Get videoId and thumbnail URL
   const videoId = getYouTubeVideoID(video);
@@ -102,6 +102,7 @@ const navigate = useNavigate();
   ];
   
   useEffect(() => {
+    if (typeof window === 'undefined') return;
     const allImages = [...cssBackgroundImages];
     if (thumbnailUrl) allImages.push(thumbnailUrl);
     preloadImages(allImages, () => setAllAssetsLoaded(true));
@@ -114,8 +115,9 @@ const navigate = useNavigate();
 
   // Generate share text when dependencies change
   useEffect(() => {
+     const url = typeof window !== 'undefined' ? window.location.href : '';
     if (testimony) {
-      setShareText(generateShareText(testimony, lang, window.location.href, "A powerful testimony of Faith", includeSummary, video));
+      setShareText(generateShareText(testimony, lang, url, "A powerful testimony of Faith", includeSummary, video));
     }
   }, [lang, testimony, includeSummary, video]);
 
@@ -125,16 +127,26 @@ const navigate = useNavigate();
   // Subtitles & current subtitle hook
   const { subtitles, currentSubtitle } = useSubtitles(subtitlesUrl, lang, currentTime);
   
+  const ttsSupported = typeof window !== 'undefined' && !!window.speechSynthesis;
 
   // Speech sync & volume control hook
-  const { isSpeaking, toggleSpeaking,stopSpeaking, volume, handleVolumeChange } = useSpeechSync({
-    playerRef,
-    showVideo,
-    subtitles,
-    currentSubtitle,
-    currentTime,
-    lang,
-  });
+const {
+  isSpeaking = false,
+  toggleSpeaking = () => {},
+  stopSpeaking = () => {},
+  volume = 100,
+  handleVolumeChange = () => {},
+} = ttsSupported
+  ? useSpeechSync({
+      playerRef,
+      showVideo,
+      subtitles,
+      currentSubtitle,
+      currentTime,
+      lang,
+    })
+  : {};
+
 
   // Auto-disable speech when video closes
   useEffect(() => {
@@ -147,7 +159,7 @@ const handleClick = () => {
     navigate(`/${initialLang || 'en'}/testimonies`);
   };
   // Share URLs
-  const shareUrl = window.location.href;
+  const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
   const fbShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
   const waShareUrl = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
   const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
@@ -156,6 +168,7 @@ const handleClick = () => {
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return; 
     const checkScreen = () => setIsMobileOrTablet(window.innerWidth <= 1368);
     checkScreen(); // initial check
 
@@ -303,7 +316,12 @@ const handleClick = () => {
               telegramShareUrl={telegramShareUrl}
               emailShareUrl={emailShareUrl}
               styles={styles}
-              defaultShareText={generateShareText(testimony, lang, window.location.href, "A powerful testimony of Faith")}
+              defaultShareText={generateShareText(
+                testimony,
+                lang,
+                typeof window !== 'undefined' ? window.location.href : '',
+                "A powerful testimony of Faith"
+              )}
               includeSummary={includeSummary}
               setIncludeSummary={setIncludeSummary}
             />
@@ -313,18 +331,20 @@ const handleClick = () => {
       </div>
 
       {/* Video player and subtitles */}
-      {showVideo && (
-        <FloatingVideoPlayer
-          isSpeaking={isSpeaking}
-          volume={volume}
-          toggleSpeaking={toggleSpeaking}
-          handleVolumeChange={handleVolumeChange}
-          playerRef={playerRef}
-          lang={lang}
-          currentSubtitle={currentSubtitle}
-          onClose={() => setShowVideo(false)}
-        />
-      )}
+    {showVideo && (
+  <FloatingVideoPlayer
+    isSpeaking={isSpeaking}
+    volume={volume}
+    toggleSpeaking={toggleSpeaking}
+    handleVolumeChange={handleVolumeChange}
+    playerRef={playerRef}
+    lang={lang}
+    currentSubtitle={currentSubtitle}
+    ttsSupported={ttsSupported} // optional: hide Speak button if false
+    onClose={() => setShowVideo(false)}
+  />
+)}
+
     </div>
   );
 }

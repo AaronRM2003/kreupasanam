@@ -129,14 +129,25 @@ export default function DhyanamPage({ lang: initialLang }) {
   const { subtitles, currentSubtitle } = useSubtitles(subtitlesUrl, lang, currentTime);
 
   // Speech sync & volume control hook
-  const { isSpeaking, toggleSpeaking,stopSpeaking, volume, handleVolumeChange } = useSpeechSync({
+   const ttsSupported = typeof window !== 'undefined' && !!window.speechSynthesis;
+
+  // Speech sync & volume control hook
+const {
+  isSpeaking = false,
+  toggleSpeaking = () => {},
+  stopSpeaking = () => {},
+  volume = 100,
+  handleVolumeChange = () => {},
+} = ttsSupported
+  ? useSpeechSync({
       playerRef,
       showVideo,
       subtitles,
       currentSubtitle,
       currentTime,
       lang,
-    });
+    })
+  : {};
   
     // Auto-disable speech when video closes
     useEffect(() => {
@@ -334,6 +345,7 @@ export default function DhyanamPage({ lang: initialLang }) {
           playerRef={playerRef}
           lang={lang}
           currentSubtitle={currentSubtitle}
+          ttsSupported={ttsSupported}
           onClose={() => setShowVideo(false)}
         />
       )}
