@@ -122,7 +122,7 @@ export default function Testimonies({lang:initialLang}) {
       image={getYouTubeThumbnail(video)}
       date={date}
       lang={lang}
-      path={`${lang}/testimony`}
+      path={`${initialLang || 'en'}/testimony`}
     />
 ))}
 

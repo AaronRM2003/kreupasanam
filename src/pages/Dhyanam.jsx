@@ -287,7 +287,7 @@ if (errorLoading) {
                     image={thumbnail || ''}
                     date={date}
                     lang={lang}
-                    path={`${lang}/dhyanam`}
+                    path={`${initialLang || 'en'}/dhyanam`}
                   />
                 );
               })

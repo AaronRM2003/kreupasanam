@@ -312,7 +312,7 @@ export default function Oracles({ lang: initialLang }) {
                     image={thumbnail || ''}
                     date={date}
                     lang={lang}
-                    path={`${lang}/oracles`}
+                    path={`${initialLang || 'en'}/oracles`}
                     onImageLoad={handleImageLoad}
                   />
                 );
