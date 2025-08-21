@@ -21,7 +21,7 @@ const getYouTubeThumbnail = (url) => {
       const videoIdMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([\w-]{11})/);
       const videoId = videoIdMatch ? videoIdMatch[1] : null;
       if (videoId) {
-        return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+        return `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
       }
       return null;
     } catch {
