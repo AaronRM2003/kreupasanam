@@ -10,7 +10,7 @@ const translations = {
     placeholder: 'Your email',
     subscribe: 'Subscribe',
     thankYou: 'Thank you for subscribing!',
-    footerNote: 'Krupasanam Testimonies. Shared with love. Not affiliated with the official shrine.',
+    footerNote: 'Kreupasanam Testimonies. Shared with love. Not affiliated with the official shrine.',
   },
   hi: {
     contact: 'संपर्क करें',
@@ -50,7 +50,7 @@ const translations = {
     placeholder: 'Votre email',
     subscribe: "S'abonner",
     thankYou: 'Merci pour votre abonnement !',
-    footerNote: 'Témoignages de Krupasanam. Partagé avec amour. Non affilié au sanctuaire officiel.',
+    footerNote: 'Témoignages de Kreupasanam. Partagé avec amour. Non affilié au sanctuaire officiel.',
   },
   es: {
     contact: 'Contáctanos',
@@ -58,7 +58,7 @@ const translations = {
     placeholder: 'Tu correo electrónico',
     subscribe: 'Suscribirse',
     thankYou: '¡Gracias por suscribirte!',
-    footerNote: 'Testimonios de Krupasanam. Compartido con amor. No afiliado al santuario oficial.',
+    footerNote: 'Testimonios de Kreupasanam. Compartido con amor. No afiliado al santuario oficial.',
   },
   mr: {
     contact: 'संपर्क साधा',
