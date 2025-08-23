@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './Testimonies.module.css';
 import { Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { formatDuration } from './utils/Utils';
 
   const languageMap = {
   en: 'English',
@@ -40,16 +41,13 @@ function slugify(text) {
     .replace(/\-\-+/g, '-');      // Replace multiple - with single -
 }
 
-export function TestimonyCard({ id, title, image, date, lang, path, onImageLoad }) {
+export function TestimonyCard({ id, title, image, date, lang, path, duration }) {
   const navigate = useNavigate();
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  // Pick title based on lang or fallback to English
-  const sluggedTitle = title['en'];
-  console.log(title);
-  // Create slug from translated title
+  const sluggedTitle = title["en"];
   const slug = slugify(sluggedTitle);
 
-  // On click, navigate to /path/id-slug
   const handleCardClick = () => {
     navigate(`/${path}/${id}-${slug}`);
   };
@@ -57,21 +55,40 @@ export function TestimonyCard({ id, title, image, date, lang, path, onImageLoad 
   return (
     <div className={styles.testimoniesCard}>
       <div className={styles.testimoniesImageWrapper}>
+        {!isLoaded && <div className={styles.skeleton}></div>}
         <img
           src={image}
           alt={title[lang]}
-          onLoad={onImageLoad}
-          onError={onImageLoad} // fallback on error to avoid hanging spinner
+          style={{ display: isLoaded ? "block" : "none" }}
+          onLoad={() => setIsLoaded(true)}
+          onError={() => setIsLoaded(true)}
         />
+
+        {/* ✅ Duration Overlay */}
+        {isLoaded && duration && (
+          <span className={styles.durationBadge}>{duration}</span>
+        )}
       </div>
-      <h3 className={styles.testimoniesCardTitle}>{title[lang]}</h3>
-      <p className={styles.testimoniesDate}>{date}</p>
+
+      {isLoaded ? (
+        <>
+          <h3 className={styles.testimoniesCardTitle}>{title[lang]}</h3>
+          <p className={styles.testimoniesDate}>{date}</p>
+        </>
+      ) : (
+        <>
+          <div className={styles.skeletonText}></div>
+          <div className={styles.skeletonSmall}></div>
+        </>
+      )}
+
       <button
-        style={{ border: 'none' }}
+        style={{ border: "none" }}
         className={styles.testimoniesVideoLink}
         onClick={handleCardClick}
+        disabled={!isLoaded} // prevent click before ready
       >
-        Watch Now
+        {isLoaded ? "Watch Now" : "Loading..."}
       </button>
     </div>
   );
@@ -85,9 +102,34 @@ export default function Testimonies({lang:initialLang}) {
   useEffect(() => {
     fetch('/assets/testimony-content.json')
       .then((res) => res.json())
-      .then((data) => setTestimonies(data))
+      .then(async (data) => {
+        // fetch subtitle JSON for each testimony
+        const testimoniesWithDuration = await Promise.all(
+          data.map(async (testimony) => {
+            if (!testimony.subtitles) return testimony;
+
+            try {
+              const res = await fetch(testimony.subtitles);
+              const subs = await res.json();
+
+              if (subs.length > 0) {
+                const last = subs[subs.length - 1];
+                const duration = formatDuration(last.start);
+                return { ...testimony, duration };
+              }
+            } catch (err) {
+              console.error(`Failed to load subtitles for ${testimony.id}:`, err);
+            }
+
+            return testimony;
+          })
+        );
+
+        setTestimonies(testimoniesWithDuration);
+      })
       .catch((err) => console.error('Failed to load testimonies:', err));
   }, []);
+
 
   return (
     <section style={{}} className={styles.testimoniesSection}>
@@ -114,7 +156,7 @@ export default function Testimonies({lang:initialLang}) {
         <div className={styles.testimoniesGrid}>
          {testimonies
   .filter(({ id }) => [16, 17, 8].includes(id))
-  .map(({ id, title, video, date }) => (
+  .map(({ id, title, video, date,duration }) => (
     <TestimonyCard
       key={id}
       id={id}
@@ -122,6 +164,7 @@ export default function Testimonies({lang:initialLang}) {
       image={getYouTubeThumbnail(video)}
       date={date}
       lang={lang}
+      duration={duration}
       path={`${initialLang || 'en'}/testimony`}
     />
 ))}

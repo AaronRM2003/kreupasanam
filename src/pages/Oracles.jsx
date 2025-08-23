@@ -5,6 +5,7 @@ import { Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { HiOutlineEmojiSad } from 'react-icons/hi';
 import AppBar from '../components/AppBar';
+import { formatDuration } from '../components/utils/Utils';
 
 const languageMap = {
   en: 'English',
@@ -26,6 +27,10 @@ export default function Oracles({ lang: initialLang }) {
   const [errorLoading, setErrorLoading] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState(0);
   const [allImagesLoaded, setAllImagesLoaded] = useState(false);
+  const MIN_IMAGES_TO_SHOW = 5; // show grid once at least 5 thumbnails loaded
+
+// Count loaded images and mark when threshold reached
+
 
   // Sync language with props
   useEffect(() => {
@@ -43,8 +48,28 @@ export default function Oracles({ lang: initialLang }) {
         if (!res.ok) throw new Error('Failed to fetch oracles content');
         return res.json();
       })
-      .then((data) => {
-        setOracles(data);
+      .then(async (data) => {
+        const oraclesWithDuration = await Promise.all(
+                        data.map(async (testimony) => {
+                          if (!testimony.subtitles) return testimony;
+              
+                          try {
+                            const res = await fetch(testimony.subtitles);
+                            const subs = await res.json();
+              
+                            if (subs.length > 0) {
+                              const last = subs[subs.length - 1];
+                              const duration = formatDuration(last.start);
+                              return { ...testimony, duration };
+                            }
+                          } catch (err) {
+                            console.error(`Failed to load subtitles for ${testimony.id}:`, err);
+                          }
+              
+                          return testimony;
+                        })
+                      );
+        setOracles(oraclesWithDuration);
         setLoadingData(false);
       })
       .catch((err) => {
@@ -82,11 +107,10 @@ export default function Oracles({ lang: initialLang }) {
 
   // Count loaded images and mark when all done
   useEffect(() => {
-    if (thumbnails.length > 0 && imagesLoaded >= thumbnails.length) {
+    if (thumbnails.length > 0 && imagesLoaded >= Math.min(MIN_IMAGES_TO_SHOW, thumbnails.length)) {
       setAllImagesLoaded(true);
     }
-  }, [imagesLoaded, thumbnails.length]);
-
+}, [imagesLoaded, thumbnails.length]);
   const handleImageLoad = () => {
     setImagesLoaded((prev) => prev + 1);
   };
@@ -302,7 +326,7 @@ export default function Oracles({ lang: initialLang }) {
         {allImagesLoaded && (
           <div className={styles.testimoniesGrid}>
             {sortedOracles.length > 0 ? (
-              sortedOracles.map(({ id, title, video, date }) => {
+              sortedOracles.map(({ id, title, video, date,duration }) => {
                 const thumbnail = getYouTubeThumbnail(video);
                 return (
                   <TestimonyCard
@@ -313,6 +337,7 @@ export default function Oracles({ lang: initialLang }) {
                     date={date}
                     lang={lang}
                     path={`${initialLang || 'en'}/oracles`}
+                    duration={duration}
                     onImageLoad={handleImageLoad}
                   />
                 );

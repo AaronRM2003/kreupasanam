@@ -5,6 +5,7 @@ import { Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { HiOutlineEmojiSad } from 'react-icons/hi';
 import AppBar from '../components/AppBar';
+import { formatDuration } from '../components/utils/Utils';
 
 const languageMap = {
   en: 'English',
@@ -38,10 +39,30 @@ useEffect(() => {
   fetch('/assets/testimony-content.json')
     .then(res => res.json())
     .then(async (data) => {
-      setTestimonies(data);
+      const testimoniesWithDuration = await Promise.all(
+                data.map(async (testimony) => {
+                  if (!testimony.subtitles) return testimony;
+      
+                  try {
+                    const res = await fetch(testimony.subtitles);
+                    const subs = await res.json();
+      
+                    if (subs.length > 0) {
+                      const last = subs[subs.length - 1];
+                      const duration = formatDuration(last.start);
+                      return { ...testimony, duration };
+                    }
+                  } catch (err) {
+                    console.error(`Failed to load subtitles for ${testimony.id}:`, err);
+                  }
+      
+                  return testimony;
+                })
+              );
+      setTestimonies(testimoniesWithDuration);
 
       // Filter based on initial month/year
-      const filtered = data.filter(({ date }) => {
+      const filtered = testimoniesWithDuration.filter(({ date }) => {
         const d = new Date(date);
         const monthName = d.toLocaleString('en', { month: 'long' });
         const year = d.getFullYear().toString();
@@ -49,7 +70,7 @@ useEffect(() => {
             && (selectedYear === 'All' || year === selectedYear);
       });
 
-      // Preload only filtered thumbnails
+      // Preload only first 5 thumbnails (or all if less than 5)
       const preloadImage = (src) =>
         new Promise(resolve => {
           if (!src) return resolve();
@@ -59,15 +80,22 @@ useEffect(() => {
         });
 
       const thumbnails = filtered.map(({ video }) => getYouTubeThumbnail(video));
-      await Promise.all(thumbnails.map(preloadImage));
+      const firstBatch = thumbnails.slice(0, 5);
 
+      await Promise.all(firstBatch.map(preloadImage));
+
+      // Show grid after 5 images load (rest will continue in background)
       setLoadingTestimonies(false);
+
+      // Start preloading the remaining images silently
+      thumbnails.slice(5).forEach(preloadImage);
     })
     .catch(err => {
       console.error('Failed to load testimonies:', err);
       setLoadingTestimonies(false);
     });
 }, [selectedMonth, selectedYear]);
+
 
 
 
@@ -205,7 +233,7 @@ useEffect(() => {
           {/* Testimonies grid */}
           {!loadingTestimonies && filteredTestimonies.length > 0 && (
             <div className={styles.testimoniesGrid}>
-              {filteredTestimonies.map(({ id, title, video, date }) => (
+              {filteredTestimonies.map(({ id, title, video, date,duration }) => (
                 <TestimonyCard
                   key={id}
                   id={id}
@@ -214,6 +242,7 @@ useEffect(() => {
                   date={date}
                   lang={lang}
                   path={`${initialLang || 'en'}/testimony`}
+                  duration={duration}
                 />
               ))}
             </div>

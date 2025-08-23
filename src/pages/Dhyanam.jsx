@@ -5,6 +5,7 @@ import { Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { HiOutlineEmojiSad } from 'react-icons/hi';
 import AppBar from '../components/AppBar';
+import { formatDuration } from '../components/utils/Utils';
 
 export default function Dhyanam({ lang: initialLang }) {
   const [lang, setLang] = useState(initialLang || 'en');
@@ -36,8 +37,29 @@ export default function Dhyanam({ lang: initialLang }) {
         if (!res.ok) throw new Error('Failed to fetch data');
         return res.json();
       })
-      .then((data) => {
-        setDhyanam(data);
+      .then(async (data) => {
+        const dhyanamWithDuration = await Promise.all(
+                        data.map(async (testimony) => {
+                          if (!testimony.subtitles) return testimony;
+              
+                          try {
+                            const res = await fetch(testimony.subtitles);
+                            const subs = await res.json();
+              
+                            if (subs.length > 0) {
+                              const last = subs[subs.length - 1];
+                              const duration = formatDuration(last.start);
+                              return { ...testimony, duration };
+                            }
+                          } catch (err) {
+                            console.error(`Failed to load subtitles for ${testimony.id}:`, err);
+                          }
+              
+                          return testimony;
+                        })
+                      );
+              
+        setDhyanam(dhyanamWithDuration);
         setLoadingData(false);
       })
       .catch((err) => {
@@ -80,11 +102,15 @@ const handleImageLoad = () => {
   setImagesLoaded((prev) => prev + 1);
 };
 
+const MIN_IMAGES_TO_SHOW = 5; // show grid once at least 5 thumbnails loaded
+
+// Count loaded images and mark when threshold reached
 useEffect(() => {
-  if (imagesLoaded === thumbnails.length && thumbnails.length > 0) {
+  if (thumbnails.length > 0 && imagesLoaded >= Math.min(MIN_IMAGES_TO_SHOW, thumbnails.length)) {
     setAllImagesLoaded(true);
   }
 }, [imagesLoaded, thumbnails.length]);
+
 const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -277,7 +303,7 @@ if (errorLoading) {
             {dhyanam.length > 0 ? (
              dhyanam
               .sort((a, b) => new Date(b.date) - new Date(a.date)) // Sort by date descending
-              .map(({ id, title, video, date }) => {
+              .map(({ id, title, video, date,duration }) => {
                 const thumbnail = getYouTubeThumbnail(video);
                 return (
                   <TestimonyCard
@@ -287,6 +313,7 @@ if (errorLoading) {
                     image={thumbnail || ''}
                     date={date}
                     lang={lang}
+                    duration={duration}
                     path={`${initialLang || 'en'}/dhyanam`}
                   />
                 );

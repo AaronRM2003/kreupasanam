@@ -30,6 +30,7 @@ export default function TestimonyPage({ lang: initialLang }) {
   const [testimonies, setTestimonies] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
   const [errorLoading, setErrorLoading] = useState(false);
+  const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
 
   // Parse id and slug from idSlug param
   // Assuming idSlug is from useParams()
@@ -260,23 +261,37 @@ const handleClick = () => {
      
         <div className={styles.testimonyInner} >
           {videoId && !showVideo ? (
-            <div
-              className={styles.thumbnailWrapper}
-              onClick={() => setShowVideo(true)}
-              style={{ cursor: 'pointer' }}
-            >
-              <img src={thumbnailUrl} alt="Video Thumbnail" className={styles.thumbnailImage} />
-              <div className={styles.smallPlayIcon}>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ff0000" width="60%" height="60%">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </div>
-            </div>
-          ) : (
-            <div className={styles.thumbnailWrapper}>
-              <img src={thumbnailUrl} alt="Video Thumbnail" className={styles.thumbnailImage} />
-            </div>
-          )}
+  <div
+    className={styles.thumbnailWrapper}
+    onClick={() => setShowVideo(true)}
+    style={{ cursor: 'pointer' }}
+  >
+    {/* Skeleton shimmer while image loads */}
+    {!thumbnailLoaded && (
+      <div className={styles.thumbnailSkeleton}></div>
+    )}
+
+    <img
+      src={thumbnailUrl}
+      alt="Video Thumbnail"
+      className={`${styles.thumbnailImage} ${thumbnailLoaded ? styles.visible : styles.hidden}`}
+      onLoad={() => setThumbnailLoaded(true)}
+      onError={() => setThumbnailLoaded(true)} // fallback
+    />
+
+    {thumbnailLoaded && (
+      <div className={styles.smallPlayIcon}>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ff0000" width="60%" height="60%">
+          <path d="M8 5v14l11-7z" />
+        </svg>
+      </div>
+    )}
+  </div>
+) : (
+  <div className={styles.thumbnailWrapper}>
+    <img src={thumbnailUrl} alt="Video Thumbnail" className={styles.thumbnailImage} />
+  </div>
+)}
            {isMobileOrTablet && (
           <div>
             <LanguageDropdown lang={lang} onSelect={setLang} />

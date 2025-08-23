@@ -240,6 +240,29 @@ export function getYouTubeVideoID(url) {
   const match = url.match(/(?:v=|\/)([0-9A-Za-z_-]{11})/);
   return match ? match[1] : null;
 }
+export function formatDuration(startTime) {
+  // startTime like "27:41" or "1:05:20"
+  const parts = startTime.split(":").map(Number);
+  
+  let totalSeconds = 0;
+  if (parts.length === 3) {
+    totalSeconds = parts[0] * 3600 + parts[1] * 60 + parts[2];
+  } else if (parts.length === 2) {
+    totalSeconds = parts[0] * 60 + parts[1];
+  }
+
+  // Add ~5s buffer
+  totalSeconds += 5;
+
+  const h = Math.floor(totalSeconds / 3600);
+  const m = Math.floor((totalSeconds % 3600) / 60);
+  const s = totalSeconds % 60;
+
+  if (h > 0) {
+    return `${h}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+  }
+  return `${m}:${String(s).padStart(2, "0")}`;
+}
 
 // Convert time string (HH:MM:SS or MM:SS) to seconds
 export function timeStringToSeconds(timeStr) {
