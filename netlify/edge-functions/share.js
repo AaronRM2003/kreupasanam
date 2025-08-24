@@ -51,24 +51,25 @@ export default async (request) => {
       /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/
     );
     const videoId = videoIdMatch ? videoIdMatch[1] : null;
+
     const ogImage = videoId
       ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
       : "";
     const ogVideo = videoId ? `https://www.youtube.com/embed/${videoId}` : "";
     const csrUrl = `/${lang}/${type}/${id}-${encodeURIComponent(correctSlug)}`;
 
-    // 🔎 Bot detection
+    // ✅ Bot detection (explicit list, safer than generic /bot/)
     const ua = request.headers.get("user-agent") || "";
-    const isBot = /bot|crawl|spider|slurp|facebook|twitter|whatsapp|linkedin/i.test(
+    const isBot = /(facebookexternalhit|facebookcatalog|Twitterbot|WhatsApp|Slackbot|LinkedInBot|Discordbot|TelegramBot|googlebot|bingbot)/i.test(
       ua
     );
 
     if (!isBot) {
-      // ✅ Human → 302 redirect
+      // ✅ Human → 302 redirect to React route
       return Response.redirect(`${siteOrigin}${csrUrl}`, 302);
     }
 
-    // ✅ Bot → return OG HTML
+    // ✅ Bot → return OG HTML (no redirect)
     const html = `
       <!DOCTYPE html>
       <html lang="${lang}">
