@@ -82,10 +82,18 @@ export default async (request) => {
 
         <title>${title}</title>
       </head>
+      
       <body>
         <h1>${title}</h1>
         <p>${description}</p>
         <p><a href="${csrUrl}">Go to site</a></p>
+
+         <script>
+      // Redirect humans after OG bots finish reading
+      if (!/bot|crawl|spider|slurp|facebook|twitter|whatsapp/i.test(navigator.userAgent)) {
+        window.location.replace("${csrUrl}");
+      }
+    </script>
       </body>
       </html>
     `;
