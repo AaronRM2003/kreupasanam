@@ -1,3 +1,7 @@
+import testimonyData from '../assets/testimony-content.json';
+import dhyanamData from '../assets/dhyanam-content.json';
+import oraclesData from '../assets/oracles-content.json';
+
 export default async (request) => {
   try {
     const url = new URL(request.url);
@@ -9,21 +13,20 @@ export default async (request) => {
     const idSlug = parts[3];
     const id = idSlug.split("-")[0];
 
+    // Map type to imported JSON
     const jsonMap = {
-      "testimony": "/assets/testimony-content.json",
-      "dhyanam": "/assets/dhyanam-content.json",
-      "oracles": "/assets/oracles-content.json"
+      testimony: testimonyData,
+      dhyanam: dhyanamData,
+      oracles: oraclesData,
     };
-    const jsonPath = jsonMap[type];
-    if (!jsonPath) return new Response("Not found", { status: 404 });
-    const siteOrigin = 'https://kreupasanamtestimonies.com'; // replace with your actual domain
-    const res = await fetch(`${siteOrigin}${jsonPath}`);
-    if (!res.ok) return new Response("Content not found", { status: 404 });
 
-    const data = await res.json();
+    const data = jsonMap[type];
+    if (!data) return new Response("Not found", { status: 404 });
+
     const item = data.find(d => String(d.id) === id);
     if (!item) return new Response("Item not found", { status: 404 });
 
+    // Extract YouTube video info
     const videoUrl = item.video || "";
     const videoIdMatch = videoUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
     const videoId = videoIdMatch ? videoIdMatch[1] : null;
@@ -35,6 +38,7 @@ export default async (request) => {
 
     const csrUrl = `/${lang}/${type}/${id}-${title.replace(/\s+/g,'-')}`;
 
+    // Return HTML with OG tags immediately
     const html = `
       <!DOCTYPE html>
       <html lang="${lang}">
@@ -61,6 +65,9 @@ export default async (request) => {
         <meta name="twitter:player:height" content="315" />
 
         <title>${title}</title>
+
+        <!-- Redirect user to normal page -->
+        <meta http-equiv="refresh" content="0; URL='${csrUrl}'" />
       </head>
       <body>
         <h1>${title}</h1>
