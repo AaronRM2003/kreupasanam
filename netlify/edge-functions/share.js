@@ -4,10 +4,11 @@ export default async (request) => {
     const parts = url.pathname.split("/").filter(Boolean); // ["en","share","testimony","123-title"]
     if (parts.length < 4) return new Response("Invalid URL", { status: 404 });
 
-    const lang = parts[0];
-    const type = parts[2];
-    const idSlug = parts[3];
-    const id = idSlug.split("-")[0];
+    const lang = parts[0];          // language for content
+    const type = parts[2];          // testimony | dhyanam | oracles
+    const idSlug = parts[3];        // "123-title"
+    const [id, ...slugParts] = idSlug.split("-");
+    const urlTitleSlug = slugParts.join("-"); // slug from URL
 
     // Map type to JSON file
     const jsonMap = {
@@ -18,7 +19,7 @@ export default async (request) => {
     const jsonPath = jsonMap[type];
     if (!jsonPath) return new Response("Not found", { status: 404 });
 
-    const siteOrigin = 'https://kreupasanamtestimonies.com'; // replace with your domain
+    const siteOrigin = 'https://kreupasanamtestimonies.com';
     const res = await fetch(`${siteOrigin}${jsonPath}`);
     if (!res.ok) return new Response("Content not found", { status: 404 });
 
@@ -26,39 +27,42 @@ export default async (request) => {
     const item = data.find(d => String(d.id) === id);
     if (!item) return new Response("Item not found", { status: 404 });
 
+    // English title used to verify slug
+    const englishTitle = item.title?.en || "Video";
+
+    // Convert English title into URL-safe slug
+    const slugify = text => text.toLowerCase().trim()
+      .replace(/\s+/g, '-')       
+      .replace(/[^\w\-]+/g, '')   
+      .replace(/\-\-+/g, '-');
+
+    const correctSlug = slugify(englishTitle);
+
+    // Only preview if URL slug matches English title slug
+    if (urlTitleSlug !== correctSlug) {
+      return new Response("Invalid URL title", { status: 404 });
+    }
+
+    // Content can be in requested language
+    const title = item.title?.[lang] || item.title?.en || "Video";
+    const description = item.content?.[lang]?.slice(0,200) || item.content?.en?.slice(0,200) || "Watch this video";
+
     const videoUrl = item.video || "";
     const videoIdMatch = videoUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
     const videoId = videoIdMatch ? videoIdMatch[1] : null;
 
-    const title = item.title?.[lang] || item.title?.en || "Video";
-    const description = item.content?.[lang]?.slice(0, 200) || item.content?.en?.slice(0, 200) || "Watch this video";
     const ogImage = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : "";
     const ogVideo = videoId ? `https://www.youtube.com/embed/${videoId}` : "";
 
-    // Function to convert full title into a URL-safe slug
-    function slugify(text) {
-      return text
-        .toString()
-        .toLowerCase()
-        .trim()
-        .replace(/\s+/g, '-')       // Replace spaces with -
-        .replace(/[^\w\-]+/g, '')   // Remove all non-word chars
-        .replace(/\-\-+/g, '-');    // Replace multiple - with single -
-    }
-
-    const titleSlug = slugify(title);
-    const csrUrl = `/${lang}/${type}/${id}-${encodeURIComponent(titleSlug)}`;
-
+    const csrUrl = `/${lang}/${type}/${id}-${encodeURIComponent(correctSlug)}`;
 
     const html = `
       <!DOCTYPE html>
       <html lang="${lang}">
       <head>
         <meta charset="UTF-8" />
-
-        <!-- Open Graph -->
         <meta property="og:type" content="video.other" />
-        <meta property="og:url" content="https://kreupasanamtestimonies.com${csrUrl}" />
+        <meta property="og:url" content="${siteOrigin}${csrUrl}" />
         <meta property="og:title" content="${title}" />
         <meta property="og:description" content="${description}" />
         <meta property="og:image" content="${ogImage}" />
@@ -67,10 +71,9 @@ export default async (request) => {
         <meta property="og:video:width" content="560" />
         <meta property="og:video:height" content="315" />
 
-        <!-- Twitter -->
         <meta name="twitter:card" content="player" />
         <meta name="twitter:title" content="${title}" />
-        <meta name="twitter:url" content="https://kreupasanamtestimonies.com${csrUrl}" />
+        <meta name="twitter:url" content="${siteOrigin}${csrUrl}" />
         <meta name="twitter:description" content="${description}" />
         <meta name="twitter:image" content="${ogImage}" />
         <meta name="twitter:player" content="${ogVideo}" />
