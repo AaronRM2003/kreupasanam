@@ -1,7 +1,3 @@
-import testimonyData from './share-data/testimony-content.json';
-import dhyanamData from './share-data/dhyanam-content.json';
-import oraclesData from './share-data/oracles-content.json';
-
 export default async (request) => {
   try {
     const url = new URL(request.url);
@@ -15,14 +11,10 @@ export default async (request) => {
     const urlTitleSlug = slugParts.join("-");
 
     const jsonMap = {
-    testimony: testimonyData,
-    dhyanam: dhyanamData,
-    oracles: oraclesData
+      testimony: "/assets/testimony-content.json",
+      dhyanam: "/assets/dhyanam-content.json",
+      oracles: "/assets/oracles-content.json",
     };
-
-    const data = jsonMap[type];
-    const item = data.find((d) => String(d.id) === id);
-
     const jsonPath = jsonMap[type];
     if (!jsonPath) return new Response("Not found", { status: 404 });
 
@@ -30,6 +22,8 @@ export default async (request) => {
     const res = await fetch(`${siteOrigin}${jsonPath}`);
     if (!res.ok) return new Response("Content not found", { status: 404 });
 
+    const data = await res.json();
+    const item = data.find((d) => String(d.id) === id);
     if (!item) return new Response("Item not found", { status: 404 });
 
     const englishTitle = item.title?.en || "Video";
