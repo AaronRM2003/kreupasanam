@@ -34,6 +34,10 @@ function LangRoute({ element: Element, redirectToRootIfNotVisited = false }) {
   return <Element lang={lang} />;
 }
 
+function RedirectTo({ toBase }) {
+  const { lang, idSlug } = useParams();
+  return <Navigate to={`/${lang}/${toBase}/${idSlug}`} replace />;
+}
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -77,6 +81,11 @@ function App() {
           <Route path="oracles/:idSlug" element={<LangRoute element={OraclesPage} />} />
           <Route path="dhyanam" element={<LangRoute element={Dhyanam} />} />
           <Route path="dhyanam/:idSlug" element={<LangRoute element={DhyanamPage} />} />
+
+          <Route path="share/testimony/:idSlug" element={<RedirectTo toBase="testimony" />} />
+          <Route path="share/oracles/:idSlug" element={<RedirectTo toBase="oracles" />} />
+          <Route path="share/dhyanam/:idSlug" element={<RedirectTo toBase="dhyanam" />} />
+
 
           {/* ✅ Catch invalid paths like /en/invalid or /ml/xyz */}
           <Route path="*" element={<NotFoundPage />} />
