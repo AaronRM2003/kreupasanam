@@ -16,8 +16,8 @@ export default async (request) => {
     };
     const jsonPath = jsonMap[type];
     if (!jsonPath) return new Response("Not found", { status: 404 });
-
-    const res = await fetch(`${request.headers.get("origin")}${jsonPath}`);
+    const siteOrigin = 'https://kreupasanamtestimonies.com'; // replace with your actual domain
+    const res = await fetch(`${siteOrigin}${jsonPath}`);
     if (!res.ok) return new Response("Content not found", { status: 404 });
 
     const data = await res.json();
