@@ -1,7 +1,3 @@
-import testimonyData from './assets/testimony-content.json';
-import dhyanamData from './assets/dhyanam-content.json';
-import oraclesData from './assets/oracles-content.json';
-
 export default async (request) => {
   try {
     const url = new URL(request.url);
@@ -14,15 +10,20 @@ export default async (request) => {
     const [id, ...slugParts] = idSlug.split("-");
     const urlTitleSlug = slugParts.join("-"); // slug from URL
 
-    // Map type to imported JSON
-    const dataMap = {
-      "testimony": testimonyData,
-      "dhyanam": dhyanamData,
-      "oracles": oraclesData
+    // Map type to JSON file
+    const jsonMap = {
+      "testimony": "/assets/testimony-content.json",
+      "dhyanam": "/assets/dhyanam-content.json",
+      "oracles": "/assets/oracles-content.json"
     };
-    const data = dataMap[type];
-    if (!data) return new Response("Not found", { status: 404 });
+    const jsonPath = jsonMap[type];
+    if (!jsonPath) return new Response("Not found", { status: 404 });
 
+    const siteOrigin = 'https://kreupasanamtestimonies.com';
+    const res = await fetch(`${siteOrigin}${jsonPath}`);
+    if (!res.ok) return new Response("Content not found", { status: 404 });
+
+    const data = await res.json();
     const item = data.find(d => String(d.id) === id);
     if (!item) return new Response("Item not found", { status: 404 });
 
@@ -54,7 +55,6 @@ export default async (request) => {
     const ogVideo = videoId ? `https://www.youtube.com/embed/${videoId}` : "";
 
     const csrUrl = `/${lang}/${type}/${id}-${encodeURIComponent(correctSlug)}`;
-    const siteOrigin = 'https://kreupasanamtestimonies.com';
 
     const html = `
       <!DOCTYPE html>
