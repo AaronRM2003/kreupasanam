@@ -1,7 +1,3 @@
-import testimonyData from '../assets/testimony-content.json';
-import dhyanamData from '../assets/dhyanam-content.json';
-import oraclesData from '../assets/oracles-content.json';
-
 export default async (request) => {
   try {
     const url = new URL(request.url);
@@ -13,20 +9,23 @@ export default async (request) => {
     const idSlug = parts[3];
     const id = idSlug.split("-")[0];
 
-    // Map type to imported JSON
+    // Map type to JSON file
     const jsonMap = {
-      testimony: testimonyData,
-      dhyanam: dhyanamData,
-      oracles: oraclesData,
+      "testimony": "/assets/testimony-content.json",
+      "dhyanam": "/assets/dhyanam-content.json",
+      "oracles": "/assets/oracles-content.json"
     };
+    const jsonPath = jsonMap[type];
+    if (!jsonPath) return new Response("Not found", { status: 404 });
 
-    const data = jsonMap[type];
-    if (!data) return new Response("Not found", { status: 404 });
+    const siteOrigin = 'https://kreupasanamtestimonies.com'; // replace with your domain
+    const res = await fetch(`${siteOrigin}${jsonPath}`);
+    if (!res.ok) return new Response("Content not found", { status: 404 });
 
+    const data = await res.json();
     const item = data.find(d => String(d.id) === id);
     if (!item) return new Response("Item not found", { status: 404 });
 
-    // Extract YouTube video info
     const videoUrl = item.video || "";
     const videoIdMatch = videoUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
     const videoId = videoIdMatch ? videoIdMatch[1] : null;
@@ -36,9 +35,21 @@ export default async (request) => {
     const ogImage = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : "";
     const ogVideo = videoId ? `https://www.youtube.com/embed/${videoId}` : "";
 
-    const csrUrl = `/${lang}/${type}/${id}-${title.replace(/\s+/g,'-')}`;
+    // Function to convert full title into a URL-safe slug
+    function slugify(text) {
+      return text
+        .toString()
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, '-')       // Replace spaces with -
+        .replace(/[^\w\-]+/g, '')   // Remove all non-word chars
+        .replace(/\-\-+/g, '-');    // Replace multiple - with single -
+    }
 
-    // Return HTML with OG tags immediately
+    const titleSlug = slugify(title);
+    const csrUrl = `/${lang}/${type}/${id}-${encodeURIComponent(titleSlug)}`;
+
+
     const html = `
       <!DOCTYPE html>
       <html lang="${lang}">
@@ -47,6 +58,7 @@ export default async (request) => {
 
         <!-- Open Graph -->
         <meta property="og:type" content="video.other" />
+        <meta property="og:url" content="https://kreupasanamtestimonies.com${csrUrl}" />
         <meta property="og:title" content="${title}" />
         <meta property="og:description" content="${description}" />
         <meta property="og:image" content="${ogImage}" />
@@ -58,6 +70,7 @@ export default async (request) => {
         <!-- Twitter -->
         <meta name="twitter:card" content="player" />
         <meta name="twitter:title" content="${title}" />
+        <meta name="twitter:url" content="https://kreupasanamtestimonies.com${csrUrl}" />
         <meta name="twitter:description" content="${description}" />
         <meta name="twitter:image" content="${ogImage}" />
         <meta name="twitter:player" content="${ogVideo}" />
@@ -65,9 +78,6 @@ export default async (request) => {
         <meta name="twitter:player:height" content="315" />
 
         <title>${title}</title>
-
-        <!-- Redirect user to normal page -->
-        <meta http-equiv="refresh" content="0; URL='${csrUrl}'" />
       </head>
       <body>
         <h1>${title}</h1>
