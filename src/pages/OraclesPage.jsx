@@ -108,7 +108,11 @@ export default function OraclesPage({ lang: initialLang }) {
 
   // Generate share text when dependencies change
   useEffect(() => {
-    setShareText(generateShareText(safeOracle, lang, window.location.href, 'A Spiritual Oracle', includeSummary, video));
+    let url = window.location.href;
+
+    // Replace the CSR route with Edge Function route
+    url = url.replace(`/${lang}/oracles`, `/${lang}/share/oracles`);
+    setShareText(generateShareText(safeOracle, lang, url, 'A Spiritual Oracle', includeSummary, video));
   }, [lang, safeOracle, includeSummary, video]);
 
   // Hooks always called unconditionally

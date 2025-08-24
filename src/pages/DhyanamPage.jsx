@@ -119,8 +119,12 @@ export default function DhyanamPage({ lang: initialLang }) {
 
   // Generate share text on dependencies change
   useEffect(() => {
+    let url = window.location.href;
+
+    // Replace the CSR route with Edge Function route
+    url = url.replace(`/${lang}/dhyanam`, `/${lang}/share/dhyanam`);
     setShareText(
-      generateShareText(safeDhyanamItem, lang, window.location.href, 'Dhyanam meditation', includeSummary, video)
+      generateShareText(safeDhyanamItem, lang, url, 'Dhyanam meditation', includeSummary, video)
     );
   }, [lang, safeDhyanamItem, includeSummary, video]);
 
