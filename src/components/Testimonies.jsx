@@ -105,28 +105,9 @@ export default function Testimonies({ lang: initialLang }) {
     fetch('/assets/testimony-content.json')
       .then((res) => res.json())
       .then(async (data) => {
-        const testimoniesWithDuration = await Promise.all(
-          data.map(async (testimony) => {
-            if (!testimony.subtitles) return testimony;
+        
 
-            try {
-              const res = await fetch(testimony.subtitles);
-              const subs = await res.json();
-
-              if (subs.length > 0) {
-                const last = subs[subs.length - 1];
-                const duration = formatDuration(last.start);
-                return { ...testimony, duration };
-              }
-            } catch (err) {
-              console.error(`Failed to load subtitles for ${testimony.id}:`, err);
-            }
-
-            return testimony;
-          })
-        );
-
-        setTestimonies(testimoniesWithDuration);
+        setTestimonies(data);
         setIsLoading(false);
       })
       .catch((err) => {
