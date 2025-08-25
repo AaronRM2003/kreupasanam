@@ -1,19 +1,16 @@
-import  { useState, useEffect ,useMemo} from 'react';
+import { useState, useEffect } from 'react';
 import styles from '../components/Testimonies.module.css';
 import { TestimonyCard } from '../components/Testimonies';
 import { Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { HiOutlineEmojiSad } from 'react-icons/hi';
 import AppBar from '../components/AppBar';
-import { formatDuration } from '../components/utils/Utils';
 
 export default function Dhyanam({ lang: initialLang }) {
   const [lang, setLang] = useState(initialLang || 'en');
   const [dhyanam, setDhyanam] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
   const [errorLoading, setErrorLoading] = useState(false);
-  const [imagesLoaded, setImagesLoaded] = useState(0);
-  const [allImagesLoaded, setAllImagesLoaded] = useState(false);
 
   const languageMap = {
     en: 'English',
@@ -28,7 +25,6 @@ export default function Dhyanam({ lang: initialLang }) {
     kn: 'ಕನ್ನಡ',
   };
 
-  // Fetch dhyanam-content.json on mount
   useEffect(() => {
     setLoadingData(true);
     setErrorLoading(false);
@@ -37,29 +33,8 @@ export default function Dhyanam({ lang: initialLang }) {
         if (!res.ok) throw new Error('Failed to fetch data');
         return res.json();
       })
-      .then(async (data) => {
-        const dhyanamWithDuration = await Promise.all(
-                        data.map(async (testimony) => {
-                          if (!testimony.subtitles) return testimony;
-              
-                          try {
-                            const res = await fetch(testimony.subtitles);
-                            const subs = await res.json();
-              
-                            if (subs.length > 0) {
-                              const last = subs[subs.length - 1];
-                              const duration = formatDuration(last.start);
-                              return { ...testimony, duration };
-                            }
-                          } catch (err) {
-                            console.error(`Failed to load subtitles for ${testimony.id}:`, err);
-                          }
-              
-                          return testimony;
-                        })
-                      );
-              
-        setDhyanam(dhyanamWithDuration);
+      .then((data) => {
+        setDhyanam(data);
         setLoadingData(false);
       })
       .catch((err) => {
@@ -75,249 +50,167 @@ export default function Dhyanam({ lang: initialLang }) {
         /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([\w-]{11})/
       );
       const videoId = videoIdMatch ? videoIdMatch[1] : null;
-      if (videoId) {
-        return `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
-      }
-      return null;
+      return videoId ? `https://img.youtube.com/vi/${videoId}/sddefault.jpg` : null;
     } catch {
       return null;
     }
   };
 
-  // Extract all valid thumbnail URLs once dhyanam data is loaded
-  const thumbnails = useMemo(() => {
-  return dhyanam.map(({ video }) => getYouTubeThumbnail(video)).filter(Boolean);
-}, [dhyanam]);
-
-useEffect(() => {
-  if (thumbnails.length > 0) {
-    setImagesLoaded(0);
-    setAllImagesLoaded(false);
-  } else {
-    setAllImagesLoaded(true);
-  }
-}, [thumbnails.length]);
-
-const handleImageLoad = () => {
-  setImagesLoaded((prev) => prev + 1);
-};
-
-const MIN_IMAGES_TO_SHOW = 5; // show grid once at least 5 thumbnails loaded
-
-// Count loaded images and mark when threshold reached
-useEffect(() => {
-  if (thumbnails.length > 0 && imagesLoaded >= Math.min(MIN_IMAGES_TO_SHOW, thumbnails.length)) {
-    setAllImagesLoaded(true);
-  }
-}, [imagesLoaded, thumbnails.length]);
-
-const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
-
     window.addEventListener('resize', handleResize);
-
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   if (loadingData) {
-  return (
-    <div
-      style={{
-        position: 'fixed',
-        inset: 0,
-        backgroundColor: 'rgba(255, 255, 255, 0.9)',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: 9999,
-      }}
-    >
+    return (
       <div
         style={{
-          border: '6px solid #f3f3f3',
-         borderTop: '4px solid #246bfd',
-          borderRadius: '50%',
-          width: '48px',
-          height: '48px',
-          animation: 'spin 1s linear infinite',
-          marginBottom: '1rem',
+          position: 'fixed',
+          inset: 0,
+          backgroundColor: 'rgba(255, 255, 255, 0.9)',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 9999,
         }}
-      />
-      <p style={{ fontSize: '1.25rem', color: '#333' }}>Loading content...</p>
-
-      {/* Add the keyframes for spin animation */}
-      <style>
-        {`
+      >
+        <div
+          style={{
+            border: '6px solid #f3f3f3',
+            borderTop: '4px solid #246bfd',
+            borderRadius: '50%',
+            width: '48px',
+            height: '48px',
+            animation: 'spin 1s linear infinite',
+            marginBottom: '1rem',
+          }}
+        />
+        <p style={{ fontSize: '1.25rem', color: '#333' }}>Loading content...</p>
+        <style>{`
           @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
           }
-        `}
-      </style>
-    </div>
-  );
-}
+        `}</style>
+      </div>
+    );
+  }
 
-if (errorLoading) {
-  return (
-    <div
-      style={{
-        display: 'flex',
-        height: '100vh',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#fefefe',
-        flexDirection: 'column',
-        padding: '1rem',
-        textAlign: 'center',
-      }}
-    >
-      <span
+  if (errorLoading) {
+    return (
+      <div
         style={{
-          fontSize: '6rem',
-          fontWeight: 'bold',
-          color: '#e74c3c',
-          marginBottom: '1rem',
+          display: 'flex',
+          height: '100vh',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#fefefe',
+          flexDirection: 'column',
+          padding: '1rem',
+          textAlign: 'center',
         }}
       >
-        500
-      </span>
-      <h1
-        style={{
-          fontSize: '2rem',
-          marginBottom: '0.5rem',
-          color: '#333',
-        }}
-      >
-        Error Loading Dhyanam
-      </h1>
-      <p style={{ fontSize: '1.125rem', color: '#666', marginBottom: '1rem' }}>
-        There was a problem loading the content. Please try again later.
-      </p>
-      {/* Optional: Add a refresh or go back button here */}
-    </div>
-  );
-}
+        <span
+          style={{
+            fontSize: '6rem',
+            fontWeight: 'bold',
+            color: '#e74c3c',
+            marginBottom: '1rem',
+          }}
+        >
+          500
+        </span>
+        <h1 style={{ fontSize: '2rem', marginBottom: '0.5rem', color: '#333' }}>
+          Error Loading Dhyanam
+        </h1>
+        <p style={{ fontSize: '1.125rem', color: '#666', marginBottom: '1rem' }}>
+          There was a problem loading the content. Please try again later.
+        </p>
+      </div>
+    );
+  }
 
   return (
-    <div >
-          <AppBar lang={initialLang || 'en'}/>
-             <section
-    className={styles.testimoniesSection}
-    style={{ 
-      marginTop: '7rem',
-      marginBottom:'2rem', 
-      backgroundColor: windowWidth <= 768 ? '#fff' : 'transparent' 
-    }}
-  >
-                <img src="/assets/logo.png" alt="Logo" className="floating-logo" />
-      <div className={styles.testimoniesSectionContainer} style={{ margin: '0 0rem' }}>
-        <div className={styles.testimoniesHeader}>
-          <div style={{ position: 'relative', textAlign: 'center' }}>
-            <button
-              className={styles.backButton}
-              onClick={() => window.history.back()}
-              style={{
-                position: 'absolute',
-                left: 0,
-                top: '50%',
-                transform: 'translateY(-50%)',
-                display: window.innerWidth <= 768 ? 'none' : 'block',
-              }}
-            >
-              &#8592; <span>Back</span>
-            </button>
+    <div>
+      <AppBar lang={initialLang || 'en'} />
+      <section
+        className={styles.testimoniesSection}
+        style={{
+          marginTop: '7rem',
+          marginBottom: '2rem',
+          backgroundColor: windowWidth <= 768 ? '#fff' : 'transparent',
+        }}
+      >
+        <img src="/assets/logo.png" alt="Logo" className="floating-logo" />
+        <div className={styles.testimoniesSectionContainer} style={{ margin: '0 0rem' }}>
+          <div className={styles.testimoniesHeader}>
+            <div style={{ position: 'relative', textAlign: 'center' }}>
+              <button
+                className={styles.backButton}
+                onClick={() => window.history.back()}
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  display: window.innerWidth <= 768 ? 'none' : 'block',
+                }}
+              >
+                &#8592; <span>Back</span>
+              </button>
+              <h2 className={styles.testimoniesTitle} style={{ margin: 0 }}>
+                Dhyanam
+              </h2>
+            </div>
 
-            <h2 className={styles.testimoniesTitle} style={{ margin: 0 }}>
-              Dhyanam
-            </h2>
-          </div>
+            <p className={styles.testimoniesSubtitle}>Stories of healing, grace...</p>
 
-          <p className={styles.testimoniesSubtitle}>Stories of healing, grace...</p>
-
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              justifyContent: 'center',
-              gap: '1rem',
-            }}
-          >
-            <Dropdown onSelect={(e) => setLang(e)}>
-              <Dropdown.Toggle variant="outline-secondary" id="dropdown-lang">
-                {languageMap[lang] || lang}
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                {Object.entries(languageMap).map(([key, label]) => (
-                  <Dropdown.Item key={key} eventKey={key}>
-                    {label}
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
-        </div>
-
-        {/* Loading Screen */}
-        {!allImagesLoaded && (
-          <div
-            style={{
-              height: 300,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              flexDirection: 'column',
-              color: '#246bfd',
-              fontSize: '1.2rem',
-              marginBottom:'12rem'
-            }}
-          >
             <div
               style={{
-                width: 40,
-                height: 40,
-                border: '4px solid #d3e3ff',
-                borderTop: '4px solid #246bfd',
-                borderRadius: '50%',
-                animation: 'spin 1s linear infinite',
-                marginBottom: 16,
+                display: 'flex',
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                justifyContent: 'center',
+                gap: '1rem',
               }}
-            ></div>
-            Loading Dhyanam...
-            <style>{`
-              @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-              }
-            `}</style>
+            >
+              <Dropdown onSelect={(e) => setLang(e)}>
+                <Dropdown.Toggle variant="outline-secondary" id="dropdown-lang">
+                  {languageMap[lang] || lang}
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {Object.entries(languageMap).map(([key, label]) => (
+                    <Dropdown.Item key={key} eventKey={key}>
+                      {label}
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
           </div>
-        )}
 
-        {/* Show content only after images loaded */}
-        {allImagesLoaded && (
           <div className={styles.testimoniesGrid}>
             {dhyanam.length > 0 ? (
-             dhyanam
-              .sort((a, b) => new Date(b.date) - new Date(a.date)) // Sort by date descending
-              .map(({ id, title, video, date,duration }) => {
-                const thumbnail = getYouTubeThumbnail(video);
-                return (
-                  <TestimonyCard
-                    key={id}
-                    id={id}
-                    title={title}
-                    image={thumbnail || ''}
-                    date={date}
-                    lang={lang}
-                    duration={duration}
-                    path={`${initialLang || 'en'}/dhyanam`}
-                  />
-                );
-              })
+              dhyanam
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .map(({ id, title, video, date, duration }) => {
+                  const thumbnail = getYouTubeThumbnail(video);
+                  return (
+                    <TestimonyCard
+                      key={id}
+                      id={id}
+                      title={title}
+                      image={thumbnail || ''}
+                      date={date}
+                      lang={lang}
+                      duration={duration}
+                      path={`${initialLang || 'en'}/dhyanam`}
+                    />
+                  );
+                })
             ) : (
               <div
                 className={styles.testimoniesCard}
@@ -344,16 +237,8 @@ if (errorLoading) {
               </div>
             )}
           </div>
-        )}
-
-        {/* Hidden images to preload */}
-        <div style={{ display: 'none' }}>
-          {thumbnails.map((src, idx) => (
-            <img key={idx} src={src} alt="" onLoad={handleImageLoad} />
-          ))}
         </div>
-      </div>
-    </section>
+      </section>
     </div>
   );
 }

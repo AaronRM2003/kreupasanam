@@ -5,7 +5,6 @@ import { Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { HiOutlineEmojiSad } from 'react-icons/hi';
 import AppBar from '../components/AppBar';
-import { formatDuration } from '../components/utils/Utils';
 
 const languageMap = {
   en: 'English',
@@ -28,76 +27,24 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
   const [lang, setLang] = useState(initialLang || 'en');
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
   const [selectedYear, setSelectedYear] = useState(currentYear);
-
   const [testimonies, setTestimonies] = useState([]);
   const [loadingTestimonies, setLoadingTestimonies] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   // Fetch testimonies JSON
-useEffect(() => {
-  setLoadingTestimonies(true);
-  fetch('/assets/testimony-content.json')
-    .then(res => res.json())
-    .then(async (data) => {
-      const testimoniesWithDuration = await Promise.all(
-                data.map(async (testimony) => {
-                  if (!testimony.subtitles) return testimony;
-      
-                  try {
-                    const res = await fetch(testimony.subtitles);
-                    const subs = await res.json();
-      
-                    if (subs.length > 0) {
-                      const last = subs[subs.length - 1];
-                      const duration = formatDuration(last.start);
-                      return { ...testimony, duration };
-                    }
-                  } catch (err) {
-                    console.error(`Failed to load subtitles for ${testimony.id}:`, err);
-                  }
-      
-                  return testimony;
-                })
-              );
-      setTestimonies(testimoniesWithDuration);
-
-      // Filter based on initial month/year
-      const filtered = testimoniesWithDuration.filter(({ date }) => {
-        const d = new Date(date);
-        const monthName = d.toLocaleString('en', { month: 'long' });
-        const year = d.getFullYear().toString();
-        return (selectedMonth === 'All' || monthName === selectedMonth)
-            && (selectedYear === 'All' || year === selectedYear);
+  useEffect(() => {
+    setLoadingTestimonies(true);
+    fetch('/assets/testimony-content.json')
+      .then(res => res.json())
+      .then((data) => {
+        setTestimonies(data);
+        setLoadingTestimonies(false);
+      })
+      .catch(err => {
+        console.error('Failed to load testimonies:', err);
+        setLoadingTestimonies(false);
       });
-
-      // Preload only first 5 thumbnails (or all if less than 5)
-      const preloadImage = (src) =>
-        new Promise(resolve => {
-          if (!src) return resolve();
-          const img = new Image();
-          img.src = src;
-          img.onload = img.onerror = resolve;
-        });
-
-      const thumbnails = filtered.map(({ video }) => getYouTubeThumbnail(video));
-      const firstBatch = thumbnails.slice(0, 5);
-
-      await Promise.all(firstBatch.map(preloadImage));
-
-      // Show grid after 5 images load (rest will continue in background)
-      setLoadingTestimonies(false);
-
-      // Start preloading the remaining images silently
-      thumbnails.slice(5).forEach(preloadImage);
-    })
-    .catch(err => {
-      console.error('Failed to load testimonies:', err);
-      setLoadingTestimonies(false);
-    });
-}, [selectedMonth, selectedYear]);
-
-
-
+  }, []);
 
   // Update language if initialLang changes
   useEffect(() => {
@@ -204,36 +151,10 @@ useEffect(() => {
             </div>
           </div>
 
-          {/* Loading spinner */}
-          {loadingTestimonies && (
-            <div style={{
-              height: 300,
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              color: '#246bfd',
-              fontSize: '1.2rem',
-              marginBottom: '10rem'
-            }}>
-              <div style={{
-                width: 40,
-                height: 40,
-                border: '4px solid #d3e3ff',
-                borderTop: '4px solid #246bfd',
-                borderRadius: '50%',
-                animation: 'spin 1s linear infinite',
-                marginBottom: 16
-              }} />
-              Loading Testimonies...
-              <style>{`@keyframes spin {0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); }}`}</style>
-            </div>
-          )}
-
           {/* Testimonies grid */}
-          {!loadingTestimonies && filteredTestimonies.length > 0 && (
+          {filteredTestimonies.length > 0 ? (
             <div className={styles.testimoniesGrid}>
-              {filteredTestimonies.map(({ id, title, video, date,duration }) => (
+              {filteredTestimonies.map(({ id, title, video, date, duration }) => (
                 <TestimonyCard
                   key={id}
                   id={id}
@@ -246,10 +167,7 @@ useEffect(() => {
                 />
               ))}
             </div>
-          )}
-
-          {/* No testimonies available */}
-          {!loadingTestimonies && filteredTestimonies.length === 0 && (
+          ) : (
             <div className={styles.testimoniesCard} style={{
               display: 'flex',
               flexDirection: 'column',
@@ -263,7 +181,6 @@ useEffect(() => {
               margin: '4rem auto 8rem auto',
               textAlign: 'center',
               boxShadow: '0 8px 24px rgba(36,107,253,0.08)',
-              marginBottom: '12rem'
             }}>
               <HiOutlineEmojiSad size={50} color="#246bfd" style={{ marginBottom: '1rem' }} />
               <h3 style={{ color: '#246bfd', fontWeight: '600', fontSize: '1.4rem' }}>No Testimonies Available</h3>

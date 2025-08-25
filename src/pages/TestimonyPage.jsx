@@ -117,23 +117,21 @@ const navigate = useNavigate();
   // Generate share text when dependencies change
   useEffect(() => {
   if (!testimony) return;
-
   if (typeof window === 'undefined') return;
 
-  let url = window.location.href;
-
-  // Replace the CSR route with Edge Function route
-  url = url.replace(`/${lang}/testimony`, `/${lang}/share/testimony`);
+  const baseUrl = window.location.origin;
+  const shareUrl = `${baseUrl}/${lang}/share/testimony/${id}-${slug}`;
 
   setShareText(generateShareText(
     testimony,
     lang,
-    url, // now points to Edge Function
+    shareUrl,
     "A powerful testimony of Faith",
     includeSummary,
     video
   ));
-}, [lang, testimony, includeSummary, video]);
+}, [lang, testimony, includeSummary, video, id, slug]);
+
 
 
   // YouTube player hook
@@ -345,12 +343,6 @@ const handleClick = () => {
               telegramShareUrl={telegramShareUrl}
               emailShareUrl={emailShareUrl}
               styles={styles}
-              defaultShareText={generateShareText(
-                testimony,
-                lang,
-                typeof window !== 'undefined' ? window.location.href : '',
-                "A powerful testimony of Faith"
-              )}
               includeSummary={includeSummary}
               setIncludeSummary={setIncludeSummary}
             />
