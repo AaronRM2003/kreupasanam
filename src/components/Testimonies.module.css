@@ -458,3 +458,37 @@
   opacity: 0.95;
 }
 
+.testimonyImage {
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+  width: 100%;
+  height: auto;
+}
+
+.testimonyImage.visible {
+  opacity: 1;
+}
+
+/* optional: fade in title/date too */
+.testimoniesCardTitle,
+.testimoniesDate {
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+}
+
+.testimoniesCardTitle.visible,
+.testimoniesDate.visible {
+  opacity: 1;
+}
+.testimoniesCardTitle,
+.testimoniesDate,
+.durationBadge {
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+}
+
+.testimoniesCardTitle.visible,
+.testimoniesDate.visible,
+.durationBadge.visible {
+  opacity: 1;
+}

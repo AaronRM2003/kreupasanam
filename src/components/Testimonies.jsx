@@ -53,44 +53,43 @@ export function TestimonyCard({ id, title, image, date, lang, path, duration }) 
   };
 
   return (
-    <div className={styles.testimoniesCard}>
-      <div className={styles.testimoniesImageWrapper}>
-        {!isLoaded && <div className={styles.skeleton}></div>}
-        <img
-          src={image}
-          alt={title[lang]}
-          style={{ display: isLoaded ? "block" : "none" }}
-          onLoad={() => setIsLoaded(true)}
-          onError={() => setIsLoaded(true)}
-        />
+   <div className={styles.testimoniesCard}>
+  <div className={styles.testimoniesImageWrapper}>
+    {!isLoaded && <div className={styles.skeleton}></div>}
 
-        {/* ✅ Duration Overlay */}
-        {isLoaded && duration && (
-          <span className={styles.durationBadge}>{duration}</span>
-        )}
-      </div>
+    <img
+      src={image}
+      alt={title[lang]}
+      className={`${styles.testimonyImage} ${isLoaded ? styles.visible : ''}`}
+      onLoad={() => setIsLoaded(true)}
+      onError={() => setIsLoaded(true)}
+    />
 
-      {isLoaded ? (
-        <>
-          <h3 className={styles.testimoniesCardTitle}>{title[lang]}</h3>
-          <p className={styles.testimoniesDate}>{date}</p>
-        </>
-      ) : (
-        <>
-          <div className={styles.skeletonText}></div>
-          <div className={styles.skeletonSmall}></div>
-        </>
-      )}
+    {duration && (
+      <span className={`${styles.durationBadge} ${isLoaded ? styles.visible : ''}`}>
+        {duration}
+      </span>
+    )}
+  </div>
 
-      <button
-        style={{ border: "none" }}
-        className={styles.testimoniesVideoLink}
-        onClick={handleCardClick}
-        disabled={!isLoaded} // prevent click before ready
-      >
-        {isLoaded ? "Watch Now" : "Loading..."}
-      </button>
-    </div>
+  {/* Always render title/date and fade-in */}
+  <h3 className={`${styles.testimoniesCardTitle} ${isLoaded ? styles.visible : ''}`}>
+    {title[lang]}
+  </h3>
+  <p className={`${styles.testimoniesDate} ${isLoaded ? styles.visible : ''}`}>
+    {date}
+  </p>
+
+  <button
+    style={{ border: 'none' }}
+    className={styles.testimoniesVideoLink}
+    onClick={handleCardClick}
+    disabled={!isLoaded} // prevent click before ready
+  >
+    {isLoaded ? 'Watch Now' : 'Loading...'}
+  </button>
+</div>
+
   );
 }
 
