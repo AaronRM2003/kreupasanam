@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect,useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { FaShareAlt, FaCompass } from 'react-icons/fa';
@@ -29,7 +29,6 @@ export default function DhyanamPage({ lang: initialLang }) {
   const [lang, setLang] = useState(initialLang || 'en');
   const [showVideo, setShowVideo] = useState(false);
   const [allAssetsLoaded, setAllAssetsLoaded] = useState(false);
-  const [shareText, setShareText] = useState('');
   const [showShareModal, setShowShareModal] = useState(false);
   const [showLangHelp, setShowLangHelp] = useState(false);
   const [includeSummary, setIncludeSummary] = useState(false);
@@ -118,18 +117,21 @@ export default function DhyanamPage({ lang: initialLang }) {
   }, [lang]);
 
   // Generate share text on dependencies change
-  useEffect(() => {
-    if (!safeDhyanamItem) return;
-    if (typeof window === 'undefined') return;
 
-    const baseUrl = window.location.origin;
-    const shareUrl = `${baseUrl}/${lang}/share/dhyanam/${id}-${slug}`;
-
-    setShareText(
-      generateShareText(safeDhyanamItem, lang, shareUrl, 'Dhyanam meditation', includeSummary, video)
-    );
-  }, [lang, safeDhyanamItem, includeSummary, video]);
-
+  const shareText = useMemo(() => {
+  if (!safeDhyanamItem || typeof window === 'undefined') return '';
+  const baseUrl = window.location.origin;
+  const shareUrl = `${baseUrl}/${lang}/share/dhyanam/${id}-${slug}`;
+  return generateShareText(
+    safeDhyanamItem,
+    lang,
+    shareUrl,
+    "Dhyanam meditation",
+    includeSummary,
+    video
+  );
+}, [safeDhyanamItem, lang, includeSummary, video, id, slug]);
+  
   // YouTube player hook - ALWAYS call hooks before conditionals
   const { currentTime, playerRef, duration: totalDuration } = useYouTubePlayer(videoId, showVideo);
 
@@ -345,12 +347,10 @@ const {
               onHide={() => setShowShareModal(false)}
               title="Dhyanam"
               shareText={shareText}
-              setShareText={setShareText}
               fbShareUrl={fbShareUrl}
               waShareUrl={waShareUrl}
               telegramShareUrl={telegramShareUrl}
               emailShareUrl={emailShareUrl}
-              styles={styles}
               includeSummary={includeSummary}
               setIncludeSummary={setIncludeSummary}
             />

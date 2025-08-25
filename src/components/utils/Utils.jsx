@@ -9,37 +9,38 @@ import {
   FaRegCopy,
   FaCheck
 } from 'react-icons/fa';
-import "./speakerControl.css"
+import styles from "./share.module.css"
 
 export function ShareModal({
   show,
   onHide,
-  shareText,
+  shareText, // initial value only
   title,
-  setShareText,
   fbShareUrl,
   waShareUrl,
   telegramShareUrl,
   emailShareUrl,
-  styles,
   includeSummary,
   setIncludeSummary,
 }) {
+  const [localText, setLocalText] = useState(shareText); // local copy
   const [copied, setCopied] = useState(false);
 
+  // Reset localText whenever modal opens
+  useEffect(() => {
+    if (show) setLocalText(shareText);
+  }, [show, shareText]);
+
   const handleCopy = async () => {
-  try {
-    await navigator.clipboard.writeText(shareText);
-    setCopied(true);
-
-    // Reset after 5 seconds
-    setTimeout(() => setCopied(false), 5000);
-  } catch (err) {
-    console.error("Failed to copy:", err);
-    setCopied(false);
-  }
-};
-
+    try {
+      await navigator.clipboard.writeText(localText);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 5000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+      setCopied(false);
+    }
+  };
 
   return (
     <Modal show={show} onHide={onHide} title={title} centered>
@@ -53,8 +54,8 @@ export function ShareModal({
         </label>
         <textarea
           rows={5}
-          value={shareText}
-          onChange={(e) => setShareText(e.target.value)}
+          value={localText}
+          onChange={(e) => setLocalText(e.target.value)} // only local
           placeholder="Write something personal before sharing..."
           style={{
             width: '100%',

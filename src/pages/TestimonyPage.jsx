@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect ,useMemo} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useParams, Link } from 'react-router-dom';
 import { FaShareAlt, FaCompass } from 'react-icons/fa';
@@ -23,7 +23,6 @@ export default function TestimonyPage({ lang: initialLang }) {
   const [lang, setLang] = useState(initialLang || 'en');
   const [showVideo, setShowVideo] = useState(false);
   const [allAssetsLoaded, setAllAssetsLoaded] = useState(false);
-  const [shareText, setShareText] = useState('');
   const [showShareModal, setShowShareModal] = useState(false);
   const [showLangHelp, setShowLangHelp] = useState(false);
   const [includeSummary, setIncludeSummary] = useState(false);
@@ -115,23 +114,20 @@ const navigate = useNavigate();
   }, [lang]);
 
   // Generate share text when dependencies change
-  useEffect(() => {
-  if (!testimony) return;
-  if (typeof window === 'undefined') return;
 
+const shareText = useMemo(() => {
+  if (!testimony || typeof window === 'undefined') return '';
   const baseUrl = window.location.origin;
   const shareUrl = `${baseUrl}/${lang}/share/testimony/${id}-${slug}`;
-
-  setShareText(generateShareText(
+  return generateShareText(
     testimony,
     lang,
     shareUrl,
     "A powerful testimony of Faith",
     includeSummary,
     video
-  ));
-}, [lang, testimony, includeSummary, video, id, slug]);
-
+  );
+}, [testimony, lang, includeSummary, video, id, slug]);
 
 
   // YouTube player hook
@@ -337,12 +333,10 @@ const handleClick = () => {
               onHide={() => setShowShareModal(false)}
               title="Testimony"
               shareText={shareText}
-              setShareText={setShareText}
               fbShareUrl={fbShareUrl}
               waShareUrl={waShareUrl}
               telegramShareUrl={telegramShareUrl}
               emailShareUrl={emailShareUrl}
-              styles={styles}
               includeSummary={includeSummary}
               setIncludeSummary={setIncludeSummary}
             />

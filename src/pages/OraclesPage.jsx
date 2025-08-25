@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect,useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { FaShareAlt, FaCompass } from 'react-icons/fa';
@@ -24,7 +24,6 @@ export default function OraclesPage({ lang: initialLang }) {
   const [lang, setLang] = useState(initialLang || 'en');
   const [showVideo, setShowVideo] = useState(false);
   const [allAssetsLoaded, setAllAssetsLoaded] = useState(false);
-  const [shareText, setShareText] = useState('');
   const [showShareModal, setShowShareModal] = useState(false);
   const [showLangHelp, setShowLangHelp] = useState(false);
   const [includeSummary, setIncludeSummary] = useState(false);
@@ -107,15 +106,23 @@ export default function OraclesPage({ lang: initialLang }) {
   }, [lang]);
 
   // Generate share text when dependencies change
-  useEffect(() => {
-    if (!safeOracle) return;
-    if (typeof window === 'undefined') return;
 
-    const baseUrl = window.location.origin;
-    const shareUrl = `${baseUrl}/${lang}/share/oracles/${id}-${slug}`;
+const shareText = useMemo(() => {
+  if (!safeOracle || typeof window === 'undefined') return '';
 
-    setShareText(generateShareText(safeOracle, lang, shareUrl, 'A Spiritual Oracle', includeSummary, video));
-  }, [lang, safeOracle, includeSummary, video]);
+  const baseUrl = window.location.origin;
+  const shareUrl = `${baseUrl}/${lang}/share/oracles/${id}-${slug}`;
+
+  return generateShareText(
+    safeOracle,
+    lang,
+    shareUrl,
+    'A Spiritual Oracle',
+    includeSummary,
+    video
+  );
+}, [lang, safeOracle, includeSummary, video, id, slug]);
+
 
   // Hooks always called unconditionally
   const { currentTime, playerRef, duration: totalDuration } = useYouTubePlayer(videoId, showVideo);
@@ -302,12 +309,10 @@ export default function OraclesPage({ lang: initialLang }) {
               onHide={() => setShowShareModal(false)}
               title="Oracle"
               shareText={shareText}
-              setShareText={setShareText}
               fbShareUrl={fbShareUrl}
               waShareUrl={waShareUrl}
               telegramShareUrl={telegramShareUrl}
               emailShareUrl={emailShareUrl}
-              styles={styles}
               includeSummary={includeSummary}
               setIncludeSummary={setIncludeSummary}
             />
