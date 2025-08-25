@@ -95,15 +95,15 @@ export function TestimonyCard({ id, title, image, date, lang, path, duration }) 
 }
 
 
-export default function Testimonies({lang:initialLang}) {
-  const [lang, setLang] = useState(initialLang||'en');
+export default function Testimonies({ lang: initialLang }) {
+  const [lang, setLang] = useState(initialLang || 'en');
   const [testimonies, setTestimonies] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetch('/assets/testimony-content.json')
       .then((res) => res.json())
       .then(async (data) => {
-        // fetch subtitle JSON for each testimony
         const testimoniesWithDuration = await Promise.all(
           data.map(async (testimony) => {
             if (!testimony.subtitles) return testimony;
@@ -126,51 +126,64 @@ export default function Testimonies({lang:initialLang}) {
         );
 
         setTestimonies(testimoniesWithDuration);
+        setIsLoading(false);
       })
-      .catch((err) => console.error('Failed to load testimonies:', err));
+      .catch((err) => {
+        console.error('Failed to load testimonies:', err);
+        setIsLoading(false);
+      });
   }, []);
 
+  // Render shimmer skeleton cards
+  const renderSkeletons = () => {
+    return Array.from({ length: 3 }).map((_, idx) => (
+      <div key={idx} className={styles.testimonySkeleton}></div>
+    ));
+  };
 
   return (
-    <section style={{}} className={styles.testimoniesSection}>
+    <section className={styles.testimoniesSection}>
       <div className={styles.testimoniesSectionContainer}>
         <div className={styles.testimoniesHeader}>
           <h2 className={styles.testimoniesTitle}>More Powerful Testimonies</h2>
           <p className={styles.testimoniesSubtitle}>Stories of healing, grace...</p>
 
-          {/* ✅ Language Dropdown */}
-       <Dropdown onSelect={(e) => setLang(e)}>
-         <Dropdown.Toggle variant="outline-secondary" id="dropdown-lang">
-           {languageMap[lang] || lang}
-         </Dropdown.Toggle>
-         <Dropdown.Menu>
-           {Object.entries(languageMap).map(([key, label]) => (
-             <Dropdown.Item key={key} eventKey={key}>
-               {label}
-             </Dropdown.Item>
-           ))}
-         </Dropdown.Menu>
-       </Dropdown>
+          <Dropdown onSelect={(e) => setLang(e)}>
+            <Dropdown.Toggle variant="outline-secondary" id="dropdown-lang">
+              {languageMap[lang] || lang}
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              {Object.entries(languageMap).map(([key, label]) => (
+                <Dropdown.Item key={key} eventKey={key}>
+                  {label}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
         </div>
 
         <div className={styles.testimoniesGrid}>
-         {testimonies
-  .filter(({ id }) => [16, 22, 8].includes(id))
-  .map(({ id, title, video, date,duration }) => (
-    <TestimonyCard
-      key={id}
-      id={id}
-      title={title}
-      image={getYouTubeThumbnail(video)}
-      date={date}
-      lang={lang}
-      duration={duration}
-      path={`${initialLang || 'en'}/testimony`}
-    />
-))}
-
+          {isLoading ? (
+            renderSkeletons()
+          ) : (
+            testimonies
+              .filter(({ id }) => [16, 22, 8].includes(id))
+              .map(({ id, title, video, date, duration }) => (
+                <TestimonyCard
+                  key={id}
+                  id={id}
+                  title={title}
+                  image={getYouTubeThumbnail(video)}
+                  date={date}
+                  lang={lang}
+                  duration={duration}
+                  path={`${initialLang || 'en'}/testimony`}
+                />
+              ))
+          )}
         </div>
       </div>
     </section>
   );
 }
+
