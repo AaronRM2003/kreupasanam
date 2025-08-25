@@ -55,22 +55,24 @@ export function TestimonyCard({ id, title, image, date, lang, path, duration }) 
   return (
    <div className={styles.testimoniesCard}>
   <div className={styles.testimoniesImageWrapper}>
-    {!isLoaded && <div className={styles.skeleton}></div>}
+  {/* Skeleton overlay */}
+  {!isLoaded && <div className={styles.skeleton}></div>}
 
-    <img
-      src={image}
-      alt={title[lang]}
-      className={`${styles.testimonyImage} ${isLoaded ? styles.visible : ''}`}
-      onLoad={() => setIsLoaded(true)}
-      onError={() => setIsLoaded(true)}
-    />
+  <img
+    src={image}
+    alt={title[lang]}
+    className={`${styles.testimonyImage} ${isLoaded ? styles.visible : ''}`}
+    onLoad={() => setIsLoaded(true)}
+    onError={() => setIsLoaded(true)}
+  />
 
-    {duration && (
-      <span className={`${styles.durationBadge} ${isLoaded ? styles.visible : ''}`}>
-        {duration}
-      </span>
-    )}
-  </div>
+  {duration && (
+    <span className={`${styles.durationBadge} ${isLoaded ? styles.visible : ''}`}>
+      {duration}
+    </span>
+  )}
+</div>
+
 
   {/* Always render title/date and fade-in */}
   <h3 className={`${styles.testimoniesCardTitle} ${isLoaded ? styles.visible : ''}`}>
