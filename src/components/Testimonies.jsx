@@ -136,11 +136,16 @@ export default function Testimonies({ lang: initialLang }) {
   }, []);
 
   // Render shimmer skeleton cards
-  const renderSkeletons = () => {
-    return Array.from({ length: 3 }).map((_, idx) => (
-      <div key={idx} className={styles.testimonySkeleton}></div>
-    ));
-  };
+const renderSkeletons = () => {
+  return Array.from({ length: 3 }).map((_, idx) => (
+    <div key={idx} className={styles.testimonySkeletonCard}>
+      <div className={styles.testimonySkeletonImage}></div>
+      <div className={styles.testimonySkeletonText}></div>
+      <div className={styles.testimonySkeletonSmall}></div>
+    </div>
+  ));
+};
+
 
   return (
     <section className={styles.testimoniesSection}>
