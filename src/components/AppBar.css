@@ -206,7 +206,7 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
     align-items: center;
     position: relative;
 
-    background: rgba(255, 253, 253, 0.737);
+    background: rgba(255, 253, 253, 0.898);
     mask-image: linear-gradient(
       to bottom,
       rgba(255, 255, 255, 1) 0%,
@@ -215,16 +215,14 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
       rgba(255, 255, 255, 0.3) 90%,
       rgba(255, 255, 255, 0) 100%
     );
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     border: none;
     border-radius: 0;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
 
     transition:
       background 0.5s ease,
       padding 0.4s ease,
-      box-shadow 0.5s ease,
-      backdrop-filter 0.5s ease,
-      -webkit-backdrop-filter 0.5s ease,
       top 0.5s ease,
       margin 0.5s ease;
   }
