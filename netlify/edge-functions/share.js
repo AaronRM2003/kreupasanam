@@ -42,8 +42,6 @@ export default async (request) => {
 
     const title = item.title?.[lang] || item.title?.en || "Video";
     const description =
-      item.content?.[lang]?.slice(0, 200) ||
-      item.content?.en?.slice(0, 200) ||
       "Watch this video";
 
     const videoUrl = item.video || "";
