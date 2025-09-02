@@ -72,23 +72,16 @@ export default async (request) => {
       <html lang="${lang}">
       <head>
         <meta charset="UTF-8" />
-        <meta property="og:type" content="video.other" />
+        <meta property="og:type" content="website" />
         <meta property="og:url" content="${siteOrigin}${csrUrl}" />
         <meta property="og:title" content="${title}" />
         <meta property="og:description" content="${description}" />
         <meta property="og:image" content="${ogImage}" />
-        <meta property="og:video:type" content="text/html" />
-        <meta property="og:video:width" content="560" />
-        <meta property="og:video:height" content="315" />
-
-        <meta name="twitter:card" content="player" />
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="${title}" />
         <meta name="twitter:url" content="${siteOrigin}${csrUrl}" />
         <meta name="twitter:description" content="${description}" />
         <meta name="twitter:image" content="${ogImage}" />
-        <meta name="twitter:player" content="${ogVideo}" />
-        <meta name="twitter:player:width" content="560" />
-        <meta name="twitter:player:height" content="315" />
 
         <title>${title}</title>
       </head>
