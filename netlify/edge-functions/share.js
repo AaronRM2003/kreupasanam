@@ -41,7 +41,8 @@ export default async (request) => {
     }
 
     const title = item.title?.[lang] || item.title?.en || "Video";
-    const description = "Watch this video";
+    const description =
+      "Watch this video";
 
     const videoUrl = item.video || "";
     const videoIdMatch = videoUrl.match(
@@ -50,45 +51,53 @@ export default async (request) => {
     const videoId = videoIdMatch ? videoIdMatch[1] : null;
 
     const ogImage = videoId
-      ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
-      : `${siteOrigin}/assets/back3.webp`; // fallback image
-
+      ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
+      : "";
+    const ogVideo = videoId ? `https://www.youtube.com/embed/${videoId}` : "";
     const csrUrl = `/${lang}/${type}/${id}-${encodeURIComponent(correctSlug)}`;
-    const absoluteCsrUrl = `${siteOrigin}${csrUrl}`;
 
-    // Bot detection
+    // ✅ Bot detection (explicit list, safer than generic /bot/)
     const ua = request.headers.get("user-agent") || "";
     const isBot = /(facebookexternalhit|facebookcatalog|Twitterbot|WhatsApp|Slackbot|LinkedInBot|Discordbot|TelegramBot|googlebot|bingbot)/i.test(
       ua
     );
 
     if (!isBot) {
-      // Human → redirect to React page
-      return Response.redirect(absoluteCsrUrl, 302);
+      // ✅ Human → 302 redirect to React route
+      return Response.redirect(`${siteOrigin}${csrUrl}`, 302);
     }
 
-    // Bot → return OG HTML
+    // ✅ Bot → return OG HTML (no redirect)
     const html = `
       <!DOCTYPE html>
       <html lang="${lang}">
       <head>
         <meta charset="UTF-8" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="${absoluteCsrUrl}" />
+        <meta property="og:type" content="video.other" />
+        <meta property="og:url" content="${siteOrigin}${csrUrl}" />
         <meta property="og:title" content="${title}" />
         <meta property="og:description" content="${description}" />
         <meta property="og:image" content="${ogImage}" />
-        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="og:video" content="${ogVideo}" />
+        <meta property="og:video:type" content="text/html" />
+        <meta property="og:video:width" content="560" />
+        <meta property="og:video:height" content="315" />
+
+        <meta name="twitter:card" content="player" />
         <meta name="twitter:title" content="${title}" />
-        <meta name="twitter:url" content="${absoluteCsrUrl}" />
+        <meta name="twitter:url" content="${siteOrigin}${csrUrl}" />
         <meta name="twitter:description" content="${description}" />
         <meta name="twitter:image" content="${ogImage}" />
+        <meta name="twitter:player" content="${ogVideo}" />
+        <meta name="twitter:player:width" content="560" />
+        <meta name="twitter:player:height" content="315" />
+
         <title>${title}</title>
       </head>
       <body>
         <h1>${title}</h1>
         <p>${description}</p>
-        <p><a href="${absoluteCsrUrl}">Go to site</a></p>
+        <p><a href="${csrUrl}">Go to site</a></p>
       </body>
       </html>
     `;
