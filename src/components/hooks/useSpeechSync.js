@@ -128,7 +128,21 @@ const subtitleDuration = currentSub?.duration ?? 3;
   const utterance = new SpeechSynthesisUtterance(textToSpeak);
 
   // Set utterance lang as before
-  
+  function numberFactor(text) {
+  const numbers = text.match(/\d+/g); // match all sequences of digits
+  if (!numbers) return 1; // no numbers, normal speed
+
+  // compute slowdown factor: bigger numbers → slower speech
+  let factor = 1;
+  numbers.forEach(num => {
+    if (num.length >= 4) factor *= 0.85;  // very long number
+    else if (num.length === 3) factor *= 0.9;
+  });
+
+  // keep factor in reasonable range
+  return Math.max(0.5, Math.min(1, factor));
+}
+
  const savedVoiceName = localStorage.getItem(`${lang}`);
 const voices = window.speechSynthesis.getVoices();
 const matchedVoice = voices.find(v => v.name === savedVoiceName);
@@ -164,9 +178,16 @@ if (utterance.voice?.name) {
   if (playerRef.current?.setPlaybackRate) {
     console.log(`Raw rate: ${rawRate}, WPS: ${wps}`);
     const rates = getSmoothedAdjustedRate(wps, rawRate);
+    
     if (rates) {
-      adjustedRate = rates;
-      playerRef.current.setPlaybackRate(adjustedRate);
+      const numFactor = numberFactor(textToSpeak); // <--- slow down for numbers
+    let adjustedRateWithNumbers = rates * numFactor;
+
+    // Clamp to reasonable bounds
+    adjustedRateWithNumbers = Math.max(0.1, Math.min(1.2, adjustedRateWithNumbers));
+    
+    adjustedRate = adjustedRateWithNumbers;
+    playerRef.current.setPlaybackRate(adjustedRate);
     }
   }
   console.log(`Speech rate: ${speechRate}, Adjusted rate: ${adjustedRate}`);

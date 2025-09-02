@@ -53,7 +53,6 @@ export default async (request) => {
     const ogImage = videoId
       ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
       : "";
-    const ogVideo = videoId ? `https://www.youtube.com/embed/${videoId}` : "";
     const csrUrl = `/${lang}/${type}/${id}-${encodeURIComponent(correctSlug)}`;
 
     // ✅ Bot detection (explicit list, safer than generic /bot/)
@@ -78,7 +77,6 @@ export default async (request) => {
         <meta property="og:title" content="${title}" />
         <meta property="og:description" content="${description}" />
         <meta property="og:image" content="${ogImage}" />
-        <meta property="og:video" content="${ogVideo}" />
         <meta property="og:video:type" content="text/html" />
         <meta property="og:video:width" content="560" />
         <meta property="og:video:height" content="315" />
