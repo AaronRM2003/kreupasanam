@@ -28,7 +28,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  backdrop-filter: blur(6px);
   box-shadow: 0 0 15px #00f2fe88;
   transition: opacity 0.3s ease, visibility 0.3s ease;
   opacity: 1;
