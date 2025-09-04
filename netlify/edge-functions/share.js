@@ -2,6 +2,7 @@ export default async (request) => {
   try {
     const url = new URL(request.url);
     const parts = url.pathname.split("/").filter(Boolean); // ["en","share","testimony","123-title"]
+
     if (parts.length < 4) return new Response("Invalid URL", { status: 404 });
 
     const lang = parts[0];
@@ -41,8 +42,7 @@ export default async (request) => {
     }
 
     const title = item.title?.[lang] || item.title?.en || "Video";
-    const description =
-      "Watch this video";
+    const description = "Watch this video";
 
     const videoUrl = item.video || "";
     const videoIdMatch = videoUrl.match(
@@ -51,12 +51,13 @@ export default async (request) => {
     const videoId = videoIdMatch ? videoIdMatch[1] : null;
 
     const ogImage = videoId
-      ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
+      ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
       : "";
-    const ogVideo = videoId ? `https://www.youtube.com/embed/${videoId}` : "";
-    const csrUrl = `/${lang}/${type}/${id}-${encodeURIComponent(correctSlug)}`;
 
-    // ✅ Bot detection (explicit list, safer than generic /bot/)
+    // ✅ This is the share URL FB should treat as canonical
+    const shareUrl = `${siteOrigin}${url.pathname}`;
+
+    // ✅ Bot detection
     const ua = request.headers.get("user-agent") || "";
     const isBot = /(facebookexternalhit|facebookcatalog|Twitterbot|WhatsApp|Slackbot|LinkedInBot|Discordbot|TelegramBot|googlebot|bingbot)/i.test(
       ua
@@ -64,40 +65,38 @@ export default async (request) => {
 
     if (!isBot) {
       // ✅ Human → 302 redirect to React route
-      return Response.redirect(`${siteOrigin}${csrUrl}`, 302);
+      return Response.redirect(shareUrl, 302);
     }
 
-    // ✅ Bot → return OG HTML (no redirect)
+    // ✅ Bot → return OG HTML with canonical
     const html = `
       <!DOCTYPE html>
       <html lang="${lang}">
       <head>
         <meta charset="UTF-8" />
-        <meta property="og:type" content="video.other" />
-        <meta property="og:url" content="${siteOrigin}${csrUrl}" />
+        <title>${title}</title>
+
+        <!-- OG -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="${shareUrl}" />
         <meta property="og:title" content="${title}" />
         <meta property="og:description" content="${description}" />
         <meta property="og:image" content="${ogImage}" />
-        <meta property="og:video" content="${ogVideo}" />
-        <meta property="og:video:type" content="text/html" />
-        <meta property="og:video:width" content="560" />
-        <meta property="og:video:height" content="315" />
 
-        <meta name="twitter:card" content="player" />
+        <!-- Canonical -->
+        <link rel="canonical" href="${shareUrl}" />
+
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="${title}" />
-        <meta name="twitter:url" content="${siteOrigin}${csrUrl}" />
+        <meta name="twitter:url" content="${shareUrl}" />
         <meta name="twitter:description" content="${description}" />
         <meta name="twitter:image" content="${ogImage}" />
-        <meta name="twitter:player" content="${ogVideo}" />
-        <meta name="twitter:player:width" content="560" />
-        <meta name="twitter:player:height" content="315" />
-
-        <title>${title}</title>
       </head>
       <body>
         <h1>${title}</h1>
         <p>${description}</p>
-        <p><a href="${csrUrl}">Go to site</a></p>
+        <p><a href="${shareUrl}">Go to site</a></p>
       </body>
       </html>
     `;
