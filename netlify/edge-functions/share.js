@@ -37,71 +37,78 @@ export default async (request) => {
         .replace(/\-\-+/g, "-");
 
     const correctSlug = slugify(englishTitle);
+    const csrPath = `/${lang}/${type}/${id}-${correctSlug}`;
+    const csrUrl = `${siteOrigin}${csrPath}`;
+
+    // ✅ If slug mismatch → always 301 redirect to correct SPA route
     if (urlTitleSlug !== correctSlug) {
-      return new Response("Invalid URL title", { status: 404 });
+      return Response.redirect(csrUrl, 301);
     }
 
     const title = item.title?.[lang] || item.title?.en || "Video";
-    const description = "Watch this video";
+    const description = item.description?.[lang] || "Watch this video";
 
     const videoUrl = item.video || "";
     const videoIdMatch = videoUrl.match(
       /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/
     );
     const videoId = videoIdMatch ? videoIdMatch[1] : null;
-
     const ogImage = videoId
-      ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
+      ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
       : "";
 
-    // ✅ This is the share URL FB should treat as canonical
-    const shareUrl = `${siteOrigin}${url.pathname}`;
+    const canonicalUrl = csrUrl;
 
-    // ✅ Bot detection
+    // ✅ Bot detection (added Facebot!)
     const ua = request.headers.get("user-agent") || "";
-    const isBot = /(facebookexternalhit|facebookcatalog|Twitterbot|WhatsApp|Slackbot|LinkedInBot|Discordbot|TelegramBot|googlebot|bingbot)/i.test(
+    const isBot = /(facebookexternalhit|Facebot|facebookcatalog|Twitterbot|WhatsApp|Slackbot|LinkedInBot|Discordbot|TelegramBot|googlebot|bingbot)/i.test(
       ua
     );
 
-    if (!isBot) {
-      // ✅ Human → 302 redirect to React route
-      return Response.redirect(shareUrl, 302);
+    if (isBot) {
+      // Serve OG HTML directly
+      const html = `
+        <!DOCTYPE html>
+        <html lang="${lang}">
+        <head>
+          <meta charset="UTF-8" />
+          <title>${title}</title>
+
+          <!-- Open Graph -->
+          <meta property="og:type" content="website" />
+          <meta property="og:url" content="${canonicalUrl}" />
+          <meta property="og:title" content="${title}" />
+          <meta property="og:description" content="${description}" />
+          <meta property="og:image" content="${ogImage}" />
+
+          <!-- Canonical -->
+          <link rel="canonical" href="${canonicalUrl}" />
+
+          <!-- Twitter -->
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content="${title}" />
+          <meta name="twitter:url" content="${canonicalUrl}" />
+          <meta name="twitter:description" content="${description}" />
+          <meta name="twitter:image" content="${ogImage}" />
+        </head>
+        <body>
+          <h1>${title}</h1>
+          <p>${description}</p>
+          <p><a href="${canonicalUrl}">Go to site</a></p>
+        </body>
+        </html>
+      `;
+      return new Response(html, { headers: { "Content-Type": "text/html" } });
     }
 
-    // ✅ Bot → return OG HTML with canonical
-    const html = `
-      <!DOCTYPE html>
-      <html lang="${lang}">
-      <head>
-        <meta charset="UTF-8" />
-        <title>${title}</title>
+    // ✅ Humans: redirect to SPA route
+    if (url.pathname !== csrPath) {
+      return Response.redirect(csrUrl, 302);
+    }
 
-        <!-- OG -->
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="${shareUrl}" />
-        <meta property="og:title" content="${title}" />
-        <meta property="og:description" content="${description}" />
-        <meta property="og:image" content="${ogImage}" />
+    // Fallback: humans on correct path → still go SPA
+    return Response.redirect(csrUrl, 302);
 
-        <!-- Canonical -->
-        <link rel="canonical" href="${shareUrl}" />
-
-        <!-- Twitter -->
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="${title}" />
-        <meta name="twitter:url" content="${shareUrl}" />
-        <meta name="twitter:description" content="${description}" />
-        <meta name="twitter:image" content="${ogImage}" />
-      </head>
-      <body>
-        <h1>${title}</h1>
-        <p>${description}</p>
-        <p><a href="${shareUrl}">Go to site</a></p>
-      </body>
-      </html>
-    `;
-
-    return new Response(html, { headers: { "Content-Type": "text/html" } });
   } catch (err) {
     console.error(err);
     return new Response("Server error", { status: 500 });
