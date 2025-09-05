@@ -71,7 +71,8 @@ export default async (request) => {
       ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
       : "";
 
-    const canonicalUrl = `${siteOrigin}${url.pathname}`;
+    // Always use slugged URL for canonical
+    const canonicalUrl = csrUrl;
 
     // Bot detection
     const isBot = /(facebookexternalhit|Facebot|facebookcatalog|Twitterbot|WhatsApp|Slackbot|LinkedInBot|Discordbot|TelegramBot|googlebot|bingbot)/i.test(
@@ -114,8 +115,8 @@ export default async (request) => {
     }
 
     // Humans → serve React app
-    if (urlTitleSlug !== correctSlug) {
-      console.log("[share] ⚠️ Slug mismatch → redirecting 301:", csrUrl);
+    if (url.pathname !== csrPath) {
+      console.log("[share] ⚠️ Human accessed un-slugged URL → redirecting 301:", csrUrl);
       return Response.redirect(csrUrl, 301);
     }
 
