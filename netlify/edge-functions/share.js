@@ -7,15 +7,22 @@ export default async (request) => {
     const parts = url.pathname.split("/").filter(Boolean);
     console.log("[share] 🔍 Path parts:", parts);
 
-    // Expecting: /:lang/:type/:id-slug
+    // Expecting: /:lang/:type/:id-title
     if (parts.length < 3) {
-      console.log("[share] ❌ Invalid path:", parts);
+      console.log("[share] ❌ Invalid path (too short):", parts);
       return new Response("Invalid URL", { status: 404 });
     }
 
     const lang = parts[0];
     const type = parts[1];
     const idSlug = parts[2];
+
+    // Deny if no slug after id
+    if (!idSlug.includes("-")) {
+      console.log("[share] ❌ Missing slug after ID:", idSlug);
+      return new Response("Invalid URL", { status: 404 });
+    }
+
     const [id, ...slugParts] = idSlug.split("-");
     const urlTitleSlug = slugParts.join("-");
     console.log("[share] 🔍 Parsed:", { lang, type, id, urlTitleSlug });
@@ -45,9 +52,7 @@ export default async (request) => {
       console.log("[share] ❌ No item found for ID:", id);
       return new Response("Item not found", { status: 404 });
     }
-    console.log("[share] 🔍 Found item:", { id, title: item.title?.en });
 
-    // Slugify
     const slugify = (text) =>
       text.toLowerCase().trim()
         .replace(/\s+/g, "-")
@@ -56,23 +61,25 @@ export default async (request) => {
 
     const englishTitle = item.title?.en || "Video";
     const correctSlug = slugify(englishTitle);
-    const csrPath = `/${lang}/${type}/${id}-${correctSlug}`;
-    const csrUrl = `${siteOrigin}${csrPath}`;
+
+    // Deny if slug does not match
+    if (urlTitleSlug !== correctSlug) {
+      console.log("[share] ❌ Wrong slug → Invalid URL:", urlTitleSlug);
+      return new Response("Invalid URL", { status: 404 });
+    }
 
     const title = item.title?.[lang] || item.title?.en || "Video";
     const description = item.description?.[lang] || "Watch this video";
 
     const videoUrl = item.video || "";
     const videoIdMatch = videoUrl.match(
-      /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/
-    );
+      /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
     const videoId = videoIdMatch ? videoIdMatch[1] : null;
     const ogImage = videoId
       ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
       : "";
 
-    // Always use slugged URL for canonical
-    const canonicalUrl = csrUrl;
+    const canonicalUrl = `${siteOrigin}${url.pathname}`;
 
     // Bot detection
     const isBot = /(facebookexternalhit|Facebot|facebookcatalog|Twitterbot|WhatsApp|Slackbot|LinkedInBot|Discordbot|TelegramBot|googlebot|bingbot)/i.test(
@@ -89,16 +96,12 @@ export default async (request) => {
         <meta charset="utf-8" />
         <title>${title}</title>
         <meta name="description" content="${description}" />
-
-        <!-- Open Graph tags -->
         <meta property="og:type" content="video.other" />
         <meta property="og:title" content="${title}" />
         <meta property="og:description" content="${description}" />
         <meta property="og:url" content="${canonicalUrl}" />
         <meta property="og:image" content="${ogImage}" />
         <meta property="og:image:alt" content="${title}" />
-
-        <!-- Twitter -->
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="${title}" />
         <meta name="twitter:description" content="${description}" />
@@ -109,18 +112,11 @@ export default async (request) => {
       </body>
       </html>`;
 
-      return new Response(html, {
-        headers: { "Content-Type": "text/html" },
-      });
+      return new Response(html, { headers: { "Content-Type": "text/html" } });
     }
 
     // Humans → serve React app
-    if (url.pathname !== csrPath) {
-      console.log("[share] ⚠️ Human accessed un-slugged URL → redirecting 301:", csrUrl);
-      return Response.redirect(csrUrl, 301);
-    }
-
-    console.log("[share] ✅ Serving React app for human:", csrUrl);
+    console.log("[share] ✅ Serving React app for human");
     return fetch(`${siteOrigin}/index.html`, {
       headers: { "Content-Type": "text/html" },
     });
