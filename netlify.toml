@@ -1,3 +1,11 @@
 [[edge_functions]]
-  path = "/*/share/*"
+  path = "/*/testimony/*"
+  function = "share"
+
+[[edge_functions]]
+  path = "/*/dhyanam/*"
+  function = "share"
+
+[[edge_functions]]
+  path = "/*/oracles/*"
   function = "share"

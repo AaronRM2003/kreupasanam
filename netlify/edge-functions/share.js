@@ -7,15 +7,15 @@ export default async (request) => {
     const parts = url.pathname.split("/").filter(Boolean);
     console.log("[share] 🔍 Path parts:", parts);
 
-    // Ensure this only runs for `/share/...`
-    if (parts[1] !== "share" || parts.length < 4) {
-      console.log("[share] ❌ Not a /share/ URL:", parts);
+    // Expecting: /:lang/:type/:id-slug
+    if (parts.length < 3) {
+      console.log("[share] ❌ Invalid path:", parts);
       return new Response("Invalid URL", { status: 404 });
     }
 
     const lang = parts[0];
-    const type = parts[2];
-    const idSlug = parts[3];
+    const type = parts[1];
+    const idSlug = parts[2];
     const [id, ...slugParts] = idSlug.split("-");
     const urlTitleSlug = slugParts.join("-");
     console.log("[share] 🔍 Parsed:", { lang, type, id, urlTitleSlug });
@@ -113,14 +113,16 @@ export default async (request) => {
       });
     }
 
-    // Humans → redirect to clean React route
+    // Humans → serve React app
     if (urlTitleSlug !== correctSlug) {
       console.log("[share] ⚠️ Slug mismatch → redirecting 301:", csrUrl);
       return Response.redirect(csrUrl, 301);
     }
 
-    console.log("[share] ➡️ Human redirect (302) to:", csrUrl);
-    return Response.redirect(csrUrl, 302);
+    console.log("[share] ✅ Serving React app for human:", csrUrl);
+    return fetch(`${siteOrigin}/index.html`, {
+      headers: { "Content-Type": "text/html" },
+    });
 
   } catch (err) {
     console.error("[share] 💥 Error in share.js:", err);
