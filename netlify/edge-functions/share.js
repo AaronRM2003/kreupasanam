@@ -2,13 +2,14 @@ export default async (request) => {
   try {
     const url = new URL(request.url);
     const ua = request.headers.get("user-agent") || "";
-    console.log("🔍 Request received:", { path: url.pathname, ua });
+    console.log("[share] 🔍 Request received:", { path: url.pathname, ua });
 
     const parts = url.pathname.split("/").filter(Boolean);
-    console.log("🔍 Path parts:", parts);
+    console.log("[share] 🔍 Path parts:", parts);
 
-    if (parts.length < 4) {
-      console.log("❌ Invalid path:", parts);
+    // Ensure this only runs for `/share/...`
+    if (parts[1] !== "share" || parts.length < 4) {
+      console.log("[share] ❌ Not a /share/ URL:", parts);
       return new Response("Invalid URL", { status: 404 });
     }
 
@@ -17,8 +18,9 @@ export default async (request) => {
     const idSlug = parts[3];
     const [id, ...slugParts] = idSlug.split("-");
     const urlTitleSlug = slugParts.join("-");
-    console.log("🔍 Parsed:", { lang, type, id, urlTitleSlug });
+    console.log("[share] 🔍 Parsed:", { lang, type, id, urlTitleSlug });
 
+    // Map type → content JSON
     const jsonMap = {
       testimony: "/assets/testimony-content.json",
       dhyanam: "/assets/dhyanam-content.json",
@@ -26,41 +28,36 @@ export default async (request) => {
     };
     const jsonPath = jsonMap[type];
     if (!jsonPath) {
-      console.log("❌ Unknown type:", type);
+      console.log("[share] ❌ Unknown type:", type);
       return new Response("Not found", { status: 404 });
     }
 
     const siteOrigin = "https://kreupasanamtestimonies.com";
-    console.log("🔍 Fetching JSON:", `${siteOrigin}${jsonPath}`);
     const res = await fetch(`${siteOrigin}${jsonPath}`);
     if (!res.ok) {
-      console.log("❌ Failed to fetch JSON:", res.status);
+      console.log("[share] ❌ Failed to fetch JSON:", res.status);
       return new Response("Content not found", { status: 404 });
     }
 
     const data = await res.json();
     const item = data.find((d) => String(d.id) === id);
     if (!item) {
-      console.log("❌ No item found for ID:", id);
+      console.log("[share] ❌ No item found for ID:", id);
       return new Response("Item not found", { status: 404 });
     }
-    console.log("🔍 Found item:", { id, title: item.title?.en });
+    console.log("[share] 🔍 Found item:", { id, title: item.title?.en });
 
-    const englishTitle = item.title?.en || "Video";
+    // Slugify
     const slugify = (text) =>
-      text
-        .toLowerCase()
-        .trim()
+      text.toLowerCase().trim()
         .replace(/\s+/g, "-")
         .replace(/[^\w\-]+/g, "")
         .replace(/\-\-+/g, "-");
 
+    const englishTitle = item.title?.en || "Video";
     const correctSlug = slugify(englishTitle);
     const csrPath = `/${lang}/${type}/${id}-${correctSlug}`;
     const csrUrl = `${siteOrigin}${csrPath}`;
-    console.log("🔍 Slug check:", { urlTitleSlug, correctSlug, csrPath });
-
-
 
     const title = item.title?.[lang] || item.title?.en || "Video";
     const description = item.description?.[lang] || "Watch this video";
@@ -74,63 +71,59 @@ export default async (request) => {
       ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
       : "";
 
-    const canonicalUrl = csrUrl;
+    const canonicalUrl = `${siteOrigin}${url.pathname}`;
 
+    // Bot detection
     const isBot = /(facebookexternalhit|Facebot|facebookcatalog|Twitterbot|WhatsApp|Slackbot|LinkedInBot|Discordbot|TelegramBot|googlebot|bingbot)/i.test(
       ua
     );
-    console.log("🔍 Bot detection:", { ua, isBot });
+    console.log("[share] 🔍 Bot detection:", { ua, isBot });
 
-   if (isBot) {
-  console.log("✅ Serving OG HTML for bot");
+    if (isBot) {
+      console.log("[share] ✅ Serving OG HTML for bot");
 
-  const html = `<!DOCTYPE html>
-  <html lang="${lang}">
-  <head>
-    <meta charset="utf-8" />
-    <title>${title}</title>
-    <meta name="description" content="${description}" />
+      const html = `<!DOCTYPE html>
+      <html lang="${lang}">
+      <head>
+        <meta charset="utf-8" />
+        <title>${title}</title>
+        <meta name="description" content="${description}" />
 
-    <!-- Open Graph tags -->
-    <meta property="og:type" content="video.other" />
-    <meta property="og:title" content="${title}" />
-    <meta property="og:description" content="${description}" />
-    <meta property="og:url" content="${canonicalUrl}" />
-    <meta property="og:image" content="${ogImage}" />
-    <meta property="og:image:alt" content="${title}" />
-    
-    <!-- Optional: Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="${title}" />
-    <meta name="twitter:description" content="${description}" />
-    <meta name="twitter:image" content="${ogImage}" />
-  </head>
-  <body>
-    <p>Sharing preview for <strong>${title}</strong></p>
-  </body>
-  </html>`;
+        <!-- Open Graph tags -->
+        <meta property="og:type" content="video.other" />
+        <meta property="og:title" content="${title}" />
+        <meta property="og:description" content="${description}" />
+        <meta property="og:url" content="${canonicalUrl}" />
+        <meta property="og:image" content="${ogImage}" />
+        <meta property="og:image:alt" content="${title}" />
 
-  return new Response(html, {
-    headers: { "Content-Type": "text/html" },
-  });
-}
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="${title}" />
+        <meta name="twitter:description" content="${description}" />
+        <meta name="twitter:image" content="${ogImage}" />
+      </head>
+      <body>
+        <p>Sharing preview for <strong>${title}</strong></p>
+      </body>
+      </html>`;
 
+      return new Response(html, {
+        headers: { "Content-Type": "text/html" },
+      });
+    }
+
+    // Humans → redirect to clean React route
     if (urlTitleSlug !== correctSlug) {
-      console.log("⚠️ Slug mismatch → redirecting 301:", csrUrl);
+      console.log("[share] ⚠️ Slug mismatch → redirecting 301:", csrUrl);
       return Response.redirect(csrUrl, 301);
     }
 
-
-    if (url.pathname !== csrPath) {
-      console.log("➡️ Human redirect (302) to:", csrUrl);
-      return Response.redirect(csrUrl, 302);
-    }
-
-    console.log("➡️ Human fallback redirect (302) to:", csrUrl);
+    console.log("[share] ➡️ Human redirect (302) to:", csrUrl);
     return Response.redirect(csrUrl, 302);
 
   } catch (err) {
-    console.error("💥 Error in share.js:", err);
+    console.error("[share] 💥 Error in share.js:", err);
     return new Response("Server error", { status: 500 });
   }
 };
