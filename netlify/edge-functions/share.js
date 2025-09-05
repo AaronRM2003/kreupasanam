@@ -85,10 +85,38 @@ export default async (request) => {
     console.log("🔍 Bot detection:", { ua, isBot });
 
     if (isBot) {
-      console.log("✅ Serving OG HTML for bot");
-      const html = `<!DOCTYPE html> ...`; // trimmed
-      return new Response(html, { headers: { "Content-Type": "text/html" } });
-    }
+  console.log("✅ Serving OG HTML for bot");
+
+  const html = `<!DOCTYPE html>
+  <html lang="${lang}">
+  <head>
+    <meta charset="utf-8" />
+    <title>${title}</title>
+    <meta name="description" content="${description}" />
+
+    <!-- Open Graph tags -->
+    <meta property="og:type" content="video.other" />
+    <meta property="og:title" content="${title}" />
+    <meta property="og:description" content="${description}" />
+    <meta property="og:url" content="${canonicalUrl}" />
+    <meta property="og:image" content="${ogImage}" />
+    <meta property="og:image:alt" content="${title}" />
+    
+    <!-- Optional: Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="${title}" />
+    <meta name="twitter:description" content="${description}" />
+    <meta name="twitter:image" content="${ogImage}" />
+  </head>
+  <body>
+    <p>Sharing preview for <strong>${title}</strong></p>
+  </body>
+  </html>`;
+
+  return new Response(html, {
+    headers: { "Content-Type": "text/html" },
+  });
+}
 
     if (url.pathname !== csrPath) {
       console.log("➡️ Human redirect (302) to:", csrUrl);
