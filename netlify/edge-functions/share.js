@@ -8,24 +8,17 @@ export default async (request) => {
     console.log("[share] 🔍 Path parts:", parts);
 
     // Expecting: /:lang/:type/:id-title
-    if (parts.length < 3) {
-      console.log("[share] ❌ Invalid path (too short):", parts);
-      return new Response("Invalid URL", { status: 404 });
-    }
-
     const lang = parts[0];
     const type = parts[1];
-    const idSlug = parts[2];
+    const idSlug = parts[2] || "";
 
-    // Deny if no slug after id
-    if (!idSlug.includes("-")) {
-      console.log("[share] ❌ Missing slug after ID:", idSlug);
-      return new Response("Invalid URL", { status: 404 });
-    }
+    const slugify = (text) =>
+      text.toLowerCase().trim()
+        .replace(/\s+/g, "-")
+        .replace(/[^\w\-]+/g, "")
+        .replace(/\-\-+/g, "-");
 
-    const [id, ...slugParts] = idSlug.split("-");
-    const urlTitleSlug = slugParts.join("-");
-    console.log("[share] 🔍 Parsed:", { lang, type, id, urlTitleSlug });
+    const siteOrigin = "https://kreupasanamtestimonies.com";
 
     // Map type → content JSON
     const jsonMap = {
@@ -34,61 +27,38 @@ export default async (request) => {
       oracles: "/assets/oracles-content.json",
     };
     const jsonPath = jsonMap[type];
-    if (!jsonPath) {
-      console.log("[share] ❌ Unknown type:", type);
-      return new Response("Not found", { status: 404 });
+
+    let item;
+    if (jsonPath && idSlug.includes("-")) {
+      const [id, ...slugParts] = idSlug.split("-");
+      const urlTitleSlug = slugParts.join("-");
+
+      const res = await fetch(`${siteOrigin}${jsonPath}`);
+      if (res.ok) {
+        const data = await res.json();
+        item = data.find((d) => String(d.id) === id);
+
+        // If slug mismatch, ignore OG (React will handle 404)
+        if (item) {
+          const correctSlug = slugify(item.title?.en || "Video");
+          if (urlTitleSlug !== correctSlug) item = null;
+        }
+      }
     }
 
-    const siteOrigin = "https://kreupasanamtestimonies.com";
-    const res = await fetch(`${siteOrigin}${jsonPath}`);
-    if (!res.ok) {
-      console.log("[share] ❌ Failed to fetch JSON:", res.status);
-      return new Response("Content not found", { status: 404 });
-    }
-
-    const data = await res.json();
-    const item = data.find((d) => String(d.id) === id);
-    if (!item) {
-      console.log("[share] ❌ No item found for ID:", id);
-      return new Response("Item not found", { status: 404 });
-    }
-
-    const slugify = (text) =>
-      text.toLowerCase().trim()
-        .replace(/\s+/g, "-")
-        .replace(/[^\w\-]+/g, "")
-        .replace(/\-\-+/g, "-");
-
-    const englishTitle = item.title?.en || "Video";
-    const correctSlug = slugify(englishTitle);
-
-    // Deny if slug does not match
-    if (urlTitleSlug !== correctSlug) {
-      console.log("[share] ❌ Wrong slug → Invalid URL:", urlTitleSlug);
-      return new Response("Invalid URL", { status: 404 });
-    }
-
-    const title = item.title?.[lang] || item.title?.en || "Video";
-    const description = item.description?.[lang] || "Watch this video";
-
-    const videoUrl = item.video || "";
-    const videoIdMatch = videoUrl.match(
-      /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
-    const videoId = videoIdMatch ? videoIdMatch[1] : null;
-    const ogImage = videoId
-      ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
-      : "";
-
-    const canonicalUrl = `${siteOrigin}${url.pathname}`;
-
-    // Bot detection
     const isBot = /(facebookexternalhit|Facebot|facebookcatalog|Twitterbot|WhatsApp|Slackbot|LinkedInBot|Discordbot|TelegramBot|googlebot|bingbot)/i.test(
       ua
     );
-    console.log("[share] 🔍 Bot detection:", { ua, isBot });
 
-    if (isBot) {
-      console.log("[share] ✅ Serving OG HTML for bot");
+    if (isBot && item) {
+      // Only serve OG HTML for valid URL
+      const title = item.title?.[lang] || item.title?.en || "Video";
+      const description = item.description?.[lang] || "Watch this video";
+      const videoUrl = item.video || "";
+      const videoIdMatch = videoUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+      const videoId = videoIdMatch ? videoIdMatch[1] : null;
+      const ogImage = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : "";
+      const canonicalUrl = `${siteOrigin}${url.pathname}`;
 
       const html = `<!DOCTYPE html>
       <html lang="${lang}">
@@ -111,12 +81,11 @@ export default async (request) => {
         <p>Sharing preview for <strong>${title}</strong></p>
       </body>
       </html>`;
-
       return new Response(html, { headers: { "Content-Type": "text/html" } });
     }
 
-    // Humans → serve React app
-    console.log("[share] ✅ Serving React app for human");
+    // For humans or bots with invalid URL → serve React app
+    console.log("[share] ✅ Serving React app (index.html)");
     return fetch(`${siteOrigin}/index.html`, {
       headers: { "Content-Type": "text/html" },
     });
