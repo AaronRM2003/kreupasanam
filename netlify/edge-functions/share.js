@@ -60,10 +60,7 @@ export default async (request) => {
     const csrUrl = `${siteOrigin}${csrPath}`;
     console.log("🔍 Slug check:", { urlTitleSlug, correctSlug, csrPath });
 
-    if (urlTitleSlug !== correctSlug) {
-      console.log("⚠️ Slug mismatch → redirecting 301:", csrUrl);
-      return Response.redirect(csrUrl, 301);
-    }
+
 
     const title = item.title?.[lang] || item.title?.en || "Video";
     const description = item.description?.[lang] || "Watch this video";
@@ -84,7 +81,7 @@ export default async (request) => {
     );
     console.log("🔍 Bot detection:", { ua, isBot });
 
-    if (isBot) {
+   if (isBot) {
   console.log("✅ Serving OG HTML for bot");
 
   const html = `<!DOCTYPE html>
@@ -117,6 +114,12 @@ export default async (request) => {
     headers: { "Content-Type": "text/html" },
   });
 }
+
+    if (urlTitleSlug !== correctSlug) {
+      console.log("⚠️ Slug mismatch → redirecting 301:", csrUrl);
+      return Response.redirect(csrUrl, 301);
+    }
+
 
     if (url.pathname !== csrPath) {
       console.log("➡️ Human redirect (302) to:", csrUrl);
