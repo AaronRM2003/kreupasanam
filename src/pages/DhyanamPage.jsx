@@ -120,8 +120,10 @@ export default function DhyanamPage({ lang: initialLang }) {
 
   const shareText = useMemo(() => {
   if (!safeDhyanamItem || typeof window === 'undefined') return '';
-  const baseUrl = window.location.origin;
-  const shareUrl = `${baseUrl}/${lang}/share/dhyanam/${id}-${slug}`;
+
+  // Use current page URL instead of /share/ URL
+  const shareUrl = window.location.href;
+
   return generateShareText(
     safeDhyanamItem,
     lang,
@@ -130,7 +132,8 @@ export default function DhyanamPage({ lang: initialLang }) {
     includeSummary,
     video
   );
-}, [safeDhyanamItem, lang, includeSummary, video, id, slug]);
+}, [safeDhyanamItem, lang, includeSummary, video]);
+
   
   // YouTube player hook - ALWAYS call hooks before conditionals
   const { currentTime, playerRef, duration: totalDuration } = useYouTubePlayer(videoId, showVideo);

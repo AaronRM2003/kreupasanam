@@ -117,8 +117,9 @@ const navigate = useNavigate();
 
 const shareText = useMemo(() => {
   if (!testimony || typeof window === 'undefined') return '';
-  const baseUrl = window.location.origin;
-  const shareUrl = `${baseUrl}/${lang}/share/testimony/${id}-${slug}`;
+
+  const shareUrl = window.location.href; // current page URL
+
   return generateShareText(
     testimony,
     lang,
@@ -127,7 +128,8 @@ const shareText = useMemo(() => {
     includeSummary,
     video
   );
-}, [testimony, lang, includeSummary, video, id, slug]);
+}, [testimony, lang, includeSummary, video]);
+
 
 
   // YouTube player hook

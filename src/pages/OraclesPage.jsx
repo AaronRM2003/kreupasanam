@@ -107,21 +107,22 @@ export default function OraclesPage({ lang: initialLang }) {
 
   // Generate share text when dependencies change
 
+
 const shareText = useMemo(() => {
   if (!safeOracle || typeof window === 'undefined') return '';
 
-  const baseUrl = window.location.origin;
-  const shareUrl = `${baseUrl}/${lang}/share/oracles/${id}-${slug}`;
+  const shareUrl = window.location.href; // current page URL
 
   return generateShareText(
     safeOracle,
     lang,
     shareUrl,
-    'A Spiritual Oracle',
+   'A Spiritual Oracle',
     includeSummary,
     video
   );
-}, [lang, safeOracle, includeSummary, video, id, slug]);
+}, [safeOracle, lang, includeSummary, video]);
+
 
 
   // Hooks always called unconditionally
