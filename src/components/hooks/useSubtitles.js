@@ -3,7 +3,7 @@ import { addEndTimesToSubtitles, getCurrentSubtitle } from '../utils/Utils';
 
 export function useSubtitles(subtitlesUrl, lang, currentTime) {
   const [subtitles, setSubtitles] = useState([]);
-
+  console.log('useSubtitles called');
   useEffect(() => {
     if (!subtitlesUrl) {
       setSubtitles([]);

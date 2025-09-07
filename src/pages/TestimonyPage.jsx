@@ -89,7 +89,6 @@ export default function TestimonyPage({ lang: initialLang }) {
   const content = (testimony && testimony.content) || {};
   const video = (testimony && testimony.video) || '';
   const subtitlesUrl = (testimony && testimony.subtitles) || '';
-  console.log('Subtitles URL:', subtitlesUrl);
 const navigate = useNavigate();
   // Get videoId and thumbnail URL
   const videoId = getYouTubeVideoID(video);
@@ -137,6 +136,9 @@ const shareText = useMemo(() => {
   const { currentTime, playerRef, duration: totalDuration } = useYouTubePlayer(videoId, showVideo);
 
   // Subtitles & current subtitle hook
+  console.log('currentTime:', currentTime);
+  console.log('Lang:', lang);
+  console.log('Subtitles URL used in hook:', subtitlesUrl);
   const { subtitles, currentSubtitle } = useSubtitles(subtitlesUrl, lang, currentTime);
   
   const ttsSupported = typeof window !== 'undefined' && !!window.speechSynthesis;
