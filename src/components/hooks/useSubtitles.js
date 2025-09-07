@@ -12,7 +12,10 @@ export function useSubtitles(subtitlesUrl, lang, currentTime) {
 
     fetch(subtitlesUrl)
       .then(res => {
-        if (!res.ok) throw new Error('Failed to load subtitles');
+        if (!res.ok) {
+          console.log('error in fetching subtitles');
+          throw new Error('Failed to load subtitles');
+        }
         return res.json();
       })
       .then(data => {
