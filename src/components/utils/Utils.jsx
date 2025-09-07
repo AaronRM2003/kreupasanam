@@ -326,6 +326,7 @@ export function getCurrentSubtitle(subtitles, currentTime, lang) {
       ? timeStringToSeconds(subtitles[i + 1].start)
       : startSec + 5;
     if (currentTime >= startSec && currentTime < endSec) {
+      console.log(' Subtitle:', subtitles[i]);
       return subtitles[i].text[lang] || subtitles[i].text['en'] || '';
     }
   }
