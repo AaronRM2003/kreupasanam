@@ -1,11 +1,14 @@
 [[edge_functions]]
   path = "/*/testimony/*"
+  excluded_path = "/assets/testimony/*.json"
   function = "share"
 
 [[edge_functions]]
   path = "/*/dhyanam/*"
+  excluded_path = "/assets/dhyanam/*.json"
   function = "share"
 
 [[edge_functions]]
   path = "/*/oracles/*"
+  excluded_path = "/assets/oracles/*.json"
   function = "share"
