@@ -13,7 +13,6 @@ export function useSubtitles(subtitlesUrl, lang, currentTime) {
     fetch(subtitlesUrl)
       .then(res => {
         if (!res.ok) {
-          console.log('error in fetching subtitles');
           throw new Error('Failed to load subtitles');
         }
         return res.json();
@@ -23,7 +22,10 @@ export function useSubtitles(subtitlesUrl, lang, currentTime) {
         const subsWithEnd = addEndTimesToSubtitles(data);
         setSubtitles(subsWithEnd);
       })
-      .catch(() => setSubtitles([]));
+      .catch(() => {
+        console.error('Error loading subtitles:', subtitlesUrl);
+        setSubtitles([]);
+      });
   }, [subtitlesUrl]);
 
   const currentSubtitle = getCurrentSubtitle(subtitles, currentTime, lang);
