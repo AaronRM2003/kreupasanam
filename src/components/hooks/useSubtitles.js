@@ -3,7 +3,7 @@ import { addEndTimesToSubtitles, getCurrentSubtitle } from '../utils/Utils';
 
 export function useSubtitles(subtitlesUrl, lang, currentTime) {
   const [subtitles, setSubtitles] = useState([]);
-  console.log('useSubtitles called');
+
   useEffect(() => {
     if (!subtitlesUrl) {
       setSubtitles([]);
@@ -12,23 +12,17 @@ export function useSubtitles(subtitlesUrl, lang, currentTime) {
 
     fetch(subtitlesUrl)
       .then(res => {
-        if (!res.ok) {
-          throw new Error('Failed to load subtitles');
-        }
+        if (!res.ok) throw new Error('Failed to load subtitles');
         return res.json();
       })
       .then(data => {
-        console.log('Fetched Subtitles:', data);
         const subsWithEnd = addEndTimesToSubtitles(data);
         setSubtitles(subsWithEnd);
       })
-      .catch(() => {
-        console.error('Error loading subtitles:', subtitlesUrl);
-        setSubtitles([]);
-      });
+      .catch(() => setSubtitles([]));
   }, [subtitlesUrl]);
 
   const currentSubtitle = getCurrentSubtitle(subtitles, currentTime, lang);
-  console.log('Current Subtitle:', currentSubtitle);
+  
   return { subtitles, currentSubtitle };
 }

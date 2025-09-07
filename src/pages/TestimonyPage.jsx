@@ -136,9 +136,6 @@ const shareText = useMemo(() => {
   const { currentTime, playerRef, duration: totalDuration } = useYouTubePlayer(videoId, showVideo);
 
   // Subtitles & current subtitle hook
-  console.log('currentTime:', currentTime);
-  console.log('Lang:', lang);
-  console.log('Subtitles URL used in hook:', subtitlesUrl);
   const { subtitles, currentSubtitle } = useSubtitles(subtitlesUrl, lang, currentTime);
   
   const ttsSupported = typeof window !== 'undefined' && !!window.speechSynthesis;
