@@ -25,6 +25,7 @@ export default function LangSelectorPage({ setLang }) {
     localStorage.setItem('hasVisitedRoot', 'true');
   }, []);
 
+  
   return (
     <div
       style={{
