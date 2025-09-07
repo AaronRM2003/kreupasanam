@@ -16,6 +16,7 @@ export function useSubtitles(subtitlesUrl, lang, currentTime) {
         return res.json();
       })
       .then(data => {
+        console.log('Fetched Subtitles:', data);
         const subsWithEnd = addEndTimesToSubtitles(data);
         setSubtitles(subsWithEnd);
       })

@@ -89,6 +89,7 @@ export default function TestimonyPage({ lang: initialLang }) {
   const content = (testimony && testimony.content) || {};
   const video = (testimony && testimony.video) || '';
   const subtitlesUrl = (testimony && testimony.subtitles) || '';
+  console.log('Subtitles URL:', subtitlesUrl);
 const navigate = useNavigate();
   // Get videoId and thumbnail URL
   const videoId = getYouTubeVideoID(video);
