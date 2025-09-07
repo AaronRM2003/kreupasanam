@@ -1,9 +1,4 @@
 export default async (request) => {
-    // If it's a static asset, just let Netlify serve it directly
-  if (url.pathname.startsWith("/assets/") || /\.(json|js|css|png|jpg|svg|ico|txt)$/i.test(url.pathname)) {
-    return fetch(request);  // forward the original request
-  }
-
   try {
     const url = new URL(request.url);
     const ua = request.headers.get("user-agent") || "";
