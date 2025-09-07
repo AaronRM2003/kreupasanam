@@ -23,6 +23,6 @@ export function useSubtitles(subtitlesUrl, lang, currentTime) {
   }, [subtitlesUrl]);
 
   const currentSubtitle = getCurrentSubtitle(subtitles, currentTime, lang);
-  
+  console.log('Current Subtitle:', currentSubtitle);
   return { subtitles, currentSubtitle };
 }
