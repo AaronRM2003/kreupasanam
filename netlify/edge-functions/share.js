@@ -1,7 +1,9 @@
-import { readFileSync } from "fs";
-import { resolve } from "path";
-
 export default async (request) => {
+    // If it's a static asset, just let Netlify serve it directly
+  if (url.pathname.startsWith("/assets/") || /\.(json|js|css|png|jpg|svg|ico|txt)$/i.test(url.pathname)) {
+    return fetch(request);  // forward the original request
+  }
+
   try {
     const url = new URL(request.url);
     const ua = request.headers.get("user-agent") || "";
@@ -10,6 +12,7 @@ export default async (request) => {
     const parts = url.pathname.split("/").filter(Boolean);
     console.log("[share] 🔍 Path parts:", parts);
 
+    // Expecting: /:lang/:type/:id-title
     const lang = parts[0];
     const type = parts[1];
     const idSlug = parts[2] || "";
@@ -22,6 +25,7 @@ export default async (request) => {
 
     const siteOrigin = "https://kreupasanamtestimonies.com";
 
+    // Map type → content JSON
     const jsonMap = {
       testimony: "/assets/testimony-content.json",
       dhyanam: "/assets/dhyanam-content.json",
@@ -39,6 +43,7 @@ export default async (request) => {
         const data = await res.json();
         item = data.find((d) => String(d.id) === id);
 
+        // If slug mismatch, ignore OG (React will handle 404)
         if (item) {
           const correctSlug = slugify(item.title?.en || "Video");
           if (urlTitleSlug !== correctSlug) item = null;
@@ -51,6 +56,7 @@ export default async (request) => {
     );
 
     if (isBot && item) {
+      // Only serve OG HTML for valid URL
       const title = item.title?.[lang] || item.title?.en || "Video";
       const description = item.description?.[lang] || "Watch this video";
       const videoUrl = item.video || "";
@@ -83,11 +89,11 @@ export default async (request) => {
       return new Response(html, { headers: { "Content-Type": "text/html" } });
     }
 
-    // 🟢 Fallback: serve build/index.html instead of refetching
-    console.log("[share] ✅ Serving local React build index.html");
-    const indexPath = resolve("build/index.html"); // adjust path if "dist" instead of "build"
-    const indexHtml = readFileSync(indexPath, "utf8");
-    return new Response(indexHtml, { headers: { "Content-Type": "text/html" } });
+    // For humans or bots with invalid URL → serve React app
+    console.log("[share] ✅ Serving React app (index.html)");
+    return fetch(`${siteOrigin}/index.html`, {
+      headers: { "Content-Type": "text/html" },
+    });
 
   } catch (err) {
     console.error("[share] 💥 Error in share.js:", err);
