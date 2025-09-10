@@ -212,47 +212,47 @@ useEffect(() => {
           )}
 
           {/* Testimonies grid */}
-          {!loadingTestimonies && filteredTestimonies.length > 0 && (
-            <div className={styles.testimoniesGrid}>
-              {filteredTestimonies.map(({ id, title, video, date,duration }) => (
-                <TestimonyCard
-                  key={id}
-                  id={id}
-                  title={title}
-                  image={getYouTubeThumbnail(video)}
-                  date={date}
-                  lang={lang}
-                  path={`${initialLang || 'en'}/testimony`}
-                  duration={duration}
-                />
-              ))}
-            </div>
-          )}
+        {/* Grid wrapper always rendered */}
+{!loadingTestimonies && (
+  <div className={styles.testimoniesGrid}>
+    {filteredTestimonies.length > 0 ? (
+      filteredTestimonies.map(({ id, title, video, date, duration }) => (
+        <TestimonyCard
+          key={id}
+          id={id}
+          title={title}
+          image={getYouTubeThumbnail(video)}
+          date={date}
+          lang={lang}
+          path={`${initialLang || 'en'}/testimony`}
+          duration={duration}
+        />
+      ))
+    ) : (
+      <div className={styles.testimoniesCard} style={{
+        gridColumn: "1 / -1", /* <-- make it span full grid width */
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '3rem 1rem',
+        border: '2px dashed #a2c4ff',
+        borderRadius: '20px',
+        backgroundColor: 'rgba(240,245,255,0.5)',
+        margin: '4rem auto 18rem auto',
+        textAlign: 'center',
+        boxShadow: '0 8px 24px rgba(36,107,253,0.08)',
+      }}>
+        <HiOutlineEmojiSad size={50} color="#246bfd" style={{ marginBottom: '1rem' }} />
+        <h3 style={{ color: '#246bfd', fontWeight: '600', fontSize: '1.4rem' }}>No Testimonies Available</h3>
+        <p style={{ color: '#444', marginTop: '0.5rem', fontSize: '1rem' }}>
+          We couldn’t find any testimonies for <strong>{selectedMonth}</strong> {selectedYear}.
+        </p>
+      </div>
+    )}
+  </div>
+)}
 
-          {/* No testimonies available */}
-          {!loadingTestimonies && filteredTestimonies.length === 0 && (
-            <div className={styles.testimoniesCard} style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '3rem 1rem',
-              border: '2px dashed #a2c4ff',
-              borderRadius: '20px',
-              backgroundColor: 'rgba(240,245,255,0.5)',
-              maxWidth: '600px',
-              margin: '4rem auto 8rem auto',
-              textAlign: 'center',
-              boxShadow: '0 8px 24px rgba(36,107,253,0.08)',
-              marginBottom: '12rem'
-            }}>
-              <HiOutlineEmojiSad size={50} color="#246bfd" style={{ marginBottom: '1rem' }} />
-              <h3 style={{ color: '#246bfd', fontWeight: '600', fontSize: '1.4rem' }}>No Testimonies Available</h3>
-              <p style={{ color: '#444', marginTop: '0.5rem', fontSize: '1rem' }}>
-                We couldn’t find any testimonies for <strong>{selectedMonth}</strong> {selectedYear}.
-              </p>
-            </div>
-          )}
         </div>
       </section>
     </div>
