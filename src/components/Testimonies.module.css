@@ -505,55 +505,68 @@
   opacity: 1;
 }
 
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #e0e0e0 25%,
+    #f5f5f5 37%,
+    #e0e0e0 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+
 .testimonySkeletonCard {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
   border-radius: 12px;
   overflow: hidden;
   background: #fff;
   width: 100%;
-  max-width: 320px; /* or match your card width */
+  max-width: 320px; /* match real card width */
+  padding: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
+/* Fake thumbnail with 16:9 aspect ratio */
 .testimonySkeletonImage {
   width: 100%;
-  padding-top: 56.25%; /* 16:9 aspect ratio */
+  padding-top: 56.25%;
+  border-radius: 10px;
   position: relative;
-  background: linear-gradient(
-    90deg,
-    #e0e0e0 25%,
-    #f5f5f5 37%,
-    #e0e0e0 63%
-  );
-  background-size: 400% 100%;
-  animation: shimmer 1.4s ease infinite;
+}
+.testimonySkeletonImage.skeleton {
+  border-radius: 10px;
 }
 
+/* Fake title */
 .testimonySkeletonText {
-  width: 70%;
-  height: 16px;
-  border-radius: 8px;
-  background: linear-gradient(
-    90deg,
-    #e0e0e0 25%,
-    #f5f5f5 37%,
-    #e0e0e0 63%
-  );
-  background-size: 400% 100%;
-  animation: shimmer 1.4s ease infinite;
+  width: 80%;
+  height: 18px;
+  border-radius: 6px;
 }
 
+/* Fake date line */
 .testimonySkeletonSmall {
-  width: 40%;
-  height: 12px;
+  width: 50%;
+  height: 14px;
   border-radius: 6px;
-  background: linear-gradient(
-    90deg,
-    #e0e0e0 25%,
-    #f5f5f5 37%,
-    #e0e0e0 63%
-  );
-  background-size: 400% 100%;
-  animation: shimmer 1.4s ease infinite;
+}
+
+/* Fake button */
+.testimonySkeletonButton {
+  width: 120px;
+  height: 34px;
+  border-radius: 20px;
+  margin-top: 8px;
 }
