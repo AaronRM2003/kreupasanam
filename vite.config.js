@@ -10,7 +10,7 @@ export default defineConfig(({ command, mode }) => {
         registerType: 'autoUpdate',
         manifest: {
           name: 'Kreupasanam Testimonies',
-          short_name: 'Testimonies',
+          short_name: 'Kreupa Voice',
           description: 'Explore Kreupasanam Marian Shrine content in multiple languages.',
           theme_color: '#ffffff',
           background_color: '#ffffff',
