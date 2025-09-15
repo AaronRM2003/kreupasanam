@@ -17,23 +17,25 @@ export default defineConfig(({ command, mode }) => {
           display: 'standalone',
           start_url: '/',
           icons: [
-            {
-              src: '/assets/kreupa-192.png',
-              sizes: '192x192',
-              type: 'image/png'
-            },
-            {
-              src: '/assets/kreupa.png',
-              sizes: '512x512',
-              type: 'image/png'
-            },
-            {
-              src: '/assets/kreupa-180.png',
-              sizes: '180x180',
-              type: 'image/png',
-              purpose: 'any maskable'
-            }
-          ]
+  {
+    src: '/assets/kreupa-192.png',
+    sizes: '192x192',
+    type: 'image/png'
+  },
+  {
+    src: '/assets/kreupa.png',
+    sizes: '512x512',
+    type: 'image/png',
+    purpose: 'any maskable'
+  },
+  {
+    src: '/assets/kreupa-180.png',
+    sizes: '180x180',
+    type: 'image/png',
+    purpose: 'any maskable'
+  }
+]
+
         }
       })
     ],
