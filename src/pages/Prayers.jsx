@@ -216,7 +216,7 @@ if (errorLoading) {
             </h2>
           </div>
 
-          <p className={styles.testimoniesSubtitle}>Stories of healing, grace...</p>
+          <p className={styles.testimoniesSubtitle}>Let's meditate on these prayers...</p>
 
           <div
             style={{
@@ -281,9 +281,7 @@ if (errorLoading) {
         {allImagesLoaded && (
           <div className={styles.testimoniesGrid}>
             {prayers.length > 0 ? (
-             prayers
-              .sort((a, b) => new Date(b.date) - new Date(a.date)) // Sort by date descending
-              .map(({ id, title, video, date,duration }) => {
+             prayers.map(({ id, title, video, date,duration }) => {
                 const thumbnail = getYouTubeThumbnail(video);
                 return (
                   <TestimonyCard

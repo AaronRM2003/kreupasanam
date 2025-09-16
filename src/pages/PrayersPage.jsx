@@ -328,7 +328,7 @@ export default function PrayersPage({ lang: initialLang }) {
           </div>
 
           <div className={styles.shareSection}>
-            <p style={{ fontWeight: '600' }}>Share this meditation:</p>
+            <p style={{ fontWeight: '600' }}>Share this prayer:</p>
             <div className={styles.actionRow}>
               <button className={`${styles.actionButton} ${styles.share}`} onClick={() => setShowShareModal(true)}>
                 <FaShareAlt />
