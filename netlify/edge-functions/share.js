@@ -25,6 +25,7 @@ export default async (request) => {
       testimony: "/assets/testimony-content.json",
       dhyanam: "/assets/dhyanam-content.json",
       oracles: "/assets/oracles-content.json",
+      prayers:"/assets/prayers-content.json",
     };
     const jsonPath = jsonMap[type];
 

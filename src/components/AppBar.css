@@ -29,21 +29,21 @@
   align-items: center;
   position: relative;
 
-  background: rgba(255, 253, 253, 0.737);
+  background: rgba(255, 253, 253, 0.846);
   mask-image: linear-gradient(
     to bottom,
     rgba(255, 255, 255, 1) 0%,
     rgba(255, 255, 255, 0.753) 60%,
     rgba(255, 255, 255, 0.561) 80%,
-    rgba(255, 255, 255, 0.3) 90%,
+    rgba(255, 255, 255, 0.288) 90%,
     rgba(255, 255, 255, 0) 100%
   );
   -webkit-mask-image: linear-gradient(
     to bottom,
     rgba(255, 255, 255, 1) 0%,
     rgba(255, 255, 255, 0.753) 60%,
-    rgba(255, 255, 255, 0.561) 80%,
-    rgba(255, 255, 255, 0.3) 90%,
+    rgba(255, 255, 255, 0.418) 80%,
+    rgba(255, 255, 255, 0.299) 90%,
     rgba(255, 255, 255, 0) 100%
   );
   box-shadow: none;
@@ -458,7 +458,7 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
   text-align: center;
   padding: 0.4rem 0;
 
-  font-size: clamp(0.4rem, 1.7vw, 1rem);
+  font-size: clamp(0.4rem, 1.5vw, 1rem);
 }
 
   

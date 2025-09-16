@@ -12,6 +12,8 @@ import LangSelectorPage from './pages/LangSelectorPage';
 import TranslationDisclaimer from './TranslationDisclaimer';
 import NotFoundPage from './NotFoundPage';
 import About from './AboutPage';
+import PrayersPage from './pages/PrayersPage';
+import Prayers from './pages/Prayers';
 
 const supportedLangs = ['en', 'hi', 'zh', 'bn', 'ta', 'te', 'fr', 'es', 'mr', 'kn'];
 
@@ -77,6 +79,8 @@ function App() {
           <Route path="oracles/:idSlug" element={<LangRoute element={OraclesPage} />} />
           <Route path="dhyanam" element={<LangRoute element={Dhyanam} />} />
           <Route path="dhyanam/:idSlug" element={<LangRoute element={DhyanamPage} />} />
+          <Route path="prayers" element={<LangRoute element={Prayers} />} />
+          <Route path="prayers/:idSlug" element={<LangRoute element={PrayersPage} />} />
 
           {/* ✅ Catch invalid paths like /en/invalid or /ml/xyz */}
           <Route path="*" element={<NotFoundPage />} />

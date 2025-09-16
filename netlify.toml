@@ -9,3 +9,7 @@
 [[edge_functions]]
   path = "/*/oracles/*"
   function = "share"
+
+[[edge_functions]]
+  path = "/*/prayers/*"
+  function = "share"
