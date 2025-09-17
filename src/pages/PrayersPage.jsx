@@ -344,7 +344,7 @@ export default function PrayersPage({ lang: initialLang }) {
             <ShareModal
               show={showShareModal}
               onHide={() => setShowShareModal(false)}
-              title="Prayers"
+              title="Prayer"
               shareText={shareText}
               fbShareUrl={fbShareUrl}
               waShareUrl={waShareUrl}
