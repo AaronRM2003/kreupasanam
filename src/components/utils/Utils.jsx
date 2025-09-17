@@ -75,7 +75,7 @@ export function ShareModal({
               checked={includeSummary}
               onChange={(e) => setIncludeSummary(e.target.checked)}
             />
-            Include full testimony in share text
+            Include the whole text
           </label>
         </div>
 
