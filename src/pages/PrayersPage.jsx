@@ -218,7 +218,7 @@ export default function PrayersPage({ lang: initialLang }) {
       <div className={styles.notFoundPage}>
         <div className={styles.notFoundContainer}>
           <span className={styles.notFoundCode}>404</span>
-          <h1 className={styles.notFoundTitle}>Prayers Not Found</h1>
+          <h1 className={styles.notFoundTitle}>Prayer Not Found</h1>
           <p className={styles.notFoundText}>
             The episode you’re looking for doesn’t exist or may have been removed.
           </p>
