@@ -1022,6 +1022,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
     padding: 0;
     width: 100vw;
     height: 100vh;
+    height: 100dvh;
   }
 }
 @media (orientation: portrait) {
@@ -1058,7 +1059,6 @@ input[type="range"]::-webkit-slider-thumb:hover {
   .floatingVideo {
     width: 100vw;
     height: 100vh;
-    height: 100dvh;
     max-width: none;
     max-height: none;
     aspect-ratio: auto; /* ignore fixed ratio for full coverage */
