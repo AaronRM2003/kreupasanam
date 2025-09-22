@@ -40,6 +40,7 @@ export default defineConfig(({ command, mode }) => {
         workbox: {
           // Only precache app shell & essential files
           globPatterns: ['**/*.{js,css,html,ico,svg,json}'],
+           navigateFallback: null,
           runtimeCaching: [
             {
               // Always bypass React for static assets
