@@ -4,6 +4,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig(({ command, mode }) => {
   return {
+    base: '/',
     plugins: [
       react(),
       VitePWA({
@@ -17,25 +18,42 @@ export default defineConfig(({ command, mode }) => {
           display: 'standalone',
           start_url: '/',
           icons: [
-  {
-    src: '/assets/kreupa-192.png',
-    sizes: '192x192',
-    type: 'image/png'
-  },
-  {
-    src: '/assets/kreupa.png',
-    sizes: '512x512',
-    type: 'image/png',
-    purpose: 'any maskable'
-  },
-  {
-    src: '/assets/kreupa-180.png',
-    sizes: '180x180',
-    type: 'image/png',
-    purpose: 'any maskable'
-  }
-]
-
+            {
+              src: '/assets/kreupa-192.png',
+              sizes: '192x192',
+              type: 'image/png'
+            },
+            {
+              src: '/assets/kreupa.png',
+              sizes: '512x512',
+              type: 'image/png',
+              purpose: 'any maskable'
+            },
+            {
+              src: '/assets/kreupa-180.png',
+              sizes: '180x180',
+              type: 'image/png',
+              purpose: 'any maskable'
+            }
+          ]
+        },
+        workbox: {
+          // Only precache app shell & essential files
+          globPatterns: ['**/*.{js,css,html,ico,svg,json}'],
+          runtimeCaching: [
+            {
+              // Always bypass React for static assets
+              urlPattern: ({ url }) => url.pathname.startsWith('/assets/'),
+              handler: 'NetworkOnly'
+            },
+            {
+              // Always bypass React for SEO files
+              urlPattern: ({ url }) =>
+                url.pathname.endsWith('sitemap.xml') ||
+                url.pathname.endsWith('robots.txt'),
+              handler: 'NetworkOnly'
+            }
+          ]
         }
       })
     ],
