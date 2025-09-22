@@ -80,7 +80,8 @@ export default async (request) => {
         <meta name="twitter:image" content="${ogImage}" />
       </head>
       <body>
-        <p>Sharing preview for <strong>${title}</strong></p>
+       <h1>${title}</h1>
+  <p>${description}</p>
       </body>
       </html>`;
       return new Response(html, { headers: { "Content-Type": "text/html" } });
