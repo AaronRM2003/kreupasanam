@@ -54,7 +54,9 @@ export default async (request) => {
     if (isBot && item) {
       // Only serve OG HTML for valid URL
       const title = item.title?.[lang] || item.title?.en || "Video";
-      const description = item.description?.[lang] || "Watch this video";
+      const fullContent = item.content?.[lang] || item.content?.en || "Watch this video";
+      const descriptionWords = fullContent.split(/\s+/).slice(0, 150); // first 150 words
+      const description = descriptionWords.join(" ");
       const videoUrl = item.video || "";
       const videoIdMatch = videoUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
       const videoId = videoIdMatch ? videoIdMatch[1] : null;
