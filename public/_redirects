@@ -3,11 +3,5 @@
 /sitemap.xml       /sitemap.xml     200
 /robots.txt        /robots.txt      200
 
-# Edge functions
-/*/testimony/*     /.netlify/functions/share 200
-/*/dhyanam/*       /.netlify/functions/share 200
-/*/oracles/*       /.netlify/functions/share 200
-/*/prayers/*       /.netlify/functions/share 200
-
 # SPA fallback (last)
- /*                 /index.html      200
+/*                 /index.html      200

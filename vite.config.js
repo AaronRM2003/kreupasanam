@@ -4,41 +4,40 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig(({ command, mode }) => {
   return {
-    base: '/',
     plugins: [
       react(),
-//       VitePWA({
-//         registerType: 'autoUpdate',
-//         manifest: {
-//           name: 'Kreupasanam Testimonies',
-//           short_name: 'Kreupa Voice',
-//           description: 'Explore Kreupasanam Marian Shrine content in multiple languages.',
-//           theme_color: '#ffffff',
-//           background_color: '#ffffff',
-//           display: 'standalone',
-//           start_url: '/',
-//           icons: [
-//   {
-//     src: '/assets/kreupa-192.png',
-//     sizes: '192x192',
-//     type: 'image/png'
-//   },
-//   {
-//     src: '/assets/kreupa.png',
-//     sizes: '512x512',
-//     type: 'image/png',
-//     purpose: 'any maskable'
-//   },
-//   {
-//     src: '/assets/kreupa-180.png',
-//     sizes: '180x180',
-//     type: 'image/png',
-//     purpose: 'any maskable'
-//   }
-// ]
+      VitePWA({
+        registerType: 'autoUpdate',
+        manifest: {
+          name: 'Kreupasanam Testimonies',
+          short_name: 'Kreupa Voice',
+          description: 'Explore Kreupasanam Marian Shrine content in multiple languages.',
+          theme_color: '#ffffff',
+          background_color: '#ffffff',
+          display: 'standalone',
+          start_url: '/',
+          icons: [
+  {
+    src: '/assets/kreupa-192.png',
+    sizes: '192x192',
+    type: 'image/png'
+  },
+  {
+    src: '/assets/kreupa.png',
+    sizes: '512x512',
+    type: 'image/png',
+    purpose: 'any maskable'
+  },
+  {
+    src: '/assets/kreupa-180.png',
+    sizes: '180x180',
+    type: 'image/png',
+    purpose: 'any maskable'
+  }
+]
 
-//         }
-//       })
+        }
+      })
     ],
     server: {
       host: true,
