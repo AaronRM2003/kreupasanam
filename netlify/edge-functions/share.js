@@ -11,6 +11,13 @@ export default async (request) => {
     const lang = parts[0];
     const type = parts[1];
     const idSlug = parts[2] || "";
+    const escapeHtml = (str) =>
+      str.replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
 
     const slugify = (text) =>
       text.toLowerCase().trim()
@@ -55,8 +62,10 @@ export default async (request) => {
       // Only serve OG HTML for valid URL
       const title = item.title?.[lang] || item.title?.en || "Video";
       const fullContent = item.content?.[lang] || item.content?.en || "Watch this video";
-      const descriptionWords = fullContent.split(/\s+/).slice(0, 150); // first 150 words
-      const description = descriptionWords.join(" ");
+      const maxLength = 150; // characters
+      let description = fullContent.slice(0, maxLength);
+      description = description.slice(0, description.lastIndexOf(" ")); // avoid cutting mid-word
+      description = escapeHtml(description);
       const videoUrl = item.video || "";
       const videoIdMatch = videoUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
       const videoId = videoIdMatch ? videoIdMatch[1] : null;
