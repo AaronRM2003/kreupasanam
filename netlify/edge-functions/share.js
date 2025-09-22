@@ -67,6 +67,7 @@ export default async (request) => {
         <meta charset="utf-8" />
         <title>${title}</title>
         <meta name="description" content="${description}" />
+        <link rel="canonical" href="${canonicalUrl}" />
         <meta property="og:type" content="video.other" />
         <meta property="og:title" content="${title}" />
         <meta property="og:description" content="${description}" />
