@@ -88,6 +88,10 @@ export default async (request) => {
 
     // For humans or bots with invalid URL → serve React app
     console.log("[share] ✅ Serving React app (index.html)");
+    if (url.pathname.startsWith("/assets") || url.pathname === "/sitemap.xml" || url.pathname === "/robots.txt") {
+      return fetch(`${siteOrigin}${url.pathname}`);
+    }
+
     return fetch(`${siteOrigin}/index.html`, {
       headers: { "Content-Type": "text/html" },
     });
