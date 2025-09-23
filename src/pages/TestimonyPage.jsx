@@ -106,7 +106,6 @@ const navigate = useNavigate();
     const allImages = [...cssBackgroundImages];
     if (thumbnailUrl) allImages.push(thumbnailUrl);
     preloadImages(allImages, () => setAllAssetsLoaded(true));
-    warmUpSpeechSynthesis();
   }, [thumbnailUrl]);
 
   // Show language help overlay for special lang value
@@ -178,14 +177,7 @@ const handleClick = () => {
   const emailShareUrl = `mailto:?subject=${encodeURIComponent(title[lang] || title['en'])}&body=${encodeURIComponent(shareText)}`;
   // Show loading if assets or testimony not ready
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
-  function warmUpSpeechSynthesis() {
-    return new Promise((resolve) => {
-      const utterance = new SpeechSynthesisUtterance(" ");
-      utterance.volume = 0; // mute
-      utterance.onend = resolve;
-      speechSynthesis.speak(utterance);
-    });
-  }
+
   useEffect(() => {
     if (typeof window === 'undefined') return; 
     const checkScreen = () => setIsMobileOrTablet(window.innerWidth <= 1368);
