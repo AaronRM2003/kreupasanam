@@ -65,7 +65,9 @@ export default async (request) => {
       const maxLength = 150; // characters
       let description = fullContent.slice(0, maxLength);
       description = description.slice(0, description.lastIndexOf(" ")); // avoid cutting mid-word
+      description = description.replace(/\n/g, ' '); // replace newlines with space
       description = escapeHtml(description);
+
       const videoUrl = item.video || "";
       const videoIdMatch = videoUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
       const videoId = videoIdMatch ? videoIdMatch[1] : null;
