@@ -77,3 +77,11 @@
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 0.75rem;
 }
+.shareOption.instagram {
+  background: #fdf0f5; /* light pastel background */
+  color: #E1306C;      /* Instagram brand pink */
+}
+
+.shareOption.instagram:hover {
+  background: #fbd8e7; /* slightly darker pastel for hover */
+}

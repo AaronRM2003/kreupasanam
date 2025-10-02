@@ -7,7 +7,7 @@ import {
   FaTelegramPlane,
   FaEnvelope,
   FaRegCopy,
-  FaCheck
+  FaInstagram,
 } from 'react-icons/fa';
 import styles from "./share.module.css"
 
@@ -80,16 +80,58 @@ export function ShareModal({
         </div>
 
         <div className={styles.shareOptionsGrid}>
-          <a href={fbShareUrl} target="_blank" rel="noopener noreferrer" className={`${styles.shareOption} ${styles.facebook}`}>
-            <FaFacebookF />
-            Facebook
-          </a>
+          <a
+  href={fbShareUrl}
+  target="_blank"
+  rel="noopener noreferrer"
+  className={`${styles.shareOption} ${styles.facebook}`}
+  onClick={async (e) => {
+    try {
+      await navigator.clipboard.writeText(localText); // copy text first
+      setCopied(true);
+      setTimeout(() => setCopied(false), 3000);
+    } catch (err) {
+      console.error("Copy failed:", err);
+    }
+  }}
+>
+  <FaFacebookF />
+  Facebook
+</a>
 
+<a
+  href="https://www.instagram.com/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className={`${styles.shareOption} ${styles.instagram}`}
+  onClick={async (e) => {
+    try {
+      await navigator.clipboard.writeText(localText); // copy text first
+      setCopied(true);
+      setTimeout(() => setCopied(false), 3000);
+    } catch (err) {
+      console.error("Copy failed:", err);
+    }
+
+    // Optional: If Web Share API is available, use it
+    if (navigator.share) {
+      e.preventDefault();
+      navigator.share({
+        title: title,
+        text: localText,
+        url: window.location.href,
+      }).catch((err) => console.error("Share failed:", err));
+    }
+  }}
+>
+  <FaInstagram />
+  Instagram
+</a>
           <a href={waShareUrl} target="_blank" rel="noopener noreferrer" className={`${styles.shareOption} ${styles.whatsapp}`}>
             <FaWhatsapp />
             WhatsApp
           </a>
-
+          
           <a href={telegramShareUrl} target="_blank" rel="noopener noreferrer" className={`${styles.shareOption} ${styles.telegram}`}>
             <FaTelegramPlane />
             Telegram
