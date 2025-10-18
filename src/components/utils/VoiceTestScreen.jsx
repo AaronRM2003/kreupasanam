@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 const Spinner = () => (
   <span
@@ -17,6 +17,7 @@ const Spinner = () => (
   />
 );
 
+// Add keyframes for spinner animation globally or inline in a style tag
 const styleSheet = `
 @keyframes spin {
   0% { transform: rotate(0deg);}
@@ -35,58 +36,28 @@ export default function VoiceTestScreen({
   onVoiceChange,
   alreadyTested,
 }) {
-  // Local state to store temporary selection
-  const [selectedVoice, setSelectedVoice] = useState(voice?.voiceURI || '');
-
-  // Reset local selection when parent voice changes
-  useEffect(() => {
-    setSelectedVoice(voice?.voiceURI || '');
-  }, [voice]);
-
   const testSentence =
     testSentences[lang] ||
     'This is a quick test to ensure subtitles are read correctly in your selected voice.';
 
-  const handleSelectChange = (e) => {
-    setSelectedVoice(e.target.value); // only update local state
-  };
-
-  const handleStart = () => {
-    // Commit selection to parent and start test
-    onVoiceChange({ target: { value: selectedVoice } });
-    startAccurateVoiceTest();
-  };
-
-  const handleCancel = () => {
-    setSelectedVoice(voice?.voiceURI || ''); // revert local selection
-    cancelVoiceTest();
-  };
-
   return (
     <>
       <style>{styleSheet}</style>
-      <div
-        className="voice-test-container"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="voice-test-title"
-      >
+      <div className="voice-test-container" role="dialog" aria-modal="true" aria-labelledby="voice-test-title">
         <h2 id="voice-test-title" className="voice-test-title">
           Voice Test: {voice?.name || 'Default'}
         </h2>
 
         {lang && <p className="voice-test-lang">Language: {lang.toUpperCase()}</p>}
 
-        <label htmlFor="voice-select" className="voice-test-label">
-          Select voice:
-        </label>
+        <label htmlFor="voice-select" className="voice-test-label">Select voice:</label>
         <select
           id="voice-select"
-          value={selectedVoice}
-          onChange={handleSelectChange}
+          value={voice?.voiceURI || ''}
+          onChange={onVoiceChange}
           aria-label="Select voice for testing"
           className="voice-test-select"
-          disabled={isLoadingTest || alreadyTested}
+          disabled={isLoadingTest}
         >
           {voices.map((v) => (
             <option key={v.voiceURI} value={v.voiceURI}>
@@ -101,7 +72,7 @@ export default function VoiceTestScreen({
 
             <div className="voice-test-buttons">
               <button
-                onClick={handleStart}
+                onClick={startAccurateVoiceTest}
                 className="voice-test-button primary"
                 aria-label="Start voice test reading"
                 disabled={isLoadingTest}
@@ -118,7 +89,7 @@ export default function VoiceTestScreen({
               </button>
 
               <button
-                onClick={handleCancel}
+                onClick={cancelVoiceTest}
                 className="voice-test-button cancel"
                 aria-label="Cancel voice test"
                 disabled={isLoadingTest}
@@ -128,21 +99,24 @@ export default function VoiceTestScreen({
             </div>
           </>
         ) : (
-          <div className="voice-test-buttons">
-            <button
-              onClick={() => {
-                cancelVoiceTest();
-              }}
-              className="voice-test-button primary"
-              autoFocus
-              aria-label="Close voice test"
-            >
-              OK
-            </button>
-          </div>
+          <>
+           
+            <div className="voice-test-buttons">
+              <button
+                onClick={() => {
+                  onVoiceChange({ target: { value: voice.voiceURI } }); // simulate select change
+                  cancelVoiceTest();
+                }}
+                className="voice-test-button primary"
+                autoFocus
+                aria-label="Close voice test"
+              >
+                OK
+              </button>
+            </div>
+          </>
         )}
-
-        <p
+         <p
           style={{
             marginTop: '24px',
             fontSize: '0.85rem',
@@ -151,7 +125,8 @@ export default function VoiceTestScreen({
           }}
           role="note"
         >
-          Note: On some devices, like newer Android phones, changing the voice may not actually affect the spoken output.
+          Note: On some devices, like newer Android phones, changing the voice
+          may not actually affect the spoken output.
         </p>
       </div>
     </>
