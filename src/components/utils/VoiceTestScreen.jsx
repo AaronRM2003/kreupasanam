@@ -57,6 +57,7 @@ export default function VoiceTestScreen({
           onChange={onVoiceChange}
           aria-label="Select voice for testing"
           className="voice-test-select"
+          disabled={isLoadingTest}
         >
           {voices.map((v) => (
             <option key={v.voiceURI} value={v.voiceURI}>
