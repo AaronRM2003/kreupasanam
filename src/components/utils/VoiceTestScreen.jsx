@@ -35,13 +35,11 @@ export default function VoiceTestScreen({
   onVoiceChange,
   alreadyTested,
 }) {
+  // Local state for select
   const [tempVoice, setTempVoice] = useState(voice?.voiceURI || '');
-  const [previousVoice, setPreviousVoice] = useState(voice?.voiceURI || '');
 
   useEffect(() => {
-    // Update both when parent voice changes
     setTempVoice(voice?.voiceURI || '');
-    setPreviousVoice(voice?.voiceURI || '');
   }, [voice]);
 
   const testSentence =
@@ -49,14 +47,17 @@ export default function VoiceTestScreen({
     'This is a quick test to ensure subtitles are read correctly in your selected voice.';
 
   const handleSelectChange = (e) => {
-    setTempVoice(e.target.value);
-    onVoiceChange(e);
+    setTempVoice(e.target.value); // only local change
+  };
+
+  const handleStart = () => {
+    // Only now commit to parent
+    onVoiceChange({ target: { value: tempVoice } });
+    startAccurateVoiceTest();
   };
 
   const handleCancel = () => {
-    // Revert to previous selection
-    setTempVoice(previousVoice);
-    onVoiceChange({ target: { value: previousVoice } });
+    setTempVoice(voice?.voiceURI || ''); // revert locally
     cancelVoiceTest();
   };
 
@@ -99,7 +100,7 @@ export default function VoiceTestScreen({
 
             <div className="voice-test-buttons">
               <button
-                onClick={startAccurateVoiceTest}
+                onClick={handleStart}
                 className="voice-test-button primary"
                 aria-label="Start voice test reading"
                 disabled={isLoadingTest}
@@ -129,7 +130,7 @@ export default function VoiceTestScreen({
           <div className="voice-test-buttons">
             <button
               onClick={() => {
-                onVoiceChange({ target: { value: voice.voiceURI } });
+                onVoiceChange({ target: { value: tempVoice } });
                 cancelVoiceTest();
               }}
               className="voice-test-button primary"
