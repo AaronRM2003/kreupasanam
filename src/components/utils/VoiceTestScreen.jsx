@@ -35,34 +35,31 @@ export default function VoiceTestScreen({
   onVoiceChange,
   alreadyTested,
 }) {
-  // Local state for dropdown selection
-  const [tempVoice, setTempVoice] = useState(voice?.voiceURI || '');
+  // Local state to store temporary selection
+  const [selectedVoice, setSelectedVoice] = useState(voice?.voiceURI || '');
 
-  // Whenever the parent voice changes, update local state
+  // Reset local selection when parent voice changes
   useEffect(() => {
-    setTempVoice(voice?.voiceURI || '');
+    setSelectedVoice(voice?.voiceURI || '');
   }, [voice]);
 
   const testSentence =
     testSentences[lang] ||
     'This is a quick test to ensure subtitles are read correctly in your selected voice.';
 
-  // Local change in dropdown
   const handleSelectChange = (e) => {
-    setTempVoice(e.target.value);
+    setSelectedVoice(e.target.value); // only update local state
   };
 
-  // Start the voice test and commit selection
   const handleStart = () => {
-    // Commit selected voice to parent
-    onVoiceChange({ target: { value: tempVoice } });
+    // Commit selection to parent and start test
+    onVoiceChange({ target: { value: selectedVoice } });
     startAccurateVoiceTest();
   };
 
-  // Cancel test and revert dropdown
   const handleCancel = () => {
-    setTempVoice(voice?.voiceURI || ''); // revert to original
-    cancelVoiceTest(); // inform parent to cancel
+    setSelectedVoice(voice?.voiceURI || ''); // revert local selection
+    cancelVoiceTest();
   };
 
   return (
@@ -85,7 +82,7 @@ export default function VoiceTestScreen({
         </label>
         <select
           id="voice-select"
-          value={tempVoice}
+          value={selectedVoice}
           onChange={handleSelectChange}
           aria-label="Select voice for testing"
           className="voice-test-select"
@@ -133,7 +130,9 @@ export default function VoiceTestScreen({
         ) : (
           <div className="voice-test-buttons">
             <button
-              onClick={cancelVoiceTest}
+              onClick={() => {
+                cancelVoiceTest();
+              }}
               className="voice-test-button primary"
               autoFocus
               aria-label="Close voice test"
