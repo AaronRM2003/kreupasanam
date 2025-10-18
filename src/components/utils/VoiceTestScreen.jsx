@@ -35,9 +35,10 @@ export default function VoiceTestScreen({
   onVoiceChange,
   alreadyTested,
 }) {
-  // Local state for select
+  // Local state for dropdown selection
   const [tempVoice, setTempVoice] = useState(voice?.voiceURI || '');
 
+  // Whenever the parent voice changes, update local state
   useEffect(() => {
     setTempVoice(voice?.voiceURI || '');
   }, [voice]);
@@ -46,19 +47,22 @@ export default function VoiceTestScreen({
     testSentences[lang] ||
     'This is a quick test to ensure subtitles are read correctly in your selected voice.';
 
+  // Local change in dropdown
   const handleSelectChange = (e) => {
-    setTempVoice(e.target.value); // only local change
+    setTempVoice(e.target.value);
   };
 
+  // Start the voice test and commit selection
   const handleStart = () => {
-    // Only now commit to parent
+    // Commit selected voice to parent
     onVoiceChange({ target: { value: tempVoice } });
     startAccurateVoiceTest();
   };
 
+  // Cancel test and revert dropdown
   const handleCancel = () => {
-    setTempVoice(voice?.voiceURI || ''); // revert locally
-    cancelVoiceTest();
+    setTempVoice(voice?.voiceURI || ''); // revert to original
+    cancelVoiceTest(); // inform parent to cancel
   };
 
   return (
@@ -85,7 +89,7 @@ export default function VoiceTestScreen({
           onChange={handleSelectChange}
           aria-label="Select voice for testing"
           className="voice-test-select"
-          disabled={isLoadingTest}
+          disabled={isLoadingTest || alreadyTested}
         >
           {voices.map((v) => (
             <option key={v.voiceURI} value={v.voiceURI}>
@@ -129,10 +133,7 @@ export default function VoiceTestScreen({
         ) : (
           <div className="voice-test-buttons">
             <button
-              onClick={() => {
-                onVoiceChange({ target: { value: tempVoice } });
-                cancelVoiceTest();
-              }}
+              onClick={cancelVoiceTest}
               className="voice-test-button primary"
               autoFocus
               aria-label="Close voice test"
