@@ -113,16 +113,19 @@ const subtitleDuration = currentSub?.duration ?? 3;
 
   // Prepare the text first to create utterance and get voice
   let textToSpeak = currentSubtitle
-  // Remove content inside square brackets (already done)
+  // Remove content inside square brackets
   .replace(/\[[^\]]*\]/g, '')  
   // Remove ellipses or multiple dots
   .replace(/\.{2,}/g, '')      
   // Remove standalone punctuation like -- or ***
   .replace(/[-*]{2,}/g, '')    
-  // Replace V.P. with VP as before
+  // Replace V.P. with VP
   .replace(/\b(V\.P\.)\b/g, 'VP')
+  // ✅ Replace Kreupasanam with Kripaasanam for better pronunciation
+  .replace(/\bKreupasanam\b/gi, 'Kripaasanam')
   // Trim whitespace
   .trim();
+
 
 
   const utterance = new SpeechSynthesisUtterance(textToSpeak);
