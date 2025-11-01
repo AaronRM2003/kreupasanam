@@ -122,7 +122,7 @@ const subtitleDuration = currentSub?.duration ?? 3;
   // Replace V.P. with VP
   .replace(/\b(V\.P\.)\b/g, 'VP')
   // ✅ Replace Kreupasanam with Kripaasanam for better pronunciation
-  .replace(/\bKreupasanam\b/gi, 'Krupaasanam')
+  .replace(/\bKreupasanam\b/gi, 'Kripaasenam')
   // Trim whitespace
   .trim();
 
