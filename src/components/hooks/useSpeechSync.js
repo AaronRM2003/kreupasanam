@@ -132,16 +132,25 @@ const subtitleDuration = currentSub?.duration ?? 3;
   const numbers = text.match(/\d+/g); // match all sequences of digits
   if (!numbers) return 1; // no numbers, normal speed
 
-  // compute slowdown factor: bigger numbers → slower speech
   let factor = 1;
+
+  // Slow down for long numbers
   numbers.forEach(num => {
     if (num.length >= 4) factor *= 0.85;  // very long number
     else if (num.length === 3) factor *= 0.9;
   });
 
-  // keep factor in reasonable range
-  return Math.max(0.5, Math.min(1, factor));
+  // 👇 Detect Bible-style references like "Numbers 2:6", "John 3:16", etc.
+  const bibleRefPattern = /\b([A-Z][a-z]+)\s+\d{1,3}:\d{1,3}\b/;
+  if (bibleRefPattern.test(text)) {
+    // Add more delay for chapter–verse phrasing
+    factor *= 0.8; // reduce further by 20%
+  }
+
+  // Keep factor within reasonable range
+  return Math.max(0.4, Math.min(1, factor));
 }
+
 
  const savedVoiceName = localStorage.getItem(`${lang}`);
 const voices = window.speechSynthesis.getVoices();
