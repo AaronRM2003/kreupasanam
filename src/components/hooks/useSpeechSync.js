@@ -50,7 +50,7 @@ export function useSpeechSync({
   }, [isSpeaking, showVideo]);
 
 const margin = 0.05;   // your safe margin
-const maxStepUp = 0.15;
+const maxStepUp = 0.25;
 
 const lastAdjustedRateRef = useRef(1);
 
