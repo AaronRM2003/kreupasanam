@@ -154,6 +154,20 @@ const subtitleDuration = currentSub?.duration ?? 3;
 
   return factor;
 }
+function punctuationFactor(text) {
+  const commas = (text.match(/,/g) || []).length;
+  const periods = (text.match(/[.!?]/g) || []).length;
+
+  // Each comma adds a small pause (≈ 0.15s), each period ≈ 0.25s
+  const pauseTime = commas * 0.15 + periods * 0.25;
+
+  const words = text.trim().split(/\s+/).length;
+  const estimatedDuration = words / 2.5; // assume 2.5 wps baseline
+
+  const factor = estimatedDuration / (estimatedDuration + pauseTime);
+  return Math.max(0.7, Math.min(1, factor)); // never reduce too much
+}
+
 
   // Set utterance lang as before
   function numberFactor(text) {
@@ -219,14 +233,12 @@ if (utterance.voice?.name) {
     if (rates) {
      const numFactor = numberFactor(textToSpeak);
       const lenFactor = lengthFactor(textToSpeak);
-      console.log(`Length factor: ${lenFactor}`);
-      let adjustedRateWithFactors = rates * numFactor * lenFactor;
-      adjustedRateWithFactors = Math.max(0.1, Math.min(1.2, adjustedRateWithFactors));
+  
+const punctFactor = punctuationFactor(textToSpeak);
 
-      
-    // Clamp to reasonable bounds
-        adjustedRate = adjustedRateWithFactors;
-      playerRef.current.setPlaybackRate(adjustedRate);  
+let adjustedRate = rates * numFactor * lenFactor * punctFactor;
+adjustedRate = Math.max(0.1, Math.min(1.2, adjustedRate));
+
     }
   }
   console.log(`Speech rate: ${speechRate}, Adjusted rate: ${adjustedRate}`);
