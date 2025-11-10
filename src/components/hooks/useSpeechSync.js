@@ -225,10 +225,8 @@ if (utterance.voice?.name) {
 
       
     // Clamp to reasonable bounds
-    adjustedRateWithNumbers = Math.max(0.1, Math.min(1.2, adjustedRateWithNumbers));
-    
-    adjustedRate = adjustedRateWithNumbers;
-    playerRef.current.setPlaybackRate(adjustedRate);
+        adjustedRate = adjustedRateWithFactors;
+      playerRef.current.setPlaybackRate(adjustedRate);  
     }
   }
   console.log(`Speech rate: ${speechRate}, Adjusted rate: ${adjustedRate}`);
