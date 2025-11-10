@@ -219,7 +219,7 @@ if (utterance.voice?.name) {
     if (rates) {
      const numFactor = numberFactor(textToSpeak);
       const lenFactor = lengthFactor(textToSpeak);
-
+      console.log(`Length factor: ${lenFactor}`);
       let adjustedRateWithFactors = rates * numFactor * lenFactor;
       adjustedRateWithFactors = Math.max(0.1, Math.min(1.2, adjustedRateWithFactors));
 
