@@ -61,7 +61,7 @@ export default function SubtitleVoiceControls({
     setTestVoice(match);
 
     // Check if tested
-    const testKey = `voice_test_data_v2_${lang}`;
+    const testKey = `voice_test_data_${lang}`;
     const storedData = localStorage.getItem(testKey);
     let tested = false;
     if (storedData) {
@@ -318,7 +318,7 @@ const handleReadSubtitlesClick = (forceTest = false) => {
     return;
   }
 
-  const testKey = `voice_test_data_v2_${lang}`;
+  const testKey = `voice_test_data_${lang}`;
   const storedData = localStorage.getItem(testKey);
   let needsTest = true;
 
@@ -351,101 +351,85 @@ if (storedData) {
 
 
   // Start the voice test reading and measure speed
- const startAccurateVoiceTest = () => {
-  if (!testVoice) return;
+  const startAccurateVoiceTest = () => {
+    if (!testVoice) return;
 
-  setIsLoadingTest(true);
+    setIsLoadingTest(true);
 
-  const sentence =
-    testSentences[lang] ||
-    "This is a quick test to ensure subtitles are read correctly in your selected voice.";
+    const sentence = testSentences[lang] || "This is a quick test to ensure subtitles are read correctly in your selected voice.";
+    const utterance = new SpeechSynthesisUtterance(sentence);
+    utterance.voice = testVoice;
+    utterance.lang = lang;
 
-  const utterance = new SpeechSynthesisUtterance(sentence);
-  utterance.voice = testVoice;
-  utterance.lang = lang;
+    utteranceRef.current = utterance;
 
-  utteranceRef.current = utterance;
+    let speechStartTime = null;
 
-  let speechStartTime = null;
-
-  utterance.onstart = () => {
-    speechStartTime = performance.now();
-  };
-
-  utterance.onerror = cleanup;
-  utterance.onpause = cleanup;
-
-  utterance.onend = () => {
-    if (!speechStartTime) return;
-
-    const speechEndTime = performance.now();
-    const elapsedSeconds = (speechEndTime - speechStartTime) / 1000;
-
-    const charCount = sentence.replace(/\s+/g, "").length;
-    const cps = charCount / elapsedSeconds;
-
-    console.log(
-      `✅ Accurate CPS for "${testVoice.name}" (${lang}): ${cps.toFixed(
-        2
-      )} chars/sec (time=${elapsedSeconds.toFixed(2)}s)`
-    );
-
-    const testData = {
-      cps: parseFloat(cps.toFixed(2)),
-      voiceName: testVoice.name,
-      voiceURI: testVoice.voiceURI,
-      lang: testVoice.lang,
-      testedAt: new Date().toISOString(),
+    utterance.onstart = () => {
+      speechStartTime = performance.now();
     };
 
-    // 🔁 New storage key (forces re-testing for old users)
-    const testKey = `voice_test_data_v2_${lang}`;
+    utterance.onerror = () => {
+      console.error("Speech synthesis error");
+      setIsLoadingTest(false);
+      setShowTestScreen(false);
+      playVideo();
+      utteranceRef.current = null;
+    };
 
-    // Clear any old WPS-based data
-    localStorage.removeItem(`voice_test_data_${lang}`);
-    localStorage.removeItem(`${lang}`);
+    utterance.onpause = () => {
+      setIsLoadingTest(false);
+      setShowTestScreen(false);
+      playVideo();
+      utteranceRef.current = null;
+    };
 
-    // Store the new test data cleanly
-    const storedData = localStorage.getItem(testKey);
-    let allTestData = {};
+    utterance.onend = () => {
+      if (!utteranceRef.current) return;
 
-    if (storedData) {
-      try {
-        allTestData = JSON.parse(storedData);
-      } catch {
-        allTestData = {};
+      const speechEndTime = performance.now();
+      const elapsedSeconds = (speechEndTime - speechStartTime) / 1000;
+      const wordCount = sentence.trim().split(/\s+/).length;
+      const wps = wordCount / elapsedSeconds;
+
+      console.log(`Accurate WPS for "${testVoice.name}": ${wps.toFixed(2)} (time=${elapsedSeconds.toFixed(2)}s)`);
+
+      const testData = {
+        wps: wps.toFixed(2),
+        voiceName: testVoice.name,
+        voiceURI: testVoice.voiceURI,
+        lang: testVoice.lang,
+      };
+      const testKey = `voice_test_data_${lang}`;
+      const storedData = localStorage.getItem(testKey);
+      let allTestData = {};
+
+      if (storedData) {
+        try {
+          allTestData = JSON.parse(storedData);
+        } catch {
+          allTestData = {};
+        }
       }
-    }
 
-    allTestData[testVoice.voiceURI] = testData;
+      allTestData[testVoice.voiceURI] = testData;
 
-    localStorage.setItem(testKey, JSON.stringify(allTestData));
-    localStorage.setItem(`voice_selected_v2_${lang}`, testVoice.voiceURI);
+      localStorage.setItem(testKey, JSON.stringify(allTestData));
+      localStorage.setItem(`${lang}`,testVoice.voiceURI);
+      console.log("accuratetest - ", localStorage.getItem(`voice_test_data_${lang}`), "langitem-",localStorage.getItem(`${lang}`));
+      setAlreadyTested(true); // Mark tested after success
+      setShowTestScreen(false);
+      setIsLoadingTest(false);
 
-    console.log("✅ Saved new CPS test data:", testData);
+      playVideo();
+      if(!isSpeaking)
+        toggleSpeaking();
 
-    setAlreadyTested(true);
-    setShowTestScreen(false);
-    setIsLoadingTest(false);
-
-    playVideo();
-    if (!isSpeaking) toggleSpeaking();
-
-    utteranceRef.current = null;
+      utteranceRef.current = null;
+    };
+    speechSynthesis.cancel();
+    speechSynthesis.speak(utterance);
   };
-
-  function cleanup() {
-    console.error("Speech synthesis test error or pause");
-    setIsLoadingTest(false);
-    setShowTestScreen(false);
-    playVideo();
-    utteranceRef.current = null;
-  }
-
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(utterance);
-};
-
 
   const cancelVoiceTest = () => {
     if (utteranceRef.current) {
@@ -477,7 +461,7 @@ if (storedData) {
     }
 
     // On voice change, check if this voice is already tested
-    const testKey = `voice_test_data_v2_${lang}`;
+    const testKey = `voice_test_data_${lang}`;
     const storedData = localStorage.getItem(testKey);
     console.log("handleread - ", storedData);
 

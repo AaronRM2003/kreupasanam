@@ -49,13 +49,13 @@ export function useSpeechSync({
     }
   }, [isSpeaking, showVideo]);
 
-const margin = 0.09;   // safe margin
+const margin = 0.09;   // your safe margin
 const maxStepUp = 0.25;
 
 const lastAdjustedRateRef = useRef(1);
 
-function adjustedRateFixedSpeech(cps, rawRate) {
-  const k = rawRate / cps;
+function adjustedRateFixedSpeech(wps, rawRate) {
+  const k = rawRate / wps;
   const speechRate = 1;
   let adjustedRate = speechRate / k;
   adjustedRate -= margin;
@@ -64,8 +64,8 @@ function adjustedRateFixedSpeech(cps, rawRate) {
   return adjustedRate;
 }
 
-function getSmoothedAdjustedRate(cps, rawRate) {
-  const targetAdjustedRate = adjustedRateFixedSpeech(cps, rawRate);
+function getSmoothedAdjustedRate(wps, rawRate) {
+  const targetAdjustedRate = adjustedRateFixedSpeech(wps, rawRate);
   const lastAdj = lastAdjustedRateRef.current;
 
   if (targetAdjustedRate < lastAdj) {
@@ -76,6 +76,7 @@ function getSmoothedAdjustedRate(cps, rawRate) {
     // Increasing: increase gradually by maxStepUp
     let newAdjRate = lastAdj + maxStepUp;
     if (newAdjRate > targetAdjustedRate) newAdjRate = targetAdjustedRate;
+    console.log(targetAdjustedRate,newAdjRate);
     lastAdjustedRateRef.current = newAdjRate;
     return parseFloat(newAdjRate.toFixed(4));
   } else {
@@ -85,9 +86,10 @@ function getSmoothedAdjustedRate(cps, rawRate) {
 }
 
 
-const voice = useSelectedVoice(lang);
 
-useEffect(() => {
+
+  const voice = useSelectedVoice(lang);
+  useEffect(() => {
   if (!isSpeaking || !showVideo || !currentSubtitle || subtitles.length === 0) return;
 
   if (!hasStartedSpeakingRef.current) {
@@ -99,92 +101,108 @@ useEffect(() => {
   lastSpokenRef.current = currentSubtitle;
 
   const currentSub = subtitles.find(
-    (sub) => currentTime >= sub.startSeconds && currentTime < sub.endSeconds
-  );
+  (sub) => currentTime >= sub.startSeconds && currentTime < sub.endSeconds
+);
 
-  const subtitleDuration = currentSub?.duration ?? 3;
+const subtitleDuration = currentSub?.duration ?? 3;
 
-  // ✅ Use characters per second instead of words
-  const charCount = currentSubtitle.replace(/\s+/g, '').length;
+  const wordCount = currentSubtitle.trim().split(/\s+/).length;
 
   // Get the utterance voice if possible
-  let cps = 15; // default baseline (average human speech)
+  let wps = 2; // default fallback
 
-  // Clean the text for speech
+  // Prepare the text first to create utterance and get voice
   let textToSpeak = currentSubtitle
-    .replace(/\[[^\]]*\]/g, '')       // remove [bracketed] parts
-    .replace(/\.{2,}/g, '')           // remove ellipses
-    .replace(/[-*]{2,}/g, '')         // remove long dashes/asterisks
-    .replace(/\b(V\.P\.)\b/g, 'VP')   // normalize abbreviations
-    .replace(/\bKreupasanam\b/gi, 'Kri-paasenam') // fix pronunciation
-    .trim();
+  // Remove content inside square brackets
+  .replace(/\[[^\]]*\]/g, '')  
+  // Remove ellipses or multiple dots
+  .replace(/\.{2,}/g, '')      
+  // Remove standalone punctuation like -- or ***
+  .replace(/[-*]{2,}/g, '')    
+  // Replace V.P. with VP
+  .replace(/\b(V\.P\.)\b/g, 'VP')
+  // ✅ Replace Kreupasanam with Kripaasanam for better pronunciation
+  .replace(/\bKreupasanam\b/gi, 'Kri-paasenam')
+  // Trim whitespace
+  .trim();
+
+
 
   const utterance = new SpeechSynthesisUtterance(textToSpeak);
 
+  // Set utterance lang as before
   function numberFactor(text) {
-    const numbers = text.match(/\d+/g);
-    if (!numbers) return 1;
+  const numbers = text.match(/\d+/g); // match all sequences of digits
+  if (!numbers) return 1; // no numbers, normal speed
 
-    let factor = 1;
-    numbers.forEach(num => {
-      if (num.length >= 4) factor *= 0.85;
-      else if (num.length === 3) factor *= 0.9;
-    });
+  let factor = 1;
 
-    const bibleRefPattern = /\b([A-Z][a-z]+)\s+\d{1,3}:\d{1,3}\b/;
-    if (bibleRefPattern.test(text)) factor *= 0.8;
+  // Slow down for long numbers
+  numbers.forEach(num => {
+    if (num.length >= 4) factor *= 0.85;  // very long number
+    else if (num.length === 3) factor *= 0.9;
+  });
 
-    return Math.max(0.4, Math.min(1, factor));
+  // 👇 Detect Bible-style references like "Numbers 2:6", "John 3:16", etc.
+  const bibleRefPattern = /\b([A-Z][a-z]+)\s+\d{1,3}:\d{1,3}\b/;
+  if (bibleRefPattern.test(text)) {
+    // Add more delay for chapter–verse phrasing
+    factor *= 0.8; // reduce further by 20%
   }
 
-  // ✅ use the new key structure (v2)
-  const savedVoiceName = localStorage.getItem(`voice_selected_v2_${lang}`);
-  const voices = window.speechSynthesis.getVoices();
-  const matchedVoice = voices.find(v => v.name === savedVoiceName);
-  utterance.voice = matchedVoice || voice || null;
-  utterance.lang = lang || 'en-US';
+  // Keep factor within reasonable range
+  return Math.max(0.4, Math.min(1, factor));
+}
 
-  if (utterance.voice?.name) {
-    const testKey = `voice_test_data_v2_${lang}`;
-    const storedData = localStorage.getItem(testKey);
 
-    if (storedData) {
-      try {
-        const allTestData = JSON.parse(storedData);
-        const voiceData = allTestData[utterance.voice.name];
-        if (voiceData && voiceData.cps) {
-          cps = parseFloat(voiceData.cps);
-        }
-      } catch (e) {
-        console.error("Failed to parse voice test data:", e);
+ const savedVoiceName = localStorage.getItem(`${lang}`);
+const voices = window.speechSynthesis.getVoices();
+const matchedVoice = voices.find(v => v.name === savedVoiceName);
+utterance.voice = matchedVoice || voice || null;
+console.log(voice, matchedVoice, savedVoiceName);
+utterance.lang = lang || 'en-US';
+
+if (utterance.voice?.name) {
+  const testKey = `voice_test_data_${lang}`;
+  const storedData = localStorage.getItem(testKey);
+
+  if (storedData) {
+    try {
+      const allTestData = JSON.parse(storedData);
+      const voiceData = allTestData[utterance.voice.name];
+      if (voiceData && voiceData.wps) {
+        wps = parseFloat(voiceData.wps);
       }
+    } catch (e) {
+      console.error("Failed to parse voice test data:", e);
     }
   }
+}
 
-  console.log(cps, `voice_${utterance.voice?.name}_tested`);
-  const rawRate = charCount / subtitleDuration;
-  console.log(charCount, subtitleDuration);
+
+  console.log(wps,`voice_${utterance.voice.name}_tested`);
+  const rawRate = wordCount / subtitleDuration;
+  console.log(wordCount, subtitleDuration);
 
   let speechRate = 1; // fallback
   let adjustedRate = 1;
 
   if (playerRef.current?.setPlaybackRate) {
-    console.log(`Raw rate: ${rawRate}, CPS: ${cps}`);
-    const rates = getSmoothedAdjustedRate(cps, rawRate);
-
+    console.log(`Raw rate: ${rawRate}, WPS: ${wps}`);
+    const rates = getSmoothedAdjustedRate(wps, rawRate);
+    
     if (rates) {
-      const numFactor = numberFactor(textToSpeak);
-      let adjustedRateWithNumbers = rates * numFactor;
+      const numFactor = numberFactor(textToSpeak); // <--- slow down for numbers
+    let adjustedRateWithNumbers = rates * numFactor;
 
-      adjustedRateWithNumbers = Math.max(0.1, Math.min(1.2, adjustedRateWithNumbers));
-      adjustedRate = adjustedRateWithNumbers;
-
-      playerRef.current.setPlaybackRate(adjustedRate);
+    // Clamp to reasonable bounds
+    adjustedRateWithNumbers = Math.max(0.1, Math.min(1.2, adjustedRateWithNumbers));
+    
+    adjustedRate = adjustedRateWithNumbers;
+    playerRef.current.setPlaybackRate(adjustedRate);
     }
   }
-
   console.log(`Speech rate: ${speechRate}, Adjusted rate: ${adjustedRate}`);
-
   if (isSSMLSupported) {
     textToSpeak = enhanceWithSsml(textToSpeak);
   }
@@ -194,6 +212,7 @@ useEffect(() => {
   window.speechSynthesis.cancel();
   window.speechSynthesis.speak(utterance);
 }, [isSpeaking, showVideo, currentSubtitle, currentTime, subtitles, lang, playerRef, isSSMLSupported]);
+
 
   useEffect(() => {
     if (!isSpeaking && playerRef.current) {
