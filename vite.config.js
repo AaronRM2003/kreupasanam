@@ -64,8 +64,8 @@ export default defineConfig(({ command, mode }) => {
       minify: 'terser',
       terserOptions: {
         compress: {
-          drop_console: mode === 'production',
-          drop_debugger: mode === 'production'
+           drop_console: false,
+    drop_debugger: false
         }
       }
     }
