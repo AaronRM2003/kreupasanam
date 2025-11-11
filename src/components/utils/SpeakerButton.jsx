@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { FaVolumeUp, FaVolumeDown } from 'react-icons/fa';
 import { useSelectedVoice } from '../hooks/useSelectedVoice';
 import './speakerControl.css';
