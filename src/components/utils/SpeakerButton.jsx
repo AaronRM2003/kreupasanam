@@ -33,7 +33,7 @@ export default function SubtitleVoiceControls({
   const pauseCheckInterval = useRef(null);
 
   const voiceFromHook = useSelectedVoice(lang);
-
+  
   // Load system voices on mount and when voices changed
   useEffect(() => {
   function loadVoices() {
@@ -191,7 +191,22 @@ export default function SubtitleVoiceControls({
     if (hideTimeout) clearTimeout(hideTimeout);
     if (maxInteractionTimeout) clearTimeout(maxInteractionTimeout);
   };
-
+  const testKey = `voice_test_data_${lang}`;
+  const storedData = localStorage.getItem(testKey);
+  const tested = useMemo(() => {
+  if (!storedData) return false;
+  try {
+    const parsed = JSON.parse(storedData);
+    const voiceTestData = parsed[newVoice.voiceURI];
+    return (
+      voiceTestData &&
+      voiceTestData.voiceName === newVoice.name &&
+      voiceTestData.lang === newVoice.lang
+    );
+  } catch {
+    return false;
+  }
+}, [storedData, newVoice]);
   const toggleControls = () => {
     clearAllTimeouts();
     setShowControls(true);
@@ -616,7 +631,7 @@ if (storedData) {
           cancelVoiceTest={cancelVoiceTest}
           onVoiceChange={onVoiceChange}
           voices={systemVoices}
-          alreadyTested={alreadyTested}
+          alreadyTested={tested}
         />
       )}
 </>
