@@ -49,7 +49,7 @@ export function useSpeechSync({
     }
   }, [isSpeaking, showVideo]);
 
-const margin = 0.06;   // your safe margin
+const margin = 0.10;   // your safe margin
 const maxStepUp = 0.25;
 
 const lastAdjustedRateRef = useRef(1);
@@ -138,7 +138,7 @@ const subtitleDuration = currentSub?.duration ?? 3;
 
     // Typical spoken English average is around 4.7 chars/word
     // We'll use that as a baseline
-    const baseline = 3;
+    const baseline = 3.5;
 
     let factor = 1;
 
