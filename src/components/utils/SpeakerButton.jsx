@@ -63,6 +63,7 @@ export default function SubtitleVoiceControls({
     // Check if tested
     const testKey = `voice_test_data_${lang}`;
     const storedData = localStorage.getItem(testKey);
+    
     let tested = false;
     if (storedData) {
       try {
@@ -197,16 +198,16 @@ export default function SubtitleVoiceControls({
   if (!storedData) return false;
   try {
     const parsed = JSON.parse(storedData);
-    const voiceTestData = parsed[newVoice.voiceURI];
+    const voiceTestData = parsed[testVoice.voiceURI];
     return (
       voiceTestData &&
-      voiceTestData.voiceName === newVoice.name &&
-      voiceTestData.lang === newVoice.lang
+      voiceTestData.voiceName === testVoice.name &&
+      voiceTestData.lang === testVoice.lang
     );
   } catch {
     return false;
   }
-}, [storedData, newVoice]);
+}, [storedData, testVoice]);
   const toggleControls = () => {
     clearAllTimeouts();
     setShowControls(true);
