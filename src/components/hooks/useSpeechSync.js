@@ -138,7 +138,7 @@ const subtitleDuration = currentSub?.duration ?? 3;
 
     // Typical spoken English average is around 4.7 chars/word
     // We'll use that as a baseline
-    const baseline = 3.7;
+    const baseline = 3;
 
     let factor = 1;
 
