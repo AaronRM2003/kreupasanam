@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styles from './Footer.module.css';
-import { FaEnvelope } from 'react-icons/fa';
+import { FaEnvelope, FaYoutube } from 'react-icons/fa';
 import { GiDove } from 'react-icons/gi';
+import { FaInstagram, FaFacebookF, FaTelegramPlane, FaWhatsapp } from 'react-icons/fa';
 
 const translations = {
   en: {
@@ -86,40 +87,15 @@ const translations = {
   },
 };
 
+
+
 export default function Footer({ lang = 'en' }) {
-  const [submitted, setSubmitted] = useState(false);
-  const [email, setEmail] = useState('');
-  const [loading, setLoading] = useState(false);
-
   const t = translations[lang] || translations.en;
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const response = await fetch('https://formspree.io/f/mzzvgyaa', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ email }),
-      });
-      if (response.ok) {
-        setSubmitted(true);
-        setEmail('');
-      } else {
-        alert('Submission failed. Please try again.');
-      }
-    } catch (error) {
-      console.error('Form submission error:', error);
-      alert('An error occurred. Please try again later.');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <div>
       <div className={styles.waveTop}>
-        <svg viewBox="0 0 1440 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
           <defs>
             <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stopColor="#0091ffff" />
@@ -136,46 +112,64 @@ export default function Footer({ lang = 'en' }) {
       <footer className={styles.footer}>
         <div className={styles.footerTop}>
           <div className={styles.section}>
-            <h3>{t.contact}</h3>
-            <p className={styles.emailText}>
-              <FaEnvelope style={{ color: '#d93025' }} />
-              <a
-                href="mailto:kreupasanamtestimonies@gmail.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.emailLink}
-              >
-                kreupasanamtestimonies@gmail.com
-              </a>
-            </p>
+          <h3>{t.contact}</h3>
+<a
+  href="mailto:kreupasanamtestimonies@gmail.com"
+  target="_blank"
+  rel="noopener noreferrer"
+  className={`${styles.iconBtnWithText} ${styles.gmail}`}
+>
+  <FaEnvelope style={{ marginRight: '0.5rem' }} />
+  Gmail
+</a>
+
 
             <h3 style={{ marginTop: '1.5rem' }}>{t.stayUpdated}</h3>
 
-            {!submitted ? (
-              <form onSubmit={handleSubmit} className={styles.newsletter}>
-                <input
-                  type="email"
-                  placeholder={t.placeholder}
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  disabled={loading}
-                />
-                <button type="submit" disabled={loading}>
-                  {loading ? 'Loading...' : t.subscribe}
-                </button>
-              </form>
-            ) : (
-              <p className={styles.thankYouMessage}>{t.thankYou}</p>
-            )}
+           <div className={styles.socialIcons}>
+  <a
+  href="https://www.instagram.com/kreupasanam_for_all"
+  target="_blank"
+  rel="noopener noreferrer"
+  className={`${styles.iconBtn} ${styles.instagram}`}
+>
+  <FaInstagram />
+</a>
+
+<a
+  href="https://www.facebook.com/profile.php?id=61578054781556"
+  target="_blank"
+  rel="noopener noreferrer"
+  className={`${styles.iconBtn} ${styles.facebook}`}
+>
+  <FaFacebookF />
+</a>
+
+<a
+  href="https://t.me/kreupasanamtestimonies"
+  target="_blank"
+  rel="noopener noreferrer"
+  className={`${styles.iconBtn} ${styles.telegram}`}
+>
+  <FaTelegramPlane />
+</a>
+
+<a
+  href="https://www.youtube.com/@MarianCovenantDevotion"
+  target="_blank"
+  rel="noopener noreferrer"
+  className={`${styles.iconBtn} ${styles.youtube}`}
+>
+  <FaYoutube />
+</a>
+</div>
+
           </div>
         </div>
 
         <div className={styles.footerBottom}>
           <p>
-            <GiDove
-              style={{ color: '#fff', fontSize: '1.2rem', verticalAlign: 'middle', marginRight: '0.3rem' }}
-            />
+            <GiDove style={{ color: '#fff', fontSize: '1.2rem', verticalAlign: 'middle', marginRight: '0.3rem' }} />
             {new Date().getFullYear()} {t.footerNote}
           </p>
         </div>
