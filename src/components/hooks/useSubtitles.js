@@ -25,35 +25,46 @@ export function useSubtitles(subtitlesUrl, lang, currentTime) {
   const currentSubtitle = getCurrentSubtitle(subtitles, currentTime, lang);
 
   // -------------------------------------------------
-  // 🔥 CHUNKING: GROUP SUBTITLES IN PACKS OF 6
+  // 🔥 MULTI-LANGUAGE CHUNKING (OPTION A)
   // -------------------------------------------------
   const chunks = useMemo(() => {
     if (!subtitles.length) return [];
 
-    const result = [];
+    const grouped = [];
     const size = 6;
 
     for (let i = 0; i < subtitles.length; i += size) {
       const group = subtitles.slice(i, i + size);
 
-      const combinedText = group
-        .map(s => s.text?.[lang] || '') // take ONLY the language requested
-        .join(' ')
-        .trim();
+      // Build full multi-language_text
+      const languages = Object.keys(group[0].text || {});
 
-      result.push({
-        startSeconds: group[0].startSeconds,
-        endSeconds: group[group.length - 1].endSeconds,
-        text: combinedText,
-        list: group // keep original subtitles if needed
+      const combinedTextObject = {};
+
+      languages.forEach(l => {
+        combinedTextObject[l] = group
+          .map(s => s.text?.[l] || "")
+          .join(" ")
+          .trim();
+      });
+
+      const startSeconds = group[0].startSeconds;
+      const endSeconds = group[group.length - 1].endSeconds;
+      const duration = endSeconds - startSeconds;
+
+      grouped.push({
+        startSeconds,
+        endSeconds,
+        duration,
+        text: combinedTextObject,   // 🔥 same structure as subtitle.text
       });
     }
 
-    return result;
-  }, [subtitles, lang]);
+    return grouped;
+  }, [subtitles]);
 
   // -------------------------------------------------
-  // 🔥 GET CURRENT CHUNK
+  // 🔥 CURRENT CHUNK IDENTIFICATION
   // -------------------------------------------------
   const currentChunk = useMemo(() => {
     return chunks.find(
