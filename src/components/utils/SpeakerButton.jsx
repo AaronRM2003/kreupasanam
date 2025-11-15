@@ -499,20 +499,6 @@ if (storedData) {
   };
 
   // Spinner component for inline loading animation
-  const Spinner = () => (
-    <span
-      style={{
-        width: '18px',
-        height: '18px',
-        border: '3px solid rgba(255, 255, 255, 0.3)',
-        borderTop: '3px solid #fff',
-        borderRadius: '50%',
-        animation: 'spin 1s linear infinite',
-        display: 'inline-block',
-        marginRight: '8px',
-      }}
-    />
-  );
 
   // Add keyframes animation for spinner
   useEffect(() => {
