@@ -113,32 +113,36 @@ useEffect(() => {
   const player = playerRef.current;
   if (!player) return;
 
-  const handlePause = () => {
-    isPausedRef.current = true;
-    window.speechSynthesis.cancel();
-  };
+  player.addEventListener("onStateChange", (event) => {
+    const state = event.data;
 
-  const handlePlay = () => {
-    isPausedRef.current = false;
-    hasStartedSpeakingRef.current = false; 
-  };
+    if (state === window.YT.PlayerState.PAUSED) {
+      isPausedRef.current = true;
 
-  const handleSeek = () => {
-    window.speechSynthesis.cancel();
-    lastGroupIndexRef.current = -1;
-    hasStartedSpeakingRef.current = false;
-  };
+      window.speechSynthesis.cancel();
+      // 🔥 Force actual cancellation
+      setTimeout(() => window.speechSynthesis.cancel(), 30);
+    }
 
-  player.addEventListener("pause", handlePause);
-  player.addEventListener("play", handlePlay);
-  player.addEventListener("seeking", handleSeek);
+    if (state === window.YT.PlayerState.PLAYING) {
+      isPausedRef.current = false;
+      hasStartedSpeakingRef.current = false;
+    }
 
-  return () => {
-    player.removeEventListener("pause", handlePause);
-    player.removeEventListener("play", handlePlay);
-    player.removeEventListener("seeking", handleSeek);
-  };
+    if (
+      state === window.YT.PlayerState.SEEKING ||
+      state === window.YT.PlayerState.BUFFERING ||
+      state === window.YT.PlayerState.CUED
+    ) {
+      window.speechSynthesis.cancel();
+      setTimeout(() => window.speechSynthesis.cancel(), 30);
+
+      lastGroupIndexRef.current = -1;
+      hasStartedSpeakingRef.current = false;
+    }
+  });
 }, [playerRef]);
+
 
 useEffect(() => {
   if (!isSpeaking || !showVideo || !currentSubtitle || subtitles.length === 0) return;
