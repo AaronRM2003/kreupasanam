@@ -4,7 +4,7 @@ export function useYouTubePlayer(videoId, isPlaying) {
   const playerRef = useRef(null);
   const intervalRef = useRef(null);
   const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0); // <-- NEW
+  const [duration, setDuration] = useState(0);
 
   useEffect(() => {
     if (!isPlaying) {
@@ -17,7 +17,7 @@ export function useYouTubePlayer(videoId, isPlaying) {
         intervalRef.current = null;
       }
       setCurrentTime(0);
-      setDuration(0); // Reset duration
+      setDuration(0);
       return;
     }
 
@@ -34,7 +34,7 @@ export function useYouTubePlayer(videoId, isPlaying) {
         events: {
           onReady: (event) => {
             const player = event.target;
-            // Set duration once ready
+
             const dur = player.getDuration?.();
             if (dur) setDuration(dur);
 
@@ -44,10 +44,30 @@ export function useYouTubePlayer(videoId, isPlaying) {
               }
               if (playerRef.current?.getDuration) {
                 const d = playerRef.current.getDuration();
-                if (d && d !== duration) setDuration(d); // Keep duration updated
+                if (d && d !== duration) setDuration(d);
               }
             }, 500);
           },
+
+          // ✅ NEW — YouTube pause/play/seek detection added here
+          onStateChange: (event) => {
+            const state = event.data;
+
+            if (state === window.YT.PlayerState.PAUSED) {
+              window.speechSynthesis.cancel();
+              setTimeout(() => window.speechSynthesis.cancel(), 30);
+            }
+
+            if (
+              state === window.YT.PlayerState.SEEKING ||
+              state === window.YT.PlayerState.BUFFERING ||
+              state === window.YT.PlayerState.CUED
+            ) {
+              window.speechSynthesis.cancel();
+              setTimeout(() => window.speechSynthesis.cancel(), 30);
+            }
+          }
+          // -----------------------------------------------
         },
       });
     };
@@ -78,5 +98,5 @@ export function useYouTubePlayer(videoId, isPlaying) {
     };
   }, [videoId, isPlaying]);
 
-  return { currentTime, playerRef, duration }; // <- updated return
+  return { currentTime, playerRef, duration };
 }
