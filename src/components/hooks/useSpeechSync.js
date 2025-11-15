@@ -86,7 +86,7 @@ function getSmoothedAdjustedRate(wps, rawRate) {
 }
 
   const voice = useSelectedVoice(lang);
-  function getSubtitleGroup(subs, time, lang, size = 6) {
+ function getSubtitleGroup(subs, time, lang, size = 6) {
   const idx = subs.findIndex(
     s => time >= s.startSeconds && time < s.endSeconds
   );
@@ -95,6 +95,7 @@ function getSmoothedAdjustedRate(wps, rawRate) {
   const group = subs.slice(idx, idx + size);
 
   return {
+    id: idx, // ⭐ NEW — stable identifier
     text: group
       .map(s => (s.text?.[lang] || "").trim())
       .filter(t => t.length > 0)
@@ -104,6 +105,7 @@ function getSmoothedAdjustedRate(wps, rawRate) {
     duration: group[group.length - 1].endSeconds - group[0].startSeconds
   };
 }
+
 
   useEffect(() => {
   if (!isSpeaking || !showVideo || !currentSubtitle || subtitles.length === 0) return;
@@ -116,8 +118,9 @@ function getSmoothedAdjustedRate(wps, rawRate) {
   const group = getSubtitleGroup(subtitles, currentTime, lang);
  if (!group || !group.text) return;
 
- if (lastSpokenRef.current === group.text) return;
- lastSpokenRef.current = group.text;
+ if (lastSpokenRef.current === group.id) return;
+lastSpokenRef.current = group.id;
+
 
  const subtitleDuration = group.duration || 3;
  const wordCount = group.text.trim().split(/\s+/).length;
