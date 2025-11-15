@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 
 export function useYouTubePlayer(videoId, isPlaying) {
   const playerRef = useRef(null);
   const intervalRef = useRef(null);
-
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
@@ -22,27 +21,8 @@ export function useYouTubePlayer(videoId, isPlaying) {
       return;
     }
 
-    // Load API only once
-    const loadYT = () => {
-      return new Promise((resolve) => {
-        if (window.YT && window.YT.Player) {
-          resolve();
-        } else {
-          const tag = document.createElement("script");
-          tag.src = "https://www.youtube.com/iframe_api";
-          document.body.appendChild(tag);
-
-          window.onYouTubeIframeAPIReady = () => resolve();
-        }
-      });
-    };
-
-    let isMounted = true;
-
-    loadYT().then(() => {
-      if (!isMounted) return;
-
-      playerRef.current = new window.YT.Player("yt-player", {
+    const onYouTubeIframeAPIReady = () => {
+      playerRef.current = new window.YT.Player('yt-player', {
         videoId,
         playerVars: {
           autoplay: 1,
@@ -55,50 +35,56 @@ export function useYouTubePlayer(videoId, isPlaying) {
           onReady: (event) => {
             const player = event.target;
 
-            // Get duration initially
             const dur = player.getDuration?.();
             if (dur) setDuration(dur);
 
-            // Start time tracking
             intervalRef.current = setInterval(() => {
-              if (!playerRef.current) return;
-
-              const t = playerRef.current.getCurrentTime?.();
-              if (typeof t === "number") setCurrentTime(t);
-
-              const d = playerRef.current.getDuration?.();
-              if (typeof d === "number" && d !== duration) {
-                setDuration(d);
+              if (playerRef.current?.getCurrentTime) {
+                setCurrentTime(playerRef.current.getCurrentTime());
               }
-            }, 300);
+              if (playerRef.current?.getDuration) {
+                const d = playerRef.current.getDuration();
+                if (d && d !== duration) setDuration(d);
+              }
+            }, 500);
           },
 
+          // ✅ NEW — YouTube pause/play/seek detection added here
           onStateChange: (event) => {
             const state = event.data;
 
             if (state === window.YT.PlayerState.PAUSED) {
-              console.log("YT PAUSED");
+              window.speechSynthesis.cancel();
+              setTimeout(() => window.speechSynthesis.cancel(), 30);
             }
 
-            if (state === window.YT.PlayerState.PLAYING) {
-              console.log("YT PLAYING");
+            if (
+              state === window.YT.PlayerState.SEEKING ||
+              state === window.YT.PlayerState.BUFFERING ||
+              state === window.YT.PlayerState.CUED
+            ) {
+              window.speechSynthesis.cancel();
+              setTimeout(() => window.speechSynthesis.cancel(), 30);
             }
-
-            if (state === window.YT.PlayerState.BUFFERING) {
-              console.log("YT BUFFERING (seek)");
-            }
-
-            if (state === window.YT.PlayerState.CUED) {
-              console.log("YT CUED (seek or ended)");
-            }
-          },
+          }
+          // -----------------------------------------------
         },
       });
-    });
+    };
+
+    if (!window.YT) {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.body.appendChild(tag);
+    }
+
+    if (window.YT && window.YT.Player) {
+      onYouTubeIframeAPIReady();
+    } else {
+      window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+    }
 
     return () => {
-      isMounted = false;
-
       if (playerRef.current) {
         playerRef.current.destroy();
         playerRef.current = null;
@@ -107,15 +93,10 @@ export function useYouTubePlayer(videoId, isPlaying) {
         clearInterval(intervalRef.current);
         intervalRef.current = null;
       }
-
       setCurrentTime(0);
       setDuration(0);
     };
   }, [videoId, isPlaying]);
 
-  return {
-    currentTime,
-    duration,
-    playerRef,
-  };
+  return { currentTime, playerRef, duration };
 }
