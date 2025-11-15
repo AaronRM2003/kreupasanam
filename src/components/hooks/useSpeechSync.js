@@ -109,6 +109,40 @@ const lastGroupIndexRef = useRef(-1);
 const isPausedRef = useRef(false);
 const lastGroupStartRef = useRef(0);
 
+useEffect(() => {
+  const player = playerRef.current;
+  if (!player) return;
+
+  player.addEventListener("onStateChange", (event) => {
+    const state = event.data;
+
+    if (state === window.YT.PlayerState.PAUSED) {
+      isPausedRef.current = true;
+
+      window.speechSynthesis.cancel();
+      // 🔥 Force actual cancellation
+      setTimeout(() => window.speechSynthesis.cancel(), 30);
+    }
+
+    if (state === window.YT.PlayerState.PLAYING) {
+      isPausedRef.current = false;
+      hasStartedSpeakingRef.current = false;
+    }
+
+    if (
+      state === window.YT.PlayerState.SEEKING ||
+      state === window.YT.PlayerState.BUFFERING ||
+      state === window.YT.PlayerState.CUED
+    ) {
+      window.speechSynthesis.cancel();
+      setTimeout(() => window.speechSynthesis.cancel(), 30);
+
+      lastGroupIndexRef.current = -1;
+      hasStartedSpeakingRef.current = false;
+    }
+  });
+}, [playerRef]);
+
 
 useEffect(() => {
   if (!isSpeaking || !showVideo || !currentSubtitle || subtitles.length === 0) return;
@@ -140,24 +174,6 @@ if (
 lastGroupIndexRef.current = currentGroupIndex;
 lastGroupStartRef.current = group.start;
 hasStartedSpeakingRef.current = true;
-useEffect(() => {
-  const player = playerRef.current;
-  if (!player) return;
-
-  player.addEventListener("onStateChange", (event) => {
-    const state = event.data;
-
-    if (state === window.YT.PlayerState.PAUSED) {
-      isPausedRef.current = true;
-      window.speechSynthesis.cancel();
-      setTimeout(() => window.speechSynthesis.cancel(), 30);
-    }
-
-    if (state === window.YT.PlayerState.PLAYING) {
-      isPausedRef.current = false;
-    }
-  });
-}, [playerRef]);
 
 
  if (!group || !group.text) return;
