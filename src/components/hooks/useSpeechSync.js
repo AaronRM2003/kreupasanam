@@ -28,6 +28,14 @@ const CHUNKS = [
   { start: 240, end: 600 }, // 4–10 min
   { start: 600, end: Infinity }
 ];
+  const subtitleText =
+  typeof currentSubtitle === "string"
+    ? currentSubtitle
+    : typeof currentSubtitle.text === "string"
+    ? currentSubtitle.text
+    : currentSubtitle.text?.[lang] ||
+      currentSubtitle.text?.en ||
+      "";
 
 const getChunkIndex = (time) =>
   CHUNKS.findIndex(c => time >= c.start && time < c.end);
@@ -169,13 +177,13 @@ function getSubText(sub) {
 
 const subtitleDuration = currentSub?.duration ?? 3;
 
-  const wordCount = getSubText(currentSubtitle).trim().split(/\s+/).length;
+  const wordCount = subtitleText.trim().split(/\s+/).length;
 
   // Get the utterance voice if possible
   let wps = 2; // default fallback
 
   // Prepare the text first to create utterance and get voice
-  let textToSpeak = getSubText(currentSubtitle)
+  let textToSpeak = subtitleText
   // Remove content inside square brackets
   .replace(/\[[^\]]*\]/g, '')  
   // Remove ellipses or multiple dots
