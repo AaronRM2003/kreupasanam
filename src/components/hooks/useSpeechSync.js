@@ -148,6 +148,9 @@ function getSmoothedAdjustedRate(wps, rawRate) {
     }
   }
 }, [currentTime, showVideo, subtitles]);
+function getSubText(sub) {
+  return typeof sub === 'string' ? sub : (sub?.text || "");
+}
 
   useEffect(() => {
   if (!isSpeaking || !showVideo || !currentSubtitle || subtitles.length === 0) return;
@@ -185,9 +188,7 @@ const subtitleDuration = currentSub?.duration ?? 3;
   .replace(/\bKreupasanam\b/gi, 'Kri-paasenam')
   // Trim whitespace
   .trim();
-  function getSubText(sub) {
-  return typeof sub === 'string' ? sub : (sub?.text || "");
-}
+  
 
 
 
