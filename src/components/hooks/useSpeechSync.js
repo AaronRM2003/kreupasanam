@@ -112,194 +112,45 @@ function getSmoothedAdjustedRate(wps, rawRate) {
     lastSpokenRef.current = '';
   }
 
-  if (lastSpokenRef.current === currentSubtitle) return;
+// Only speak when entering a chunk OR user resumes OR user seeks
+if (!hasStartedSpeakingRef.current || currentSubtitle !== lastSpokenRef.current) {
+
+  hasStartedSpeakingRef.current = true;
   lastSpokenRef.current = currentSubtitle;
 
-  const currentSub = subtitles.find(
-  (sub) => currentTime >= sub.startSeconds && currentTime < sub.endSeconds
-);
+  // ❗ build continuous chunk text
+  let chunkSpeechText = getChunkText(subtitles, currentTime);
 
-const subtitleDuration = currentSub?.duration ?? 3;
+  // apply same cleaning
+  chunkSpeechText = chunkSpeechText
+    .replace(/\[[^\]]*\]/g, '')
+    .replace(/\.{2,}/g, '')
+    .replace(/[-*]{2,}/g, '')
+    .replace(/\b(V\.P\.)\b/g, 'VP')
+    .replace(/\bKreupasanam\b/gi, 'Kri-paasenam')
+    .trim();
 
-  const wordCount = currentSubtitle.trim().split(/\s+/).length;
+  const utterance = new SpeechSynthesisUtterance(chunkSpeechText);
+  utterance.voice = matchedVoice || voice;
+  utterance.lang = lang;
 
-  // Get the utterance voice if possible
-  let wps = 2; // default fallback
+  // Rate settings same as before…
+  utterance.rate = 1; 
 
-  // Prepare the text first to create utterance and get voice
-  let textToSpeak = currentSubtitle
-  // Remove content inside square brackets
-  .replace(/\[[^\]]*\]/g, '')  
-  // Remove ellipses or multiple dots
-  .replace(/\.{2,}/g, '')      
-  // Remove standalone punctuation like -- or ***
-  .replace(/[-*]{2,}/g, '')    
-  // Replace V.P. with VP
-  .replace(/\b(V\.P\.)\b/g, 'VP')
-  // ✅ Replace Kreupasanam with Kripaasanam for better pronunciation
-  .replace(/\bKreupasanam\b/gi, 'Kri-paasenam')
-  // Trim whitespace
-  .trim();
-
-
-
-  const utterance = new SpeechSynthesisUtterance(textToSpeak);
-  function lengthFactor(text) {
-    const words = text.trim().split(/\s+/);
-    if (words.length === 0) return 1;
-
-    const totalChars = words.reduce((sum, w) => sum + w.length, 0);
-    const avgChars = totalChars / words.length;
-
-    // Typical spoken English average is around 4.7 chars/word
-    // We'll use that as a baseline
-    const baseline = 3;
-
-    let factor = 1;
-
-    // If avg word length is higher → longer pronunciation → slow down
-    if (avgChars > baseline) {
-      // For each extra char above baseline, reduce by 3–5%
-      factor *= Math.max(0.7, 1 - ((avgChars - baseline) * 0.05));
-    } 
-    // If words are short → can go slightly faster
-    else if (avgChars < baseline - 1) {
-      factor *= Math.min(1.15, 1 + ((baseline - avgChars) * 0.04));
-    }
-
-    return factor;
-}
-
-  // Set utterance lang as before
-  function numberFactor(text) {
-  const numbers = text.match(/\d+/g); // match all sequences of digits
-  if (!numbers) return 1; // no numbers, normal speed
-
-  let factor = 1;
-
-  // Slow down for long numbers
-  numbers.forEach(num => {
-    if (num.length >= 4) factor *= 0.85;  // very long number
-    else if (num.length === 3) factor *= 0.9;
-  });
-
-  // 👇 Detect Bible-style references like "Numbers 2:6", "John 3:16", etc.
-  const bibleRefPattern = /\b([A-Z][a-z]+)\s+\d{1,3}:\d{1,3}\b/;
-  if (bibleRefPattern.test(text)) {
-    // Add more delay for chapter–verse phrasing
-    factor *= 0.8; // reduce further by 20%
-  }
-
-  // Keep factor within reasonable range
-  return Math.max(0.4, Math.min(1, factor));
-}
-
-
- const savedVoiceName = localStorage.getItem(`${lang}`);
-const voices = window.speechSynthesis.getVoices();
-const matchedVoice = voices.find(v => v.name === savedVoiceName);
-utterance.voice = matchedVoice || voice || null;
-console.log(voice, matchedVoice, savedVoiceName);
-utterance.lang = lang || 'en-US';
-
-if (utterance.voice?.name) {
-  const testKey = `voice_test_data_${lang}`;
-  const storedData = localStorage.getItem(testKey);
-
-  if (storedData) {
-    try {
-      const allTestData = JSON.parse(storedData);
-      const voiceData = allTestData[utterance.voice.name];
-      if (voiceData && voiceData.wps) {
-        wps = parseFloat(voiceData.wps);
-      }
-    } catch (e) {
-      console.error("Failed to parse voice test data:", e);
-    }
-  }
-}
-
-
-  console.log(wps,`voice_${utterance.voice.name}_tested`);
-  const rawRate = wordCount / subtitleDuration;
-  console.log(wordCount, subtitleDuration);
-
-  let speechRate = 1; // fallback
-  let adjustedRate = 1;
-
-  // Determine the current chunk
-const newChunkIndex = getChunkIndex(currentTime);
-
-// Chunk changed?
-if (newChunkIndex !== currentChunkRef.current) {
-  lastAdjustedRateRef.current = 1;   // reset smoothing
-  currentChunkRef.current = newChunkIndex;
-}
-
-// Apply video speed only ONCE per chunk
-if (playerRef.current?.setPlaybackRate) {
-
-  // Calculate the chunk-wide playback rate
-  const rates = getSmoothedAdjustedRate(wps, rawRate);
-
-  if (rates) {
-    const numFactor = numberFactor(textToSpeak);
-    const lenFactor = lengthFactor(textToSpeak);
-
-    let adjustedRateWithFactors = rates * numFactor * lenFactor;
-    adjustedRateWithFactors = Math.max(0.1, Math.min(1.2, adjustedRateWithFactors));
-
-    // This rate remains constant for entire chunk
-    const adjustedRate = adjustedRateWithFactors;
-
-    playerRef.current.setPlaybackRate(adjustedRate);
-  }
-}
-
-  console.log(`Speech rate: ${speechRate}, Adjusted rate: ${adjustedRate}`);
-  if (isSSMLSupported) {
-    textToSpeak = enhanceWithSsml(textToSpeak);
-  }
-
-  utterance.rate = speechRate;
-
+  // 🔥 reset + speak only once
   window.speechSynthesis.cancel();
-  // When the utterance finishes BEFORE chunk end,
-// jump video to next chunk start
-utterance.onend = () => {
-  const player = playerRef.current;
-  if (!player) return;
-
-  const chunkIndex = currentChunkRef.current;
-  const chunkStart = CHUNKS[chunkIndex];
-  const nextChunkStart = CHUNKS[chunkIndex + 1];
-  const now = player.getCurrentTime?.() ?? currentTime;
-
-  // 1. only skip if we are still inside THIS chunk
-  const stillInsideChunk = now < nextChunkStart;
-
-  // 2. find last subtitle of current chunk
-  const subsInChunk = subtitles.filter(
-    (s) => s.startSeconds >= chunkStart && s.endSeconds <= nextChunkStart
-  );
-
-  if (subsInChunk.length === 0) return;
-
-  const lastSub = subsInChunk[subsInChunk.length - 1];
-
-  // 3. skip only if the END OF LAST SUBTITLE <= now
-  const finishedAllSubtitlesInChunk = now >= lastSub.endSeconds;
-
-  // final condition: TTS finished + time still inside chunk + chunk not over
-  if (finishedAllSubtitlesInChunk && stillInsideChunk) {
-    if (nextChunkStart !== Infinity) {
-      player.seekTo?.(nextChunkStart, true);
-    }
-  }
-};
-
-
   window.speechSynthesis.speak(utterance);
+
+  // handle early-finish skip
+  utterance.onend = () => {
+    const now = playerRef.current.getCurrentTime?.() ?? currentTime;
+    const chunkEnd = CHUNKS[currentChunkRef.current + 1];
+    if (now < chunkEnd) {
+      playerRef.current.seekTo?.(chunkEnd, true);
+    }
+  };
+}
+
 }, [isSpeaking, showVideo, currentSubtitle, currentTime, subtitles, lang, playerRef, isSSMLSupported]);
 
 // Handle user pause/resume/seek behavior
