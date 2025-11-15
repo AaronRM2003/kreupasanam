@@ -1,9 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
-import { enhanceWithSsml } from './useSsml';
-import { useIsGoogleTTS } from './useIsGoogleTts';
-import { useSSMLSupportTest } from './useIsSsmlSupport';
-import { useSelectedVoice } from './useSelectedVoice';
-import { addEndTimesToSubtitles } from '../utils/Utils';
+import { useState, useEffect, useRef } from "react";
+import { useSelectedVoice } from "./useSelectedVoice";
+import { useSSMLSupportTest } from "./useIsSsmlSupport";
 
 export function useSpeechSync({
   playerRef,
@@ -11,240 +8,183 @@ export function useSpeechSync({
   subtitles,
   currentSubtitle,
   currentTime,
-  lang,
+  lang
 }) {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [volume, setVolume] = useState(100);
-  const hasStartedSpeakingRef = useRef(false);
-  const lastSpokenRef = useRef('');
-  const [playerReady, setPlayerReady] = useState(false);
 
   const isSSMLSupported = useSSMLSupportTest();
-function getChunkText(subtitles, currentTime) {
-  const chunkIndex = currentChunkRef.current;
-  const chunkStart = CHUNKS[chunkIndex];
-  const nextChunkStart = CHUNKS[chunkIndex + 1];
+  const voice = useSelectedVoice(lang);
 
-  const subs = subtitles.filter(
-    (s) => s.startSeconds >= currentTime && s.endSeconds <= nextChunkStart
-  );
+  // ---------------------------
+  // FIXED CHUNKS
+  // ---------------------------
+  const CHUNKS = [0, 240, 600, Infinity];
 
-  // join all remaining subtitles inside this chunk
-  return subs.map(s => s.text[lang] || s.text).join(" ");
-}
-
-  // Sync volume once player is available
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const player = playerRef.current;
-      if (player?.setVolume instanceof Function) {
-        player.setVolume(volume);
-        setPlayerReady(true);
-        clearInterval(interval);
-      }
-    }, 200);
-
-    return () => clearInterval(interval);
-  }, [volume, playerRef]);
-
-  useEffect(() => {
-    if (playerReady && playerRef.current?.setVolume instanceof Function) {
-      playerRef.current.setVolume(volume);
+  function getChunkIndex(t) {
+    for (let i = 0; i < CHUNKS.length - 1; i++) {
+      if (t >= CHUNKS[i] && t < CHUNKS[i + 1]) return i;
     }
-  }, [volume, playerReady, playerRef]);
+    return 0;
+  }
 
+  const currentChunkRef = useRef(getChunkIndex(currentTime));
+
+  // Used to ensure only one chunk utterance plays at a time
+  const speakingChunkRef = useRef(null);
+  const lastUserSeekRef = useRef(false);
+
+  // ---------------------------------------------------------
+  // Build FULL CHUNK SPEECH TEXT (continuous no stops)
+  // ---------------------------------------------------------
+  function getChunkText(chunkIndex, fromTime) {
+    const start = CHUNKS[chunkIndex];
+    const end = CHUNKS[chunkIndex + 1];
+
+    // Only include subtitles inside chunk that are >= current time
+    const chunkSubs = subtitles.filter(
+      (s) => s.startSeconds >= fromTime && s.startSeconds < end
+    );
+
+    const text = chunkSubs
+      .map((s) => s.text[lang] || s.text)
+      .join(" ");
+
+    return text
+      .replace(/\[[^\]]*\]/g, "")
+      .replace(/\.{2,}/g, "")
+      .replace(/[-*]{2,}/g, "")
+      .replace(/\b(V\.P\.)\b/g, "VP")
+      .replace(/\bKreupasanam\b/gi, "Kri-paasenam")
+      .trim();
+  }
+
+  // -----------------------------------------------------
+  // MAIN SPEAKING EFFECT – runs whenever speaking/resuming
+  // -----------------------------------------------------
   useEffect(() => {
     if (!isSpeaking || !showVideo) {
       window.speechSynthesis.cancel();
-      hasStartedSpeakingRef.current = false;
-      lastSpokenRef.current = '';
+      speakingChunkRef.current = null;
+      return;
     }
-  }, [isSpeaking, showVideo]);
 
-const margin = 0.10;   // your safe margin
-const maxStepUp = 0.25;
-// ------------------------------------
-// FIXED CHUNK CHECKPOINTS (in seconds)
-// Example: 4:00 (240s), 10:00 (600s)
-// ------------------------------------
-const CHUNKS = [0, 240, 600, Infinity]; 
+    if (!playerRef.current || subtitles.length === 0) return;
 
-function getChunkIndex(time) {
-  for (let i = 0; i < CHUNKS.length - 1; i++) {
-    if (time >= CHUNKS[i] && time < CHUNKS[i + 1]) return i;
-  }
-  return 0;
-}
+    const player = playerRef.current;
 
-const currentChunkRef = useRef(getChunkIndex(currentTime));
+    const now = player.getCurrentTime?.() ?? currentTime;
 
+    const chunkIndex = getChunkIndex(now);
+    currentChunkRef.current = chunkIndex;
 
-const lastAdjustedRateRef = useRef(1);
-
-function adjustedRateFixedSpeech(wps, rawRate) {
-  const k = rawRate / wps;
-  const speechRate = 1;
-  let adjustedRate = speechRate / k;
-  adjustedRate -= margin;
-  if (adjustedRate > 1) adjustedRate = 1;
-  if (adjustedRate < 0) adjustedRate = 0;
-  return adjustedRate;
-}
-
-function getSmoothedAdjustedRate(wps, rawRate) {
-  const targetAdjustedRate = adjustedRateFixedSpeech(wps, rawRate);
-  const lastAdj = lastAdjustedRateRef.current;
-
-  if (targetAdjustedRate < lastAdj) {
-    // Decreasing: jump immediately
-    lastAdjustedRateRef.current = targetAdjustedRate;
-    return parseFloat(targetAdjustedRate.toFixed(4));
-  } else if (targetAdjustedRate > lastAdj) {
-    // Increasing: increase gradually by maxStepUp
-    let newAdjRate = lastAdj + maxStepUp;
-    if (newAdjRate > targetAdjustedRate) newAdjRate = targetAdjustedRate;
-    console.log(targetAdjustedRate,newAdjRate);
-    lastAdjustedRateRef.current = newAdjRate;
-    return parseFloat(newAdjRate.toFixed(4));
-  } else {
-    // Equal
-    return parseFloat(lastAdj.toFixed(4));
-  }
-}
-
-
-
-
-  const voice = useSelectedVoice(lang);
-  useEffect(() => {
-  if (!isSpeaking || !showVideo || !currentSubtitle || subtitles.length === 0) return;
-
-  if (!hasStartedSpeakingRef.current) {
-    hasStartedSpeakingRef.current = true;
-    lastSpokenRef.current = '';
-  }
-
-// Only speak when entering a chunk OR user resumes OR user seeks
-if (!hasStartedSpeakingRef.current || currentSubtitle !== lastSpokenRef.current) {
-
-  hasStartedSpeakingRef.current = true;
-  lastSpokenRef.current = currentSubtitle;
-
-  // ❗ build continuous chunk text
-  let chunkSpeechText = getChunkText(subtitles, currentTime);
-
-  // apply same cleaning
-  chunkSpeechText = chunkSpeechText
-    .replace(/\[[^\]]*\]/g, '')
-    .replace(/\.{2,}/g, '')
-    .replace(/[-*]{2,}/g, '')
-    .replace(/\b(V\.P\.)\b/g, 'VP')
-    .replace(/\bKreupasanam\b/gi, 'Kri-paasenam')
-    .trim();
-
-  const utterance = new SpeechSynthesisUtterance(chunkSpeechText);
-  utterance.voice = matchedVoice || voice;
-  utterance.lang = lang;
-
-  // Rate settings same as before…
-  utterance.rate = 1; 
-
-  // 🔥 reset + speak only once
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(utterance);
-
-  // handle early-finish skip
-  utterance.onend = () => {
-    const now = playerRef.current.getCurrentTime?.() ?? currentTime;
-    const chunkEnd = CHUNKS[currentChunkRef.current + 1];
-    if (now < chunkEnd) {
-      playerRef.current.seekTo?.(chunkEnd, true);
+    // If this chunk already speaking and user didn’t seek → do nothing
+    if (
+      speakingChunkRef.current === chunkIndex &&
+      lastUserSeekRef.current === false
+    ) {
+      return;
     }
-  };
-}
 
-}, [isSpeaking, showVideo, currentSubtitle, currentTime, subtitles, lang, playerRef, isSSMLSupported]);
+    // Reset seek flag
+    lastUserSeekRef.current = false;
 
-// Handle user pause/resume/seek behavior
-useEffect(() => {
-  if (!showVideo) return;
-
-  const player = playerRef.current;
-  if (!player) return;
-
-  // When user seeks, recalc chunk and restart TTS from correct subtitle
-  const handleSeeked = () => {
-    const time = player.getCurrentTime?.() ?? currentTime;
-    const newChunk = getChunkIndex(time);
-    currentChunkRef.current = newChunk;
-
-    // Reset smoothing for this chunk
-    lastAdjustedRateRef.current = 1;
-
-    // Restart TTS from the subtitle at this new location
-    lastSpokenRef.current = '';
-  };
-
-  player.addEventListener?.("seeked", handleSeeked);
-
-  return () => {
-    player.removeEventListener?.("seeked", handleSeeked);
-  };
-}, [playerRef, showVideo]);
-
-// If user pauses → stop TTS
-// If user resumes → restart from same subtitle
-useEffect(() => {
-  const player = playerRef.current;
-  if (!player) return;
-
-  const onPause = () => {
+    // Cancel previous speech
     window.speechSynthesis.cancel();
-  };
 
-  const onPlay = () => {
-    lastSpokenRef.current = ''; // So TTS restarts from current subtitle
-  };
+    // Build full continuous text of the chunk
+    const text = getChunkText(chunkIndex, now);
 
-  player.addEventListener?.("pause", onPause);
-  player.addEventListener?.("play", onPlay);
+    if (!text) return;
 
-  return () => {
-    player.removeEventListener?.("pause", onPause);
-    player.removeEventListener?.("play", onPlay);
-  };
-}, [playerRef]);
+    const utterance = new SpeechSynthesisUtterance(text);
 
+    // voice
+    utterance.voice = voice;
+    utterance.lang = lang;
+    utterance.rate = 1;
+
+    speakingChunkRef.current = chunkIndex;
+
+    // Start speaking
+    window.speechSynthesis.speak(utterance);
+
+    // -------------------------------------------------
+    // EARLY FINISH → jump to chunk end
+    // -------------------------------------------------
+    utterance.onend = () => {
+      const currentVideoTime = player.getCurrentTime?.() ?? now;
+      const chunkEnd = CHUNKS[chunkIndex + 1];
+      if (currentVideoTime < chunkEnd) {
+        player.seekTo?.(chunkEnd, true);
+      }
+    };
+  }, [isSpeaking, showVideo, currentSubtitle, currentTime, subtitles, lang]);
+
+  // -------------------------------------------------------
+  // USER SEEKS → restart correct chunk + correct subtitle
+  // -------------------------------------------------------
   useEffect(() => {
-    if (!isSpeaking && playerRef.current) {
-      playerRef.current.setPlaybackRate?.(1);
-      playerRef.current.setVolume?.(100);
-      setVolume(100);
-    }
-  }, [isSpeaking, playerRef]);
+    const player = playerRef.current;
+    if (!player) return;
 
-  const handleVolumeChange = (e) => {
-    const newVol = Number(e.target.value);
-    setVolume(newVol);
-  };
+    const handleSeeked = () => {
+      lastUserSeekRef.current = true;
+      window.speechSynthesis.cancel();
+      speakingChunkRef.current = null;
+    };
 
+    player.addEventListener?.("seeked", handleSeeked);
+    return () => player.removeEventListener?.("seeked", handleSeeked);
+  }, [playerRef]);
+
+  // -------------------------------------------------------
+  // USER PAUSE / PLAY
+  // -------------------------------------------------------
+  useEffect(() => {
+    const player = playerRef.current;
+    if (!player) return;
+
+    const onPause = () => {
+      lastUserSeekRef.current = false;
+      window.speechSynthesis.cancel();
+    };
+
+    const onPlay = () => {
+      lastUserSeekRef.current = false;
+      speakingChunkRef.current = null; // restart chunk from here
+    };
+
+    player.addEventListener?.("pause", onPause);
+    player.addEventListener?.("play", onPlay);
+
+    return () => {
+      player.removeEventListener?.("pause", onPause);
+      player.removeEventListener?.("play", onPlay);
+    };
+  }, [playerRef]);
+
+  // ---------------------------
+  // SPEECH ON/OFF
+  // ---------------------------
   const toggleSpeaking = () => {
     setIsSpeaking((prev) => {
-      const newSpeaking = !prev;
-      if (newSpeaking) setVolume(10);
-      return newSpeaking;
+      const newVal = !prev;
+      if (newVal) setVolume(10);
+      return newVal;
     });
   };
 
   const stopSpeaking = () => {
     setIsSpeaking(false);
     window.speechSynthesis.cancel();
-    hasStartedSpeakingRef.current = false;
-    lastSpokenRef.current = '';
+    speakingChunkRef.current = null;
     setVolume(100);
-    if (playerRef.current?.setVolume) {
-      playerRef.current.setVolume(100);
-    }
+    playerRef.current?.setVolume?.(100);
+  };
+
+  const handleVolumeChange = (e) => {
+    setVolume(Number(e.target.value));
   };
 
   return {
@@ -252,6 +192,6 @@ useEffect(() => {
     toggleSpeaking,
     stopSpeaking,
     volume,
-    handleVolumeChange,
+    handleVolumeChange
   };
 }
