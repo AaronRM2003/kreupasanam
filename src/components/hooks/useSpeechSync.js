@@ -49,7 +49,7 @@ function computeChunkRate(chunkIndex) {
   let totalWPS = 0;
 
   subsInChunk.forEach(s => {
-    const words = s.text.trim().split(/\s+/).length;
+    const words = getSubText(s).trim().split(/\s+/).length;
     const rawRate = words / s.duration; // words per sec
     totalWPS += rawRate;
   });
@@ -185,6 +185,9 @@ const subtitleDuration = currentSub?.duration ?? 3;
   .replace(/\bKreupasanam\b/gi, 'Kri-paasenam')
   // Trim whitespace
   .trim();
+  function getSubText(sub) {
+  return typeof sub === 'string' ? sub : (sub?.text || "");
+}
 
 
 
@@ -321,7 +324,7 @@ useEffect(() => {
     s => currentTime >= s.startSeconds && currentTime < s.endSeconds
   );
 
-  if (sub && lastSpokenRef.current !== sub.text) {
+  if (sub && lastSpokenRef.current !== getSubText(sub)) {
     lastSpokenRef.current = ''; // force restart
   }
 }, [currentTime, isSpeaking]);
