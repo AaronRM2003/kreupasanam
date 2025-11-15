@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { addEndTimesToSubtitles, getCurrentSubtitle, timeStringToSeconds } from '../utils/Utils';
+import { addEndTimesToSubtitles, buildChunks, getCurrentChunk, getCurrentSubtitle, timeStringToSeconds } from '../utils/Utils';
 
 export function useSubtitles(subtitlesUrl, lang, currentTime) {
   const [subtitles, setSubtitles] = useState([]);
