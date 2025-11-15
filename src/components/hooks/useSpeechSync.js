@@ -105,6 +105,7 @@ function getSmoothedAdjustedRate(wps, rawRate) {
     duration: group[group.length - 1].endSeconds - group[0].startSeconds
   };
 }
+const lastGroupIndexRef = useRef(-1);
 
 
   useEffect(() => {
@@ -116,6 +117,22 @@ function getSmoothedAdjustedRate(wps, rawRate) {
   }
 
   const group = getSubtitleGroup(subtitles, currentTime, lang);
+  // New: calculate stable group index
+const currentIndex = subtitles.findIndex(
+  s => currentTime >= s.startSeconds && currentTime < s.endSeconds
+);
+
+const groupSize = 6;
+const currentGroupIndex = Math.floor(currentIndex / groupSize);
+
+// If same group, skip speaking
+if (currentGroupIndex === lastGroupIndexRef.current) {
+  return;
+}
+
+// Save new group index
+lastGroupIndexRef.current = currentGroupIndex;
+
  if (!group || !group.text) return;
 
  if (lastSpokenRef.current === group.id) return;
