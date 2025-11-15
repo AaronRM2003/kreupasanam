@@ -106,16 +106,20 @@ function getSmoothedAdjustedRate(wps, rawRate) {
   };
 }
 const lastGroupIndexRef = useRef(-1);
+const isPausedRef = useRef(false);
+const lastGroupStartRef = useRef(0);
+
 useEffect(() => {
   const player = playerRef.current;
   if (!player) return;
 
   const handlePause = () => {
+    isPausedRef.current = true;
     window.speechSynthesis.cancel();
-    hasStartedSpeakingRef.current = false;
   };
 
   const handlePlay = () => {
+    isPausedRef.current = false;
     hasStartedSpeakingRef.current = false; 
   };
 
@@ -136,9 +140,9 @@ useEffect(() => {
   };
 }, [playerRef]);
 
-
-  useEffect(() => {
+useEffect(() => {
   if (!isSpeaking || !showVideo || !currentSubtitle || subtitles.length === 0) return;
+  if (isPausedRef.current) return; // 🚨 skip TTS while paused
 
   if (!hasStartedSpeakingRef.current) {
   lastSpokenRef.current = '';
@@ -155,13 +159,18 @@ const groupSize = 6;
 const currentGroupIndex = Math.floor(currentIndex / groupSize);
 
 // If same group, skip speaking
-if (currentGroupIndex === lastGroupIndexRef.current) {
+if (
+  currentGroupIndex === lastGroupIndexRef.current &&
+  Math.abs(group.start - lastGroupStartRef.current) < 0.1
+) {
   return;
 }
 
-// Save new group index
+// Update refs
 lastGroupIndexRef.current = currentGroupIndex;
-hasStartedSpeakingRef.current = true; // <— moved here
+lastGroupStartRef.current = group.start;
+hasStartedSpeakingRef.current = true;
+
 
  if (!group || !group.text) return;
 
