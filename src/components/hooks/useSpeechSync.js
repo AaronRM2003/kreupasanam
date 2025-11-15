@@ -169,7 +169,7 @@ function getSubText(sub) {
 
 const subtitleDuration = currentSub?.duration ?? 3;
 
-  const wordCount = currentSubtitle.trim().split(/\s+/).length;
+  const wordCount = getSubText(currentSubtitle).trim().split(/\s+/).length;
 
   // Get the utterance voice if possible
   let wps = 2; // default fallback
