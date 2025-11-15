@@ -21,47 +21,6 @@ export function useSpeechSync({
 
   const isSSMLSupported = useSSMLSupportTest();
 
-  // ---------------- CHUNK SYSTEM ---------------------
-
-const CHUNKS = [
-  { start: 0, end: 240 },   // 0–4 min
-  { start: 240, end: 600 }, // 4–10 min
-  { start: 600, end: Infinity }
-];
-
-const getChunkIndex = (time) =>
-  CHUNKS.findIndex(c => time >= c.start && time < c.end);
-
-const currentChunkRef = useRef(null);
-const chunkPlaybackRateRef = useRef(1);
-const pendingSeekToChunkEndRef = useRef(false);
-
-// Compute stable rate per chunk (based on average subtitle WPS)
-function computeChunkRate(chunkIndex) {
-  const chunk = CHUNKS[chunkIndex];
-
-  const subsInChunk = subtitles.filter(
-    s => s.startSeconds >= chunk.start && s.startSeconds < chunk.end
-  );
-
-  if (subsInChunk.length === 0) return 1;
-
-  let totalWPS = 0;
-
-  subsInChunk.forEach(s => {
-    const words = getSubText(s).trim().split(/\s+/).length;
-    const rawRate = words / s.duration; // words per sec
-    totalWPS += rawRate;
-  });
-
-  const avgRawRate = totalWPS / subsInChunk.length;
-
-  // Convert using your existing algorithm
-  const chunkRate = adjustedRateFixedSpeech(2, avgRawRate);
-
-  return Math.max(0.5, Math.min(1.2, chunkRate));
-}
-
   // Sync volume once player is available
   useEffect(() => {
     const interval = setInterval(() => {
@@ -130,28 +89,6 @@ function getSmoothedAdjustedRate(wps, rawRate) {
 
 
   const voice = useSelectedVoice(lang);
-
-  useEffect(() => {
-  if (!showVideo || subtitles.length === 0) return;
-
-  const chunkIndex = getChunkIndex(currentTime);
-
-  if (chunkIndex !== currentChunkRef.current) {
-    currentChunkRef.current = chunkIndex;
-
-    const newRate = computeChunkRate(chunkIndex);
-    chunkPlaybackRateRef.current = newRate;
-
-    // Apply video rate
-    if (playerRef.current?.setPlaybackRate) {
-      playerRef.current.setPlaybackRate(newRate);
-    }
-  }
-}, [currentTime, showVideo, subtitles]);
-function getSubText(sub) {
-  return typeof sub === 'string' ? sub : (sub?.text || "");
-}
-
   useEffect(() => {
   if (!isSpeaking || !showVideo || !currentSubtitle || subtitles.length === 0) return;
 
@@ -169,7 +106,7 @@ function getSubText(sub) {
 
 const subtitleDuration = currentSub?.duration ?? 3;
 
-  const wordCount = getSubText(currentSubtitle).trim().split(/\s+/).length;
+  const wordCount = currentSubtitle.trim().split(/\s+/).length;
 
   // Get the utterance voice if possible
   let wps = 2; // default fallback
@@ -188,7 +125,6 @@ const subtitleDuration = currentSub?.duration ?? 3;
   .replace(/\bKreupasanam\b/gi, 'Kri-paasenam')
   // Trim whitespace
   .trim();
-  
 
 
 
@@ -276,10 +212,23 @@ if (utterance.voice?.name) {
   let speechRate = 1; // fallback
   let adjustedRate = 1;
 
-  // Playback rate comes ONLY from the chunk now
-const fixedChunkRate = chunkPlaybackRateRef.current;
-playerRef.current?.setPlaybackRate(fixedChunkRate);
+  if (playerRef.current?.setPlaybackRate) {
+    console.log(`Raw rate: ${rawRate}, WPS: ${wps}`);
+    const rates = getSmoothedAdjustedRate(wps, rawRate);
+    
+    if (rates) {
+     const numFactor = numberFactor(textToSpeak);
+      const lenFactor = lengthFactor(textToSpeak);
+      console.log(`Length factor: ${lenFactor}`);
+      let adjustedRateWithFactors = rates * numFactor * lenFactor;
+      adjustedRateWithFactors = Math.max(0.1, Math.min(1.2, adjustedRateWithFactors));
 
+      
+    // Clamp to reasonable bounds
+        adjustedRate = adjustedRateWithFactors;
+      playerRef.current.setPlaybackRate(adjustedRate);  
+    }
+  }
   console.log(`Speech rate: ${speechRate}, Adjusted rate: ${adjustedRate}`);
   if (isSSMLSupported) {
     textToSpeak = enhanceWithSsml(textToSpeak);
@@ -289,46 +238,8 @@ playerRef.current?.setPlaybackRate(fixedChunkRate);
 
   window.speechSynthesis.cancel();
   window.speechSynthesis.speak(utterance);
-  // When TTS finishes early → jump to end of chunk
-utterance.onend = () => {
-  const chunk = CHUNKS[currentChunkRef.current];
-
-  if (currentTime < chunk.end && !pendingSeekToChunkEndRef.current) {
-    pendingSeekToChunkEndRef.current = true;
-
-    if (playerRef.current?.seekTo) {
-      playerRef.current.seekTo(chunk.end, true);
-    }
-
-    setTimeout(() => {
-      pendingSeekToChunkEndRef.current = false;
-    }, 300);
-  }
-};
-
 }, [isSpeaking, showVideo, currentSubtitle, currentTime, subtitles, lang, playerRef, isSSMLSupported]);
 
-useEffect(() => {
-  if (!isSpeaking) return;
-
-  const chunkIndex = getChunkIndex(currentTime);
-  currentChunkRef.current = chunkIndex;
-
-  const newRate = chunkPlaybackRateRef.current;
-
-  if (playerRef.current?.setPlaybackRate) {
-    playerRef.current.setPlaybackRate(newRate);
-  }
-
-  // Restart TTS for the matching subtitle
-  const sub = subtitles.find(
-    s => currentTime >= s.startSeconds && currentTime < s.endSeconds
-  );
-
-  if (sub && lastSpokenRef.current !== getSubText(sub)) {
-    lastSpokenRef.current = ''; // force restart
-  }
-}, [currentTime, isSpeaking]);
 
   useEffect(() => {
     if (!isSpeaking && playerRef.current) {
