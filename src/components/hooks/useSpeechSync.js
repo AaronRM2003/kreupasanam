@@ -85,78 +85,35 @@ function getSmoothedAdjustedRate(wps, rawRate) {
   }
 }
 
+
+
+
   const voice = useSelectedVoice(lang);
- function getSubtitleGroup(subs, time, lang, size = 6) {
-  const idx = subs.findIndex(
-    s => time >= s.startSeconds && time < s.endSeconds
-  );
-  if (idx === -1) return null;
-
-  const group = subs.slice(idx, idx + size);
-
-  return {
-    id: idx, // ⭐ NEW — stable identifier
-    text: group
-      .map(s => (s.text?.[lang] || "").trim())
-      .filter(t => t.length > 0)
-      .join(" "),
-    start: group[0].startSeconds,
-    end: group[group.length - 1].endSeconds,
-    duration: group[group.length - 1].endSeconds - group[0].startSeconds
-  };
-}
-const lastGroupIndexRef = useRef(-1);
-const isPausedRef = useRef(false);
-const lastGroupStartRef = useRef(0);
-
-
-useEffect(() => {
+  useEffect(() => {
   if (!isSpeaking || !showVideo || !currentSubtitle || subtitles.length === 0) return;
-  if (isPausedRef.current) return; // 🚨 skip TTS while paused
 
   if (!hasStartedSpeakingRef.current) {
-  lastSpokenRef.current = '';
-}
+    hasStartedSpeakingRef.current = true;
+    lastSpokenRef.current = '';
+  }
 
+  if (lastSpokenRef.current === currentSubtitle) return;
+  lastSpokenRef.current = currentSubtitle;
 
-  const group = getSubtitleGroup(subtitles, currentTime, lang);
-  // New: calculate stable group index
-const currentIndex = subtitles.findIndex(
-  s => currentTime >= s.startSeconds && currentTime < s.endSeconds
+  const currentSub = subtitles.find(
+  (sub) => currentTime >= sub.startSeconds && currentTime < sub.endSeconds
 );
 
-const groupSize = 6;
-const currentGroupIndex = Math.floor(currentIndex / groupSize);
+const subtitleDuration = currentSub?.duration ?? 3;
 
-// If same group, skip speaking
-if (
-  currentGroupIndex === lastGroupIndexRef.current &&
-  Math.abs(group.start - lastGroupStartRef.current) < 0.1
-) {
-  return;
-}
-
-// Update refs
-lastGroupIndexRef.current = currentGroupIndex;
-lastGroupStartRef.current = group.start;
-hasStartedSpeakingRef.current = true;
-
-
- if (!group || !group.text) return;
-
- if (lastSpokenRef.current === currentGroupIndex) return;
-lastSpokenRef.current = currentGroupIndex;
-
-
-
- const subtitleDuration = group.duration || 3;
- const wordCount = group.text.trim().split(/\s+/).length;
+  const wordCount = currentSubtitle.trim().split(/\s+/).length;
 
   // Get the utterance voice if possible
   let wps = 2; // default fallback
 
   // Prepare the text first to create utterance and get voice
-let textToSpeak = group.text  // Remove content inside square brackets
+  let textToSpeak = currentSubtitle
+  // Remove content inside square brackets
   .replace(/\[[^\]]*\]/g, '')  
   // Remove ellipses or multiple dots
   .replace(/\.{2,}/g, '')      
@@ -278,17 +235,6 @@ if (utterance.voice?.name) {
   }
 
   utterance.rate = speechRate;
-  utterance.onend = () => {
-  const player = playerRef.current;
-  if (!player) return;
-
-  const now = player.getCurrentTime?.() || 0;
-
-  // If TTS finished early move video to end of group
-  if (now < group.end - 0.3) {
-    player.seekTo(group.end, true);
-  }
-};
 
   window.speechSynthesis.cancel();
   window.speechSynthesis.speak(utterance);
