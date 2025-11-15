@@ -90,7 +90,7 @@ function getSmoothedAdjustedRate(wps, rawRate) {
 const lastChunkRef = useRef("");
 
 // Utility to group 5–6 subtitles into a chunk
-function getSubtitleChunk(subs, time, groupSize = 6) {
+function getSubtitleChunk(subs, time, lang, groupSize = 6) {
   const index = subs.findIndex(
     s => time >= s.startSeconds && time < s.endSeconds
   );
@@ -99,7 +99,11 @@ function getSubtitleChunk(subs, time, groupSize = 6) {
   const chunkSubs = subs.slice(index, index + groupSize);
 
   return {
-    mergedText: chunkSubs.map(s => s.text).join(" "),
+    // 👇 Pick language-specific subtitle text
+    mergedText: chunkSubs
+      .map(s => (s.text?.[lang] ?? "").trim())
+      .filter(t => t.length > 0)
+      .join(" "),
     chunkStart: chunkSubs[0].startSeconds,
     chunkEnd: chunkSubs[chunkSubs.length - 1].endSeconds,
   };
@@ -112,7 +116,7 @@ useEffect(() => {
     return;
   }
 
-  const chunk = getSubtitleChunk(subtitles, currentTime);
+  const chunk = getSubtitleChunk(subtitles, currentTime, lang);
 
   if (!chunk) return;
 
@@ -122,17 +126,19 @@ useEffect(() => {
 
   // Build utterance
   let textToSpeak = chunk.mergedText.trim();
+  if (textToSpeak.length === 0) return;
+
   if (isSSMLSupported) {
     textToSpeak = enhanceWithSsml(textToSpeak);
   }
 
   const utterance = new SpeechSynthesisUtterance(textToSpeak);
 
-  // Voice
+  // Voice assignment
   utterance.voice = voice || null;
   utterance.lang = lang;
 
-  // Always cancel old TTS before starting new one
+  // Start speaking
   window.speechSynthesis.cancel();
   window.speechSynthesis.speak(utterance);
 
