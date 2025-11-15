@@ -168,8 +168,9 @@ function getSubText(sub) {
     lastSpokenRef.current = '';
   }
 
-  if (lastSpokenRef.current === currentSubtitle) return;
-  lastSpokenRef.current = currentSubtitle;
+ if (lastSpokenRef.current === subtitleText) return;
+lastSpokenRef.current = subtitleText;
+
 
   const currentSub = subtitles.find(
   (sub) => currentTime >= sub.startSeconds && currentTime < sub.endSeconds
