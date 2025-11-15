@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react';
-import { addEndTimesToSubtitles, buildChunks, getCurrentChunk, getCurrentSubtitle, timeStringToSeconds } from '../utils/Utils';
+import { addEndTimesToSubtitles, getCurrentSubtitle } from '../utils/Utils';
 
 export function useSubtitles(subtitlesUrl, lang, currentTime) {
   const [subtitles, setSubtitles] = useState([]);
-  const [chunks, setChunks] = useState([]);
 
   useEffect(() => {
     if (!subtitlesUrl) {
       setSubtitles([]);
-      setChunks([]);
       return;
     }
 
@@ -20,19 +18,11 @@ export function useSubtitles(subtitlesUrl, lang, currentTime) {
       .then(data => {
         const subsWithEnd = addEndTimesToSubtitles(data);
         setSubtitles(subsWithEnd);
-
-        // Build chunks immediately after loading subtitles
-        const grouped = buildChunks(subsWithEnd, lang);
-        setChunks(grouped);
       })
-      .catch(() => {
-        setSubtitles([]);
-        setChunks([]);
-      });
-  }, [subtitlesUrl, lang]);
+      .catch(() => setSubtitles([]));
+  }, [subtitlesUrl]);
 
   const currentSubtitle = getCurrentSubtitle(subtitles, currentTime, lang);
-  const currentChunk = getCurrentChunk(chunks, currentTime);
-
-  return { subtitles, currentSubtitle, currentChunk };
+  
+  return { subtitles, currentSubtitle };
 }

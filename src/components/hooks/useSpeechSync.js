@@ -9,7 +9,7 @@ export function useSpeechSync({
   playerRef,
   showVideo,
   subtitles,
-  currentChunk,
+  currentSubtitle,
   currentTime,
   lang,
 }) {
@@ -90,15 +90,15 @@ function getSmoothedAdjustedRate(wps, rawRate) {
 
   const voice = useSelectedVoice(lang);
   useEffect(() => {
-  if (!isSpeaking || !showVideo || !currentChunk || subtitles.length === 0) return;
+  if (!isSpeaking || !showVideo || !currentSubtitle || subtitles.length === 0) return;
 
   if (!hasStartedSpeakingRef.current) {
     hasStartedSpeakingRef.current = true;
     lastSpokenRef.current = '';
   }
 
-  if (lastSpokenRef.current === currentChunk) return;
-  lastSpokenRef.current = currentChunk;
+  if (lastSpokenRef.current === currentSubtitle) return;
+  lastSpokenRef.current = currentSubtitle;
 
   const currentSub = subtitles.find(
   (sub) => currentTime >= sub.startSeconds && currentTime < sub.endSeconds
@@ -106,13 +106,13 @@ function getSmoothedAdjustedRate(wps, rawRate) {
 
 const subtitleDuration = currentSub?.duration ?? 3;
 
-  const wordCount = currentChunk.trim().split(/\s+/).length;
+  const wordCount = currentSubtitle.trim().split(/\s+/).length;
 
   // Get the utterance voice if possible
   let wps = 2; // default fallback
 
   // Prepare the text first to create utterance and get voice
-  let textToSpeak = currentChunk
+  let textToSpeak = currentSubtitle
   // Remove content inside square brackets
   .replace(/\[[^\]]*\]/g, '')  
   // Remove ellipses or multiple dots
@@ -235,26 +235,10 @@ if (utterance.voice?.name) {
   }
 
   utterance.rate = speechRate;
-  utterance.onend = () => {
-  console.log("Speaking finished.");
-
-  // find next subtitle
-  const currentIndex = subtitles.findIndex(
-    sub => currentTime >= sub.startSeconds && currentTime < sub.endSeconds
-  );
-
-  const next = subtitles[currentIndex + 1];
-  if (!next) return;
-
-  // Jump video to next subtitle start
-  if (playerRef.current?.seekTo) {
-    playerRef.current.seekTo(next.startSeconds, true);
-  }
-};
 
   window.speechSynthesis.cancel();
   window.speechSynthesis.speak(utterance);
-}, [isSpeaking, showVideo, currentChunk, currentTime, subtitles, lang, playerRef, isSSMLSupported]);
+}, [isSpeaking, showVideo, currentSubtitle, currentTime, subtitles, lang, playerRef, isSSMLSupported]);
 
 
   useEffect(() => {
