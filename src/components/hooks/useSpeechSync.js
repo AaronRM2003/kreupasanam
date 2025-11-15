@@ -106,15 +106,44 @@ function getSmoothedAdjustedRate(wps, rawRate) {
   };
 }
 const lastGroupIndexRef = useRef(-1);
+useEffect(() => {
+  const player = playerRef.current;
+  if (!player) return;
+
+  const handlePause = () => {
+    window.speechSynthesis.cancel();
+    hasStartedSpeakingRef.current = false;
+  };
+
+  const handlePlay = () => {
+    hasStartedSpeakingRef.current = false; 
+  };
+
+  const handleSeek = () => {
+    window.speechSynthesis.cancel();
+    lastGroupIndexRef.current = -1;
+    hasStartedSpeakingRef.current = false;
+  };
+
+  player.addEventListener("pause", handlePause);
+  player.addEventListener("play", handlePlay);
+  player.addEventListener("seeking", handleSeek);
+
+  return () => {
+    player.removeEventListener("pause", handlePause);
+    player.removeEventListener("play", handlePlay);
+    player.removeEventListener("seeking", handleSeek);
+  };
+}, [playerRef]);
 
 
   useEffect(() => {
   if (!isSpeaking || !showVideo || !currentSubtitle || subtitles.length === 0) return;
 
   if (!hasStartedSpeakingRef.current) {
-    hasStartedSpeakingRef.current = true;
-    lastSpokenRef.current = '';
-  }
+  lastSpokenRef.current = '';
+}
+
 
   const group = getSubtitleGroup(subtitles, currentTime, lang);
   // New: calculate stable group index
@@ -132,11 +161,13 @@ if (currentGroupIndex === lastGroupIndexRef.current) {
 
 // Save new group index
 lastGroupIndexRef.current = currentGroupIndex;
+hasStartedSpeakingRef.current = true; // <— moved here
 
  if (!group || !group.text) return;
 
- if (lastSpokenRef.current === group.id) return;
-lastSpokenRef.current = group.id;
+ if (lastSpokenRef.current === currentGroupIndex) return;
+lastSpokenRef.current = currentGroupIndex;
+
 
 
  const subtitleDuration = group.duration || 3;
