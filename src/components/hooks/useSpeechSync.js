@@ -267,15 +267,37 @@ if (playerRef.current?.setPlaybackRate) {
   // When the utterance finishes BEFORE chunk end,
 // jump video to next chunk start
 utterance.onend = () => {
-  const chunk = currentChunkRef.current;
-  const nextChunkStart = CHUNKS[chunk + 1];
+  const player = playerRef.current;
+  if (!player) return;
 
-  if (nextChunkStart !== Infinity) {
-    if (playerRef.current?.seekTo) {
-      playerRef.current.seekTo(nextChunkStart, true);
+  const chunkIndex = currentChunkRef.current;
+  const chunkStart = CHUNKS[chunkIndex];
+  const nextChunkStart = CHUNKS[chunkIndex + 1];
+  const now = player.getCurrentTime?.() ?? currentTime;
+
+  // 1. only skip if we are still inside THIS chunk
+  const stillInsideChunk = now < nextChunkStart;
+
+  // 2. find last subtitle of current chunk
+  const subsInChunk = subtitles.filter(
+    (s) => s.startSeconds >= chunkStart && s.endSeconds <= nextChunkStart
+  );
+
+  if (subsInChunk.length === 0) return;
+
+  const lastSub = subsInChunk[subsInChunk.length - 1];
+
+  // 3. skip only if the END OF LAST SUBTITLE <= now
+  const finishedAllSubtitlesInChunk = now >= lastSub.endSeconds;
+
+  // final condition: TTS finished + time still inside chunk + chunk not over
+  if (finishedAllSubtitlesInChunk && stillInsideChunk) {
+    if (nextChunkStart !== Infinity) {
+      player.seekTo?.(nextChunkStart, true);
     }
   }
 };
+
 
   window.speechSynthesis.speak(utterance);
 }, [isSpeaking, showVideo, currentSubtitle, currentTime, subtitles, lang, playerRef, isSSMLSupported]);
