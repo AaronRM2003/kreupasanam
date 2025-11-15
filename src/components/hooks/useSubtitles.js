@@ -1,12 +1,14 @@
-import { useState, useEffect, useMemo } from 'react';
-import { addEndTimesToSubtitles, getCurrentSubtitle } from '../utils/Utils';
+import { useState, useEffect } from 'react';
+import { addEndTimesToSubtitles, getCurrentSubtitle, timeStringToSeconds } from '../utils/Utils';
 
 export function useSubtitles(subtitlesUrl, lang, currentTime) {
   const [subtitles, setSubtitles] = useState([]);
+  const [chunks, setChunks] = useState([]);
 
   useEffect(() => {
     if (!subtitlesUrl) {
       setSubtitles([]);
+      setChunks([]);
       return;
     }
 
@@ -18,63 +20,19 @@ export function useSubtitles(subtitlesUrl, lang, currentTime) {
       .then(data => {
         const subsWithEnd = addEndTimesToSubtitles(data);
         setSubtitles(subsWithEnd);
+
+        // Build chunks immediately after loading subtitles
+        const grouped = buildChunks(subsWithEnd, lang);
+        setChunks(grouped);
       })
-      .catch(() => setSubtitles([]));
-  }, [subtitlesUrl]);
+      .catch(() => {
+        setSubtitles([]);
+        setChunks([]);
+      });
+  }, [subtitlesUrl, lang]);
 
   const currentSubtitle = getCurrentSubtitle(subtitles, currentTime, lang);
+  const currentChunk = getCurrentChunk(chunks, currentTime);
 
-  // -------------------------------------------------
-  // 🔥 MULTI-LANGUAGE CHUNKING (OPTION A)
-  // -------------------------------------------------
-  const chunks = useMemo(() => {
-    if (!subtitles.length) return [];
-
-    const grouped = [];
-    const size = 6;
-
-    for (let i = 0; i < subtitles.length; i += size) {
-      const group = subtitles.slice(i, i + size);
-
-      // Build full multi-language_text
-      const languages = Object.keys(group[0].text || {});
-
-      const combinedTextObject = {};
-
-      languages.forEach(l => {
-        combinedTextObject[l] = group
-          .map(s => s.text?.[l] || "")
-          .join(" ")
-          .trim();
-      });
-
-      const startSeconds = group[0].startSeconds;
-      const endSeconds = group[group.length - 1].endSeconds;
-      const duration = endSeconds - startSeconds;
-
-      grouped.push({
-        startSeconds,
-        endSeconds,
-        duration,
-        text: combinedTextObject,   // 🔥 same structure as subtitle.text
-      });
-    }
-
-    return grouped;
-  }, [subtitles]);
-
-  // -------------------------------------------------
-  // 🔥 CURRENT CHUNK IDENTIFICATION
-  // -------------------------------------------------
-  const currentChunk = useMemo(() => {
-    return chunks.find(
-      c => currentTime >= c.startSeconds && currentTime < c.endSeconds
-    );
-  }, [chunks, currentTime]);
-
-  return {
-    subtitles,
-    currentSubtitle,
-    currentChunk
-  };
+  return { subtitles, currentSubtitle, currentChunk };
 }

@@ -373,6 +373,62 @@ export function getCurrentSubtitle(subtitles, currentTime, lang) {
   }
   return '';
 }
+export function buildChunks(subs, lang, gapThreshold = 1) {
+  if (!subs.length) return [];
+
+  const chunks = [];
+  let chunkStart = subs[0].start;
+  let chunkEnd = subs[0].end;
+
+  const getText = (s) => s.text[lang] || s.text.en || "";
+  let chunkText = getText(subs[0]);
+
+  for (let i = 1; i < subs.length; i++) {
+    const prevEnd = timeStringToSeconds(subs[i - 1].end);
+    const curStart = timeStringToSeconds(subs[i].start);
+
+    const gap = curStart - prevEnd;
+
+    if (gap <= gapThreshold) {
+      // merge text
+      chunkText += " " + getText(subs[i]);
+      chunkEnd = subs[i].end;
+    } else {
+      // push finished chunk
+      chunks.push({
+        start: chunkStart,
+        end: chunkEnd,
+        text: chunkText.trim()
+      });
+
+      // start new chunk
+      chunkStart = subs[i].start;
+      chunkEnd = subs[i].end;
+      chunkText = getText(subs[i]);
+    }
+  }
+
+  // last chunk
+  chunks.push({
+    start: chunkStart,
+    end: chunkEnd,
+    text: chunkText.trim()
+  });
+
+  return chunks;
+}
+export function getCurrentChunk(chunks, currentTime) {
+  for (let c of chunks) {
+    const startSec = timeStringToSeconds(c.start);
+    const endSec = timeStringToSeconds(c.end);
+
+    if (currentTime >= startSec && currentTime < endSec) {
+      return c.text;   // 🔥 return only the text
+    }
+  }
+  return "";
+}
+
 
 
 export function addEndTimesToSubtitles(subtitles) {
