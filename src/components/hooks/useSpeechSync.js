@@ -86,47 +86,78 @@ function getSmoothedAdjustedRate(wps, rawRate) {
 }
 
   const voice = useSelectedVoice(lang);
-  useEffect(() => {
-  if (!isSpeaking || !showVideo || subtitles.length === 0) return;
+  // Track last spoken chunk so we don't restart TTS unnecessarily
+const lastChunkRef = useRef("");
+
+// Utility to group 5–6 subtitles into a chunk
+function getSubtitleChunk(subs, time, groupSize = 6) {
+  const index = subs.findIndex(
+    s => time >= s.startSeconds && time < s.endSeconds
+  );
+  if (index === -1) return null;
+
+  const chunkSubs = subs.slice(index, index + groupSize);
+
+  return {
+    mergedText: chunkSubs.map(s => s.text).join(" "),
+    chunkStart: chunkSubs[0].startSeconds,
+    chunkEnd: chunkSubs[chunkSubs.length - 1].endSeconds,
+  };
+}
+
+useEffect(() => {
+  if (!isSpeaking || !showVideo || subtitles.length === 0) {
+    window.speechSynthesis.cancel();
+    lastChunkRef.current = "";
+    return;
+  }
 
   const chunk = getSubtitleChunk(subtitles, currentTime);
 
   if (!chunk) return;
 
-  // Avoid re-speaking same chunk
+  // No re-speaking same group
   if (lastChunkRef.current === chunk.mergedText) return;
-
   lastChunkRef.current = chunk.mergedText;
 
-  // Prepare utterance
-  let text = chunk.mergedText;
-  const utterance = new SpeechSynthesisUtterance(text);
-
-  // Apply SSML if supported
+  // Build utterance
+  let textToSpeak = chunk.mergedText.trim();
   if (isSSMLSupported) {
-    text = enhanceWithSsml(text);
+    textToSpeak = enhanceWithSsml(textToSpeak);
   }
 
-  utterance.voice = voice || null;
-  utterance.rate = 1;
+  const utterance = new SpeechSynthesisUtterance(textToSpeak);
 
-  // Clean old TTS
+  // Voice
+  utterance.voice = voice || null;
+  utterance.lang = lang;
+
+  // Always cancel old TTS before starting new one
   window.speechSynthesis.cancel();
   window.speechSynthesis.speak(utterance);
 
-  // When speech finishes
+  // When the chunk finishes speaking
   utterance.onend = () => {
-    const videoTime = playerRef.current?.getCurrentTime?.() || 0;
+    const player = playerRef.current;
+    if (!player) return;
 
-    if (videoTime < chunk.chunkEnd - 0.3) {
-      // Jump video forward to matched time
-      playerRef.current.seekTo(chunk.chunkEnd);
+    const now = player.getCurrentTime?.() || 0;
+
+    // If TTS finished BEFORE video reached chunk end → jump video to chunk end
+    if (now < chunk.chunkEnd - 0.3) {
+      player.seekTo(chunk.chunkEnd, true);
     }
-
-    // Let next chunk happen automatically
   };
-
-}, [isSpeaking, showVideo, currentTime, subtitles]);
+}, [
+  isSpeaking,
+  showVideo,
+  currentTime,
+  subtitles,
+  lang,
+  voice,
+  isSSMLSupported,
+  playerRef
+]);
 
 
   useEffect(() => {
