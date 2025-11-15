@@ -86,84 +86,183 @@ function getSmoothedAdjustedRate(wps, rawRate) {
 }
 
   const voice = useSelectedVoice(lang);
-  // Track last spoken chunk so we don't restart TTS unnecessarily
-const lastChunkRef = useRef("");
-
-// Utility to group 5–6 subtitles into a chunk
-function getSubtitleChunk(subs, time, lang, groupSize = 6) {
-  const index = subs.findIndex(
+  function getSubtitleGroup(subs, time, lang, size = 6) {
+  const idx = subs.findIndex(
     s => time >= s.startSeconds && time < s.endSeconds
   );
-  if (index === -1) return null;
+  if (idx === -1) return null;
 
-  const chunkSubs = subs.slice(index, index + groupSize);
+  const group = subs.slice(idx, idx + size);
 
   return {
-    // 👇 Pick language-specific subtitle text
-    mergedText: chunkSubs
-      .map(s => (s.text?.[lang] ?? "").trim())
+    text: group
+      .map(s => (s.text?.[lang] || "").trim())
       .filter(t => t.length > 0)
       .join(" "),
-    chunkStart: chunkSubs[0].startSeconds,
-    chunkEnd: chunkSubs[chunkSubs.length - 1].endSeconds,
+    start: group[0].startSeconds,
+    end: group[group.length - 1].endSeconds,
+    duration: group[group.length - 1].endSeconds - group[0].startSeconds
   };
 }
 
-useEffect(() => {
-  if (!isSpeaking || !showVideo || subtitles.length === 0) {
-    window.speechSynthesis.cancel();
-    lastChunkRef.current = "";
-    return;
+  useEffect(() => {
+  if (!isSpeaking || !showVideo || !currentSubtitle || subtitles.length === 0) return;
+
+  if (!hasStartedSpeakingRef.current) {
+    hasStartedSpeakingRef.current = true;
+    lastSpokenRef.current = '';
   }
 
-  const chunk = getSubtitleChunk(subtitles, currentTime, lang);
+  const group = getSubtitleGroup(subtitles, currentTime, lang);
+ if (!group || !group.text) return;
 
-  if (!chunk) return;
+ if (lastSpokenRef.current === group.text) return;
+ lastSpokenRef.current = group.text;
 
-  // No re-speaking same group
-  if (lastChunkRef.current === chunk.mergedText) return;
-  lastChunkRef.current = chunk.mergedText;
+ const subtitleDuration = group.duration || 3;
+ const wordCount = group.text.trim().split(/\s+/).length;
 
-  // Build utterance
-  let textToSpeak = chunk.mergedText.trim();
-  if (textToSpeak.length === 0) return;
+  // Get the utterance voice if possible
+  let wps = 2; // default fallback
 
+  // Prepare the text first to create utterance and get voice
+let textToSpeak = group.text  // Remove content inside square brackets
+  .replace(/\[[^\]]*\]/g, '')  
+  // Remove ellipses or multiple dots
+  .replace(/\.{2,}/g, '')      
+  // Remove standalone punctuation like -- or ***
+  .replace(/[-*]{2,}/g, '')    
+  // Replace V.P. with VP
+  .replace(/\b(V\.P\.)\b/g, 'VP')
+  // ✅ Replace Kreupasanam with Kripaasanam for better pronunciation
+  .replace(/\bKreupasanam\b/gi, 'Kri-paasenam')
+  // Trim whitespace
+  .trim();
+
+
+
+  const utterance = new SpeechSynthesisUtterance(textToSpeak);
+  function lengthFactor(text) {
+    const words = text.trim().split(/\s+/);
+    if (words.length === 0) return 1;
+
+    const totalChars = words.reduce((sum, w) => sum + w.length, 0);
+    const avgChars = totalChars / words.length;
+
+    // Typical spoken English average is around 4.7 chars/word
+    // We'll use that as a baseline
+    const baseline = 3;
+
+    let factor = 1;
+
+    // If avg word length is higher → longer pronunciation → slow down
+    if (avgChars > baseline) {
+      // For each extra char above baseline, reduce by 3–5%
+      factor *= Math.max(0.7, 1 - ((avgChars - baseline) * 0.05));
+    } 
+    // If words are short → can go slightly faster
+    else if (avgChars < baseline - 1) {
+      factor *= Math.min(1.15, 1 + ((baseline - avgChars) * 0.04));
+    }
+
+    return factor;
+}
+
+  // Set utterance lang as before
+  function numberFactor(text) {
+  const numbers = text.match(/\d+/g); // match all sequences of digits
+  if (!numbers) return 1; // no numbers, normal speed
+
+  let factor = 1;
+
+  // Slow down for long numbers
+  numbers.forEach(num => {
+    if (num.length >= 4) factor *= 0.85;  // very long number
+    else if (num.length === 3) factor *= 0.9;
+  });
+
+  // 👇 Detect Bible-style references like "Numbers 2:6", "John 3:16", etc.
+  const bibleRefPattern = /\b([A-Z][a-z]+)\s+\d{1,3}:\d{1,3}\b/;
+  if (bibleRefPattern.test(text)) {
+    // Add more delay for chapter–verse phrasing
+    factor *= 0.8; // reduce further by 20%
+  }
+
+  // Keep factor within reasonable range
+  return Math.max(0.4, Math.min(1, factor));
+}
+
+
+ const savedVoiceName = localStorage.getItem(`${lang}`);
+const voices = window.speechSynthesis.getVoices();
+const matchedVoice = voices.find(v => v.name === savedVoiceName);
+utterance.voice = matchedVoice || voice || null;
+console.log(voice, matchedVoice, savedVoiceName);
+utterance.lang = lang || 'en-US';
+
+if (utterance.voice?.name) {
+  const testKey = `voice_test_data_${lang}`;
+  const storedData = localStorage.getItem(testKey);
+
+  if (storedData) {
+    try {
+      const allTestData = JSON.parse(storedData);
+      const voiceData = allTestData[utterance.voice.name];
+      if (voiceData && voiceData.wps) {
+        wps = parseFloat(voiceData.wps);
+      }
+    } catch (e) {
+      console.error("Failed to parse voice test data:", e);
+    }
+  }
+}
+
+
+  console.log(wps,`voice_${utterance.voice.name}_tested`);
+  const rawRate = wordCount / subtitleDuration;
+  console.log(wordCount, subtitleDuration);
+
+  let speechRate = 1; // fallback
+  let adjustedRate = 1;
+
+  if (playerRef.current?.setPlaybackRate) {
+    console.log(`Raw rate: ${rawRate}, WPS: ${wps}`);
+    const rates = getSmoothedAdjustedRate(wps, rawRate);
+    
+    if (rates) {
+     const numFactor = numberFactor(textToSpeak);
+      const lenFactor = lengthFactor(textToSpeak);
+      console.log(`Length factor: ${lenFactor}`);
+      let adjustedRateWithFactors = rates * numFactor * lenFactor;
+      adjustedRateWithFactors = Math.max(0.1, Math.min(1.2, adjustedRateWithFactors));
+
+      
+    // Clamp to reasonable bounds
+        adjustedRate = adjustedRateWithFactors;
+      playerRef.current.setPlaybackRate(adjustedRate);  
+    }
+  }
+  console.log(`Speech rate: ${speechRate}, Adjusted rate: ${adjustedRate}`);
   if (isSSMLSupported) {
     textToSpeak = enhanceWithSsml(textToSpeak);
   }
 
-  const utterance = new SpeechSynthesisUtterance(textToSpeak);
+  utterance.rate = speechRate;
+  utterance.onend = () => {
+  const player = playerRef.current;
+  if (!player) return;
 
-  // Voice assignment
-  utterance.voice = voice || null;
-  utterance.lang = lang;
+  const now = player.getCurrentTime?.() || 0;
 
-  // Start speaking
+  // If TTS finished early move video to end of group
+  if (now < group.end - 0.3) {
+    player.seekTo(group.end, true);
+  }
+};
+
   window.speechSynthesis.cancel();
   window.speechSynthesis.speak(utterance);
-
-  // When the chunk finishes speaking
-  utterance.onend = () => {
-    const player = playerRef.current;
-    if (!player) return;
-
-    const now = player.getCurrentTime?.() || 0;
-
-    // If TTS finished BEFORE video reached chunk end → jump video to chunk end
-    if (now < chunk.chunkEnd - 0.3) {
-      player.seekTo(chunk.chunkEnd, true);
-    }
-  };
-}, [
-  isSpeaking,
-  showVideo,
-  currentTime,
-  subtitles,
-  lang,
-  voice,
-  isSSMLSupported,
-  playerRef
-]);
+}, [isSpeaking, showVideo, currentSubtitle, currentTime, subtitles, lang, playerRef, isSSMLSupported]);
 
 
   useEffect(() => {
