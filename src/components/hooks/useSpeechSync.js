@@ -157,8 +157,15 @@ function getSmoothedAdjustedRate(wps, rawRate) {
   }
 }, [currentTime, showVideo, subtitles]);
 function getSubText(sub) {
-  return typeof sub === 'string' ? sub : (sub?.text || "");
+  if (!sub) return "";
+  if (typeof sub === "string") return sub;
+
+  if (typeof sub.text === "string") return sub.text;
+
+  // multilingual object
+  return sub.text?.[lang] || sub.text?.en || "";
 }
+
 
   useEffect(() => {
   if (!isSpeaking || !showVideo || !currentSubtitle || subtitles.length === 0) return;
