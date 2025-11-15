@@ -20,6 +20,18 @@ export function useSpeechSync({
   const [playerReady, setPlayerReady] = useState(false);
 
   const isSSMLSupported = useSSMLSupportTest();
+function getChunkText(subtitles, currentTime) {
+  const chunkIndex = currentChunkRef.current;
+  const chunkStart = CHUNKS[chunkIndex];
+  const nextChunkStart = CHUNKS[chunkIndex + 1];
+
+  const subs = subtitles.filter(
+    (s) => s.startSeconds >= currentTime && s.endSeconds <= nextChunkStart
+  );
+
+  // join all remaining subtitles inside this chunk
+  return subs.map(s => s.text[lang] || s.text).join(" ");
+}
 
   // Sync volume once player is available
   useEffect(() => {
