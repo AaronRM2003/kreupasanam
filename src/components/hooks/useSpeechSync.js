@@ -238,7 +238,7 @@ if (utterance.voice?.name) {
 
   window.speechSynthesis.cancel();
   window.speechSynthesis.speak(utterance);
-}, [isSpeaking, showVideo, text, currentTime, subtitles, lang, playerRef, isSSMLSupported]);
+}, [isSpeaking, showVideo, current5Subtitle, currentTime, subtitles, lang, playerRef, isSSMLSupported]);
 
 
   useEffect(() => {
