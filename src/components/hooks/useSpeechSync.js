@@ -236,15 +236,36 @@ if (utterance.voice?.name) {
 
   utterance.rate = speechRate;
   utterance.onend = () => {
- 
-  if (playerRef.current?.seekTo) {
-    playerRef.current.seekTo(end, true);
-  }
+  if (!playerRef.current?.seekTo) return;
+
+  fadeSeek(playerRef.current, end);
 };
+
 
   window.speechSynthesis.cancel();
   window.speechSynthesis.speak(utterance);
 }, [isSpeaking, showVideo, current5Subtitle, currentTime, subtitles, lang, playerRef, isSSMLSupported]);
+
+function fadeSeek(player, target) {
+  const videoEl = player.getIframe?.(); // works for YouTube iframe API
+  if (!videoEl) {
+    // fallback: just seek
+    player.seekTo(target, true);
+    return;
+  }
+
+  // Apply a smooth opacity transition
+  videoEl.style.transition = "opacity 0.35s ease";
+  videoEl.style.opacity = 0;
+
+  // After fade-out, perform seek
+  setTimeout(() => {
+    player.seekTo(target, true);
+
+    // Fade back in
+    videoEl.style.opacity = 1;
+  }, 350);
+}
 
 
   useEffect(() => {
