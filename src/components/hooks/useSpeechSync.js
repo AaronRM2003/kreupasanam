@@ -21,55 +21,6 @@ export function useSpeechSync({
   const [playerReady, setPlayerReady] = useState(false);
 
   const isSSMLSupported = useSSMLSupportTest();
-   function lengthFactor(text) {
-    const words = text.trim().split(/\s+/);
-    if (words.length === 0) return 1;
-
-    const totalChars = words.reduce((sum, w) => sum + w.length, 0);
-    const avgChars = totalChars / words.length;
-
-    // Typical spoken English average is around 4.7 chars/word
-    // We'll use that as a baseline
-    const baseline = 3;
-
-    let factor = 1;
-
-    // If avg word length is higher → longer pronunciation → slow down
-    if (avgChars > baseline) {
-      // For each extra char above baseline, reduce by 3–5%
-      factor *= Math.max(0.7, 1 - ((avgChars - baseline) * 0.05));
-    } 
-    // If words are short → can go slightly faster
-    else if (avgChars < baseline - 1) {
-      factor *= Math.min(1.15, 1 + ((baseline - avgChars) * 0.04));
-    }
-
-    return factor;
-}
-
-  // Set utterance lang as before
-  function numberFactor(text) {
-  const numbers = text.match(/\d+/g); // match all sequences of digits
-  if (!numbers) return 1; // no numbers, normal speed
-
-  let factor = 1;
-
-  // Slow down for long numbers
-  numbers.forEach(num => {
-    if (num.length >= 4) factor *= 0.85;  // very long number
-    else if (num.length === 3) factor *= 0.9;
-  });
-
-  // 👇 Detect Bible-style references like "Numbers 2:6", "John 3:16", etc.
-  const bibleRefPattern = /\b([A-Z][a-z]+)\s+\d{1,3}:\d{1,3}\b/;
-  if (bibleRefPattern.test(text)) {
-    // Add more delay for chapter–verse phrasing
-    factor *= 0.8; // reduce further by 20%
-  }
-
-  // Keep factor within reasonable range
-  return Math.max(0.4, Math.min(1, factor));
-}
 
   // Sync volume once player is available
   useEffect(() => {
@@ -140,29 +91,28 @@ function getSmoothedAdjustedRate(wps, rawRate) {
 
   const voice = useSelectedVoice(lang);
   useEffect(() => {
-  if (!isSpeaking || !showVideo || !currentSubtitle || subtitles.length === 0) return;
+  if (!isSpeaking || !showVideo || !current5Subtitle || subtitles.length === 0) return;
+  const { text, start, end } = current5Subtitle;
 
   if (!hasStartedSpeakingRef.current) {
     hasStartedSpeakingRef.current = true;
     lastSpokenRef.current = '';
   }
 
-  if (lastSpokenRef.current === currentSubtitle) return;
-  lastSpokenRef.current = currentSubtitle;
+  if (lastSpokenRef.current === text) return;
+  lastSpokenRef.current = text;
 
-  const currentSub = subtitles.find(
-  (sub) => currentTime >= sub.startSeconds && currentTime < sub.endSeconds
-);
+  
 
-const subtitleDuration = currentSub?.duration ?? 3;
+const subtitleDuration = end - start;
 
-  const wordCount = currentSubtitle.trim().split(/\s+/).length;
+  const wordCount = text.trim().split(/\s+/).length;
 
   // Get the utterance voice if possible
   let wps = 2; // default fallback
 
   // Prepare the text first to create utterance and get voice
-  let textToSpeak = currentSubtitle
+  let textToSpeak = text
   // Remove content inside square brackets
   .replace(/\[[^\]]*\]/g, '')  
   // Remove ellipses or multiple dots
@@ -179,6 +129,56 @@ const subtitleDuration = currentSub?.duration ?? 3;
 
 
   const utterance = new SpeechSynthesisUtterance(textToSpeak);
+  function lengthFactor(text) {
+    const words = text.trim().split(/\s+/);
+    if (words.length === 0) return 1;
+
+    const totalChars = words.reduce((sum, w) => sum + w.length, 0);
+    const avgChars = totalChars / words.length;
+
+    // Typical spoken English average is around 4.7 chars/word
+    // We'll use that as a baseline
+    const baseline = 3;
+
+    let factor = 1;
+
+    // If avg word length is higher → longer pronunciation → slow down
+    if (avgChars > baseline) {
+      // For each extra char above baseline, reduce by 3–5%
+      factor *= Math.max(0.7, 1 - ((avgChars - baseline) * 0.05));
+    } 
+    // If words are short → can go slightly faster
+    else if (avgChars < baseline - 1) {
+      factor *= Math.min(1.15, 1 + ((baseline - avgChars) * 0.04));
+    }
+
+    return factor;
+}
+
+  // Set utterance lang as before
+  function numberFactor(text) {
+  const numbers = text.match(/\d+/g); // match all sequences of digits
+  if (!numbers) return 1; // no numbers, normal speed
+
+  let factor = 1;
+
+  // Slow down for long numbers
+  numbers.forEach(num => {
+    if (num.length >= 4) factor *= 0.85;  // very long number
+    else if (num.length === 3) factor *= 0.9;
+  });
+
+  // 👇 Detect Bible-style references like "Numbers 2:6", "John 3:16", etc.
+  const bibleRefPattern = /\b([A-Z][a-z]+)\s+\d{1,3}:\d{1,3}\b/;
+  if (bibleRefPattern.test(text)) {
+    // Add more delay for chapter–verse phrasing
+    factor *= 0.8; // reduce further by 20%
+  }
+
+  // Keep factor within reasonable range
+  return Math.max(0.4, Math.min(1, factor));
+}
+
 
  const savedVoiceName = localStorage.getItem(`${lang}`);
 const voices = window.speechSynthesis.getVoices();
@@ -212,7 +212,23 @@ if (utterance.voice?.name) {
   let speechRate = 1; // fallback
   let adjustedRate = 1;
 
-  
+  if (playerRef.current?.setPlaybackRate) {
+    console.log(`Raw rate: ${rawRate}, WPS: ${wps}`);
+    const rates = getSmoothedAdjustedRate(wps, rawRate);
+    
+    if (rates) {
+     const numFactor = numberFactor(textToSpeak);
+      const lenFactor = lengthFactor(textToSpeak);
+      console.log(`Length factor: ${lenFactor}`);
+      let adjustedRateWithFactors = rates * numFactor * lenFactor;
+      adjustedRateWithFactors = Math.max(0.1, Math.min(1.2, adjustedRateWithFactors));
+
+      
+    // Clamp to reasonable bounds
+        adjustedRate = adjustedRateWithFactors;
+      playerRef.current.setPlaybackRate(adjustedRate);  
+    }
+  }
   console.log(`Speech rate: ${speechRate}, Adjusted rate: ${adjustedRate}`);
   if (isSSMLSupported) {
     textToSpeak = enhanceWithSsml(textToSpeak);
@@ -222,65 +238,7 @@ if (utterance.voice?.name) {
 
   window.speechSynthesis.cancel();
   window.speechSynthesis.speak(utterance);
-}, [isSpeaking, showVideo, currentSubtitle, currentTime, subtitles, lang, playerRef, isSSMLSupported]);
-
-useEffect(() => {
-  if (!current5Subtitle || !isSpeaking || !showVideo) return;
-
-  const { text, start, end } = current5Subtitle;
-
-  const duration = end - start;
-  if (duration <= 0) return;
-
-  // Count total words in the 5-subtitle block
-  const wordCount = text.trim().split(/\s+/).length;
-
-  let wps = 2;
-
-  // Fetch saved voice if needed
-  const savedVoiceName = localStorage.getItem(lang);
-  const voices = window.speechSynthesis.getVoices();
-  const matchedVoice = voices.find(v => v.name === savedVoiceName);
-
-  if (matchedVoice?.name) {
-    const key = `voice_test_data_${lang}`;
-    const stored = localStorage.getItem(key);
-    if (stored) {
-      const all = JSON.parse(stored);
-      const data = all[matchedVoice.name];
-      if (data?.wps) wps = parseFloat(data.wps);
-    }
-  }
-
-  // Calculate raw rate using REAL duration
-  const rawRate = wordCount / duration;
-
-  // Apply same factors as before
-  const lenFactor = lengthFactor(text);
-  const numFactor = numberFactor(text);
-
-  let finalRate = getSmoothedAdjustedRate(wps, rawRate);
-  finalRate = finalRate * lenFactor * numFactor;
-
-  // Clamp rate
-  finalRate = Math.max(0.1, Math.min(1.2, finalRate));
-
-  console.log(
-    "Adjusted Rate (5-subtitle block):",
-    finalRate,
-    "Duration:",
-    duration,
-    "Words:",
-    wordCount
-  );
-
-  // Update video playback rate
-  if (playerRef.current?.setPlaybackRate) {
-    playerRef.current.setPlaybackRate(finalRate);
-  }
-
-}, [current5Subtitle, isSpeaking, showVideo, lang]);
-
+}, [isSpeaking, showVideo, text, currentTime, subtitles, lang, playerRef, isSSMLSupported]);
 
 
   useEffect(() => {
