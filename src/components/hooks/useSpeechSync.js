@@ -21,6 +21,55 @@ export function useSpeechSync({
   const [playerReady, setPlayerReady] = useState(false);
 
   const isSSMLSupported = useSSMLSupportTest();
+   function lengthFactor(text) {
+    const words = text.trim().split(/\s+/);
+    if (words.length === 0) return 1;
+
+    const totalChars = words.reduce((sum, w) => sum + w.length, 0);
+    const avgChars = totalChars / words.length;
+
+    // Typical spoken English average is around 4.7 chars/word
+    // We'll use that as a baseline
+    const baseline = 3;
+
+    let factor = 1;
+
+    // If avg word length is higher → longer pronunciation → slow down
+    if (avgChars > baseline) {
+      // For each extra char above baseline, reduce by 3–5%
+      factor *= Math.max(0.7, 1 - ((avgChars - baseline) * 0.05));
+    } 
+    // If words are short → can go slightly faster
+    else if (avgChars < baseline - 1) {
+      factor *= Math.min(1.15, 1 + ((baseline - avgChars) * 0.04));
+    }
+
+    return factor;
+}
+
+  // Set utterance lang as before
+  function numberFactor(text) {
+  const numbers = text.match(/\d+/g); // match all sequences of digits
+  if (!numbers) return 1; // no numbers, normal speed
+
+  let factor = 1;
+
+  // Slow down for long numbers
+  numbers.forEach(num => {
+    if (num.length >= 4) factor *= 0.85;  // very long number
+    else if (num.length === 3) factor *= 0.9;
+  });
+
+  // 👇 Detect Bible-style references like "Numbers 2:6", "John 3:16", etc.
+  const bibleRefPattern = /\b([A-Z][a-z]+)\s+\d{1,3}:\d{1,3}\b/;
+  if (bibleRefPattern.test(text)) {
+    // Add more delay for chapter–verse phrasing
+    factor *= 0.8; // reduce further by 20%
+  }
+
+  // Keep factor within reasonable range
+  return Math.max(0.4, Math.min(1, factor));
+}
 
   // Sync volume once player is available
   useEffect(() => {
@@ -130,56 +179,6 @@ const subtitleDuration = currentSub?.duration ?? 3;
 
 
   const utterance = new SpeechSynthesisUtterance(textToSpeak);
-  function lengthFactor(text) {
-    const words = text.trim().split(/\s+/);
-    if (words.length === 0) return 1;
-
-    const totalChars = words.reduce((sum, w) => sum + w.length, 0);
-    const avgChars = totalChars / words.length;
-
-    // Typical spoken English average is around 4.7 chars/word
-    // We'll use that as a baseline
-    const baseline = 3;
-
-    let factor = 1;
-
-    // If avg word length is higher → longer pronunciation → slow down
-    if (avgChars > baseline) {
-      // For each extra char above baseline, reduce by 3–5%
-      factor *= Math.max(0.7, 1 - ((avgChars - baseline) * 0.05));
-    } 
-    // If words are short → can go slightly faster
-    else if (avgChars < baseline - 1) {
-      factor *= Math.min(1.15, 1 + ((baseline - avgChars) * 0.04));
-    }
-
-    return factor;
-}
-
-  // Set utterance lang as before
-  function numberFactor(text) {
-  const numbers = text.match(/\d+/g); // match all sequences of digits
-  if (!numbers) return 1; // no numbers, normal speed
-
-  let factor = 1;
-
-  // Slow down for long numbers
-  numbers.forEach(num => {
-    if (num.length >= 4) factor *= 0.85;  // very long number
-    else if (num.length === 3) factor *= 0.9;
-  });
-
-  // 👇 Detect Bible-style references like "Numbers 2:6", "John 3:16", etc.
-  const bibleRefPattern = /\b([A-Z][a-z]+)\s+\d{1,3}:\d{1,3}\b/;
-  if (bibleRefPattern.test(text)) {
-    // Add more delay for chapter–verse phrasing
-    factor *= 0.8; // reduce further by 20%
-  }
-
-  // Keep factor within reasonable range
-  return Math.max(0.4, Math.min(1, factor));
-}
-
 
  const savedVoiceName = localStorage.getItem(`${lang}`);
 const voices = window.speechSynthesis.getVoices();
