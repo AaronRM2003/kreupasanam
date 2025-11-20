@@ -236,19 +236,9 @@ if (utterance.voice?.name) {
 
   utterance.rate = speechRate;
   utterance.onend = () => {
-  console.log("Speaking finished.");
-
-  // find next subtitle
-  const currentIndex = subtitles.findIndex(
-    sub => currentTime >= sub.startSeconds && currentTime < sub.endSeconds
-  );
-
-  const next = subtitles[currentIndex + 1];
-  if (!next) return;
-
-  // Jump video to next subtitle start
+ 
   if (playerRef.current?.seekTo) {
-    playerRef.current.seekTo(next.startSeconds, true);
+    playerRef.current.seekTo(end, true);
   }
 };
 
