@@ -373,60 +373,41 @@ export function getCurrentSubtitle(subtitles, currentTime, lang) {
   }
   return '';
 }
-export function buildChunks(subs, lang, gapThreshold = 1) {
-  if (!subs.length) return [];
 
-  const chunks = [];
-  let chunkStart = subs[0].start;
-  let chunkEnd = subs[0].end;
+export function getCurrentFiveSubtitles(subtitles, currentTime, lang) {
+  if (!subtitles.length) return '';
 
-  const getText = (s) => s.text[lang] || s.text.en || "";
-  let chunkText = getText(subs[0]);
-
-  for (let i = 1; i < subs.length; i++) {
-    const prevEnd = timeStringToSeconds(subs[i - 1].end);
-    const curStart = timeStringToSeconds(subs[i].start);
-
-    const gap = curStart - prevEnd;
-
-    if (gap <= gapThreshold) {
-      // merge text
-      chunkText += " " + getText(subs[i]);
-      chunkEnd = subs[i].end;
-    } else {
-      // push finished chunk
-      chunks.push({
-        start: chunkStart,
-        end: chunkEnd,
-        text: chunkText.trim()
-      });
-
-      // start new chunk
-      chunkStart = subs[i].start;
-      chunkEnd = subs[i].end;
-      chunkText = getText(subs[i]);
-    }
-  }
-
-  // last chunk
-  chunks.push({
-    start: chunkStart,
-    end: chunkEnd,
-    text: chunkText.trim()
-  });
-
-  return chunks;
-}
-export function getCurrentChunk(chunks, currentTime) {
-  for (let c of chunks) {
-    const startSec = timeStringToSeconds(c.start);
-    const endSec = timeStringToSeconds(c.end);
+  // 1. Find the current subtitle index
+  let currentIndex = -1;
+  for (let i = 0; i < subtitles.length; i++) {
+    const startSec = timeStringToSeconds(subtitles[i].start);
+    const endSec =
+      i + 1 < subtitles.length
+        ? timeStringToSeconds(subtitles[i + 1].start)
+        : startSec + 5;
 
     if (currentTime >= startSec && currentTime < endSec) {
-      return c.text;   // 🔥 return only the text
+      currentIndex = i;
+      break;
     }
   }
-  return "";
+
+  if (currentIndex === -1) return '';
+
+  // 2. Collect current + next 4 subtitles
+  const collected = [];
+
+  for (let j = currentIndex; j < currentIndex + 5 && j < subtitles.length; j++) {
+    const text =
+      subtitles[j].text[lang] ||
+      subtitles[j].text['en'] ||
+      '';
+
+    if (text) collected.push(text);
+  }
+
+  // 3. Return as one combined string
+  return collected.join(' ');
 }
 
 

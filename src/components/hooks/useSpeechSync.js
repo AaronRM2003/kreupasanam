@@ -10,6 +10,7 @@ export function useSpeechSync({
   showVideo,
   subtitles,
   currentSubtitle,
+  current5Subtitle,
   currentTime,
   lang,
 }) {
@@ -212,23 +213,7 @@ if (utterance.voice?.name) {
   let speechRate = 1; // fallback
   let adjustedRate = 1;
 
-  if (playerRef.current?.setPlaybackRate) {
-    console.log(`Raw rate: ${rawRate}, WPS: ${wps}`);
-    const rates = getSmoothedAdjustedRate(wps, rawRate);
-    
-    if (rates) {
-     const numFactor = numberFactor(textToSpeak);
-      const lenFactor = lengthFactor(textToSpeak);
-      console.log(`Length factor: ${lenFactor}`);
-      let adjustedRateWithFactors = rates * numFactor * lenFactor;
-      adjustedRateWithFactors = Math.max(0.1, Math.min(1.2, adjustedRateWithFactors));
-
-      
-    // Clamp to reasonable bounds
-        adjustedRate = adjustedRateWithFactors;
-      playerRef.current.setPlaybackRate(adjustedRate);  
-    }
-  }
+  
   console.log(`Speech rate: ${speechRate}, Adjusted rate: ${adjustedRate}`);
   if (isSSMLSupported) {
     textToSpeak = enhanceWithSsml(textToSpeak);
@@ -239,6 +224,56 @@ if (utterance.voice?.name) {
   window.speechSynthesis.cancel();
   window.speechSynthesis.speak(utterance);
 }, [isSpeaking, showVideo, currentSubtitle, currentTime, subtitles, lang, playerRef, isSSMLSupported]);
+
+useEffect(() => {
+  if (!current5Subtitle || !isSpeaking || !showVideo) return;
+
+  const text = current5Subtitle;
+
+  // Count total words in the 5-subtitle block
+  const wordCount = text.trim().split(/\s+/).length;
+
+  // Estimate combined duration of 5 subtitles
+  // or calculate it however you prefer
+  const combinedDuration = 5 * 3; // example: 3 seconds each
+
+  let wps = 2;
+
+  // Fetch saved voice if needed
+  const savedVoiceName = localStorage.getItem(lang);
+  const voices = window.speechSynthesis.getVoices();
+  const matchedVoice = voices.find(v => v.name === savedVoiceName);
+
+  if (matchedVoice?.name) {
+    const key = `voice_test_data_${lang}`;
+    const stored = localStorage.getItem(key);
+    if (stored) {
+      const all = JSON.parse(stored);
+      const data = all[matchedVoice.name];
+      if (data?.wps) wps = parseFloat(data.wps);
+    }
+  }
+
+  // Calculate raw rate
+  const rawRate = wordCount / combinedDuration;
+
+  // Apply same factors as before
+  const lenFactor = lengthFactor(text);
+  const numFactor = numberFactor(text);
+
+  let finalRate = getSmoothedAdjustedRate(wps, rawRate);
+  finalRate = finalRate * lenFactor * numFactor;
+
+  finalRate = Math.max(0.1, Math.min(1.2, finalRate));
+
+  console.log("Adjusted Rate (5-subtitle block):", finalRate);
+
+  // Update video playback rate
+  if (playerRef.current?.setPlaybackRate) {
+    playerRef.current.setPlaybackRate(finalRate);
+  }
+
+}, [current5Subtitle, isSpeaking, showVideo, lang]);
 
 
   useEffect(() => {
