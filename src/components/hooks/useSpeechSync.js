@@ -227,14 +227,13 @@ if (utterance.voice?.name) {
 useEffect(() => {
   if (!current5Subtitle || !isSpeaking || !showVideo) return;
 
-  const text = current5Subtitle;
+  const { text, start, end } = current5Subtitle;
+
+  const duration = end - start;
+  if (duration <= 0) return;
 
   // Count total words in the 5-subtitle block
   const wordCount = text.trim().split(/\s+/).length;
-
-  // Estimate combined duration of 5 subtitles
-  // or calculate it however you prefer
-  const combinedDuration = 5 * 3; // example: 3 seconds each
 
   let wps = 2;
 
@@ -253,8 +252,8 @@ useEffect(() => {
     }
   }
 
-  // Calculate raw rate
-  const rawRate = wordCount / combinedDuration;
+  // Calculate raw rate using REAL duration
+  const rawRate = wordCount / duration;
 
   // Apply same factors as before
   const lenFactor = lengthFactor(text);
@@ -263,9 +262,17 @@ useEffect(() => {
   let finalRate = getSmoothedAdjustedRate(wps, rawRate);
   finalRate = finalRate * lenFactor * numFactor;
 
+  // Clamp rate
   finalRate = Math.max(0.1, Math.min(1.2, finalRate));
 
-  console.log("Adjusted Rate (5-subtitle block):", finalRate);
+  console.log(
+    "Adjusted Rate (5-subtitle block):",
+    finalRate,
+    "Duration:",
+    duration,
+    "Words:",
+    wordCount
+  );
 
   // Update video playback rate
   if (playerRef.current?.setPlaybackRate) {
@@ -273,6 +280,7 @@ useEffect(() => {
   }
 
 }, [current5Subtitle, isSpeaking, showVideo, lang]);
+
 
 
   useEffect(() => {
