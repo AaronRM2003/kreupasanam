@@ -10,7 +10,6 @@ export function useSpeechSync({
   showVideo,
   subtitles,
   currentSubtitle,
-  current5Subtitle,
   currentTime,
   lang,
 }) {
@@ -91,28 +90,29 @@ function getSmoothedAdjustedRate(wps, rawRate) {
 
   const voice = useSelectedVoice(lang);
   useEffect(() => {
-  if (!isSpeaking || !showVideo || !current5Subtitle || subtitles.length === 0) return;
-  const { text, start, end } = current5Subtitle;
+  if (!isSpeaking || !showVideo || !currentSubtitle || subtitles.length === 0) return;
 
   if (!hasStartedSpeakingRef.current) {
     hasStartedSpeakingRef.current = true;
     lastSpokenRef.current = '';
   }
 
-  if (lastSpokenRef.current === text) return;
-  lastSpokenRef.current = text;
+  if (lastSpokenRef.current === currentSubtitle) return;
+  lastSpokenRef.current = currentSubtitle;
 
-  
+  const currentSub = subtitles.find(
+  (sub) => currentTime >= sub.startSeconds && currentTime < sub.endSeconds
+);
 
-const subtitleDuration = end - start;
+const subtitleDuration = currentSub?.duration ?? 3;
 
-  const wordCount = text.trim().split(/\s+/).length;
+  const wordCount = currentSubtitle.trim().split(/\s+/).length;
 
   // Get the utterance voice if possible
   let wps = 2; // default fallback
 
   // Prepare the text first to create utterance and get voice
-  let textToSpeak = text
+  let textToSpeak = currentSubtitle
   // Remove content inside square brackets
   .replace(/\[[^\]]*\]/g, '')  
   // Remove ellipses or multiple dots
@@ -235,37 +235,10 @@ if (utterance.voice?.name) {
   }
 
   utterance.rate = speechRate;
-  utterance.onend = () => {
-  if (!playerRef.current?.seekTo) return;
-
-  fadeSeek(playerRef.current, end);
-};
-
 
   window.speechSynthesis.cancel();
   window.speechSynthesis.speak(utterance);
-}, [isSpeaking, showVideo, current5Subtitle, currentTime, subtitles, lang, playerRef, isSSMLSupported]);
-
-function fadeSeek(player, target) {
-  const videoEl = player.getIframe?.(); // works for YouTube iframe API
-  if (!videoEl) {
-    // fallback: just seek
-    player.seekTo(target, true);
-    return;
-  }
-
-  // Apply a smooth opacity transition
-  videoEl.style.transition = "opacity 0.35s ease";
-  videoEl.style.opacity = 0;
-
-  // After fade-out, perform seek
-  setTimeout(() => {
-    player.seekTo(target, true);
-
-    // Fade back in
-    videoEl.style.opacity = 1;
-  }, 350);
-}
+}, [isSpeaking, showVideo, currentSubtitle, currentTime, subtitles, lang, playerRef, isSSMLSupported]);
 
 
   useEffect(() => {

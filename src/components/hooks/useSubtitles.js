@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { addEndTimesToSubtitles, getCurrentFiveSubtitles, getCurrentSubtitle } from '../utils/Utils';
+import { addEndTimesToSubtitles, getCurrentSubtitle } from '../utils/Utils';
 
 export function useSubtitles(subtitlesUrl, lang, currentTime) {
   const [subtitles, setSubtitles] = useState([]);
@@ -23,7 +23,6 @@ export function useSubtitles(subtitlesUrl, lang, currentTime) {
   }, [subtitlesUrl]);
 
   const currentSubtitle = getCurrentSubtitle(subtitles, currentTime, lang);
-  const current5Subtitle = getCurrentFiveSubtitles(subtitles, currentTime, lang);
   
-  return { subtitles, currentSubtitle, current5Subtitle };
+  return { subtitles, currentSubtitle };
 }

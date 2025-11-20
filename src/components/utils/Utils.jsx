@@ -374,67 +374,6 @@ export function getCurrentSubtitle(subtitles, currentTime, lang) {
   return '';
 }
 
-export function getCurrentFiveSubtitles(subtitles, currentTime, lang) {
-  if (!subtitles.length) {
-    return { text: '', start: 0, end: 0 };
-  }
-
-  // 1. Find the current subtitle index
-  let currentIndex = -1;
-
-  for (let i = 0; i < subtitles.length; i++) {
-    const startSec = timeStringToSeconds(subtitles[i].start);
-    const endSec =
-      i + 1 < subtitles.length
-        ? timeStringToSeconds(subtitles[i + 1].start)
-        : startSec + 5;
-
-    if (currentTime >= startSec && currentTime < endSec) {
-      currentIndex = i;
-      break;
-    }
-  }
-
-  if (currentIndex === -1) {
-    return { text: '', start: 0, end: 0 };
-  }
-
-  // 🔥 FIX: Compute 5-subtitle block index
-  const blockStartIndex = Math.floor(currentIndex / 5) * 5;
-
-  // 2. Collect 5 subtitles starting from blockStartIndex
-  const collectedTexts = [];
-  const blockStart = timeStringToSeconds(subtitles[blockStartIndex].start);
-
-  let blockEnd = blockStart;
-
-  for (let j = blockStartIndex; j < blockStartIndex + 5 && j < subtitles.length; j++) {
-    const subStart = timeStringToSeconds(subtitles[j].start);
-    const subEnd =
-      j + 1 < subtitles.length
-        ? timeStringToSeconds(subtitles[j + 1].start)
-        : subStart + 5;
-
-    blockEnd = subEnd;
-
-    const text =
-      subtitles[j].text[lang] ||
-      subtitles[j].text.en ||
-      '';
-
-    if (text) collectedTexts.push(text);
-  }
-
-  return {
-    text: collectedTexts.join(' '),
-    start: blockStart,
-    end: blockEnd,
-  };
-}
-
-
-
-
 
 export function addEndTimesToSubtitles(subtitles) {
   return subtitles.map((sub, i) => {
