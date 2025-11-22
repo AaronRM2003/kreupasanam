@@ -1,5 +1,5 @@
 import { useState, useEffect ,useMemo} from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useParams, Link } from 'react-router-dom';
 import { FaShareAlt, FaCompass } from 'react-icons/fa';
 import styles from './TestimonyPage.module.css';
@@ -314,7 +314,7 @@ const handleClick = () => {
           </div>
 
           <div className={styles.shareSection}>
-            <p style={{ fontWeight: '600' }}>Share this testimony:</p>
+            <p style={{ fontWeight: '600',marginTop: '1rem' }}>Share this testimony:</p>
            <div className={styles.actionRow}>
 
   <button className={`${styles.actionButton} ${styles.share}`} onClick={() => setShowShareModal(true)}>
@@ -322,10 +322,16 @@ const handleClick = () => {
     <span>Share</span>
   </button>
 
-  <button className={`${styles.actionButton} ${styles.explore}`} onClick={handleClick}>
-    <FaCompass />
-    <span>Explore More</span>
-  </button>
+  
+  
+</div>
+<div className={styles.footerNavLinks}>
+  <NavLink to={`/${initialLang}/home`} className={styles.footerNavLink}>Home</NavLink>
+  <NavLink to={`/${initialLang}/about`} className={styles.footerNavLink}>About</NavLink>
+  <NavLink to={`/${initialLang}/testimonies`} className={styles.footerNavLink}>Testimonies</NavLink>
+  <NavLink to={`/${initialLang}/oracles`} className={styles.footerNavLink}>Oracles</NavLink>
+  <NavLink to={`/${initialLang}/dhyanam`} className={styles.footerNavLink}>Dhyanam</NavLink>
+  <NavLink to={`/${initialLang}/prayers`} className={styles.footerNavLink}>Prayers</NavLink>
 </div>
 
 

@@ -6,6 +6,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { HiOutlineEmojiSad } from 'react-icons/hi';
 import AppBar from '../components/AppBar';
 import { formatDuration } from '../components/utils/Utils';
+import FadeInOnScroll from '../framer';
+import Footer from '../components/Footer';
 
 export default function Prayers({ lang: initialLang }) {
   const [lang, setLang] = useState(initialLang || 'en');
@@ -332,6 +334,9 @@ if (errorLoading) {
         </div>
       </div>
     </section>
+    <FadeInOnScroll delay={0.4}>
+                        <Footer lang={lang} />
+                      </FadeInOnScroll>
     </div>
   );
 }

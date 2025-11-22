@@ -6,6 +6,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { HiOutlineEmojiSad } from 'react-icons/hi';
 import AppBar from '../components/AppBar';
 import { formatDuration } from '../components/utils/Utils';
+import Footer from '../components/Footer';
+import FadeInOnScroll from '../framer';
 
 const languageMap = {
   en: 'English',
@@ -255,6 +257,9 @@ useEffect(() => {
 
         </div>
       </section>
+      <FadeInOnScroll delay={0.4}>
+                    <Footer lang={lang} />
+                  </FadeInOnScroll>
     </div>
   );
 }

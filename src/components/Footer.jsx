@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import styles from './Footer.module.css';
-import { FaEnvelope, FaYoutube } from 'react-icons/fa';
+import { FaBookOpen, FaEnvelope, FaFeatherAlt, FaHome, FaInfoCircle, FaLeaf, FaYoutube } from 'react-icons/fa';
 import { GiDove } from 'react-icons/gi';
 import { FaInstagram, FaFacebookF, FaTelegramPlane, FaWhatsapp } from 'react-icons/fa';
+import { NavLink, useParams } from 'react-router-dom';
 
 const translations = {
   en: {
@@ -90,6 +91,7 @@ const translations = {
 
 
 export default function Footer({ lang = 'en' }) {
+  const { lang: urlLang } = useParams();
   const t = translations[lang] || translations.en;
 
   return (
@@ -163,6 +165,18 @@ export default function Footer({ lang = 'en' }) {
   <FaYoutube />
 </a>
 </div>
+<h3 style={{ marginTop: '1.5rem' }}>{"Important Links"}</h3>
+
+<div className={styles.linksRow}>
+  <NavLink to={`/${urlLang}/home`} className={styles.footerNavLink}>Home</NavLink>
+  <NavLink to={`/${urlLang}/about`} className={styles.footerNavLink}>About</NavLink>
+  <NavLink to={`/${urlLang}/testimonies`} className={styles.footerNavLink}>Testimonies</NavLink>
+  <NavLink to={`/${urlLang}/oracles`} className={styles.footerNavLink}>Oracles</NavLink>
+  <NavLink to={`/${urlLang}/dhyanam`} className={styles.footerNavLink}>Dhyanam</NavLink>
+  <NavLink to={`/${urlLang}/prayers`} className={styles.footerNavLink}>Prayers</NavLink>
+</div>
+
+
 
           </div>
         </div>

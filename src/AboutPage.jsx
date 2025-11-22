@@ -3,6 +3,8 @@ import styles from './About.module.css';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import AppBar from './components/AppBar';
+import FadeInOnScroll from './framer';
+import Footer from './components/Footer';
 
 const translations = {
   hi: {
@@ -529,6 +531,9 @@ export default function About({ lang = 'en' }) {
         </div>
       </section>
     </div>
+    <FadeInOnScroll delay={0.4}>
+                    <Footer lang={lang} />
+                  </FadeInOnScroll>
     </div>
   );
 }

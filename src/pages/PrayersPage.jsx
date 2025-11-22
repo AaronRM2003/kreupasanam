@@ -1,5 +1,5 @@
 import { useState, useEffect,useMemo } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { FaShareAlt, FaCompass } from 'react-icons/fa';
 import styles from './TestimonyPage.module.css';
@@ -335,12 +335,16 @@ export default function PrayersPage({ lang: initialLang }) {
                 <span>Share</span>
               </button>
 
-              <button className={`${styles.actionButton} ${styles.explore}`} onClick={handleClick}>
-                <FaCompass />
-                <span>Explore More</span>
-              </button>
+              
             </div>
-
+             <div className={styles.footerNavLinks}>
+  <NavLink to={`/${initialLang}/home`} className={styles.footerNavLink}>Home</NavLink>
+  <NavLink to={`/${initialLang}/about`} className={styles.footerNavLink}>About</NavLink>
+  <NavLink to={`/${initialLang}/testimonies`} className={styles.footerNavLink}>Testimonies</NavLink>
+  <NavLink to={`/${initialLang}/oracles`} className={styles.footerNavLink}>Oracles</NavLink>
+  <NavLink to={`/${initialLang}/dhyanam`} className={styles.footerNavLink}>Dhyanam</NavLink>
+  <NavLink to={`/${initialLang}/prayers`} className={styles.footerNavLink}>Prayers</NavLink>
+</div>
             <ShareModal
               show={showShareModal}
               onHide={() => setShowShareModal(false)}

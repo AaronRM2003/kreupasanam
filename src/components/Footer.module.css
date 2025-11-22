@@ -47,13 +47,29 @@
 }
 
 .section h3 {
-  font-size: 1.3rem; /* slightly larger on mobile readability */
-  margin-bottom: 1rem;
+  font-size: 1.32rem;
+  margin-bottom: 1.2rem;
+  padding-top: 1rem;
+  font-weight: 600;
   color: #0e1a3a;
+  position: relative;
 }
 
+/* thin clean separator */
+.section h3::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 1px;
+  background: #d1dff3;
+}
+
+
 .section p {
-  font-size: 1rem;
+  font-size: 0.5rem;
   color: #123f7c;
   margin-bottom: 0.75rem;
 }
@@ -174,7 +190,9 @@
   .footer {
     padding: 3rem 1rem 2rem;
   }
-
+  .socialIcons {
+    gap: 1.5rem;
+  }
   .footerTop {
     flex-direction: column;
     align-items: center;
@@ -240,3 +258,66 @@
   }
 }
 
+/* ---- Important Links Row ---- */
+.linksRow {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 1.2rem;
+}
+
+/* Text-style links */
+.footerNavLink {
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: #0e1a3a;
+  transition: all 0.25s ease;
+  position: relative;
+  padding-bottom: 3px;
+}
+
+/* Subtle underline reveal on hover */
+.footerNavLink::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: #0055aa;
+  border-radius: 2px;
+  transition: width 0.25s ease;
+}
+
+.footerNavLink:hover {
+  color: #0055aa;
+  transform: translateY(-2px);
+}
+
+.footerNavLink:hover::after {
+  width: 100%;
+}
+
+/* Active route indicator */
+.footerNavLink.active {
+  color: #003a7a;
+  font-weight: 600;
+}
+
+.footerNavLink.active::after {
+  width: 100%;
+  background: #003a7a;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .linksRow {
+    gap: 1rem;
+  }
+
+  .footerNavLink {
+    font-size: 0.90rem;
+  }
+}
