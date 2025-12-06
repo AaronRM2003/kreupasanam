@@ -300,23 +300,21 @@
 
   /* Centered title */
   .testimonyHeading {
+    margin-bottom: 1.5rem;
     font-size: 2rem;
   }
 
   /* Container */
   .testimonyContainer {
-    width: 95%;
-    padding: 1.5rem 1rem;
-    border-radius: 20px;
+    width: 100%;
+    padding: 1.5rem 0rem;
     margin-top: 5.5rem;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-    border: 3px solid rgba(36, 107, 253, 0.1);
+    border: 0;
+    box-shadow: none;
+    border-radius: 0%;
   }
 
-  .testimonyContainer:hover {
-    border-color: rgba(36, 107, 253, 0.25);
-    box-shadow: 0 12px 30px rgba(36, 107, 253, 0.12);
-  }
+  
 
   /* Language Dropdown */
   .dropdownToggle {
@@ -443,6 +441,45 @@ filter: drop-shadow(0 0 12px rgba(255, 223, 93, 0.7)) drop-shadow(0 0 24px rgba(
   object-fit: cover;
   border-radius: 24px;
   user-select: none;
+}
+
+.bgBlur {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: contain;
+  background-position: center;
+  filter: blur(60px) brightness(1.2) saturate(1.5);
+  opacity: 0.3;
+  z-index: -1;
+  transition: opacity 0.6s ease;
+}
+
+.bgBlur::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.855));
+}
+.bgBlur {
+  animation: zoomEffect 20s ease-in-out infinite alternate;
+}
+
+@keyframes zoomEffect {
+  from { transform: scale(1.15); }
+  to   { transform: scale(1.25); }
+}
+
+@keyframes float {
+  0%   { transform: scale(1.2) translateX(-2%) translateY(-2%); }
+  50%  { transform: scale(1.25) translateX(2%) translateY(2%); }
+  100% { transform: scale(1.2) translateX(-2%) translateY(-2%); }
+}
+
+.bgBlur {
+  animation: float 30s ease-in-out infinite;
 }
 
 /* Play Button */
@@ -618,6 +655,8 @@ filter: drop-shadow(0 0 12px rgba(255, 223, 93, 0.7)) drop-shadow(0 0 24px rgba(
     background: rgb(255, 255, 255);
     padding: 1%;
     padding-bottom: 2%;
+    border: none;
+    box-shadow: none;
   }
 
 }
@@ -747,13 +786,11 @@ filter: drop-shadow(0 0 12px rgba(255, 223, 93, 0.7)) drop-shadow(0 0 24px rgba(
   }
 
  .testimonyContainer {
-  padding: 0.8rem 0.8rem; /* slightly more padding for comfort */
-  border-radius: 16px;
+  padding: 0.8rem 1rem; /* slightly more padding for comfort */
   margin-top: 0rem;
   border: none;
 
   /* Background gradient for a soft highlight */
-  background: linear-gradient(145deg, #f9f9f9, #e6f1ff);
 
   /* Soft shadow for a lifted card effect */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -761,14 +798,10 @@ filter: drop-shadow(0 0 12px rgba(255, 223, 93, 0.7)) drop-shadow(0 0 24px rgba(
   /* Smooth transition for hover effects */
 
   /* Optional: subtle border */
-  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 /* Hover effect */
-.testimonyContainer:hover {
-  transform: translateY(-4px); /* lift on hover */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
+
 
 
   .testimonyContainer:hover {

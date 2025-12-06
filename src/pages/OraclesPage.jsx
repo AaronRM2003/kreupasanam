@@ -209,7 +209,8 @@ const shareText = useMemo(() => {
   return (
     <div className={styles.testimonyPage}>
       {/* Header */}
-      <div className={styles.testimonyHeader}>
+
+      {!isMobileOrTablet && (  <div className={styles.testimonyHeader}>
         <div className={styles.testimonyLeft}>
           <button className={styles.backButton} onClick={() => window.history.back()}>
             &#8592; <span className={styles.backText}>Back</span>
@@ -226,7 +227,7 @@ const shareText = useMemo(() => {
  {!isMobileOrTablet && (
             <LanguageDropdown lang={lang} onSelect={setLang} />
           )}        </div>
-      </div>
+      </div>)}
 
       {showLangHelp && (
         <LangHelpOverlay
@@ -247,6 +248,13 @@ const shareText = useMemo(() => {
                <img src="/assets/logo.png" alt="Logo" className="floating-logo" />
 
         <div className={styles.testimonyInner}>
+            {isMobileOrTablet && (  <h2 className={styles.testimonyHeading}>Living Oracles</h2>)}
+                       <div
+                          className={styles.bgBlur}
+                          style={{
+                            backgroundImage: `url(${thumbnailUrl})`
+                          }}
+                        />
           {videoId && !showVideo ? (
   <div
     className={styles.thumbnailWrapper}

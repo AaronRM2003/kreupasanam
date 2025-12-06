@@ -227,14 +227,14 @@ const handleClick = () => {
     <div className={styles.testimonyPage}>
      
       {/* Header */}
-      
+      {!isMobileOrTablet && ( 
       <div className={styles.testimonyHeader}>
         <div className={styles.testimonyLeft}>
           <button className={styles.backButton} onClick={() => window.history.back()}>
             &#8592; <span className={styles.backText}>Back</span>
           </button>
         </div>
-
+     
         <div className={styles.testimonyCenter}>
           <div className={styles.animatedLineLeft}></div>
           <h2 className={styles.testimonyHeading}>Testimony</h2>
@@ -250,6 +250,7 @@ const handleClick = () => {
           </div>
         </div>
       </div>
+)}
 
       {showLangHelp && (
         <LangHelpOverlay
@@ -267,9 +268,20 @@ const handleClick = () => {
 
       {/* Main content */}
       <div className={styles.testimonyContainer}>
+        
                <img src="/assets/logo.png" alt="Logo" className="floating-logo" />
      
         <div className={styles.testimonyInner} >
+           
+                   {isMobileOrTablet && (  <h2 className={styles.testimonyHeading}>Testimony</h2>)}
+
+
+  <div
+    className={styles.bgBlur}
+    style={{
+      backgroundImage: `url(${thumbnailUrl})`
+    }}
+  />
           {videoId && !showVideo ? (
   <div
     className={styles.thumbnailWrapper}
