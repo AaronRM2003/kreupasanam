@@ -436,23 +436,22 @@ filter: drop-shadow(0 0 12px rgba(255, 223, 93, 0.7)) drop-shadow(0 0 24px rgba(
 
 .thumbnailImg {
   width: 100%;
-  height: auto;
   display: block;
   object-fit: cover;
-  border-radius: 24px;
+  border-radius: 40px;
   user-select: none;
 }
 
 .bgBlur {
   position: absolute;
-  top: 80px;
+  top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background-size:cover;
   background-position: center;
-  filter: blur(60px) brightness(1.5) saturate(1.5);
-  opacity: 0.2;
+  filter: blur(60px) brightness(1) saturate(1);
+  opacity: 0.25;
   z-index: -1;
   transition: opacity 0.6s ease;
 }
@@ -463,23 +462,17 @@ filter: drop-shadow(0 0 12px rgba(255, 223, 93, 0.7)) drop-shadow(0 0 24px rgba(
   inset: 0;
   background: linear-gradient(to bottom, transparent, rgb(255, 255, 255));
 }
-.bgBlur {
-  animation: zoomEffect 20s ease-in-out infinite alternate;
-}
+
 
 @keyframes zoomEffect {
   from { transform: scale(1.15); }
-  to   { transform: scale(1.25); }
+  to   { transform: scale(1.75); }
 }
 
 @keyframes float {
   0%   { transform: scale(1.2) translateX(-2%) translateY(-2%); }
   50%  { transform: scale(1.25) translateX(2%) translateY(2%); }
   100% { transform: scale(1.2) translateX(-2%) translateY(-2%); }
-}
-
-.bgBlur {
-  animation: float 30s ease-in-out infinite;
 }
 
 /* Play Button */
