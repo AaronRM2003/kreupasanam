@@ -155,7 +155,7 @@ export default function SubtitleVoiceControls({
     const timer = setTimeout(() => {
       setControlsVisible(false);
       setTimeout(() => setShowControls(false), 300);
-    }, 3000);
+    }, 8000);
 
     return () => clearTimeout(timer);
   }, []);
