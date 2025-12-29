@@ -392,6 +392,69 @@ export function addEndTimesToSubtitles(subtitles) {
   });
 }
 
+export function AutoFitText({
+  text,
+  width,
+  height,
+  color,
+  fontFamily = "Arial",
+  fontWeight = "bold",
+  padding = 8,
+}) {
+  const ref = useRef(null);
+  const [fontSize, setFontSize] = useState(10);
 
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    let min = 4;
+    let max = 300; // upper bound
+    let best = min;
+
+    while (min <= max) {
+      const mid = Math.floor((min + max) / 2);
+      el.style.fontSize = `${mid}px`;
+
+      if (
+        el.scrollWidth <= width - padding * 2 &&
+        el.scrollHeight <= height - padding * 2
+      ) {
+        best = mid;
+        min = mid + 1;
+      } else {
+        max = mid - 1;
+      }
+    }
+
+    setFontSize(best);
+  }, [text, width, height]);
+
+  return (
+    <div
+      ref={ref}
+      style={{
+        width,
+        height,
+        color,
+        fontFamily,
+        fontWeight,
+        fontSize,
+        lineHeight: 1.2,
+        padding,
+        boxSizing: "border-box",
+        overflow: "hidden",
+        textAlign: "center",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        whiteSpace: "pre-wrap",
+        wordBreak: "break-word",
+      }}
+    >
+      {text}
+    </div>
+  );
+}
 
 
