@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import AutoFitText from "./Utils";
-import "./ImageWithBoxes.css";
+import "./imageWithBoxes.css";
 
 const ORIGINAL_WIDTH = 1280;
 const ORIGINAL_HEIGHT = 720;
