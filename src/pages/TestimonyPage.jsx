@@ -17,6 +17,7 @@ import { useSubtitles } from '../components/hooks/useSubtitles';
 import { useSpeechSync } from '../components/hooks/useSpeechSync';
 import FloatingVideoPlayer from '../components/utils/FloatingVideoPlayer';
 import LangHelpOverlay from '../components/utils/LangHelpOverlay';
+import ImageWithBoxes from '../components/utils/ImageWithBoxes';
 
 export default function TestimonyPage({ lang: initialLang }) {
   const { idSlug } = useParams();  // Changed from id to idSlug
@@ -89,8 +90,9 @@ export default function TestimonyPage({ lang: initialLang }) {
   const content = (testimony && testimony.content) || {};
   const video = (testimony && testimony.video) || '';
   const subtitlesUrl = (testimony && testimony.subtitles) || '';
-const navigate = useNavigate();
-  // Get videoId and thumbnail URL
+const overlayData = testimony?.overlay ?? null;
+  const navigate = useNavigate();
+  // Get videoId and thumbnail URLS
   const videoId = getYouTubeVideoID(video);
   const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
 
@@ -177,7 +179,7 @@ const handleClick = () => {
   const emailShareUrl = `mailto:?subject=${encodeURIComponent(title[lang] || title['en'])}&body=${encodeURIComponent(shareText)}`;
   // Show loading if assets or testimony not ready
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
-
+  
   useEffect(() => {
     if (typeof window === 'undefined') return; 
     const checkScreen = () => setIsMobileOrTablet(window.innerWidth <= 1368);
@@ -292,14 +294,13 @@ const handleClick = () => {
     {!thumbnailLoaded && (
       <div className={styles.thumbnailSkeleton}></div>
     )}
-
-    <img
-      src={thumbnailUrl}
-      alt="Video Thumbnail"
-      className={`${styles.thumbnailImage} ${thumbnailLoaded ? styles.visible : styles.hidden}`}
-      onLoad={() => setThumbnailLoaded(true)}
-      onError={() => setThumbnailLoaded(true)} // fallback
-    />
+    <ImageWithBoxes
+        src={thumbnailUrl}
+        data={overlayData}
+        lang={lang}
+        onImageLoad={() => setThumbnailLoaded(true)}
+      />
+   
 
     {thumbnailLoaded && (
       <div className={styles.smallPlayIcon}>

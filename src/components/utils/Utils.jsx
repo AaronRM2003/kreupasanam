@@ -1,6 +1,6 @@
 import { Dropdown } from 'react-bootstrap';
 import { Modal, Button } from 'react-bootstrap';
-import { useState,useEffect } from 'react';
+import { useState,useEffect, useRef } from 'react';
 import {
   FaFacebookF,
   FaWhatsapp,
@@ -392,69 +392,90 @@ export function addEndTimesToSubtitles(subtitles) {
   });
 }
 
-export function AutoFitText({
+export default function AutoFitText({
   text,
   width,
   height,
   color,
-  fontFamily = "Arial",
+  lang,
+  fontFamily = "Inter",
   fontWeight = "bold",
-  padding = 8,
+  padding = 5,
 }) {
   const ref = useRef(null);
-  const [fontSize, setFontSize] = useState(10);
+  const [fontSize, setFontSize] = useState(12);
+  useEffect(() => {
+  setFontSize(12);
+}, [lang]);
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el || !text || width === 0 || height === 0) return;
 
-    let min = 4;
-    let max = 300; // upper bound
-    let best = min;
+    // 🔑 NEVER allow text area to become too narrow
+    const effectiveWidth = Math.max(
+      width * 0.75,
+      width - padding * 2
+    );
 
-    while (min <= max) {
-      const mid = Math.floor((min + max) / 2);
-      el.style.fontSize = `${mid}px`;
+    const fit = () => {
+      let min = 7;
+      let max = Math.min(width, height);
+      let best = min;
 
-      if (
-        el.scrollWidth <= width - padding * 2 &&
-        el.scrollHeight <= height - padding * 2
-      ) {
-        best = mid;
-        min = mid + 1;
-      } else {
-        max = mid - 1;
+      while (min <= max) {
+        const mid = Math.floor((min + max) / 2);
+        el.style.fontSize = `${mid}px`;
+        el.style.maxWidth = `${effectiveWidth}px`;
+
+        const fitsHeight =
+          el.scrollHeight <= height - padding * 2 - 4;
+
+        if (fitsHeight) {
+          best = mid;
+          min = mid + 1;
+        } else {
+          max = mid - 1;
+        }
       }
-    }
 
-    setFontSize(best);
-  }, [text, width, height]);
+      setFontSize(best);
+    };
+
+    document.fonts?.ready ? document.fonts.ready.then(fit) : fit();
+  }, [text, width, height, padding, fontFamily,lang]);
 
   return (
-    <div
+  <div
+    style={{
+      width,
+      height,
+      padding,
+      boxSizing: "border-box",
+      overflow: "hidden",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      textAlign: "center",
+    }}
+  >
+    <span
       ref={ref}
       style={{
-        width,
-        height,
         color,
         fontFamily,
         fontWeight,
         fontSize,
         lineHeight: 1.2,
-        padding,
-        boxSizing: "border-box",
-        overflow: "hidden",
-        textAlign: "center",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+        maxWidth: "100%",
         whiteSpace: "pre-wrap",
-        wordBreak: "break-word",
+        overflowWrap: "break-word",
+        display: "block",
       }}
     >
       {text}
-    </div>
-  );
+    </span>
+  </div>
+);
 }
-
 

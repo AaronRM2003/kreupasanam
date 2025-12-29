@@ -1391,7 +1391,71 @@
       "fr": "Ce témoignage est partagé par Hency Johnson, qui a pris l’Alliance pour la première fois en 2018, mais s’en est ensuite éloignée. Elle a ensuite souffert d’une paralysie du nerf facial, paralysant un côté de son visage et provoquant une grande détresse mentale. Dans la prière, elle a reçu la Parole de Dieu l’invitant à se réconcilier avec son frère et, après la confession et son abandon total à Jésus et à la Mère, sa paralysie a disparu — un miracle que les médecins ne pouvaient garantir.\n\nAprès avoir renouvelé l’Alliance, sa famille a également vécu d’autres miracles. On soupçonnait une obstruction cardiaque chez son mari, mais après la prière de foi, les examens ont révélé qu’il n’y en avait aucune. Sa fille aînée a été guérie du SOPK et sa plus jeune fille a été épargnée d’une chirurgie grâce à la disparition d’un gonflement de la main — tout cela par la confiance en la Mère et en l’Alliance.\n\nTouchée par ces bénédictions, elle partage désormais le message de l’Alliance à travers la charité, les témoignages et l’évangélisation. Son message est clair : le pardon, l’humilité et vivre dans l’amour de Dieu ouvrent la porte aux miracles. Lorsque nous cherchons Dieu en premier, la Mère nous conduit à Jésus et des transformations extraordinaires se produisent dans nos vies."
     },
     "subtitles": "/assets/testimony-subtitle/02dec.json",
-    "duration": "11:55"
+    "duration": "11:55",
+    "overlay": {
+    "boxes": [
+        {
+        "x": 27,
+        "y": 26,
+        "w": 985,
+        "h": 119,
+        "background": "#004f56",
+        "fontColor": "#ffef06"
+        },
+        {
+        "x": 24,
+        "y": 160,
+        "w": 969,
+        "h": 187,
+        "background": "#ffffff",
+        "fontColor": "#fe0104"
+        },
+        {
+        "x": 1024,
+        "y": 37,
+        "w": 252,
+        "h": 49,
+        "background": "#005158",
+        "fontColor": "#ffffff"
+        },
+        {
+        "x": 54,
+        "y": 494,
+        "w": 825,
+        "h": 101,
+        "background": "#110551",
+        "fontColor": "#ffee06"
+        },
+        {
+        "x": 29,
+        "y": 609,
+        "w": 627,
+        "h": 86,
+        "background": "#1e0a7b",
+        "fontColor": "#ffffff"
+        },
+        {
+        "x": 670,
+        "y": 624,
+        "w": 447,
+        "h": 53,
+        "background": "#fd4507",
+        "fontColor": "#fffeff"
+        }
+    ],
+    "texts": {
+      "en":["Got a message from Holy Mother!","Got reconciled with the Brother and a severe disease","Ernakulam","Disease cured!","Hency Johnson's","Miraculous testimony"],
+"bn":["পবিত্র মাতার কাছ থেকে বার্তা পেলাম!","ভাইয়ের সাথে পুনর্মিলন ও এক গুরুতর রোগ থেকে মুক্তি","এর্নাকুলাম","রোগ নিরাময়!","হেনসি জনসনের","অলৌকিক স্বাক্ষ্য"],
+"zh":["收到了圣母的讯息！","与兄弟和解并从严重疾病中得医治","厄尔讷古兰","疾病得医治！","亨西·约翰逊的","奇迹般的见证"],
+"hi":["पवित्र माता से संदेश मिला!","भाई से मेल-मिलाप और भयंकर बीमारी से मुक्ति","एर्नाकुलम","रोग से चंगाई!","हेन्सी जॉनसन का","चमत्कारी साक्ष्य"],
+"kn":["ಪವಿತ್ರ ತಾಯಿಯಿಂದ ಸಂದೇಶ ಲಭಿಸಿದೆ!","ಸಹೋದರನೊಂದಿಗೆ ಪುನರ್ಮಿಲನ ಮತ್ತು ಭೀಕರ ರೋಗದಿಂದ ಗುಣಮುಖ","ಎರ್ನಾಕುಲಂ","ರೋಗ ಗುಣವಾಗಿದೆ!","ಹೆನ್ಸಿ ಜಾನ್ಸನ್ ಅವರ","ಅದ್ಭುತ ಸಾಕ್ಷ್ಯ"],
+"mr":["पवित्र आईकडून संदेश मिळाला!","भावाशी पुन्हा सलोखा झाला आणि गंभीर आजारातून मुक्ती","एर्नाकुलम","आजार बरा झाला!","हेन्सी जॉन्सनचे","अद्भुत साक्ष"],
+"es":["¡Recibí un mensaje de la Santa Madre!","Reconciliación con el hermano y sanación de una enfermedad grave","Ernakulam","¡Enfermedad curada!","De Hency Johnson","Testimonio milagroso"],
+"ta":["பரிசுத்த தாயாரிடமிருந்து செய்தி கிடைத்தது!","சகோதரருடன் சமரசம் & கடுமையான நோயிலிருந்து குணமடைதல்","எர்ணாகுளம்","நோய் குணமானது!","ஹென்சி ஜான்சனின்","அதிசய மெய்சாட்சி"],
+"te":["పవిత్ర తల్లిదండ్రి సందేశం అందింది!","అన్నతో సఖ్యత మరియు తీవ్రమైన వ్యాధికి స్వస్థత","ఎర్నాకులమ్","వ్యాధి నయం అయింది!","హెన్సీ జాన్సన్ యొక్క","అద్భుత సాక్ష్యం"],
+"fr":["Message reçu de la Sainte Mère !","Réconciliation avec le frère et guérison d'une maladie grave","Ernakulam","Maladie guérie !","De Hency Johnson","Témoignage miraculeux"]
+}
+    }
   },
   {
     "id": 46,
@@ -1422,7 +1486,105 @@
       "fr": "Jino, originaire de Mavelikkara, partage son témoignage puissant à Kreupasanam. Sa sœur et son beau-frère ont désiré un deuxième enfant pendant 13 ans, essayant de nombreux traitements sans succès. Avec une grande foi, Jino a appliqué l’huile de l’Alliance sur le ventre de sa sœur et a prié en larmes la Vierge Marie. En chemin vers l’hôpital, ils ont trouvé un feuillet de Kreupasanam dans une église — et ce même jour, le test de grossesse est enfin devenu positif.\n\nLa grossesse a été compliquée par une forte tension, un taux de sucre élevé et même une recommandation de suture cervicale. Mais chaque fois, Jino a prié en toute confiance la « plus grande médecin » — la Mère Marie — et les miracles se sont succédé. Avant l’accouchement, le bébé avait un poids insuffisant, mais après la prière, son poids est passé en une seule nuit de 1,9 kg à 2,1 kg, et il est né en bonne santé sans avoir besoin de soins intensifs.\n\nJino témoigne également de ses propres guérisons — d’une grave infection dentaire et d’une douleur nerveuse qui l’empêchait de lever le bras — guéries grâce à l’huile de l’Alliance et au sel béni. Elle remercie profondément Jésus, l’Esprit Saint et la Mère de Kreupasanam pour avoir transformé sa vie et lui avoir donné la joie d’aider les autres. Ce bébé et ces miracles sont un témoignage vivant de la miséricorde de Dieu et de la puissante intercession de la Mère."
     },
     "subtitles": "/assets/testimony-subtitle/03dec.json",
-    "duration": "9:24"
+    "duration": "9:24",
+    "overlay":{
+  "boxes": [
+    {
+      "x": 50,
+      "y": 24,
+      "w": 972,
+      "h": 245,
+      "background": "#117edb",
+      "fontColor": "#fffc00"
+    },
+    {
+      "x": 31,
+      "y": 278,
+      "w": 878,
+      "h": 259,
+      "background": "#0968b8",
+      "fontColor": "#fffffb"
+    },
+    {
+      "x": 95,
+      "y": 529,
+      "w": 894,
+      "h": 170,
+      "background": "#014886",
+      "fontColor": "#fcfb0b"
+    },
+    {
+      "x": 1086,
+      "y": 9,
+      "w": 174,
+      "h": 39,
+      "background": "#3193de",
+      "fontColor": "#f9fbfa"
+    }
+  ],
+  "texts": {
+  "zh": [
+    "当我们收到克鲁帕萨纳姆通讯时",
+    "发生了13年的时间缩短",
+    "一个家庭领受了神奇的恩典",
+    "阿拉普扎"
+  ],
+  "bn": [
+    "যখন আমরা ক্রুপাসানাম নিউজলেটার পেয়েছিলাম",
+    "১৩ বছরের সময় সংকোচন ঘটেছে",
+    "একটি পরিবার আশ্চর্যজনক ঈশ্বরের কৃপা পেয়েছে",
+    "আলাপ্পুঝা"
+  ],
+  "en": [
+    "When we received a Kreupasanam Newsletter",
+    "Time shortening of 13 years happened",
+    "Miraculous God's grace received by a family",
+    "Alappuzha"
+  ],
+  "hi": [
+    "जब हमें क्रीपासनम न्यूज़लेटर मिला",
+    "13 वर्षों का समय संक्षिप्त हो गया",
+    "एक परिवार को ईश्वर की चमत्कारी कृपा मिली",
+    "अलप्पुझा"
+  ],
+  "ta": [
+    "நாங்கள் குருபாசனம் செய்திமடலை பெற்றபோது",
+    "13 ஆண்டுகளின் காலக் குறைப்பு நிகழ்ந்தது",
+    "ஒரு குடும்பம் அதிசயமான தேவனுடைய கிருபையை பெற்றது",
+    "அலப்புழா"
+  ],
+  "te": [
+    "మేము కృపాసనం న్యూస్‌లెటర్‌ను పొందినప్పుడు",
+    "13 సంవత్సరాల కాలం సంక్షిప్తమైంది",
+    "ఒక కుటుంబం అద్భుతమైన దేవుని కృపను పొందింది",
+    "అലപ്പుఝ"
+  ],
+  "fr": [
+    "Lorsque nous avons reçu le bulletin Kreupasanam",
+    "Un raccourcissement du temps de 13 ans s'est produit",
+    "Une famille a reçu la grâce miraculeuse de Dieu",
+    "Alappuzha"
+  ],
+  "es": [
+    "Cuando recibimos un boletín de Kreupasanam",
+    "Ocurrió un acortamiento de tiempo de 13 años",
+    "Una familia recibió la gracia milagrosa de Dios",
+    "Alappuzha"
+  ],
+  "kn": [
+    "ನಾವು ಕ್ರುಪಾಸನಮ್ ಸುದ್ದಿಪತ್ರವನ್ನು ಪಡೆದಾಗ",
+    "13 ವರ್ಷಗಳ ಕಾಲದ ಕುಗ್ಗುವಿಕೆ ಸಂಭವಿಸಿತು",
+    "ಒಂದು ಕುಟುಂಬ ದೇವರ ಅದ್ಭುತ ಕೃಪೆಯನ್ನು ಪಡೆದಿದೆ",
+    "ಅಲಪ್ಪುಝಾ"
+  ],
+  "mr": [
+    "जेव्हा आम्हाला क्रुपासनम न्यूजलेटर मिळाले",
+    "१३ वर्षांच्या वेळेचे संकुचन झाले",
+    "एका कुटुंबाला देवाची चमत्कारी कृपा मिळाली",
+    "अलप्पुळा"
+  ]
+}
+}
   },
   {
     "id": 47,

@@ -123,6 +123,24 @@ useEffect(() => {
       return monthMatch && yearMatch;
     });
   }, [testimonies, selectedMonth, selectedYear]);
+  function resolveOverlay(testimony, all) {
+  // direct overlay
+  if (testimony.overlay) return testimony.overlay;
+
+  // reuse overlay
+  if (testimony.overlayRef != null) {
+    const base = all.find(t => t.id === testimony.overlayRef);
+    if (!base?.overlay) return null;
+
+    return {
+      ...base.overlay,
+      texts: testimony.overlayTexts ?? base.overlay.texts
+    };
+  }
+
+  return null;
+}
+
 
   return (
     <div>
@@ -218,18 +236,19 @@ useEffect(() => {
 {!loadingTestimonies && (
   <div className={styles.testimoniesGrid}>
     {filteredTestimonies.length > 0 ? (
-      filteredTestimonies.map(({ id, title, video, date, duration }) => (
-        <TestimonyCard
-          key={id}
-          id={id}
-          title={title}
-          image={getYouTubeThumbnail(video)}
-          date={date}
-          lang={lang}
-          path={`${initialLang || 'en'}/testimony`}
-          duration={duration}
-        />
-      ))
+      filteredTestimonies.map((t) => (
+  <TestimonyCard
+    key={t.id}
+    id={t.id}
+    title={t.title}
+    image={getYouTubeThumbnail(t.video)}
+    date={t.date}
+    lang={lang}
+    path={`${initialLang || 'en'}/testimony`}
+    duration={t.duration}
+    overlayData={resolveOverlay(t, filteredTestimonies)} // 👈 HERE
+  />
+))
     ) : (
       <div className={styles.testimoniesCard} style={{
         gridColumn: "1 / -1", /* <-- make it span full grid width */

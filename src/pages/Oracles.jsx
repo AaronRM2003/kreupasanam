@@ -71,7 +71,23 @@ export default function Oracles({ lang: initialLang }) {
       return null;
     }
   };
+function resolveOverlay(oracle, all) {
+  // direct overlay
+  if (oracle.overlay) return oracle.overlay;
 
+  // reuse overlay
+  if (oracle.overlayRef != null) {
+    const base = all.find(t => t.id === oracle.overlayRef);
+    if (!base?.overlay) return null;
+
+    return {
+      ...base.overlay,
+      texts: oracle.overlayTexts ?? base.overlay.texts
+    };
+  }
+
+  return null;
+}
   // Memoized thumbnails
   const thumbnails = useMemo(() => {
     return oracles.map(({ video }) => getYouTubeThumbnail(video)).filter(Boolean);
@@ -308,8 +324,10 @@ export default function Oracles({ lang: initialLang }) {
         {allImagesLoaded && (
           <div className={styles.testimoniesGrid}>
             {sortedOracles.length > 0 ? (
-              sortedOracles.map(({ id, title, video, date,duration }) => {
+             sortedOracles.map((o) => {
+                const { id, title, video, date, duration } = o;
                 const thumbnail = getYouTubeThumbnail(video);
+
                 return (
                   <TestimonyCard
                     key={id}
@@ -321,9 +339,11 @@ export default function Oracles({ lang: initialLang }) {
                     path={`${initialLang || 'en'}/oracles`}
                     duration={duration}
                     onImageLoad={handleImageLoad}
+                    overlayData={resolveOverlay(o, sortedOracles)} // ✅ now correct
                   />
                 );
               })
+
             ) : (
               <div
                 className={styles.testimoniesCard}

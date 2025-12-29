@@ -4,6 +4,7 @@ import styles from './Testimonies.module.css';
 import { Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { formatDuration } from './utils/Utils';
+import ImageWithBoxes from './utils/ImageWithBoxes';
 
   const languageMap = {
   en: 'English',
@@ -41,59 +42,76 @@ function slugify(text) {
     .replace(/\-\-+/g, '-');      // Replace multiple - with single -
 }
 
-export function TestimonyCard({ id, title, image, date, lang, path, duration }) {
+export function TestimonyCard({
+  id,
+  title,
+  image,
+  date,
+  lang,
+  path,
+  duration,
+  overlayData,
+}) {
   const navigate = useNavigate();
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const sluggedTitle = title["en"];
-  const slug = slugify(sluggedTitle);
+  const slug = slugify(title["en"]);
 
   const handleCardClick = () => {
     navigate(`/${path}/${id}-${slug}`);
   };
 
   return (
-   <div className={styles.testimoniesCard}>
-  <div className={styles.testimoniesImageWrapper}>
-  {/* Skeleton overlay */}
-  {!isLoaded && <div className={styles.skeleton}></div>}
+    <div className={styles.testimoniesCard}>
+      <div className={styles.testimoniesImageWrapper}>
+        {/* Skeleton overlay */}
+        {!isLoaded && <div className={styles.skeleton}></div>}
 
-  <img
-    src={image}
-    alt={title[lang]}
-    className={`${styles.testimonyImage} ${isLoaded ? styles.visible : ''}`}
-    onLoad={() => setIsLoaded(true)}
-    onError={() => setIsLoaded(true)}
-  />
+        <ImageWithBoxes
+          src={image}
+          data={overlayData}
+          lang={lang}
+          onImageLoad={() => setIsLoaded(true)}
+        />
 
-  {duration && (
-    <span className={`${styles.durationBadge} ${isLoaded ? styles.visible : ''}`}>
-      {duration}
-    </span>
-  )}
-</div>
+        {duration && isLoaded && (
+          <span className={styles.durationBadge}>
+            {duration}
+          </span>
+        )}
+      </div>
 
+      {/* Title */}
+      <h3
+        className={`${styles.testimoniesCardTitle} ${
+          isLoaded ? styles.visible : ""
+        }`}
+      >
+        {title[lang]}
+      </h3>
 
-  {/* Always render title/date and fade-in */}
-  <h3 className={`${styles.testimoniesCardTitle} ${isLoaded ? styles.visible : ''}`}>
-    {title[lang]}
-  </h3>
-  <p className={`${styles.testimoniesDate} ${isLoaded ? styles.visible : ''}`}>
-    {date}
-  </p>
+      {/* Date */}
+      <p
+        className={`${styles.testimoniesDate} ${
+          isLoaded ? styles.visible : ""
+        }`}
+      >
+        {date}
+      </p>
 
-  <button
-    style={{ border: 'none' }}
-    className={styles.testimoniesVideoLink}
-    onClick={handleCardClick}
-    disabled={!isLoaded} // prevent click before ready
-  >
-    {isLoaded ? 'Watch Now' : 'Loading...'}
-  </button>
-</div>
-
+      {/* CTA */}
+      <button
+        className={styles.testimoniesVideoLink}
+        onClick={handleCardClick}
+        disabled={!isLoaded}
+        style={{ border: "none" }}
+      >
+        {isLoaded ? "Watch Now" : "Loading..."}
+      </button>
+    </div>
   );
 }
+
 
 
 export default function Testimonies({ lang: initialLang }) {

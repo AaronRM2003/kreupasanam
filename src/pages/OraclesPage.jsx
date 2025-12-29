@@ -18,6 +18,7 @@ import { useSubtitles } from '../components/hooks/useSubtitles';
 import { useSpeechSync } from '../components/hooks/useSpeechSync';
 import FloatingVideoPlayer from '../components/utils/FloatingVideoPlayer';
 import LangHelpOverlay from '../components/utils/LangHelpOverlay';
+import ImageWithBoxes from '../components/utils/ImageWithBoxes';
 
 export default function OraclesPage({ lang: initialLang }) {
   const { idSlug } = useParams(); // changed from id to idSlug
@@ -87,6 +88,8 @@ export default function OraclesPage({ lang: initialLang }) {
   };
 
   const { title, date, content, video, subtitles: subtitlesUrl } = safeOracle;
+  const overlayData = safeOracle?.overlay ?? null;
+
 
   const videoId = getYouTubeVideoID(video);
   const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
@@ -162,7 +165,23 @@ const shareText = useMemo(() => {
   const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
   const emailShareUrl = `mailto:?subject=${encodeURIComponent(title[lang] || title['en'])}&body=${encodeURIComponent(shareText)}`;
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
+  function resolveOverlay(oracle, all) {
+  // direct overlay
+  if (oracle.overlay) return oracle.overlay;
 
+  // reuse overlay
+  if (oracle.overlayRef != null) {
+    const base = all.find(t => t.id === oracle.overlayRef);
+    if (!base?.overlay) return null;
+
+    return {
+      ...base.overlay,
+      texts: oracle.overlayTexts ?? base.overlay.texts
+    };
+  }
+
+  return null;
+}
   useEffect(() => {
     const checkScreen = () => setIsMobileOrTablet(window.innerWidth <= 1368);
     checkScreen(); // initial check
@@ -266,13 +285,12 @@ const shareText = useMemo(() => {
       <div className={styles.thumbnailSkeleton}></div>
     )}
 
-    <img
-      src={thumbnailUrl}
-      alt="Video Thumbnail"
-      className={`${styles.thumbnailImage} ${thumbnailLoaded ? styles.visible : styles.hidden}`}
-      onLoad={() => setThumbnailLoaded(true)}
-      onError={() => setThumbnailLoaded(true)} // fallback
-    />
+     <ImageWithBoxes
+            src={thumbnailUrl}
+            data={resolveOverlay(oracle, oracles)}
+            lang={lang}
+            onImageLoad={() => setThumbnailLoaded(true)}
+          />
 
     {thumbnailLoaded && (
       <div className={styles.smallPlayIcon}>

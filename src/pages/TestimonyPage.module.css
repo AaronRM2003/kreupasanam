@@ -496,13 +496,15 @@ filter: drop-shadow(0 0 12px rgba(255, 223, 93, 0.7)) drop-shadow(0 0 24px rgba(
   border-radius: 18px;
   overflow: hidden;
   margin-bottom: 1rem;
+  aspect-ratio: 5.3 / 3;
+}
+.thumbnailWrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.thumbnailImage {
-  width: 100%;
-  border-radius: 18px;
-  display: block;
-}
+
 
 .smallPlayIcon {
   position: absolute;
