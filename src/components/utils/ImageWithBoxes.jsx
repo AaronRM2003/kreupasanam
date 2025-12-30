@@ -16,46 +16,51 @@ export default function ImageWithBoxes({
   const [scale, setScale] = useState({ x: 1, y: 1 });
   const [ready, setReady] = useState(false);
 
-
+  // 🔑 Only notify parent here — no scale logic
   const handleImageLoad = () => {
     if (onImageLoad) onImageLoad();
+  };
 
-    if (preloadOnly) return;
+  // 🔑 ResizeObserver is the ONLY place scale is calculated
+  useEffect(() => {
+    if (!imgRef.current || preloadOnly) return;
 
     const img = imgRef.current;
-    if (!img) return;
 
-    setScale({
-      x: img.clientWidth / ORIGINAL_WIDTH,
-      y: img.clientHeight / ORIGINAL_HEIGHT,
-    });
-  };
+    const updateScale = () => {
+      const rect = img.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+
+      setScale({
+        x: rect.width / ORIGINAL_WIDTH,
+        y: rect.height / ORIGINAL_HEIGHT,
+      });
+
+      setReady(prev => prev || true);
+    };
+
+    updateScale();
+
+    const observer = new ResizeObserver(updateScale);
+    observer.observe(img);
+
+    return () => observer.disconnect();
+  }, [src, preloadOnly]);
+
+  // 🔑 Reset animation only on language change
   useEffect(() => {
-  if (!imgRef.current || preloadOnly) return;
+  setReady(false);
 
-  const img = imgRef.current;
-
-  const updateScale = () => {
-    const rect = img.getBoundingClientRect();
-    if (!rect.width || !rect.height) return;
-
-    setScale({
-      x: rect.width / ORIGINAL_WIDTH,
-      y: rect.height / ORIGINAL_HEIGHT,
-    });
+  // allow next paint, then show overlay again
+  const id = requestAnimationFrame(() => {
     setReady(true);
-  };
+  });
 
-  // initial measure
-  updateScale();
+  return () => cancelAnimationFrame(id);
+}, [lang]);
 
-  const observer = new ResizeObserver(updateScale);
-  observer.observe(img);
 
-  return () => observer.disconnect();
-}, [src, preloadOnly]);
-
-  /* ✅ NO OVERLAY CASE */
+  /* NO OVERLAY CASE */
   if (!data || !data.boxes?.length || preloadOnly) {
     return (
       <div className="image-wrapper">
@@ -70,7 +75,6 @@ export default function ImageWithBoxes({
     );
   }
 
-  /* ✅ SAFE DESTRUCTURE */
   const { boxes = [], texts = {} } = data;
 
   return (
@@ -90,26 +94,25 @@ export default function ImageWithBoxes({
 
         return (
           <div
-            key={i}
-             className={`overlay-box ${ready ? "overlay-visible" : ""}`}
+            key={`${lang}-${i}`}
+            className={`overlay-box ${ready ? "overlay-visible" : ""}`}
             style={{
               left: box.x * scale.x,
               top: box.y * scale.y,
               width: w,
               height: h,
               backgroundColor: box.background,
-              borderRadius: "12px",        // 🔥 Add this
-
+              borderRadius: "12px",
             }}
           >
             <AutoFitText
-              key={`${lang}-${i}`}  
               text={text}
               width={w}
               height={h}
               color={box.fontColor}
               lang={lang}
               fontFamily="Inter"
+              backgroundColor={box.background}
             />
           </div>
         );

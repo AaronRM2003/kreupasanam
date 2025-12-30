@@ -398,14 +398,16 @@ export default function AutoFitText({
   height,
   color,
   lang,
+  backgroundColor,
   fontFamily = "Inter",
   fontWeight = "bold",
-  padding = 6.5,
+  padding = 9,
 }) {
   const ref = useRef(null);
-  const [fontSize, setFontSize] = useState(10);
+  const [fontSize, setFontSize] = useState(12);
+   const shadowColor = getAdaptiveShadow(color, backgroundColor);
   useEffect(() => {
-  setFontSize(10);
+  setFontSize(12);
 }, [lang]);
 
   useEffect(() => {
@@ -414,7 +416,7 @@ export default function AutoFitText({
 
     // 🔑 NEVER allow text area to become too narrow
     const effectiveWidth = Math.max(
-      width * 0.75,
+      width * 0.95,
       width - padding * 2
     );
 
@@ -433,9 +435,9 @@ export default function AutoFitText({
 
         if (fitsHeight) {
           best = mid;
-          min = mid + 1;
+          min = mid + 0.8;
         } else {
-          max = mid - 1;
+          max = mid - 0.8;
         }
       }
 
@@ -459,23 +461,67 @@ export default function AutoFitText({
       textAlign: "center",
     }}
   >
-    <span
-      ref={ref}
-      style={{
-        color,
-        fontFamily,
-        fontWeight,
-        fontSize,
-        lineHeight: 1.2,
-        maxWidth: "100%",
-        whiteSpace: "pre-wrap",
-        overflowWrap: "break-word",
-        display: "block",
-      }}
-    >
-      {text}
-    </span>
+  
+
+<span
+  ref={ref}
+  style={{
+    color,
+    fontFamily,
+    fontWeight,
+    fontSize,
+    lineHeight: 1.3,
+    maxWidth: "100%",
+    whiteSpace: "pre-wrap",
+    overflowWrap: "break-word",
+    display: "block",
+
+    // 🔥 adaptive shadow
+    textShadow: `
+      0 1px 2px ${shadowColor},
+      0 2px 6px ${shadowColor}
+    `,
+  }}
+>
+  {text}
+</span>
+
   </div>
 );
 }
 
+function hexToRgb(hex) {
+  const clean = hex.replace("#", "");
+  const bigint = parseInt(clean, 16);
+  return {
+    r: (bigint >> 16) & 255,
+    g: (bigint >> 8) & 255,
+    b: bigint & 255,
+  };
+}
+
+function luminance({ r, g, b }) {
+  const a = [r, g, b].map(v => {
+    v /= 255;
+    return v <= 0.03928
+      ? v / 12.92
+      : Math.pow((v + 0.055) / 1.055, 2.4);
+  });
+  return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
+}
+
+function getAdaptiveShadow(textColor, bgColor) {
+  if (!textColor || !bgColor) {
+    return "rgba(0,0,0,0.4)";
+  }
+
+  const textLum = luminance(hexToRgb(textColor));
+  const bgLum = luminance(hexToRgb(bgColor));
+
+  // contrast direction
+  const useDarkShadow = textLum > bgLum;
+
+  return useDarkShadow
+    ? "rgba(0,0,0,0.45)"
+    : "rgba(255,255,255,0.45)";
+}

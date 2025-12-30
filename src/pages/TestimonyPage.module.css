@@ -496,7 +496,8 @@ filter: drop-shadow(0 0 12px rgba(255, 223, 93, 0.7)) drop-shadow(0 0 24px rgba(
   border-radius: 18px;
   overflow: hidden;
   margin-bottom: 1rem;
-  aspect-ratio: 5.3 / 3;
+  aspect-ratio: 16/9;
+  
 }
 .thumbnailWrapper img {
   width: 100%;

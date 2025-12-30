@@ -294,12 +294,15 @@ const handleClick = () => {
     {!thumbnailLoaded && (
       <div className={styles.thumbnailSkeleton}></div>
     )}
-    <ImageWithBoxes
-        src={thumbnailUrl}
-        data={overlayData}
-        lang={lang}
-        onImageLoad={() => setThumbnailLoaded(true)}
-      />
+   <div key={lang} style={{ contain: "layout paint" }}>
+  <ImageWithBoxes
+    src={thumbnailUrl}
+    data={overlayData}
+    lang={lang}
+    onImageLoad={() => setThumbnailLoaded(true)}
+  />
+</div>
+
    
 
     {thumbnailLoaded && (
