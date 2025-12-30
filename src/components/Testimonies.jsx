@@ -74,8 +74,12 @@ export function TestimonyCard({
           onImageLoad={() => setIsLoaded(true)}
         />
 
-        {duration && isLoaded && (
-          <span className={styles.durationBadge}>
+        {duration && (
+          <span
+            className={`${styles.durationBadge} ${
+              isLoaded ? styles.visible : ""
+            }`}
+          >
             {duration}
           </span>
         )}
