@@ -29,30 +29,50 @@
     },
     "subtitles": "/assets/oracles-subtitle/oracles1.json",
     "duration": "13:50",
-    "overlay":{
-  "boxes": [
-    {
-      "x": 56,
-      "y": 647,
-      "w": 1181,
-      "h": 64,
-      "background": "#fded5c",
-      "fontColor": "#cf0600"
+    "overlay": {
+      "boxes": [
+        {
+          "x": 56,
+          "y": 647,
+          "w": 1181,
+          "h": 64,
+          "background": "#fded5c",
+          "fontColor": "#cf0600"
+        }
+      ],
+      "texts": {
+        "zh": [
+          "每周日晚上8:00"
+        ],
+        "bn": [
+          "প্রতি রবিবার রাত ৮:০০ টায়"
+        ],
+        "en": [
+          "Every Sunday at 8:00 PM"
+        ],
+        "hi": [
+          "हर रविवार रात 8:00 बजे"
+        ],
+        "ta": [
+          "ஒவ்வொரு ஞாயிற்றுக்கிழமையும் இரவு 8:00 மணிக்கு"
+        ],
+        "te": [
+          "ప్రతి ఆదివారం రాత్రి 8:00 గంటలకు"
+        ],
+        "fr": [
+          "Chaque dimanche à 20h00"
+        ],
+        "es": [
+          "Todos los domingos a las 8:00 p. m."
+        ],
+        "kn": [
+          "ಪ್ರತಿ ಭಾನುವಾರ ರಾತ್ರಿ 8:00ಕ್ಕೆ"
+        ],
+        "mr": [
+          "दर रविवारी रात्री 8:00 वाजता"
+        ]
+      }
     }
-  ],
-  "texts": {
-  "zh": ["每周日晚上8:00"],
-  "bn": ["প্রতি রবিবার রাত ৮:০০ টায়"],
-  "en": ["Every Sunday at 8:00 PM"],
-  "hi": ["हर रविवार रात 8:00 बजे"],
-  "ta": ["ஒவ்வொரு ஞாயிற்றுக்கிழமையும் இரவு 8:00 மணிக்கு"],
-  "te": ["ప్రతి ఆదివారం రాత్రి 8:00 గంటలకు"],
-  "fr": ["Chaque dimanche à 20h00"],
-  "es": ["Todos los domingos a las 8:00 p. m."],
-  "kn": ["ಪ್ರತಿ ಭಾನುವಾರ ರಾತ್ರಿ 8:00ಕ್ಕೆ"],
-  "mr": ["दर रविवारी रात्री 8:00 वाजता"]
-}
-}
   },
   {
     "id": 2,
@@ -84,7 +104,7 @@
     },
     "subtitles": "/assets/oracles-subtitle/oracles2.json",
     "duration": "16:16",
-    "overlayRef":1
+    "overlayRef": 1
   },
   {
     "id": 3,
@@ -114,7 +134,7 @@
     },
     "subtitles": "/assets/oracles-subtitle/oracles3.json",
     "duration": "19:54",
-    "overlayRef":1
+    "overlayRef": 1
   },
   {
     "id": 4,
@@ -146,7 +166,7 @@
     },
     "subtitles": "/assets/oracles-subtitle/oracles4.json",
     "duration": "21:19",
-    "overlayRef":1
+    "overlayRef": 1
   },
   {
     "id": 5,
@@ -178,7 +198,7 @@
     },
     "subtitles": "/assets/oracles-subtitle/oracles5.json",
     "duration": "18:23",
-    "overlayRef":1
+    "overlayRef": 1
   },
   {
     "id": 6,
@@ -210,7 +230,7 @@
     },
     "subtitles": "/assets/oracles-subtitle/oracles6.json",
     "duration": "23:03",
-    "overlayRef":1
+    "overlayRef": 1
   },
   {
     "id": 7,
@@ -242,7 +262,7 @@
     },
     "subtitles": "/assets/oracles-subtitle/oracles7.json",
     "duration": "20:14",
-    "overlayRef":1
+    "overlayRef": 1
   },
   {
     "id": 8,
@@ -274,7 +294,7 @@
     },
     "subtitles": "/assets/oracles-subtitle/oracles8.json",
     "duration": "19:44",
-    "overlayRef":1
+    "overlayRef": 1
   },
   {
     "id": 9,
@@ -306,7 +326,7 @@
     },
     "subtitles": "/assets/oracles-subtitle/oracles9.json",
     "duration": "16:35",
-    "overlayRef":1
+    "overlayRef": 1
   },
   {
     "id": 10,
@@ -338,7 +358,7 @@
     },
     "subtitles": "/assets/oracles-subtitle/oracles10.json",
     "duration": "24:58",
-    "overlayRef":1
+    "overlayRef": 1
   },
   {
     "id": 11,
@@ -370,7 +390,7 @@
     },
     "subtitles": "/assets/oracles-subtitle/oracles11.json",
     "duration": "19:23",
-    "overlayRef":1
+    "overlayRef": 1
   },
   {
     "id": 12,
@@ -402,7 +422,7 @@
     },
     "subtitles": "/assets/oracles-subtitle/oracles12.json",
     "duration": "17:38",
-    "overlayRef":1
+    "overlayRef": 1
   },
   {
     "id": 13,
@@ -434,7 +454,7 @@
     },
     "subtitles": "/assets/oracles-subtitle/oracles13.json",
     "duration": "16:41",
-    "overlayRef":1
+    "overlayRef": 1
   },
   {
     "id": 14,
@@ -466,7 +486,7 @@
     },
     "subtitles": "/assets/oracles-subtitle/oracles14.json",
     "duration": "14:03",
-    "overlayRef":1
+    "overlayRef": 1
   },
   {
     "id": 15,
@@ -498,7 +518,7 @@
     },
     "subtitles": "/assets/oracles-subtitle/oracles15.json",
     "duration": "19:39",
-    "overlayRef":1
+    "overlayRef": 1
   },
   {
     "id": 16,
@@ -530,7 +550,7 @@
     },
     "subtitles": "/assets/oracles-subtitle/oracles16.json",
     "duration": "15:54",
-    "overlayRef":1
+    "overlayRef": 1
   },
   {
     "id": 17,
@@ -562,7 +582,7 @@
     },
     "subtitles": "/assets/oracles-subtitle/oracles17.json",
     "duration": "21:48",
-    "overlayRef":1
+    "overlayRef": 1
   },
   {
     "id": 18,
@@ -594,7 +614,7 @@
     },
     "subtitles": "/assets/oracles-subtitle/oracles18.json",
     "duration": "16:59",
-    "overlayRef":1
+    "overlayRef": 1
   },
   {
     "id": 19,
@@ -626,7 +646,7 @@
     },
     "subtitles": "/assets/oracles-subtitle/oracles19.json",
     "duration": "15:21",
-    "overlayRef":1
+    "overlayRef": 1
   },
   {
     "id": 20,
@@ -658,7 +678,7 @@
     },
     "subtitles": "/assets/oracles-subtitle/oracles20.json",
     "duration": "22:45",
-    "overlayRef":1
+    "overlayRef": 1
   },
   {
     "id": 21,
@@ -690,7 +710,7 @@
     },
     "subtitles": "/assets/oracles-subtitle/oracles21.json",
     "duration": "16:18",
-    "overlayRef":1
+    "overlayRef": 1
   },
   {
     "id": 22,
@@ -722,7 +742,7 @@
     },
     "subtitles": "/assets/oracles-subtitle/oracles22.json",
     "duration": "21:06",
-    "overlayRef":1
+    "overlayRef": 1
   },
   {
     "id": 23,
@@ -754,7 +774,7 @@
     },
     "subtitles": "/assets/oracles-subtitle/oracles23.json",
     "duration": "14:58",
-    "overlayRef":1
+    "overlayRef": 1
   },
   {
     "id": 24,
@@ -786,7 +806,7 @@
     },
     "subtitles": "/assets/oracles-subtitle/oracles24.json",
     "duration": "18:41",
-    "overlayRef":1
+    "overlayRef": 1
   },
   {
     "id": 25,
@@ -818,7 +838,7 @@
     },
     "subtitles": "/assets/oracles-subtitle/oracles25.json",
     "duration": "22:48",
-    "overlayRef":1
+    "overlayRef": 1
   },
   {
     "id": 26,
@@ -850,7 +870,7 @@
     },
     "subtitles": "/assets/oracles-subtitle/oracles26.json",
     "duration": "19:43",
-    "overlayRef":1
+    "overlayRef": 1
   },
   {
     "id": 27,
@@ -882,6 +902,6 @@
     },
     "subtitles": "/assets/oracles-subtitle/oracles27.json",
     "duration": "19:08",
-    "overlayRef":1
+    "overlayRef": 1
   }
 ]

@@ -1393,68 +1393,138 @@
     "subtitles": "/assets/testimony-subtitle/02dec.json",
     "duration": "11:55",
     "overlay": {
-    "boxes": [
+      "boxes": [
         {
-        "x": 27,
-        "y": 26,
-        "w": 985,
-        "h": 119,
-        "background": "#004f56",
-        "fontColor": "#ffef06"
+          "x": 27,
+          "y": 26,
+          "w": 985,
+          "h": 119,
+          "background": "#004f56",
+          "fontColor": "#ffef06"
         },
         {
-        "x": 24,
-        "y": 160,
-        "w": 969,
-        "h": 187,
-        "background": "#ffffff",
-        "fontColor": "#fe0104"
+          "x": 24,
+          "y": 160,
+          "w": 969,
+          "h": 187,
+          "background": "#ffffff",
+          "fontColor": "#fe0104"
         },
         {
-        "x": 1024,
-        "y": 37,
-        "w": 252,
-        "h": 49,
-        "background": "#005158",
-        "fontColor": "#ffffff"
+          "x": 1024,
+          "y": 37,
+          "w": 252,
+          "h": 49,
+          "background": "#005158",
+          "fontColor": "#ffffff"
         },
         {
-        "x": 54,
-        "y": 494,
-        "w": 825,
-        "h": 101,
-        "background": "#110551",
-        "fontColor": "#ffee06"
+          "x": 54,
+          "y": 494,
+          "w": 825,
+          "h": 101,
+          "background": "#110551",
+          "fontColor": "#ffee06"
         },
         {
-        "x": 29,
-        "y": 609,
-        "w": 627,
-        "h": 86,
-        "background": "#1e0a7b",
-        "fontColor": "#ffffff"
+          "x": 29,
+          "y": 609,
+          "w": 627,
+          "h": 86,
+          "background": "#1e0a7b",
+          "fontColor": "#ffffff"
         },
         {
-        "x": 670,
-        "y": 624,
-        "w": 447,
-        "h": 53,
-        "background": "#fd4507",
-        "fontColor": "#fffeff"
+          "x": 670,
+          "y": 624,
+          "w": 447,
+          "h": 53,
+          "background": "#fd4507",
+          "fontColor": "#fffeff"
         }
-    ],
-    "texts": {
-      "en":["Got a message from Holy Mother!","Got reconciled with the Brother and a severe disease","Ernakulam","Disease cured!","Hency Johnson's","Miraculous testimony"],
-"bn":["পবিত্র মাতার কাছ থেকে বার্তা পেলাম!","ভাইয়ের সাথে পুনর্মিলন ও এক গুরুতর রোগ থেকে মুক্তি","এর্নাকুলাম","রোগ নিরাময়!","হেনসি জনসনের","অলৌকিক স্বাক্ষ্য"],
-"zh":["收到了圣母的讯息！","与兄弟和解并从严重疾病中得医治","厄尔讷古兰","疾病得医治！","亨西·约翰逊的","奇迹般的见证"],
-"hi":["पवित्र माता से संदेश मिला!","भाई से मेल-मिलाप और भयंकर बीमारी से मुक्ति","एर्नाकुलम","रोग से चंगाई!","हेन्सी जॉनसन का","चमत्कारी साक्ष्य"],
-"kn":["ಪವಿತ್ರ ತಾಯಿಯಿಂದ ಸಂದೇಶ ಲಭಿಸಿದೆ!","ಸಹೋದರನೊಂದಿಗೆ ಪುನರ್ಮಿಲನ ಮತ್ತು ಭೀಕರ ರೋಗದಿಂದ ಗುಣಮುಖ","ಎರ್ನಾಕುಲಂ","ರೋಗ ಗುಣವಾಗಿದೆ!","ಹೆನ್ಸಿ ಜಾನ್ಸನ್ ಅವರ","ಅದ್ಭುತ ಸಾಕ್ಷ್ಯ"],
-"mr":["पवित्र आईकडून संदेश मिळाला!","भावाशी पुन्हा सलोखा झाला आणि गंभीर आजारातून मुक्ती","एर्नाकुलम","आजार बरा झाला!","हेन्सी जॉन्सनचे","अद्भुत साक्ष"],
-"es":["¡Recibí un mensaje de la Santa Madre!","Reconciliación con el hermano y sanación de una enfermedad grave","Ernakulam","¡Enfermedad curada!","De Hency Johnson","Testimonio milagroso"],
-"ta":["பரிசுத்த தாயாரிடமிருந்து செய்தி கிடைத்தது!","சகோதரருடன் சமரசம் & கடுமையான நோயிலிருந்து குணமடைதல்","எர்ணாகுளம்","நோய் குணமானது!","ஹென்சி ஜான்சனின்","அதிசய மெய்சாட்சி"],
-"te":["పవిత్ర తల్లిదండ్రి సందేశం అందింది!","అన్నతో సఖ్యత మరియు తీవ్రమైన వ్యాధికి స్వస్థత","ఎర్నాకులమ్","వ్యాధి నయం అయింది!","హెన్సీ జాన్సన్ యొక్క","అద్భుత సాక్ష్యం"],
-"fr":["Message reçu de la Sainte Mère !","Réconciliation avec le frère et guérison d'une maladie grave","Ernakulam","Maladie guérie !","De Hency Johnson","Témoignage miraculeux"]
-}
+      ],
+      "texts": {
+        "en": [
+          "Got a message from Holy Mother!",
+          "Got reconciled with the Brother and a severe disease",
+          "Ernakulam",
+          "Disease cured!",
+          "Hency Johnson's",
+          "Miraculous testimony"
+        ],
+        "bn": [
+          "পবিত্র মাতার কাছ থেকে বার্তা পেলাম!",
+          "ভাইয়ের সাথে পুনর্মিলন ও এক গুরুতর রোগ থেকে মুক্তি",
+          "এর্নাকুলাম",
+          "রোগ নিরাময়!",
+          "হেনসি জনসনের",
+          "অলৌকিক স্বাক্ষ্য"
+        ],
+        "zh": [
+          "收到了圣母的讯息！",
+          "与兄弟和解并从严重疾病中得医治",
+          "厄尔讷古兰",
+          "疾病得医治！",
+          "亨西·约翰逊的",
+          "奇迹般的见证"
+        ],
+        "hi": [
+          "पवित्र माता से संदेश मिला!",
+          "भाई से मेल-मिलाप और भयंकर बीमारी से मुक्ति",
+          "एर्नाकुलम",
+          "रोग से चंगाई!",
+          "हेन्सी जॉनसन का",
+          "चमत्कारी साक्ष्य"
+        ],
+        "kn": [
+          "ಪವಿತ್ರ ತಾಯಿಯಿಂದ ಸಂದೇಶ ಲಭಿಸಿದೆ!",
+          "ಸಹೋದರನೊಂದಿಗೆ ಪುನರ್ಮಿಲನ ಮತ್ತು ಭೀಕರ ರೋಗದಿಂದ ಗುಣಮುಖ",
+          "ಎರ್ನಾಕುಲಂ",
+          "ರೋಗ ಗುಣವಾಗಿದೆ!",
+          "ಹೆನ್ಸಿ ಜಾನ್ಸನ್ ಅವರ",
+          "ಅದ್ಭುತ ಸಾಕ್ಷ್ಯ"
+        ],
+        "mr": [
+          "पवित्र आईकडून संदेश मिळाला!",
+          "भावाशी पुन्हा सलोखा झाला आणि गंभीर आजारातून मुक्ती",
+          "एर्नाकुलम",
+          "आजार बरा झाला!",
+          "हेन्सी जॉन्सनचे",
+          "अद्भुत साक्ष"
+        ],
+        "es": [
+          "¡Recibí un mensaje de la Santa Madre!",
+          "Reconciliación con el hermano y sanación de una enfermedad grave",
+          "Ernakulam",
+          "¡Enfermedad curada!",
+          "De Hency Johnson",
+          "Testimonio milagroso"
+        ],
+        "ta": [
+          "பரிசுத்த தாயாரிடமிருந்து செய்தி கிடைத்தது!",
+          "சகோதரருடன் சமரசம் & கடுமையான நோயிலிருந்து குணமடைதல்",
+          "எர்ணாகுளம்",
+          "நோய் குணமானது!",
+          "ஹென்சி ஜான்சனின்",
+          "அதிசய மெய்சாட்சி"
+        ],
+        "te": [
+          "పవిత్ర తల్లిదండ్రి సందేశం అందింది!",
+          "అన్నతో సఖ్యత మరియు తీవ్రమైన వ్యాధికి స్వస్థత",
+          "ఎర్నాకులమ్",
+          "వ్యాధి నయం అయింది!",
+          "హెన్సీ జాన్సన్ యొక్క",
+          "అద్భుత సాక్ష్యం"
+        ],
+        "fr": [
+          "Message reçu de la Sainte Mère !",
+          "Réconciliation avec le frère et guérison d'une maladie grave",
+          "Ernakulam",
+          "Maladie guérie !",
+          "De Hency Johnson",
+          "Témoignage miraculeux"
+        ]
+      }
     }
   },
   {
@@ -1487,104 +1557,104 @@
     },
     "subtitles": "/assets/testimony-subtitle/03dec.json",
     "duration": "9:24",
-    "overlay":{
-  "boxes": [
-    {
-      "x": 50,
-      "y": 24,
-      "w": 972,
-      "h": 245,
-      "background": "#117edb",
-      "fontColor": "#fffc00"
-    },
-    {
-      "x": 31,
-      "y": 278,
-      "w": 878,
-      "h": 259,
-      "background": "#0968b8",
-      "fontColor": "#fffffb"
-    },
-    {
-      "x": 95,
-      "y": 529,
-      "w": 894,
-      "h": 170,
-      "background": "#014886",
-      "fontColor": "#fcfb0b"
-    },
-    {
-      "x": 1086,
-      "y": 9,
-      "w": 174,
-      "h": 39,
-      "background": "#3193de",
-      "fontColor": "#f9fbfa"
+    "overlay": {
+      "boxes": [
+        {
+          "x": 50,
+          "y": 24,
+          "w": 972,
+          "h": 245,
+          "background": "#117edb",
+          "fontColor": "#fffc00"
+        },
+        {
+          "x": 31,
+          "y": 278,
+          "w": 878,
+          "h": 259,
+          "background": "#0968b8",
+          "fontColor": "#fffffb"
+        },
+        {
+          "x": 95,
+          "y": 529,
+          "w": 894,
+          "h": 170,
+          "background": "#014886",
+          "fontColor": "#fcfb0b"
+        },
+        {
+          "x": 1086,
+          "y": 9,
+          "w": 174,
+          "h": 39,
+          "background": "#3193de",
+          "fontColor": "#f9fbfa"
+        }
+      ],
+      "texts": {
+        "zh": [
+          "当我们收到克鲁帕萨纳姆通讯时",
+          "发生了13年的时间缩短",
+          "一个家庭领受了神奇的恩典",
+          "阿拉普扎"
+        ],
+        "bn": [
+          "যখন আমরা ক্রুপাসানাম নিউজলেটার পেয়েছিলাম",
+          "১৩ বছরের সময় সংকোচন ঘটেছে",
+          "একটি পরিবার আশ্চর্যজনক ঈশ্বরের কৃপা পেয়েছে",
+          "আলাপ্পুঝা"
+        ],
+        "en": [
+          "When we received a Kreupasanam Newsletter",
+          "Time shortening of 13 years happened",
+          "Miraculous God's grace received by a family",
+          "Alappuzha"
+        ],
+        "hi": [
+          "जब हमें क्रीपासनम न्यूज़लेटर मिला",
+          "13 वर्षों का समय संक्षिप्त हो गया",
+          "एक परिवार को ईश्वर की चमत्कारी कृपा मिली",
+          "अलप्पुझा"
+        ],
+        "ta": [
+          "நாங்கள் குருபாசனம் செய்திமடலை பெற்றபோது",
+          "13 ஆண்டுகளின் காலக் குறைப்பு நிகழ்ந்தது",
+          "ஒரு குடும்பம் அதிசயமான தேவனுடைய கிருபையை பெற்றது",
+          "அலப்புழா"
+        ],
+        "te": [
+          "మేము కృపాసనం న్యూస్‌లెటర్‌ను పొందినప్పుడు",
+          "13 సంవత్సరాల కాలం సంక్షిప్తమైంది",
+          "ఒక కుటుంబం అద్భుతమైన దేవుని కృపను పొందింది",
+          "అലപ്പుఝ"
+        ],
+        "fr": [
+          "Lorsque nous avons reçu le bulletin Kreupasanam",
+          "Un raccourcissement du temps de 13 ans s'est produit",
+          "Une famille a reçu la grâce miraculeuse de Dieu",
+          "Alappuzha"
+        ],
+        "es": [
+          "Cuando recibimos un boletín de Kreupasanam",
+          "Ocurrió un acortamiento de tiempo de 13 años",
+          "Una familia recibió la gracia milagrosa de Dios",
+          "Alappuzha"
+        ],
+        "kn": [
+          "ನಾವು ಕ್ರುಪಾಸನಮ್ ಸುದ್ದಿಪತ್ರವನ್ನು ಪಡೆದಾಗ",
+          "13 ವರ್ಷಗಳ ಕಾಲದ ಕುಗ್ಗುವಿಕೆ ಸಂಭವಿಸಿತು",
+          "ಒಂದು ಕುಟುಂಬ ದೇವರ ಅದ್ಭುತ ಕೃಪೆಯನ್ನು ಪಡೆದಿದೆ",
+          "ಅಲಪ್ಪುಝಾ"
+        ],
+        "mr": [
+          "जेव्हा आम्हाला क्रुपासनम न्यूजलेटर मिळाले",
+          "१३ वर्षांच्या वेळेचे संकुचन झाले",
+          "एका कुटुंबाला देवाची चमत्कारी कृपा मिळाली",
+          "अलप्पुळा"
+        ]
+      }
     }
-  ],
-  "texts": {
-  "zh": [
-    "当我们收到克鲁帕萨纳姆通讯时",
-    "发生了13年的时间缩短",
-    "一个家庭领受了神奇的恩典",
-    "阿拉普扎"
-  ],
-  "bn": [
-    "যখন আমরা ক্রুপাসানাম নিউজলেটার পেয়েছিলাম",
-    "১৩ বছরের সময় সংকোচন ঘটেছে",
-    "একটি পরিবার আশ্চর্যজনক ঈশ্বরের কৃপা পেয়েছে",
-    "আলাপ্পুঝা"
-  ],
-  "en": [
-    "When we received a Kreupasanam Newsletter",
-    "Time shortening of 13 years happened",
-    "Miraculous God's grace received by a family",
-    "Alappuzha"
-  ],
-  "hi": [
-    "जब हमें क्रीपासनम न्यूज़लेटर मिला",
-    "13 वर्षों का समय संक्षिप्त हो गया",
-    "एक परिवार को ईश्वर की चमत्कारी कृपा मिली",
-    "अलप्पुझा"
-  ],
-  "ta": [
-    "நாங்கள் குருபாசனம் செய்திமடலை பெற்றபோது",
-    "13 ஆண்டுகளின் காலக் குறைப்பு நிகழ்ந்தது",
-    "ஒரு குடும்பம் அதிசயமான தேவனுடைய கிருபையை பெற்றது",
-    "அலப்புழா"
-  ],
-  "te": [
-    "మేము కృపాసనం న్యూస్‌లెటర్‌ను పొందినప్పుడు",
-    "13 సంవత్సరాల కాలం సంక్షిప్తమైంది",
-    "ఒక కుటుంబం అద్భుతమైన దేవుని కృపను పొందింది",
-    "అലപ്പుఝ"
-  ],
-  "fr": [
-    "Lorsque nous avons reçu le bulletin Kreupasanam",
-    "Un raccourcissement du temps de 13 ans s'est produit",
-    "Une famille a reçu la grâce miraculeuse de Dieu",
-    "Alappuzha"
-  ],
-  "es": [
-    "Cuando recibimos un boletín de Kreupasanam",
-    "Ocurrió un acortamiento de tiempo de 13 años",
-    "Una familia recibió la gracia milagrosa de Dios",
-    "Alappuzha"
-  ],
-  "kn": [
-    "ನಾವು ಕ್ರುಪಾಸನಮ್ ಸುದ್ದಿಪತ್ರವನ್ನು ಪಡೆದಾಗ",
-    "13 ವರ್ಷಗಳ ಕಾಲದ ಕುಗ್ಗುವಿಕೆ ಸಂಭವಿಸಿತು",
-    "ಒಂದು ಕುಟುಂಬ ದೇವರ ಅದ್ಭುತ ಕೃಪೆಯನ್ನು ಪಡೆದಿದೆ",
-    "ಅಲಪ್ಪುಝಾ"
-  ],
-  "mr": [
-    "जेव्हा आम्हाला क्रुपासनम न्यूजलेटर मिळाले",
-    "१३ वर्षांच्या वेळेचे संकुचन झाले",
-    "एका कुटुंबाला देवाची चमत्कारी कृपा मिळाली",
-    "अलप्पुळा"
-  ]
-}
-}
   },
   {
     "id": 47,

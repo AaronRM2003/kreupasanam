@@ -99,7 +99,7 @@ export default function ImageWithBoxes({
               height: h,
               backgroundColor: box.background,
               borderRadius: "12px",        // 🔥 Add this
-      border: "1px solid #ddd"  
+
             }}
           >
             <AutoFitText

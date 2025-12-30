@@ -400,12 +400,12 @@ export default function AutoFitText({
   lang,
   fontFamily = "Inter",
   fontWeight = "bold",
-  padding = 5,
+  padding = 6.5,
 }) {
   const ref = useRef(null);
-  const [fontSize, setFontSize] = useState(12);
+  const [fontSize, setFontSize] = useState(10);
   useEffect(() => {
-  setFontSize(12);
+  setFontSize(10);
 }, [lang]);
 
   useEffect(() => {
@@ -419,7 +419,7 @@ export default function AutoFitText({
     );
 
     const fit = () => {
-      let min = 7;
+      let min = 6;
       let max = Math.min(width, height);
       let best = min;
 
