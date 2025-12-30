@@ -1717,104 +1717,104 @@
     },
     "subtitles": "/assets/testimony-subtitle/09dec.json",
     "duration": "19:58",
-    "overlay":{
-  "boxes": [
-    {
-      "x": 21,
-      "y": 91,
-      "w": 1009,
-      "h": 204,
-      "background": "#002f7f",
-      "fontColor": "#fefffb"
-    },
-    {
-      "x": 20,
-      "y": 308,
-      "w": 926,
-      "h": 101,
-      "background": "#ffffff",
-      "fontColor": "#f9060c"
-    },
-    {
-      "x": 24,
-      "y": 385,
-      "w": 842,
-      "h": 139,
-      "background": "#ffffff",
-      "fontColor": "#ff0700"
-    },
-    {
-      "x": 31,
-      "y": 540,
-      "w": 977,
-      "h": 151,
-      "background": "#1d2029",
-      "fontColor": "#feec06"
+    "overlay": {
+      "boxes": [
+        {
+          "x": 21,
+          "y": 91,
+          "w": 1009,
+          "h": 204,
+          "background": "#002f7f",
+          "fontColor": "#fefffb"
+        },
+        {
+          "x": 20,
+          "y": 308,
+          "w": 926,
+          "h": 101,
+          "background": "#ffffff",
+          "fontColor": "#f9060c"
+        },
+        {
+          "x": 24,
+          "y": 385,
+          "w": 842,
+          "h": 139,
+          "background": "#ffffff",
+          "fontColor": "#ff0700"
+        },
+        {
+          "x": 31,
+          "y": 540,
+          "w": 977,
+          "h": 151,
+          "background": "#1d2029",
+          "fontColor": "#feec06"
+        }
+      ],
+      "texts": {
+        "en": [
+          "Many people felt called to speak about Kreupasanam!",
+          "In Germany",
+          "I was diagnosed with cancer in multiple organs at the same time.",
+          "A healing testimony by Sr. Stephna MSMI"
+        ],
+        "bn": [
+          "অনেকেই কৃষ্পাসানম সম্পর্কে কথা বলতে অনুভব করেছিলেন!",
+          "জার্মানিতে",
+          "একই সময়ে আমার শরীরের বহু অঙ্গে ক্যান্সার ধরা পড়েছিল।",
+          "এম.এস.এম.আই সিস্টার স্টেফনা-এর আরোগ্যের সাক্ষ্য"
+        ],
+        "zh": [
+          "许多人感到被召唤来见证Kreupasanam！",
+          "在德国",
+          "我同时被诊断出多个器官患有癌症。",
+          "MSMI 斯特芬娜修女的治愈见证"
+        ],
+        "hi": [
+          "कई लोगों ने कृपासानम के बारे में बोलने का बुलावा महसूस किया!",
+          "जर्मनी में",
+          "मुझे एक ही समय में कई अंगों में कैंसर का पता चला।",
+          "एमएसएमआई सिस्टर स्टेफ़ना की चंगाई की गवाही"
+        ],
+        "kn": [
+          "ಕೃಪಾಸನಮ್ ಕುರಿತು ಮಾತನಾಡಲು ಅನೇಕರು ಕರೆಯಲ್ಪಟ್ಟಂತೆ ಅನುಭವಿಸಿದರು!",
+          "ಜರ್ಮನಿಯಲ್ಲಿ",
+          "ಒಂದೇ ಸಮಯದಲ್ಲಿ ನನ್ನ ದೇಹದ ಹಲವು ಅಂಗಗಳಲ್ಲಿ ಕ್ಯಾನ್ಸರ್ ಪತ್ತೆಯಾಯಿತು.",
+          "ಎಂಎಸ್‌ಎಂಐ ಸಿಸ್ಟರ್ ಸ್ಟೆಫ್ನ ಅವರ ಗುಣಮುಖತೆಗೆ ಸಾಕ್ಷಿ"
+        ],
+        "mr": [
+          "कृपासनमविषयी बोलण्यासाठी अनेकांना बोलावणे मिळाल्याचा अनुभव झाला!",
+          "जर्मनीमध्ये",
+          "माझ्या अनेक अवयवांमध्ये एकाच वेळी कर्करोग आढळला.",
+          "एमएसएमआय सिस्टर स्टेफना यांचे आरोग्य साक्ष"
+        ],
+        "es": [
+          "¡Muchas personas sintieron el llamado a hablar sobre Kreupasanam!",
+          "En Alemania",
+          "Me diagnosticaron cáncer en múltiples órganos al mismo tiempo.",
+          "Un testimonio de sanación de la Hna. Stephna MSMI"
+        ],
+        "ta": [
+          "கிருபாசனம் பற்றிப் பேச பலர் அழைக்கப்பட்டதை உணர்ந்தனர்!",
+          "ஜெர்மனியில்",
+          "எனது பல உறுப்புகளில் ஒரே நேரத்தில் புற்றுநோய் கண்டறியப்பட்டது.",
+          "எம்.எஸ்.எம்.ஐ சகோதரி ஸ்டெப்னாவின் சுகமடைந்த சாட்சி"
+        ],
+        "te": [
+          "కృపాసనం గురించి మాట్లాడడానికి అనేక మంది పిలువబడ్డారని భావించారు!",
+          "జర్మనీలో",
+          "ఒకేసారి నా శరీరంలోని అనేక అవయవాల్లో క్యాన్సర్ గుర్తించారు.",
+          "ఎంఎస్ఎంఐ సిస్టర్ స్టెఫ్నా యొక్క స్వస్థత సాక్ష్యం"
+        ],
+        "fr": [
+          "De nombreuses personnes se sont senties appelées à parler de Kreupasanam !",
+          "En Allemagne",
+          "On m’a diagnostiqué un cancer dans plusieurs organes en même temps.",
+          "Un témoignage de guérison par Sœur Stephna MSMI"
+        ]
+      }
     }
-  ],
-  "texts": {
-  "en": [
-    "Many people felt called to speak about Kreupasanam!",
-    "In Germany",
-    "I was diagnosed with cancer in multiple organs at the same time.",
-    "A healing testimony by Sr. Stephna MSMI"
-  ],
-  "bn": [
-    "অনেকেই কৃষ্পাসানম সম্পর্কে কথা বলতে অনুভব করেছিলেন!",
-    "জার্মানিতে",
-    "একই সময়ে আমার শরীরের বহু অঙ্গে ক্যান্সার ধরা পড়েছিল।",
-    "এম.এস.এম.আই সিস্টার স্টেফনা-এর আরোগ্যের সাক্ষ্য"
-  ],
-  "zh": [
-    "许多人感到被召唤来见证Kreupasanam！",
-    "在德国",
-    "我同时被诊断出多个器官患有癌症。",
-    "MSMI 斯特芬娜修女的治愈见证"
-  ],
-  "hi": [
-    "कई लोगों ने कृपासानम के बारे में बोलने का बुलावा महसूस किया!",
-    "जर्मनी में",
-    "मुझे एक ही समय में कई अंगों में कैंसर का पता चला।",
-    "एमएसएमआई सिस्टर स्टेफ़ना की चंगाई की गवाही"
-  ],
-  "kn": [
-    "ಕೃಪಾಸನಮ್ ಕುರಿತು ಮಾತನಾಡಲು ಅನೇಕರು ಕರೆಯಲ್ಪಟ್ಟಂತೆ ಅನುಭವಿಸಿದರು!",
-    "ಜರ್ಮನಿಯಲ್ಲಿ",
-    "ಒಂದೇ ಸಮಯದಲ್ಲಿ ನನ್ನ ದೇಹದ ಹಲವು ಅಂಗಗಳಲ್ಲಿ ಕ್ಯಾನ್ಸರ್ ಪತ್ತೆಯಾಯಿತು.",
-    "ಎಂಎಸ್‌ಎಂಐ ಸಿಸ್ಟರ್ ಸ್ಟೆಫ್ನ ಅವರ ಗುಣಮುಖತೆಗೆ ಸಾಕ್ಷಿ"
-  ],
-  "mr": [
-    "कृपासनमविषयी बोलण्यासाठी अनेकांना बोलावणे मिळाल्याचा अनुभव झाला!",
-    "जर्मनीमध्ये",
-    "माझ्या अनेक अवयवांमध्ये एकाच वेळी कर्करोग आढळला.",
-    "एमएसएमआय सिस्टर स्टेफना यांचे आरोग्य साक्ष"
-  ],
-  "es": [
-    "¡Muchas personas sintieron el llamado a hablar sobre Kreupasanam!",
-    "En Alemania",
-    "Me diagnosticaron cáncer en múltiples órganos al mismo tiempo.",
-    "Un testimonio de sanación de la Hna. Stephna MSMI"
-  ],
-  "ta": [
-    "கிருபாசனம் பற்றிப் பேச பலர் அழைக்கப்பட்டதை உணர்ந்தனர்!",
-    "ஜெர்மனியில்",
-    "எனது பல உறுப்புகளில் ஒரே நேரத்தில் புற்றுநோய் கண்டறியப்பட்டது.",
-    "எம்.எஸ்.எம்.ஐ சகோதரி ஸ்டெப்னாவின் சுகமடைந்த சாட்சி"
-  ],
-  "te": [
-    "కృపాసనం గురించి మాట్లాడడానికి అనేక మంది పిలువబడ్డారని భావించారు!",
-    "జర్మనీలో",
-    "ఒకేసారి నా శరీరంలోని అనేక అవయవాల్లో క్యాన్సర్ గుర్తించారు.",
-    "ఎంఎస్ఎంఐ సిస్టర్ స్టెఫ్నా యొక్క స్వస్థత సాక్ష్యం"
-  ],
-  "fr": [
-    "De nombreuses personnes se sont senties appelées à parler de Kreupasanam !",
-    "En Allemagne",
-    "On m’a diagnostiqué un cancer dans plusieurs organes en même temps.",
-    "Un témoignage de guérison par Sœur Stephna MSMI"
-  ]
-}
-}
   },
   {
     "id": 49,
@@ -1846,105 +1846,104 @@
     },
     "subtitles": "/assets/testimony-subtitle/11dec.json",
     "duration": "31:46",
-    "overlay":{
-  "boxes": [
-    {
-      "x": 34,
-      "y": 29,
-      "w": 968,
-      "h": 135,
-      "background": "#307a93",
-      "fontColor": "#fcfcfa"
-    },
-    {
-      "x": 61,
-      "y": 157,
-      "w": 919,
-      "h": 390,
-      "background": "#666390",
-      "fontColor": "#fff90a"
-    },
-    {
-      "x": 37,
-      "y": 597,
-      "w": 1051,
-      "h": 126,
-      "background": "#fcf800",
-      "fontColor": "#943999"
-    },
-    {
-      "x": 1070,
-      "y": 14,
-      "w": 200,
-      "h": 55,
-      "background": "#5ea2af",
-      "fontColor": "#fbffff"
+    "overlay": {
+      "boxes": [
+        {
+          "x": 34,
+          "y": 29,
+          "w": 968,
+          "h": 135,
+          "background": "#307a93",
+          "fontColor": "#fcfcfa"
+        },
+        {
+          "x": 61,
+          "y": 157,
+          "w": 919,
+          "h": 390,
+          "background": "#666390",
+          "fontColor": "#fff90a"
+        },
+        {
+          "x": 37,
+          "y": 597,
+          "w": 1051,
+          "h": 126,
+          "background": "#fcf800",
+          "fontColor": "#943999"
+        },
+        {
+          "x": 1070,
+          "y": 14,
+          "w": 200,
+          "h": 55,
+          "background": "#5ea2af",
+          "fontColor": "#fbffff"
+        }
+      ],
+      "texts": {
+        "en": [
+          "Kreupasanam Our Dream Land!",
+          "From Canada to the altar of Kreupasanam",
+          "Mindblowing testimony of Marian Presence!",
+          "Canada"
+        ],
+        "bn": [
+          "কৃপাসানম আমাদের স্বপ্নের ভূমি!",
+          "কানাডা থেকে কৃপাসানমের বেদীর কাছে",
+          "মেরীয় উপস্থিতির বিস্ময়কর সাক্ষ্য!",
+          "কানাডা"
+        ],
+        "zh": [
+          "Kreupasanam——我们的梦想之地！",
+          "从加拿大到Kreupasanam的圣坛",
+          "有关圣母临在的震撼见证！",
+          "加拿大"
+        ],
+        "hi": [
+          "कृपासनम हमारी स्वप्नभूमि!",
+          "कनाडा से कृपासनम की वेदी तक",
+          "मरियम की उपस्थिति की चमत्कारी गवाही!",
+          "कनाडा"
+        ],
+        "kn": [
+          "ಕೃಪಾಸನಮ್ – ನಮ್ಮ ಕನಸಿನ ನಾಡು!",
+          "ಕೆನಡಾದಿಂದ ಕೃಪಾಸನಮ್ ಬಲಿಪೀಠದವರೆಗೆ",
+          "ಮರಿಯನ್ ಸನ್ನಿಧಾನದ ಅದ್ಭುತ ಸಾಕ್ಷ್ಯ!",
+          "ಕೆನಡಾ"
+        ],
+        "mr": [
+          "कृपासनम आमची स्वप्नभूमी!",
+          "कॅनडाहून कृपासनमच्या वेदीपर्यंत",
+          "मरियमच्या उपस्थितीची अद्‍भुत साक्ष!",
+          "कॅनडा"
+        ],
+        "es": [
+          "¡Kreupasanam, nuestra tierra soñada!",
+          "Desde Canadá hasta el altar de Kreupasanam",
+          "¡Testimonio asombroso de la presencia mariana!",
+          "Canadá"
+        ],
+        "ta": [
+          "கிருபாசனம் – எங்கள் கனவு நிலம்!",
+          "கனடாவிலிருந்து கிருபாசனத்தின் பலிபீடத்திற்குப் பயணம்",
+          "மரியாவின் இருப்பின் அதிசய சாட்சி!",
+          "கனடா"
+        ],
+        "te": [
+          "కృపాసనం – మా కలల నేల!",
+          "కెనడా నుండి కృపాసనం బలి పీఠం వరకు",
+          "మేరియన్ సన్నిధి గురించి అద్భుతమైన సాక్ష్యం!",
+          "కెనడా"
+        ],
+        "fr": [
+          "Kreupasanam – notre terre de rêve !",
+          "Du Canada jusqu’à l’autel de Kreupasanam",
+          "Un témoignage stupéfiant de la présence mariale !",
+          "Canada"
+        ]
+      }
     }
-  ],
-  "texts": {
-  "en": [
-    "Kreupasanam Our Dream Land!",
-    "From Canada to the altar of Kreupasanam",
-    "Mindblowing testimony of Marian Presence!",
-    "Canada"
-  ],
-  "bn": [
-    "কৃপাসানম আমাদের স্বপ্নের ভূমি!",
-    "কানাডা থেকে কৃপাসানমের বেদীর কাছে",
-    "মেরীয় উপস্থিতির বিস্ময়কর সাক্ষ্য!",
-    "কানাডা"
-  ],
-  "zh": [
-    "Kreupasanam——我们的梦想之地！",
-    "从加拿大到Kreupasanam的圣坛",
-    "有关圣母临在的震撼见证！",
-    "加拿大"
-  ],
-  "hi": [
-    "कृपासनम हमारी स्वप्नभूमि!",
-    "कनाडा से कृपासनम की वेदी तक",
-    "मरियम की उपस्थिति की चमत्कारी गवाही!",
-    "कनाडा"
-  ],
-  "kn": [
-    "ಕೃಪಾಸನಮ್ – ನಮ್ಮ ಕನಸಿನ ನಾಡು!",
-    "ಕೆನಡಾದಿಂದ ಕೃಪಾಸನಮ್ ಬಲಿಪೀಠದವರೆಗೆ",
-    "ಮರಿಯನ್ ಸನ್ನಿಧಾನದ ಅದ್ಭುತ ಸಾಕ್ಷ್ಯ!",
-    "ಕೆನಡಾ"
-  ],
-  "mr": [
-    "कृपासनम आमची स्वप्नभूमी!",
-    "कॅनडाहून कृपासनमच्या वेदीपर्यंत",
-    "मरियमच्या उपस्थितीची अद्‍भुत साक्ष!",
-    "कॅनडा"
-  ],
-  "es": [
-    "¡Kreupasanam, nuestra tierra soñada!",
-    "Desde Canadá hasta el altar de Kreupasanam",
-    "¡Testimonio asombroso de la presencia mariana!",
-    "Canadá"
-  ],
-  "ta": [
-    "கிருபாசனம் – எங்கள் கனவு நிலம்!",
-    "கனடாவிலிருந்து கிருபாசனத்தின் பலிபீடத்திற்குப் பயணம்",
-    "மரியாவின் இருப்பின் அதிசய சாட்சி!",
-    "கனடா"
-  ],
-  "te": [
-    "కృపాసనం – మా కలల నేల!",
-    "కెనడా నుండి కృపాసనం బలి పీఠం వరకు",
-    "మేరియన్ సన్నిధి గురించి అద్భుతమైన సాక్ష్యం!",
-    "కెనడా"
-  ],
-  "fr": [
-    "Kreupasanam – notre terre de rêve !",
-    "Du Canada jusqu’à l’autel de Kreupasanam",
-    "Un témoignage stupéfiant de la présence mariale !",
-    "Canada"
-  ]
-}
-
-}
   },
   {
     "id": 50,
@@ -2007,123 +2006,122 @@
     },
     "subtitles": "/assets/testimony-subtitle/13dec.json",
     "duration": "16:11",
-    "overlay":{
-  "boxes": [
-    {
-      "x": 34,
-      "y": 19,
-      "w": 836,
-      "h": 202,
-      "background": "#4291dc",
-      "fontColor": "#ffffff"
-    },
-    {
-      "x": 30,
-      "y": 214,
-      "w": 762,
-      "h": 173,
-      "background": "#b8d6f2",
-      "fontColor": "#2eff07"
-    },
-    {
-      "x": 38,
-      "y": 394,
-      "w": 1225,
-      "h": 139,
-      "background": "#303ef9",
-      "fontColor": "#fff70b"
-    },
-    {
-      "x": 39,
-      "y": 539,
-      "w": 1100,
-      "h": 176,
-      "background": "#191bfa",
-      "fontColor": "#fffdfc"
-    },
-    {
-      "x": 1072,
-      "y": 34,
-      "w": 199,
-      "h": 56,
-      "background": "#1154bf",
-      "fontColor": "#fff8ff"
+    "overlay": {
+      "boxes": [
+        {
+          "x": 34,
+          "y": 19,
+          "w": 836,
+          "h": 202,
+          "background": "#4291dc",
+          "fontColor": "#ffffff"
+        },
+        {
+          "x": 30,
+          "y": 214,
+          "w": 762,
+          "h": 173,
+          "background": "#b8d6f2",
+          "fontColor": "#2eff07"
+        },
+        {
+          "x": 38,
+          "y": 394,
+          "w": 1225,
+          "h": 139,
+          "background": "#303ef9",
+          "fontColor": "#fff70b"
+        },
+        {
+          "x": 39,
+          "y": 539,
+          "w": 1100,
+          "h": 176,
+          "background": "#191bfa",
+          "fontColor": "#fffdfc"
+        },
+        {
+          "x": 1072,
+          "y": 34,
+          "w": 199,
+          "h": 56,
+          "background": "#1154bf",
+          "fontColor": "#fff8ff"
+        }
+      ],
+      "texts": {
+        "en": [
+          "After I left home with half a bottle of alcohol",
+          "I came to take the Covenant",
+          "When I held Holy Mother during the pilgrim Covenant",
+          "A mindblowing testimony by Sajikumar from Kannur",
+          "Kannur"
+        ],
+        "bn": [
+          "অর্ধেক বোতল মদ নিয়ে বাড়ি থেকে বের হওয়ার পর",
+          "আমি চুক্তি নিতে এসেছিলাম",
+          "তীর্থযাত্রার চুক্তির সময় যখন আমি পবিত্র মাতাকে ধরেছিলাম",
+          "কান্নুরের সাজিকুমারের এক বিস্ময়কর সাক্ষ্য",
+          "কান্নুর"
+        ],
+        "zh": [
+          "带着半瓶酒离开家之后",
+          "我来到这里领受盟约",
+          "在朝圣盟约中当我拥抱圣母的那一刻",
+          "来自坎努尔的萨吉库马尔震撼人心的见证",
+          "坎努尔"
+        ],
+        "hi": [
+          "आधे बोतल शराब के साथ घर से निकलने के बाद",
+          "मैं वाचा लेने आया",
+          "तीर्थ वाचा के समय जब मैंने पवित्र माता को थामा",
+          "कन्नूर के सजीकुमार की चमत्कारी गवाही",
+          "कन्नूर"
+        ],
+        "kn": [
+          "ಅರೆ ಬಾಟಲಿ ಮದ್ಯ ಕುಡಿದು ಮನೆಯಿಂದ ಹೊರಬಂದ ನಂತರ",
+          "ನಾನು ಒಡಂಬಡಿಕೆಯನ್ನು ಸ್ವೀಕರಿಸಲು ಬಂದೆ",
+          "ಯಾತ್ರೆಯ ಒಡಂಬಡಿಕೆಯ ಸಂದರ್ಭದಲ್ಲಿ ನಾನು ಪವಿತ್ರ ತಾಯಿಯನ್ನು ಹಿಡಿದಾಗ",
+          "ಕನ್ನೂರಿನ ಸಜಿಕುಮಾರ್ ಅವರ ಅದ್ಭುತ ಸಾಕ್ಷ್ಯ",
+          "ಕನ್ನೂರು"
+        ],
+        "mr": [
+          "अर्धी बाटली दारू घेऊन मी घराबाहेर पडल्यावर",
+          "मी करार (करार प्रार्थना) घेण्यासाठी आलो",
+          "तीर्थ कराराच्या वेळी जेव्हा मी पवित्र मातेला हातात घेतले",
+          "कन्नूरच्या सजिकुमार यांचे थक्क करणारे साक्ष्य",
+          "कन्नूर"
+        ],
+        "es": [
+          "Después de salir de casa con media botella de alcohol",
+          "Vine a tomar el Pacto",
+          "Cuando sostuve a la Santa Madre durante el Pacto de peregrinación",
+          "Un testimonio impactante de Sajikumar de Kannur",
+          "Kannur"
+        ],
+        "ta": [
+          "அரை பாட்டில் மது குடித்தபின் வீட்டை விட்டு நான் வெளியேறினேன்",
+          "உடன்படிக்கை எடுக்க நான் வந்தேன்",
+          "தீர்த்த உடன்படிக்கையின் போது நான் பரிசுத்த அன்னையைத் தழுவிய நேரம்",
+          "கன்னூரைச் சேர்ந்த சஜிகுமாரின் அதிசய சாட்சி",
+          "கன்னூர்"
+        ],
+        "te": [
+          "అర బాటిల్ మద్యం తాగి ఇంటి నుండి బయలుదేరిన తరువాత",
+          "నేను ఒడంబడిక తీసుకోవడానికి వచ్చాను",
+          "యాత్ర ఒడంబడిక సమయంలో నేను పవిత్ర తల్లిని పట్టుకున్నప్పుడు",
+          "కన్నూర్‌కు చెందిన సజికుమార్ యొక్క ఆశ్చర్యకరమైన సాక్ష్యం",
+          "కన్నూర్"
+        ],
+        "fr": [
+          "Après être sorti de chez moi avec une demi-bouteille d’alcool",
+          "Je suis venu pour prendre l’Alliance",
+          "Quand j’ai tenu la Sainte Mère pendant l’Alliance du pèlerin",
+          "Un témoignage bouleversant de Sajikumar de Kannur",
+          "Kannur"
+        ]
+      }
     }
-  ],
-  "texts": {
-  "en": [
-    "After I left home with half a bottle of alcohol",
-    "I came to take the Covenant",
-    "When I held Holy Mother during the pilgrim Covenant",
-    "A mindblowing testimony by Sajikumar from Kannur",
-    "Kannur"
-  ],
-  "bn": [
-    "অর্ধেক বোতল মদ নিয়ে বাড়ি থেকে বের হওয়ার পর",
-    "আমি চুক্তি নিতে এসেছিলাম",
-    "তীর্থযাত্রার চুক্তির সময় যখন আমি পবিত্র মাতাকে ধরেছিলাম",
-    "কান্নুরের সাজিকুমারের এক বিস্ময়কর সাক্ষ্য",
-    "কান্নুর"
-  ],
-  "zh": [
-    "带着半瓶酒离开家之后",
-    "我来到这里领受盟约",
-    "在朝圣盟约中当我拥抱圣母的那一刻",
-    "来自坎努尔的萨吉库马尔震撼人心的见证",
-    "坎努尔"
-  ],
-  "hi": [
-    "आधे बोतल शराब के साथ घर से निकलने के बाद",
-    "मैं वाचा लेने आया",
-    "तीर्थ वाचा के समय जब मैंने पवित्र माता को थामा",
-    "कन्नूर के सजीकुमार की चमत्कारी गवाही",
-    "कन्नूर"
-  ],
-  "kn": [
-    "ಅರೆ ಬಾಟಲಿ ಮದ್ಯ ಕುಡಿದು ಮನೆಯಿಂದ ಹೊರಬಂದ ನಂತರ",
-    "ನಾನು ಒಡಂಬಡಿಕೆಯನ್ನು ಸ್ವೀಕರಿಸಲು ಬಂದೆ",
-    "ಯಾತ್ರೆಯ ಒಡಂಬಡಿಕೆಯ ಸಂದರ್ಭದಲ್ಲಿ ನಾನು ಪವಿತ್ರ ತಾಯಿಯನ್ನು ಹಿಡಿದಾಗ",
-    "ಕನ್ನೂರಿನ ಸಜಿಕುಮಾರ್ ಅವರ ಅದ್ಭುತ ಸಾಕ್ಷ್ಯ",
-    "ಕನ್ನೂರು"
-  ],
-  "mr": [
-    "अर्धी बाटली दारू घेऊन मी घराबाहेर पडल्यावर",
-    "मी करार (करार प्रार्थना) घेण्यासाठी आलो",
-    "तीर्थ कराराच्या वेळी जेव्हा मी पवित्र मातेला हातात घेतले",
-    "कन्नूरच्या सजिकुमार यांचे थक्क करणारे साक्ष्य",
-    "कन्नूर"
-  ],
-  "es": [
-    "Después de salir de casa con media botella de alcohol",
-    "Vine a tomar el Pacto",
-    "Cuando sostuve a la Santa Madre durante el Pacto de peregrinación",
-    "Un testimonio impactante de Sajikumar de Kannur",
-    "Kannur"
-  ],
-  "ta": [
-    "அரை பாட்டில் மது குடித்தபின் வீட்டை விட்டு நான் வெளியேறினேன்",
-    "உடன்படிக்கை எடுக்க நான் வந்தேன்",
-    "தீர்த்த உடன்படிக்கையின் போது நான் பரிசுத்த அன்னையைத் தழுவிய நேரம்",
-    "கன்னூரைச் சேர்ந்த சஜிகுமாரின் அதிசய சாட்சி",
-    "கன்னூர்"
-  ],
-  "te": [
-    "అర బాటిల్ మద్యం తాగి ఇంటి నుండి బయలుదేరిన తరువాత",
-    "నేను ఒడంబడిక తీసుకోవడానికి వచ్చాను",
-    "యాత్ర ఒడంబడిక సమయంలో నేను పవిత్ర తల్లిని పట్టుకున్నప్పుడు",
-    "కన్నూర్‌కు చెందిన సజికుమార్ యొక్క ఆశ్చర్యకరమైన సాక్ష్యం",
-    "కన్నూర్"
-  ],
-  "fr": [
-    "Après être sorti de chez moi avec une demi-bouteille d’alcool",
-    "Je suis venu pour prendre l’Alliance",
-    "Quand j’ai tenu la Sainte Mère pendant l’Alliance du pèlerin",
-    "Un témoignage bouleversant de Sajikumar de Kannur",
-    "Kannur"
-  ]
-}
-
-}
   },
   {
     "id": 52,
@@ -2155,123 +2153,122 @@
     },
     "subtitles": "/assets/testimony-subtitle/21dec.json",
     "duration": "24:11",
-    "overlay":{
-  "boxes": [
-    {
-      "x": 34,
-      "y": 10,
-      "w": 1020,
-      "h": 124,
-      "background": "#056947",
-      "fontColor": "#ffef06"
-    },
-    {
-      "x": 28,
-      "y": 129,
-      "w": 1025,
-      "h": 161,
-      "background": "#469c3b",
-      "fontColor": "#0adeff"
-    },
-    {
-      "x": 21,
-      "y": 286,
-      "w": 931,
-      "h": 303,
-      "background": "#d4d70e",
-      "fontColor": "#fffffd"
-    },
-    {
-      "x": 26,
-      "y": 616,
-      "w": 1100,
-      "h": 120,
-      "background": "#ffffff",
-      "fontColor": "#f70400"
-    },
-    {
-      "x": 1033,
-      "y": 15,
-      "w": 206,
-      "h": 40,
-      "background": "#39836c",
-      "fontColor": "#000103"
+    "overlay": {
+      "boxes": [
+        {
+          "x": 34,
+          "y": 10,
+          "w": 1020,
+          "h": 124,
+          "background": "#056947",
+          "fontColor": "#ffef06"
+        },
+        {
+          "x": 28,
+          "y": 129,
+          "w": 1025,
+          "h": 161,
+          "background": "#469c3b",
+          "fontColor": "#0adeff"
+        },
+        {
+          "x": 21,
+          "y": 286,
+          "w": 931,
+          "h": 303,
+          "background": "#d4d70e",
+          "fontColor": "#fffffd"
+        },
+        {
+          "x": 26,
+          "y": 616,
+          "w": 1100,
+          "h": 120,
+          "background": "#ffffff",
+          "fontColor": "#f70400"
+        },
+        {
+          "x": 1033,
+          "y": 15,
+          "w": 206,
+          "h": 40,
+          "background": "#39836c",
+          "fontColor": "#000103"
+        }
+      ],
+      "texts": {
+        "en": [
+          "Fr. Joseph",
+          "drew the sign of cross 3 times on my Mother's throat",
+          "After so many years, my mother is finally eating properly. When I saw it, tears of joy filled my eyes.",
+          "A testimony from Lakshmi",
+          "Ernakulam"
+        ],
+        "bn": [
+          "ফা. জোসেফ",
+          "আমার মায়ের গলায় তিনবার ক্রুশের চিহ্ন এঁকে দিয়েছিলেন",
+          "অনেক বছর পর, আমার মা অবশেষে ঠিকভাবে খেতে শুরু করেছেন। এটি দেখে আমার চোখে আনন্দের অশ্রু এসে পড়ে।",
+          "লক্ষ্মীর পক্ষ থেকে একটি সাক্ষ্য",
+          "এর্নাকুলাম"
+        ],
+        "zh": [
+          "若瑟神父",
+          "在我母亲的喉咙上画了三次十字圣号",
+          "多年之后，我的母亲终于能正常进食了。看到这一幕，我的眼中满是喜悦的泪水。",
+          "来自拉克希米的见证",
+          "埃尔讷古兰"
+        ],
+        "hi": [
+          "फादर जोसेफ",
+          "उन्होंने मेरी माँ के गले पर तीन बार क्रॉस का निशान बनाया",
+          "कई वर्षों बाद, मेरी माँ आखिरकार ठीक से खाना खाने लगीं। यह देखकर मेरी आँखों में खुशी के आँसू आ गए।",
+          "लक्ष्मी की ओर से एक गवाही",
+          "एर्नाकुलम"
+        ],
+        "kn": [
+          "ಫಾ. ಜೋಸೆಫ್",
+          "ಅವರು ನನ್ನ ತಾಯಿಯ ಕಂಠದ ಮೇಲೆ ಮೂರು ಬಾರಿ ಕ್ರಾಸ್ ಗುರುತು ಮಾಡಿದ್ದಾರೆ",
+          "ಅನೇಕ ವರ್ಷಗಳ ನಂತರ, ನನ್ನ ತಾಯಿ ಕೊನೆಗೂ ಸರಿಯಾಗಿ ಊಟ ಮಾಡತೊಡಗಿದರು. ಅದನ್ನು ನೋಡಿ ನನ್ನ ಕಣ್ಣಿಗೆ ಸಂತೋಷದ ಕಣ್ಣೀರು ತುಂಬಿತು.",
+          "ಲಕ್ಷ್ಮಿಯ ಸಾಕ್ಷ್ಯ",
+          "ಎರ್ಣಾಕುಲಂ"
+        ],
+        "mr": [
+          "फा. जोसेफ",
+          "माझ्या आईच्या घशावर त्यांनी तीन वेळा क्रॉसची खूण केली",
+          "खूप वर्षांनंतर माझी आई अखेर व्यवस्थित खायला लागली. हे पाहून माझ्या डोळ्यात आनंदाश्रू आले.",
+          "लक्ष्मी यांची साक्ष",
+          "एर्नाकुलम"
+        ],
+        "es": [
+          "P. Joseph",
+          "trazó la señal de la cruz tres veces en la garganta de mi madre",
+          "Después de tantos años, mi madre finalmente está comiendo bien. Al verlo, mis ojos se llenaron de lágrimas de alegría.",
+          "Un testimonio de Lakshmi",
+          "Ernakulam"
+        ],
+        "ta": [
+          "பா. ஜோசெப்",
+          "என் அம்மாவின் தொண்டையில் அவர் மூன்று முறை சிலுவைச் சின்னம் வரைந்தார்",
+          "பல ஆண்டுகளுக்குப் பிறகு, என் அம்மா இறுதியாக சரியாக சாப்பிடத் தொடங்கினார். அதை பார்த்தபோது, என் கண்களில் மகிழ்ச்சிக் கண்ணீர் பொங்கியது.",
+          "லட்சுமியின் சாட்சி",
+          "எറണாகுளம்"
+        ],
+        "te": [
+          "ఫా. జోసెఫ్",
+          "ఆయన నా అమ్మ గొంతుపై మూడు సార్లు క్రాస్ గుర్తు గీశారు",
+          "చాలా సంవత్సరాల తర్వాత, నా అమ్మ చివరికి సరిగ్గా తినడం ప్రారంభించింది. అది చూసినప్పుడు నా కళ్లలో ఆనందభాష్పాలు వచ్చాయి.",
+          "లక్ష్మి నుండి ఒక సాక్ష్యం",
+          "ఎర్నాకులం"
+        ],
+        "fr": [
+          "Père Joseph",
+          "a tracé trois fois le signe de croix sur la gorge de ma mère",
+          "Après tant d’années, ma mère mange enfin correctement. En voyant cela, mes yeux se sont remplis de larmes de joie.",
+          "Un témoignage de Lakshmi",
+          "Ernakulam"
+        ]
+      }
     }
-  ],
-  "texts":{
-  "en": [
-    "Fr. Joseph",
-    "drew the sign of cross 3 times on my Mother's throat",
-    "After so many years, my mother is finally eating properly. When I saw it, tears of joy filled my eyes.",
-    "A testimony from Lakshmi",
-    "Ernakulam"
-  ],
-  "bn": [
-    "ফা. জোসেফ",
-    "আমার মায়ের গলায় তিনবার ক্রুশের চিহ্ন এঁকে দিয়েছিলেন",
-    "অনেক বছর পর, আমার মা অবশেষে ঠিকভাবে খেতে শুরু করেছেন। এটি দেখে আমার চোখে আনন্দের অশ্রু এসে পড়ে।",
-    "লক্ষ্মীর পক্ষ থেকে একটি সাক্ষ্য",
-    "এর্নাকুলাম"
-  ],
-  "zh": [
-    "若瑟神父",
-    "在我母亲的喉咙上画了三次十字圣号",
-    "多年之后，我的母亲终于能正常进食了。看到这一幕，我的眼中满是喜悦的泪水。",
-    "来自拉克希米的见证",
-    "埃尔讷古兰"
-  ],
-  "hi": [
-    "फादर जोसेफ",
-    "उन्होंने मेरी माँ के गले पर तीन बार क्रॉस का निशान बनाया",
-    "कई वर्षों बाद, मेरी माँ आखिरकार ठीक से खाना खाने लगीं। यह देखकर मेरी आँखों में खुशी के आँसू आ गए।",
-    "लक्ष्मी की ओर से एक गवाही",
-    "एर्नाकुलम"
-  ],
-  "kn": [
-    "ಫಾ. ಜೋಸೆಫ್",
-    "ಅವರು ನನ್ನ ತಾಯಿಯ ಕಂಠದ ಮೇಲೆ ಮೂರು ಬಾರಿ ಕ್ರಾಸ್ ಗುರುತು ಮಾಡಿದ್ದಾರೆ",
-    "ಅನೇಕ ವರ್ಷಗಳ ನಂತರ, ನನ್ನ ತಾಯಿ ಕೊನೆಗೂ ಸರಿಯಾಗಿ ಊಟ ಮಾಡತೊಡಗಿದರು. ಅದನ್ನು ನೋಡಿ ನನ್ನ ಕಣ್ಣಿಗೆ ಸಂತೋಷದ ಕಣ್ಣೀರು ತುಂಬಿತು.",
-    "ಲಕ್ಷ್ಮಿಯ ಸಾಕ್ಷ್ಯ",
-    "ಎರ್ಣಾಕುಲಂ"
-  ],
-  "mr": [
-    "फा. जोसेफ",
-    "माझ्या आईच्या घशावर त्यांनी तीन वेळा क्रॉसची खूण केली",
-    "खूप वर्षांनंतर माझी आई अखेर व्यवस्थित खायला लागली. हे पाहून माझ्या डोळ्यात आनंदाश्रू आले.",
-    "लक्ष्मी यांची साक्ष",
-    "एर्नाकुलम"
-  ],
-  "es": [
-    "P. Joseph",
-    "trazó la señal de la cruz tres veces en la garganta de mi madre",
-    "Después de tantos años, mi madre finalmente está comiendo bien. Al verlo, mis ojos se llenaron de lágrimas de alegría.",
-    "Un testimonio de Lakshmi",
-    "Ernakulam"
-  ],
-  "ta": [
-    "பா. ஜோசெப்",
-    "என் அம்மாவின் தொண்டையில் அவர் மூன்று முறை சிலுவைச் சின்னம் வரைந்தார்",
-    "பல ஆண்டுகளுக்குப் பிறகு, என் அம்மா இறுதியாக சரியாக சாப்பிடத் தொடங்கினார். அதை பார்த்தபோது, என் கண்களில் மகிழ்ச்சிக் கண்ணீர் பொங்கியது.",
-    "லட்சுமியின் சாட்சி",
-    "எറണாகுளம்"
-  ],
-  "te": [
-    "ఫా. జోసెఫ్",
-    "ఆయన నా అమ్మ గొంతుపై మూడు సార్లు క్రాస్ గుర్తు గీశారు",
-    "చాలా సంవత్సరాల తర్వాత, నా అమ్మ చివరికి సరిగ్గా తినడం ప్రారంభించింది. అది చూసినప్పుడు నా కళ్లలో ఆనందభాష్పాలు వచ్చాయి.",
-    "లక్ష్మి నుండి ఒక సాక్ష్యం",
-    "ఎర్నాకులం"
-  ],
-  "fr": [
-    "Père Joseph",
-    "a tracé trois fois le signe de croix sur la gorge de ma mère",
-    "Après tant d’années, ma mère mange enfin correctement. En voyant cela, mes yeux se sont remplis de larmes de joie.",
-    "Un témoignage de Lakshmi",
-    "Ernakulam"
-  ]
-}
-
-}
   },
   {
     "id": 53,
@@ -2303,140 +2300,139 @@
     },
     "subtitles": "/assets/testimony-subtitle/17dec.json",
     "duration": "18:34",
-    "overlay":{
-  "boxes": [
-    {
-      "x": 36,
-      "y": 7,
-      "w": 948,
-      "h": 122,
-      "background": "#ffffff",
-      "fontColor": "#1571c6"
-    },
-    {
-      "x": 53,
-      "y": 127,
-      "w": 839,
-      "h": 101,
-      "background": "#fffefa",
-      "fontColor": "#1278ca"
-    },
-    {
-      "x": 18,
-      "y": 251,
-      "w": 844,
-      "h": 194,
-      "background": "#b81a4b",
-      "fontColor": "#e2ff00"
-    },
-    {
-      "x": 17,
-      "y": 471,
-      "w": 743,
-      "h": 108,
-      "background": "#000b41",
-      "fontColor": "#fdfdfd"
-    },
-    {
-      "x": 15,
-      "y": 592,
-      "w": 764,
-      "h": 120,
-      "background": "#0a439a",
-      "fontColor": "#e2fe37"
-    },
-    {
-      "x": 989,
-      "y": 6,
-      "w": 281,
-      "h": 49,
-      "background": "#5398d3",
-      "fontColor": "#edf5f8"
+    "overlay": {
+      "boxes": [
+        {
+          "x": 36,
+          "y": 7,
+          "w": 948,
+          "h": 122,
+          "background": "#ffffff",
+          "fontColor": "#1571c6"
+        },
+        {
+          "x": 53,
+          "y": 127,
+          "w": 839,
+          "h": 101,
+          "background": "#fffefa",
+          "fontColor": "#1278ca"
+        },
+        {
+          "x": 18,
+          "y": 251,
+          "w": 844,
+          "h": 194,
+          "background": "#b81a4b",
+          "fontColor": "#e2ff00"
+        },
+        {
+          "x": 17,
+          "y": 471,
+          "w": 743,
+          "h": 108,
+          "background": "#000b41",
+          "fontColor": "#fdfdfd"
+        },
+        {
+          "x": 15,
+          "y": 592,
+          "w": 764,
+          "h": 120,
+          "background": "#0a439a",
+          "fontColor": "#e2fe37"
+        },
+        {
+          "x": 989,
+          "y": 6,
+          "w": 281,
+          "h": 49,
+          "background": "#5398d3",
+          "fontColor": "#edf5f8"
+        }
+      ],
+      "texts": {
+        "en": [
+          "Everyone wanted was his news",
+          "But we wanted his Life back!",
+          "The child who came on major news channels",
+          "With the power of Covenant Items",
+          "Now standing at the altar of Kreupasanam!",
+          "Thiruvananthapuram"
+        ],
+        "bn": [
+          "সবার চাওয়া ছিল শুধু তার খবর",
+          "কিন্তু আমরা চেয়েছিলাম তার জীবন ফিরে আসুক!",
+          "সে শিশুটি যাকে বড় বড় নিউজ চ্যানেলে দেখানো হয়েছিল",
+          "উদ্বন্ধ সামগ্রীর শক্তির মাধ্যমে",
+          "এখন কৃপাসানমের বেদীর সামনে দাঁড়িয়ে আছে!",
+          "তিরুবনন্তপুরম"
+        ],
+        "zh": [
+          "所有人想要的只是他的新闻",
+          "但我们想要的是他的生命回来！",
+          "那个曾出现在各大新闻频道的孩子",
+          "凭借盟约圣物的力量",
+          "如今站在Kreupasanam的祭坛前！",
+          "特里凡得琅"
+        ],
+        "hi": [
+          "सबको सिर्फ उसकी खबर चाहिए थी",
+          "पर हमें उसकी ज़िंदगी वापस चाहिए थी!",
+          "वह बच्चा जो बड़े न्यूज़ चैनलों पर आया था",
+          "वाचा की वस्तुओं की शक्ति से",
+          "अब कृपासनम की वेदी पर खड़ा है!",
+          "तिरुवनंतपुरम"
+        ],
+        "kn": [
+          "ಎಲ್ಲರಿಗೂ ಬೇಕಾಗಿದ್ದದ್ದು ಅವನ ಸುದ್ದಿಯಷ್ಟೇ",
+          "ಆದರೆ ನಮಗೆ ಅವನ ಜೀವನವೇ ಬೇಕಾಗಿತ್ತು!",
+          "ಮುಖ್ಯ ಸುದ್ದಿಚಾನೆಲ್‌ಗಳಲ್ಲಿ ಕಾಣಿಸಿಕೊಂಡಿದ್ದ ಆ ಬಾಲಕ",
+          "ಒಡಂಬಡಿಕೆಯ ವಸ್ತುಗಳ ಶಕ್ತಿಯಿಂದ",
+          "ಈಗ ಕೃಪಾಸನಮ್ ವೇದಿಕೆಯಲ್ಲಿ ನಿಂತಿದ್ದಾನೆ!",
+          "ತಿರುವನಂತಪುರಂ"
+        ],
+        "mr": [
+          "सगळ्यांना फक्त त्याची बातमी हवी होती",
+          "पण आम्हाला त्याचे जीवन परत हवे होते!",
+          "तो मुलगा जो मोठ्या न्यूज चॅनेलवर दाखवला गेला",
+          "कराराच्या वस्तूंच्या शक्तीने",
+          "आता कृपासनमच्या वेदीवर उभा आहे!",
+          "तिरुवनंतपुरम"
+        ],
+        "es": [
+          "Todos querían solo sus noticias",
+          "Pero nosotros queríamos que su vida volviera",
+          "El niño que apareció en los principales canales de noticias",
+          "Con el poder de los artículos del Pacto",
+          "¡Ahora está de pie en el altar de Kreupasanam!",
+          "Thiruvananthapuram"
+        ],
+        "ta": [
+          "அவரைப் பற்றிய செய்தியே எல்லாரும் விரும்பினர்",
+          "ஆனால் நாங்கள் விரும்பியது அவரது வாழ்க்கை திரும்ப வேண்டும்!",
+          "பெரும் செய்தி சேனல்களில் வந்த அந்தக் குழந்தை",
+          "உடன்படிக்கை பொருட்களின் சக்தியால்",
+          "இப்போது கிருபாசனத்தின் பலிபீடத்தில் நிற்கிறான்!",
+          "திருவனந்தபுரம்"
+        ],
+        "te": [
+          "అందరికీ కావలసింది అతని వార్త మాత్రమే",
+          "కానీ మాకు కావలసింది అతని జీవితం తిరిగి రావాలి!",
+          "పెద్ద వార్తా చానళ్లలో కనిపించిన ఆ బాలుడు",
+          "ఒడంబడిక సామాగ్రి శక్తితో",
+          "ఇప్పుడు కృపాసనం బలి పీఠం ముందు నిలబడ్డాడు!",
+          "తిరువనంతపురం"
+        ],
+        "fr": [
+          "Tout le monde ne voulait que des nouvelles de lui",
+          "Mais nous, nous voulions que sa vie revienne !",
+          "L’enfant qui est apparu sur les grandes chaînes d’information",
+          "Avec la puissance des objets de l’Alliance",
+          "Se tient maintenant devant l’autel de Kreupasanam !",
+          "Thiruvananthapuram"
+        ]
+      }
     }
-  ],
-  "texts":{
-  "en": [
-    "Everyone wanted was his news",
-    "But we wanted his Life back!",
-    "The child who came on major news channels",
-    "With the power of Covenant Items",
-    "Now standing at the altar of Kreupasanam!",
-    "Thiruvananthapuram"
-  ],
-  "bn": [
-    "সবার চাওয়া ছিল শুধু তার খবর",
-    "কিন্তু আমরা চেয়েছিলাম তার জীবন ফিরে আসুক!",
-    "সে শিশুটি যাকে বড় বড় নিউজ চ্যানেলে দেখানো হয়েছিল",
-    "উদ্বন্ধ সামগ্রীর শক্তির মাধ্যমে",
-    "এখন কৃপাসানমের বেদীর সামনে দাঁড়িয়ে আছে!",
-    "তিরুবনন্তপুরম"
-  ],
-  "zh": [
-    "所有人想要的只是他的新闻",
-    "但我们想要的是他的生命回来！",
-    "那个曾出现在各大新闻频道的孩子",
-    "凭借盟约圣物的力量",
-    "如今站在Kreupasanam的祭坛前！",
-    "特里凡得琅"
-  ],
-  "hi": [
-    "सबको सिर्फ उसकी खबर चाहिए थी",
-    "पर हमें उसकी ज़िंदगी वापस चाहिए थी!",
-    "वह बच्चा जो बड़े न्यूज़ चैनलों पर आया था",
-    "वाचा की वस्तुओं की शक्ति से",
-    "अब कृपासनम की वेदी पर खड़ा है!",
-    "तिरुवनंतपुरम"
-  ],
-  "kn": [
-    "ಎಲ್ಲರಿಗೂ ಬೇಕಾಗಿದ್ದದ್ದು ಅವನ ಸುದ್ದಿಯಷ್ಟೇ",
-    "ಆದರೆ ನಮಗೆ ಅವನ ಜೀವನವೇ ಬೇಕಾಗಿತ್ತು!",
-    "ಮುಖ್ಯ ಸುದ್ದಿಚಾನೆಲ್‌ಗಳಲ್ಲಿ ಕಾಣಿಸಿಕೊಂಡಿದ್ದ ಆ ಬಾಲಕ",
-    "ಒಡಂಬಡಿಕೆಯ ವಸ್ತುಗಳ ಶಕ್ತಿಯಿಂದ",
-    "ಈಗ ಕೃಪಾಸನಮ್ ವೇದಿಕೆಯಲ್ಲಿ ನಿಂತಿದ್ದಾನೆ!",
-    "ತಿರುವನಂತಪುರಂ"
-  ],
-  "mr": [
-    "सगळ्यांना फक्त त्याची बातमी हवी होती",
-    "पण आम्हाला त्याचे जीवन परत हवे होते!",
-    "तो मुलगा जो मोठ्या न्यूज चॅनेलवर दाखवला गेला",
-    "कराराच्या वस्तूंच्या शक्तीने",
-    "आता कृपासनमच्या वेदीवर उभा आहे!",
-    "तिरुवनंतपुरम"
-  ],
-  "es": [
-    "Todos querían solo sus noticias",
-    "Pero nosotros queríamos que su vida volviera",
-    "El niño que apareció en los principales canales de noticias",
-    "Con el poder de los artículos del Pacto",
-    "¡Ahora está de pie en el altar de Kreupasanam!",
-    "Thiruvananthapuram"
-  ],
-  "ta": [
-    "அவரைப் பற்றிய செய்தியே எல்லாரும் விரும்பினர்",
-    "ஆனால் நாங்கள் விரும்பியது அவரது வாழ்க்கை திரும்ப வேண்டும்!",
-    "பெரும் செய்தி சேனல்களில் வந்த அந்தக் குழந்தை",
-    "உடன்படிக்கை பொருட்களின் சக்தியால்",
-    "இப்போது கிருபாசனத்தின் பலிபீடத்தில் நிற்கிறான்!",
-    "திருவனந்தபுரம்"
-  ],
-  "te": [
-    "అందరికీ కావలసింది అతని వార్త మాత్రమే",
-    "కానీ మాకు కావలసింది అతని జీవితం తిరిగి రావాలి!",
-    "పెద్ద వార్తా చానళ్లలో కనిపించిన ఆ బాలుడు",
-    "ఒడంబడిక సామాగ్రి శక్తితో",
-    "ఇప్పుడు కృపాసనం బలి పీఠం ముందు నిలబడ్డాడు!",
-    "తిరువనంతపురం"
-  ],
-  "fr": [
-    "Tout le monde ne voulait que des nouvelles de lui",
-    "Mais nous, nous voulions que sa vie revienne !",
-    "L’enfant qui est apparu sur les grandes chaînes d’information",
-    "Avec la puissance des objets de l’Alliance",
-    "Se tient maintenant devant l’autel de Kreupasanam !",
-    "Thiruvananthapuram"
-  ]
-}
-
-}
   }
 ]
