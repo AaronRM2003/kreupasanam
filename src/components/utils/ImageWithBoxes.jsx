@@ -78,7 +78,7 @@ export default function ImageWithBoxes({
   const { boxes = [], texts = {} } = data;
 
   return (
-    <div className="image-wrapper">
+    <div className="image-wrapper3">
       <img
         ref={imgRef}
         src={src}
