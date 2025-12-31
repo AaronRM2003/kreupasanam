@@ -85,16 +85,17 @@ const translations = {
   },
 };
 
-const DailyBread = ({ videoId = "dIK2G8JrF6w", lang = "en" }) => {
+const DailyBread = ({ videoId = "CsHxPaqGVhw", lang = "en" }) => {
   const t = translations[lang] || translations.en;
 
-  const dailyBreadUrl = `https://www.youtube.com/watch?v=${videoId}`;
-  const covenantUrl = `/${lang}/marian-covenant`; // <-- Change to actual link if different
+  const dailyBreadUrl = `/${lang}/prayers`;
+  const dailyBreadvideoUrl = `/${lang}/dhyanam/24-covenant-worship-23122025`;
+  const covenantUrl = `/${lang}/dhyanam`; // <-- Change to actual link if different
   const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 
   return (
     <section className={styles.container}>
-      <div className={styles.right} onClick={() => window.open(dailyBreadUrl, "_blank")}>
+      <div className={styles.right} onClick={() =>  (window.location.href = dailyBreadvideoUrl)}>
         <div className={styles.thumbnailWrapper}>
           <img className={styles.thumbnail} src={thumbnailUrl} alt={t.highlight1} loading="lazy" />
           <div className={styles.playIcon}>
@@ -113,7 +114,7 @@ const DailyBread = ({ videoId = "dIK2G8JrF6w", lang = "en" }) => {
 
         {/* BUTTONS */}
         <div className={styles.buttonsRow}>
-          <button className={styles.button} onClick={() => window.open(dailyBreadUrl, "_blank")}>
+          <button className={styles.button} onClick={() =>  (window.location.href = dailyBreadUrl)}>
             {t.button1}
           </button>
           <button className={styles.buttonSecondary} onClick={() => (window.location.href = covenantUrl)}>
