@@ -416,7 +416,7 @@ export default function AutoFitText({
 
     // 🔑 NEVER allow text area to become too narrow
     const effectiveWidth = Math.max(
-      width * 0.95,
+      width * 0.75,
       width - padding * 2
     );
 

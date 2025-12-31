@@ -35,7 +35,7 @@ export default function FeaturedTestimonySection({ lang: initialLang }) {
     }
   }, [initialLang]);
 
-  const testimony = testimonies.find((item) => item.id === 1);
+  const testimony = testimonies.find((item) => item.id === 42);
   const { title = {}, content = {} } = testimony || {};
 
   return (
@@ -100,7 +100,7 @@ export default function FeaturedTestimonySection({ lang: initialLang }) {
             <Button
               variant="primary"
               className="explore-btn"
-              href={`/${initialLang || "en"}/testimony/1-covenant-of-strength`}
+              href={`/${initialLang || "en"}/testimony/42-healing-from-stage-3-brain-tumor`}
             >
               Let's Read!
             </Button>

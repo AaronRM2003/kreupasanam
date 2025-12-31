@@ -9,6 +9,7 @@ import heroImage from "../assets/mother.webp";
 import heroImage1 from "../assets/lamb.webp";
 import Footer from '../components/Footer';
 import FadeInOnScroll from '../framer';
+import DailyBread from '../components/DailyBread';
 
 export default function Home({ lang }) {
   
@@ -169,6 +170,9 @@ export default function Home({ lang }) {
                   <FeaturedTestimonySection lang={lang} />
                 </div>
               </div>
+            </FadeInOnScroll>
+            <FadeInOnScroll delay={0.2}>
+             <DailyBread lang={lang} />
             </FadeInOnScroll>
 
             {/* Testimonies and Footer */}

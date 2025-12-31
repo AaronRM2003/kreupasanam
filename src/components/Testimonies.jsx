@@ -149,6 +149,24 @@ const renderSkeletons = () => {
     </div>
   ));
 };
+  function resolveOverlay(testimony, all) {
+  // direct overlay
+  if (testimony.overlay) return testimony.overlay;
+
+  // reuse overlay
+  if (testimony.overlayRef != null) {
+    const base = all.find(t => t.id === testimony.overlayRef);
+    if (!base?.overlay) return null;
+
+    return {
+      ...base.overlay,
+      texts: testimony.overlayTexts ?? base.overlay.texts
+    };
+  }
+
+  return null;
+}
+
 
 
   return (
@@ -178,18 +196,19 @@ const renderSkeletons = () => {
           ) : (
             testimonies
               .filter(({ id }) => [16, 22, 8].includes(id))
-              .map(({ id, title, video, date, duration }) => (
-                <TestimonyCard
-                  key={id}
-                  id={id}
-                  title={title}
-                  image={getYouTubeThumbnail(video)}
-                  date={date}
-                  lang={lang}
-                  duration={duration}
-                  path={`${initialLang || 'en'}/testimony`}
-                />
-              ))
+              .map((t) => (
+  <TestimonyCard
+    key={t.id}
+    id={t.id}
+    title={t.title}
+    image={getYouTubeThumbnail(t.video)}
+    date={t.date}
+    lang={lang}
+    path={`${initialLang || 'en'}/testimony`}
+    duration={t.duration}
+    overlayData={resolveOverlay(t, testimonies)} // 👈 HERE
+  />
+))
           )}
         </div>
       </div>
