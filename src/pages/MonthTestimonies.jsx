@@ -35,52 +35,6 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
   const [loadingTestimonies, setLoadingTestimonies] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  // Fetch testimonies JSON
-useEffect(() => {
-  setLoadingTestimonies(true);
-  fetch('/assets/testimony-content.json')
-    .then(res => res.json())
-    .then(async (data) => {
-      
-      setTestimonies(data);
-
-      // Filter based on initial month/year
-      const filtered = testimonies.filter(({ date }) => {
-        const d = new Date(date);
-        const monthName = d.toLocaleString('en', { month: 'long' });
-        const year = d.getFullYear().toString();
-        return (selectedMonth === 'All' || monthName === selectedMonth)
-            && (selectedYear === 'All' || year === selectedYear);
-      });
-
-      // Preload only first 5 thumbnails (or all if less than 5)
-      const preloadImage = (src) =>
-        new Promise(resolve => {
-          if (!src) return resolve();
-          const img = new Image();
-          img.src = src;
-          img.onload = img.onerror = resolve;
-        });
-
-      const thumbnails = filtered.map(({ video }) => getYouTubeThumbnail(video));
-      const firstBatch = thumbnails.slice(0, 1);
-
-      await Promise.all(firstBatch.map(preloadImage));
-
-      // Show grid after 1 image load (rest will continue in background)
-      setLoadingTestimonies(false);
-
-      // Start preloading the remaining images silently
-      thumbnails.slice(1).forEach(preloadImage);
-    })
-    .catch(err => {
-      console.error('Failed to load testimonies:', err);
-      setLoadingTestimonies(false);
-    });
-}, [selectedMonth, selectedYear]);
-
-
-
 
   // Update language if initialLang changes
   useEffect(() => {
@@ -112,15 +66,28 @@ useEffect(() => {
     }
   };
 
-  // Filter testimonies based on month & year
+  const fetchJSONOneTime = () => {
+    setLoadingTestimonies(true);
+    fetch("/assets/testimony-content.json")
+      .then(res => res.json())
+      .then(data => {
+        setTestimonies(data);
+        setLoadingTestimonies(false);
+      })
+      .catch(() => setLoadingTestimonies(false));
+  };
+
+  useEffect(() => {
+    fetchJSONOneTime();
+  }, []);   // ⬅️ run only first render
+
   const filteredTestimonies = useMemo(() => {
     return testimonies.filter(({ date }) => {
       const d = new Date(date);
-      const monthName = d.toLocaleString('en', { month: 'long' });
-      const year = d.getFullYear().toString();
-      const monthMatch = selectedMonth === 'All' || monthName === selectedMonth;
-      const yearMatch = selectedYear === 'All' || year === selectedYear;
-      return monthMatch && yearMatch;
+      const m = d.toLocaleString("en", { month: "long" });
+      const y = d.getFullYear().toString();
+      return (selectedMonth === "All" || m === selectedMonth) &&
+             (selectedYear === "All"  || y === selectedYear);
     });
   }, [testimonies, selectedMonth, selectedYear]);
   function resolveOverlay(testimony, all) {
@@ -246,7 +213,7 @@ useEffect(() => {
     lang={lang}
     path={`${initialLang || 'en'}/testimony`}
     duration={t.duration}
-    overlayData={resolveOverlay(t, filteredTestimonies)} // 👈 HERE
+    overlayData={resolveOverlay(t, testimonies)} // 👈 HERE
   />
 ))
     ) : (
