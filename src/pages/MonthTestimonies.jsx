@@ -28,8 +28,8 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
   const currentYear = today.getFullYear().toString();
 
   const [lang, setLang] = useState(initialLang || 'en');
-  const [selectedMonth, setSelectedMonth] = useState(currentMonth);
-  const [selectedYear, setSelectedYear] = useState(currentYear);
+  const [selectedMonth, setSelectedMonth] = useState('All');
+  const [selectedYear, setSelectedYear] = useState('All');
 
   const [testimonies, setTestimonies] = useState([]);
   const [loadingTestimonies, setLoadingTestimonies] = useState(true);
@@ -81,15 +81,19 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
     fetchJSONOneTime();
   }, []);   // ⬅️ run only first render
 
-  const filteredTestimonies = useMemo(() => {
-    return testimonies.filter(({ date }) => {
+const filteredTestimonies = useMemo(() => {
+  return testimonies
+    .filter(({ date }) => {
       const d = new Date(date);
       const m = d.toLocaleString("en", { month: "long" });
       const y = d.getFullYear().toString();
+
       return (selectedMonth === "All" || m === selectedMonth) &&
              (selectedYear === "All"  || y === selectedYear);
-    });
-  }, [testimonies, selectedMonth, selectedYear]);
+    })
+    .sort((a, b) => new Date(b.date) - new Date(a.date)); // 🔥 latest first
+}, [testimonies, selectedMonth, selectedYear]);
+
   function resolveOverlay(testimony, all) {
   // direct overlay
   if (testimony.overlay) return testimony.overlay;
