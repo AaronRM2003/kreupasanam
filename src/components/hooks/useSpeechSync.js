@@ -103,6 +103,9 @@ function getSmoothedAdjustedRate(wps, rawRate) {
   const currentSub = subtitles.find(
   (sub) => currentTime >= sub.startSeconds && currentTime < sub.endSeconds
 );
+function normalizeColonNumbers(text) {
+  return text.replace(/\b(\d{1,3}):(\d{1,3})\b/g, '$1, $2');
+}
 
 const subtitleDuration = currentSub?.duration ?? 3;
 
@@ -125,7 +128,7 @@ const subtitleDuration = currentSub?.duration ?? 3;
   .replace(/\bKreupasanam\b/gi, 'Kri-paasenam')
   // Trim whitespace
   .trim();
-
+  textToSpeak = normalizeColonNumbers(textToSpeak);
 
 
   const utterance = new SpeechSynthesisUtterance(textToSpeak);
