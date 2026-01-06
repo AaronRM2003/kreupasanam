@@ -104,8 +104,9 @@ function getSmoothedAdjustedRate(wps, rawRate) {
   (sub) => currentTime >= sub.startSeconds && currentTime < sub.endSeconds
 );
 function normalizeColonNumbers(text) {
-  return text.replace(/\b(\d{1,3}):(\d{1,3})\b/g, '$1, $2');
+  return text.replace(/\b(\d{1,3}):(\d{1,3})\b/g, '$1 $2');
 }
+
 
 const subtitleDuration = currentSub?.duration ?? 3;
 
