@@ -2051,7 +2051,141 @@
       "fr": "Après 16 ans de mariage sans enfants, avec des traitements infructueux et une fausse couche, Elizabeth et son mari Abhilash étaient profondément découragés. Une amie leur a parlé des miracles de Kreupasanam et en 2023 ils ont décidé de faire l’Alliance, plaçant toute leur confiance en la Vierge Marie et en Jésus.\n\nEn juillet 2024, Elizabeth est tombée enceinte malgré son âge, une hypertension et un taux de sucre élevé. À 32 semaines, une césarienne d’urgence a été nécessaire. Leur bébé Joseph est né prématuré avec seulement 1,387 kg et a passé 38 jours en soins intensifs. Grâce à la foi, à la prière et aux objets de l’Alliance, il est devenu totalement sain. Aujourd’hui, dix mois plus tard, il est en parfaite santé — un miracle dont ils remercient la Vierge Marie.\n\nMarykutty Mathew, l’amie qui les a accompagnés, a elle-même été guérie d’un grave mal de dos qu’elle avait depuis 20 ans. Ils témoignent que, par la miséricorde de Dieu, l’impossible devient possible."
     },
     "subtitles": "/assets/testimony-subtitle/30nov.json",
-    "duration": "8:27"
+    "duration": "8:27",
+    "overlay":{ 
+  "boxes": [
+    {
+      "x": 20,
+      "y": 10,
+      "w": 998,
+      "h": 165,
+      "background": "#c53072",
+      "fontColor": "#f7ef06"
+    },
+    {
+      "x": 18,
+      "y": 191,
+      "w": 290,
+      "h": 246,
+      "background": "#fff701",
+      "fontColor": "#b31270"
+    },
+    {
+      "x": 339,
+      "y": 193,
+      "w": 701,
+      "h": 237,
+      "background": "#ffffff",
+      "fontColor": "#11479d"
+    },
+    {
+      "x": 32,
+      "y": 444,
+      "w": 775,
+      "h": 106,
+      "background": "#13479d",
+      "fontColor": "#fef20a"
+    },
+    {
+      "x": 33,
+      "y": 555,
+      "w": 793,
+      "h": 160,
+      "background": "#e24b5a",
+      "fontColor": "#fefffb"
+    },
+    {
+      "x": 1028,
+      "y": 5,
+      "w": 222,
+      "h": 58,
+      "background": "#cf2f6f",
+      "fontColor": "#fefcff"
+    }
+  ],
+  "texts": {
+  "zh": [
+    "因朋友的介绍来到这里",
+    "16 年",
+    "无子婚姻，如今时间被缩短",
+    "因为圣母盟约",
+    "20 年的背痛",
+    "科塔亚姆"
+  ],
+  "bn": [
+    "বন্ধুর কারণে এখানে এসেছি",
+    "১৬ বছর",
+    "সন্তানহীন দাম্পত্য, এখন সময় সংক্ষিপ্ত হয়েছে",
+    "মেরিয়ান চুক্তির কারণে",
+    "২০ বছরের পিঠের ব্যথা",
+    "কোট্টায়াম"
+  ],
+  "en": [
+    "Came here because of my friend",
+    "16 Years",
+    "Childless marriage, now time-shortened",
+    "Because of Marian Covenant",
+    "20 years of back pain",
+    "Kottayam"
+  ],
+  "hi": [
+    "अपने मित्र के कारण यहाँ आया/आई",
+    "16 वर्ष",
+    "निसंतान विवाह, अब समय कम हो गया",
+    "मरियम की वाचा के कारण",
+    "20 वर्षों से पीठ दर्द",
+    "कोट्टायम"
+  ],
+  "ta": [
+    "என் நண்பரின் காரணமாக இங்கு வந்தேன்",
+    "16 ஆண்டுகள்",
+    "குழந்தையில்லா திருமணம், இப்போது காலம் குறைக்கப்பட்டது",
+    "மரியன் உடன்படிக்கையின் காரணமாக",
+    "20 ஆண்டுகளாக முதுகுவலி",
+    "கோட்டயம்"
+  ],
+  "te": [
+    "నా స్నేహితుడి కారణంగా ఇక్కడికి వచ్చాను",
+    "16 సంవత్సరాలు",
+    "సంతానం లేని వివాహం, ఇప్పుడు కాలం తగ్గింది",
+    "మరియన్ ఒడంబడిక కారణంగా",
+    "20 సంవత్సరాల వెన్నునొప్పి",
+    "కొట్టాయం"
+  ],
+  "fr": [
+    "Je suis venu(e) ici à cause de mon ami",
+    "16 ans",
+    "Mariage sans enfant, maintenant le temps est raccourci",
+    "À cause de l’Alliance mariale",
+    "20 ans de mal de dos",
+    "Kottayam"
+  ],
+  "es": [
+    "Vine aquí por mi amigo",
+    "16 años",
+    "Matrimonio sin hijos, ahora el tiempo se ha acortado",
+    "Gracias a la Alianza Mariana",
+    "20 años de dolor de espalda",
+    "Kottayam"
+  ],
+  "kn": [
+    "ನನ್ನ ಸ್ನೇಹಿತನ ಕಾರಣದಿಂದ ಇಲ್ಲಿ ಬಂದೆ",
+    "16 ವರ್ಷಗಳು",
+    "ಮಕ್ಕಳಿಲ್ಲದ ವಿವಾಹ, ಈಗ ಸಮಯ ಕಡಿಮೆಯಾಯಿತು",
+    "ಮರಿಯನ್ ಒಡಂಬಡಿಕೆಯ ಕಾರಣದಿಂದ",
+    "20 ವರ್ಷಗಳ ಬೆನ್ನುನೋವು",
+    "ಕೊಟ್ಟಾಯಂ"
+  ],
+  "mr": [
+    "माझ्या मित्रामुळे येथे आलो/आले",
+    "१६ वर्षे",
+    "अपत्य नसलेले वैवाहिक जीवन, आता वेळ कमी झाली",
+    "मरियन करारामुळे",
+    "२० वर्षांचा पाठदुखीचा त्रास",
+    "कोट्टायम"
+  ]
+}
+}
   },
   {
     "id": 48,
