@@ -1664,7 +1664,105 @@
       "fr": "Tina, hôtesse de l'air originaire de Muvattupuzha, entendit parler pour la première fois de Kreupasanam par une sœur rencontrée en Amérique, qui lui conseilla de rendre visite à la Sainte Mère, surtout avec son enfant. À cette époque, Tina n’était pas une personne de foi profonde, bien que sa sœur aînée fût religieuse. De retour en Inde, elle commença à souffrir de violents maux de tête et perdit la vue de son œil gauche. Les examens médicaux révélèrent un méningiome de stade 3 (tumeur cérébrale maligne), et les médecins avertirent que la chirurgie offrait peu d’espoir : elle pourrait devenir paralysée, aveugle ou perdre la mémoire, et sans traitement, elle mourrait en quelques mois. Ayant perdu tout espoir, Tina décida de ne pas subir l’opération et de passer ses derniers jours avec son enfant. Sa tante Rincy, fervente dévote vivant l’Alliance mariale à Kreupasanam, l’encouragea à y aller et à prier avec foi.\n\nPour la première fois, Tina se rendit à Kreupasanam le 26 août avec son petit bébé. Elle prit l’Alliance de la Sainte Mère et, après avoir écouté les enseignements du Père, sa foi s’éveilla. Remplie d’espérance, elle dit à son médecin de procéder à l’opération. Le 26 janvier, elle entra dans la salle d’opération en tenant sa médaille d’alliance et pria pour l’intercession de la Sainte Mère. L’opération dura neuf heures au lieu de cinq et nécessita six poches de sang, miraculeusement fournies à temps par des inconnus. Malgré les avertissements des médecins, Tina se réveilla pleinement consciente, capable de voir, d’entendre et de bouger — complètement guérie.\n\nElle continua à utiliser chaque jour l’huile de l’Alliance et le sel béni, même en soins intensifs, et se rétablit à une vitesse miraculeuse. Aujourd’hui, bien qu’elle n’ait pas pu retourner à sa carrière d’hôtesse de l’air, elle travaille dans l’informatique à Infopark, menant une vie nouvelle de foi, de prière et de charité. Tina témoigne que ce que les médecins jugeaient impossible, la Sainte Mère de l’Alliance l’a rendu possible — transformant la mort en vie, le désespoir en foi, et lui accordant une guérison miraculeuse. À travers son témoignage, elle proclame que si nous confions nos vies à la Sainte Mère et à son Divin Fils, ils transformeront même les situations les plus désespérées par la grâce divine."
     },
     "subtitles": "/assets/testimony-subtitle/03nov.json",
-    "duration": "10:36"
+    "duration": "10:36",
+    "overlay":{
+  "boxes": [
+    {
+      "x": 37,
+      "y": 7,
+      "w": 985,
+      "h": 158,
+      "background": "#530d25",
+      "fontColor": "#feffff"
+    },
+    {
+      "x": 117,
+      "y": 168,
+      "w": 860,
+      "h": 175,
+      "background": "#550d25",
+      "fontColor": "#fff001"
+    },
+    {
+      "x": 37,
+      "y": 413,
+      "w": 1103,
+      "h": 286,
+      "background": "#550d25",
+      "fontColor": "#f4f4f4"
+    },
+    {
+      "x": 1029,
+      "y": 5,
+      "w": 215,
+      "h": 50,
+      "background": "#550d25",
+      "fontColor": "#f8fefc"
+    }
+  ],
+  "texts": {
+  "zh": [
+    "通过核磁共振检查，我得知自己患有第三期脑肿瘤",
+    "如果不进行手术，我将在三个月内去世",
+    "在领受临终圣事后，我佩戴着盟约圣牌进入手术室，圣母与我一同前往！",
+    "埃尔纳库拉姆"
+  ],
+  "bn": [
+    "এমআরআই পরীক্ষার মাধ্যমে আমি জানতে পারি যে আমার তৃতীয় পর্যায়ের মস্তিষ্কের টিউমার হয়েছে",
+    "যদি আমি অস্ত্রোপচার না করতাম, তাহলে তিন মাসের মধ্যে মারা যেতাম",
+    "শেষকৃত্য গ্রহণের পর, আমি আমার চুক্তির পদকসহ অপারেশন থিয়েটারে প্রবেশ করি, এবং পবিত্র মা আমার সঙ্গে এসেছিলেন!",
+    "এর্নাকুলাম"
+  ],
+  "en": [
+    "Through an MRI, I realized that I had a stage three brain tumor",
+    "If I did not undergo surgery, I would die within three months",
+    "After receiving my last rites, I entered the operation theatre with my Covenant medal, and the Holy Mother came with me!",
+    "Ernakulam"
+  ],
+  "hi": [
+    "एमआरआई के माध्यम से मुझे पता चला कि मुझे तीसरे चरण का ब्रेन ट्यूमर है",
+    "यदि मैं सर्जरी नहीं कराता/कराती, तो तीन महीनों के भीतर मेरी मृत्यु हो जाती",
+    "अंतिम संस्कार ग्रहण करने के बाद, मैं अपनी वाचा पदक के साथ ऑपरेशन थिएटर में गया/गई, और पवित्र माता मेरे साथ आईं!",
+    "एर्नाकुलम"
+  ],
+  "ta": [
+    "எம்.ஆர்.ஐ. பரிசோதனையின் மூலம் எனக்கு மூன்றாம் கட்ட மூளை கட்டி இருப்பது தெரிய வந்தது",
+    "அறுவை சிகிச்சை செய்யவில்லை என்றால், மூன்று மாதங்களில் நான் உயிரிழந்திருப்பேன்",
+    "இறுதி திருச்சடங்குகளை பெற்ற பிறகு, என் உடன்படிக்கை பதக்கத்துடன் அறுவை சிகிச்சை அறைக்குள் நுழைந்தபோது, புனித மாதா என்னுடன் வந்தார்!",
+    "எர்ணாகுளம்"
+  ],
+  "te": [
+    "ఎమ్‌ఆర్‌ఐ ద్వారా నాకు మూడవ దశ మెదడు గడ్డ ఉందని తెలిసింది",
+    "నేను శస్త్రచికిత్స చేయించుకోకపోతే, మూడు నెలల్లోనే మరణించేవాడిని/మరణించేదాన్ని",
+    "చివరి కర్మలు స్వీకరించిన తరువాత, నా ఒడంబడిక మెడల్‌తో ఆపరేషన్ థియేటర్‌లోకి వెళ్లాను, పవిత్ర తల్లి నా వెంట వచ్చారు!",
+    "ఎర్నాకులం"
+  ],
+  "fr": [
+    "Grâce à une IRM, j’ai appris que j’avais une tumeur cérébrale de stade trois",
+    "Si je n’avais pas subi l’opération, je serais mort(e) dans les trois mois",
+    "Après avoir reçu les derniers sacrements, je suis entré(e) au bloc opératoire avec ma médaille de l’Alliance, et la Sainte Mère est venue avec moi !",
+    "Ernakulam"
+  ],
+  "es": [
+    "A través de una resonancia magnética, supe que tenía un tumor cerebral en etapa tres",
+    "Si no me sometía a la cirugía, moriría en un plazo de tres meses",
+    "Después de recibir los últimos sacramentos, entré al quirófano con mi medalla de la Alianza, ¡y la Santa Madre vino conmigo!",
+    "Ernakulam"
+  ],
+  "kn": [
+    "ಎಂಆರ್‌ಐ ಪರೀಕ್ಷೆಯ ಮೂಲಕ ನನಗೆ ಮೂರನೇ ಹಂತದ ಮೆದುಳು ಗಡ್ಡೆ ಇರುವುದನ್ನು ತಿಳಿದುಕೊಂಡೆ",
+    "ನಾನು ಶಸ್ತ್ರಚಿಕಿತ್ಸೆಗೆ ಒಳಗಾಗದೇ ಇದ್ದರೆ, ಮೂರು ತಿಂಗಳೊಳಗೆ ಮರಣವಾಗುತ್ತಿತ್ತು",
+    "ಕೊನೆಯ ಸಂಸ್ಕಾರಗಳನ್ನು ಸ್ವೀಕರಿಸಿದ ನಂತರ, ನನ್ನ ಒಡಂಬಡಿಕೆ ಪದಕದೊಂದಿಗೆ ಶಸ್ತ್ರಚಿಕಿತ್ಸಾ ಕೋಣೆಗೆ ಪ್ರವೇಶಿಸಿದ್ದೆ, ಮತ್ತು ಪವಿತ್ರ ತಾಯಿ ನನ್ನ ಜೊತೆ ಬಂದರು!",
+    "ಎರ್ನಾಕುಲಂ"
+  ],
+  "mr": [
+    "एमआरआय तपासणीतून मला तिसऱ्या टप्प्याचा मेंदूचा ट्यूमर असल्याचे कळले",
+    "मी शस्त्रक्रिया केली नसती तर तीन महिन्यांच्या आत मृत्यू झाला असता",
+    "अंतिम संस्कार स्वीकारल्यानंतर, मी माझ्या कराराच्या पदकासह ऑपरेशन थिएटरमध्ये प्रवेश केला, आणि पवित्र माता माझ्यासोबत आल्या!",
+    "एर्नाकुलम"
+  ]
+}
+}
   },
   {
     "id": 43,
@@ -1695,7 +1793,124 @@
       "fr": "Meenu Mathew, de l’église Saint-Sébastien de Shanthinagar, Ernakulam, a partagé comment son fils Hayden, muet jusqu’à l’âge de quatre ans, a été miraculeusement guéri grâce à l’Alliance Mariale. Après que le Père V.P. Joseph a prié pour lui à Kreupasanam et l’a béni avec le signe de la croix, Meenu et sa famille ont continué à prier chaque jour et ont donné à l’enfant l’huile d’onction, le miel et le sel bénit de la Mère. Bientôt, le garçon a commencé à parler. Plus tard, lorsque son test de QI a montré un retard de deux ans et que les écoles ont refusé son admission, la famille s’est tournée de nouveau vers la Vierge Marie avec foi. Grâce aux prières de l’alliance et à l’usage des objets bénis, Hayden a commencé à apprendre, à écrire avec aisance et a finalement été admis à l’école — aujourd’hui, il étudie bien et obtient de très bonnes notes.\n\nSon deuxième témoignage raconte comment, malgré plusieurs échecs aux examens OET et Prometric, Meenu a été guidée par la Vierge Marie vers un emploi d’infirmière à Oman. Par la prière persévérante et la confiance, elle a réussi miraculeusement l’examen et l’entretien, obtenant un poste dans un hôpital public bien qu’elle ait eu moins d’expérience que ses collègues. Gardant toujours la médaille de l’alliance et utilisant chaque jour l’huile bénite, elle a surmonté ses peurs, travaillé efficacement et reconnu que tout cela était dû à l’intercession de la Mère et à la grâce de Jésus.\n\nDans son troisième témoignage, Meenu décrit comment elle a été guérie d’une douleur abdominale intense qui la réveillait chaque nuit à 1 heure du matin. Malgré les conseils médicaux, elle a placé toute sa confiance dans la Vierge, a prié et a bu de l’eau mélangée au sel de l’alliance. Cette nuit-là, elle a dormi paisiblement et, depuis, la douleur n’est jamais revenue. Par gratitude, Meenu aide désormais les autres dans le besoin, partage les messages et les objets bénis de la Mère et vit comme un témoin vivant de la miséricorde divine."
     },
     "subtitles": "/assets/testimony-subtitle/13nov.json",
-    "duration": "17:12"
+    "duration": "17:12",
+    "overlay":{
+  "boxes": [
+    {
+      "x": 25,
+      "y": 7,
+      "w": 893,
+      "h": 133,
+      "background": "#01004e",
+      "fontColor": "#efdf03"
+    },
+    {
+      "x": 14,
+      "y": 155,
+      "w": 883,
+      "h": 169,
+      "background": "#fe0000",
+      "fontColor": "#fff3f3"
+    },
+    {
+      "x": 32,
+      "y": 332,
+      "w": 754,
+      "h": 173,
+      "background": "#00014e",
+      "fontColor": "#f2f4f3"
+    },
+    {
+      "x": 34,
+      "y": 504,
+      "w": 838,
+      "h": 208,
+      "background": "#ffffff",
+      "fontColor": "#ff2927"
+    },
+    {
+      "x": 1053,
+      "y": 13,
+      "w": 212,
+      "h": 51,
+      "background": "#01004e",
+      "fontColor": "#f4df00"
+    }
+  ],
+  "texts": {
+  "zh": [
+    "当我立下盟约时",
+    "为了我四岁、智力低下的孩子",
+    "我领受了极大的祝福",
+    "请完整聆听米努的见证",
+    "埃尔纳库拉姆"
+  ],
+  "bn": [
+    "যখন আমি চুক্তি গ্রহণ করেছিলাম",
+    "আমার ৪ বছরের কম আইকিউ সন্তানের জন্য",
+    "আমি মহান আশীর্বাদ লাভ করেছি",
+    "মীনুর সাক্ষ্যটি শেষ পর্যন্ত শুনুন",
+    "এর্নাকুলাম"
+  ],
+  "en": [
+    "When I took the Covenant",
+    "For my 4 year old low-IQ child",
+    "I received great blessings",
+    "Listen to the testimony of Meenu till the end",
+    "Ernakulam"
+  ],
+  "hi": [
+    "जब मैंने वाचा ली",
+    "अपने 4 वर्ष के कम बुद्धि वाले बच्चे के लिए",
+    "मुझे महान आशीर्वाद प्राप्त हुए",
+    "मीनू की गवाही अंत तक सुनें",
+    "एर्नाकुलम"
+  ],
+  "ta": [
+    "நான் உடன்படிக்கை எடுத்தபோது",
+    "என் 4 வயது குறைந்த அறிவாற்றல் கொண்ட குழந்தைக்காக",
+    "நான் பெரிய ஆசீர்வாதங்களை பெற்றேன்",
+    "மீனுவின் சாட்சியத்தை இறுதிவரை கேளுங்கள்",
+    "எர்ணாகுளம்"
+  ],
+  "te": [
+    "నేను ఒడంబడిక తీసుకున్నప్పుడు",
+    "నా 4 ఏళ్ల తక్కువ ఐక్యూ ఉన్న పిల్లవాడి కోసం",
+    "నేను గొప్ప ఆశీర్వాదాలు పొందాను",
+    "మీను సాక్ష్యాన్ని చివరి వరకు వినండి",
+    "ఎర్నాకులం"
+  ],
+  "fr": [
+    "Lorsque j’ai pris l’Alliance",
+    "Pour mon enfant de 4 ans ayant un faible QI",
+    "J’ai reçu de grandes bénédictions",
+    "Écoutez le témoignage de Meenu jusqu’à la fin",
+    "Ernakulam"
+  ],
+  "es": [
+    "Cuando hice la Alianza",
+    "Por mi hijo de 4 años con bajo coeficiente intelectual",
+    "Recibí grandes bendiciones",
+    "Escuchen el testimonio de Meenu hasta el final",
+    "Ernakulam"
+  ],
+  "kn": [
+    "ನಾನು ಒಡಂಬಡಿಕೆಯನ್ನು ಸ್ವೀಕರಿಸಿದಾಗ",
+    "ನನ್ನ 4 ವರ್ಷದ ಕಡಿಮೆ ಐಕ್ಯೂ ಹೊಂದಿರುವ ಮಗುವಿಗಾಗಿ",
+    "ನಾನು ಮಹತ್ತರ ಆಶೀರ್ವಾದಗಳನ್ನು ಪಡೆದಿದ್ದೇನೆ",
+    "ಮೀನು ಅವರ ಸಾಕ್ಷ್ಯವನ್ನು ಅಂತ್ಯದವರೆಗೆ ಕೇಳಿ",
+    "ಎರ್ನಾಕುಲಂ"
+  ],
+  "mr": [
+    "जेव्हा मी करार स्वीकारला",
+    "माझ्या ४ वर्षांच्या कमी बुद्ध्यांक असलेल्या मुलासाठी",
+    "मला मोठे आशीर्वाद मिळाले",
+    "मीनू यांची साक्ष शेवटपर्यंत ऐका",
+    "एर्नाकुलम"
+  ]
+}
+
+}
   },
   {
     "id": 44,
@@ -1726,7 +1941,88 @@
       "fr": "Chandrakumar, originaire de Kollam, a témoigné que peu après avoir fait l’Alliance Mariale, il a subi une perforation soudaine d’ulcère nécessitant une chirurgie d’urgence. Les biopsies de l’hôpital Medicity puis du RCC ont confirmé un cancer, et les médecins insistaient pour lui retirer l’estomac. Mais les examens répétés — scanners, endoscopies et multiples biopsies — n’ont révélé aucune trace de cancer. Malgré la confusion médicale et la pression pour une lourde opération, il a placé toute sa confiance en la Vierge Marie et en Jésus, priant chaque jour avec la médaille et l’huile de l’alliance.\n\nIl a renouvelé son alliance, reçu des bénédictions et vécu un signe puissant de présence divine lorsque l’image de la Vierge Marie est apparue clairement dans la lumière d’une bougie. Au fil des mois, tous les examens sont restés négatifs et il a retrouvé une santé complète. Dix mois plus tard, il demeure en parfaite santé, avec un poids normal et aucun symptôme. Son épouse a également été guérie de plusieurs excroissances utérines qui ont disparu sans aucune intervention médicale.\n\nChandrakumar témoigne avec gratitude que la Vierge Marie et Jésus l’ont non seulement guéri, lui et son épouse, mais les ont aussi bénis avec une nouvelle maison dont la fondation est déjà posée. Il partage son expérience avec tous, distribue des bulletins et accomplit des œuvres de charité en signe d’action de grâce. Ce témoignage montre que vivre fidèlement l’Alliance Mariale apporte une protection, une guidance et une guérison divines constantes."
     },
     "subtitles": "/assets/testimony-subtitle/26nov.json",
-    "duration": "15:16"
+    "duration": "15:16",
+    "overlay":{
+  "boxes": [
+    {
+      "x": 17,
+      "y": 7,
+      "w": 811,
+      "h": 322,
+      "background": "#ffffff",
+      "fontColor": "#f80100"
+    },
+    {
+      "x": 1058,
+      "y": 7,
+      "w": 205,
+      "h": 74,
+      "background": "#ffffff",
+      "fontColor": "#070632"
+    },
+    {
+      "x": 22,
+      "y": 323,
+      "w": 929,
+      "h": 364,
+      "background": "#173152",
+      "fontColor": "#ffe91b"
+    }
+  ],
+  "texts":{
+  "zh": [
+    "钱德拉库马尔的癌症得医治了！",
+    "科勒姆",
+    "充满神迹奇事的重大见证"
+  ],
+  "bn": [
+    "চন্দ্রকুমারের ক্যান্সার সেরে গেছে!",
+    "কোল্লাম",
+    "চিহ্ন ও আশ্চর্যে ভরা একটি মহান সাক্ষ্য"
+  ],
+  "en": [
+    "Chandrakumar's Cancer cured!",
+    "Kollam",
+    "A big testimony with signs and wonders"
+  ],
+  "hi": [
+    "चंद्रकुमार का कैंसर ठीक हो गया!",
+    "कोल्लम",
+    "चिन्हों और अद्भुत कार्यों से भरी एक बड़ी गवाही"
+  ],
+  "ta": [
+    "சந்திரகுமாரின் புற்றுநோய் குணமடைந்தது!",
+    "கொல்லம்",
+    "அடையாளங்களும் அதிசயங்களும் நிறைந்த ஒரு பெரிய சாட்சியம்"
+  ],
+  "te": [
+    "చంద్రకుమార్ క్యాన్సర్ నయం అయింది!",
+    "కొల్లం",
+    "సూచకాలు మరియు అద్భుతాలతో కూడిన గొప్ప సాక్ష్యం"
+  ],
+  "fr": [
+    "Le cancer de Chandrakumar a été guéri !",
+    "Kollam",
+    "Un grand témoignage avec des signes et des prodiges"
+  ],
+  "es": [
+    "¡El cáncer de Chandrakumar fue curado!",
+    "Kollam",
+    "Un gran testimonio con señales y prodigios"
+  ],
+  "kn": [
+    "ಚಂದ್ರಕುಮಾರ್ ಅವರ ಕ್ಯಾನ್ಸರ್ ಗುಣಮುಖವಾಗಿದೆ!",
+    "ಕೊಲ್ಲಂ",
+    "ಸೂಚನೆಗಳು ಮತ್ತು ಅದ್ಭುತಗಳಿಂದ ಕೂಡಿದ ಮಹಾ ಸಾಕ್ಷ್ಯ"
+  ],
+  "mr": [
+    "चंद्रकुमार यांचा कॅन्सर बरा झाला!",
+    "कोल्लम",
+    "चिन्हे व अद्भुत कार्यांनी भरलेली एक महान साक्ष"
+  ]
+}
+
+}
   },
   {
     "id": 45,
