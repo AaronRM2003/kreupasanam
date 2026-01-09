@@ -18,6 +18,7 @@ import { useSubtitles } from '../components/hooks/useSubtitles';
 import { useSpeechSync } from '../components/hooks/useSpeechSync';
 import FloatingVideoPlayer from '../components/utils/FloatingVideoPlayer';
 import LangHelpOverlay from '../components/utils/LangHelpOverlay';
+import TranscriptModal from '../components/utils/TranscriptModel';
 
 export default function DhyanamPage({ lang: initialLang }) {
   const { idSlug } = useParams();  // changed from id to idSlug
@@ -33,6 +34,8 @@ export default function DhyanamPage({ lang: initialLang }) {
   const [showLangHelp, setShowLangHelp] = useState(false);
   const [includeSummary, setIncludeSummary] = useState(false);
   const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
+      const [showTranscript, setShowTranscript] = useState(false);
+
 
   const navigate = useNavigate();
   const handleClick = () => {
@@ -336,10 +339,16 @@ const {
             <h1 className={styles.testimonyTitle}>{title[lang] || title['en']}</h1>
             <p className={styles.testimonyDate}>{date}</p>
             <div className={styles.testimonyContent}>{content[lang] || content['en']}</div>
+             <button
+              className={styles.transcriptButton}
+              onClick={() => setShowTranscript(true)}
+            >
+              📜 Read More
+            </button>
           </div>
 
           <div className={styles.shareSection}>
-            <p style={{ fontWeight: '600' }}>Share this meditation:</p>
+            <p style={{ fontWeight: '600',marginTop:"1rem" }}>Share this meditation:</p>
              <div className={styles.actionRow}>
                      
                        <button className={`${styles.actionButton} ${styles.share}`} onClick={() => setShowShareModal(true)}>
@@ -373,7 +382,12 @@ const {
           </div>
         </div>
       </div>
-
+<TranscriptModal
+  show={showTranscript}
+  onClose={() => setShowTranscript(false)}
+  subtitles={subtitles}
+  lang={lang}
+/>
       {/* Video player and subtitles */}
       {showVideo && (
         <FloatingVideoPlayer

@@ -19,6 +19,7 @@ import { useSpeechSync } from '../components/hooks/useSpeechSync';
 import FloatingVideoPlayer from '../components/utils/FloatingVideoPlayer';
 import LangHelpOverlay from '../components/utils/LangHelpOverlay';
 import ImageWithBoxes from '../components/utils/ImageWithBoxes';
+import TranscriptModal from '../components/utils/TranscriptModel';
 
 export default function OraclesPage({ lang: initialLang }) {
   const { idSlug } = useParams(); // changed from id to idSlug
@@ -31,6 +32,8 @@ export default function OraclesPage({ lang: initialLang }) {
   const [oracles, setOracles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
+      const [showTranscript, setShowTranscript] = useState(false);
+
 
 
   // Fetch oracles data on mount
@@ -314,10 +317,16 @@ const shareText = useMemo(() => {
             <h1 className={styles.testimonyTitle}>{title[lang] || title['en']}</h1>
             <p className={styles.testimonyDate}>{date}</p>
             <div className={styles.testimonyContent}>{content[lang] || content['en']}</div>
+            <button
+                          className={styles.transcriptButton}
+                          onClick={() => setShowTranscript(true)}
+                        >
+                          📜 Read More
+                        </button>
           </div>
 
           <div className={styles.shareSection}>
-            <p style={{ fontWeight: '600' }}>Share this Oracle:</p>
+            <p style={{ fontWeight: '600',marginTop:'1rem' }}>Share this Oracle:</p>
            <div className={styles.actionRow}>
            
              <button className={`${styles.actionButton} ${styles.share}`} onClick={() => setShowShareModal(true)}>
@@ -350,7 +359,12 @@ const shareText = useMemo(() => {
           </div>
         </div>
       </div>
-
+<TranscriptModal
+  show={showTranscript}
+  onClose={() => setShowTranscript(false)}
+  subtitles={subtitles}
+  lang={lang}
+/>
       {/* Video player and subtitles */}
       {showVideo && (
         <FloatingVideoPlayer

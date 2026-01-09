@@ -264,6 +264,37 @@
   transition: all 0.4s ease;
   margin: 6rem auto 0rem auto;
 }
+.transcriptButton {
+  margin-top: 0.8rem;
+  padding: 0.45rem 1.1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #5a3b1e; /* warm brown */
+  background: rgba(255, 248, 235, 0.9);
+  border: 1px solid rgba(90, 59, 30, 0.22);
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 0.2s ease;
+}
+
+.transcriptButton:hover {
+  background: #fff1d6;
+  border-color: rgba(90, 59, 30, 0.4);
+  transform: translateY(-1px);
+}
+
+.transcriptButton:active {
+  transform: translateY(0);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.transcriptButton:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 198, 120, 0.55);
+}
 
 .testimonyContainer:hover {
   border-color: rgba(36, 107, 253, 0.35);

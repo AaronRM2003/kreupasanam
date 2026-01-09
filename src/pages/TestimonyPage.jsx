@@ -18,6 +18,7 @@ import { useSpeechSync } from '../components/hooks/useSpeechSync';
 import FloatingVideoPlayer from '../components/utils/FloatingVideoPlayer';
 import LangHelpOverlay from '../components/utils/LangHelpOverlay';
 import ImageWithBoxes from '../components/utils/ImageWithBoxes';
+import TranscriptModal from '../components/utils/TranscriptModel';
 
 export default function TestimonyPage({ lang: initialLang }) {
   const { idSlug } = useParams();  // Changed from id to idSlug
@@ -31,6 +32,7 @@ export default function TestimonyPage({ lang: initialLang }) {
   const [loadingData, setLoadingData] = useState(true);
   const [errorLoading, setErrorLoading] = useState(false);
   const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
+  const [showTranscript, setShowTranscript] = useState(false);
 
   // Parse id and slug from idSlug param
   // Assuming idSlug is from useParams()
@@ -327,6 +329,13 @@ const handleClick = () => {
             <h1 className={styles.testimonyTitle}>{title[lang] || title['en']}</h1>
             <p className={styles.testimonyDate}>{date}</p>
             <div className={styles.testimonyContent}>{content[lang] || content['en']}</div>
+            <button
+  className={styles.transcriptButton}
+  onClick={() => setShowTranscript(true)}
+>
+  📜 Read More
+</button>
+
           </div>
 
           <div className={styles.shareSection}>
@@ -364,10 +373,19 @@ const handleClick = () => {
               includeSummary={includeSummary}
               setIncludeSummary={setIncludeSummary}
             />
+           
+
           </div>
         </div>
+       
         
       </div>
+        <TranscriptModal
+  show={showTranscript}
+  onClose={() => setShowTranscript(false)}
+  subtitles={subtitles}
+  lang={lang}
+/>
 
       {/* Video player and subtitles */}
     {showVideo && (

@@ -1,0 +1,157 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal {
+  background: #fff;
+  width: 90%;
+  max-width: 700px;
+  max-height: 80vh;
+  border-radius: 12px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.content {
+  overflow-y: auto;
+  max-height: 60vh;
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.copyBtn {
+  background: #f5efe6;
+  border: 1px solid #d8c4a2;
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.copyBtn:hover {
+  background: #ede1cf;
+}
+
+.copyBtn:active {
+  transform: scale(0.97);
+}
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.actions button {
+  background: #f5efe6;
+  border: 1px solid #d8c4a2;
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.actions button:hover {
+  background: #ede1cf;
+}
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+
+/* Modal container */
+.modal {
+  background: #fff;
+  width: min(92vw, 720px);
+  height: min(85vh, 720px);
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* Header */
+.modalHeader {
+  flex-shrink: 0;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid #e6d8c5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff8ee;
+}
+
+/* Header buttons */
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.headerActions button {
+  background: #f5efe6;
+  border: 1px solid #d8c4a2;
+  border-radius: 999px;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Scrollable body */
+.modalBody {
+  padding: 1rem;
+  overflow-y: auto;
+  flex: 1;
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+/* Mobile improvements */
+@media (max-width: 600px) {
+  .modal {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+  }
+
+  .modalHeader h2 {
+    font-size: 1rem;
+  }
+
+  .headerActions button {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.6rem;
+  }
+}
+
+
