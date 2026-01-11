@@ -18,6 +18,36 @@ export default function FloatingVideoPlayer({
   const [isLandscape, setIsLandscape] = React.useState(window.innerWidth > window.innerHeight);
   const [showTtsWarning, setShowTtsWarning] = React.useState(false);
   const timeoutRef = React.useRef(null);
+  const [copied, setCopied] = React.useState(false);
+
+async function copyLink() {
+  const text = window.location.href;
+
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+    } else {
+      // Fallback for older browsers/webviews (like Instagram)
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.style.position = "fixed";
+      textarea.style.left = "-9999px";
+      textarea.style.top = "-9999px";
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+      document.execCommand("copy");
+      textarea.remove();
+    }
+
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  } catch (err) {
+    alert("Could not copy link. Please copy it manually.");
+  }
+}
+
+
 
   React.useEffect(() => {
     const handleResize = () => setIsLandscape(window.innerWidth > window.innerHeight);
@@ -45,15 +75,28 @@ export default function FloatingVideoPlayer({
   }
 
   // ✅ Render warning via portal outside wrapper
-  const warningDialog = !ttsSupported && showTtsWarning
-    ? ReactDOM.createPortal(
-        <div className={styles.ttsWarningOverlay}>
-          <div className={styles.ttsWarningBox}>
-           <h3>Speech Not Supported</h3>
-<p>
-  Oops! Your browser doesn’t support the speech feature.  
-  For the best experience, please try using Chrome, Edge, or Safari.
-</p>
+ const warningDialog = !ttsSupported && showTtsWarning
+  ? ReactDOM.createPortal(
+      <div className={styles.ttsWarningOverlay}>
+        <div className={styles.ttsWarningBox}>
+          <h3>Speech Not Supported</h3>
+
+          <p>
+            Oops! Your browser doesn’t support the speech feature.  
+            For the best experience, please try using Chrome, Edge, or Safari.
+          </p>
+
+          <p style={{ fontSize: "13px", opacity: 0.8 }}>
+            Tip: If you're using Instagram browser → tap ⋮ and choose <b>Open in Browser</b>.
+          </p>
+
+          <div style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
+            <button
+              className={styles.ttsWarningButton}
+              onClick={copyLink}
+            >
+              {copied ? "Copied ✅" : "Copy Link"}
+            </button>
 
             <button
               className={styles.ttsWarningButton}
@@ -62,10 +105,12 @@ export default function FloatingVideoPlayer({
               OK
             </button>
           </div>
-        </div>,
-        document.body
-      )
-    : null;
+        </div>
+      </div>,
+      document.body
+    )
+  : null;
+
 
   return (
     <>
