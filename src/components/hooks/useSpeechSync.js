@@ -12,6 +12,7 @@ export function useSpeechSync({
   currentSubtitle,
   currentTime,
   lang,
+  isBrowserTranslateOn=true,
 }) {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [volume, setVolume] = useState(100);
@@ -19,7 +20,36 @@ export function useSpeechSync({
   const lastSpokenRef = useRef('');
   const [playerReady, setPlayerReady] = useState(false);
 
+
   const isSSMLSupported = useSSMLSupportTest();
+
+function normalizeTextForCompare(t) {
+  return (t || "")
+    .replace(/\s+/g, " ")
+    .replace(/\u00A0/g, " ") // nbsp
+    .trim()
+    .toLowerCase();
+}
+  const translatedDomRef = useRef("");
+
+useEffect(() => {
+  if (!isBrowserTranslateOn) return;
+
+  const el = document.getElementById("subtitle-dom");
+  if (!el) return;
+
+  const update = () => {
+    translatedDomRef.current = (el.innerText || el.textContent || "").trim();
+  };
+
+  update();
+
+  const obs = new MutationObserver(() => update());
+  obs.observe(el, { childList: true, subtree: true, characterData: true });
+
+  return () => obs.disconnect();
+}, [isBrowserTranslateOn]);
+
 
   // Sync volume once player is available
   useEffect(() => {
@@ -86,6 +116,9 @@ function getSmoothedAdjustedRate(wps, rawRate) {
 }
 
 
+function normalizeColonNumbers(text) {
+  return text.replace(/\b(\d{1,3}):(\d{1,3})\b/g, '$1 $2');
+}
 
 
   const voice = useSelectedVoice(lang);
@@ -97,42 +130,56 @@ function getSmoothedAdjustedRate(wps, rawRate) {
     lastSpokenRef.current = '';
   }
 
-  if (lastSpokenRef.current === currentSubtitle) return;
-  lastSpokenRef.current = currentSubtitle;
-
-  const currentSub = subtitles.find(
-  (sub) => currentTime >= sub.startSeconds && currentTime < sub.endSeconds
-);
-function normalizeColonNumbers(text) {
-  return text.replace(/\b(\d{1,3}):(\d{1,3})\b/g, '$1 $2');
-}
-
-
-const subtitleDuration = currentSub?.duration ?? 3;
-
-  const wordCount = currentSubtitle.trim().split(/\s+/).length;
-
-  // Get the utterance voice if possible
-  let wps = 2; // default fallback
-
-  // Prepare the text first to create utterance and get voice
+  // ✅ Build cleaned subtitle text
   let textToSpeak = currentSubtitle
-  // Remove content inside square brackets
-  .replace(/\[[^\]]*\]/g, '')  
-  // Remove ellipses or multiple dots
-  .replace(/\.{2,}/g, '')      
-  // Remove standalone punctuation like -- or ***
-  .replace(/[-*]{2,}/g, '')    
-  // Replace V.P. with VP
-  .replace(/\b(V\.P\.)\b/g, 'VP')
-  // ✅ Replace Kreupasanam with Kripaasanam for better pronunciation
-  .replace(/\bKreupasanam\b/gi, 'Kri-paasenam')
-  // Trim whitespace
-  .trim();
+    .replace(/\[[^\]]*\]/g, '')   // Remove [Music] etc
+    .replace(/\.{2,}/g, '')       // Remove ellipses
+    .replace(/[-*]{2,}/g, '')     // Remove --- or ***
+    .replace(/\b(V\.P\.)\b/g, 'VP')
+    .replace(/\bKreupasanam\b/gi, 'Kri-paasenam')
+    .trim();
+
   textToSpeak = normalizeColonNumbers(textToSpeak);
 
+  // ✅ Default speech is cleaned subtitle
+  let textSource = textToSpeak;
 
-  const utterance = new SpeechSynthesisUtterance(textToSpeak);
+  // ✅ If browser translate ON, wait and speak only translated DOM text
+  if (isBrowserTranslateOn) {
+    const domText = translatedDomRef.current;
+
+    const normDom = normalizeTextForCompare(domText);
+    const normOriginal = normalizeTextForCompare(currentSubtitle);
+
+    // wait until DOM exists and differs (meaning translation happened)
+    if (!normDom) return;
+    if (normDom === normOriginal) return;
+
+    textSource = domText;
+  }
+
+  // ✅ speakKey MUST be exactly what you're speaking
+  const speakKey = textSource;
+
+  if (lastSpokenRef.current === speakKey) return;
+  lastSpokenRef.current = speakKey;
+
+  // ✅ Now compute subtitle duration
+  const currentSub = subtitles.find(
+    (sub) => currentTime >= sub.startSeconds && currentTime < sub.endSeconds
+  );
+
+  const subtitleDuration = currentSub?.duration ?? 3;
+
+  // ✅ IMPORTANT:
+  // Word count should match what you're speaking (translated or not)
+  const wordCount = textSource.trim().split(/\s+/).filter(Boolean).length;
+
+  // WPS fallback
+  let wps = 2;
+
+  // ✅ Create utterance from FINAL textSource
+  const utterance = new SpeechSynthesisUtterance(textSource);
   function lengthFactor(text) {
     const words = text.trim().split(/\s+/);
     if (words.length === 0) return 1;

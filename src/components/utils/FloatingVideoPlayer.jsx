@@ -176,7 +176,7 @@ async function copyLink() {
         </div>
 
         {currentSubtitle && (
-          <div className={styles.subtitleBox}>{currentSubtitle}</div>
+          <div id='subtitle-dom' className={styles.subtitleBox}>{currentSubtitle}</div>
         )}
       </div>
 
