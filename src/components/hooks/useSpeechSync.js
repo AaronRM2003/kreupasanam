@@ -12,7 +12,7 @@ export function useSpeechSync({
   currentSubtitle,
   currentTime,
   lang,
-  isBrowserTranslateOn=true,
+  isBrowserTranslateOn=false,
 }) {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [volume, setVolume] = useState(100);
