@@ -293,10 +293,23 @@ if (utterance.voice?.name) {
 } else {
   utterance.lang = lang || "en-US";
 }
+utterance.onstart = () => console.log("✅ TTS started:", utterance.lang, utterance.voice?.name);
+utterance.onend = () => console.log("✅ TTS ended");
+utterance.onerror = (e) => console.log("❌ TTS error:", e);
 
- const synth = window.speechSynthesis;
-if (synth.speaking || synth.pending) synth.cancel();
-synth.speak(utterance);
+const synth = window.speechSynthesis;
+
+// 🔥 if Chrome is paused, it will be silent without resume()
+synth.resume();
+
+// 🔥 Chrome bug workaround: cancel + delayed speak
+synth.cancel();
+
+setTimeout(() => {
+  synth.resume();          // resume again just in case
+  synth.speak(utterance);
+}, 80);
+
 
 }, [isSpeaking, showVideo, currentSubtitle, subtitles, lang, playerRef, isSSMLSupported]);
 
