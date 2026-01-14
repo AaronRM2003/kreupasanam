@@ -180,6 +180,7 @@ function normalizeColonNumbers(text) {
 
   // ✅ Create utterance from FINAL textSource
   const utterance = new SpeechSynthesisUtterance(textSource);
+
   function lengthFactor(text) {
     const words = text.trim().split(/\s+/);
     if (words.length === 0) return 1;
@@ -286,6 +287,12 @@ if (utterance.voice?.name) {
   }
 
   utterance.rate = speechRate;
+    if (isBrowserTranslateOn) {
+  utterance.lang = "hi-IN";      // ✅ speak as Hindi
+  utterance.voice = null;        // ✅ let browser pick Hindi voice
+} else {
+  utterance.lang = lang || "en-US";
+}
 
  const synth = window.speechSynthesis;
 if (synth.speaking || synth.pending) synth.cancel();
