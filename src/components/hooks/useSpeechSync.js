@@ -146,17 +146,24 @@ function normalizeColonNumbers(text) {
 
   // ✅ If browser translate ON, wait and speak only translated DOM text
   if (isBrowserTranslateOn) {
-    const domText = translatedDomRef.current;
+  const domText = translatedDomRef.current;
+  const normDom = normalizeTextForCompare(domText);
+  const normOriginal = normalizeTextForCompare(currentSubtitle);
 
-    const normDom = normalizeTextForCompare(domText);
-    const normOriginal = normalizeTextForCompare(currentSubtitle);
+  console.log("TTS translate check:", { domText, normDom, normOriginal });
 
-    // wait until DOM exists and differs (meaning translation happened)
-    if (!normDom) return;
-    if (normDom === normOriginal) return;
-
-    textSource = domText;
+  if (!normDom) {
+    console.log("RETURN: dom empty");
+    return;
   }
+  if (normDom === normOriginal) {
+    console.log("RETURN: dom equals original");
+    return;
+  }
+
+  textSource = domText;
+}
+
 
   // ✅ speakKey MUST be exactly what you're speaking
   const speakKey = textSource;
@@ -296,6 +303,7 @@ if (utterance.voice?.name) {
 utterance.onstart = () => console.log("✅ TTS started:", utterance.lang, utterance.voice?.name);
 utterance.onend = () => console.log("✅ TTS ended");
 utterance.onerror = (e) => console.log("❌ TTS error:", e);
+console.log("ABOUT TO SPEAK:", textSource);
 
 const synth = window.speechSynthesis;
 
