@@ -31,6 +31,34 @@ function normalizeTextForCompare(t) {
     .toLowerCase();
 }
   const translatedDomRef = useRef("");
+  function readSubtitleDom() {
+  const el = document.getElementById("subtitle-dom");
+  return (el?.innerText || el?.textContent || "").trim();
+}
+
+function sleep(ms) {
+  return new Promise((r) => setTimeout(r, ms));
+}
+
+async function waitForTranslatedDomText(original, timeoutMs = 250) {
+  const start = performance.now();
+  const normOriginal = normalizeTextForCompare(original);
+
+  while (performance.now() - start < timeoutMs) {
+    const domText = readSubtitleDom();
+    const normDom = normalizeTextForCompare(domText);
+
+    // if DOM exists and differs from original => translation caught
+    if (normDom && normDom !== normOriginal) return domText;
+
+    // wait for next frame (better than setTimeout(0))
+    await new Promise(requestAnimationFrame);
+  }
+
+  // if we failed to catch translation within timeout, return latest DOM anyway
+  return readSubtitleDom();
+}
+
 
 useEffect(() => {
   if (!isBrowserTranslateOn) return;
@@ -125,6 +153,9 @@ function normalizeColonNumbers(text) {
 
   const voice = useSelectedVoice(lang);
   useEffect(() => {
+     let cancelled = false;
+
+  const run = async () => {
   if (!isSpeaking || !showVideo || !currentSubtitle || subtitles.length === 0) return;
 
   if (!hasStartedSpeakingRef.current) {
@@ -147,27 +178,14 @@ function normalizeColonNumbers(text) {
   let textSource = textToSpeak;
 
   // ✅ If browser translate ON, wait and speak only translated DOM text
-  if (isBrowserTranslateOn) {
-  const domText =
-  translatedDomRef.current ||
-  document.getElementById("subtitle-dom")?.innerText ||
-  "";
+if (isBrowserTranslateOn) {
+  // 👇 actively wait a few frames to catch translated DOM
+  const translated = await waitForTranslatedDomText(currentSubtitle, 300);
 
-  const normDom = normalizeTextForCompare(domText);
-  const normOriginal = normalizeTextForCompare(currentSubtitle);
+  const normTranslated = normalizeTextForCompare(translated);
+  if (!normTranslated) return;
 
-  console.log("TTS translate check:", { domText, normDom, normOriginal });
-
-  if (!normDom) {
-    console.log("RETURN: dom empty");
-    return;
-  }
-  if (normDom === normOriginal) {
-    console.log("RETURN: dom equals original");
-    return;
-  }
-
-  textSource = domText;
+  textSource = translated;
 }
 
 
@@ -323,7 +341,9 @@ setTimeout(() => {
   synth.resume();          // resume again just in case
   synth.speak(utterance);
 }, 80);
-
+  };
+  run();
+  return () => { cancelled = true; };
 
 }, [isSpeaking, showVideo, currentSubtitle, subtitles, lang, playerRef, isSSMLSupported]);
 
