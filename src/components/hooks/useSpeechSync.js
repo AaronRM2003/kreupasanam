@@ -35,20 +35,22 @@ function normalizeTextForCompare(t) {
 useEffect(() => {
   if (!isBrowserTranslateOn) return;
 
-  const el = document.getElementById("subtitle-dom");
-  if (!el) return;
+  const wrapper = document.getElementById("subtitle-wrapper");
+  if (!wrapper) return;
 
   const update = () => {
-    translatedDomRef.current = (el.innerText || el.textContent || "").trim();
+    const el = document.getElementById("subtitle-dom");
+    translatedDomRef.current = (el?.innerText || el?.textContent || "").trim();
   };
 
-  update();
+  update(); // initial read
 
-  const obs = new MutationObserver(() => update());
-  obs.observe(el, { childList: true, subtree: true, characterData: true });
+  const obs = new MutationObserver(update);
+  obs.observe(wrapper, { childList: true, subtree: true, characterData: true });
 
   return () => obs.disconnect();
 }, [isBrowserTranslateOn]);
+
 
 
   // Sync volume once player is available
@@ -146,7 +148,11 @@ function normalizeColonNumbers(text) {
 
   // ✅ If browser translate ON, wait and speak only translated DOM text
   if (isBrowserTranslateOn) {
-  const domText = translatedDomRef.current;
+  const domText =
+  translatedDomRef.current ||
+  document.getElementById("subtitle-dom")?.innerText ||
+  "";
+
   const normDom = normalizeTextForCompare(domText);
   const normOriginal = normalizeTextForCompare(currentSubtitle);
 

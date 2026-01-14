@@ -175,9 +175,14 @@ async function copyLink() {
           )}
         </div>
 
-        {currentSubtitle && (
-          <div id='subtitle-dom' className={styles.subtitleBox}>{currentSubtitle}</div>
-        )}
+      <div id="subtitle-wrapper">
+  {currentSubtitle && (
+    <div id="subtitle-dom" className={styles.subtitleBox}>
+      {currentSubtitle}
+    </div>
+  )}
+</div>
+
       </div>
 
       {/* Warning overlay injected outside wrapper */}
