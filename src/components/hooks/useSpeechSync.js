@@ -287,9 +287,11 @@ if (utterance.voice?.name) {
 
   utterance.rate = speechRate;
 
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(utterance);
-}, [isSpeaking, showVideo, currentSubtitle, currentTime, subtitles, lang, playerRef, isSSMLSupported]);
+ const synth = window.speechSynthesis;
+if (synth.speaking || synth.pending) synth.cancel();
+synth.speak(utterance);
+
+}, [isSpeaking, showVideo, currentSubtitle, subtitles, lang, playerRef, isSSMLSupported]);
 
 
   useEffect(() => {
