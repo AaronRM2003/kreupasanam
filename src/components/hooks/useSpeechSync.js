@@ -21,7 +21,11 @@ export function useSpeechSync({
   const hasStartedSpeakingRef = useRef(false);
   const lastSpokenRef = useRef('');
   const [playerReady, setPlayerReady] = useState(false);
-  const effectiveLang = userLang || lang;
+const acceptedUserLang =
+  isBrowserTranslateOn && userLang && isLangAcceptedExactly(userLang);
+
+const effectiveLang = acceptedUserLang ? userLang : lang;
+
   const translationDelayRef = useRef(0);
 
 
@@ -193,8 +197,7 @@ function isLangAcceptedExactly(langTag) {
     hasStartedSpeakingRef.current = true;
     lastSpokenRef.current = '';
   }
-  const shouldSpeakTranslated =
-  isBrowserTranslateOn && userLang && isLangAcceptedExactly(userLang);
+  const shouldSpeakTranslated = acceptedUserLang;
 
   let margin = 0.10;
 
