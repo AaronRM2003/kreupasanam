@@ -403,19 +403,28 @@ function shortCode(langTag) {
       speechStartTime = performance.now();
     };
 
-    utterance.onerror = () => {
-      console.error("Speech synthesis error");
-      setIsLoadingTest(false);
-      playVideo();
-      utteranceRef.current = null;
-    };
+    utterance.onerror = (e) => {
+  // ✅ interrupted is normal when we cancel/replace speech
+  if (e?.error === "interrupted" || e?.error === "canceled") {
+    setIsLoadingTest(false);
+    // ✅ DO NOT close test screen
+    utteranceRef.current = null;
+    return;
+  }
 
-    utterance.onpause = () => {
-      setIsLoadingTest(false);
-      setShowTestScreen(false);
-      playVideo();
-      utteranceRef.current = null;
-    };
+  console.error("Speech synthesis error", e);
+  setIsLoadingTest(false);
+  // ✅ Keep screen open so user can retry
+  utteranceRef.current = null;
+};
+
+
+   utterance.onpause = () => {
+  setIsLoadingTest(false);
+  // ✅ do not close screen automatically
+  utteranceRef.current = null;
+};
+
 
     utterance.onend = () => {
       if (!utteranceRef.current) return;
