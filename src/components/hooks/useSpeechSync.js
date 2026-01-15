@@ -22,7 +22,7 @@ export function useSpeechSync({
   const lastSpokenRef = useRef('');
   const [playerReady, setPlayerReady] = useState(false);
 const acceptedUserLang =
-  lang=="en" && isBrowserTranslateOn && userLang && isLangAcceptedExactly(userLang);
+  isBrowserTranslateOn && userLang && isLangAcceptedExactly(userLang);
 
 const effectiveLang = acceptedUserLang ? userLang : lang;
 
