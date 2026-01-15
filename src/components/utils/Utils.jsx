@@ -316,6 +316,44 @@ export function timeStringToSeconds(timeStr) {
   return 0;
 }
 
+// utils/browserTranslate.js
+export function detectBrowserTranslateLang() {
+  if (typeof window === "undefined") return null;
+
+  const html = document.documentElement;
+
+  const isTranslated =
+    html.classList.contains("translated-ltr") ||
+    html.classList.contains("translated-rtl");
+
+  if (!isTranslated) return null;
+
+  // Usually becomes "hi", "ta", "te" etc. Sometimes may become "hi-IN"
+  const lang = html.getAttribute("lang") || "";
+
+  return lang ? lang : null;
+}
+
+// optional: normalize to BCP-47 locale
+export function normalizeToLocale(lang) {
+  if (!lang) return null;
+  const short = lang.toLowerCase();
+
+  // if already like hi-IN keep as is
+  if (lang.includes("-")) return lang;
+
+  // map short → locale (for speech synth voices)
+  if (short === "hi") return "hi-IN";
+  if (short === "ta") return "ta-IN";
+  if (short === "te") return "te-IN";
+  if (short === "ml") return "ml-IN";
+  if (short === "kn") return "kn-IN";
+  if (short === "mr") return "mr-IN";
+  if (short === "bn") return "bn-IN";
+
+  return lang;
+}
+
 // Generate share text snippet for testimony preview
 export function generateShareText(testimony, lang, currentUrl, text, includeFullContent = false,youtubeLink) {
   if (!testimony) return '';

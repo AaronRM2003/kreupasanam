@@ -13,12 +13,16 @@ export function useSpeechSync({
   currentTime,
   lang,
   isBrowserTranslateOn=false,
+    userLang = null,  // ✅ new
+
 }) {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [volume, setVolume] = useState(100);
   const hasStartedSpeakingRef = useRef(false);
   const lastSpokenRef = useRef('');
   const [playerReady, setPlayerReady] = useState(false);
+  const effectiveLang = userLang || lang;
+
 
 
   const isSSMLSupported = useSSMLSupportTest();
@@ -151,7 +155,7 @@ function normalizeColonNumbers(text) {
 }
 
 
-  const voice = useSelectedVoice(lang);
+  const voice = useSelectedVoice(effectiveLang);
   useEffect(() => {
      let cancelled = false;
 
@@ -263,7 +267,7 @@ if (isBrowserTranslateOn) {
 }
 
 
- const savedVoiceName = localStorage.getItem(`${lang}`);
+ const savedVoiceName = localStorage.getItem(`${effectiveLang}`);
 const voices = window.speechSynthesis.getVoices();
 const matchedVoice = voices.find(v => v.name === savedVoiceName);
 utterance.voice = matchedVoice || voice || null;
@@ -271,7 +275,7 @@ console.log(voice, matchedVoice, savedVoiceName);
 utterance.lang = lang || 'en-US';
 
 if (utterance.voice?.name) {
-  const testKey = `voice_test_data_${lang}`;
+  const testKey = `voice_test_data_${effectiveLang}`;
   const storedData = localStorage.getItem(testKey);
 
   if (storedData) {
@@ -318,12 +322,13 @@ if (utterance.voice?.name) {
   }
 
   utterance.rate = speechRate;
-    if (isBrowserTranslateOn) {
-  utterance.lang = "hi-IN";      // ✅ speak as Hindi
-  utterance.voice = null;        // ✅ let browser pick Hindi voice
+    if (isBrowserTranslateOn && userLang) {
+  utterance.lang = userLang;   // ✅ speak translated language
+  utterance.voice = null;      // ✅ let browser pick best voice for lang
 } else {
   utterance.lang = lang || "en-US";
 }
+
 utterance.onstart = () => console.log("✅ TTS started:", utterance.lang, utterance.voice?.name);
 utterance.onend = () => console.log("✅ TTS ended");
 utterance.onerror = (e) => console.log("❌ TTS error:", e);

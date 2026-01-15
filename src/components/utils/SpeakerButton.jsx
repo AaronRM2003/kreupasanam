@@ -11,6 +11,8 @@ export default function SubtitleVoiceControls({
   handleVolumeChange,
   playerRef,
   lang,
+
+  userLang,
 }) {
   const [showControls, setShowControls] = useState(false);
   const [isInteracting, setIsInteracting] = useState(false);
@@ -21,6 +23,8 @@ export default function SubtitleVoiceControls({
   const [controlsVisible, setControlsVisible] = useState(false);
   const [showTestScreen, setShowTestScreen] = useState(false);
   const [isLoadingTest, setIsLoadingTest] = useState(false);
+  const effectiveLang = userLang || lang;
+
 
   // Keep all available voices from system
   const [systemVoices, setSystemVoices] = useState([]);
@@ -32,28 +36,28 @@ export default function SubtitleVoiceControls({
   const utteranceRef = useRef(null);
   const pauseCheckInterval = useRef(null);
 
-  const voiceFromHook = useSelectedVoice(lang);
+  const voiceFromHook = useSelectedVoice(effectiveLang);
   
   // Load system voices on mount and when voices changed
   useEffect(() => {
   function loadVoices() {
     const allVoices = window.speechSynthesis.getVoices();
     const filteredVoices = allVoices.filter(voice =>
-      voice.lang.toLowerCase().startsWith(lang.toLowerCase())
+      voice.lang.toLowerCase().startsWith(effectiveLang.toLowerCase())
     );
     setSystemVoices(filteredVoices);
   }
 
   loadVoices();
   window.speechSynthesis.onvoiceschanged = loadVoices;
-}, [lang]);
+}, [effectiveLang]);
 
   // When voiceFromHook or systemVoices change, update testVoice and tested state
   useEffect(() => {
     if (!voiceFromHook) return;
 
     // Try to find the exact voiceFromHook in system voices
-    const savedVoiceName = localStorage.getItem(`${lang}`);
+    const savedVoiceName = localStorage.getItem(`${effectiveLang}`);
     const voices = window.speechSynthesis.getVoices();
     const matchedVoice = voices.find(v => v.voiceURI === savedVoiceName);
     console.log("matched voice",matchedVoice,savedVoiceName);
@@ -61,7 +65,7 @@ export default function SubtitleVoiceControls({
     setTestVoice(match);
 
     // Check if tested
-    const testKey = `voice_test_data_${lang}`;
+    const testKey = `voice_test_data_${effectiveLang}`;
     const storedData = localStorage.getItem(testKey);
     
     let tested = false;
@@ -365,6 +369,9 @@ if (storedData) {
   toggleSpeaking();
 };
 
+function shortCode(langTag) {
+  return (langTag || "en").split("-")[0].toLowerCase();
+}
 
   // Start the voice test reading and measure speed
   const startAccurateVoiceTest = () => {
@@ -372,10 +379,10 @@ if (storedData) {
 
     setIsLoadingTest(true);
 
-    const sentence = testSentences[lang] || "This is a quick test to ensure subtitles are read correctly in your selected voice.";
+    const sentence = testSentences[shortCode(effectiveLang)] || "This is a quick test to ensure subtitles are read correctly in your selected voice.";
     const utterance = new SpeechSynthesisUtterance(sentence);
     utterance.voice = testVoice;
-    utterance.lang = lang;
+    utterance.lang = effectiveLang;
 
     utteranceRef.current = utterance;
 
@@ -431,7 +438,7 @@ if (storedData) {
       allTestData[testVoice.voiceURI] = testData;
 
       localStorage.setItem(testKey, JSON.stringify(allTestData));
-      localStorage.setItem(`${lang}`,testVoice.voiceURI);
+      localStorage.setItem(`${effectiveLang}`,testVoice.voiceURI);
       console.log("accuratetest - ", localStorage.getItem(`voice_test_data_${lang}`), "langitem-",localStorage.getItem(`${lang}`));
       setAlreadyTested(true); // Mark tested after success
       setShowTestScreen(false);
@@ -471,7 +478,7 @@ if (storedData) {
     setTestVoice(newVoice);
     console.log("alreadytested",alreadyTested);
     if(alreadyTested){
-      localStorage.setItem(`${lang}`, newVoice.voiceURI);
+      localStorage.setItem(`${effectiveLang}`, newVoice.voiceURI);
       if(!isSpeaking)
         toggleSpeaking();
     }
@@ -611,7 +618,7 @@ if (storedData) {
    {showTestScreen && (
         <VoiceTestScreen
           voice={testVoice}
-          lang={lang}
+          lang={effectiveLang}
           testSentences={testSentences}
           isLoadingTest={isLoadingTest}
           startAccurateVoiceTest={startAccurateVoiceTest}

@@ -10,6 +10,7 @@ import {
   preloadImages,
   LanguageDropdown,
   ShareModal,
+  detectBrowserTranslateLang,
 } from '../components/utils/Utils';
 
 import { useYouTubePlayer } from '../components/hooks/useYoutubePlayer';
@@ -33,6 +34,7 @@ export default function TestimonyPage({ lang: initialLang }) {
   const [errorLoading, setErrorLoading] = useState(false);
   const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
   const [showTranscript, setShowTranscript] = useState(false);
+  const [userLang, setUserLang] = useState(null);
 
   // Parse id and slug from idSlug param
   // Assuming idSlug is from useParams()
@@ -119,6 +121,26 @@ const overlayData = testimony?.overlay ?? null;
 
   // Generate share text when dependencies change
 
+  useEffect(() => {
+  if (typeof window === "undefined") return;
+
+  const update = () => {
+    const detected = detectBrowserTranslateLang();
+    setUserLang(detected ? normalizeToLocale(detected) : null);
+  };
+
+  update();
+
+  // Observe html changes because translate modifies html class/lang
+  const obs = new MutationObserver(update);
+  obs.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["class", "lang"],
+  });
+
+  return () => obs.disconnect();
+}, []);
+
 const shareText = useMemo(() => {
   if (!testimony || typeof window === 'undefined') return '';
 
@@ -143,6 +165,7 @@ const shareText = useMemo(() => {
   const { subtitles, currentSubtitle } = useSubtitles(subtitlesUrl, lang, currentTime);
   
   const ttsSupported = typeof window !== 'undefined' && !!window.speechSynthesis;
+  const isBrowserTranslateOn = !!userLang;
 
   // Speech sync & volume control hook
 const {
@@ -159,6 +182,9 @@ const {
       currentSubtitle,
       currentTime,
       lang,
+
+      isBrowserTranslateOn,
+      userLang, // ✅ new
     })
   : {};
 
@@ -399,6 +425,8 @@ const handleClick = () => {
     currentSubtitle={currentSubtitle}
     ttsSupported={ttsSupported} // optional: hide Speak button if false
     onClose={() => setShowVideo(false)}
+
+    userLang={userLang}
   />
 )}
 

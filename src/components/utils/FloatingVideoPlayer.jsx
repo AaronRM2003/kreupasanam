@@ -13,6 +13,8 @@ export default function FloatingVideoPlayer({
   currentSubtitle,
   onClose,
   ttsSupported = false,
+
+  userLang = null,
 }) {
   const [showCloseButton, setShowCloseButton] = React.useState(false);
   const [isLandscape, setIsLandscape] = React.useState(window.innerWidth > window.innerHeight);
@@ -170,6 +172,8 @@ async function copyLink() {
                 handleVolumeChange={handleVolumeChange}
                 playerRef={playerRef}
                 lang={lang}
+
+                userLang={userLang}
               />
             </div>
           )}
