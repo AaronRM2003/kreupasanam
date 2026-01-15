@@ -406,7 +406,6 @@ function shortCode(langTag) {
     utterance.onerror = () => {
       console.error("Speech synthesis error");
       setIsLoadingTest(false);
-      setShowTestScreen(false);
       playVideo();
       utteranceRef.current = null;
     };
