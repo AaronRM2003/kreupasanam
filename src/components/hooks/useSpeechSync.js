@@ -174,6 +174,10 @@ function getSmoothedAdjustedRate(wps, rawRate, margin) {
 function normalizeColonNumbers(text) {
   return text.replace(/\b(\d{1,3}):(\d{1,3})\b/g, '$1 $2');
 }
+function isLangAcceptedExactly(langTag) {
+  if (!langTag) return false;
+  return !!localStorage.getItem(langTag); // ✅ exact key only
+}
 
 
   const voice = useSelectedVoice(effectiveLang);
@@ -189,6 +193,9 @@ function normalizeColonNumbers(text) {
     hasStartedSpeakingRef.current = true;
     lastSpokenRef.current = '';
   }
+  const shouldSpeakTranslated =
+  isBrowserTranslateOn && userLang && isLangAcceptedExactly(userLang);
+
   let margin = 0.10;
 
   // ✅ Build cleaned subtitle text
@@ -207,7 +214,7 @@ function normalizeColonNumbers(text) {
 
   // ✅ If browser translate ON, wait and speak only translated DOM text
 
-if (isBrowserTranslateOn) {
+if (shouldSpeakTranslated) {
   const { text: translated, delayMs } = await waitForTranslatedDomTextStable(
     currentSubtitle,
     {
@@ -265,7 +272,7 @@ if (!isBrowserTranslateOn) {
   const subtitleDuration = currentSub?.duration ?? 3;
   let effectiveDuration = subtitleDuration;
 
-if (isBrowserTranslateOn) {
+if (shouldSpeakTranslated) {
   effectiveDuration = subtitleDuration - translationDelayRef.current;
 
   // never let it go too low (otherwise rawRate explodes)
@@ -388,7 +395,7 @@ if (utterance.voice?.name) {
   }
 
   utterance.rate = speechRate;
-    if (isBrowserTranslateOn && userLang) {
+    if (shouldSpeakTranslated) {
   utterance.lang = userLang;   // ✅ speak translated language
   utterance.voice = null;      // ✅ let browser pick best voice for lang
 } else {
