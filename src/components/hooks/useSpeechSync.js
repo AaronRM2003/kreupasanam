@@ -139,7 +139,7 @@ useEffect(() => {
 
 
 const maxStepUp = 0.5;
-let margin = 0.10; // default margin
+ // default margin
 
 
 const lastAdjustedRateRef = useRef(1);
@@ -189,6 +189,7 @@ function normalizeColonNumbers(text) {
     hasStartedSpeakingRef.current = true;
     lastSpokenRef.current = '';
   }
+  let margin = 0.10;
 
   // ✅ Build cleaned subtitle text
   let textToSpeak = currentSubtitle
