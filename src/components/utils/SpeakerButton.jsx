@@ -378,20 +378,13 @@ function shortCode(langTag) {
 }
 
   // Start the voice test reading and measure speed
-  const startAccurateVoiceTest = (testSentence) => {
-  let sentence = (testSentence || "").trim();
-
-  // ✅ If base language is not English, always use predefined sentence
-  if (lang !== "en") {
-    sentence =
-      testSentences[shortCode(effectiveLang)] ||
-      "This is a quick test to ensure subtitles are read correctly in your selected voice.";
-  }
-  if (!sentence) return;
+  const startAccurateVoiceTest = () => {
     if (!testVoice) return;
 
     setIsLoadingTest(true);
-     const utterance = new SpeechSynthesisUtterance(sentence);
+
+    const sentence = testSentences[shortCode(effectiveLang)] || "This is a quick test to ensure subtitles are read correctly in your selected voice.";
+    const utterance = new SpeechSynthesisUtterance(sentence);
     utterance.voice = testVoice;
     utterance.lang = effectiveLang;
 
@@ -434,7 +427,7 @@ function shortCode(langTag) {
         voiceURI: testVoice.voiceURI,
         lang: testVoice.lang,
       };
-      const testKey = `voice_test_data_${effectiveLang}`;
+      const testKey = `voice_test_data_${lang}`;
       const storedData = localStorage.getItem(testKey);
       let allTestData = {};
 
@@ -450,7 +443,7 @@ function shortCode(langTag) {
 
       localStorage.setItem(testKey, JSON.stringify(allTestData));
       localStorage.setItem(`${effectiveLang}`,testVoice.voiceURI);
-      console.log("accuratetest - ", localStorage.getItem(`voice_test_data_${effectiveLang}`), "langitem-",localStorage.getItem(`${effectiveLang}`));
+      console.log("accuratetest - ", localStorage.getItem(`voice_test_data_${lang}`), "langitem-",localStorage.getItem(`${lang}`));
       setAlreadyTested(true); // Mark tested after success
       setShowTestScreen(false);
       setIsLoadingTest(false);
