@@ -22,6 +22,8 @@ export function useSpeechSync({
   const lastSpokenRef = useRef('');
   const [playerReady, setPlayerReady] = useState(false);
   const effectiveLang = userLang || lang;
+  const translationDelayRef = useRef(0);
+
 
 
 
@@ -135,47 +137,38 @@ useEffect(() => {
     }
   }, [isSpeaking, showVideo]);
 
-const baseMargin = 0.10;
-const translatedBaseExtra = 0.001; // extra margin in translate mode
-const dynamicExtra = Math.min(0.10, translationDelaySec * 0.06); // delay-based
-const margin = isBrowserTranslateOn
-  ? baseMargin + translatedBaseExtra + dynamicExtra
-  : baseMargin;
 
 const maxStepUp = 0.5;
+let margin = 0.10; // default margin
+
 
 const lastAdjustedRateRef = useRef(1);
 
-function adjustedRateFixedSpeech(wps, rawRate) {
+function adjustedRateFixedSpeech(wps, rawRate, margin) {
   const k = rawRate / wps;
-  const speechRate = 1;
-  let adjustedRate = speechRate / k;
+  let adjustedRate = 1 / k;
   adjustedRate -= margin;
-  if (adjustedRate > 1) adjustedRate = 1;
-  if (adjustedRate < 0) adjustedRate = 0;
-  return adjustedRate;
+  return Math.max(0, Math.min(1, adjustedRate));
 }
 
-function getSmoothedAdjustedRate(wps, rawRate) {
-  const targetAdjustedRate = adjustedRateFixedSpeech(wps, rawRate);
+function getSmoothedAdjustedRate(wps, rawRate, margin) {
+  const targetAdjustedRate = adjustedRateFixedSpeech(wps, rawRate, margin);
+
   const lastAdj = lastAdjustedRateRef.current;
 
   if (targetAdjustedRate < lastAdj) {
-    // Decreasing: jump immediately
     lastAdjustedRateRef.current = targetAdjustedRate;
     return parseFloat(targetAdjustedRate.toFixed(4));
   } else if (targetAdjustedRate > lastAdj) {
-    // Increasing: increase gradually by maxStepUp
     let newAdjRate = lastAdj + maxStepUp;
     if (newAdjRate > targetAdjustedRate) newAdjRate = targetAdjustedRate;
-    console.log(targetAdjustedRate,newAdjRate);
     lastAdjustedRateRef.current = newAdjRate;
     return parseFloat(newAdjRate.toFixed(4));
   } else {
-    // Equal
     return parseFloat(lastAdj.toFixed(4));
   }
 }
+
 
 
 function normalizeColonNumbers(text) {
@@ -184,7 +177,7 @@ function normalizeColonNumbers(text) {
 
 
   const voice = useSelectedVoice(effectiveLang);
-  let translationDelaySec = 0;
+  // let translationDelaySec = 0;
 
   useEffect(() => {
      let cancelled = false;
@@ -225,7 +218,14 @@ if (isBrowserTranslateOn) {
 
   if (cancelled) return;
 
-  translationDelaySec = delayMs / 1000;
+  translationDelayRef.current = delayMs / 1000;
+
+const baseMargin = 0.10;
+const translatedBaseExtra = 0.01;
+const dynamicExtra = Math.min(0.10, translationDelayRef.current * 0.06);
+
+margin = baseMargin + translatedBaseExtra + dynamicExtra;
+
 
   // ✅ If translation not ready → DO NOT speak original
   if (!translated) {
@@ -243,6 +243,10 @@ if (isBrowserTranslateOn) {
 
   textSource = translated;
 }
+if (!isBrowserTranslateOn) {
+  margin = 0.10;
+}
+
 
 
 
@@ -261,7 +265,7 @@ if (isBrowserTranslateOn) {
   let effectiveDuration = subtitleDuration;
 
 if (isBrowserTranslateOn) {
-  effectiveDuration = subtitleDuration - translationDelaySec;
+  effectiveDuration = subtitleDuration - translationDelayRef.current;
 
   // never let it go too low (otherwise rawRate explodes)
   effectiveDuration = Math.max(0.7, effectiveDuration);
@@ -334,7 +338,6 @@ const voices = window.speechSynthesis.getVoices();
 const matchedVoice = voices.find(v => v.name === savedVoiceName);
 utterance.voice = matchedVoice || voice || null;
 console.log(voice, matchedVoice, savedVoiceName);
-utterance.lang = lang || 'en-US';
 
 if (utterance.voice?.name) {
   const testKey = `voice_test_data_${effectiveLang}`;
@@ -363,7 +366,7 @@ if (utterance.voice?.name) {
 
   if (playerRef.current?.setPlaybackRate) {
     console.log(`Raw rate: ${rawRate}, WPS: ${wps}`);
-    const rates = getSmoothedAdjustedRate(wps, rawRate);
+    const rates = getSmoothedAdjustedRate(wps, rawRate,margin);
     
     if (rates) {
      const numFactor = numberFactor(textSource);
@@ -412,7 +415,7 @@ setTimeout(() => {
   run();
   return () => { cancelled = true; };
 
-}, [isSpeaking, showVideo, currentSubtitle, subtitles, lang, playerRef, isSSMLSupported]);
+}, [isSpeaking, showVideo, currentSubtitle, subtitles, effectiveLang, playerRef, isSSMLSupported]);
 
 
   useEffect(() => {
