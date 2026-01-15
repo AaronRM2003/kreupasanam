@@ -404,6 +404,9 @@ if (utterance.voice?.name) {
 } else {
   utterance.lang = lang || "en-US";
 }
+if (!shouldSpeakTranslated) {
+  translationDelayRef.current = 0;
+}
 
 utterance.onstart = () => console.log("✅ TTS started:", utterance.lang, utterance.voice?.name);
 utterance.onend = () => console.log("✅ TTS ended");
