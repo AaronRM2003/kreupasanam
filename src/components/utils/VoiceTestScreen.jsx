@@ -72,7 +72,7 @@ export default function VoiceTestScreen({
 
             <div className="voice-test-buttons">
               <button
-                onClick={startAccurateVoiceTest(testSentence)}
+               onClick={() => startAccurateVoiceTest(testSentence)}
                 className="voice-test-button primary"
                 aria-label="Start voice test reading"
                 disabled={isLoadingTest}
