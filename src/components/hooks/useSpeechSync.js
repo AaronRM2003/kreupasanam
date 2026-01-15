@@ -184,6 +184,8 @@ function normalizeColonNumbers(text) {
 
 
   const voice = useSelectedVoice(effectiveLang);
+  let translationDelaySec = 0;
+
   useEffect(() => {
      let cancelled = false;
 
@@ -210,7 +212,6 @@ function normalizeColonNumbers(text) {
   let textSource = textToSpeak;
 
   // ✅ If browser translate ON, wait and speak only translated DOM text
-let translationDelaySec = 0;
 
 if (isBrowserTranslateOn) {
   const { text: translated, delayMs } = await waitForTranslatedDomTextStable(
