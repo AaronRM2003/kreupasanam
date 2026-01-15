@@ -19,7 +19,8 @@ import { useSpeechSync } from '../components/hooks/useSpeechSync';
 import FloatingVideoPlayer from '../components/utils/FloatingVideoPlayer';
 import LangHelpOverlay from '../components/utils/LangHelpOverlay';
 import ImageWithBoxes from '../components/utils/ImageWithBoxes';
-import TranscriptModal from '../components/utils/TranscriptModel';
+import TranscriptModal from '../components/utils/TranscriptModel'
+import { normalizeToLocale } from '../components/utils/Utils';
 
 export default function TestimonyPage({ lang: initialLang }) {
   const { idSlug } = useParams();  // Changed from id to idSlug
