@@ -22,10 +22,12 @@ export function useSpeechSync({
   const lastSpokenRef = useRef('');
   const [playerReady, setPlayerReady] = useState(false);
 const acceptedUserLang =
-  isBrowserTranslateOn && userLang && isLangAcceptedExactly(userLang);
+  lang === "en" &&
+  isBrowserTranslateOn &&
+  userLang &&
+  !!localStorage.getItem(userLang);  // exact only
 
 const effectiveLang = acceptedUserLang ? userLang : lang;
-
   const translationDelayRef = useRef(0);
 
 
@@ -197,7 +199,7 @@ function isLangAcceptedExactly(langTag) {
     hasStartedSpeakingRef.current = true;
     lastSpokenRef.current = '';
   }
-  const shouldSpeakTranslated = acceptedUserLang;
+  const shouldSpeakTranslated =acceptedUserLang;
 
   let margin = 0.10;
 
@@ -403,9 +405,6 @@ if (utterance.voice?.name) {
   utterance.voice = null;      // ✅ let browser pick best voice for lang
 } else {
   utterance.lang = lang || "en-US";
-}
-if (!shouldSpeakTranslated) {
-  translationDelayRef.current = 0;
 }
 
 utterance.onstart = () => console.log("✅ TTS started:", utterance.lang, utterance.voice?.name);

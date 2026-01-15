@@ -196,7 +196,7 @@ export default function SubtitleVoiceControls({
     if (hideTimeout) clearTimeout(hideTimeout);
     if (maxInteractionTimeout) clearTimeout(maxInteractionTimeout);
   };
-  const testKey = `voice_test_data_${lang}`;
+  const testKey = `voice_test_data_${effectiveLang}`;
   const storedData = localStorage.getItem(testKey);
   const tested = useMemo(() => {
   if (!storedData) return false;
@@ -342,7 +342,7 @@ const handleReadSubtitlesClick = (forceTest = false) => {
     return;
   }
 
-  const testKey = `voice_test_data_${lang}`;
+  const testKey = `voice_test_data_${effectiveLang}`;
   const storedData = localStorage.getItem(testKey);
   let needsTest = true;
 
@@ -495,7 +495,7 @@ function shortCode(langTag) {
     }
 
     // On voice change, check if this voice is already tested
-    const testKey = `voice_test_data_${lang}`;
+    const testKey = `voice_test_data_${effectiveLang}`;
     const storedData = localStorage.getItem(testKey);
     console.log("handleread - ", storedData);
 
