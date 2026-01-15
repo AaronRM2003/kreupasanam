@@ -68,11 +68,23 @@ export default function VoiceTestScreen({
 
         {!alreadyTested ? (
           <>
-            <p className="voice-test-text">{testSentence}</p>
+            <p id="voice-test-sentence-dom" className="voice-test-text">
+  {testSentence}
+</p>
+
 
             <div className="voice-test-buttons">
               <button
-               onClick={() => startAccurateVoiceTest(testSentence)}
+              onClick={() => {
+  let domText =
+    document.getElementById("voice-test-sentence-dom")?.innerText?.trim();
+
+  // only allow DOM translated testing for English base
+  if (lang !== "en") domText = testSentence;
+
+  startAccurateVoiceTest(domText || testSentence);
+}}
+
                 className="voice-test-button primary"
                 aria-label="Start voice test reading"
                 disabled={isLoadingTest}
