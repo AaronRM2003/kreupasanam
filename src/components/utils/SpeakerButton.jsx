@@ -290,6 +290,10 @@ export default function SubtitleVoiceControls({
 
   // Handle Read Subtitles click - show test screen if not tested
 const handleReadSubtitlesClick = (forceTest = false) => {
+  if (isSpeaking) {
+  toggleSpeaking();
+  return;
+}
   if (!('speechSynthesis' in window)) {
     alert("Text-to-Speech is not supported by your browser/device.");
     return;
