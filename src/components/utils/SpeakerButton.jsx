@@ -637,7 +637,7 @@ function shortCode(langTag) {
    {showTestScreen && (
         <VoiceTestScreen
           voice={testVoice}
-          lang={effectiveLang}
+          lang={lang}
           testSentences={testSentences}
           isLoadingTest={isLoadingTest}
           startAccurateVoiceTest={startAccurateVoiceTest}
