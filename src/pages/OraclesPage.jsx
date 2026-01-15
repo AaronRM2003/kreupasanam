@@ -11,6 +11,8 @@ import {
   preloadImages,
   LanguageDropdown,
   ShareModal,
+  detectBrowserTranslateLang,
+  normalizeToLocale,
 } from '../components/utils/Utils';
 
 import { useYouTubePlayer } from '../components/hooks/useYoutubePlayer';
@@ -33,6 +35,7 @@ export default function OraclesPage({ lang: initialLang }) {
   const [loading, setLoading] = useState(true);
   const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
       const [showTranscript, setShowTranscript] = useState(false);
+      const [userLang, setUserLang] = useState(null);
 
 
 
@@ -112,7 +115,25 @@ export default function OraclesPage({ lang: initialLang }) {
   }, [lang]);
 
   // Generate share text when dependencies change
+  useEffect(() => {
+  if (typeof window === "undefined") return;
 
+  const update = () => {
+    const detected = detectBrowserTranslateLang();
+    setUserLang(detected ? normalizeToLocale(detected) : null);
+  };
+
+  update();
+
+  // Observe html changes because translate modifies html class/lang
+  const obs = new MutationObserver(update);
+  obs.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["class", "lang"],
+  });
+
+  return () => obs.disconnect();
+}, []);
 
 const shareText = useMemo(() => {
   if (!safeOracle || typeof window === 'undefined') return '';
@@ -128,6 +149,7 @@ const shareText = useMemo(() => {
     video
   );
 }, [safeOracle, lang, includeSummary, video]);
+const isBrowserTranslateOn = !!userLang;
 
 
 
@@ -148,6 +170,9 @@ const shareText = useMemo(() => {
       currentSubtitle,
       currentTime,
       lang,
+
+      isBrowserTranslateOn,
+      userLang, // ✅ new
     })
   : {};
     const navigate = useNavigate();
@@ -377,6 +402,8 @@ const shareText = useMemo(() => {
           currentSubtitle={currentSubtitle}
           ttsSupported={ttsSupported}
           onClose={() => setShowVideo(false)}
+
+           userLang={userLang}
         />
       )}
     </div>

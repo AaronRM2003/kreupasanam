@@ -39,10 +39,7 @@ export default function VoiceTestScreen({
   const testSentence =
     testSentences[lang] ||
     'This is a quick test to ensure subtitles are read correctly in your selected voice.';
-    console.log("lang =", lang);
-console.log("testSentences keys =", Object.keys(testSentences));
-console.log("testSentences[lang] =", testSentences?.[lang]);
-console.log("final testSentence =", testSentence);
+  
 
 
   return (

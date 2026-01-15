@@ -10,6 +10,8 @@ import {
   preloadImages,
   LanguageDropdown,
   ShareModal,
+  detectBrowserTranslateLang,
+  normalizeToLocale,
 } from '../components/utils/Utils';
 
 import { useYouTubePlayer } from '../components/hooks/useYoutubePlayer';
@@ -35,6 +37,7 @@ export default function DhyanamPage({ lang: initialLang }) {
   const [includeSummary, setIncludeSummary] = useState(false);
   const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
       const [showTranscript, setShowTranscript] = useState(false);
+      const [userLang, setUserLang] = useState(null);
 
 
   const navigate = useNavigate();
@@ -75,6 +78,25 @@ export default function DhyanamPage({ lang: initialLang }) {
       });
   }, []);
 
+    useEffect(() => {
+  if (typeof window === "undefined") return;
+
+  const update = () => {
+    const detected = detectBrowserTranslateLang();
+    setUserLang(detected ? normalizeToLocale(detected) : null);
+  };
+
+  update();
+
+  // Observe html changes because translate modifies html class/lang
+  const obs = new MutationObserver(update);
+  obs.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["class", "lang"],
+  });
+
+  return () => obs.disconnect();
+}, []);
   // Find the dhyanam item by id (converted to number)
   const dhyanamItemsearch = dhyanam?.find(item => item.id === Number(id));
 
@@ -146,6 +168,7 @@ export default function DhyanamPage({ lang: initialLang }) {
 
   // Speech sync & volume control hook
    const ttsSupported = typeof window !== 'undefined' && !!window.speechSynthesis;
+   const isBrowserTranslateOn = !!userLang;
 
   // Speech sync & volume control hook
 const {
@@ -162,6 +185,9 @@ const {
       currentSubtitle,
       currentTime,
       lang,
+
+      isBrowserTranslateOn,
+      userLang, // ✅ new
     })
   : {};
   
@@ -400,6 +426,8 @@ const {
           currentSubtitle={currentSubtitle}
           ttsSupported={ttsSupported}
           onClose={() => setShowVideo(false)}
+
+           userLang={userLang}
         />
       )}
     </div>

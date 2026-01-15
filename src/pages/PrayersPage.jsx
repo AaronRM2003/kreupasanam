@@ -10,6 +10,8 @@ import {
   preloadImages,
   LanguageDropdown,
   ShareModal,
+  detectBrowserTranslateLang,
+  normalizeToLocale,
 } from '../components/utils/Utils';
 
 import { useYouTubePlayer } from '../components/hooks/useYoutubePlayer';
@@ -35,6 +37,7 @@ export default function PrayersPage({ lang: initialLang }) {
   const [includeSummary, setIncludeSummary] = useState(false);
   const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
     const [showTranscript, setShowTranscript] = useState(false);
+    const [userLang, setUserLang] = useState(null);
 
 
   const navigate = useNavigate();
@@ -145,6 +148,7 @@ export default function PrayersPage({ lang: initialLang }) {
 
   // Speech sync & volume control hook
   const ttsSupported = typeof window !== 'undefined' && !!window.speechSynthesis;
+  const isBrowserTranslateOn = !!userLang;
 
   const {
     isSpeaking = false,
@@ -160,6 +164,9 @@ export default function PrayersPage({ lang: initialLang }) {
         currentSubtitle,
         currentTime,
         lang,
+
+        isBrowserTranslateOn,
+      userLang, // ✅ new
       })
     : {};
 
@@ -169,6 +176,26 @@ export default function PrayersPage({ lang: initialLang }) {
       stopSpeaking();
     }
   }, [showVideo, isSpeaking, stopSpeaking]);
+
+    useEffect(() => {
+  if (typeof window === "undefined") return;
+
+  const update = () => {
+    const detected = detectBrowserTranslateLang();
+    setUserLang(detected ? normalizeToLocale(detected) : null);
+  };
+
+  update();
+
+  // Observe html changes because translate modifies html class/lang
+  const obs = new MutationObserver(update);
+  obs.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["class", "lang"],
+  });
+
+  return () => obs.disconnect();
+}, []);
 
   // Share URLs
   const shareUrl = window.location.href;
@@ -396,6 +423,8 @@ export default function PrayersPage({ lang: initialLang }) {
           currentSubtitle={currentSubtitle}
           ttsSupported={ttsSupported}
           onClose={() => setShowVideo(false)}
+
+           userLang={userLang}
         />
       )}
     </div>
