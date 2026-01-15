@@ -44,24 +44,46 @@ function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
-async function waitForTranslatedDomText(original, timeoutMs = 250) {
+async function waitForTranslatedDomTextStable(
+  original,
+  {
+    maxWaitMs = 2000,   // ✅ instead of 300ms
+    stableMs = 80,      // DOM must stay unchanged for 80ms
+    minDiffChars = 2,   // ignore tiny whitespace changes
+  } = {}
+) {
   const start = performance.now();
   const normOriginal = normalizeTextForCompare(original);
 
-  while (performance.now() - start < timeoutMs) {
+  let lastDom = "";
+  let lastChangeAt = performance.now();
+
+  while (performance.now() - start < maxWaitMs) {
     const domText = readSubtitleDom();
     const normDom = normalizeTextForCompare(domText);
 
-    // if DOM exists and differs from original => translation caught
-    if (normDom && normDom !== normOriginal) return domText;
+    // Track DOM changes
+    if (domText !== lastDom) {
+      lastDom = domText;
+      lastChangeAt = performance.now();
+    }
 
-    // wait for next frame (better than setTimeout(0))
+    const isDifferent = normDom && normDom !== normOriginal;
+    const diffEnough =
+      Math.abs((normDom?.length || 0) - (normOriginal?.length || 0)) >= minDiffChars;
+
+    // ✅ translated + stable for stableMs
+    if (isDifferent && diffEnough && performance.now() - lastChangeAt >= stableMs) {
+      return { text: domText, delayMs: performance.now() - start };
+    }
+
     await new Promise(requestAnimationFrame);
   }
 
-  // if we failed to catch translation within timeout, return latest DOM anyway
-  return readSubtitleDom();
+  // timeout
+  return { text: null, delayMs: performance.now() - start };
 }
+
 
 
 useEffect(() => {
@@ -113,7 +135,13 @@ useEffect(() => {
     }
   }, [isSpeaking, showVideo]);
 
-const margin = 0.10;   // your safe margin
+const baseMargin = 0.10;
+const translatedBaseExtra = 0.001; // extra margin in translate mode
+const dynamicExtra = Math.min(0.10, translationDelaySec * 0.06); // delay-based
+const margin = isBrowserTranslateOn
+  ? baseMargin + translatedBaseExtra + dynamicExtra
+  : baseMargin;
+
 const maxStepUp = 0.5;
 
 const lastAdjustedRateRef = useRef(1);
@@ -182,15 +210,39 @@ function normalizeColonNumbers(text) {
   let textSource = textToSpeak;
 
   // ✅ If browser translate ON, wait and speak only translated DOM text
+let translationDelaySec = 0;
+
 if (isBrowserTranslateOn) {
-  // 👇 actively wait a few frames to catch translated DOM
-  const translated = await waitForTranslatedDomText(currentSubtitle, 300);
+  const { text: translated, delayMs } = await waitForTranslatedDomTextStable(
+    currentSubtitle,
+    {
+      maxWaitMs: 2200, // ✅ you can tune 1800–2500
+      stableMs: 80,
+      minDiffChars: 2,
+    }
+  );
+
+  if (cancelled) return;
+
+  translationDelaySec = delayMs / 1000;
+
+  // ✅ If translation not ready → DO NOT speak original
+  if (!translated) {
+    console.warn("⏳ Translation not ready. Skipping TTS for this subtitle.");
+    return;
+  }
 
   const normTranslated = normalizeTextForCompare(translated);
-  if (!normTranslated) return;
+  const normOriginal = normalizeTextForCompare(currentSubtitle);
+
+  if (!normTranslated || normTranslated === normOriginal) {
+    console.warn("⚠️ Translation still same as original. Skipping.");
+    return;
+  }
 
   textSource = translated;
 }
+
 
 
   // ✅ speakKey MUST be exactly what you're speaking
@@ -205,6 +257,15 @@ if (isBrowserTranslateOn) {
   );
 
   const subtitleDuration = currentSub?.duration ?? 3;
+  let effectiveDuration = subtitleDuration;
+
+if (isBrowserTranslateOn) {
+  effectiveDuration = subtitleDuration - translationDelaySec;
+
+  // never let it go too low (otherwise rawRate explodes)
+  effectiveDuration = Math.max(0.7, effectiveDuration);
+}
+
 
   // ✅ IMPORTANT:
   // Word count should match what you're speaking (translated or not)
@@ -293,8 +354,8 @@ if (utterance.voice?.name) {
 
 
   console.log(wps,`voice_${utterance.voice.name}_tested`);
-  const rawRate = wordCount / subtitleDuration;
-  console.log(wordCount, subtitleDuration);
+  const rawRate = wordCount / effectiveDuration;
+  console.log(wordCount,subtitleDuration, effectiveDuration);
 
   let speechRate = 1; // fallback
   let adjustedRate = 1;
@@ -304,8 +365,8 @@ if (utterance.voice?.name) {
     const rates = getSmoothedAdjustedRate(wps, rawRate);
     
     if (rates) {
-     const numFactor = numberFactor(textToSpeak);
-      const lenFactor = lengthFactor(textToSpeak);
+     const numFactor = numberFactor(textSource);
+      const lenFactor = lengthFactor(textSource);
       console.log(`Length factor: ${lenFactor}`);
       let adjustedRateWithFactors = rates * numFactor * lenFactor;
       adjustedRateWithFactors = Math.max(0.1, Math.min(1.2, adjustedRateWithFactors));
