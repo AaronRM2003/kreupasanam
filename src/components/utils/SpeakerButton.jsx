@@ -52,6 +52,15 @@ export default function SubtitleVoiceControls({
   window.speechSynthesis.onvoiceschanged = loadVoices;
 }, [effectiveLang]);
 
+useEffect(() => {
+  const synth = window.speechSynthesis;
+  const load = () => synth.getVoices();
+  load();
+  synth.onvoiceschanged = load;
+  return () => { synth.onvoiceschanged = null; };
+}, []);
+
+
   // When voiceFromHook or systemVoices change, update testVoice and tested state
   useEffect(() => {
     if (!voiceFromHook) return;

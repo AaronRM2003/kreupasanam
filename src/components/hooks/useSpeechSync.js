@@ -346,12 +346,11 @@ if (shouldSpeakTranslated) {
 }
 
 
- const savedVoiceName = localStorage.getItem(`${effectiveLang}`);
 const voices = window.speechSynthesis.getVoices();
-const matchedVoice = voices.find(v => v.name === savedVoiceName);
+const savedVoiceURI = localStorage.getItem(`${effectiveLang}`);
+const matchedVoice = voices.find(v => v.voiceURI === savedVoiceURI);
 utterance.voice = matchedVoice || voice || null;
-console.log(voice, matchedVoice, savedVoiceName);
-
+console.log(voice, matchedVoice, savedVoiceURI);
 if (utterance.voice?.name) {
   const testKey = `voice_test_data_${effectiveLang}`;
   const storedData = localStorage.getItem(testKey);
