@@ -320,7 +320,7 @@ const handleReadSubtitlesClick = (forceTest = false) => {
   }
 
   // Check if testVoice is really available in system voices (edge case)
-  const voiceAvailable = voices.some(v => v.name === testVoice.name);
+const voiceAvailable = voices.some(v => v.voiceURI === testVoice.voiceURI);
   if (!voiceAvailable) {
     const userAgent = navigator.userAgent.toLowerCase();
     let instructions = "Please check your device's Text-to-Speech settings to install or enable voices.";
