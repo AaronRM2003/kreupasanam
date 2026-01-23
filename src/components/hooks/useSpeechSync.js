@@ -370,17 +370,88 @@ if (shouldSpeakTranslated) {
 
   // ✅ IMPORTANT:
   // Word count should match what you're speaking (translated or not)
-const { units: speakUnits, mode } = estimateTextUnits(textSource, utterance.lang || effectiveLang);
 
-// add punctuation pauses (all languages)
-const pauseSec = punctuationPauseSeconds(textSource);
+  // WPS fallback
+  let wps = 2;
 
-// effective speak duration must account for pauses
-const adjustedSpeakDuration = Math.max(0.6, effectiveDuration - pauseSec);
+  // ✅ Create utterance from FINAL textSource
+  const utterance = new SpeechSynthesisUtterance(textSource);
 
-// rawRate now uses units
-const rawRate = speakUnits / adjustedSpeakDuration;
+  function lengthFactor(text) {
+    const words = text.trim().split(/\s+/);
+    if (words.length === 0) return 1;
 
+    const totalChars = words.reduce((sum, w) => sum + w.length, 0);
+    const avgChars = totalChars / words.length;
+
+    // Typical spoken English average is around 4.7 chars/word
+    // We'll use that as a baseline
+    const baseline = 3;
+
+    let factor = 1;
+
+    // If avg word length is higher → longer pronunciation → slow down
+    if (avgChars > baseline) {
+      // For each extra char above baseline, reduce by 3–5%
+      factor *= Math.max(0.7, 1 - ((avgChars - baseline) * 0.05));
+    } 
+    // If words are short → can go slightly faster
+    else if (avgChars < baseline - 1) {
+      factor *= Math.min(1.15, 1 + ((baseline - avgChars) * 0.04));
+    }
+
+    return factor;
+}
+
+  // Set utterance lang as before
+  function numberFactor(text) {
+  const numbers = text.match(/\d+/g); // match all sequences of digits
+  if (!numbers) return 1; // no numbers, normal speed
+
+  let factor = 1;
+
+  // Slow down for long numbers
+  numbers.forEach(num => {
+    if (num.length >= 4) factor *= 0.85;  // very long number
+    else if (num.length === 3) factor *= 0.9;
+  });
+
+  // 👇 Detect Bible-style references like "Numbers 2:6", "John 3:16", etc.
+  const bibleRefPattern = /\b([A-Z][a-z]+)\s+\d{1,3}:\d{1,3}\b/;
+  if (bibleRefPattern.test(text)) {
+    // Add more delay for chapter–verse phrasing
+    factor *= 0.8; // reduce further by 20%
+  }
+
+  // Keep factor within reasonable range
+  return Math.max(0.4, Math.min(1, factor));
+}
+
+
+const voices = window.speechSynthesis.getVoices();
+const savedVoiceURI = localStorage.getItem(`${effectiveLang}`);
+const matchedVoice = voices.find(v => v.voiceURI === savedVoiceURI);
+utterance.voice = matchedVoice || voice || null;
+console.log(voice, matchedVoice, savedVoiceURI);
+if (utterance.voice?.name) {
+  const testKey = `voice_test_data_${effectiveLang}`;
+  const storedData = localStorage.getItem(testKey);
+
+  if (storedData) {
+    try {
+      const allTestData = JSON.parse(storedData);
+      const voiceData = allTestData[utterance.voice.name];
+      if (voiceData && voiceData.wps) {
+        wps = parseFloat(voiceData.wps);
+      }
+    } catch (e) {
+      console.error("Failed to parse voice test data:", e);
+    }
+  }
+}
+
+
+  console.log(wps,`voice_${utterance.voice.name}_tested`);
   console.log(wordCount,subtitleDuration, effectiveDuration);
 
   let speechRate = 1; // fallback
@@ -414,7 +485,6 @@ if (rates) {
   adjustedRate = adjustedRateWithFactors;
   playerRef.current.setPlaybackRate(adjustedRate);
 }
-
   }
   console.log(`Speech rate: ${speechRate}, Adjusted rate: ${adjustedRate}`);
   if (isSSMLSupported) {
