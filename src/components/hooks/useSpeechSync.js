@@ -21,10 +21,6 @@ export function useSpeechSync({
   const hasStartedSpeakingRef = useRef(false);
   const lastSpokenRef = useRef('');
   const [playerReady, setPlayerReady] = useState(false);
-  const voiceSpeedRef = useRef({}); // key => unitsPerSec
-  const ttsStartDelayRef = useRef({});
-
-
 const acceptedUserLang =
   lang === "en" &&
   isBrowserTranslateOn &&
@@ -188,14 +184,6 @@ function isLangAcceptedExactly(langTag) {
   if (!langTag) return false;
   return !!localStorage.getItem(langTag); // ✅ exact key only
 }
-function getVoiceKey(langTag, voiceObj) {
-  return `${langTag || "auto"}__${voiceObj?.voiceURI || "auto"}`;
-}
-function updateEMA(objRef, key, measured, alpha = 0.2) {
-  const prev = objRef.current[key];
-  objRef.current[key] = prev == null ? measured : prev * (1 - alpha) + measured * alpha;
-}
-
 
 
   const voice = useSelectedVoice(effectiveLang);
@@ -213,7 +201,7 @@ function updateEMA(objRef, key, measured, alpha = 0.2) {
   }
   const shouldSpeakTranslated =acceptedUserLang;
 
-  let margin = 0.02;
+  let margin = 0.08;
 
   // ✅ Build cleaned subtitle text
   let textToSpeak = currentSubtitle
@@ -299,7 +287,7 @@ if (shouldSpeakTranslated) {
 
   // ✅ IMPORTANT:
   // Word count should match what you're speaking (translated or not)
-  // const wordCount = textSource.trim().split(/\s+/).filter(Boolean).length;
+  const wordCount = textSource.trim().split(/\s+/).filter(Boolean).length;
 
   // WPS fallback
   let wps = 2;
@@ -332,35 +320,6 @@ if (shouldSpeakTranslated) {
 
     return factor;
 }
-function estimateSpeechUnitsUniversal(text) {
-  const clean = (text || "").trim();
-  if (!clean) return 1;
-
-  const noSpaces = clean.replace(/\s+/g, "");
-  const chars = noSpaces.length;
-
-  // punctuation pauses are real in every language
-  const punct = (clean.match(/[,.!?;:，。！？؛]/g) || []).length;
-
-  // digits slow down most voices
-  const digits = (clean.match(/\d/g) || []).length;
-
-  // longer scripts (Malayalam etc.) tend to take slightly more time per char
-  const nonAscii = (clean.match(/[^\x00-\x7F]/g) || []).length;
-  const nonAsciiRatio = nonAscii / Math.max(1, chars);
-
-  // base units: chars
-  let units = chars;
-
-  // add pause & digit penalties
-  units += punct * 6;
-  units += digits * 2;
-
-  // non-ascii languages: slightly heavier weighting
-  units *= 1 + nonAsciiRatio * 0.15;
-
-  return Math.max(10, units);
-}
 
   // Set utterance lang as before
   function numberFactor(text) {
@@ -383,86 +342,87 @@ function estimateSpeechUnitsUniversal(text) {
   }
 
   // Keep factor within reasonable range
-  return Math.max(0.4, Math.min(1.3, factor));
+  return Math.max(0.4, Math.min(1, factor));
 }
 
 
-function updateVoiceSpeed(key, units, durationSec) {
-  if (durationSec <= 0.2) return;
-  const measured = units / durationSec;
-  const alpha = 0.2;
-  const prev = voiceSpeedRef.current[key] ?? measured;
-  voiceSpeedRef.current[key] = prev * (1 - alpha) + measured * alpha;
-}
- // ✅ set utterance language + voice FIRST
-utterance.rate = 1;
+const voices = window.speechSynthesis.getVoices();
+const savedVoiceURI = localStorage.getItem(`${effectiveLang}`);
+const matchedVoice = voices.find(v => v.voiceURI === savedVoiceURI);
+utterance.voice = matchedVoice || voice || null;
+console.log(voice, matchedVoice, savedVoiceURI);
+if (utterance.voice?.name) {
+  const testKey = `voice_test_data_${effectiveLang}`;
+  const storedData = localStorage.getItem(testKey);
 
-if (shouldSpeakTranslated) {
-  utterance.lang = userLang;
-  utterance.voice = null; // let browser choose
+  if (storedData) {
+    try {
+      const allTestData = JSON.parse(storedData);
+      const voiceData = allTestData[utterance.voice.name];
+      if (voiceData && voiceData.wps) {
+        wps = parseFloat(voiceData.wps);
+      }
+    } catch (e) {
+      console.error("Failed to parse voice test data:", e);
+    }
+  }
+}
+
+
+  console.log(wps,`voice_${utterance.voice.name}_tested`);
+  const rawRate = wordCount / effectiveDuration;
+  console.log(wordCount,subtitleDuration, effectiveDuration);
+
+  let speechRate = 1; // fallback
+  let adjustedRate = 1;
+
+  if (playerRef.current?.setPlaybackRate) {
+    console.log(`Raw rate: ${rawRate}, WPS: ${wps}`);
+    const rates = getSmoothedAdjustedRate(wps, rawRate,margin);
+    
+    if (rates) {
+     const numFactor = numberFactor(textSource);
+      const lenFactor = lengthFactor(textSource);
+      console.log(`Length factor: ${lenFactor}`);
+      let adjustedRateWithFactors = rates * numFactor * lenFactor;
+      adjustedRateWithFactors = Math.max(0.1, Math.min(1.2, adjustedRateWithFactors));
+
+      
+    // Clamp to reasonable bounds
+        adjustedRate = adjustedRateWithFactors;
+      playerRef.current.setPlaybackRate(adjustedRate);  
+    }
+  }
+  console.log(`Speech rate: ${speechRate}, Adjusted rate: ${adjustedRate}`);
+  if (isSSMLSupported) {
+    textToSpeak = enhanceWithSsml(textToSpeak);
+  }
+
+  utterance.rate = speechRate;
+    if (shouldSpeakTranslated) {
+  utterance.lang = userLang;   // ✅ speak translated language
+  utterance.voice = null;      // ✅ let browser pick best voice for lang
 } else {
   utterance.lang = lang || "en-US";
-
-  const voices = window.speechSynthesis.getVoices();
-  const savedVoiceURI = localStorage.getItem(`${effectiveLang}`);
-  const matchedVoice = voices.find(v => v.voiceURI === savedVoiceURI);
-  utterance.voice = matchedVoice || voice || null;
 }
 
-// ✅ now compute key + timing
-const key = getVoiceKey(utterance.lang, utterance.voice);
-const units = estimateSpeechUnitsUniversal(textSource);
-
-const unitsPerSec = voiceSpeedRef.current[key] ?? 16;  // baseline default
-const expectedSpeakSec = units / unitsPerSec;
-
-const startDelay = ttsStartDelayRef.current[key] ?? 0;
-let availableSec = subtitleDuration - startDelay;
-availableSec = Math.max(0.7, availableSec);
-
-let targetPlaybackRate = expectedSpeakSec / availableSec;
-targetPlaybackRate = Math.max(0.85, Math.min(1.35, targetPlaybackRate));
-
-// smooth change
-const prev = lastAdjustedRateRef.current;
-const step = 0.08;
-let smoothed = targetPlaybackRate;
-if (smoothed > prev) smoothed = Math.min(smoothed, prev + step);
-if (smoothed < prev) smoothed = Math.max(smoothed, prev - step);
-lastAdjustedRateRef.current = smoothed;
-
-playerRef.current?.setPlaybackRate?.(smoothed);
-
-// ✅ learn start delay + speed
-const speakCallAt = performance.now();
-let actualStartAt = null;
-
-utterance.onstart = () => {
-  actualStartAt = performance.now();
-  const delaySec = (actualStartAt - speakCallAt) / 1000;
-  updateEMA(ttsStartDelayRef, key, delaySec, 0.25);
-};
-
-utterance.onend = () => {
-  if (!actualStartAt) return;
-  const durSec = (performance.now() - actualStartAt) / 1000;
-
-  if (durSec > 0.2) {
-    const measuredUnitsPerSec = units / durSec;
-    updateEMA(voiceSpeedRef, key, measuredUnitsPerSec, 0.2);
-  }
-};
-
-
-
+utterance.onstart = () => console.log("✅ TTS started:", utterance.lang, utterance.voice?.name);
+utterance.onend = () => console.log("✅ TTS ended");
 utterance.onerror = (e) => console.log("❌ TTS error:", e);
 console.log("ABOUT TO SPEAK:", textSource);
 
 const synth = window.speechSynthesis;
 
 // 🔥 if Chrome is paused, it will be silent without resume()
-if (synth.speaking || synth.pending) synth.cancel();
-synth.speak(utterance);
+synth.resume();
+
+// 🔥 Chrome bug workaround: cancel + delayed speak
+synth.cancel();
+
+setTimeout(() => {
+  synth.resume();          // resume again just in case
+  synth.speak(utterance);
+}, 80);
   };
   run();
   return () => { cancelled = true; };
