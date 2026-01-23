@@ -51,89 +51,6 @@ function normalizeTextForCompare(t) {
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
-function estimateTextUnits(text, langTag) {
-  const t = (text || "").trim();
-  if (!t) return { units: 0, mode: "empty" };
-
-  const isCJK = /^(zh|ja|ko)\b/i.test(langTag || "");
-
-  // For CJK: count readable characters (best proxy for speaking time)
-  if (isCJK) {
-    const chars = t.replace(/\s+/g, "").length;
-    return { units: chars, mode: "char" };
-  }
-
-  // Default: count words
-  const words = t.split(/\s+/).filter(Boolean).length;
-  return { units: words, mode: "word" };
-}
-
-/**
- * Estimate pause time introduced by punctuation.
- * Works across languages by counting punctuation characters
- * and converting them to an estimated pause duration in seconds.
- */
-function punctuationPauseSeconds(text) {
-  if (!text) return 0;
-
-  // light pauses: commas, semicolons, Arabic comma, etc.
-  const light = (text.match(/[,，、;；،]/g) || []).length;
-
-  // medium pauses: colon, dash-like separators
-  const medium = (text.match(/[:：—–-]/g) || []).length;
-
-  // heavy pauses: sentence endings
-  const heavy = (text.match(/[.!?。！？॥]/g) || []).length;
-
-  // extra-heavy: new lines (often indicates sentence break)
-  const newLines = (text.match(/\n+/g) || []).length;
-
-  // tuned values (seconds) — small but meaningful
-  const pause =
-    light * 0.10 +
-    medium * 0.14 +
-    heavy * 0.22 +
-    newLines * 0.20;
-
-  // Clamp so a punctuation-heavy subtitle doesn't destroy timing
-  return Math.max(0, Math.min(1.0, pause));
-}
-
-/**
- * Penalize fast speech in long / complex lines,
- * regardless of language.
- */
-function complexitySlowdownFactor(text) {
-  if (!text) return 1;
-
-  const t = text.trim();
-
-  // Longer text => slow down slightly
-  const len = t.length;
-
-  // Many clauses / commas => more slowing
-  const clauseCount = (t.match(/[,，、;；،]/g) || []).length;
-
-  // Big numbers: slow down a bit
-  const numCount = (t.match(/\d+/g) || []).length;
-
-  let factor = 1;
-
-  // length based
-  if (len > 80) factor *= 0.93;
-  if (len > 120) factor *= 0.90;
-  if (len > 170) factor *= 0.86;
-
-  // clause based
-  if (clauseCount >= 2) factor *= 0.95;
-  if (clauseCount >= 4) factor *= 0.92;
-
-  // number density
-  if (numCount >= 2) factor *= 0.94;
-  if (numCount >= 4) factor *= 0.90;
-
-  return Math.max(0.70, Math.min(1.05, factor));
-}
 
 async function waitForTranslatedDomTextStable(
   original,
@@ -370,27 +287,13 @@ if (shouldSpeakTranslated) {
 
   // ✅ IMPORTANT:
   // Word count should match what you're speaking (translated or not)
+  const wordCount = textSource.trim().split(/\s+/).filter(Boolean).length;
 
   // WPS fallback
   let wps = 2;
 
   // ✅ Create utterance from FINAL textSource
   const utterance = new SpeechSynthesisUtterance(textSource);
-  // ✅ NEW unit estimation (word for normal langs, char for CJK)
-const { units: unitCount, mode } = estimateTextUnits(textSource, utterance.lang || effectiveLang);
-
-// ✅ punctuation pause estimation
-const pauseSec = punctuationPauseSeconds(textSource);
-
-// ✅ duration available for speech after punctuation pauses
-const adjustedSpeakDuration = Math.max(0.6, effectiveDuration - pauseSec);
-
-// ✅ raw speaking speed (units/sec)
-const rawRate = unitCount / adjustedSpeakDuration;
-
-// ✅ keep old variable name for logs if needed
-const wordCount = unitCount;
-
 
   function lengthFactor(text) {
     const words = text.trim().split(/\s+/);
@@ -467,6 +370,7 @@ if (utterance.voice?.name) {
 
 
   console.log(wps,`voice_${utterance.voice.name}_tested`);
+  const rawRate = wordCount / effectiveDuration;
   console.log(wordCount,subtitleDuration, effectiveDuration);
 
   let speechRate = 1; // fallback
@@ -474,32 +378,20 @@ if (utterance.voice?.name) {
 
   if (playerRef.current?.setPlaybackRate) {
     console.log(`Raw rate: ${rawRate}, WPS: ${wps}`);
-    // If mode is char-based (CJK), wps doesn't mean much.
-// We'll treat wps as "units per second" for char mode.
-let effectiveWps = wps;
-if (mode === "char") {
-  // typical comfortable narration for CJK ≈ 6–10 chars/sec
-  // if your wps test is for English words, clamp it
-  effectiveWps = Math.max(6, Math.min(11, wps * 4));
-}
+    const rates = getSmoothedAdjustedRate(wps, rawRate,margin);
+    
+    if (rates) {
+     const numFactor = numberFactor(textSource);
+      const lenFactor = lengthFactor(textSource);
+      console.log(`Length factor: ${lenFactor}`);
+      let adjustedRateWithFactors = rates * numFactor * lenFactor;
+      adjustedRateWithFactors = Math.max(0.1, Math.min(1.2, adjustedRateWithFactors));
 
-const rates = getSmoothedAdjustedRate(effectiveWps, rawRate, margin);
-
-if (rates) {
-  const numFactor = numberFactor(textSource);
-  const lenFactor = lengthFactor(textSource);
-
-  // NEW: language-agnostic slowdown for complexity + punctuation-heavy lines
-  const slowComplex = complexitySlowdownFactor(textSource);
-
-  let adjustedRateWithFactors = rates * numFactor * lenFactor * slowComplex;
-
-  // clamp (slightly wider top because some subs are short)
-  adjustedRateWithFactors = Math.max(0.12, Math.min(1.25, adjustedRateWithFactors));
-
-  adjustedRate = adjustedRateWithFactors;
-  playerRef.current.setPlaybackRate(adjustedRate);
-}
+      
+    // Clamp to reasonable bounds
+        adjustedRate = adjustedRateWithFactors;
+      playerRef.current.setPlaybackRate(adjustedRate);  
+    }
   }
   console.log(`Speech rate: ${speechRate}, Adjusted rate: ${adjustedRate}`);
   if (isSSMLSupported) {
