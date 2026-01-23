@@ -342,7 +342,7 @@ if (shouldSpeakTranslated) {
   }
 
   // Keep factor within reasonable range
-  return Math.max(0.4, Math.min(1, factor));
+  return Math.max(0.4, Math.min(1.3, factor));
 }
 
 
