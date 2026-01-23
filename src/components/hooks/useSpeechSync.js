@@ -376,6 +376,21 @@ if (shouldSpeakTranslated) {
 
   // ✅ Create utterance from FINAL textSource
   const utterance = new SpeechSynthesisUtterance(textSource);
+  // ✅ NEW unit estimation (word for normal langs, char for CJK)
+const { units: unitCount, mode } = estimateTextUnits(textSource, utterance.lang || effectiveLang);
+
+// ✅ punctuation pause estimation
+const pauseSec = punctuationPauseSeconds(textSource);
+
+// ✅ duration available for speech after punctuation pauses
+const adjustedSpeakDuration = Math.max(0.6, effectiveDuration - pauseSec);
+
+// ✅ raw speaking speed (units/sec)
+const rawRate = unitCount / adjustedSpeakDuration;
+
+// ✅ keep old variable name for logs if needed
+const wordCount = unitCount;
+
 
   function lengthFactor(text) {
     const words = text.trim().split(/\s+/);
