@@ -1,4 +1,4 @@
-import { useState, useEffect ,useMemo, useRef} from 'react';
+import { useState, useEffect ,useMemo} from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useParams, Link } from 'react-router-dom';
 import { FaShareAlt, FaCompass } from 'react-icons/fa';
@@ -108,52 +108,7 @@ const overlayData = testimony?.overlay ?? null;
     '/assets/cloud.webp',
   ];
 
-  const lastTimeRef = useRef(0);
-const isAutoSeekingRef = useRef(false);
-
-useEffect(() => {
-  if (!showVideo) return;
-  if (!playerRef.current) return;
-  if (!isSpeaking) {
-    lastTimeRef.current = currentTime;
-    return;
-  }
-
-  const lastTime = lastTimeRef.current;
-  const delta = Math.abs(currentTime - lastTime);
-
-  // Detect manual seek (user drag)
-  if (delta > 1.2 && !isAutoSeekingRef.current) {
-    // 🔍 Find nearest subtitle start
-    const target = subtitles.reduce((closest, sub) => {
-      if (sub.startSeconds <= currentTime) {
-        if (
-          !closest ||
-          Math.abs(sub.startSeconds - currentTime) <
-            Math.abs(closest.startSeconds - currentTime)
-        ) {
-          return sub;
-        }
-      }
-      return closest;
-    }, null);
-
-    if (target) {
-      isAutoSeekingRef.current = true;
-
-      playerRef.current.seekTo(target.startSeconds, true);
-
-      // Allow future seeks after this correction
-      setTimeout(() => {
-        isAutoSeekingRef.current = false;
-      }, 300);
-    }
-  }
-
-  lastTimeRef.current = currentTime;
-}, [currentTime, isSpeaking, subtitles, playerRef, showVideo]);
-
-
+  
   useEffect(() => {
   const warmUp = () => {
     window.speechSynthesis.getVoices();
@@ -250,6 +205,51 @@ const {
     stopSpeaking();
   }
 }, [showVideo, isSpeaking, stopSpeaking]);
+
+const lastTimeRef = useRef(0);
+const isAutoSeekingRef = useRef(false);
+
+useEffect(() => {
+  if (!showVideo) return;
+  if (!playerRef.current) return;
+  if (!isSpeaking) {
+    lastTimeRef.current = currentTime;
+    return;
+  }
+
+  const lastTime = lastTimeRef.current;
+  const delta = Math.abs(currentTime - lastTime);
+
+  // Detect manual seek (user drag)
+  if (delta > 1.2 && !isAutoSeekingRef.current) {
+    // 🔍 Find nearest subtitle start
+    const target = subtitles.reduce((closest, sub) => {
+      if (sub.startSeconds <= currentTime) {
+        if (
+          !closest ||
+          Math.abs(sub.startSeconds - currentTime) <
+            Math.abs(closest.startSeconds - currentTime)
+        ) {
+          return sub;
+        }
+      }
+      return closest;
+    }, null);
+
+    if (target) {
+      isAutoSeekingRef.current = true;
+
+      playerRef.current.seekTo(target.startSeconds, true);
+
+      // Allow future seeks after this correction
+      setTimeout(() => {
+        isAutoSeekingRef.current = false;
+      }, 300);
+    }
+  }
+
+  lastTimeRef.current = currentTime;
+}, [currentTime, isSpeaking, subtitles, playerRef, showVideo]);
 
 const handleClick = () => {
     navigate(`/${initialLang || 'en'}/testimonies`);
