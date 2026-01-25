@@ -182,6 +182,7 @@ const {
   isSpeaking = false,
   toggleSpeaking = () => {},
   stopSpeaking = () => {},
+  resetSpeechState = () => {},
   volume = 100,
   handleVolumeChange = () => {},
 } = ttsSupported
@@ -234,24 +235,26 @@ useEffect(() => {
       }
     }
 
-    if (state === 1 && wasPausedRef.current) {
-      // ▶️ Video resumed
-      wasPausedRef.current = false;
+if (state === 1 && wasPausedRef.current) {
+  // ▶️ Video resumed
+  wasPausedRef.current = false;
 
-      // Force restart speech cleanly
-      window.speechSynthesis.cancel();
+  // 🔥 FULL reset of TTS state
+  resetSpeechState();
 
-      // Seek back to subtitle start
-      const currentSub = subtitles.find(
-        (s) =>
-          currentTime >= s.startSeconds &&
-          currentTime < s.endSeconds
-      );
+  // 🔁 Find current subtitle
+  const currentSub = subtitles.find(
+    s =>
+      currentTime >= s.startSeconds &&
+      currentTime < s.endSeconds
+  );
 
-      if (currentSub) {
-        player.seekTo(currentSub.startSeconds, true);
-      }
-    }
+  if (currentSub) {
+    // ⏪ Snap back slightly to force subtitle re-trigger
+    player.seekTo(currentSub.startSeconds + 0.01, true);
+  }
+}
+
   };
 
   const interval = setInterval(checkState, 250);

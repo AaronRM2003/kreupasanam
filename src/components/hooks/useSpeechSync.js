@@ -462,10 +462,17 @@ setTimeout(() => {
     }
   };
 
+  const resetSpeechState = () => {
+  window.speechSynthesis.cancel();
+  hasStartedSpeakingRef.current = false;
+  lastSpokenRef.current = '';
+};
+
   return {
     isSpeaking,
     toggleSpeaking,
     stopSpeaking,
+    resetSpeechState,
     volume,
     handleVolumeChange,
   };
