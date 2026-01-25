@@ -1,4 +1,4 @@
-import { useState, useEffect,useMemo } from 'react';
+import { useState, useEffect,useMemo, useRef } from 'react';
 import { useParams, Link, NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { FaShareAlt, FaCompass } from 'react-icons/fa';
@@ -222,6 +222,52 @@ export default function PrayersPage({ lang: initialLang }) {
     window.addEventListener('resize', checkScreen);
     return () => window.removeEventListener('resize', checkScreen);
   }, []);
+
+
+  const lastTimeRef = useRef(0);
+  const isAutoSeekingRef = useRef(false);
+  
+  useEffect(() => {
+    if (!showVideo) return;
+    if (!playerRef.current) return;
+    if (!isSpeaking) {
+      lastTimeRef.current = currentTime;
+      return;
+    }
+  
+    const lastTime = lastTimeRef.current;
+    const delta = Math.abs(currentTime - lastTime);
+  
+    // Detect manual seek (user drag)
+    if (delta > 1.2 && !isAutoSeekingRef.current) {
+      // 🔍 Find nearest subtitle start
+      const target = subtitles.reduce((closest, sub) => {
+        if (sub.startSeconds <= currentTime) {
+          if (
+            !closest ||
+            Math.abs(sub.startSeconds - currentTime) <
+              Math.abs(closest.startSeconds - currentTime)
+          ) {
+            return sub;
+          }
+        }
+        return closest;
+      }, null);
+  
+      if (target) {
+        isAutoSeekingRef.current = true;
+  
+        playerRef.current.seekTo(target.startSeconds, true);
+  
+        // Allow future seeks after this correction
+        setTimeout(() => {
+          isAutoSeekingRef.current = false;
+        }, 300);
+      }
+    }
+  
+    lastTimeRef.current = currentTime;
+  }, [currentTime, isSpeaking, subtitles, playerRef, showVideo]);
 
   // Conditional renderings AFTER hooks:
   if (loadingData) {
