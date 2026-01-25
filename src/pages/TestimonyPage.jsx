@@ -182,6 +182,7 @@ const {
   isSpeaking = false,
   toggleSpeaking = () => {},
   stopSpeaking = () => {},
+  restartSpeaking = () => {},
   volume = 100,
   handleVolumeChange = () => {},
 } = ttsSupported
