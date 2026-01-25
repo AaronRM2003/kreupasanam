@@ -42,9 +42,12 @@ export default function SubtitleVoiceControls({
   useEffect(() => {
   function loadVoices() {
     const allVoices = window.speechSynthesis.getVoices();
-    const filteredVoices = allVoices.filter(voice =>
-      voice.lang.toLowerCase().startsWith(effectiveLang.toLowerCase())
-    );
+    const baseLang = effectiveLang.split("-")[0].toLowerCase();
+
+const filteredVoices = allVoices.filter(voice =>
+  voice.lang.toLowerCase().startsWith(baseLang)
+);
+
     setSystemVoices(filteredVoices);
   }
 
@@ -52,13 +55,7 @@ export default function SubtitleVoiceControls({
   window.speechSynthesis.onvoiceschanged = loadVoices;
 }, [effectiveLang]);
 
-useEffect(() => {
-  const synth = window.speechSynthesis;
-  const load = () => synth.getVoices();
-  load();
-  synth.onvoiceschanged = load;
-  return () => { synth.onvoiceschanged = null; };
-}, []);
+
 
 
   // When voiceFromHook or systemVoices change, update testVoice and tested state
@@ -92,7 +89,7 @@ useEffect(() => {
       } catch {}
     }
     setAlreadyTested(tested);
-  }, [voiceFromHook, systemVoices, lang]);
+  }, [voiceFromHook, systemVoices, effectiveLang]);
 
   const updatePosition = () => {
     const width = window.innerWidth;
@@ -158,6 +155,33 @@ useEffect(() => {
   kn: "ಈ ಪರೀಕ್ಷೆಯನ್ನು ಭಾಷಣದ ಪ್ರಸ್ತುತಿಕರಣ ಮತ್ತು ಉಚ್ಚಾರಣೆಯ ಗರಿಷ್ಠ ಖಚಿತತೆಯನ್ನು ಖಾತ್ರಿಪಡಿಸಲು ವಿನ್ಯಾಸಗೊಳಿಸಲಾಗಿದೆ. ಈ ಪ್ರಕ್ರಿಯೆಯ ಸಮಯದಲ್ಲಿ ನಿಮ್ಮ ಸಹನಕ್ಕೆ ನಾವು ಹೃದಯಪೂರ್ವಕ ಧನ್ಯವಾದಗಳನ್ನು ಸಲ್ಲಿಸುತ್ತೇವೆ.",
 };
 
+function getVoicesWithRetry({
+  interval = 100,
+  maxRetries = 15,
+} = {}) {
+  let attempts = 0;
+
+  return new Promise((resolve) => {
+    const tryLoad = () => {
+      const voices = window.speechSynthesis.getVoices();
+
+      if (voices.length) {
+        resolve(voices);
+        return;
+      }
+
+      attempts++;
+      if (attempts >= maxRetries) {
+        resolve([]); // give up gracefully
+        return;
+      }
+
+      setTimeout(tryLoad, interval);
+    };
+
+    tryLoad();
+  });
+}
 
   // Load voice matching the lang code (e.g. "en" matches "en-US", etc)
 
@@ -298,7 +322,7 @@ useEffect(() => {
   };
 
   // Handle Read Subtitles click - show test screen if not tested
-const handleReadSubtitlesClick = (forceTest = false) => {
+const handleReadSubtitlesClick = async (forceTest = false) => {
   if (isSpeaking) {
   toggleSpeaking();
   return;
@@ -308,11 +332,16 @@ const handleReadSubtitlesClick = (forceTest = false) => {
     return;
   }
 
-  const voices = window.speechSynthesis.getVoices();
-  if (!voices.length) {
-    alert("Voices are still loading, please wait a moment and try again.");
-    return;
-  }
+  const voices = await getVoicesWithRetry();
+
+if (!voices.length) {
+  alert(
+    "Text-to-Speech voices are still loading.\n" +
+    "Please wait a moment and try again."
+  );
+  return;
+}
+
 
   if (!testVoice) {
     alert("No suitable voice found for your language. Please check your device's Text-to-Speech settings.");
@@ -320,7 +349,12 @@ const handleReadSubtitlesClick = (forceTest = false) => {
   }
 
   // Check if testVoice is really available in system voices (edge case)
-const voiceAvailable = voices.some(v => v.voiceURI === testVoice.voiceURI);
+const voiceAvailable = voices.some(
+  v =>
+    v.voiceURI === testVoice.voiceURI ||
+    (v.name === testVoice.name && v.lang === testVoice.lang)
+);
+
   if (!voiceAvailable) {
     const userAgent = navigator.userAgent.toLowerCase();
     let instructions = "Please check your device's Text-to-Speech settings to install or enable voices.";
