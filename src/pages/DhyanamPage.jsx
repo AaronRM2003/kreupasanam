@@ -169,6 +169,13 @@ export default function DhyanamPage({ lang: initialLang }) {
   // Speech sync & volume control hook
    const ttsSupported = typeof window !== 'undefined' && !!window.speechSynthesis;
    const isBrowserTranslateOn = !!userLang;
+  useEffect(() => {
+  const warmUp = () => {
+    window.speechSynthesis.getVoices();
+    document.removeEventListener("click", warmUp);
+  };
+  document.addEventListener("click", warmUp);
+}, []);
 
   // Speech sync & volume control hook
 const {

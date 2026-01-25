@@ -113,6 +113,13 @@ export default function OraclesPage({ lang: initialLang }) {
   useEffect(() => {
     setShowLangHelp(lang === 'other');
   }, [lang]);
+  useEffect(() => {
+  const warmUp = () => {
+    window.speechSynthesis.getVoices();
+    document.removeEventListener("click", warmUp);
+  };
+  document.addEventListener("click", warmUp);
+}, []);
 
   // Generate share text when dependencies change
   useEffect(() => {

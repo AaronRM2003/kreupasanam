@@ -169,6 +169,13 @@ export default function PrayersPage({ lang: initialLang }) {
       userLang, // ✅ new
       })
     : {};
+  useEffect(() => {
+  const warmUp = () => {
+    window.speechSynthesis.getVoices();
+    document.removeEventListener("click", warmUp);
+  };
+  document.addEventListener("click", warmUp);
+}, []);
 
   // Auto-disable speech when video closes
   useEffect(() => {
