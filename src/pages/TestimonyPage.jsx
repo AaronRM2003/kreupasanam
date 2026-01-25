@@ -107,7 +107,14 @@ const overlayData = testimony?.overlay ?? null;
     '/assets/angel3.webp',
     '/assets/cloud.webp',
   ];
-  
+  useEffect(() => {
+  const warmUp = () => {
+    window.speechSynthesis.getVoices();
+    document.removeEventListener("click", warmUp);
+  };
+  document.addEventListener("click", warmUp);
+}, []);
+
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const allImages = [...cssBackgroundImages];
