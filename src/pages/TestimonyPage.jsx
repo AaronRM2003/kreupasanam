@@ -182,7 +182,6 @@ const {
   isSpeaking = false,
   toggleSpeaking = () => {},
   stopSpeaking = () => {},
-  restartSpeaking = () => {},
   volume = 100,
   handleVolumeChange = () => {},
 } = ttsSupported
@@ -224,16 +223,10 @@ useEffect(() => {
     // YouTube states:
     // 1 = playing, 2 = paused
     if (state === 2 && !wasPausedRef.current) {
-      // ⏸ Video paused
-      wasPausedRef.current = true;
+  wasPausedRef.current = true;
+  window.speechSynthesis.cancel();
+}
 
-      // Try to pause speech
-      try {
-        window.speechSynthesis.pause();
-      } catch {
-        // ignore
-      }
-    }
 
   if (state === 1 && wasPausedRef.current) {
   wasPausedRef.current = false;
@@ -245,13 +238,10 @@ useEffect(() => {
   );
 
   if (currentSub) {
-    player.seekTo(currentSub.startSeconds + 0.01, true);
+    // 👇 move BEFORE the checkpoint
+    const rewindTo = Math.max(0, currentSub.startSeconds - 0.05);
+    player.seekTo(rewindTo, true);
   }
-
-  // 🔁 Restart speech without touching UI
-  setTimeout(() => {
-    restartSpeaking();
-  }, 120);
 }
 
   };
