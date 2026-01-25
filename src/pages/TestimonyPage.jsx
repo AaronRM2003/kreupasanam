@@ -207,7 +207,57 @@ const {
 }, [showVideo, isSpeaking, stopSpeaking]);
 
 const lastTimeRef = useRef(0);
+const wasPausedRef = useRef(false);
 const isAutoSeekingRef = useRef(false);
+
+useEffect(() => {
+  if (!playerRef.current || !isSpeaking) return;
+
+  const player = playerRef.current;
+
+  const checkState = () => {
+    if (typeof player.getPlayerState !== "function") return;
+
+    const state = player.getPlayerState();
+
+    // YouTube states:
+    // 1 = playing, 2 = paused
+    if (state === 2 && !wasPausedRef.current) {
+      // ⏸ Video paused
+      wasPausedRef.current = true;
+
+      // Try to pause speech
+      try {
+        window.speechSynthesis.pause();
+      } catch {
+        // ignore
+      }
+    }
+
+    if (state === 1 && wasPausedRef.current) {
+      // ▶️ Video resumed
+      wasPausedRef.current = false;
+
+      // Force restart speech cleanly
+      window.speechSynthesis.cancel();
+
+      // Seek back to subtitle start
+      const currentSub = subtitles.find(
+        (s) =>
+          currentTime >= s.startSeconds &&
+          currentTime < s.endSeconds
+      );
+
+      if (currentSub) {
+        player.seekTo(currentSub.startSeconds, true);
+      }
+    }
+  };
+
+  const interval = setInterval(checkState, 250);
+
+  return () => clearInterval(interval);
+}, [playerRef, isSpeaking, subtitles, currentTime]);
 
 useEffect(() => {
   if (!showVideo) return;
