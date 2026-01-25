@@ -182,7 +182,6 @@ const {
   isSpeaking = false,
   toggleSpeaking = () => {},
   stopSpeaking = () => {},
-  resetSpeechState = () => {},
   volume = 100,
   handleVolumeChange = () => {},
 } = ttsSupported
@@ -226,7 +225,6 @@ useEffect(() => {
     if (state === 2 && !wasPausedRef.current) {
       // ⏸ Video paused
       wasPausedRef.current = true;
-      stopSpeaking();
 
       // Try to pause speech
       try {
@@ -236,7 +234,7 @@ useEffect(() => {
       }
     }
 
-if (state === 1 && wasPausedRef.current) {
+  if (state === 1 && wasPausedRef.current) {
   wasPausedRef.current = false;
 
   const currentSub = subtitles.find(
@@ -246,14 +244,13 @@ if (state === 1 && wasPausedRef.current) {
   );
 
   if (currentSub) {
-    // ⏪ snap to subtitle start
     player.seekTo(currentSub.startSeconds + 0.01, true);
   }
 
-  // ⏱️ allow player & subtitle hook to settle
+  // 🔁 Restart speech without touching UI
   setTimeout(() => {
-    toggleSpeaking(); // ✅ START FRESH SPEAKING SESSION
-  }, 150);
+    restartSpeaking();
+  }, 120);
 }
 
   };

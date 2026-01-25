@@ -462,8 +462,13 @@ setTimeout(() => {
     }
   };
 
-  const resetSpeechState = () => {
+  const restartSpeaking = () => {
+  if (!isSpeaking) return;
+
+  // Hard reset TTS
   window.speechSynthesis.cancel();
+
+  // Reset guards
   hasStartedSpeakingRef.current = false;
   lastSpokenRef.current = '';
 };
@@ -472,7 +477,7 @@ setTimeout(() => {
     isSpeaking,
     toggleSpeaking,
     stopSpeaking,
-    resetSpeechState,
+    restartSpeaking,
     volume,
     handleVolumeChange,
   };
