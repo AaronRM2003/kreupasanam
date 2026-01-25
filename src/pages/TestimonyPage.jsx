@@ -223,27 +223,35 @@ useEffect(() => {
     // YouTube states:
     // 1 = playing, 2 = paused
     if (state === 2 && !wasPausedRef.current) {
-  wasPausedRef.current = true;
-  window.speechSynthesis.cancel();
-}
+      // ⏸ Video paused
+      wasPausedRef.current = true;
 
+      // Try to pause speech
+      try {
+        window.speechSynthesis.pause();
+      } catch {
+        // ignore
+      }
+    }
 
-  if (state === 1 && wasPausedRef.current) {
-  wasPausedRef.current = false;
+    if (state === 1 && wasPausedRef.current) {
+      // ▶️ Video resumed
+      wasPausedRef.current = false;
 
-  const currentSub = subtitles.find(
-    s =>
-      currentTime >= s.startSeconds &&
-      currentTime < s.endSeconds
-  );
+      // Force restart speech cleanly
+      window.speechSynthesis.cancel();
 
-  if (currentSub) {
-    // 👇 move BEFORE the checkpoint
-    const rewindTo = Math.max(0, currentSub.startSeconds - 0.05);
-    player.seekTo(rewindTo, true);
-  }
-}
+      // Seek back to subtitle start
+      const currentSub = subtitles.find(
+        (s) =>
+          currentTime >= s.startSeconds &&
+          currentTime < s.endSeconds
+      );
 
+      if (currentSub) {
+        player.seekTo(currentSub.startSeconds, true);
+      }
+    }
   };
 
   const interval = setInterval(checkState, 250);
