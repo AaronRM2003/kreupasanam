@@ -11,6 +11,10 @@ import {
 } from 'react-icons/fa';
 import styles from "./share.module.css"
 
+export const ORIGINAL_WIDTH = 1280;
+export const ORIGINAL_HEIGHT = 720;
+
+
 export function ShareModal({
   show,
   onHide,
@@ -22,9 +26,14 @@ export function ShareModal({
   emailShareUrl,
   includeSummary,
   setIncludeSummary,
+   overlayData,
+  imageSrc,
+  lang,
 }) {
   const [localText, setLocalText] = useState(shareText); // local copy
   const [copied, setCopied] = useState(false);
+  const hasOverlay = Boolean(overlayData?.boxes?.length);
+
 
   // Reset localText whenever modal opens
   useEffect(() => {
@@ -78,6 +87,23 @@ export function ShareModal({
             Include the whole text
           </label>
         </div>
+        {hasOverlay && (
+  <button
+    className={`${styles.shareOption} ${styles.download}`}
+    type="button"
+    onClick={() => {
+      exportImageWithBoxes({
+        src: imageSrc,
+        boxes: overlayData.boxes,
+        texts: overlayData.texts,
+        lang,
+      });
+    }}
+  >
+   Download Image
+  </button>
+)}
+
 
         <div className={styles.shareOptionsGrid}>
           <a
@@ -562,4 +588,152 @@ function getAdaptiveShadow(textColor, bgColor) {
   return useDarkShadow
     ? "rgba(0,0,0,0.45)"
     : "rgba(255,255,255,0.45)";
+}
+
+
+export async function exportImageWithBoxes({
+  src,
+  boxes,
+  texts,
+  lang,
+}) {
+  const canvas = document.createElement("canvas");
+  canvas.width = ORIGINAL_WIDTH;
+  canvas.height = ORIGINAL_HEIGHT;
+
+  const ctx = canvas.getContext("2d");
+
+  // 🔑 Wait for font
+  if (document.fonts) {
+    await document.fonts.ready;
+  }
+
+  // Load image
+  const img = new Image();
+  img.crossOrigin = "anonymous";
+  img.src = src;
+
+  await new Promise((res, rej) => {
+    img.onload = res;
+    img.onerror = rej;
+  });
+
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+  // Draw overlays
+  boxes.forEach((box, i) => {
+    const text = texts?.[lang]?.[i] ?? "";
+
+    // Background
+    ctx.fillStyle = box.background;
+    roundRect(ctx, box.x, box.y, box.w, box.h, 12);
+    ctx.fill();
+
+    // 🔑 Fit text like AutoFitText
+    const { fontSize, lines } = fitText(
+      ctx,
+      text,
+      box.w,
+      box.h
+    );
+
+    ctx.fillStyle = box.fontColor;
+    ctx.font = `600 ${fontSize}px Inter`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    const lineHeightPx = fontSize * 1.25;
+    const startY =
+      box.y +
+      box.h / 2 -
+      ((lines.length - 1) * lineHeightPx) / 2;
+
+    lines.forEach((line, index) => {
+      ctx.fillText(
+        line.trim(),
+        box.x + box.w / 2,
+        startY + index * lineHeightPx
+      );
+    });
+  });
+
+  // Download
+  const link = document.createElement("a");
+  link.download = "thumbnail.png";
+  link.href = canvas.toDataURL("image/png");
+  link.click();
+}
+
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+
+function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+  const words = text.split(" ");
+  let line = "";
+  const lines = [];
+
+  words.forEach(word => {
+    const test = line + word + " ";
+    if (ctx.measureText(test).width > maxWidth) {
+      lines.push(line);
+      line = word + " ";
+    } else {
+      line = test;
+    }
+  });
+  lines.push(line);
+
+  const startY = y - (lines.length - 1) * lineHeight / 2;
+
+  lines.forEach((l, i) => {
+    ctx.fillText(l.trim(), x, startY + i * lineHeight);
+  });
+}
+
+function fitText(ctx, text, boxWidth, boxHeight, {
+    fontFamily = "Inter",
+    fontWeight = 600,
+    padding = 16,
+    maxFontSize = 64,
+    minFontSize = 10,
+    lineHeight = 1.25,
+  } = {} ) {
+  let fontSize = maxFontSize;
+
+  while (fontSize >= minFontSize) {
+    ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
+
+    const words = text.split(" ");
+    const lines = [];
+    let line = "";
+
+    for (let word of words) {
+      const test = line + word + " ";
+      if (ctx.measureText(test).width > boxWidth - padding * 2) {
+        lines.push(line);
+        line = word + " ";
+      } else {
+        line = test;
+      }
+    }
+    lines.push(line);
+
+    const totalHeight = lines.length * fontSize * lineHeight;
+
+    if (totalHeight <= boxHeight - padding * 2) {
+      return { fontSize, lines };
+    }
+
+    fontSize--;
+  }
+
+  return { fontSize: minFontSize, lines: [text] };
 }

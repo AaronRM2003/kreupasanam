@@ -453,8 +453,11 @@ const handleClick = () => {
               emailShareUrl={emailShareUrl}
               includeSummary={includeSummary}
               setIncludeSummary={setIncludeSummary}
+               overlayData={overlayData}   // 👈 pass everything
+  imageSrc={thumbnailUrl}            // 👈 pass image src too
+  lang={lang}                 // 👈 needed for text
             />
-           
+
 
           </div>
         </div>
