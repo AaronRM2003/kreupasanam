@@ -111,6 +111,24 @@ export default function PrayersPage({ lang: initialLang }) {
 
   const videoId = getYouTubeVideoID(video);
   const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
+useEffect(() => {
+  const metaThemeColor = document.querySelector(
+    'meta[name="theme-color"]'
+  );
+
+  if (!metaThemeColor) return;
+
+  if (showVideo) {
+    metaThemeColor.setAttribute("content", "#000000"); // black notch
+  } else {
+    metaThemeColor.setAttribute("content", "#ffffff"); // restore
+  }
+
+  // cleanup on unmount
+  return () => {
+    metaThemeColor.setAttribute("content", "#ffffff");
+  };
+}, [showVideo]);
 
   // Preload background + thumbnail images
   useEffect(() => {

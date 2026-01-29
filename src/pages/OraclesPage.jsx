@@ -108,6 +108,24 @@ export default function OraclesPage({ lang: initialLang }) {
     if (thumbnailUrl) allImages.push(thumbnailUrl);
     preloadImages(allImages, () => setAllAssetsLoaded(true));
   }, [thumbnailUrl]);
+useEffect(() => {
+  const metaThemeColor = document.querySelector(
+    'meta[name="theme-color"]'
+  );
+
+  if (!metaThemeColor) return;
+
+  if (showVideo) {
+    metaThemeColor.setAttribute("content", "#000000"); // black notch
+  } else {
+    metaThemeColor.setAttribute("content", "#ffffff"); // restore
+  }
+
+  // cleanup on unmount
+  return () => {
+    metaThemeColor.setAttribute("content", "#ffffff");
+  };
+}, [showVideo]);
 
   // Show language help overlay for specific language key
   useEffect(() => {

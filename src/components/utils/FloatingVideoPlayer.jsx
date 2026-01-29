@@ -51,6 +51,23 @@ async function copyLink() {
 
 
 
+function enterFullscreen() {
+  const el = document.documentElement;
+
+  if (el.requestFullscreen) el.requestFullscreen();
+  else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+}
+
+React.useEffect(() => {
+  enterFullscreen();
+
+  return () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen?.();
+    }
+  };
+}, []);
+
   React.useEffect(() => {
     const handleResize = () => setIsLandscape(window.innerWidth > window.innerHeight);
     window.addEventListener('resize', handleResize);

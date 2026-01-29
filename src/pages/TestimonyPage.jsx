@@ -197,6 +197,24 @@ const {
       userLang, // ✅ new
     })
   : {};
+useEffect(() => {
+  const metaThemeColor = document.querySelector(
+    'meta[name="theme-color"]'
+  );
+
+  if (!metaThemeColor) return;
+
+  if (showVideo) {
+    metaThemeColor.setAttribute("content", "#000000"); // black notch
+  } else {
+    metaThemeColor.setAttribute("content", "#ffffff"); // restore
+  }
+
+  // cleanup on unmount
+  return () => {
+    metaThemeColor.setAttribute("content", "#ffffff");
+  };
+}, [showVideo]);
 
 
   // Auto-disable speech when video closes

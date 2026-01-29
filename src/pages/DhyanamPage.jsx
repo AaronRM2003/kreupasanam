@@ -205,7 +205,25 @@ const {
     }
   }, [showVideo, isSpeaking, stopSpeaking]);
 
-  
+  useEffect(() => {
+  const metaThemeColor = document.querySelector(
+    'meta[name="theme-color"]'
+  );
+
+  if (!metaThemeColor) return;
+
+  if (showVideo) {
+    metaThemeColor.setAttribute("content", "#000000"); // black notch
+  } else {
+    metaThemeColor.setAttribute("content", "#ffffff"); // restore
+  }
+
+  // cleanup on unmount
+  return () => {
+    metaThemeColor.setAttribute("content", "#ffffff");
+  };
+}, [showVideo]);
+
   // Share URLs
   const shareUrl = window.location.href;
   const fbShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
