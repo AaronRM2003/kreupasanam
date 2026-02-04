@@ -21,6 +21,12 @@ export default function FloatingVideoPlayer({
   const [showTtsWarning, setShowTtsWarning] = React.useState(false);
   const timeoutRef = React.useRef(null);
   const [copied, setCopied] = React.useState(false);
+  const [subtitleKey, setSubtitleKey] = React.useState(0);
+
+React.useEffect(() => {
+  setSubtitleKey(prev => prev + 1);
+}, [currentSubtitle]);
+
 
 async function copyLink() {
   const text = window.location.href;
@@ -198,9 +204,14 @@ React.useEffect(() => {
 
       <div id="subtitle-wrapper">
   {currentSubtitle && (
-    <div id="subtitle-dom" className={styles.subtitleBox}>
-      {currentSubtitle}
-    </div>
+  <div
+  key={subtitleKey}
+  id="subtitle-dom"
+  className={styles.subtitleBox}
+>
+  {currentSubtitle}
+</div>
+    
   )}
 </div>
 

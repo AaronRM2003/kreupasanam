@@ -1235,6 +1235,24 @@ input[type="range"]::-webkit-slider-thumb:hover {
   }
 }
 
+.subtitleBox {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: subtitleIn 300ms ease-out forwards;
+}
+
+@keyframes subtitleIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
 
 .actionRow {
   display: flex;
