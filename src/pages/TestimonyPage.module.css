@@ -1235,6 +1235,24 @@ input[type="range"]::-webkit-slider-thumb:hover {
   }
 }
 
+.subtitleBox {
+  opacity: 0;
+  animation: subtitleFade 350ms ease-in-out forwards;
+}
+
+@keyframes subtitleFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (max-width: 768px) {
+  .subtitleBox {
+    animation-duration: 450ms;
+  }
+}
 
 .actionRow {
   display: flex;
