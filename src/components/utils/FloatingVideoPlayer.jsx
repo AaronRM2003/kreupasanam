@@ -140,11 +140,18 @@ React.useEffect(() => {
   return (
     <>
       <div className={styles.floatingVideoWrapper} onClick={handleWrapperClick}>
+          {!isLandscape && (
+  <div className={styles.rotateHint}>
+    <span className={styles.rotateIcon}>↻</span>
+    Rotate for full screen
+  </div>
+)}
         <div
           className={styles.floatingVideo}
           onClick={handleVideoClick}
           style={{ position: 'relative' }}
         >
+          
           <div id="yt-player" style={{ width: '100%' }} ref={playerRef}></div>
 
           {/* Close button (portrait) */}

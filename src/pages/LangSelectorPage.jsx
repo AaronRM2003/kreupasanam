@@ -97,7 +97,21 @@ export default function LangSelectorPage({ setLang }) {
             </button>
           ))}
         </div>
+        <p
+  style={{
+    marginTop: '1.25rem',
+    fontSize: '13px',
+    color: '#64748b',
+    lineHeight: 1.4,
+    opacity: 0.9,
+  }}
+>
+  🌍 Not seeing your language?  
+  Use your browser’s translate and select <b>English</b>.
+</p>
+
       </div>
+      
     </div>
   );
 }
