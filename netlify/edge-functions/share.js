@@ -16,11 +16,12 @@ export default async (request) => {
     const url = new URL(request.url);
     const ua = request.headers.get("user-agent") || "";
     console.log("[share] 🔍 Request received:", { path: url.pathname, ua });
+    
+
+    const parts = url.pathname.split("/").filter(Boolean);
     const isHomePage = parts.length === 2 && parts[1] === "home";
 const isSectionPage = parts.length === 2 && parts[1] !== "home";
 
-
-    const parts = url.pathname.split("/").filter(Boolean);
     console.log("[share] 🔍 Path parts:", parts);
 
     // Expecting: /:lang/:type/:id-title
