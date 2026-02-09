@@ -1290,6 +1290,26 @@ input[type="range"]::-webkit-slider-thumb:hover {
   border: 1px solid rgba(255, 255, 255, 0.08);
   text-shadow: 0 1px 3px rgba(0,0,0,0.6);
 }
+.subtitleBox {
+  /* existing styles remain */
+
+  /* fade edges */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 6%,
+    black 94%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 6%,
+    black 94%,
+    transparent 100%
+  );
+}
+
 
 .actionRow {
   display: flex;
