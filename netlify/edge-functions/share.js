@@ -16,6 +16,9 @@ export default async (request) => {
     const url = new URL(request.url);
     const ua = request.headers.get("user-agent") || "";
     console.log("[share] 🔍 Request received:", { path: url.pathname, ua });
+    const isHomePage = parts.length === 2 && parts[1] === "home";
+const isSectionPage = parts.length === 2 && parts[1] !== "home";
+
 
     const parts = url.pathname.split("/").filter(Boolean);
     console.log("[share] 🔍 Path parts:", parts);
@@ -92,6 +95,7 @@ export default async (request) => {
   bn: "এখানে আপনি বাংলায় ক্রুপাসনামের বিষয়বস্তু দেখতে পারেন, যার মধ্যে রয়েছে আমাদের দৈনন্দিন রুটি, ধ্যান, সাক্ষ্য এবং জীবন্ত বাণী।"
 };
 
+
     const sectionTitles = {
   prayers: {
   en: "Kreupasanam Our Daily Bread",
@@ -145,6 +149,39 @@ export default async (request) => {
     bn: "জীবন্ত বাণী"
   }
 };
+if (isBot && isHomePage) {
+  const title = "Kreupasanam Testimonies";
+  const description = escapeHtml(homeDescriptions[lang] || homeDescriptions.en);
+  const canonicalUrl = `${siteOrigin}${url.pathname}`;
+  const ogImage = `${siteOrigin}/assets/kreupa.png`;
+
+  const html = `<!DOCTYPE html>
+<html lang="${lang}">
+<head>
+<meta charset="utf-8" />
+<title>${title}</title>
+<meta name="description" content="${description}" />
+<link rel="canonical" href="${canonicalUrl}" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="${title}" />
+<meta property="og:description" content="${description}" />
+<meta property="og:url" content="${canonicalUrl}" />
+<meta property="og:image" content="${ogImage}" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="${title}" />
+<meta name="twitter:description" content="${description}" />
+<meta name="twitter:image" content="${ogImage}" />
+</head>
+<body></body>
+</html>`;
+
+  return new Response(html, {
+    headers: { "Content-Type": "text/html" }
+  });
+}
+
 
 if (isBot && isSectionPage && jsonPath) {
   const res = await fetch(`${siteOrigin}${jsonPath}`);
@@ -218,12 +255,11 @@ if (isBot && isSectionPage && jsonPath) {
       // Only serve OG HTML for valid URL
       const title = item.title?.[lang] || item.title?.en || "Video";
       const fullContent = item.content?.[lang] || item.content?.en || "Watch this video";
-      const maxLength = 150; // characters
-      // let description = fullContent.slice(0, maxLength);
-      // description = description.slice(0, description.lastIndexOf(" ")); // avoid cutting mid-word
-      // description = description.replace(/\n/g, ' '); // replace newlines with space
-      // description = escapeHtml(description);
-      const description = escapeHtml(homeDescriptions[lang] || homeDescriptions.en);
+      let description = fullContent
+        .replace(/\n/g, " ")
+        .slice(0, 150);
+      description = description.slice(0, description.lastIndexOf(" "));
+      description = escapeHtml(description);
 
 
       const videoUrl = item.video || "";
