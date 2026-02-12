@@ -195,7 +195,7 @@ const renderSkeletons = () => {
             renderSkeletons()
           ) : (
             testimonies
-              .filter(({ id }) => [16, 22, 8].includes(id))
+              .filter(({ id }) => [16, 22, 44].includes(id))
               .map((t) => (
   <TestimonyCard
     key={t.id}
