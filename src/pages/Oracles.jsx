@@ -200,8 +200,7 @@ function resolveOverlay(oracle, all) {
            <img src="/assets/logo.png" alt="Logo" className="floating-logo" />
              <section
     className={styles.testimoniesSection}
-    style={{ 
-      marginTop: '7rem',
+    style={{
       marginBottom:'2rem', 
       backgroundColor: windowWidth <= 768 ? '#fff' : 'transparent' 
     }}

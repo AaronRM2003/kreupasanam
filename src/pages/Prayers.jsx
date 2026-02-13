@@ -190,7 +190,6 @@ if (errorLoading) {
              <section
     className={styles.testimoniesSection}
     style={{ 
-      marginTop: '7rem',
       marginBottom:'2rem', 
       backgroundColor: windowWidth <= 768 ? '#fff' : 'transparent' 
     }}

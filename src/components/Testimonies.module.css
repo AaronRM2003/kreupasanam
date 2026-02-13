@@ -3,6 +3,7 @@
   padding: 0rem; 
   max-width: 1400px;
   margin: 0 auto;
+  margin-top: 7rem;
    background-size: cover;
 }
 .testimoniesSectionContainer {
@@ -26,14 +27,22 @@
     padding: 2rem 1rem;
   }
 }
+.testimoniesSection {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(245, 248, 255, 0.9),
+      rgba(235, 242, 255, 0.6)
+    );
+}
 
 @media (max-width: 768px) {
 .testimoniesSection {
+  margin-top: 6rem;
   position: relative;
   background-color: #fff;
   border-radius: 30px;
   padding-top: 2rem;
-  margin: 0.7rem;
   box-shadow: 0 8px 24px rgba(36, 107, 253, 0.08);
   overflow: hidden;
   min-height: 100vh;
@@ -41,11 +50,11 @@
 
 /* Fading border */
 .testimoniesSection {
-  position: relative;
   background-color: #fff;
   border-radius: 30px;
   padding-top: 2rem;
-  margin: 0.4rem;
+  margin-left: 0rem;
+  margin-right: 0rem;
   box-shadow: 0 8px 24px rgba(36, 107, 253, 0.08);
   overflow: hidden;
 

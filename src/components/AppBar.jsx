@@ -70,6 +70,7 @@ export default function AppBar({ lang }) {
       <NavLink to={`/${lang}/oracles`}>Oracles</NavLink>
       <NavLink to={`/${lang}/dhyanam`}>Dhyanam</NavLink>
       <NavLink to={`/${lang}/prayers`}>Prayers</NavLink>
+      <NavLink to={`/${lang}/history`}>History</NavLink>
     </nav>
   );
 

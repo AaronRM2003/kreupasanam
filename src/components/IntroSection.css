@@ -82,7 +82,7 @@
 /* Portrait Mobile */
 @media (max-width: 768px) {
   .introBox1 {
-    margin: 110px 16px 24px;
+    margin: 95px 16px 24px;
     padding: 20px 8px;
     border-radius: 20px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
