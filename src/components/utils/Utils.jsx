@@ -361,24 +361,18 @@ export function detectBrowserTranslateLang() {
 }
 
 // optional: normalize to BCP-47 locale
-export function normalizeToLocale(lang) {
+export function normalizeForTTS(lang) {
   if (!lang) return null;
-  const short = lang.toLowerCase();
 
-  // if already like hi-IN keep as is
-  if (lang.includes("-")) return lang;
+  // normalize format
+  const clean = lang.replace("_", "-").toLowerCase();
+  const base = clean.split("-")[0];
 
-  // map short → locale (for speech synth voices)
-  if (short === "hi") return "hi-IN";
-  if (short === "ta") return "ta-IN";
-  if (short === "te") return "te-IN";
-  if (short === "ml") return "ml-IN";
-  if (short === "kn") return "kn-IN";
-  if (short === "mr") return "mr-IN";
-  if (short === "bn") return "bn-IN";
 
-  return lang;
+  // everything else → base language only
+  return base;
 }
+
 
 // Generate share text snippet for testimony preview
 export function generateShareText(testimony, lang, currentUrl, text, includeFullContent = false,youtubeLink) {
