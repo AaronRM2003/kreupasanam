@@ -33,6 +33,7 @@ export default async (request) => {
       dhyanam: "/assets/dhyanam-content.json",
       oracles: "/assets/oracles-content.json",
       prayers:"/assets/prayers-content.json",
+      history:"/assets/history-content.json"
     };
     const jsonPath = jsonMap[type];
 

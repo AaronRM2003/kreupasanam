@@ -14,6 +14,8 @@ import NotFoundPage from './NotFoundPage';
 import About from './AboutPage';
 import PrayersPage from './pages/PrayersPage';
 import Prayers from './pages/Prayers';
+import History from './pages/History';
+import HistoryPage from './pages/HistoryPage';
 
 const supportedLangs = ['en', 'hi', 'zh', 'bn', 'ta', 'te', 'fr', 'es', 'mr', 'kn'];
 
@@ -81,6 +83,8 @@ function App() {
           <Route path="dhyanam/:idSlug" element={<LangRoute element={DhyanamPage} />} />
           <Route path="prayers" element={<LangRoute element={Prayers} />} />
           <Route path="prayers/:idSlug" element={<LangRoute element={PrayersPage} />} />
+          <Route path="history" element={<LangRoute element={History} />} />
+          <Route path="history/:idSlug" element={<LangRoute element={HistoryPage} />} />
 
           {/* ✅ Catch invalid paths like /en/invalid or /ml/xyz */}
           <Route path="*" element={<NotFoundPage />} />

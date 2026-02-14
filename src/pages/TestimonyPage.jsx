@@ -456,6 +456,7 @@ const handleClick = () => {
   <NavLink to={`/${initialLang}/oracles`} className={styles.footerNavLink}>Oracles</NavLink>
   <NavLink to={`/${initialLang}/dhyanam`} className={styles.footerNavLink}>Dhyanam</NavLink>
   <NavLink to={`/${initialLang}/prayers`} className={styles.footerNavLink}>Prayers</NavLink>
+  <NavLink to={`/${initialLang}/history`} className={styles.footerNavLink}>History</NavLink>
 </div>
 
 

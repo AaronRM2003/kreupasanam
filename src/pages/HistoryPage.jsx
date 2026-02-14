@@ -1,6 +1,6 @@
-import { useState, useEffect,useMemo, useRef } from 'react';
-import { useParams, Link, NavLink } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect ,useMemo, useRef} from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { FaShareAlt, FaCompass } from 'react-icons/fa';
 import styles from './TestimonyPage.module.css';
 
@@ -11,74 +11,127 @@ import {
   LanguageDropdown,
   ShareModal,
   detectBrowserTranslateLang,
-  normalizeToLocale,
 } from '../components/utils/Utils';
 
 import { useYouTubePlayer } from '../components/hooks/useYoutubePlayer';
 import { useSubtitles } from '../components/hooks/useSubtitles';
-
 import { useSpeechSync } from '../components/hooks/useSpeechSync';
 import FloatingVideoPlayer from '../components/utils/FloatingVideoPlayer';
 import LangHelpOverlay from '../components/utils/LangHelpOverlay';
-import TranscriptModal from '../components/utils/TranscriptModel';
+import ImageWithBoxes from '../components/utils/ImageWithBoxes';
+import TranscriptModal from '../components/utils/TranscriptModel'
+import { normalizeToLocale } from '../components/utils/Utils';
 
-export default function DhyanamPage({ lang: initialLang }) {
-  const { idSlug } = useParams();  // changed from id to idSlug
-
-  const [dhyanam, setDhyanam] = useState(null);
-  const [loadingData, setLoadingData] = useState(true);
-  const [errorLoading, setErrorLoading] = useState(false);
-
+export default function HistoryPage({ lang: initialLang }) {
+  const { idSlug } = useParams();  // Changed from id to idSlug
   const [lang, setLang] = useState(initialLang || 'en');
   const [showVideo, setShowVideo] = useState(false);
   const [allAssetsLoaded, setAllAssetsLoaded] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
   const [showLangHelp, setShowLangHelp] = useState(false);
   const [includeSummary, setIncludeSummary] = useState(false);
+  const [testimonies, setTestimonies] = useState([]);
+  const [loadingData, setLoadingData] = useState(true);
+  const [errorLoading, setErrorLoading] = useState(false);
   const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
-      const [showTranscript, setShowTranscript] = useState(false);
-      const [userLang, setUserLang] = useState(null);
+  const [showTranscript, setShowTranscript] = useState(false);
+  const [userLang, setUserLang] = useState(null);
 
-
-  const navigate = useNavigate();
-  const handleClick = () => {
-      navigate(`/${initialLang || 'en'}/dhyanam`);
-    };
   // Parse id and slug from idSlug param
-  let id;
-  let slug;
+  // Assuming idSlug is from useParams()
+  let id = null;
+  let slug = '';
+
   if (idSlug) {
     const separatorIndex = idSlug.indexOf('-');
     if (separatorIndex === -1) {
-      id = idSlug;
-      slug = '';
+      id = idSlug;    // no slug part
     } else {
       id = idSlug.substring(0, separatorIndex);
       slug = idSlug.substring(separatorIndex + 1);
     }
   }
 
-  // Fetch dhyanam content JSON dynamically
+  // Find history by id
+  const historysearch = testimonies.find(item => item.id === Number(id));
+
+  // Function to slugify text (you already have this)
+  function slugify(text) {
+    return text
+      .toString()
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w\-]+/g, '')
+      .replace(/\-\-+/g, '-');
+  }
+ 
+  // If history exists, verify slug matches
+  const history = historysearch && slug === slugify(historysearch.title['en']) ? historysearch : null;
+
+  // Fetch testimonies on mount
   useEffect(() => {
     setLoadingData(true);
     setErrorLoading(false);
-    fetch('/assets/dhyanam-content.json')
+    fetch('/assets/history-content.json')
       .then((res) => {
         if (!res.ok) throw new Error('Failed to fetch data');
         return res.json();
       })
       .then((data) => {
-        setDhyanam(data);
+        setTestimonies(data);
         setLoadingData(false);
       })
       .catch((err) => {
-        console.error('Error loading dhyanam content:', err);
+        console.error('Error loading history content:', err);
         setErrorLoading(true);
         setLoadingData(false);
       });
   }, []);
 
-    useEffect(() => {
+  // Safe destructuring with fallback values to avoid errors before data loads
+  const title = (history && history.title) || {};
+  const date = (history && history.date) || '';
+  const content = (history && history.content) || {};
+  const video = (history && history.video) || '';
+  const subtitlesUrl = (history && history.subtitles) || '';
+const overlayData = history?.overlay ?? null;
+  const navigate = useNavigate();
+  // Get videoId and thumbnail URLS
+  const videoId = getYouTubeVideoID(video);
+  const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
+
+  // Preload images (background + thumbnail)
+  const cssBackgroundImages = [
+    '/assets/angel3.webp',
+    '/assets/angel3.webp',
+    '/assets/cloud.webp',
+  ];
+
+  
+  useEffect(() => {
+  const warmUp = () => {
+    window.speechSynthesis.getVoices();
+    document.removeEventListener("click", warmUp);
+  };
+  document.addEventListener("click", warmUp);
+}, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const allImages = [...cssBackgroundImages];
+    if (thumbnailUrl) allImages.push(thumbnailUrl);
+    preloadImages(allImages, () => setAllAssetsLoaded(true));
+  }, [thumbnailUrl]);
+
+  // Show language help overlay for special lang value
+  useEffect(() => {
+    setShowLangHelp(lang === 'other');
+  }, [lang]);
+
+  // Generate share text when dependencies change
+
+  useEffect(() => {
   if (typeof window === "undefined") return;
 
   const update = () => {
@@ -97,85 +150,32 @@ export default function DhyanamPage({ lang: initialLang }) {
 
   return () => obs.disconnect();
 }, []);
-  // Find the dhyanam item by id (converted to number)
-  const dhyanamItemsearch = dhyanam?.find(item => item.id === Number(id));
 
-  // Function to slugify text (you already have this)
-  function slugify(text) {
-    return text
-      .toString()
-      .toLowerCase()
-      .trim()
-      .replace(/\s+/g, '-')
-      .replace(/[^\w\-]+/g, '')
-      .replace(/\-\-+/g, '-');
-  }
- 
-  // If dhyanamItem exists, verify slug matches
-  const dhyanamItem = dhyanamItemsearch && slug === slugify(dhyanamItemsearch.title['en']) ? dhyanamItemsearch : null;
-  // Provide safe fallback object for hooks even if dhyanamItem not ready
-  const safeDhyanamItem = dhyanamItem || {
-    title: {},
-    date: '',
-    content: {},
-    video: '',
-    subtitles: '',
-  };
+const shareText = useMemo(() => {
+  if (!history || typeof window === 'undefined') return '';
 
-  const { title, date, content, video, subtitles: subtitlesUrl } = safeDhyanamItem;
-
-  const cssBackgroundImages = ['/assets/angel3.webp', '/assets/angel3.webp', '/assets/cloud.webp'];
-
-  const videoId = getYouTubeVideoID(video);
-  const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
-
-  // Preload background + thumbnail images
-  useEffect(() => {
-    const allImages = [...cssBackgroundImages];
-    if (thumbnailUrl) allImages.push(thumbnailUrl);
-    preloadImages(allImages, () => setAllAssetsLoaded(true));
-  }, [thumbnailUrl]);
-
-  // Show language help overlay for special lang
-  useEffect(() => {
-    setShowLangHelp(lang === 'other');
-  }, [lang]);
-
-  // Generate share text on dependencies change
-
-  const shareText = useMemo(() => {
-  if (!safeDhyanamItem || typeof window === 'undefined') return '';
-
-  // Use current page URL instead of /share/ URL
-  const shareUrl = window.location.href;
+  const shareUrl = window.location.href; // current page URL
 
   return generateShareText(
-    safeDhyanamItem,
+    history,
     lang,
     shareUrl,
-    "Dhyanam meditation",
+    "Watch more about the history of Kreupasanam",
     includeSummary,
     video
   );
-}, [safeDhyanamItem, lang, includeSummary, video]);
+}, [history, lang, includeSummary, video]);
 
-  
-  // YouTube player hook - ALWAYS call hooks before conditionals
+
+
+  // YouTube player hook
   const { currentTime, playerRef, duration: totalDuration } = useYouTubePlayer(videoId, showVideo);
 
-  // Subtitles & current subtitle
+  // Subtitles & current subtitle hook
   const { subtitles, currentSubtitle } = useSubtitles(subtitlesUrl, lang, currentTime);
-
-  // Speech sync & volume control hook
-   const ttsSupported = typeof window !== 'undefined' && !!window.speechSynthesis;
-   const isBrowserTranslateOn = !!userLang;
-  useEffect(() => {
-  const warmUp = () => {
-    window.speechSynthesis.getVoices();
-    document.removeEventListener("click", warmUp);
-  };
-  document.addEventListener("click", warmUp);
-}, []);
+  
+  const ttsSupported = typeof window !== 'undefined' && !!window.speechSynthesis;
+  const isBrowserTranslateOn = !!userLang;
 
   // Speech sync & volume control hook
 const {
@@ -197,15 +197,7 @@ const {
       userLang, // ✅ new
     })
   : {};
-  
-    // Auto-disable speech when video closes
-    useEffect(() => {
-    if (!showVideo && isSpeaking) {
-      stopSpeaking();
-    }
-  }, [showVideo, isSpeaking, stopSpeaking]);
-
-  useEffect(() => {
+useEffect(() => {
   const metaThemeColor = document.querySelector(
     'meta[name="theme-color"]'
   );
@@ -224,26 +216,14 @@ const {
   };
 }, [showVideo]);
 
-  // Share URLs
-  const shareUrl = window.location.href;
-  const fbShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
-  const waShareUrl = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
-  const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(
-    shareText
-  )}`;
-  const emailShareUrl = `mailto:?subject=${encodeURIComponent(title[lang] || title['en'])}&body=${encodeURIComponent(
-    shareText
-  )}`;
-  const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
-  
-    useEffect(() => {
-      const checkScreen = () => setIsMobileOrTablet(window.innerWidth <= 1368);
-      checkScreen(); // initial check
-  
-      window.addEventListener('resize', checkScreen);
-      return () => window.removeEventListener('resize', checkScreen);
-    }, []);
-  // Conditional renderings AFTER hooks:
+
+  // Auto-disable speech when video closes
+  useEffect(() => {
+  if (!showVideo && isSpeaking) {
+    stopSpeaking();
+  }
+}, [showVideo, isSpeaking, stopSpeaking]);
+
 const lastTimeRef = useRef(0);
 const isAutoSeekingRef = useRef(false);
 
@@ -289,49 +269,36 @@ useEffect(() => {
   lastTimeRef.current = currentTime;
 }, [currentTime, isSpeaking, subtitles, playerRef, showVideo]);
 
+const handleClick = () => {
+    navigate(`/${initialLang || 'en'}/testimonies`);
+  };
+  // Share URLs
+  const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
+  const fbShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+  const waShareUrl = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
+  const telegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
+  const emailShareUrl = `mailto:?subject=${encodeURIComponent(title[lang] || title['en'])}&body=${encodeURIComponent(shareText)}`;
+  // Show loading if assets or history not ready
+  const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
+  
+  useEffect(() => {
+    if (typeof window === 'undefined') return; 
+    const checkScreen = () => setIsMobileOrTablet(window.innerWidth <= 1368);
+    checkScreen(); // initial check
+
+    window.addEventListener('resize', checkScreen);
+    return () => window.removeEventListener('resize', checkScreen);
+  }, []);
+  
   if (loadingData) {
-    return (
-      <div className={styles.loadingOverlay}>
-        <div className={styles.spinner}></div>
-        <p>Loading content...</p>
-      </div>
-    );
-  }
-
-  if (errorLoading || !dhyanam) {
-    return (
-      <div className={styles.notFoundPage}>
-        <div className={styles.notFoundContainer}>
-          <span className={styles.notFoundCode}>500</span>
-          <h1 className={styles.notFoundTitle}>Error Loading Dhyanam</h1>
-          <p className={styles.notFoundText}>
-            There was a problem loading the content. Please try again later.
-          </p>
-          <Link to={`/${lang || 'en'}/dhyanam`} className={styles.notFoundButton}>
-            Go Back
-          </Link>
+      return (
+        <div className={styles.loadingOverlay}>
+          <div className={styles.spinner}></div>
+          <p>Loading content...</p>
         </div>
-      </div>
-    );
-  }
-
-  if (!dhyanamItem) {
-    return (
-      <div className={styles.notFoundPage}>
-        <div className={styles.notFoundContainer}>
-          <span className={styles.notFoundCode}>404</span>
-          <h1 className={styles.notFoundTitle}>Dhyanam Not Found</h1>
-          <p className={styles.notFoundText}>
-            The episode you’re looking for doesn’t exist or may have been removed.
-          </p>
-          <Link to={`/${lang || 'en'}/dhyanam`} className={styles.notFoundButton}>
-            Browse More
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
+      );
+    }
+  
   if (!allAssetsLoaded) {
     return (
       <div className={styles.loadingOverlay}>
@@ -341,30 +308,52 @@ useEffect(() => {
     );
   }
 
+  // Show 404 if history not found after loading
+  if (!history) {
+    return (
+      <div className={styles.notFoundPage}>
+        <div className={styles.notFoundContainer}>
+          <span className={styles.notFoundCode}>404</span>
+          <h1 className={styles.notFoundTitle}>History Not Found</h1>
+          <p className={styles.notFoundText}>
+            Oops! The history you're looking for doesn’t exist or may have been removed.
+          </p>
+          <Link to={`/${lang || 'en'}/history`} className={styles.notFoundButton}>
+            Browse More
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.testimonyPage}>
+     
       {/* Header */}
-      
-      {!isMobileOrTablet && (  <div className={styles.testimonyHeader}>
+      {!isMobileOrTablet && ( 
+      <div className={styles.testimonyHeader}>
         <div className={styles.testimonyLeft}>
           <button className={styles.backButton} onClick={() => window.history.back()}>
             &#8592; <span className={styles.backText}>Back</span>
           </button>
         </div>
-
+     
         <div className={styles.testimonyCenter}>
           <div className={styles.animatedLineLeft}></div>
-          <h2 className={styles.testimonyHeading}>Dhyanam</h2>
+          <h2 className={styles.testimonyHeading}>History</h2>
           <div className={styles.animatedLineRight}></div>
         </div>
 
         <div className={styles.testimonyRight}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
- {!isMobileOrTablet && (
+                      {!isMobileOrTablet && (
             <LanguageDropdown lang={lang} onSelect={setLang} />
-          )}          </div>
+          )}
+
+          </div>
         </div>
-      </div>)}
+      </div>
+)}
 
       {showLangHelp && (
         <LangHelpOverlay
@@ -382,17 +371,21 @@ useEffect(() => {
 
       {/* Main content */}
       <div className={styles.testimonyContainer}>
+        
                <img src="/assets/logo.png" alt="Logo" className="floating-logo" />
+     
+        <div className={styles.testimonyInner} >
+           
+                   {isMobileOrTablet && (  <h2 className={styles.testimonyHeading}>History</h2>)}
 
-        <div className={styles.testimonyInner}>
-            {isMobileOrTablet && (  <h2 className={styles.testimonyHeading}>Dhyanam</h2>)}
-                       <div
-                          className={styles.bgBlur}
-                          style={{
-                            backgroundImage: `url(${thumbnailUrl})`
-                          }}
-                        />
-{videoId && !showVideo ? (
+
+  <div
+    className={styles.bgBlur}
+    style={{
+      backgroundImage: `url(${thumbnailUrl})`
+    }}
+  />
+          {videoId && !showVideo ? (
   <div
     className={styles.thumbnailWrapper}
     onClick={() => setShowVideo(true)}
@@ -402,14 +395,16 @@ useEffect(() => {
     {!thumbnailLoaded && (
       <div className={styles.thumbnailSkeleton}></div>
     )}
+   <div key={lang} style={{ contain: "layout paint" }}>
+  <ImageWithBoxes
+    src={thumbnailUrl}
+    data={overlayData}
+    lang={lang}
+    onImageLoad={() => setThumbnailLoaded(true)}
+  />
+</div>
 
-    <img
-      src={thumbnailUrl}
-      alt="Video Thumbnail"
-      className={`${styles.thumbnailImage} ${thumbnailLoaded ? styles.visible : styles.hidden}`}
-      onLoad={() => setThumbnailLoaded(true)}
-      onError={() => setThumbnailLoaded(true)} // fallback
-    />
+   
 
     {thumbnailLoaded && (
       <div className={styles.smallPlayIcon}>
@@ -424,36 +419,37 @@ useEffect(() => {
     <img src={thumbnailUrl} alt="Video Thumbnail" className={styles.thumbnailImage} />
   </div>
 )}
-
-             {isMobileOrTablet && (
-                    <div>
-                      <LanguageDropdown lang={lang} onSelect={setLang} />
-                    </div>
-                  )}
-          <div className={styles.testimonyText}>
+           {isMobileOrTablet && (
+          <div>
+            <LanguageDropdown lang={lang} onSelect={setLang} />
+          </div>
+        )}
+          <div className={styles.testimonyText} >
             <h1 className={styles.testimonyTitle}>{title[lang] || title['en']}</h1>
             <p className={styles.testimonyDate}>{date}</p>
             <div className={styles.testimonyContent}>{content[lang] || content['en']}</div>
-             <button
-              className={styles.transcriptButton}
-              onClick={() => setShowTranscript(true)}
-            >
-              📜 Read More
-            </button>
+            <button
+  className={styles.transcriptButton}
+  onClick={() => setShowTranscript(true)}
+>
+  📜 Read More
+</button>
+
           </div>
 
           <div className={styles.shareSection}>
-            <p style={{ fontWeight: '600',marginTop:"1rem" }}>Share this meditation:</p>
-             <div className={styles.actionRow}>
-                     
-                       <button className={`${styles.actionButton} ${styles.share}`} onClick={() => setShowShareModal(true)}>
-                         <FaShareAlt />
-                         <span>Share</span>
-                       </button>
-                     
-                      
-                     </div>
-                     <div className={styles.footerNavLinks}>
+            <p style={{ fontWeight: '600',marginTop: '1rem' }}>Share this Episode:</p>
+           <div className={styles.actionRow}>
+
+  <button className={`${styles.actionButton} ${styles.share}`} onClick={() => setShowShareModal(true)}>
+    <FaShareAlt />
+    <span>Share</span>
+  </button>
+
+  
+  
+</div>
+<div className={styles.footerNavLinks}>
   <NavLink to={`/${initialLang}/home`} className={styles.footerNavLink}>Home</NavLink>
   <NavLink to={`/${initialLang}/about`} className={styles.footerNavLink}>About</NavLink>
   <NavLink to={`/${initialLang}/testimonies`} className={styles.footerNavLink}>Testimonies</NavLink>
@@ -463,10 +459,12 @@ useEffect(() => {
   <NavLink to={`/${initialLang}/history`} className={styles.footerNavLink}>History</NavLink>
 </div>
 
+
+
             <ShareModal
               show={showShareModal}
               onHide={() => setShowShareModal(false)}
-              title="Dhyanam"
+              title="Interview"
               shareText={shareText}
               fbShareUrl={fbShareUrl}
               waShareUrl={waShareUrl}
@@ -474,32 +472,41 @@ useEffect(() => {
               emailShareUrl={emailShareUrl}
               includeSummary={includeSummary}
               setIncludeSummary={setIncludeSummary}
+               overlayData={overlayData}   // 👈 pass everything
+  imageSrc={thumbnailUrl}            // 👈 pass image src too
+  lang={lang}                 // 👈 needed for text
             />
+
+
           </div>
         </div>
+       
+        
       </div>
-<TranscriptModal
+        <TranscriptModal
   show={showTranscript}
   onClose={() => setShowTranscript(false)}
   subtitles={subtitles}
   lang={lang}
 />
-      {/* Video player and subtitles */}
-      {showVideo && (
-        <FloatingVideoPlayer
-          isSpeaking={isSpeaking}
-          volume={volume}
-          toggleSpeaking={toggleSpeaking}
-          handleVolumeChange={handleVolumeChange}
-          playerRef={playerRef}
-          lang={lang}
-          currentSubtitle={currentSubtitle}
-          ttsSupported={ttsSupported}
-          onClose={() => setShowVideo(false)}
 
-           userLang={userLang}
-        />
-      )}
+      {/* Video player and subtitles */}
+    {showVideo && (
+  <FloatingVideoPlayer
+    isSpeaking={isSpeaking}
+    volume={volume}
+    toggleSpeaking={toggleSpeaking}
+    handleVolumeChange={handleVolumeChange}
+    playerRef={playerRef}
+    lang={lang}
+    currentSubtitle={currentSubtitle}
+    ttsSupported={ttsSupported} // optional: hide Speak button if false
+    onClose={() => setShowVideo(false)}
+
+    userLang={userLang}
+  />
+)}
+
     </div>
   );
 }
