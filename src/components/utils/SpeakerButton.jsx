@@ -3,6 +3,7 @@ import { FaVolumeUp, FaVolumeDown } from 'react-icons/fa';
 import { useSelectedVoice } from '../hooks/useSelectedVoice';
 import './speakerControl.css';
 import VoiceTestScreen from './VoiceTestScreen';
+import { speechUnits } from './Utils';
 
 export default function SubtitleVoiceControls({
   isSpeaking,
@@ -474,12 +475,7 @@ function shortCode(langTag) {
 
       const speechEndTime = performance.now();
       const elapsedSeconds = (speechEndTime - speechStartTime) / 1000;
-      if (elapsedSeconds < 1.2) {
-        alert("Test speech was too short. Please try again.");
-        setIsLoadingTest(false);
-        utteranceRef.current = null;
-        return;
-      }
+      
       const baseLang = shortCode(effectiveLang);
       const unitCount = speechUnits(sentence, baseLang);
 
@@ -697,7 +693,6 @@ function shortCode(langTag) {
           onVoiceChange={onVoiceChange}
           voices={systemVoices}
           alreadyTested={tested}
-          
         />
       )}
 </>
