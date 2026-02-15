@@ -419,11 +419,13 @@ if (storedData) {
 function shortCode(langTag) {
   return (langTag || "en").split("-")[0].toLowerCase();
 }
-let finished = false;
 
   // Start the voice test reading and measure speed
   const startAccurateVoiceTest = (testSentence) => {
+
   let sentence = (testSentence || "").trim();
+    let speechStartTime = 0;
+let finished = false;
 
   // ✅ If base language is not English, always use predefined sentence
   if (lang !== "en") {
@@ -438,21 +440,19 @@ let finished = false;
     const utterance = new SpeechSynthesisUtterance(sentence);
 utteranceRef.current = utterance;
 
-let finished = false;
-
 utterance.onstart = () => {
   speechStartTime = performance.now();
 };
 
 utterance.onerror = (e) => {
   if (finished) return;
+  finished = true;
 
   console.warn("TTS error:", e?.error);
-
-  finished = true;
   setIsLoadingTest(false);
   utteranceRef.current = null;
 };
+
 
 utterance.onend = () => {
   if (finished) return;
@@ -461,53 +461,47 @@ utterance.onend = () => {
   const speechEndTime = performance.now();
   const elapsedSeconds = (speechEndTime - speechStartTime) / 1000;
 
-  if (elapsedSeconds < 1.2) {
+  // ALWAYS clear loading first
+  setIsLoadingTest(false);
+
+  if (!elapsedSeconds || elapsedSeconds < 1.2) {
     alert("Test speech was too short. Please try again.");
-    setIsLoadingTest(false);
     utteranceRef.current = null;
     return;
   }
-      const baseLang = shortCode(effectiveLang);
-      const unitCount = speechUnits(sentence, baseLang);
 
-      const wps = unitCount / elapsedSeconds;
+  const baseLang = shortCode(effectiveLang);
+  const unitCount = speechUnits(sentence, baseLang);
+  const wps = unitCount / elapsedSeconds;
 
+  const testData = {
+    wps: wps.toFixed(2),
+    voiceName: testVoice.name,
+    voiceURI: testVoice.voiceURI,
+    lang: testVoice.lang,
+  };
 
-      console.log(`Accurate WPS for "${testVoice.name}": ${wps.toFixed(2)} (time=${elapsedSeconds.toFixed(2)}s)`);
+  const testKey = `voice_test_data_${effectiveLang}`;
+  let allTestData = {};
 
-      const testData = {
-        wps: wps.toFixed(2),
-        voiceName: testVoice.name,
-        voiceURI: testVoice.voiceURI,
-        lang: testVoice.lang,
-      };
-      const testKey = `voice_test_data_${effectiveLang}`;
-      const storedData = localStorage.getItem(testKey);
-      let allTestData = {};
+  try {
+    allTestData = JSON.parse(localStorage.getItem(testKey)) || {};
+  } catch {}
 
-      if (storedData) {
-        try {
-          allTestData = JSON.parse(storedData);
-        } catch {
-          allTestData = {};
-        }
-      }
+  allTestData[testVoice.voiceURI] = testData;
 
-      allTestData[testVoice.voiceURI] = testData;
+  localStorage.setItem(testKey, JSON.stringify(allTestData));
+  localStorage.setItem(effectiveLang, testVoice.voiceURI);
 
-      localStorage.setItem(testKey, JSON.stringify(allTestData));
-      localStorage.setItem(`${effectiveLang}`,testVoice.voiceURI);
-      console.log("accuratetest - ", localStorage.getItem(`voice_test_data_${effectiveLang}`), "langitem-",localStorage.getItem(`${effectiveLang}`));
-      setAlreadyTested(true); // Mark tested after success
-      setShowTestScreen(false);
-      setIsLoadingTest(false);
+  setAlreadyTested(true);
+  setShowTestScreen(false);
 
-      playVideo();
-      if(!isSpeaking)
-        toggleSpeaking();
+  playVideo();
+  if (!isSpeaking) toggleSpeaking();
 
-      utteranceRef.current = null;
-    };
+  utteranceRef.current = null;
+};
+
    speechSynthesis.cancel();
 
 setTimeout(() => {
