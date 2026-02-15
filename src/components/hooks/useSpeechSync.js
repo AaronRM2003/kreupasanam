@@ -233,7 +233,7 @@ if (shouldSpeakTranslated) {
 
   translationDelayRef.current = delayMs / 1000;
 
-const baseMargin = 0.08;
+const baseMargin = 0.10;
 const translatedBaseExtra = 0.01;
 const dynamicExtra = Math.min(0.10, translationDelayRef.current * 0.06);
 
@@ -290,6 +290,7 @@ if (shouldSpeakTranslated) {
   const wordCount = textSource.trim().split(/\s+/).filter(Boolean).length;
 
   // WPS fallback
+  let wps = 2;
 
   // ✅ Create utterance from FINAL textSource
   const utterance = new SpeechSynthesisUtterance(textSource);
@@ -405,38 +406,8 @@ if (utterance.voice?.name) {
   utterance.lang = lang || "en-US";
 }
 
-
-
-
-// Add refs for dynamic WPS (per voice)
-const voiceWpsRef = useRef({}); // {voiceName: avgWps}
-const utteranceStartRef = useRef(0);
-
-// Inside run(), before synth.speak():
-utterance.onstart = () => {
-  utteranceStartRef.current = performance.now();
-  console.log("✅ TTS started", utterance.lang, utterance.voice?.name);
-};
-utterance.onend = (event) => {
-  if (event.charIndex + 1 === textSource.length) { // Confirm natural end, ignore cancels [web:24]
-    const actualDuration = (performance.now() - utteranceStartRef.current) / 1000;
-    const actualWps = wordCount / actualDuration;
-    
-    const voiceName = utterance.voice?.name || 'default';
-    const oldWps = voiceWpsRef.current[voiceName] || 2.3; // ~140 WPM fallback [web:11]
-    voiceWpsRef.current[voiceName] = 0.8 * actualWps + 0.2 * oldWps; // EMA smooth [web:22]
-    
-    console.log(`Voice ${voiceName} actualWPS: ${voiceWpsRef.current[voiceName].toFixed(2)} (duration: ${actualDuration.toFixed(2)}s)`);
-  }
-  console.log("✅ TTS ended");
-};
-
-// Replace static wps lookup with:
-const voiceName = utterance.voice?.name || 'default';
-let wps = voiceWpsRef.current[voiceName] || 2.3; // Dynamic first!
-console.log(wps, `voice_${voiceName}_live`);
-
-
+utterance.onstart = () => console.log("✅ TTS started:", utterance.lang, utterance.voice?.name);
+utterance.onend = () => console.log("✅ TTS ended");
 utterance.onerror = (e) => console.log("❌ TTS error:", e);
 console.log("ABOUT TO SPEAK:", textSource);
 
