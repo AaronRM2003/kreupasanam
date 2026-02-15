@@ -176,6 +176,54 @@ function getSmoothedAdjustedRate(wps, rawRate, margin) {
 }
 
 
+// --------------------
+// Speech timing helpers
+// --------------------
+function speechUnits(text) {
+  if (!text) return 0;
+
+  let units = 0;
+
+  text.split(/\s+/).forEach(word => {
+    let u = 1;
+
+    if (/\d/.test(word)) u += 0.6;          // numbers
+    if (word.length >= 8) u += 0.3;
+    if (word.length >= 12) u += 0.5;
+    if (/^[A-Z][a-z]+/.test(word)) u += 0.15; // names
+
+    units += u;
+  });
+
+  return units;
+}
+
+function computeAdjustedPlaybackRate({
+  baselineWps,
+  unitCount,
+  duration,
+  margin,
+  lastRateRef,
+}) {
+  if (!baselineWps || !unitCount || !duration) return 1;
+
+  const rawRate = unitCount / duration;
+  const target = Math.max(
+    0,
+    Math.min(1, baselineWps / rawRate - margin)
+  );
+
+  const last = lastRateRef.current;
+
+  if (target < last) {
+    lastRateRef.current = target;
+    return target;
+  }
+
+  const stepped = Math.min(last + 0.5, target);
+  lastRateRef.current = stepped;
+  return stepped;
+}
 
 function normalizeColonNumbers(text) {
   return text.replace(/\b(\d{1,3}):(\d{1,3})\b/g, '$1 $2');
@@ -189,245 +237,145 @@ function isLangAcceptedExactly(langTag) {
   const voice = useSelectedVoice(effectiveLang);
   // let translationDelaySec = 0;
 
-  useEffect(() => {
-     let cancelled = false;
+ useEffect(() => {
+  let cancelled = false;
 
   const run = async () => {
-  if (!isSpeaking || !showVideo || !currentSubtitle || subtitles.length === 0) return;
+    if (!isSpeaking || !showVideo || !currentSubtitle || !subtitles.length) return;
 
-  if (!hasStartedSpeakingRef.current) {
-    hasStartedSpeakingRef.current = true;
-    lastSpokenRef.current = '';
-  }
-  const shouldSpeakTranslated =acceptedUserLang;
-
-  let margin = 0.08;
-
-  // ✅ Build cleaned subtitle text
-  let textToSpeak = currentSubtitle
-    .replace(/\[[^\]]*\]/g, '')   // Remove [Music] etc
-    .replace(/\.{2,}/g, '')       // Remove ellipses
-    .replace(/[-*]{2,}/g, '')     // Remove --- or ***
-    .replace(/\b(V\.P\.)\b/g, 'VP')
-    .replace(/\bKreupasanam\b/gi, 'Kri-paasenam')
-    .trim();
-
-  textToSpeak = normalizeColonNumbers(textToSpeak);
-
-  // ✅ Default speech is cleaned subtitle
-  let textSource = textToSpeak;
-
-  // ✅ If browser translate ON, wait and speak only translated DOM text
-
-if (shouldSpeakTranslated) {
-  const { text: translated, delayMs } = await waitForTranslatedDomTextStable(
-    currentSubtitle,
-    {
-      maxWaitMs: 2200, // ✅ you can tune 1800–2500
-      stableMs: 80,
-      minDiffChars: 2,
-    }
-  );
-
-  if (cancelled) return;
-
-  translationDelayRef.current = delayMs / 1000;
-
-const baseMargin = 0.10;
-const translatedBaseExtra = 0.01;
-const dynamicExtra = Math.min(0.10, translationDelayRef.current * 0.06);
-
-margin = baseMargin + translatedBaseExtra + dynamicExtra;
-
-
-  // ✅ If translation not ready → DO NOT speak original
-  if (!translated) {
-    console.warn("⏳ Translation not ready. Skipping TTS for this subtitle.");
-    return;
-  }
-
-  const normTranslated = normalizeTextForCompare(translated);
-  const normOriginal = normalizeTextForCompare(currentSubtitle);
-
-  if (!normTranslated || normTranslated === normOriginal) {
-    console.warn("⚠️ Translation still same as original. Skipping.");
-    return;
-  }
-
-  textSource = translated;
-}
-if (!isBrowserTranslateOn) {
-  margin = 0.10;
-}
-
-
-
-
-  // ✅ speakKey MUST be exactly what you're speaking
-  const speakKey = textSource;
-
-  if (lastSpokenRef.current === speakKey) return;
-  lastSpokenRef.current = speakKey;
-
-  // ✅ Now compute subtitle duration
-  const currentSub = subtitles.find(
-    (sub) => currentTime >= sub.startSeconds && currentTime < sub.endSeconds
-  );
-
-  const subtitleDuration = currentSub?.duration ?? 3;
-  let effectiveDuration = subtitleDuration;
-
-if (shouldSpeakTranslated) {
-  effectiveDuration = subtitleDuration - translationDelayRef.current;
-
-  // never let it go too low (otherwise rawRate explodes)
-  effectiveDuration = Math.max(0.7, effectiveDuration);
-}
-
-
-  // ✅ IMPORTANT:
-  // Word count should match what you're speaking (translated or not)
-  const wordCount = textSource.trim().split(/\s+/).filter(Boolean).length;
-
-  // WPS fallback
-  let wps = 2;
-
-  // ✅ Create utterance from FINAL textSource
-  const utterance = new SpeechSynthesisUtterance(textSource);
-
-  function lengthFactor(text) {
-    const words = text.trim().split(/\s+/);
-    if (words.length === 0) return 1;
-
-    const totalChars = words.reduce((sum, w) => sum + w.length, 0);
-    const avgChars = totalChars / words.length;
-
-    // Typical spoken English average is around 4.7 chars/word
-    // We'll use that as a baseline
-    const baseline = 3;
-
-    let factor = 1;
-
-    // If avg word length is higher → longer pronunciation → slow down
-    if (avgChars > baseline) {
-      // For each extra char above baseline, reduce by 3–5%
-      factor *= Math.max(0.7, 1 - ((avgChars - baseline) * 0.05));
-    } 
-    // If words are short → can go slightly faster
-    else if (avgChars < baseline - 1) {
-      factor *= Math.min(1.15, 1 + ((baseline - avgChars) * 0.04));
+    if (!hasStartedSpeakingRef.current) {
+      hasStartedSpeakingRef.current = true;
+      lastSpokenRef.current = '';
     }
 
-    return factor;
-}
+    const shouldTranslate = acceptedUserLang;
 
-  // Set utterance lang as before
-  function numberFactor(text) {
-  const numbers = text.match(/\d+/g); // match all sequences of digits
-  if (!numbers) return 1; // no numbers, normal speed
+    // --------------------
+    // Prepare text
+    // --------------------
+    let text = currentSubtitle
+      .replace(/\[[^\]]*\]/g, '')
+      .replace(/\.{2,}/g, '')
+      .replace(/[-*]{2,}/g, '')
+      .replace(/\b(V\.P\.)\b/g, 'VP')
+      .replace(/\bKreupasanam\b/gi, 'Kri-paasenam')
+      .trim();
 
-  let factor = 1;
+    text = normalizeColonNumbers(text);
 
-  // Slow down for long numbers
-  numbers.forEach(num => {
-    if (num.length >= 4) factor *= 0.85;  // very long number
-    else if (num.length === 3) factor *= 0.9;
-  });
+    // --------------------
+    // Handle translation
+    // --------------------
+    let translationDelay = 0;
 
-  // 👇 Detect Bible-style references like "Numbers 2:6", "John 3:16", etc.
-  const bibleRefPattern = /\b([A-Z][a-z]+)\s+\d{1,3}:\d{1,3}\b/;
-  if (bibleRefPattern.test(text)) {
-    // Add more delay for chapter–verse phrasing
-    factor *= 0.8; // reduce further by 20%
-  }
+    if (shouldTranslate) {
+      const { text: translated, delayMs } =
+        await waitForTranslatedDomTextStable(currentSubtitle);
 
-  // Keep factor within reasonable range
-  return Math.max(0.4, Math.min(1, factor));
-}
+      if (cancelled || !translated) return;
 
-
-const voices = window.speechSynthesis.getVoices();
-const savedVoiceURI = localStorage.getItem(`${effectiveLang}`);
-const matchedVoice = voices.find(v => v.voiceURI === savedVoiceURI);
-utterance.voice = matchedVoice || voice || null;
-console.log(voice, matchedVoice, savedVoiceURI);
-if (utterance.voice?.name) {
-  const testKey = `voice_test_data_${effectiveLang}`;
-  const storedData = localStorage.getItem(testKey);
-
-  if (storedData) {
-    try {
-      const allTestData = JSON.parse(storedData);
-      const voiceData = allTestData[utterance.voice.name];
-      if (voiceData && voiceData.wps) {
-        wps = parseFloat(voiceData.wps);
+      if (
+        normalizeTextForCompare(translated) ===
+        normalizeTextForCompare(currentSubtitle)
+      ) {
+        return;
       }
-    } catch (e) {
-      console.error("Failed to parse voice test data:", e);
+
+      text = translated;
+      translationDelay = delayMs / 1000;
     }
-  }
-}
 
+    if (lastSpokenRef.current === text) return;
+    lastSpokenRef.current = text;
 
-  console.log(wps,`voice_${utterance.voice.name}_tested`);
-  const rawRate = wordCount / effectiveDuration;
-  console.log(wordCount,subtitleDuration, effectiveDuration);
+    // --------------------
+    // Subtitle timing
+    // --------------------
+    const currentSub = subtitles.find(
+      s => currentTime >= s.startSeconds && currentTime < s.endSeconds
+    );
 
-  let speechRate = 1; // fallback
-  let adjustedRate = 1;
+    let duration = currentSub?.duration ?? 3;
+    duration = Math.max(0.7, duration - translationDelay);
 
-  if (playerRef.current?.setPlaybackRate) {
-    console.log(`Raw rate: ${rawRate}, WPS: ${wps}`);
-    const rates = getSmoothedAdjustedRate(wps, rawRate,margin);
-    
-    if (rates) {
-     const numFactor = numberFactor(textSource);
-      const lenFactor = lengthFactor(textSource);
-      console.log(`Length factor: ${lenFactor}`);
-      let adjustedRateWithFactors = rates * numFactor * lenFactor;
-      adjustedRateWithFactors = Math.max(0.1, Math.min(1.2, adjustedRateWithFactors));
+    // --------------------
+    // Speech units
+    // --------------------
+    const unitCount = speechUnits(text);
 
-      
-    // Clamp to reasonable bounds
-        adjustedRate = adjustedRateWithFactors;
-      playerRef.current.setPlaybackRate(adjustedRate);  
+    // --------------------
+    // Load baseline WPS
+    // --------------------
+    let baselineWps = 2;
+    const voiceURI = localStorage.getItem(effectiveLang);
+    const testKey = `voice_test_data_${effectiveLang}`;
+
+    try {
+      const data = JSON.parse(localStorage.getItem(testKey) || '{}');
+      if (data[voiceURI]?.wps) {
+        baselineWps = parseFloat(data[voiceURI].wps);
+      }
+    } catch {}
+
+    // --------------------
+    // Margin model
+    // --------------------
+    const speechMargin = 0.035;
+    const translationMargin = Math.min(0.08, translationDelay * 0.05);
+    const margin = speechMargin + translationMargin;
+
+    // --------------------
+    // Playback rate sync
+    // --------------------
+    if (playerRef.current?.setPlaybackRate) {
+      const rate = computeAdjustedPlaybackRate({
+        baselineWps,
+        unitCount,
+        duration,
+        margin,
+        lastRateRef: lastAdjustedRateRef,
+      });
+
+      playerRef.current.setPlaybackRate(
+        Math.max(0.1, Math.min(1.2, rate))
+      );
     }
-  }
-  console.log(`Speech rate: ${speechRate}, Adjusted rate: ${adjustedRate}`);
-  if (isSSMLSupported) {
-    textToSpeak = enhanceWithSsml(textToSpeak);
-  }
 
-  utterance.rate = speechRate;
-    if (shouldSpeakTranslated) {
-  utterance.lang = userLang;   // ✅ speak translated language
-  utterance.voice = null;      // ✅ let browser pick best voice for lang
-} else {
-  utterance.lang = lang || "en-US";
-}
+    // --------------------
+    // Speak
+    // --------------------
+    const utterance = new SpeechSynthesisUtterance(text);
 
-utterance.onstart = () => console.log("✅ TTS started:", utterance.lang, utterance.voice?.name);
-utterance.onend = () => console.log("✅ TTS ended");
-utterance.onerror = (e) => console.log("❌ TTS error:", e);
-console.log("ABOUT TO SPEAK:", textSource);
+    if (shouldTranslate) {
+      utterance.lang = userLang;
+      utterance.voice = null;
+    } else {
+      utterance.lang = lang || 'en-US';
+utterance.voice = voice || null;
+    }
 
-const synth = window.speechSynthesis;
+    const synth = window.speechSynthesis;
+    synth.cancel();
+    synth.resume();
 
-// 🔥 if Chrome is paused, it will be silent without resume()
-synth.resume();
-
-// 🔥 Chrome bug workaround: cancel + delayed speak
-synth.cancel();
-
-setTimeout(() => {
-  synth.resume();          // resume again just in case
-  synth.speak(utterance);
-}, 80);
+    setTimeout(() => {
+      synth.speak(utterance);
+    }, 80);
   };
-  run();
-  return () => { cancelled = true; };
 
-}, [isSpeaking, showVideo, currentSubtitle, subtitles, effectiveLang, playerRef, isSSMLSupported]);
+  run();
+  return () => {
+    cancelled = true;
+  };
+}, [
+  isSpeaking,
+  showVideo,
+  currentSubtitle,
+  subtitles,
+  effectiveLang,
+  currentTime,
+  isSSMLSupported,
+]);
 
 
   useEffect(() => {
