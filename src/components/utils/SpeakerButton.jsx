@@ -474,8 +474,17 @@ function shortCode(langTag) {
 
       const speechEndTime = performance.now();
       const elapsedSeconds = (speechEndTime - speechStartTime) / 1000;
-      const wordCount = sentence.trim().split(/\s+/).length;
-      const wps = wordCount / elapsedSeconds;
+      if (elapsedSeconds < 1.2) {
+        alert("Test speech was too short. Please try again.");
+        setIsLoadingTest(false);
+        utteranceRef.current = null;
+        return;
+      }
+      const baseLang = shortCode(effectiveLang);
+      const unitCount = speechUnits(sentence, baseLang);
+
+      const wps = unitCount / elapsedSeconds;
+
 
       console.log(`Accurate WPS for "${testVoice.name}": ${wps.toFixed(2)} (time=${elapsedSeconds.toFixed(2)}s)`);
 
