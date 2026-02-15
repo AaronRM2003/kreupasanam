@@ -697,6 +697,10 @@ function shortCode(langTag) {
           onVoiceChange={onVoiceChange}
           voices={systemVoices}
           alreadyTested={tested}
+          onRetest={() => {
+          setAlreadyTested(false);     // 🔑 unlock test UI
+          setIsLoadingTest(false);     // safety
+        }}
         />
       )}
 </>
