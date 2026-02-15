@@ -35,7 +35,6 @@ export default function VoiceTestScreen({
   cancelVoiceTest,
   onVoiceChange,
   alreadyTested,
-  onRetest,  
 }) {
   const testSentence =
     testSentences[lang] ||
@@ -114,30 +113,23 @@ export default function VoiceTestScreen({
             </div>
           </>
         ) : (
-  <>
-    <div className="voice-test-buttons">
-      <button
-        onClick={() => {
-          onVoiceChange({ target: { value: voice.voiceURI } });
-          cancelVoiceTest();
-        }}
-        className="voice-test-button primary"
-        aria-label="Close voice test"
-      >
-        OK
-      </button>
-
-      <button
-        onClick={onRetest}
-        className="voice-test-button secondary"
-        aria-label="Retest voice speed"
-        disabled={isLoadingTest}
-      >
-        Retest
-      </button>
-    </div>
-  </>
-)}
+          <>
+           
+            <div className="voice-test-buttons">
+              <button
+                onClick={() => {
+                  onVoiceChange({ target: { value: voice.voiceURI } }); // simulate select change
+                  cancelVoiceTest();
+                }}
+                className="voice-test-button primary"
+                autoFocus
+                aria-label="Close voice test"
+              >
+                OK
+              </button>
+            </div>
+          </>
+        )}
          <p
           style={{
             marginTop: '24px',

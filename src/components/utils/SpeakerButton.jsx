@@ -13,7 +13,6 @@ export default function SubtitleVoiceControls({
   lang,
 
   userLang,
-  isVoiceTestActiveRef,
 }) {
   const [showControls, setShowControls] = useState(false);
   const [isInteracting, setIsInteracting] = useState(false);
@@ -36,7 +35,6 @@ export default function SubtitleVoiceControls({
 
   const utteranceRef = useRef(null);
   const pauseCheckInterval = useRef(null);
-
 
   const voiceFromHook = useSelectedVoice(effectiveLang);
   
@@ -423,112 +421,115 @@ function shortCode(langTag) {
 }
 
   // Start the voice test reading and measure speed
- const startAccurateVoiceTest = (testSentence) => {
-  if (!testVoice) return;
-  isVoiceTestActiveRef.current = true;
-
-
+  const startAccurateVoiceTest = (testSentence) => {
   let sentence = (testSentence || "").trim();
-  if (!sentence) return;
 
-  // Force predefined sentence for non-English
+  // ✅ If base language is not English, always use predefined sentence
   if (lang !== "en") {
     sentence =
       testSentences[shortCode(effectiveLang)] ||
-      "This is a quick test to ensure subtitles are read correctly.";
+      "This is a quick test to ensure subtitles are read correctly in your selected voice.";
   }
+  if (!sentence) return;
+    if (!testVoice) return;
 
-  setIsLoadingTest(true);
+    setIsLoadingTest(true);
+     const utterance = new SpeechSynthesisUtterance(sentence);
+    utterance.voice = testVoice;
+    utterance.lang = effectiveLang;
 
-  const utterance = new SpeechSynthesisUtterance(sentence);
-  utterance.voice = testVoice;
-  utterance.lang = effectiveLang;
-  utteranceRef.current = utterance;
+    utteranceRef.current = utterance;
 
-  let speechStartTime = null;
-  let finished = false;
-  let finalizeTimer = null;
+    let speechStartTime = null;
 
-  const finalize = () => {
-    if (finished) return;
-    finished = true;
-
-    clearTimeout(finalizeTimer);
-    setIsLoadingTest(false);
-    utteranceRef.current = null;
-    
-  };
-  
-
-  utterance.onstart = () => {
-    speechStartTime = performance.now();
-
-    // 🛡 failsafe: force cleanup if browser never fires onend
-    finalizeTimer = setTimeout(() => {
-      console.warn("TTS finalize timeout triggered");
-      finalize();
-      setShowTestScreen(false);
-    }, 15000);
-  };
-
-  utterance.onerror = (e) => {
-    console.warn("TTS error:", e?.error);
-    finalize();
-  };
-
-  utterance.onend = () => {
-    if (!speechStartTime) {
-      isVoiceTestActiveRef.current = false;
-      finalize();
-      return;
-    }
-
-    const elapsedSeconds =
-      (performance.now() - speechStartTime) / 1000;
-
-    finalize();
-
-    if (elapsedSeconds < 1.2) {
-      alert("Test speech was too short. Please try again.");
-      return;
-    }
-
-    const baseLang = shortCode(effectiveLang);
-    const unitCount = speechUnits(sentence, baseLang);
-    const wps = unitCount / elapsedSeconds;
-
-    const testKey = `voice_test_data_${effectiveLang}`;
-    const stored = JSON.parse(localStorage.getItem(testKey) || "{}");
-
-    stored[testVoice.voiceURI] = {
-      wps: Number(wps.toFixed(2)),
-      voiceName: testVoice.name,
-      voiceURI: testVoice.voiceURI,
-      lang: testVoice.lang,
-      updatedAt: Date.now(),
+    utterance.onstart = () => {
+      speechStartTime = performance.now();
     };
 
-    localStorage.setItem(testKey, JSON.stringify(stored));
-    localStorage.setItem(effectiveLang, testVoice.voiceURI);
+    utterance.onerror = (e) => {
+  // ✅ interrupted is normal when we cancel/replace speech
+  if (e?.error === "interrupted" || e?.error === "canceled") {
+    setIsLoadingTest(false);
+    // ✅ DO NOT close test screen
+    utteranceRef.current = null;
+    return;
+  }
 
-    setAlreadyTested(true);
-    setShowTestScreen(false);
-
-    playVideo();
-    if (!isSpeaking) toggleSpeaking();
-  };
-
-  // 🔁 reset speech engine cleanly
-  speechSynthesis.cancel();
-  setTimeout(() => speechSynthesis.speak(utterance), 50);
+  console.error("Speech synthesis error", e);
+  setIsLoadingTest(false);
+  // ✅ Keep screen open so user can retry
+  utteranceRef.current = null;
 };
 
+
+   utterance.onpause = () => {
+  setIsLoadingTest(false);
+  // ✅ do not close screen automatically
+  utteranceRef.current = null;
+};
+
+
+    utterance.onend = () => {
+      if (!utteranceRef.current) return;
+
+      const speechEndTime = performance.now();
+      const elapsedSeconds = (speechEndTime - speechStartTime) / 1000;
+      if (elapsedSeconds < 1.2) {
+        alert("Test speech was too short. Please try again.");
+        setIsLoadingTest(false);
+        utteranceRef.current = null;
+        return;
+      }
+      const baseLang = shortCode(effectiveLang);
+      const unitCount = speechUnits(sentence, baseLang);
+
+      const wps = unitCount / elapsedSeconds;
+
+
+      console.log(`Accurate WPS for "${testVoice.name}": ${wps.toFixed(2)} (time=${elapsedSeconds.toFixed(2)}s)`);
+
+      const testData = {
+        wps: wps.toFixed(2),
+        voiceName: testVoice.name,
+        voiceURI: testVoice.voiceURI,
+        lang: testVoice.lang,
+      };
+      const testKey = `voice_test_data_${effectiveLang}`;
+      const storedData = localStorage.getItem(testKey);
+      let allTestData = {};
+
+      if (storedData) {
+        try {
+          allTestData = JSON.parse(storedData);
+        } catch {
+          allTestData = {};
+        }
+      }
+
+      allTestData[testVoice.voiceURI] = testData;
+
+      localStorage.setItem(testKey, JSON.stringify(allTestData));
+      localStorage.setItem(`${effectiveLang}`,testVoice.voiceURI);
+      console.log("accuratetest - ", localStorage.getItem(`voice_test_data_${effectiveLang}`), "langitem-",localStorage.getItem(`${effectiveLang}`));
+      setAlreadyTested(true); // Mark tested after success
+      setShowTestScreen(false);
+      setIsLoadingTest(false);
+
+      playVideo();
+      if(!isSpeaking)
+        toggleSpeaking();
+
+      utteranceRef.current = null;
+    };
+    speechSynthesis.cancel();
+    speechSynthesis.speak(utterance);
+  };
 
   const cancelVoiceTest = () => {
     if (utteranceRef.current) {
       speechSynthesis.pause();
       speechSynthesis.cancel();
-      isVoiceTestActiveRef.current = false;
+
       utteranceRef.current.onend = null;
       utteranceRef.current.onerror = null;
       utteranceRef.current.onpause = null;
@@ -696,22 +697,7 @@ function shortCode(langTag) {
           onVoiceChange={onVoiceChange}
           voices={systemVoices}
           alreadyTested={tested}
-          onRetest={() => {
-            const testKey = `voice_test_data_${effectiveLang}`;
-            const storedData = localStorage.getItem(testKey);
-
-            if (storedData && testVoice?.voiceURI) {
-              try {
-                const parsed = JSON.parse(storedData);
-                delete parsed[testVoice.voiceURI];   // 🔑 remove only this voice
-                localStorage.setItem(testKey, JSON.stringify(parsed));
-              } catch {}
-            }
-
-            setAlreadyTested(false);
-            setIsLoadingTest(false);
-          }}
-
+          
         />
       )}
 </>
