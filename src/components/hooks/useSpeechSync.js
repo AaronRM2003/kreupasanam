@@ -21,6 +21,8 @@ export function useSpeechSync({
   const hasStartedSpeakingRef = useRef(false);
   const lastSpokenRef = useRef('');
   const [playerReady, setPlayerReady] = useState(false);
+  const didInitialSyncRef = useRef(false);
+
 const acceptedUserLang =
   lang === "en" &&
   isBrowserTranslateOn &&
@@ -93,6 +95,11 @@ async function waitForTranslatedDomTextStable(
   // timeout
   return { text: null, delayMs: performance.now() - start };
 }
+useEffect(() => {
+  if (!isSpeaking) {
+    didInitialSyncRef.current = false;
+  }
+}, [isSpeaking]);
 
 
 
@@ -445,6 +452,17 @@ function isLangAcceptedExactly(langTag) {
     // --------------------
 const utterance = new SpeechSynthesisUtterance(text);
 let wasCancelled = false;
+utterance.onstart = () => {
+  if (!didInitialSyncRef.current && playerRef.current) {
+    if (typeof playerRef.current.play === "function") {
+      playerRef.current.play();
+    } else if (typeof playerRef.current.playVideo === "function") {
+      playerRef.current.playVideo();
+    }
+  }
+  didInitialSyncRef.current = true;
+};
+
 
 utterance.onerror = () => {
   wasCancelled = true;
@@ -459,6 +477,7 @@ const speechStart = performance.now();
 
 // ✅ attach learning ONLY on successful end
 utterance.onend = () => {
+  if (wasCancelled) return;
   const speechEnd = performance.now();
   const actualDuration = (speechEnd - speechStart) / 1000;
 
@@ -510,8 +529,16 @@ utterance.voice = voice || null;
     }
 
     const synth = window.speechSynthesis;
+    if (!didInitialSyncRef.current && playerRef.current) {
+      if (typeof playerRef.current.pause === "function") {
+        playerRef.current.pause();
+      } else if (typeof playerRef.current.pauseVideo === "function") {
+        playerRef.current.pauseVideo();
+      }
+    }
     synth.cancel();
     synth.resume();
+
 
     setTimeout(() => {
       synth.speak(utterance);
