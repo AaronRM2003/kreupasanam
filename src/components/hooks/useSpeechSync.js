@@ -184,19 +184,49 @@ function speechUnits(text) {
 
   let units = 0;
 
+  const numberWords = new Set([
+    "one","two","three","four","five","six","seven","eight","nine","ten",
+    "first","second","third","fourth","fifth","sixth","seventh","eighth","ninth","tenth"
+  ]);
+
+  // 1️⃣ Word-level spoken effort
   text.split(/\s+/).forEach(word => {
     let u = 1;
+    const lower = word.toLowerCase();
 
-    if (/\d/.test(word)) u += 0.6;          // numbers
+    // digits: 3, 16, 2024
+    if (/\d/.test(word)) u += 0.6;
+
+    // number words: one, second, three
+    if (numberWords.has(lower)) u += 0.6;
+
+    // tens: twenty, thirty, seventy
+    if (/(twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety)/.test(lower)) {
+      u += 0.8;
+    }
+
+    // large numbers: hundred, thousand
+    if (/(hundred|thousand|million)/.test(lower)) {
+      u += 1.0;
+    }
+
+    // long words
     if (word.length >= 8) u += 0.3;
     if (word.length >= 12) u += 0.5;
-    if (/^[A-Z][a-z]+/.test(word)) u += 0.15; // names
+
+    // proper names
+    if (/^[A-Z][a-z]+/.test(word)) u += 0.15;
 
     units += u;
   });
 
+  // 2️⃣ Punctuation pauses (phrase-level)
+  const commaCount = (text.match(/,/g) || []).length;
+  units += commaCount * 0.4;
+
   return units;
 }
+
 
 function computeAdjustedPlaybackRate({
   baselineWps,
