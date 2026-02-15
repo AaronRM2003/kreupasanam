@@ -421,94 +421,101 @@ function shortCode(langTag) {
 }
 
   // Start the voice test reading and measure speed
-  const startAccurateVoiceTest = (testSentence) => {
+ const startAccurateVoiceTest = (testSentence) => {
+  if (!testVoice) return;
 
   let sentence = (testSentence || "").trim();
-    let speechStartTime = 0;
-let finished = false;
+  if (!sentence) return;
 
-  // ✅ If base language is not English, always use predefined sentence
+  // Force predefined sentence for non-English
   if (lang !== "en") {
     sentence =
       testSentences[shortCode(effectiveLang)] ||
-      "This is a quick test to ensure subtitles are read correctly in your selected voice.";
+      "This is a quick test to ensure subtitles are read correctly.";
   }
-  if (!sentence) return;
-    if (!testVoice) return;
 
-    setIsLoadingTest(true);
-    const utterance = new SpeechSynthesisUtterance(sentence);
-utteranceRef.current = utterance;
+  setIsLoadingTest(true);
 
-utterance.onstart = () => {
-  speechStartTime = performance.now();
-};
+  const utterance = new SpeechSynthesisUtterance(sentence);
+  utterance.voice = testVoice;
+  utterance.lang = effectiveLang;
+  utteranceRef.current = utterance;
 
-utterance.onerror = (e) => {
-  if (finished) return;
-  finished = true;
+  let speechStartTime = null;
+  let finished = false;
+  let finalizeTimer = null;
 
-  console.warn("TTS error:", e?.error);
-  setIsLoadingTest(false);
-  utteranceRef.current = null;
-};
+  const finalize = () => {
+    if (finished) return;
+    finished = true;
 
-
-utterance.onend = () => {
-  if (finished) return;
-  finished = true;
-
-  const speechEndTime = performance.now();
-  const elapsedSeconds = (speechEndTime - speechStartTime) / 1000;
-
-  // ALWAYS clear loading first
-  setIsLoadingTest(false);
-
-  if (!elapsedSeconds || elapsedSeconds < 1.2) {
-    alert("Test speech was too short. Please try again.");
+    clearTimeout(finalizeTimer);
+    setIsLoadingTest(false);
     utteranceRef.current = null;
-    return;
-  }
-
-  const baseLang = shortCode(effectiveLang);
-  const unitCount = speechUnits(sentence, baseLang);
-  const wps = unitCount / elapsedSeconds;
-
-  const testData = {
-    wps: wps.toFixed(2),
-    voiceName: testVoice.name,
-    voiceURI: testVoice.voiceURI,
-    lang: testVoice.lang,
   };
 
-  const testKey = `voice_test_data_${effectiveLang}`;
-  let allTestData = {};
+  utterance.onstart = () => {
+    speechStartTime = performance.now();
 
-  try {
-    allTestData = JSON.parse(localStorage.getItem(testKey)) || {};
-  } catch {}
+    // 🛡 failsafe: force cleanup if browser never fires onend
+    finalizeTimer = setTimeout(() => {
+      console.warn("TTS finalize timeout triggered");
+      finalize();
+      setShowTestScreen(false);
+    }, 15000);
+  };
 
-  allTestData[testVoice.voiceURI] = testData;
+  utterance.onerror = (e) => {
+    console.warn("TTS error:", e?.error);
+    finalize();
+  };
 
-  localStorage.setItem(testKey, JSON.stringify(allTestData));
-  localStorage.setItem(effectiveLang, testVoice.voiceURI);
+  utterance.onend = () => {
+    if (!speechStartTime) {
+      finalize();
+      return;
+    }
 
-  setAlreadyTested(true);
-  setShowTestScreen(false);
+    const elapsedSeconds =
+      (performance.now() - speechStartTime) / 1000;
 
-  playVideo();
-  if (!isSpeaking) toggleSpeaking();
+    finalize();
 
-  utteranceRef.current = null;
+    if (elapsedSeconds < 1.2) {
+      alert("Test speech was too short. Please try again.");
+      return;
+    }
+
+    const baseLang = shortCode(effectiveLang);
+    const unitCount = speechUnits(sentence, baseLang);
+    const wps = unitCount / elapsedSeconds;
+
+    const testKey = `voice_test_data_${effectiveLang}`;
+    const stored = JSON.parse(localStorage.getItem(testKey) || "{}");
+
+    stored[testVoice.voiceURI] = {
+      wps: Number(wps.toFixed(2)),
+      voiceName: testVoice.name,
+      voiceURI: testVoice.voiceURI,
+      lang: testVoice.lang,
+      updatedAt: Date.now(),
+    };
+
+    localStorage.setItem(testKey, JSON.stringify(stored));
+    localStorage.setItem(effectiveLang, testVoice.voiceURI);
+
+    setAlreadyTested(true);
+    setShowTestScreen(false);
+
+    playVideo();
+    if (!isSpeaking) toggleSpeaking();
+  };
+
+  // 🔁 reset speech engine cleanly
+  speechSynthesis.cancel();
+  setTimeout(() => speechSynthesis.speak(utterance), 50);
 };
 
-   speechSynthesis.cancel();
-
-setTimeout(() => {
-  speechSynthesis.speak(utterance);
-}, 50);
-
-  };
 
   const cancelVoiceTest = () => {
     if (utteranceRef.current) {
