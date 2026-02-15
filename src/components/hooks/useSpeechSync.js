@@ -297,18 +297,6 @@ function isLangAcceptedExactly(langTag) {
     // --------------------
     const unitCount = speechUnits(text, effectiveLang);
 
-    if (unitCount <= 2) {
-      unitCount += 0.9;
-    } else if (unitCount <= 4) {
-      unitCount += 0.6;
-    } else if (unitCount <= 6) {
-      unitCount += 0.4;
-    } else if (unitCount <= 8) {
-      unitCount += 0.25;
-    } else if (unitCount <= 10) {
-      unitCount += 0.15;
-    }
-
     // --------------------
     // Load baseline WPS
     // --------------------
