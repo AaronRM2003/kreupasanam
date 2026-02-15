@@ -419,6 +419,7 @@ if (storedData) {
 function shortCode(langTag) {
   return (langTag || "en").split("-")[0].toLowerCase();
 }
+let finished = false;
 
   // Start the voice test reading and measure speed
   const startAccurateVoiceTest = (testSentence) => {
@@ -434,52 +435,38 @@ function shortCode(langTag) {
     if (!testVoice) return;
 
     setIsLoadingTest(true);
-     const utterance = new SpeechSynthesisUtterance(sentence);
-    utterance.voice = testVoice;
-    utterance.lang = effectiveLang;
+    const utterance = new SpeechSynthesisUtterance(sentence);
+utteranceRef.current = utterance;
 
-    utteranceRef.current = utterance;
+let finished = false;
 
-    let speechStartTime = null;
+utterance.onstart = () => {
+  speechStartTime = performance.now();
+};
 
-    utterance.onstart = () => {
-      speechStartTime = performance.now();
-    };
+utterance.onerror = (e) => {
+  if (finished) return;
 
-    utterance.onerror = (e) => {
-  // ✅ interrupted is normal when we cancel/replace speech
-  if (e?.error === "interrupted" || e?.error === "canceled") {
+  console.warn("TTS error:", e?.error);
+
+  finished = true;
+  setIsLoadingTest(false);
+  utteranceRef.current = null;
+};
+
+utterance.onend = () => {
+  if (finished) return;
+  finished = true;
+
+  const speechEndTime = performance.now();
+  const elapsedSeconds = (speechEndTime - speechStartTime) / 1000;
+
+  if (elapsedSeconds < 1.2) {
+    alert("Test speech was too short. Please try again.");
     setIsLoadingTest(false);
-    // ✅ DO NOT close test screen
     utteranceRef.current = null;
     return;
   }
-
-  console.error("Speech synthesis error", e);
-  setIsLoadingTest(false);
-  // ✅ Keep screen open so user can retry
-  utteranceRef.current = null;
-};
-
-
-   utterance.onpause = () => {
-  setIsLoadingTest(false);
-  // ✅ do not close screen automatically
-  utteranceRef.current = null;
-};
-
-
-    utterance.onend = () => {
-      if (!utteranceRef.current) return;
-
-      const speechEndTime = performance.now();
-      const elapsedSeconds = (speechEndTime - speechStartTime) / 1000;
-      if (elapsedSeconds < 1.2) {
-        alert("Test speech was too short. Please try again.");
-        setIsLoadingTest(false);
-        utteranceRef.current = null;
-        return;
-      }
       const baseLang = shortCode(effectiveLang);
       const unitCount = speechUnits(sentence, baseLang);
 
@@ -521,8 +508,12 @@ function shortCode(langTag) {
 
       utteranceRef.current = null;
     };
-    speechSynthesis.cancel();
-    speechSynthesis.speak(utterance);
+   speechSynthesis.cancel();
+
+setTimeout(() => {
+  speechSynthesis.speak(utterance);
+}, 50);
+
   };
 
   const cancelVoiceTest = () => {
