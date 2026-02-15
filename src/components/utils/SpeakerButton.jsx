@@ -698,9 +698,21 @@ function shortCode(langTag) {
           voices={systemVoices}
           alreadyTested={tested}
           onRetest={() => {
-          setAlreadyTested(false);     // 🔑 unlock test UI
-          setIsLoadingTest(false);     // safety
-        }}
+            const testKey = `voice_test_data_${effectiveLang}`;
+            const storedData = localStorage.getItem(testKey);
+
+            if (storedData && testVoice?.voiceURI) {
+              try {
+                const parsed = JSON.parse(storedData);
+                delete parsed[testVoice.voiceURI];   // 🔑 remove only this voice
+                localStorage.setItem(testKey, JSON.stringify(parsed));
+              } catch {}
+            }
+
+            setAlreadyTested(false);
+            setIsLoadingTest(false);
+          }}
+
         />
       )}
 </>
