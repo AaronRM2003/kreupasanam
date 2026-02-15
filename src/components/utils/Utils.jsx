@@ -361,7 +361,7 @@ export function detectBrowserTranslateLang() {
 }
 
 // optional: normalize to BCP-47 locale
-export function normalizeForTTS(lang) {
+export function normalizeToLocale(lang) {
   if (!lang) return null;
 
   // normalize format
