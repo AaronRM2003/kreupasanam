@@ -36,8 +36,6 @@ export default function TestimonyPage({ lang: initialLang }) {
   const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
   const [showTranscript, setShowTranscript] = useState(false);
   const [userLang, setUserLang] = useState(null);
-  const isVoiceTestActiveRef = useRef(false);
-
 
   // Parse id and slug from idSlug param
   // Assuming idSlug is from useParams()
@@ -197,7 +195,6 @@ const {
 
       isBrowserTranslateOn,
       userLang, // ✅ new
-      isVoiceTestActiveRef, // ✅ new
     })
   : {};
 useEffect(() => {
@@ -507,7 +504,6 @@ const handleClick = () => {
     onClose={() => setShowVideo(false)}
 
     userLang={userLang}
-    isVoiceTestActiveRef={isVoiceTestActiveRef} // ✅ new
   />
 )}
 
