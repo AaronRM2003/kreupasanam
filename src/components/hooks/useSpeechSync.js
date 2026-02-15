@@ -29,6 +29,8 @@ const acceptedUserLang =
 
 const effectiveLang = acceptedUserLang ? userLang : lang;
   const translationDelayRef = useRef(0);
+  const baseLang = (effectiveLang || "en").split("-")[0];
+
 
 
 
@@ -179,8 +181,19 @@ function getSmoothedAdjustedRate(wps, rawRate, margin) {
 // --------------------
 // Speech timing helpers
 // --------------------
-function speechUnits(text) {
+function speechUnits(text, lang) {
   if (!text) return 0;
+
+  // ---- CJK languages (character-timed) ----
+  // Japanese, Korean (Chinese handled similarly if added later)
+ if (lang === "ja" || lang === "ko" || lang === "zh") {
+    let units = text.length * 0.9;
+
+    const commaCount = (text.match(/[、，,]/g) || []).length;
+    units += commaCount * 0.4;
+
+    return units;
+  }
 
   let units = 0;
 
@@ -189,43 +202,74 @@ function speechUnits(text) {
     "first","second","third","fourth","fifth","sixth","seventh","eighth","ninth","tenth"
   ]);
 
-  // 1️⃣ Word-level spoken effort
+  // ---- Word-based languages ----
   text.split(/\s+/).forEach(word => {
     let u = 1;
     const lower = word.toLowerCase();
 
-    // digits: 3, 16, 2024
+    // digits
     if (/\d/.test(word)) u += 0.6;
 
-    // number words: one, second, three
+    // English number words
     if (numberWords.has(lower)) u += 0.6;
 
-    // tens: twenty, thirty, seventy
+    // tens (English / French / Spanish)
     if (/(twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety)/.test(lower)) {
       u += 0.8;
     }
 
-    // large numbers: hundred, thousand
+    // large number words
     if (/(hundred|thousand|million)/.test(lower)) {
       u += 1.0;
     }
 
-    // long words
+    // long words (Indian & Romance languages benefit a lot from this)
     if (word.length >= 8) u += 0.3;
     if (word.length >= 12) u += 0.5;
 
     // proper names
     if (/^[A-Z][a-z]+/.test(word)) u += 0.15;
 
+    // ---- Indian language tweaks ----
+    if (lang === "hi" || lang === "mr" || lang === "bn") {
+      // syllable-timed, numbers are slower
+      if (/\d/.test(word)) u += 0.2;
+      if (numberWords.has(lower)) u += 0.2;
+    }
+
+    if (lang === "kn" || lang === "te") {
+      // agglutinative / compound-heavy
+      if (word.length >= 8) u += 0.2;
+      if (word.length >= 12) u += 0.3;
+    }
+
+    // ---- Romance languages ----
+    if (lang === "fr" || lang === "es") {
+      // smoother but number words are long
+      if (/(vingt|trente|quarante|cinquante|soixante|soixante-dix|quatre-vingt|quatre-vingt-dix)/.test(lower)) {
+        u += 0.8;
+      }
+      if (/(treinta|cuarenta|cincuenta|sesenta|setenta|ochenta|noventa)/.test(lower)) {
+        u += 0.8;
+      }
+    }
+
     units += u;
   });
 
-  // 2️⃣ Punctuation pauses (phrase-level)
+  // ---- Punctuation pauses ----
   const commaCount = (text.match(/,/g) || []).length;
   units += commaCount * 0.4;
 
+  const colonCount = (text.match(/:/g) || []).length;
+  units += colonCount * 0.5;
+
+  const dashCount = (text.match(/[—–-]/g) || []).length;
+  units += dashCount * 0.3;
+
   return units;
 }
+
 
 
 function computeAdjustedPlaybackRate({
@@ -331,21 +375,34 @@ function isLangAcceptedExactly(langTag) {
     // --------------------
     // Speech units
     // --------------------
-    const unitCount = speechUnits(text);
+    const unitCount = speechUnits(text, effectiveLang);
 
     // --------------------
     // Load baseline WPS
     // --------------------
     let baselineWps = 2;
+
     const voiceURI = localStorage.getItem(effectiveLang);
     const testKey = `voice_test_data_${effectiveLang}`;
+    const learnedKey = `voice_learned_wps_${effectiveLang}`;
 
+    // 1️⃣ Load tested WPS
     try {
-      const data = JSON.parse(localStorage.getItem(testKey) || '{}');
-      if (data[voiceURI]?.wps) {
-        baselineWps = parseFloat(data[voiceURI].wps);
+      const testData = JSON.parse(localStorage.getItem(testKey) || '{}');
+      if (testData[voiceURI]?.wps) {
+        baselineWps = parseFloat(testData[voiceURI].wps);
       }
     } catch {}
+
+    // 2️⃣ Blend learned WPS (if exists)
+    try {
+      const learnedData = JSON.parse(localStorage.getItem(learnedKey) || '{}');
+      if (learnedData[voiceURI]?.wps) {
+        // tested = anchor, learned = refinement
+        baselineWps = baselineWps * 0.7 + learnedData[voiceURI].wps * 0.3;
+      }
+    } catch {}
+
 
     // --------------------
     // Margin model
@@ -365,16 +422,84 @@ function isLangAcceptedExactly(langTag) {
         margin,
         lastRateRef: lastAdjustedRateRef,
       });
+      let maxRate = 1.2;
+
+      // Indian syllable-timed languages
+      if (["hi","mr","bn","kn","te"].includes(baseLang)) {
+        maxRate = 1.15;
+      }
+
+      // Character-timed languages
+      if (["ja","ko","zh"].includes(baseLang)) {
+        maxRate = 1.1;
+      }
 
       playerRef.current.setPlaybackRate(
-        Math.max(0.1, Math.min(1.2, rate))
+        Math.max(0.1, Math.min(maxRate, rate))
       );
+
     }
 
     // --------------------
     // Speak
     // --------------------
-    const utterance = new SpeechSynthesisUtterance(text);
+const utterance = new SpeechSynthesisUtterance(text);
+let wasCancelled = false;
+
+utterance.onerror = () => {
+  wasCancelled = true;
+};
+
+utterance.onpause = () => {
+  wasCancelled = true;
+};
+
+// ✅ capture start time immediately after creation
+const speechStart = performance.now();
+
+// ✅ attach learning ONLY on successful end
+utterance.onend = () => {
+  const speechEnd = performance.now();
+  const actualDuration = (speechEnd - speechStart) / 1000;
+
+  // --- guards (VERY important) ---
+  if (translationDelay > duration * 0.4) return;
+  if (!actualDuration || actualDuration < 0.5) return;
+  if (unitCount < 2) return;
+
+  const observedWps = unitCount / actualDuration;
+
+  const learnedKey = `voice_learned_wps_${effectiveLang}`;
+  let learnedData = {};
+
+  try {
+    learnedData = JSON.parse(localStorage.getItem(learnedKey) || '{}');
+  } catch {}
+
+  const prev = learnedData[voiceURI]?.wps ?? baselineWps;
+  const samples = learnedData[voiceURI]?.samples ?? 0;
+
+  // 🔑 slow learning (10%)
+  const alpha = 0.1;
+  const updatedWps = Math.max(
+  1.2,
+  Math.min(5.0, prev * (1 - alpha) + observedWps * alpha)
+);
+
+
+  learnedData[voiceURI] = {
+    wps: parseFloat(updatedWps.toFixed(3)),
+    samples: samples + 1,
+    lastUpdated: Date.now(),
+  };
+
+  // ✅ persist only after a few good samples
+  if (samples >= 3 && samples % 5 === 0) {
+  localStorage.setItem(learnedKey, JSON.stringify(learnedData));
+}
+
+};
+    
 
     if (shouldTranslate) {
       utterance.lang = userLang;
