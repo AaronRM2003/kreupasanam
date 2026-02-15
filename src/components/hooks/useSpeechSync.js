@@ -290,14 +290,7 @@ function isLangAcceptedExactly(langTag) {
     );
 
     let duration = currentSub?.duration ?? 3;
-
-    // 🔥 compensate dense short phrases
-    if (duration < 2.5 && unitCount >= 8) {
-      duration *= 1.4;
-    }
-
     duration = Math.max(0.7, duration - translationDelay);
-
 
     // --------------------
     // Speech units
