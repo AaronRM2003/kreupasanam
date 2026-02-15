@@ -15,6 +15,7 @@ export default function FloatingVideoPlayer({
   ttsSupported = false,
 
   userLang = null,
+  isVoiceTestActiveRef
 }) {
   const [showCloseButton, setShowCloseButton] = React.useState(false);
   const [isLandscape, setIsLandscape] = React.useState(window.innerWidth > window.innerHeight);
@@ -204,6 +205,7 @@ React.useEffect(() => {
                 lang={lang}
 
                 userLang={userLang}
+                isVoiceTestActiveRef={isVoiceTestActiveRef}
               />
             </div>
           )}

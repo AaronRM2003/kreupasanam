@@ -14,6 +14,7 @@ export function useSpeechSync({
   lang,
   isBrowserTranslateOn=false,
     userLang = null,  // ✅ new
+    isVoiceTestActiveRef// ✅ new
 
 }) {
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -146,6 +147,9 @@ useEffect(() => {
 
   useEffect(() => {
     if (!isSpeaking || !showVideo) {
+      if (isVoiceTestActiveRef?.current) {
+        return; // 🔒 Voice test owns speech engine
+      }
       window.speechSynthesis.cancel();
       hasStartedSpeakingRef.current = false;
       lastSpokenRef.current = '';
@@ -449,6 +453,7 @@ utterance.voice = voice || null;
         playerRef.current.pauseVideo();
       }
     }
+
     synth.cancel();
     synth.resume();
 
@@ -496,6 +501,9 @@ utterance.voice = voice || null;
 
   const stopSpeaking = () => {
     setIsSpeaking(false);
+    if (isVoiceTestActiveRef?.current) {
+      return; // 🔒 Voice test owns speech engine
+    }
     window.speechSynthesis.cancel();
     hasStartedSpeakingRef.current = false;
     lastSpokenRef.current = '';

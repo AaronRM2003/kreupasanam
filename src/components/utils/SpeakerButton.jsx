@@ -13,6 +13,7 @@ export default function SubtitleVoiceControls({
   lang,
 
   userLang,
+  isVoiceTestActiveRef,
 }) {
   const [showControls, setShowControls] = useState(false);
   const [isInteracting, setIsInteracting] = useState(false);
@@ -35,6 +36,7 @@ export default function SubtitleVoiceControls({
 
   const utteranceRef = useRef(null);
   const pauseCheckInterval = useRef(null);
+
 
   const voiceFromHook = useSelectedVoice(effectiveLang);
   
@@ -423,6 +425,8 @@ function shortCode(langTag) {
   // Start the voice test reading and measure speed
  const startAccurateVoiceTest = (testSentence) => {
   if (!testVoice) return;
+  isVoiceTestActiveRef.current = true;
+
 
   let sentence = (testSentence || "").trim();
   if (!sentence) return;
@@ -452,7 +456,9 @@ function shortCode(langTag) {
     clearTimeout(finalizeTimer);
     setIsLoadingTest(false);
     utteranceRef.current = null;
+    
   };
+  
 
   utterance.onstart = () => {
     speechStartTime = performance.now();
@@ -472,6 +478,7 @@ function shortCode(langTag) {
 
   utterance.onend = () => {
     if (!speechStartTime) {
+      isVoiceTestActiveRef.current = false;
       finalize();
       return;
     }
@@ -521,7 +528,7 @@ function shortCode(langTag) {
     if (utteranceRef.current) {
       speechSynthesis.pause();
       speechSynthesis.cancel();
-
+      isVoiceTestActiveRef.current = false;
       utteranceRef.current.onend = null;
       utteranceRef.current.onerror = null;
       utteranceRef.current.onpause = null;
