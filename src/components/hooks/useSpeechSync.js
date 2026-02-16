@@ -125,7 +125,7 @@ useEffect(() => {
     didInitialSyncRef.current = false;
 
     // optional but recommended
-    // carryOverDebtRef.current = 0;
+    carryOverDebtRef.current = 0;
   }
 
   lastVideoTimeRef.current = now;
