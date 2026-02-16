@@ -76,6 +76,12 @@ React.useEffect(() => {
     }
   };
 }, []);
+React.useEffect(() => {
+  if (!isSpeaking && hideSubtitles) {
+    setHideSubtitles(false);
+  }
+}, [isSpeaking, hideSubtitles]);
+
 
   React.useEffect(() => {
     const handleResize = () => setIsLandscape(window.innerWidth > window.innerHeight);
