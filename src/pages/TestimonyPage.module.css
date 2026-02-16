@@ -285,6 +285,13 @@
   border-color: rgba(90, 59, 30, 0.4);
   transform: translateY(-1px);
 }
+.subtitleBox {
+  transition: opacity 0.2s ease;
+}
+
+.subtitleHidden {
+  opacity: 0;
+}
 
 .transcriptButton:active {
   transform: translateY(0);
