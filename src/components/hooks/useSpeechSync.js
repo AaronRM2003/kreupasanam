@@ -22,6 +22,8 @@ export function useSpeechSync({
   const lastSpokenRef = useRef('');
   const [playerReady, setPlayerReady] = useState(false);
   const didInitialSyncRef = useRef(false);
+  const activeSubtitleKeyRef = useRef(null);
+
 
 const acceptedUserLang =
   lang === "en" &&
@@ -149,6 +151,7 @@ useEffect(() => {
     // 🔒 Only cancel if speech actually started
     if (hasStartedSpeakingRef.current) {
       window.speechSynthesis.cancel();
+      activeSubtitleKeyRef.current = null; // 🔓 RELEASE
     }
     hasStartedSpeakingRef.current = false;
     lastSpokenRef.current = '';
@@ -297,7 +300,17 @@ function isLangAcceptedExactly(langTag) {
     );
 
     let duration = currentSub?.duration ?? 3;
-    duration = Math.max(0.7, duration - translationDelay);
+    if (!currentSub) return;
+
+    const subtitleKey = `${currentSub.startSeconds}-${currentSub.endSeconds}`;
+
+    // 🔒 HARD LOCK — EXIT IMMEDIATELY
+    if (activeSubtitleKeyRef.current === subtitleKey) {
+      return;
+    }
+
+duration = Math.max(0.7, duration - translationDelay);
+
 
     // --------------------
     // Speech units
@@ -391,6 +404,8 @@ utterance.onstart = () => {
   console.log("TTS START:", text, duration);
     hasStartedSpeakingRef.current = true; // 🔥 REQUIRED
     lastSpokenRef.current = text;
+      activeSubtitleKeyRef.current = subtitleKey; // 🔒 LOCK
+
   if (!didInitialSyncRef.current && playerRef.current) {
     if (typeof playerRef.current.play === "function") {
       playerRef.current.play();
@@ -417,6 +432,8 @@ const speechStart = performance.now();
 utterance.onend = () => {
   if (wasCancelled) return;
   if (duration <= 3) return;
+  activeSubtitleKeyRef.current = null; // 🔓 RELEASE
+
 
   const speechEnd = performance.now();
   const actualDuration = (speechEnd - speechStart) / 1000;
@@ -479,16 +496,7 @@ console.log("BEFORE SPEAK", {
   duration,
 });
 
-synth.resume();
-synth.speak(utterance);
 
-setTimeout(() => {
-  console.log("AFTER 50ms", {
-    pending: synth.pending,
-    speaking: synth.speaking,
-    paused: synth.paused,
-  });
-}, 50);
 
     if (!didInitialSyncRef.current && playerRef.current) {
       if (typeof playerRef.current.pause === "function") {
@@ -498,10 +506,6 @@ setTimeout(() => {
       }
     }
     
-    if (!isShort) {
-  synth.cancel();
-  synth.resume();
-}
 
   if (cancelled) return;
   synth.resume(); 
