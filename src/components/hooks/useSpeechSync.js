@@ -112,16 +112,20 @@ useEffect(() => {
   const last = lastVideoTimeRef.current;
   const now = currentTime;
 
-  // forward seek detection (threshold ~0.8s)
-  if (now - last > 0.8) {
-    // 🔥 HARD CANCEL — user intent
+  const delta = now - last;
+
+  // 🔥 seek detection: forward OR backward
+  if (Math.abs(delta) > 0.8) {
     window.speechSynthesis.cancel();
 
-    // reset all speech state
+    // full reset
     activeSubtitleKeyRef.current = null;
     hasStartedSpeakingRef.current = false;
     lastSpokenRef.current = '';
     didInitialSyncRef.current = false;
+
+    // optional but recommended
+    // carryOverDebtRef.current = 0;
   }
 
   lastVideoTimeRef.current = now;
