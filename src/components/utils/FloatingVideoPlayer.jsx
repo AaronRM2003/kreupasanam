@@ -23,6 +23,8 @@ export default function FloatingVideoPlayer({
   const timeoutRef = React.useRef(null);
   const [copied, setCopied] = React.useState(false);
   const [subtitleKey, setSubtitleKey] = React.useState(0);
+  const [hideSubtitles, setHideSubtitles] = React.useState(false);
+
 
 React.useEffect(() => {
   setSubtitleKey(prev => prev + 1);
@@ -206,21 +208,22 @@ React.useEffect(() => {
 
                 userLang={userLang}
                 isVoiceTestActiveRef={isVoiceTestActiveRef}
+                setHideSubtitles={setHideSubtitles}
+
               />
             </div>
           )}
         </div>
 
-      <div id="subtitle-wrapper">
-  {currentSubtitle && (
-  <div
-  key={subtitleKey}
-  id="subtitle-dom"
-  className={styles.subtitleBox}
->
-  {currentSubtitle}
-</div>
-    
+     <div id="subtitle-wrapper">
+  {!hideSubtitles && currentSubtitle && (
+    <div
+      key={subtitleKey}
+      id="subtitle-dom"
+      className={styles.subtitleBox}
+    >
+      {currentSubtitle}
+    </div>
   )}
 </div>
 
