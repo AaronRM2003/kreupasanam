@@ -144,13 +144,18 @@ useEffect(() => {
     }
   }, [volume, playerReady, playerRef]);
 
-  useEffect(() => {
-    if (!isSpeaking || !showVideo) {
+useEffect(() => {
+  if (!isSpeaking || !showVideo) {
+    // 🔒 Only cancel if speech actually started
+    if (hasStartedSpeakingRef.current) {
       window.speechSynthesis.cancel();
-      hasStartedSpeakingRef.current = false;
-      lastSpokenRef.current = '';
     }
-  }, [isSpeaking, showVideo]);
+    hasStartedSpeakingRef.current = false;
+    lastSpokenRef.current = '';
+  }
+}, [isSpeaking, showVideo]);
+
+
 
 
 const maxStepUp = 0.5;
@@ -200,16 +205,17 @@ function computeAdjustedPlaybackRate({
   lastRateRef,
 }) {
   if (!baselineWps || !unitCount || !duration) return 1;
-  if (duration <= 3) {
-    lastRateRef.current = target;
-    return target;
-  }
+  
 
   const rawRate = unitCount / duration;
   const target = Math.max(
     0,
     Math.min(1, baselineWps / rawRate - margin)
   );
+  if (duration <= 3) {
+    lastRateRef.current = target;
+    return target;
+  }
 
   const last = lastRateRef.current;
 
@@ -241,10 +247,7 @@ function isLangAcceptedExactly(langTag) {
   const run = async () => {
     if (!isSpeaking || !showVideo || !currentSubtitle || !subtitles.length) return;
 
-    if (!hasStartedSpeakingRef.current) {
-      hasStartedSpeakingRef.current = true;
-      lastSpokenRef.current = '';
-    }
+    
 
     const shouldTranslate = acceptedUserLang;
 
@@ -283,15 +286,8 @@ function isLangAcceptedExactly(langTag) {
       translationDelay = delayMs / 1000;
     }
 
-    if (lastSpokenRef.current === text) {
-    if (isShort) {
-      lastSpokenRef.current = ""; // force speak
-    } else {
-      return;
-    }
-  }
+   
 
-    lastSpokenRef.current = text;
 
     // --------------------
     // Subtitle timing
@@ -306,19 +302,11 @@ function isLangAcceptedExactly(langTag) {
     // --------------------
     // Speech units
     // --------------------
-    const unitCount = speechUnits(text, effectiveLang);
-    const isShort = duration <= 3;
-    if (isShort) {
-      const cap = duration * baselineWps * 1.3;
-      unitCount = Math.min(unitCount, cap);
-    }
-        
-
+    let baselineWps = 2;
 
     // --------------------
     // Load baseline WPS
     // --------------------
-    let baselineWps = 2;
 
     const voiceURI = localStorage.getItem(effectiveLang);
     const testKey = `voice_test_data_${effectiveLang}`;
@@ -341,7 +329,16 @@ function isLangAcceptedExactly(langTag) {
       }
     } catch {}
 
-
+    let unitCount = speechUnits(text, effectiveLang);
+    const isShort = duration <= 3;
+        if (isShort) {
+          const cap = duration * baselineWps * 1.3;
+          unitCount = Math.min(unitCount, cap);
+        }
+        if (lastSpokenRef.current === text) {
+          if (!isShort) return;
+          lastSpokenRef.current = "";
+        }
     // --------------------
     // Margin model
     // --------------------
@@ -391,6 +388,9 @@ function isLangAcceptedExactly(langTag) {
 const utterance = new SpeechSynthesisUtterance(text);
 let wasCancelled = false;
 utterance.onstart = () => {
+  console.log("TTS START:", text, duration);
+    hasStartedSpeakingRef.current = true; // 🔥 REQUIRED
+    lastSpokenRef.current = text;
   if (!didInitialSyncRef.current && playerRef.current) {
     if (typeof playerRef.current.play === "function") {
       playerRef.current.play();
@@ -482,6 +482,7 @@ utterance.voice = voice || null;
   synth.resume();
 }
 
+  if (cancelled) return;
 
 
    if (isShort) {
