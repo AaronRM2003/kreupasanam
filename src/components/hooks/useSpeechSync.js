@@ -477,13 +477,21 @@ utterance.voice = voice || null;
       }
     }
     
-    synth.cancel();
-    synth.resume();
+    if (!isShort) {
+  synth.cancel();
+  synth.resume();
+}
 
 
-    setTimeout(() => {
-      synth.speak(utterance);
-    }, 80);
+
+   if (isShort) {
+  synth.speak(utterance); // 🔥 IMMEDIATE
+} else {
+  setTimeout(() => {
+    synth.speak(utterance);
+  }, 80);
+}
+
   };
 
   run();
