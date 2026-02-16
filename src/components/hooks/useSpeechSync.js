@@ -344,7 +344,7 @@ function isLangAcceptedExactly(langTag) {
     // --------------------
     const speechMargin = 0.035;
     const translationMargin = Math.min(0.08, translationDelay * 0.05);
-    const margin = speechMargin + translationMargin;
+    let margin = speechMargin + translationMargin;
     if (isShort) {
       margin *= 0.6;
     }
