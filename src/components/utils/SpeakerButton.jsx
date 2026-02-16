@@ -650,13 +650,16 @@ function shortCode(langTag) {
             <div className="toggle-switch-circle" />
           </div>
         </div>
- <button
-  className={`subtitle-chip ${hideSubtitles ? 'off' : ''}`}
-  onClick={() => setHideSubtitles(v => !v)}
-  aria-label={hideSubtitles ? "Show subtitles" : "Hide subtitles"}
->
-  {hideSubtitles ? "Show subtitles" : "Hide subtitles"}
-</button>
+{isSpeaking && (
+  <button
+    className={`subtitle-chip ${hideSubtitles ? 'off' : ''}`}
+    onClick={() => setHideSubtitles(v => !v)}
+    aria-label={hideSubtitles ? "Show subtitles" : "Hide subtitles"}
+  >
+    {hideSubtitles ? "Show subtitles" : "Hide subtitles"}
+  </button>
+)}
+
         {/* Volume Control */}
         <div className="volume-control">
           <div className="volume-label">
