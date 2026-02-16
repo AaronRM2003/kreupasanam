@@ -24,6 +24,8 @@ export function useSpeechSync({
   const didInitialSyncRef = useRef(false);
   const activeSubtitleKeyRef = useRef(null);
   const lastVideoTimeRef = useRef(0);
+  const carryOverDebtRef = useRef(0);
+
 
 
 
@@ -330,6 +332,19 @@ function isLangAcceptedExactly(langTag) {
     }
 
 duration = Math.max(0.7, duration - translationDelay);
+if (
+  carryOverDebtRef.current > 0 &&
+  duration > 3 // never short subtitles
+) {
+  const payback = Math.min(
+    carryOverDebtRef.current,
+    duration * 0.25 // 🔒 max 25% compression
+  );
+
+  duration -= payback;
+  carryOverDebtRef.current -= payback;
+}
+
 
 
     // --------------------
@@ -462,6 +477,15 @@ utterance.onend = () => {
   if (translationDelay > duration * 0.4) return;
   if (!actualDuration || actualDuration < 0.5) return;
   if (unitCount < 2) return;
+  const overrun = actualDuration - duration;
+
+  if (overrun > 0.12 && duration > 3) {
+    carryOverDebtRef.current = Math.min(
+      0.6, // 🔒 hard cap
+      carryOverDebtRef.current + overrun
+    );
+  }
+
 
   const observedWps = unitCount / actualDuration;
 
