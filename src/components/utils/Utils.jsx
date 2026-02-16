@@ -469,10 +469,10 @@ if (isIndic) {
     if (lang === "fr" || lang === "es") {
       // smoother but number words are long
       if (/(vingt|trente|quarante|cinquante|soixante|soixante-dix|quatre-vingt|quatre-vingt-dix)/.test(lower)) {
-        u += 0.8;
+        u += 0.7;
       }
       if (/(treinta|cuarenta|cincuenta|sesenta|setenta|ochenta|noventa)/.test(lower)) {
-        u += 0.8;
+        u += 0.7;
       }
     }
 

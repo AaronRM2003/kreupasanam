@@ -26,6 +26,8 @@ export default function SubtitleVoiceControls({
   const [isLoadingTest, setIsLoadingTest] = useState(false);
   const effectiveLang = userLang || lang;
 
+  const [hideSubtitles, setHideSubtitles] = useState(false);
+
 
   // Keep all available voices from system
   const [systemVoices, setSystemVoices] = useState([]);
@@ -39,6 +41,15 @@ export default function SubtitleVoiceControls({
 
   const voiceFromHook = useSelectedVoice(effectiveLang);
   
+  useEffect(() => {
+  const saved = localStorage.getItem("hide_subtitles");
+  if (saved !== null) setHideSubtitles(saved === "true");
+}, []);
+
+useEffect(() => {
+  localStorage.setItem("hide_subtitles", hideSubtitles);
+}, [hideSubtitles]);
+
   // Load system voices on mount and when voices changed
   useEffect(() => {
   function loadVoices() {
@@ -628,6 +639,7 @@ function shortCode(langTag) {
         className={`controls-panel ${controlsVisible ? 'visible' : 'hidden'}`}
       >
         {/* Toggle Subtitles Switch */}
+        
         <div
           className="toggle-subtitles"
           onClick={() => handleReadSubtitlesClick(false)}
@@ -639,12 +651,19 @@ function shortCode(langTag) {
           aria-pressed={isSpeaking}
           aria-label="Toggle read subtitles"
         >
+          
           <span>Read Subtitles</span>
           <div className={`toggle-switch ${isSpeaking ? 'active' : ''}`}>
             <div className="toggle-switch-circle" />
           </div>
         </div>
-
+ <button
+  className={`subtitle-chip ${hideSubtitles ? 'off' : ''}`}
+  onClick={() => setHideSubtitles(v => !v)}
+  aria-label={hideSubtitles ? "Show subtitles" : "Hide subtitles"}
+>
+  {hideSubtitles ? "Show subtitles" : "Hide subtitles"}
+</button>
         {/* Volume Control */}
         <div className="volume-control">
           <div className="volume-label">
@@ -666,6 +685,8 @@ function shortCode(langTag) {
             aria-label="Volume control"
           />
         </div>
+       
+
         {/* Change Voice Button */}
 <div className="change-voice-container" style={{ marginTop: '12px' }}>
   <button
