@@ -283,7 +283,14 @@ function isLangAcceptedExactly(langTag) {
       translationDelay = delayMs / 1000;
     }
 
-    if (lastSpokenRef.current === text) return;
+    if (lastSpokenRef.current === text) {
+    if (isShort) {
+      lastSpokenRef.current = ""; // force speak
+    } else {
+      return;
+    }
+  }
+
     lastSpokenRef.current = text;
 
     // --------------------
@@ -409,6 +416,8 @@ const speechStart = performance.now();
 // ✅ attach learning ONLY on successful end
 utterance.onend = () => {
   if (wasCancelled) return;
+  if (duration <= 3) return;
+
   const speechEnd = performance.now();
   const actualDuration = (speechEnd - speechStart) / 1000;
 
