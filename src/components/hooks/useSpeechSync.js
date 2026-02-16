@@ -200,6 +200,10 @@ function computeAdjustedPlaybackRate({
   lastRateRef,
 }) {
   if (!baselineWps || !unitCount || !duration) return 1;
+  if (duration <= 3) {
+    lastRateRef.current = target;
+    return target;
+  }
 
   const rawRate = unitCount / duration;
   const target = Math.max(
@@ -296,10 +300,12 @@ function isLangAcceptedExactly(langTag) {
     // Speech units
     // --------------------
     const unitCount = speechUnits(text, effectiveLang);
-    if (duration <= 3) {
-  const cap = duration * baselineWps * 1.3;
-  unitCount = Math.min(unitCount, cap);
-}
+    const isShort = duration <= 3;
+    if (isShort) {
+      const cap = duration * baselineWps * 1.3;
+      unitCount = Math.min(unitCount, cap);
+    }
+        
 
 
     // --------------------
@@ -335,6 +341,9 @@ function isLangAcceptedExactly(langTag) {
     const speechMargin = 0.035;
     const translationMargin = Math.min(0.08, translationDelay * 0.05);
     const margin = speechMargin + translationMargin;
+    if (isShort) {
+      margin *= 0.6;
+    }
 
     // --------------------
     // Playback rate sync
@@ -358,9 +367,13 @@ function isLangAcceptedExactly(langTag) {
       if (["ja","ko","zh"].includes(baseLang)) {
         maxRate = 1.1;
       }
+      let minRate = 0.75;
+      if (isShort) minRate = 0.85;
+      if (duration <= 2) minRate = 0.9;
+      if (duration <= 1.5) minRate = 0.95;
 
       playerRef.current.setPlaybackRate(
-        Math.max(0.1, Math.min(maxRate, rate))
+        Math.max(minRate, Math.min(maxRate, rate))
       );
 
     }
