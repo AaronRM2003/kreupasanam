@@ -23,6 +23,8 @@ export function useSpeechSync({
   const [playerReady, setPlayerReady] = useState(false);
   const didInitialSyncRef = useRef(false);
   const activeSubtitleKeyRef = useRef(null);
+  const lastVideoTimeRef = useRef(0);
+
 
 
 const acceptedUserLang =
@@ -104,6 +106,24 @@ useEffect(() => {
 }, [isSpeaking]);
 
 
+useEffect(() => {
+  const last = lastVideoTimeRef.current;
+  const now = currentTime;
+
+  // forward seek detection (threshold ~0.8s)
+  if (now - last > 0.8) {
+    // 🔥 HARD CANCEL — user intent
+    window.speechSynthesis.cancel();
+
+    // reset all speech state
+    activeSubtitleKeyRef.current = null;
+    hasStartedSpeakingRef.current = false;
+    lastSpokenRef.current = '';
+    didInitialSyncRef.current = false;
+  }
+
+  lastVideoTimeRef.current = now;
+}, [currentTime]);
 
 useEffect(() => {
   if (!isBrowserTranslateOn) return;
