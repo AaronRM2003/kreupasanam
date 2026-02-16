@@ -41,14 +41,6 @@ export default function SubtitleVoiceControls({
 
   const voiceFromHook = useSelectedVoice(effectiveLang);
   
-  useEffect(() => {
-  const saved = localStorage.getItem("hide_subtitles");
-  if (saved !== null) setHideSubtitles(saved === "true");
-}, []);
-
-useEffect(() => {
-  localStorage.setItem("hide_subtitles", hideSubtitles);
-}, [hideSubtitles]);
 
   // Load system voices on mount and when voices changed
   useEffect(() => {
