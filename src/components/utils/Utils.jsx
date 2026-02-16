@@ -372,6 +372,10 @@ export function normalizeToLocale(lang) {
   // everything else → base language only
   return base;
 }
+function estimateIndicUnits(text) {
+  // Count Unicode syllabic clusters
+  return (text.match(/[\u0C80-\u0CFF\u0C00-\u0C7F\u0B80-\u0BFF\u0D00-\u0D7F]/g) || []).length / 2;
+}
 
 export function speechUnits(text, lang) {
   if (!text) return 0;
@@ -434,6 +438,19 @@ export function speechUnits(text, lang) {
       if (word.length >= 8) u += 0.2;
       if (word.length >= 12) u += 0.3;
     }
+    if (["te","kn","ta","ml","bn","mr"].includes(lang)) {
+      let units = estimateIndicUnits(text);
+
+      // soft punctuation weighting
+      const commaCount = (text.match(/[၊,，]/g) || []).length;
+      units += commaCount * 0.3;
+
+      const stopCount = (text.match(/[.!?]/g) || []).length;
+      units += stopCount * 0.4;
+
+      return units;
+    }
+
 
     // ---- Romance languages ----
     if (lang === "fr" || lang === "es") {
