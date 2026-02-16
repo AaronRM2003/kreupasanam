@@ -15,6 +15,7 @@ export default function SubtitleVoiceControls({
 
   userLang,
   hideSubtitles,
+  setHideSubtitles
 }) {
   const [showControls, setShowControls] = useState(false);
   const [isInteracting, setIsInteracting] = useState(false);
