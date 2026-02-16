@@ -483,7 +483,7 @@ utterance.voice = voice || null;
 }
 
   if (cancelled) return;
-
+  synth.resume(); 
 
    if (isShort) {
   synth.speak(utterance); // 🔥 IMMEDIATE
