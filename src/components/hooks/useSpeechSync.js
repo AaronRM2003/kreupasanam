@@ -296,6 +296,10 @@ function isLangAcceptedExactly(langTag) {
     // Speech units
     // --------------------
     const unitCount = speechUnits(text, effectiveLang);
+    if (duration <= 3) {
+  const cap = duration * baselineWps * 1.3;
+  unitCount = Math.min(unitCount, cap);
+}
 
 
     // --------------------
