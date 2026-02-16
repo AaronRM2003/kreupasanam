@@ -506,6 +506,11 @@ setTimeout(() => {
   if (cancelled) return;
   synth.resume(); 
 
+  // 🔒 DO NOT re-speak while already speaking
+if (synth.speaking || synth.pending) {
+  return;
+}
+
    if (isShort) {
   synth.speak(utterance); // 🔥 IMMEDIATE
 } else {
