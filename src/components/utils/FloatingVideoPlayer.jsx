@@ -209,6 +209,7 @@ React.useEffect(() => {
                 userLang={userLang}
                 isVoiceTestActiveRef={isVoiceTestActiveRef}
                 setHideSubtitles={setHideSubtitles}
+                hideSubtitles={hideSubtitles}
 
               />
             </div>
