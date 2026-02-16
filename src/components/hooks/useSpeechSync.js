@@ -469,6 +469,27 @@ utterance.voice = voice || null;
     }
 
     const synth = window.speechSynthesis;
+
+console.log("BEFORE SPEAK", {
+  pending: synth.pending,
+  speaking: synth.speaking,
+  paused: synth.paused,
+  isShort,
+  text,
+  duration,
+});
+
+synth.resume();
+synth.speak(utterance);
+
+setTimeout(() => {
+  console.log("AFTER 50ms", {
+    pending: synth.pending,
+    speaking: synth.speaking,
+    paused: synth.paused,
+  });
+}, 50);
+
     if (!didInitialSyncRef.current && playerRef.current) {
       if (typeof playerRef.current.pause === "function") {
         playerRef.current.pause();
