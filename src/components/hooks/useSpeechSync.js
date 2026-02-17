@@ -25,6 +25,13 @@ export function useSpeechSync({
   const activeSubtitleKeyRef = useRef(null);
   const lastVideoTimeRef = useRef(0);
   const carryOverDebtRef = useRef(0);
+  const pendingGapEffectRef = useRef(null);
+  const fadeIntervalRef = useRef(null);
+const fadeTimeoutRef = useRef(null);
+const isFadingRef = useRef(false);
+
+
+
 
 
 
@@ -61,6 +68,37 @@ function normalizeTextForCompare(t) {
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
+function fadeVolume(player, from, to, durationMs = 800) {
+  if (!player?.setVolume) return;
+
+  isFadingRef.current = true;
+
+  if (fadeIntervalRef.current) {
+    clearInterval(fadeIntervalRef.current);
+    fadeIntervalRef.current = null;
+  }
+
+  const steps = 12;
+  const stepTime = durationMs / steps;
+  const delta = (to - from) / steps;
+
+  let current = from;
+  let step = 0;
+
+  fadeIntervalRef.current = setInterval(() => {
+    step++;
+    current += delta;
+    player.setVolume(Math.max(0, Math.min(100, current)));
+
+    if (step >= steps) {
+      clearInterval(fadeIntervalRef.current);
+      fadeIntervalRef.current = null;
+      isFadingRef.current = false; // ✅ release control
+    }
+  }, stepTime);
+}
+
+
 
 async function waitForTranslatedDomTextStable(
   original,
@@ -117,12 +155,23 @@ useEffect(() => {
   // 🔥 seek detection: forward OR backward
   if (Math.abs(delta) > 0.8) {
     window.speechSynthesis.cancel();
+    if (fadeIntervalRef.current) {
+      clearInterval(fadeIntervalRef.current);
+      fadeIntervalRef.current = null;
+    }
+    if (fadeTimeoutRef.current) {
+      clearTimeout(fadeTimeoutRef.current);
+      fadeTimeoutRef.current = null;
+    }
+
 
     // full reset
     activeSubtitleKeyRef.current = null;
     hasStartedSpeakingRef.current = false;
     lastSpokenRef.current = '';
     didInitialSyncRef.current = false;
+    isFadingRef.current = false;
+
 
     // optional but recommended
     carryOverDebtRef.current = 0;
@@ -153,24 +202,33 @@ useEffect(() => {
 
 
   // Sync volume once player is available
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const player = playerRef.current;
-      if (player?.setVolume instanceof Function) {
-        player.setVolume(volume);
-        setPlayerReady(true);
-        clearInterval(interval);
-      }
-    }, 200);
-
-    return () => clearInterval(interval);
-  }, [volume, playerRef]);
-
-  useEffect(() => {
-    if (playerReady && playerRef.current?.setVolume instanceof Function) {
-      playerRef.current.setVolume(volume);
+useEffect(() => {
+  const interval = setInterval(() => {
+    const player = playerRef.current;
+    if (
+      player?.setVolume instanceof Function &&
+      !isFadingRef.current // ✅ IMPORTANT
+    ) {
+      player.setVolume(volume);
+      setPlayerReady(true);
+      clearInterval(interval);
     }
-  }, [volume, playerReady, playerRef]);
+  }, 200);
+
+  return () => clearInterval(interval);
+}, [volume, playerRef]);
+
+
+useEffect(() => {
+  if (
+    playerReady &&
+    playerRef.current?.setVolume instanceof Function &&
+    !isFadingRef.current // 🔑 KEY
+  ) {
+    playerRef.current.setVolume(volume);
+  }
+}, [volume, playerReady, playerRef]);
+
 
 useEffect(() => {
   if (!isSpeaking || !showVideo) {
@@ -444,6 +502,15 @@ utterance.onstart = () => {
     hasStartedSpeakingRef.current = true; // 🔥 REQUIRED
     lastSpokenRef.current = text;
       activeSubtitleKeyRef.current = subtitleKey; // 🔒 LOCK
+      if (fadeIntervalRef.current) {
+  clearInterval(fadeIntervalRef.current);
+  fadeIntervalRef.current = null;
+}
+if (fadeTimeoutRef.current) {
+  clearTimeout(fadeTimeoutRef.current);
+  fadeTimeoutRef.current = null;
+}
+
 
   if (!didInitialSyncRef.current && playerRef.current) {
     if (typeof playerRef.current.play === "function") {
@@ -472,10 +539,52 @@ utterance.onend = () => {
   if (wasCancelled) return;
   if (duration <= 3) return;
   activeSubtitleKeyRef.current = null; // 🔓 RELEASE
-
-
+  const endedSubtitleKey = subtitleKey;
   const speechEnd = performance.now();
   const actualDuration = (speechEnd - speechStart) / 1000;
+
+  const remaining = duration - actualDuration;
+
+  // 🔕 ignore tiny gaps
+  if (remaining < 2) return;
+
+  // 🕒 grace pause
+  pendingGapEffectRef.current = setTimeout(() => {
+    pendingGapEffectRef.current = null;
+
+    if (!playerRef.current) return;
+
+    const now = playerRef.current.getCurrentTime?.() ?? currentTime;
+
+    const stillHere = subtitles.find(
+      s => now >= s.startSeconds && now < s.endSeconds
+    );
+    if (!stillHere) return;
+
+    const stillKey = `${stillHere.startSeconds}-${stillHere.endSeconds}`;
+    if (stillKey !== endedSubtitleKey) return;
+
+    // 🔊 VOLUME FADE IN
+    const originalVol =
+  typeof playerRef.current.getVolume === "function"
+    ? playerRef.current.getVolume()
+    : volume;
+
+    fadeVolume(playerRef.current, originalVol, 80, 700);
+    const fadeOutDelay = Math.max(
+      200,
+      Math.min(remaining * 1000 - 800, 1200)
+    );
+
+    // 🔕 FADE OUT before next subtitle
+    fadeTimeoutRef.current = setTimeout(() => {
+      fadeTimeoutRef.current = null;
+      fadeVolume(playerRef.current, 80, originalVol, 700);
+    }, fadeOutDelay);
+
+
+  }, 1500);
+
 
   // --- guards (VERY important) ---
   if (translationDelay > duration * 0.4) return;
@@ -597,17 +706,30 @@ if (synth.speaking || synth.pending) {
   }, [isSpeaking, playerRef]);
 
   const handleVolumeChange = (e) => {
-    const newVol = Number(e.target.value);
-    setVolume(newVol);
-  };
+  const newVol = Number(e.target.value);
+
+  // 🛑 user intent overrides system fade
+  if (isFadingRef.current) {
+    isFadingRef.current = false;
+
+    if (fadeIntervalRef.current) {
+      clearInterval(fadeIntervalRef.current);
+      fadeIntervalRef.current = null;
+    }
+    if (fadeTimeoutRef.current) {
+      clearTimeout(fadeTimeoutRef.current);
+      fadeTimeoutRef.current = null;
+    }
+  }
+
+  setVolume(newVol);
+};
+
 
   const toggleSpeaking = () => {
-    setIsSpeaking((prev) => {
-      const newSpeaking = !prev;
-      if (newSpeaking) setVolume(10);
-      return newSpeaking;
-    });
-  };
+  setIsSpeaking(prev => !prev);
+};
+
 
   const stopSpeaking = () => {
     setIsSpeaking(false);
