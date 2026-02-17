@@ -28,6 +28,8 @@ export function useSpeechSync({
   const pendingGapEffectRef = useRef(null);
   const fadeIntervalRef = useRef(null);
 const fadeTimeoutRef = useRef(null);
+const isFadingRef = useRef(false);
+
 
 
 
@@ -69,6 +71,8 @@ function sleep(ms) {
 function fadeVolume(player, from, to, durationMs = 800) {
   if (!player?.setVolume) return;
 
+  isFadingRef.current = true;
+
   if (fadeIntervalRef.current) {
     clearInterval(fadeIntervalRef.current);
     fadeIntervalRef.current = null;
@@ -89,9 +93,11 @@ function fadeVolume(player, from, to, durationMs = 800) {
     if (step >= steps) {
       clearInterval(fadeIntervalRef.current);
       fadeIntervalRef.current = null;
+      isFadingRef.current = false; // ✅ release control
     }
   }, stepTime);
 }
+
 
 
 async function waitForTranslatedDomTextStable(
@@ -207,11 +213,16 @@ useEffect(() => {
     return () => clearInterval(interval);
   }, [volume, playerRef]);
 
-  useEffect(() => {
-    if (playerReady && playerRef.current?.setVolume instanceof Function) {
-      playerRef.current.setVolume(volume);
-    }
-  }, [volume, playerReady, playerRef]);
+useEffect(() => {
+  if (
+    playerReady &&
+    playerRef.current?.setVolume instanceof Function &&
+    !isFadingRef.current // 🔑 KEY
+  ) {
+    playerRef.current.setVolume(volume);
+  }
+}, [volume, playerReady, playerRef]);
+
 
 useEffect(() => {
   if (!isSpeaking || !showVideo) {
