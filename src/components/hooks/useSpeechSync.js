@@ -170,6 +170,8 @@ useEffect(() => {
     hasStartedSpeakingRef.current = false;
     lastSpokenRef.current = '';
     didInitialSyncRef.current = false;
+    isFadingRef.current = false;
+
 
     // optional but recommended
     carryOverDebtRef.current = 0;
@@ -200,18 +202,22 @@ useEffect(() => {
 
 
   // Sync volume once player is available
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const player = playerRef.current;
-      if (player?.setVolume instanceof Function) {
-        player.setVolume(volume);
-        setPlayerReady(true);
-        clearInterval(interval);
-      }
-    }, 200);
+useEffect(() => {
+  const interval = setInterval(() => {
+    const player = playerRef.current;
+    if (
+      player?.setVolume instanceof Function &&
+      !isFadingRef.current // ✅ IMPORTANT
+    ) {
+      player.setVolume(volume);
+      setPlayerReady(true);
+      clearInterval(interval);
+    }
+  }, 200);
 
-    return () => clearInterval(interval);
-  }, [volume, playerRef]);
+  return () => clearInterval(interval);
+}, [volume, playerRef]);
+
 
 useEffect(() => {
   if (
@@ -700,9 +706,25 @@ if (synth.speaking || synth.pending) {
   }, [isSpeaking, playerRef]);
 
   const handleVolumeChange = (e) => {
-    const newVol = Number(e.target.value);
-    setVolume(newVol);
-  };
+  const newVol = Number(e.target.value);
+
+  // 🛑 user intent overrides system fade
+  if (isFadingRef.current) {
+    isFadingRef.current = false;
+
+    if (fadeIntervalRef.current) {
+      clearInterval(fadeIntervalRef.current);
+      fadeIntervalRef.current = null;
+    }
+    if (fadeTimeoutRef.current) {
+      clearTimeout(fadeTimeoutRef.current);
+      fadeTimeoutRef.current = null;
+    }
+  }
+
+  setVolume(newVol);
+};
+
 
   const toggleSpeaking = () => {
     setIsSpeaking((prev) => {
