@@ -25,16 +25,6 @@ export function useSpeechSync({
   const activeSubtitleKeyRef = useRef(null);
   const lastVideoTimeRef = useRef(0);
   const carryOverDebtRef = useRef(0);
-  const pendingGapEffectRef = useRef(null);
-  const fadeIntervalRef = useRef(null);
-const fadeTimeoutRef = useRef(null);
-const isFadingRef = useRef(false);
-const didInitVolumeRef = useRef(false);
-const baseVolumeRef = useRef(100);
-const liveVolumeRef = useRef(100); // actual player volume
-
-
-
 
 
 
@@ -71,43 +61,6 @@ function normalizeTextForCompare(t) {
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
-
-function setPlayerVolumeSafe(vol) {
-  liveVolumeRef.current = vol;
-  playerRef.current?.setVolume?.(vol);
-}
-
-function fadeVolume(player, from, to, durationMs = 800) {
-  if (!player?.setVolume) return;
-
-  isFadingRef.current = true;
-
-  clearInterval(fadeIntervalRef.current);
-
-  const steps = 14;
-  const stepTime = durationMs / steps;
-  const delta = (to - from) / steps;
-
-  let current = from;
-  let step = 0;
-
-  fadeIntervalRef.current = setInterval(() => {
-    step++;
-    current += delta;
-    liveVolumeRef.current = current;
-    player.setVolume(Math.round(current));
-
-    if (step >= steps) {
-      clearInterval(fadeIntervalRef.current);
-      fadeIntervalRef.current = null;
-      isFadingRef.current = false;
-    }
-  }, stepTime);
-}
-
-
-
-
 
 async function waitForTranslatedDomTextStable(
   original,
@@ -164,23 +117,12 @@ useEffect(() => {
   // 🔥 seek detection: forward OR backward
   if (Math.abs(delta) > 0.8) {
     window.speechSynthesis.cancel();
-    if (fadeIntervalRef.current) {
-      clearInterval(fadeIntervalRef.current);
-      fadeIntervalRef.current = null;
-    }
-    if (fadeTimeoutRef.current) {
-      clearTimeout(fadeTimeoutRef.current);
-      fadeTimeoutRef.current = null;
-    }
-
 
     // full reset
     activeSubtitleKeyRef.current = null;
     hasStartedSpeakingRef.current = false;
     lastSpokenRef.current = '';
     didInitialSyncRef.current = false;
-    isFadingRef.current = false;
-
 
     // optional but recommended
     carryOverDebtRef.current = 0;
@@ -211,33 +153,24 @@ useEffect(() => {
 
 
   // Sync volume once player is available
-// useEffect(() => {
-//   const interval = setInterval(() => {
-//     const player = playerRef.current;
-//     if (
-//       player?.setVolume instanceof Function &&
-//       !isFadingRef.current // ✅ IMPORTANT
-//     ) {
-//       player.setVolume(volume);
-//       setPlayerReady(true);
-//       clearInterval(interval);
-//     }
-//   }, 200);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const player = playerRef.current;
+      if (player?.setVolume instanceof Function) {
+        player.setVolume(volume);
+        setPlayerReady(true);
+        clearInterval(interval);
+      }
+    }, 200);
 
-//   return () => clearInterval(interval);
-// }, [volume, playerRef]);
+    return () => clearInterval(interval);
+  }, [volume, playerRef]);
 
-
-useEffect(() => {
-  if (
-    playerReady &&
-    playerRef.current?.setVolume instanceof Function &&
-    !isFadingRef.current // 🔑 KEY
-  ) {
-    playerRef.current.setVolume(volume);
-  }
-}, [volume, playerReady, playerRef]);
-
+  useEffect(() => {
+    if (playerReady && playerRef.current?.setVolume instanceof Function) {
+      playerRef.current.setVolume(volume);
+    }
+  }, [volume, playerReady, playerRef]);
 
 useEffect(() => {
   if (!isSpeaking || !showVideo) {
@@ -512,27 +445,6 @@ utterance.onstart = () => {
     lastSpokenRef.current = text;
       activeSubtitleKeyRef.current = subtitleKey; // 🔒 LOCK
 
-      // 🦆 DUCK video volume for speech
-  clearInterval(fadeIntervalRef.current);
-  clearTimeout(fadeTimeoutRef.current);
-
-  fadeVolume(
-    playerRef.current,
-    liveVolumeRef.current,
-    10,          // duck target
-    400          // fast duck
-  );
-
-      if (fadeIntervalRef.current) {
-  clearInterval(fadeIntervalRef.current);
-  fadeIntervalRef.current = null;
-}
-if (fadeTimeoutRef.current) {
-  clearTimeout(fadeTimeoutRef.current);
-  fadeTimeoutRef.current = null;
-}
-
-
   if (!didInitialSyncRef.current && playerRef.current) {
     if (typeof playerRef.current.play === "function") {
       playerRef.current.play();
@@ -560,25 +472,10 @@ utterance.onend = () => {
   if (wasCancelled) return;
   if (duration <= 3) return;
   activeSubtitleKeyRef.current = null; // 🔓 RELEASE
-  const endedSubtitleKey = subtitleKey;
+
+
   const speechEnd = performance.now();
   const actualDuration = (speechEnd - speechStart) / 1000;
-
-  const remaining = duration - actualDuration;
-  const originalVol = baseVolumeRef.current;
-
-  // 🔕 ignore tiny gaps
-  if (remaining < 2) return;
-
-  // 🕒 grace pause
-  pendingGapEffectRef.current = setTimeout(() => {
-    // 🔊 fade UP
-    fadeVolume(playerRef.current, liveVolumeRef.current, originalVol, 700);
-
-  
-
-  }, 1500);
-
 
   // --- guards (VERY important) ---
   if (translationDelay > duration * 0.4) return;
@@ -691,44 +588,37 @@ if (synth.speaking || synth.pending) {
 ]);
 
 
- 
-
-const handleVolumeChange = (e) => {
-  const v = Number(e.target.value);
-  baseVolumeRef.current = v;
-  setVolume(v);
-  setPlayerVolumeSafe(v); // immediate
-};
-
-
-
-
-
-const toggleSpeaking = () => {
-  setIsSpeaking(prev => {
-    if (!prev) {
-      baseVolumeRef.current = volume; // remember
-      setPlayerVolumeSafe(10);        // duck
+  useEffect(() => {
+    if (!isSpeaking && playerRef.current) {
+      playerRef.current.setPlaybackRate?.(1);
+      playerRef.current.setVolume?.(100);
+      setVolume(100);
     }
-    return !prev;
-  });
-};
+  }, [isSpeaking, playerRef]);
 
+  const handleVolumeChange = (e) => {
+    const newVol = Number(e.target.value);
+    setVolume(newVol);
+  };
 
-
+  const toggleSpeaking = () => {
+    setIsSpeaking((prev) => {
+      const newSpeaking = !prev;
+      if (newSpeaking) setVolume(10);
+      return newSpeaking;
+    });
+  };
 
   const stopSpeaking = () => {
-  setIsSpeaking(false);
-  window.speechSynthesis.cancel();
-
-  hasStartedSpeakingRef.current = false;
-  lastSpokenRef.current = '';
-
-  setVolume(100);
-  setPlayerVolumeSafe(100);
-
-  didInitVolumeRef.current = false;
-};
+    setIsSpeaking(false);
+    window.speechSynthesis.cancel();
+    hasStartedSpeakingRef.current = false;
+    lastSpokenRef.current = '';
+    setVolume(100);
+    if (playerRef.current?.setVolume) {
+      playerRef.current.setVolume(100);
+    }
+  };
 
   
   return {
