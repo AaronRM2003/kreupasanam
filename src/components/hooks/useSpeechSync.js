@@ -25,6 +25,8 @@ export function useSpeechSync({
   const activeSubtitleKeyRef = useRef(null);
   const lastVideoTimeRef = useRef(0);
   const carryOverDebtRef = useRef(0);
+  const pendingSkipTimeoutRef = useRef(null);
+
 
 
 
@@ -117,6 +119,11 @@ useEffect(() => {
   // 🔥 seek detection: forward OR backward
   if (Math.abs(delta) > 0.8) {
     window.speechSynthesis.cancel();
+    if (pendingSkipTimeoutRef.current) {
+      clearTimeout(pendingSkipTimeoutRef.current);
+      pendingSkipTimeoutRef.current = null;
+    }
+
 
     // full reset
     activeSubtitleKeyRef.current = null;
@@ -441,6 +448,12 @@ const utterance = new SpeechSynthesisUtterance(text);
 let wasCancelled = false;
 utterance.onstart = () => {
   console.log("TTS START:", text, duration);
+  if (pendingSkipTimeoutRef.current) {
+    clearTimeout(pendingSkipTimeoutRef.current);
+    pendingSkipTimeoutRef.current = null;
+  }
+
+
     hasStartedSpeakingRef.current = true; // 🔥 REQUIRED
     lastSpokenRef.current = text;
       activeSubtitleKeyRef.current = subtitleKey; // 🔒 LOCK
@@ -472,10 +485,48 @@ utterance.onend = () => {
   if (wasCancelled) return;
   if (duration <= 3) return;
   activeSubtitleKeyRef.current = null; // 🔓 RELEASE
+  const endedSubtitleKey = subtitleKey;
 
 
   const speechEnd = performance.now();
   const actualDuration = (speechEnd - speechStart) / 1000;
+  const remaining = duration - actualDuration;
+
+  // ❌ too small → ignore
+  if (remaining < 1.5 || duration <= 3) return;
+
+  // 🕒 wait before skipping
+  pendingSkipTimeoutRef.current = setTimeout(() => {
+  pendingSkipTimeoutRef.current = null;
+
+  if (!playerRef.current) return;
+
+  // ✅ get LIVE video time
+  const now =
+    typeof playerRef.current.getCurrentTime === "function"
+      ? playerRef.current.getCurrentTime()
+      : currentTime; // fallback
+
+  // ✅ check if we are STILL in the same subtitle
+  const stillHere = subtitles.find(
+    s => now >= s.startSeconds && now < s.endSeconds
+  );
+
+  if (!stillHere) return;
+
+  const stillKey = `${stillHere.startSeconds}-${stillHere.endSeconds}`;
+
+  // 🔒 only skip if it's the SAME subtitle that ended speech
+  if (stillKey !== endedSubtitleKey) return;
+
+  const idx = subtitles.indexOf(stillHere);
+  const next = subtitles[idx + 1];
+
+  if (next?.startSeconds && playerRef.current.seekTo) {
+    playerRef.current.seekTo(next.startSeconds + 0.01, true);
+  }
+}, 2000);
+
 
   // --- guards (VERY important) ---
   if (translationDelay > duration * 0.4) return;
@@ -612,6 +663,11 @@ if (synth.speaking || synth.pending) {
   const stopSpeaking = () => {
     setIsSpeaking(false);
     window.speechSynthesis.cancel();
+    if (pendingSkipTimeoutRef.current) {
+      clearTimeout(pendingSkipTimeoutRef.current);
+      pendingSkipTimeoutRef.current = null;
+    }
+
     hasStartedSpeakingRef.current = false;
     lastSpokenRef.current = '';
     setVolume(100);
