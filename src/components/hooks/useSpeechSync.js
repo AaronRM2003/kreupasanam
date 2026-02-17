@@ -78,21 +78,24 @@ function setPlayerVolumeSafe(vol) {
 }
 
 function fadeVolume(player, from, to, durationMs = 800) {
+  if (!player?.setVolume) return;
+
   isFadingRef.current = true;
 
-  const steps = 12;
+  clearInterval(fadeIntervalRef.current);
+
+  const steps = 14;
   const stepTime = durationMs / steps;
   const delta = (to - from) / steps;
 
   let current = from;
   let step = 0;
 
-  clearInterval(fadeIntervalRef.current);
-
   fadeIntervalRef.current = setInterval(() => {
     step++;
     current += delta;
-    setPlayerVolumeSafe(current);
+    liveVolumeRef.current = current;
+    player.setVolume(Math.round(current));
 
     if (step >= steps) {
       clearInterval(fadeIntervalRef.current);
@@ -101,6 +104,7 @@ function fadeVolume(player, from, to, durationMs = 800) {
     }
   }, stepTime);
 }
+
 
 
 
@@ -507,6 +511,18 @@ utterance.onstart = () => {
     hasStartedSpeakingRef.current = true; // 🔥 REQUIRED
     lastSpokenRef.current = text;
       activeSubtitleKeyRef.current = subtitleKey; // 🔒 LOCK
+
+      // 🦆 DUCK video volume for speech
+  clearInterval(fadeIntervalRef.current);
+  clearTimeout(fadeTimeoutRef.current);
+
+  fadeVolume(
+    playerRef.current,
+    liveVolumeRef.current,
+    10,          // duck target
+    400          // fast duck
+  );
+  
       if (fadeIntervalRef.current) {
   clearInterval(fadeIntervalRef.current);
   fadeIntervalRef.current = null;
@@ -549,42 +565,20 @@ utterance.onend = () => {
   const actualDuration = (speechEnd - speechStart) / 1000;
 
   const remaining = duration - actualDuration;
+  const originalVol = baseVolumeRef.current;
 
   // 🔕 ignore tiny gaps
   if (remaining < 2) return;
 
   // 🕒 grace pause
   pendingGapEffectRef.current = setTimeout(() => {
-    pendingGapEffectRef.current = null;
+    // 🔊 fade UP
+    fadeVolume(playerRef.current, liveVolumeRef.current, originalVol, 700);
 
-    if (!playerRef.current) return;
-
-    const now = playerRef.current.getCurrentTime?.() ?? currentTime;
-
-    const stillHere = subtitles.find(
-      s => now >= s.startSeconds && now < s.endSeconds
-    );
-    if (!stillHere) return;
-
-    const stillKey = `${stillHere.startSeconds}-${stillHere.endSeconds}`;
-    if (stillKey !== endedSubtitleKey) return;
-
-    // 🔊 VOLUME FADE IN
-   const originalVol = baseVolumeRef.current;
-
-
-    fadeVolume(playerRef.current, originalVol, 80, 700);
-    const fadeOutDelay = Math.max(
-      200,
-      Math.min(remaining * 1000 - 800, 1200)
-    );
-
-    // 🔕 FADE OUT before next subtitle
+    // 🔉 fade DOWN before next subtitle
     fadeTimeoutRef.current = setTimeout(() => {
-      fadeTimeoutRef.current = null;
-      fadeVolume(playerRef.current, 80, originalVol, 700);
-    }, fadeOutDelay);
-
+      fadeVolume(playerRef.current, originalVol, 10, 700);
+    }, Math.min(1200, remaining * 1000 - 800));
 
   }, 1500);
 
@@ -703,23 +697,26 @@ if (synth.speaking || synth.pending) {
  
 
 const handleVolumeChange = (e) => {
-  const newVol = Number(e.target.value);
-  setVolume(newVol);
-  setPlayerVolumeSafe(newVol);
+  const v = Number(e.target.value);
+  baseVolumeRef.current = v;
+  setVolume(v);
+  setPlayerVolumeSafe(v); // immediate
 };
 
 
 
 
- const toggleSpeaking = () => {
+
+const toggleSpeaking = () => {
   setIsSpeaking(prev => {
     if (!prev) {
-      setVolume(10);
-      setPlayerVolumeSafe(10);
+      baseVolumeRef.current = volume; // remember
+      setPlayerVolumeSafe(10);        // duck
     }
     return !prev;
   });
 };
+
 
 
 
