@@ -224,6 +224,11 @@ function getSmoothedAdjustedRate(wps, rawRate, margin) {
 // --------------------
 
 
+function resolveVoiceByURI(uri) {
+  if (!uri) return null;
+  const voices = window.speechSynthesis.getVoices();
+  return voices.find(v => v.voiceURI === uri) || null;
+}
 
 
 function computeAdjustedPlaybackRate({
@@ -525,13 +530,18 @@ utterance.onend = () => {
 };
     
 
-    if (shouldTranslate) {
-      utterance.lang = userLang;
-      utterance.voice = null;
-    } else {
-      utterance.lang = lang || 'en-US';
-utterance.voice = voice || null;
-    }
+   const testedVoiceURI = localStorage.getItem(effectiveLang);
+const testedVoice = resolveVoiceByURI(testedVoiceURI);
+
+utterance.lang = shouldTranslate ? userLang : (lang || 'en-US');
+
+if (testedVoice) {
+  utterance.voice = testedVoice;
+} else {
+  console.warn("⚠️ Tested voice not found, fallback in use");
+  utterance.voice = voice || null;
+}
+
 
     const synth = window.speechSynthesis;
 
