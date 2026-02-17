@@ -29,6 +29,7 @@ export function useSpeechSync({
   const fadeIntervalRef = useRef(null);
 const fadeTimeoutRef = useRef(null);
 const isFadingRef = useRef(false);
+const didInitVolumeRef = useRef(false);
 
 
 
@@ -727,7 +728,17 @@ if (synth.speaking || synth.pending) {
 
 
   const toggleSpeaking = () => {
-  setIsSpeaking(prev => !prev);
+  setIsSpeaking(prev => {
+    const next = !prev;
+
+    // 🔑 only once, when turning ON for the first time
+    if (next && !didInitVolumeRef.current) {
+      setVolume(10);
+      didInitVolumeRef.current = true;
+    }
+
+    return next;
+  });
 };
 
 
@@ -737,6 +748,7 @@ if (synth.speaking || synth.pending) {
     hasStartedSpeakingRef.current = false;
     lastSpokenRef.current = '';
     setVolume(100);
+    didInitVolumeRef.current = false; // 🔄 allow fresh start next time
     if (playerRef.current?.setVolume) {
       playerRef.current.setVolume(100);
     }
