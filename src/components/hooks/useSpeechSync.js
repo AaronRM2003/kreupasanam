@@ -25,6 +25,11 @@ export function useSpeechSync({
   const activeSubtitleKeyRef = useRef(null);
   const lastVideoTimeRef = useRef(0);
   const carryOverDebtRef = useRef(0);
+  const pendingGapEffectRef = useRef(null);
+  const fadeIntervalRef = useRef(null);
+const fadeTimeoutRef = useRef(null);
+
+
 
 
 
@@ -61,6 +66,33 @@ function normalizeTextForCompare(t) {
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
+function fadeVolume(player, from, to, durationMs = 800) {
+  if (!player?.setVolume) return;
+
+  if (fadeIntervalRef.current) {
+    clearInterval(fadeIntervalRef.current);
+    fadeIntervalRef.current = null;
+  }
+
+  const steps = 12;
+  const stepTime = durationMs / steps;
+  const delta = (to - from) / steps;
+
+  let current = from;
+  let step = 0;
+
+  fadeIntervalRef.current = setInterval(() => {
+    step++;
+    current += delta;
+    player.setVolume(Math.max(0, Math.min(100, current)));
+
+    if (step >= steps) {
+      clearInterval(fadeIntervalRef.current);
+      fadeIntervalRef.current = null;
+    }
+  }, stepTime);
+}
+
 
 async function waitForTranslatedDomTextStable(
   original,
@@ -117,6 +149,15 @@ useEffect(() => {
   // 🔥 seek detection: forward OR backward
   if (Math.abs(delta) > 0.8) {
     window.speechSynthesis.cancel();
+    if (fadeIntervalRef.current) {
+      clearInterval(fadeIntervalRef.current);
+      fadeIntervalRef.current = null;
+    }
+    if (fadeTimeoutRef.current) {
+      clearTimeout(fadeTimeoutRef.current);
+      fadeTimeoutRef.current = null;
+    }
+
 
     // full reset
     activeSubtitleKeyRef.current = null;
@@ -444,6 +485,15 @@ utterance.onstart = () => {
     hasStartedSpeakingRef.current = true; // 🔥 REQUIRED
     lastSpokenRef.current = text;
       activeSubtitleKeyRef.current = subtitleKey; // 🔒 LOCK
+      if (fadeIntervalRef.current) {
+  clearInterval(fadeIntervalRef.current);
+  fadeIntervalRef.current = null;
+}
+if (fadeTimeoutRef.current) {
+  clearTimeout(fadeTimeoutRef.current);
+  fadeTimeoutRef.current = null;
+}
+
 
   if (!didInitialSyncRef.current && playerRef.current) {
     if (typeof playerRef.current.play === "function") {
@@ -472,10 +522,52 @@ utterance.onend = () => {
   if (wasCancelled) return;
   if (duration <= 3) return;
   activeSubtitleKeyRef.current = null; // 🔓 RELEASE
-
-
+  const endedSubtitleKey = subtitleKey;
   const speechEnd = performance.now();
   const actualDuration = (speechEnd - speechStart) / 1000;
+
+  const remaining = duration - actualDuration;
+
+  // 🔕 ignore tiny gaps
+  if (remaining < 2) return;
+
+  // 🕒 grace pause
+  pendingGapEffectRef.current = setTimeout(() => {
+    pendingGapEffectRef.current = null;
+
+    if (!playerRef.current) return;
+
+    const now = playerRef.current.getCurrentTime?.() ?? currentTime;
+
+    const stillHere = subtitles.find(
+      s => now >= s.startSeconds && now < s.endSeconds
+    );
+    if (!stillHere) return;
+
+    const stillKey = `${stillHere.startSeconds}-${stillHere.endSeconds}`;
+    if (stillKey !== endedSubtitleKey) return;
+
+    // 🔊 VOLUME FADE IN
+    const originalVol =
+  typeof playerRef.current.getVolume === "function"
+    ? playerRef.current.getVolume()
+    : volume;
+
+    fadeVolume(playerRef.current, originalVol, 80, 700);
+    const fadeOutDelay = Math.max(
+      200,
+      Math.min(remaining * 1000 - 800, 1200)
+    );
+
+    // 🔕 FADE OUT before next subtitle
+    fadeTimeoutRef.current = setTimeout(() => {
+      fadeTimeoutRef.current = null;
+      fadeVolume(playerRef.current, 80, originalVol, 700);
+    }, fadeOutDelay);
+
+
+  }, 1500);
+
 
   // --- guards (VERY important) ---
   if (translationDelay > duration * 0.4) return;
