@@ -522,7 +522,7 @@ utterance.onstart = () => {
     10,          // duck target
     400          // fast duck
   );
-  
+
       if (fadeIntervalRef.current) {
   clearInterval(fadeIntervalRef.current);
   fadeIntervalRef.current = null;
@@ -575,10 +575,7 @@ utterance.onend = () => {
     // 🔊 fade UP
     fadeVolume(playerRef.current, liveVolumeRef.current, originalVol, 700);
 
-    // 🔉 fade DOWN before next subtitle
-    fadeTimeoutRef.current = setTimeout(() => {
-      fadeVolume(playerRef.current, originalVol, 10, 700);
-    }, Math.min(1200, remaining * 1000 - 800));
+  
 
   }, 1500);
 
