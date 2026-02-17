@@ -31,6 +31,7 @@ const fadeTimeoutRef = useRef(null);
 const isFadingRef = useRef(false);
 const didInitVolumeRef = useRef(false);
 const baseVolumeRef = useRef(100);
+const liveVolumeRef = useRef(100); // actual player volume
 
 
 
@@ -70,15 +71,14 @@ function normalizeTextForCompare(t) {
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
+
+function setPlayerVolumeSafe(vol) {
+  liveVolumeRef.current = vol;
+  playerRef.current?.setVolume?.(vol);
+}
+
 function fadeVolume(player, from, to, durationMs = 800) {
-  if (!player?.setVolume) return;
-
   isFadingRef.current = true;
-
-  if (fadeIntervalRef.current) {
-    clearInterval(fadeIntervalRef.current);
-    fadeIntervalRef.current = null;
-  }
 
   const steps = 12;
   const stepTime = durationMs / steps;
@@ -87,18 +87,21 @@ function fadeVolume(player, from, to, durationMs = 800) {
   let current = from;
   let step = 0;
 
+  clearInterval(fadeIntervalRef.current);
+
   fadeIntervalRef.current = setInterval(() => {
     step++;
     current += delta;
-    player.setVolume(Math.max(0, Math.min(100, current)));
+    setPlayerVolumeSafe(current);
 
     if (step >= steps) {
       clearInterval(fadeIntervalRef.current);
       fadeIntervalRef.current = null;
-      isFadingRef.current = false; // ✅ release control
+      isFadingRef.current = false;
     }
   }, stepTime);
 }
+
 
 
 
@@ -204,21 +207,21 @@ useEffect(() => {
 
 
   // Sync volume once player is available
-useEffect(() => {
-  const interval = setInterval(() => {
-    const player = playerRef.current;
-    if (
-      player?.setVolume instanceof Function &&
-      !isFadingRef.current // ✅ IMPORTANT
-    ) {
-      player.setVolume(volume);
-      setPlayerReady(true);
-      clearInterval(interval);
-    }
-  }, 200);
+// useEffect(() => {
+//   const interval = setInterval(() => {
+//     const player = playerRef.current;
+//     if (
+//       player?.setVolume instanceof Function &&
+//       !isFadingRef.current // ✅ IMPORTANT
+//     ) {
+//       player.setVolume(volume);
+//       setPlayerReady(true);
+//       clearInterval(interval);
+//     }
+//   }, 200);
 
-  return () => clearInterval(interval);
-}, [volume, playerRef]);
+//   return () => clearInterval(interval);
+// }, [volume, playerRef]);
 
 
 useEffect(() => {
@@ -697,64 +700,41 @@ if (synth.speaking || synth.pending) {
 ]);
 
 
-  useEffect(() => {
-    if (!isSpeaking && playerRef.current) {
-      playerRef.current.setPlaybackRate?.(1);
-      playerRef.current.setVolume?.(100);
-      setVolume(100);
-    }
-  }, [isSpeaking, playerRef]);
+ 
 
- const handleVolumeChange = (e) => {
+const handleVolumeChange = (e) => {
   const newVol = Number(e.target.value);
-
-  baseVolumeRef.current = newVol; // 🔑 user intent
   setVolume(newVol);
-
-  // cancel any active fades
-  if (isFadingRef.current) {
-    isFadingRef.current = false;
-
-    if (fadeIntervalRef.current) {
-      clearInterval(fadeIntervalRef.current);
-      fadeIntervalRef.current = null;
-    }
-    if (fadeTimeoutRef.current) {
-      clearTimeout(fadeTimeoutRef.current);
-      fadeTimeoutRef.current = null;
-    }
-  }
+  setPlayerVolumeSafe(newVol);
 };
 
 
 
-  const toggleSpeaking = () => {
+
+ const toggleSpeaking = () => {
   setIsSpeaking(prev => {
-    const next = !prev;
-
-    // 🔑 only once, when turning ON for the first time
-    if (next && !didInitVolumeRef.current) {
+    if (!prev) {
       setVolume(10);
-        baseVolumeRef.current = 10; // 🔑 THIS WAS MISSING
-      didInitVolumeRef.current = true;
+      setPlayerVolumeSafe(10);
     }
-
-    return next;
+    return !prev;
   });
 };
 
 
+
   const stopSpeaking = () => {
-    setIsSpeaking(false);
-    window.speechSynthesis.cancel();
-    hasStartedSpeakingRef.current = false;
-    lastSpokenRef.current = '';
-    setVolume(100);
-    didInitVolumeRef.current = false; // 🔄 allow fresh start next time
-    if (playerRef.current?.setVolume) {
-      playerRef.current.setVolume(100);
-    }
-  };
+  setIsSpeaking(false);
+  window.speechSynthesis.cancel();
+
+  hasStartedSpeakingRef.current = false;
+  lastSpokenRef.current = '';
+
+  setVolume(100);
+  setPlayerVolumeSafe(100);
+
+  didInitVolumeRef.current = false;
+};
 
   
   return {
