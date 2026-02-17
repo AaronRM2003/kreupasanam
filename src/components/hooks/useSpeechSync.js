@@ -30,6 +30,7 @@ export function useSpeechSync({
 const fadeTimeoutRef = useRef(null);
 const isFadingRef = useRef(false);
 const didInitVolumeRef = useRef(false);
+const baseVolumeRef = useRef(100);
 
 
 
@@ -566,10 +567,8 @@ utterance.onend = () => {
     if (stillKey !== endedSubtitleKey) return;
 
     // 🔊 VOLUME FADE IN
-    const originalVol =
-  typeof playerRef.current.getVolume === "function"
-    ? playerRef.current.getVolume()
-    : volume;
+   const originalVol = baseVolumeRef.current;
+
 
     fadeVolume(playerRef.current, originalVol, 80, 700);
     const fadeOutDelay = Math.max(
@@ -706,10 +705,13 @@ if (synth.speaking || synth.pending) {
     }
   }, [isSpeaking, playerRef]);
 
-  const handleVolumeChange = (e) => {
+ const handleVolumeChange = (e) => {
   const newVol = Number(e.target.value);
 
-  // 🛑 user intent overrides system fade
+  baseVolumeRef.current = newVol; // 🔑 user intent
+  setVolume(newVol);
+
+  // cancel any active fades
   if (isFadingRef.current) {
     isFadingRef.current = false;
 
@@ -722,9 +724,8 @@ if (synth.speaking || synth.pending) {
       fadeTimeoutRef.current = null;
     }
   }
-
-  setVolume(newVol);
 };
+
 
 
   const toggleSpeaking = () => {
@@ -734,6 +735,7 @@ if (synth.speaking || synth.pending) {
     // 🔑 only once, when turning ON for the first time
     if (next && !didInitVolumeRef.current) {
       setVolume(10);
+        baseVolumeRef.current = 10; // 🔑 THIS WAS MISSING
       didInitVolumeRef.current = true;
     }
 
