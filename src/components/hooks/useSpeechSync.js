@@ -520,12 +520,20 @@ utterance.onend = () => {
   const learnedKey = `voice_learned_wps_${effectiveLang}`;
   let learnedData = {};
 
+  const samplesKey = `voice_learned_samples_${effectiveLang}`;
+
+  let samplesData = {};
+  try {
+    samplesData = JSON.parse(localStorage.getItem(samplesKey) || '{}');
+  } catch {}
+
+  const samples = samplesData[voiceURI] ?? 0;
+
   try {
     learnedData = JSON.parse(localStorage.getItem(learnedKey) || '{}');
   } catch {}
 
   const prev = learnedData[voiceURI]?.wps ?? baselineWps;
-  const samples = learnedData[voiceURI]?.samples ?? 0;
 
   // --------------------
   // Observe speech
@@ -561,9 +569,12 @@ updatedWps = Math.max(
   // --------------------
   learnedData[voiceURI] = {
     wps: parseFloat(updatedWps.toFixed(3)),
-    samples: samples + 1,
     lastUpdated: Date.now(),
   };
+
+  samplesData[voiceURI] = samples + 1;
+  localStorage.setItem(samplesKey, JSON.stringify(samplesData));
+
   console.log("📈 LEARN APPLY", {
   prev,
   observedWps,
@@ -571,9 +582,20 @@ updatedWps = Math.max(
   samplesBefore: samples,
 });
 
-  if (samples >= 2 && samples % 3 === 0) {
+  const shouldPersist = samples < 5 || samples % 3 === 0;
+
+  if (shouldPersist) {
     localStorage.setItem(learnedKey, JSON.stringify(learnedData));
   }
+    
+  console.log("📈 LEARN APPLY", {
+    prev,
+    observedWps,
+    updatedWps,
+    samplesBefore: samples,
+    persisted: shouldPersist,
+  });
+
 };
 
     
