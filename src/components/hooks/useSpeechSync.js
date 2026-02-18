@@ -552,8 +552,10 @@ utterance.onend = () => {
     updatedWps *= 0.96;
   }
 
-  updatedWps = Math.max(1.2, Math.min(5.0, updatedWps));
-
+updatedWps = Math.max(
+  40,    // lower bound
+  Math.min(140, updatedWps)
+);
   // --------------------
   // Save
   // --------------------
