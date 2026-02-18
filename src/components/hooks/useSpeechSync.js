@@ -562,6 +562,12 @@ utterance.onend = () => {
     samples: samples + 1,
     lastUpdated: Date.now(),
   };
+  console.log("📈 LEARN APPLY", {
+  prev,
+  observedWps,
+  updatedWps,
+  samplesBefore: samples,
+});
 
   if (samples >= 2 && samples % 3 === 0) {
     localStorage.setItem(learnedKey, JSON.stringify(learnedData));
