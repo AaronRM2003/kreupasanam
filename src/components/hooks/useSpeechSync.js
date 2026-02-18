@@ -365,7 +365,7 @@ if (
     // --------------------
     // Speech units
     // --------------------
-    let baselineWps = 2;
+    let baselineWps = 80;
 
     // --------------------
     // Load baseline WPS
@@ -575,12 +575,6 @@ updatedWps = Math.max(
   samplesData[voiceURI] = samples + 1;
   localStorage.setItem(samplesKey, JSON.stringify(samplesData));
 
-  console.log("📈 LEARN APPLY", {
-  prev,
-  observedWps,
-  updatedWps,
-  samplesBefore: samples,
-});
 
   const shouldPersist = samples < 5 || samples % 3 === 0;
 
