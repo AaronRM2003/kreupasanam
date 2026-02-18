@@ -230,6 +230,12 @@ function resolveVoiceByURI(uri) {
   return voices.find(v => v.voiceURI === uri) || null;
 }
 
+function getAdaptiveAlpha(samples) {
+  if (samples < 3) return 0.35;   // 🔥 converge fast
+  if (samples < 10) return 0.2;
+  if (samples < 25) return 0.12;
+  return 0.06;                   // 🎯 fine tuning
+}
 
 function computeAdjustedPlaybackRate({
   baselineWps,
@@ -445,10 +451,22 @@ if (
 const utterance = new SpeechSynthesisUtterance(text);
 let wasCancelled = false;
 utterance.onstart = () => {
-  console.log("TTS START:", text, duration);
+  
     hasStartedSpeakingRef.current = true; // 🔥 REQUIRED
     lastSpokenRef.current = text;
       activeSubtitleKeyRef.current = subtitleKey; // 🔒 LOCK
+
+      console.log("🗣️ TTS START", {
+    text,
+    duration,
+    effectiveLang,
+    voice: utterance.voice?.name || "browser-default",
+    voiceURI: utterance.voice?.voiceURI || "none",
+    baselineWpsUsed: baselineWps,
+    unitCount,
+    computedRate: lastAdjustedRateRef.current,
+    carryOverDebt: carryOverDebtRef.current.toFixed(3),
+  });
 
   if (!didInitialSyncRef.current && playerRef.current) {
     if (typeof playerRef.current.play === "function") {
@@ -476,28 +494,29 @@ const speechStart = performance.now();
 utterance.onend = () => {
   if (wasCancelled) return;
   if (duration <= 3) return;
-  activeSubtitleKeyRef.current = null; // 🔓 RELEASE
 
+  activeSubtitleKeyRef.current = null; // 🔓 RELEASE
 
   const speechEnd = performance.now();
   const actualDuration = (speechEnd - speechStart) / 1000;
 
-  // --- guards (VERY important) ---
+  // --- guards ---
   if (translationDelay > duration * 0.4) return;
   if (!actualDuration || actualDuration < 0.5) return;
   if (unitCount < 2) return;
+
   const overrun = actualDuration - duration;
 
   if (overrun > 0.12 && duration > 3) {
     carryOverDebtRef.current = Math.min(
-      0.6, // 🔒 hard cap
+      0.6,
       carryOverDebtRef.current + overrun
     );
   }
 
-
-  const observedWps = unitCount / actualDuration;
-
+  // --------------------
+  // Load learned state FIRST
+  // --------------------
   const learnedKey = `voice_learned_wps_${effectiveLang}`;
   let learnedData = {};
 
@@ -508,26 +527,47 @@ utterance.onend = () => {
   const prev = learnedData[voiceURI]?.wps ?? baselineWps;
   const samples = learnedData[voiceURI]?.samples ?? 0;
 
-  // 🔑 slow learning (10%)
-  const alpha = 0.1;
-  const updatedWps = Math.max(
-  1.2,
-  Math.min(5.0, prev * (1 - alpha) + observedWps * alpha)
-);
+  // --------------------
+  // Observe speech
+  // --------------------
+  const observedWps = unitCount / actualDuration;
+  const ratio = observedWps / prev;
 
+  // Reject anomalies
+  if (ratio < 0.6 || ratio > 1.6) return;
 
+  // Weight long samples more
+  const durationWeight = Math.min(1.0, actualDuration / 6);
+  const weightedObserved =
+    prev * (1 - durationWeight) + observedWps * durationWeight;
+
+  // Adaptive learning rate
+  const alpha = getAdaptiveAlpha(samples);
+
+  let updatedWps =
+    prev * (1 - alpha) + weightedObserved * alpha;
+
+  // Penalize persistent overruns
+  if (carryOverDebtRef.current > 0.25) {
+    updatedWps *= 0.96;
+  }
+
+  updatedWps = Math.max(1.2, Math.min(5.0, updatedWps));
+
+  // --------------------
+  // Save
+  // --------------------
   learnedData[voiceURI] = {
     wps: parseFloat(updatedWps.toFixed(3)),
     samples: samples + 1,
     lastUpdated: Date.now(),
   };
 
-  // ✅ persist only after a few good samples
-  if (samples >= 3 && samples % 5 === 0) {
-  localStorage.setItem(learnedKey, JSON.stringify(learnedData));
-}
-
+  if (samples >= 2 && samples % 3 === 0) {
+    localStorage.setItem(learnedKey, JSON.stringify(learnedData));
+  }
 };
+
     
 
    const testedVoiceURI = localStorage.getItem(effectiveLang);
