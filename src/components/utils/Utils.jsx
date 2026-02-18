@@ -380,89 +380,78 @@ function estimateIndicUnits(text) {
 export function speechUnits(text, lang) {
   if (!text) return 0;
 
-  // ---- CJK languages (character-timed) ----
-  // Japanese, Korean (Chinese handled similarly if added later)
- if (lang === "ja" || lang === "ko" || lang === "zh") {
-    let units = text.length * 0.9;
+  const baseLang = (lang || "en").split("-")[0];
+  let units = 0;
 
-    const commaCount = (text.match(/[、，,]/g) || []).length;
-    units += commaCount * 0.4;
+  // -------------------------
+  // Character-timed languages
+  // -------------------------
+  if (["ja", "zh"].includes(baseLang)) {
+    // Mora / character rhythm
+    units += text.replace(/\s+/g, "").length * 0.95;
 
+    units += (text.match(/[、，,]/g) || []).length * 0.4;
+    units += (text.match(/[。]/g) || []).length * 0.8;
     return units;
   }
 
-  let units = 0;
+  if (baseLang === "ko") {
+    // Hangul blocks ≈ syllables
+    units += text.replace(/\s+/g, "").length * 0.75;
+    units += (text.match(/[,.]/g) || []).length * 0.4;
+    return units;
+  }
 
-  const numberWords = new Set([
-    "one","two","three","four","five","six","seven","eight","nine","ten",
-    "first","second","third","fourth","fifth","sixth","seventh","eighth","ninth","tenth"
-  ]);
+  // -------------------------
+  // Word / syllable languages
+  // -------------------------
+  const words = text.split(/\s+/);
 
-  // ---- Word-based languages ----
-  text.split(/\s+/).forEach(word => {
+  for (const word of words) {
     let u = 1;
+
     const lower = word.toLowerCase();
 
-    // digits
+    // Digits slow speech everywhere
     if (/\d/.test(word)) u += 0.6;
 
-    // English number words
-    if (numberWords.has(lower)) u += 0.6;
-
-    // tens (English / French / Spanish)
-    if (/(twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety)/.test(lower)) {
-      u += 0.8;
+    // -------------------------
+    // Syllable approximation
+    // -------------------------
+    if (["en", "fr", "es", "de", "it", "pt"].includes(baseLang)) {
+      // Count vowel groups ≈ syllables
+      const syllables =
+        lower.match(/[aeiouyàâäéèêëïîôöùûü]/g)?.length || 1;
+      u += Math.max(0, syllables - 1) * 0.6;
     }
 
-    // large number words
-    if (/(hundred|thousand|million)/.test(lower)) {
-      u += 1.0;
+    if (["hi", "mr", "bn", "ta", "kn", "te", "ml"].includes(baseLang)) {
+      // Indian languages: vowel signs + inherent vowels
+      const vowelBeats =
+        word.match(/[अआइईउऊएऐओऔािीुूेैोौ]/g)?.length || 1;
+      u += vowelBeats * 0.9;
+
+      // consonant clusters add effort
+      if (word.length >= 6) u += 0.4;
     }
 
-    // long words (Indian & Romance languages benefit a lot from this)
-    if (word.length >= 8) u += 0.3;
-    if (word.length >= 12) u += 0.5;
-
-    // proper names
-    if (/^[A-Z][a-z]+/.test(word)) u += 0.15;
-
-    // ---- Indian language tweaks ----
-    if (lang === "hi" || lang === "mr" || lang === "bn") {
-      // syllable-timed, numbers are slower
-      if (/\d/.test(word)) u += 0.2;
-      if (numberWords.has(lower)) u += 0.2;
-    }
-
-    if (lang === "kn" || lang === "te") {
-      // agglutinative / compound-heavy
-      if (word.length >= 8) u += 0.2;
-      if (word.length >= 12) u += 0.3;
-    }
-  
-
-    // ---- Romance languages ----
-    if (lang === "fr" || lang === "es") {
-      // smoother but number words are long
-      if (/(vingt|trente|quarante|cinquante|soixante|soixante-dix|quatre-vingt|quatre-vingt-dix)/.test(lower)) {
-        u += 0.7;
-      }
-      if (/(treinta|cuarenta|cincuenta|sesenta|setenta|ochenta|noventa)/.test(lower)) {
-        u += 0.7;
-      }
+    // Germanic compound penalty
+    if (baseLang === "de" && word.length >= 10) {
+      u += 0.6;
     }
 
     units += u;
-  });
+  }
 
-  // ---- Punctuation pauses ----
-  const commaCount = (text.match(/,/g) || []).length;
-  units += commaCount * 0.4;
+  // -------------------------
+  // Pause & rhythm penalties
+  // -------------------------
+  units += (text.match(/,/g) || []).length * 0.4;
+  units += (text.match(/:/g) || []).length * 0.5;
+  units += (text.match(/[—–-]/g) || []).length * 0.3;
 
-  const colonCount = (text.match(/:/g) || []).length;
-  units += colonCount * 0.5;
-
-  const dashCount = (text.match(/[—–-]/g) || []).length;
-  units += dashCount * 0.3;
+  // Indian danda pause
+  units += (text.match(/।/g) || []).length * 0.9;
 
   return units;
 }
