@@ -381,67 +381,80 @@ export function speechUnits(text, lang) {
   if (!text) return 0;
 
   const baseLang = (lang || "en").split("-")[0];
+
+  // -------------------------------------------------
+  // Normalize punctuation that breaks tokenization
+  // -------------------------------------------------
+  text = text.replace(/[“”"]/g, " ");
+  text = text.replace(/[—–]/g, " - ");
+
   let units = 0;
 
-  // -------------------------
-  // Character-timed languages
-  // -------------------------
+  // -------------------------------------------------
+  // Character-timed languages (CJK)
+  // -------------------------------------------------
   if (["ja", "zh"].includes(baseLang)) {
-    // Mora / character rhythm
     units += text.replace(/\s+/g, "").length * 0.95;
-
     units += (text.match(/[、，,]/g) || []).length * 0.4;
     units += (text.match(/[。]/g) || []).length * 0.8;
     return units;
   }
 
   if (baseLang === "ko") {
-    // Hangul blocks ≈ syllables
     units += text.replace(/\s+/g, "").length * 0.75;
     units += (text.match(/[,.]/g) || []).length * 0.4;
     return units;
   }
 
-  // -------------------------
+  // -------------------------------------------------
   // Word / syllable languages
-  // -------------------------
+  // -------------------------------------------------
   const words = text.split(/\s+/);
 
   for (const word of words) {
-    let u = 1;
-
     const lower = word.toLowerCase();
 
-    // Digits slow speech everywhere
+    // ---------------------------------------------
+    // Indian languages (syllable-timed)
+    // ---------------------------------------------
+    if (["hi", "mr", "bn", "ta", "kn", "te", "ml"].includes(baseLang)) {
+      // Written vowel signs (extra syllables)
+      const vowelSigns =
+        word.match(/[ािीुूेैोौ]/g)?.length || 0;
+
+      // Independent vowels
+      const independentVowels =
+        word.match(/[अआइईउऊएऐओऔ]/g)?.length || 0;
+
+      // Every word has at least one inherent vowel
+      const syllables = 1 + vowelSigns + independentVowels;
+
+      let u = syllables * 1.25;
+
+      // Consonant clusters / heavy words
+      if (word.length >= 6) u += 0.4;
+      if (word.length >= 10) u += 0.6;
+
+      units += u;
+      continue;
+    }
+
+    // ---------------------------------------------
+    // Word-timed languages (English / Romance / etc.)
+    // ---------------------------------------------
+    let u = 1;
+
+    // Numbers slow speech everywhere
     if (/\d/.test(word)) u += 0.6;
 
-    // -------------------------
-    // Syllable approximation
-    // -------------------------
+    // Approximate syllables via vowels
     if (["en", "fr", "es", "de", "it", "pt"].includes(baseLang)) {
-      // Count vowel groups ≈ syllables
       const syllables =
         lower.match(/[aeiouyàâäéèêëïîôöùûü]/g)?.length || 1;
       u += Math.max(0, syllables - 1) * 0.6;
     }
 
-    if (["hi", "mr", "bn", "ta", "kn", "te", "ml"].includes(baseLang)) {
-  // syllable-timed → syllables ARE the unit
-  const vowelBeats =
-    word.match(/[अआइईउऊएऐओऔािीुूेैोौ]/g)?.length || 1;
-
-  let u = vowelBeats * 1.2;
-
-  // consonant clusters / emphasis
-  if (word.length >= 6) u += 0.4;
-  if (word.length >= 10) u += 0.6;
-
-  units += u;
-  continue; // 🔴 skip word-based logic
-}
-
-
-    // Germanic compound penalty
+    // German compound penalty
     if (baseLang === "de" && word.length >= 10) {
       u += 0.6;
     }
@@ -449,15 +462,14 @@ export function speechUnits(text, lang) {
     units += u;
   }
 
-  // -------------------------
-  // Pause & rhythm penalties
-  // -------------------------
+  // -------------------------------------------------
+  // Pause & rhythm penalties (COUNT ONCE)
+  // -------------------------------------------------
+  units += (text.match(/।/g) || []).length * 1.3;   // danda
   units += (text.match(/,/g) || []).length * 0.4;
   units += (text.match(/:/g) || []).length * 0.5;
-  units += (text.match(/[—–-]/g) || []).length * 0.3;
-
-  // Indian danda pause
-  units += (text.match(/।/g) || []).length * 0.9;
+  units += (text.match(/[—-]/g) || []).length * 0.5;
+  units += (text.match(/[“”"]/g) || []).length * 0.6;
 
   return units;
 }
