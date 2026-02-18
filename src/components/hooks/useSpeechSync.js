@@ -434,7 +434,7 @@ if (
       if (["ja","ko","zh"].includes(baseLang)) {
         maxRate = 1.1;
       }
-      let minRate = 0.75;
+      let minRate = 0.70;
       if (isShort) minRate = 0.85;
       if (duration <= 2) minRate = 0.9;
       if (duration <= 1.5) minRate = 0.95;
