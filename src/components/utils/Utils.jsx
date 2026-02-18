@@ -426,14 +426,20 @@ export function speechUnits(text, lang) {
     }
 
     if (["hi", "mr", "bn", "ta", "kn", "te", "ml"].includes(baseLang)) {
-      // Indian languages: vowel signs + inherent vowels
-      const vowelBeats =
-        word.match(/[अआइईउऊएऐओऔािीुूेैोौ]/g)?.length || 1;
-      u += vowelBeats * 0.9;
+  // syllable-timed → syllables ARE the unit
+  const vowelBeats =
+    word.match(/[अआइईउऊएऐओऔािीुूेैोौ]/g)?.length || 1;
 
-      // consonant clusters add effort
-      if (word.length >= 6) u += 0.4;
-    }
+  let u = vowelBeats * 1.2;
+
+  // consonant clusters / emphasis
+  if (word.length >= 6) u += 0.4;
+  if (word.length >= 10) u += 0.6;
+
+  units += u;
+  continue; // 🔴 skip word-based logic
+}
+
 
     // Germanic compound penalty
     if (baseLang === "de" && word.length >= 10) {
