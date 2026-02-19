@@ -551,7 +551,7 @@ function isLangAcceptedExactly(langTag) {
     // apply the computed rate if present (clamp within your normal min/max)
     if (typeof intentionalAppliedRate !== 'undefined') {
       try {
-        utterance.rate = Math.max(0.65, Math.min(1.0, intentionalAppliedRate));
+        utterance.rate = Math.max(0.60, Math.min(1.0, intentionalAppliedRate));
       } catch (e) {
         // ignore if browser doesn't allow rate change
       }
