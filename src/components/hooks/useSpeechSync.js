@@ -12,9 +12,10 @@ export function useSpeechSync({
   currentSubtitle,
   currentTime,
   lang,
-  isBrowserTranslateOn=false,
+  isBrowserTranslateOn = false,
   userLang = null,
 }) {
+  // --- state + refs ---
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [volume, setVolume] = useState(100);
   const hasStartedSpeakingRef = useRef(false);
@@ -25,36 +26,38 @@ export function useSpeechSync({
   const lastVideoTimeRef = useRef(0);
   const carryOverDebtRef = useRef(0);
 
-  // --- NEW refs for fade logic ---
+  // --- fade related refs ---
   const fadeRafRef = useRef(null);
-  const fadeTimeoutRef = useRef(null);
-  const scheduledDownTimeoutRef = useRef(null);
+  const fadeUpTimeoutRef = useRef(null);
+  const fadeDownTimeoutRef = useRef(null);
   const lastUserAdjustAtRef = useRef(0);
-  const userManualOverrideRef = useRef(false); // true if user moved slider recently
-  const fadeStateRef = useRef({}); // store currently active fade details
+  const userManualOverrideRef = useRef(false);
+
+  // --- constants for fade/timing (tweakable) ---
+  const WAIT_AFTER_END = 2.0; // seconds to wait after speech end before fading up
+  const FADE_UP_TIME = 0.8; // seconds to fade up
+  const FADE_DOWN_TIME = 0.8; // seconds to fade down
+  const MANUAL_OVERRIDE_GRACE_MS = 1500; // if user moved slider within this window, block auto fades
 
   const acceptedUserLang =
-    lang === "en" &&
-    isBrowserTranslateOn &&
-    userLang &&
-    !!localStorage.getItem(userLang);  // exact only
+    lang === 'en' && isBrowserTranslateOn && userLang && !!localStorage.getItem(userLang);
 
   const effectiveLang = acceptedUserLang ? userLang : lang;
-  const baseLang = (effectiveLang || "en").split("-")[0];
+  const baseLang = (effectiveLang || 'en').split('-')[0];
 
   const isSSMLSupported = useSSMLSupportTest();
 
   function normalizeTextForCompare(t) {
-    return (t || "")
-      .replace(/\s+/g, " ")
-      .replace(/\u00A0/g, " ") // nbsp
+    return (t || '')
+      .replace(/\s+/g, ' ')
+      .replace(/\u00A0/g, ' ')
       .trim()
       .toLowerCase();
   }
-  const translatedDomRef = useRef("");
+  const translatedDomRef = useRef('');
   function readSubtitleDom() {
-    const el = document.getElementById("subtitle-dom");
-    return (el?.innerText || el?.textContent || "").trim();
+    const el = document.getElementById('subtitle-dom');
+    return (el?.innerText || el?.textContent || '').trim();
   }
 
   function sleep(ms) {
@@ -63,16 +66,12 @@ export function useSpeechSync({
 
   async function waitForTranslatedDomTextStable(
     original,
-    {
-      maxWaitMs = 2000,
-      stableMs = 80,
-      minDiffChars = 2,
-    } = {}
+    { maxWaitMs = 2000, stableMs = 80, minDiffChars = 2 } = {}
   ) {
     const start = performance.now();
     const normOriginal = normalizeTextForCompare(original);
 
-    let lastDom = "";
+    let lastDom = '';
     let lastChangeAt = performance.now();
 
     while (performance.now() - start < maxWaitMs) {
@@ -109,8 +108,8 @@ export function useSpeechSync({
     const now = currentTime;
     const delta = now - last;
 
+    // seek detection
     if (Math.abs(delta) > 0.8) {
-      // big seek - cancel everything
       window.speechSynthesis.cancel();
 
       activeSubtitleKeyRef.current = null;
@@ -121,20 +120,21 @@ export function useSpeechSync({
       carryOverDebtRef.current = 0;
 
       // cancel fades
-      cancelAutoFade();
+      cancelAutoFades();
     }
+
     lastVideoTimeRef.current = now;
   }, [currentTime]);
 
   useEffect(() => {
     if (!isBrowserTranslateOn) return;
 
-    const wrapper = document.getElementById("subtitle-wrapper");
+    const wrapper = document.getElementById('subtitle-wrapper');
     if (!wrapper) return;
 
     const update = () => {
-      const el = document.getElementById("subtitle-dom");
-      translatedDomRef.current = (el?.innerText || el?.textContent || "").trim();
+      const el = document.getElementById('subtitle-dom');
+      translatedDomRef.current = (el?.innerText || el?.textContent || '').trim();
     };
 
     update();
@@ -145,7 +145,7 @@ export function useSpeechSync({
     return () => obs.disconnect();
   }, [isBrowserTranslateOn]);
 
-  // Sync volume once player is available
+  // Sync player volume once available
   useEffect(() => {
     const interval = setInterval(() => {
       const player = playerRef.current;
@@ -173,8 +173,9 @@ export function useSpeechSync({
       }
       hasStartedSpeakingRef.current = false;
       lastSpokenRef.current = '';
-      // Stop fades
-      cancelAutoFade();
+
+      // stop fades when speech stops or video hidden
+      cancelAutoFades();
     }
   }, [isSpeaking, showVideo]);
 
@@ -207,185 +208,86 @@ export function useSpeechSync({
   }
 
   // --------------------
-  // Volume fade helpers (NEW)
+  // Fade helpers
   // --------------------
-  function cancelAutoFade() {
+  function cancelAutoFades() {
     if (fadeRafRef.current) {
       cancelAnimationFrame(fadeRafRef.current);
       fadeRafRef.current = null;
     }
-    if (fadeTimeoutRef.current) {
-      clearTimeout(fadeTimeoutRef.current);
-      fadeTimeoutRef.current = null;
+    if (fadeUpTimeoutRef.current) {
+      clearTimeout(fadeUpTimeoutRef.current);
+      fadeUpTimeoutRef.current = null;
     }
-    if (scheduledDownTimeoutRef.current) {
-      clearTimeout(scheduledDownTimeoutRef.current);
-      scheduledDownTimeoutRef.current = null;
+    if (fadeDownTimeoutRef.current) {
+      clearTimeout(fadeDownTimeoutRef.current);
+      fadeDownTimeoutRef.current = null;
     }
-    fadeStateRef.current = {};
   }
 
-  // linear fade using requestAnimationFrame
-  function fadeVolume({ from, to, duration = 800, onTick = null, onComplete = null }) {
-    cancelAutoFade();
+  function fadeVolumeLinear({ from, to, durationMs = 800, onComplete = null }) {
+    // Cancel any running fade
+    if (fadeRafRef.current) {
+      cancelAnimationFrame(fadeRafRef.current);
+      fadeRafRef.current = null;
+    }
+
     const start = performance.now();
-    fadeStateRef.current = { from, to, duration, start };
+    const startVol = Math.round(from);
+    const endVol = Math.round(to);
+    const diff = endVol - startVol;
 
     function step(now) {
-      const t = Math.min(1, (now - start) / duration);
-      const next = Math.round(from + (to - from) * t);
-      // Only apply if user didn't recently override:
+      const t = Math.min(1, (now - start) / durationMs);
+      const nextVol = Math.round(startVol + diff * t);
+
+      // honor recent manual override
       const sinceManual = performance.now() - (lastUserAdjustAtRef.current || 0);
-      const manualOverrideActive = userManualOverrideRef.current && sinceManual < 2000; // 2s grace
-      if (!manualOverrideActive) {
-        setVolume((prev) => {
-          // avoid redundant setState if same
-          if (prev === next) return prev;
-          if (playerRef.current?.setVolume) playerRef.current.setVolume(next);
-          return next;
-        });
-      } else {
-        // If user override is active, cancel fades
-        cancelAutoFade();
-        if (onComplete) onComplete(false);
+      if (userManualOverrideRef.current && sinceManual < MANUAL_OVERRIDE_GRACE_MS) {
+        // cancel fade if user intervened recently
+        cancelAutoFades();
+        if (typeof onComplete === 'function') onComplete(false);
         return;
       }
 
-      if (onTick) onTick(next);
+      setVolume((prev) => {
+        if (prev === nextVol) return prev;
+        if (playerRef.current?.setVolume) playerRef.current.setVolume(nextVol);
+        return nextVol;
+      });
 
       if (t < 1) {
         fadeRafRef.current = requestAnimationFrame(step);
       } else {
         fadeRafRef.current = null;
-        fadeStateRef.current = {};
-        if (onComplete) onComplete(true);
+        if (typeof onComplete === 'function') onComplete(true);
       }
     }
+
     fadeRafRef.current = requestAnimationFrame(step);
   }
 
-  // Schedule an automatic fade up after speech end, then schedule ramp down before next subtitle
-  function scheduleAutoFadeAfterSpeech({ currentSub, currentTimeSec }) {
-    cancelAutoFade();
-
-    // don't run if user manual override was set very recently
-    const sinceManual = performance.now() - (lastUserAdjustAtRef.current || 0);
-    if (userManualOverrideRef.current && sinceManual < 1500) {
-      // user just adjusted — skip automatic fades this time
-      return;
-    }
-
-    // compute next subtitle start (if any)
-    const idx = subtitles.findIndex(s => s.startSeconds === currentSub.startSeconds && s.endSeconds === currentSub.endSeconds);
-    const nextSub = (idx >= 0 && idx + 1 < subtitles.length) ? subtitles[idx + 1] : null;
-
-    const nowVideo = currentTimeSec; // seconds
-    const timeUntilNextMs = nextSub ? Math.max(0, (nextSub.startSeconds - nowVideo) * 1000) : 6000;
-
-    // Fade up start: 2s after speech end
-    const fadeUpDelay = 2000;
-    let fadeUpStartDelay = fadeUpDelay;
-
-    // If next subtitle is very soon, compress the fade up duration so we don't overshoot
-    let fadeUpDuration = 800; // ms default
-    // We'll plan to start ramp-down 800ms before next subtitle
-    const downLeadMs = 800;
-    let rampDownStartIn = Math.max(0, timeUntilNextMs - downLeadMs);
-
-    // If rampDownStartIn <= fadeUpDelay, there's not enough room. Compress fade up duration
-    if (rampDownStartIn <= fadeUpDelay) {
-      // make fadeUp start immediately, compress duration to finish before ramp down
-      fadeUpStartDelay = 200; // start almost immediately after end
-      fadeUpDuration = Math.max(100, Math.min(600, Math.floor(Math.max(50, rampDownStartIn - 100))));
-      // if still tiny, we'll just do a brief pop and then immediate ramp down
-    }
-
-    // determine volumes:
-    const currentVol = volume;
-    // automated max: if user never moved, use 100; if user moved, respect their chosen level as maximum
-    const userPrefVol = (lastUserAdjustAtRef.current ? currentVol : null);
-    const autoMaxVol = userPrefVol != null ? Math.max(currentVol, userPrefVol) : 100;
-    const targetUpVol = Math.min(100, Math.max(currentVol, autoMaxVol));
-
-    // target down is 10 (but only if user hasn't recently overridden)
-    const targetDownVol = 10;
-
-    // schedule fade up
-    fadeTimeoutRef.current = setTimeout(() => {
-      // double-check not overridden recently
-      const sinceManualInner = performance.now() - (lastUserAdjustAtRef.current || 0);
-      if (userManualOverrideRef.current && sinceManualInner < 1500) {
-        cancelAutoFade();
-        return;
-      }
-
-      fadeVolume({
-        from: (typeof volume === 'number' ? volume : 10),
-        to: targetUpVol,
-        duration: fadeUpDuration,
-        onComplete: (succeeded) => {
-          // if succeeded and next subtitle exists, schedule ramp down
-          if (!succeeded) return;
-          // compute exact ms until ramp down start
-          if (nextSub) {
-            // compute up-to-date time until next using currentTime prop
-            const nowVideo2 = currentTime; // seconds (prop may be updated)
-            const msUntilNext = Math.max(0, (nextSub.startSeconds - nowVideo2) * 1000);
-            const downAt = Math.max(0, msUntilNext - downLeadMs);
-            // schedule ramp down
-            scheduledDownTimeoutRef.current = setTimeout(() => {
-              // final check for manual override
-              const sinceManualInner2 = performance.now() - (lastUserAdjustAtRef.current || 0);
-              if (userManualOverrideRef.current && sinceManualInner2 < 1500) {
-                cancelAutoFade();
-                return;
-              }
-              // compute small duration for ramp down based on remaining time
-              const downDuration = Math.min(600, Math.max(120, downLeadMs));
-              fadeVolume({
-                from: (typeof volume === 'number' ? volume : targetUpVol),
-                to: targetDownVol,
-                duration: downDuration,
-              });
-            }, downAt);
-          } else {
-            // no next subtitle -> slowly fade down after a pause (optional)
-            scheduledDownTimeoutRef.current = setTimeout(() => {
-              fadeVolume({
-                from: (typeof volume === 'number' ? volume : targetUpVol),
-                to: targetDownVol,
-                duration: 800,
-              });
-            }, 1800); // little gap
-          }
-        },
-      });
-    }, fadeUpStartDelay);
-  }
-
-  // handle manual slider: mark manual override and cancel auto fades
+  // handle user manual slider change
   const handleVolumeChange = (e) => {
     const newVol = Number(e.target.value);
     lastUserAdjustAtRef.current = performance.now();
     userManualOverrideRef.current = true;
-    // keep manual override for a small window; fades will check the timestamp
     setVolume(newVol);
     if (playerRef.current?.setVolume) playerRef.current.setVolume(newVol);
-    // cancel any automated fades immediately
-    cancelAutoFade();
-    // optional: clear manual override after 5s of no adjustments
-    if (fadeTimeoutRef.current) clearTimeout(fadeTimeoutRef.current);
-    // schedule auto-clear of manual override
-    fadeTimeoutRef.current = setTimeout(() => {
+
+    // Cancel any scheduled auto fades when user touches the slider
+    cancelAutoFades();
+
+    // clear manual override after some time (so auto fades can resume later)
+    setTimeout(() => {
       userManualOverrideRef.current = false;
-      fadeTimeoutRef.current = null;
     }, 5000);
   };
 
   const toggleSpeaking = () => {
     setIsSpeaking((prev) => {
       const newSpeaking = !prev;
-      if (newSpeaking) setVolume(10); // default when reading on
+      if (newSpeaking) setVolume(10);
       return newSpeaking;
     });
   };
@@ -399,14 +301,16 @@ export function useSpeechSync({
     if (playerRef.current?.setVolume) {
       playerRef.current.setVolume(100);
     }
-    cancelAutoFade();
+    cancelAutoFades();
   };
 
-  // -------------------- other helpers (unchanged)
+  // --------------------
+  // other helpers (unchanged)
+  // --------------------
   function resolveVoiceByURI(uri) {
     if (!uri) return null;
     const voices = window.speechSynthesis.getVoices();
-    return voices.find(v => v.voiceURI === uri) || null;
+    return voices.find((v) => v.voiceURI === uri) || null;
   }
 
   function getAdaptiveAlpha(samples) {
@@ -416,20 +320,11 @@ export function useSpeechSync({
     return 0.06;
   }
 
-  function computeAdjustedPlaybackRate({
-    baselineWps,
-    unitCount,
-    duration,
-    margin,
-    lastRateRef,
-  }) {
+  function computeAdjustedPlaybackRate({ baselineWps, unitCount, duration, margin, lastRateRef }) {
     if (!baselineWps || !unitCount || !duration) return 1;
 
     const rawRate = unitCount / duration;
-    const target = Math.max(
-      0,
-      Math.min(1, baselineWps / rawRate - margin)
-    );
+    const target = Math.max(0, Math.min(1, baselineWps / rawRate - margin));
     if (duration <= 3) {
       lastRateRef.current = target;
       return target;
@@ -457,6 +352,9 @@ export function useSpeechSync({
 
   const voice = useSelectedVoice(effectiveLang);
 
+  // --------------------
+  // main speech effect (unchanged except onend scheduling)
+  // --------------------
   useEffect(() => {
     let cancelled = false;
 
@@ -465,7 +363,9 @@ export function useSpeechSync({
 
       const shouldTranslate = acceptedUserLang;
 
+      // --------------------
       // Prepare text
+      // --------------------
       let text = currentSubtitle
         .replace(/\[[^\]]*\]/g, '')
         .replace(/\.{2,}/g, '')
@@ -476,18 +376,17 @@ export function useSpeechSync({
 
       text = normalizeColonNumbers(text);
 
-      // translation
+      // --------------------
+      // Handle translation
+      // --------------------
       let translationDelay = 0;
+
       if (shouldTranslate) {
-        const { text: translated, delayMs } =
-          await waitForTranslatedDomTextStable(currentSubtitle);
+        const { text: translated, delayMs } = await waitForTranslatedDomTextStable(currentSubtitle);
 
         if (cancelled || !translated) return;
 
-        if (
-          normalizeTextForCompare(translated) ===
-          normalizeTextForCompare(currentSubtitle)
-        ) {
+        if (normalizeTextForCompare(translated) === normalizeTextForCompare(currentSubtitle)) {
           return;
         }
 
@@ -495,9 +394,11 @@ export function useSpeechSync({
         translationDelay = delayMs / 1000;
       }
 
-      // subtitle timing
+      // --------------------
+      // Subtitle timing
+      // --------------------
       const currentSub = subtitles.find(
-        s => currentTime >= s.startSeconds && currentTime < s.endSeconds
+        (s) => currentTime >= s.startSeconds && currentTime < s.endSeconds
       );
 
       let duration = currentSub?.duration ?? 3;
@@ -505,25 +406,21 @@ export function useSpeechSync({
 
       const subtitleKey = `${currentSub.startSeconds}-${currentSub.endSeconds}`;
 
+      // HARD LOCK — EXIT IMMEDIATELY if already active
       if (activeSubtitleKeyRef.current === subtitleKey) {
         return;
       }
 
       duration = Math.max(0.7, duration - translationDelay);
-      if (
-        carryOverDebtRef.current > 0 &&
-        duration > 3
-      ) {
-        const payback = Math.min(
-          carryOverDebtRef.current,
-          duration * 0.25
-        );
-
+      if (carryOverDebtRef.current > 0 && duration > 3) {
+        const payback = Math.min(carryOverDebtRef.current, duration * 0.25);
         duration -= payback;
         carryOverDebtRef.current -= payback;
       }
 
-      // speech units
+      // --------------------
+      // Speech units
+      // --------------------
       let baselineWps = 80;
 
       const voiceURI = localStorage.getItem(effectiveLang);
@@ -532,16 +429,12 @@ export function useSpeechSync({
 
       try {
         const testData = JSON.parse(localStorage.getItem(testKey) || '{}');
-        if (testData[voiceURI]?.wps) {
-          baselineWps = parseFloat(testData[voiceURI].wps);
-        }
+        if (testData[voiceURI]?.wps) baselineWps = parseFloat(testData[voiceURI].wps);
       } catch {}
 
       try {
         const learnedData = JSON.parse(localStorage.getItem(learnedKey) || '{}');
-        if (learnedData[voiceURI]?.wps) {
-          baselineWps = baselineWps * 0.7 + learnedData[voiceURI].wps * 0.3;
-        }
+        if (learnedData[voiceURI]?.wps) baselineWps = baselineWps * 0.7 + learnedData[voiceURI].wps * 0.3;
       } catch {}
 
       let unitCount = speechUnits(text, effectiveLang);
@@ -552,18 +445,20 @@ export function useSpeechSync({
       }
       if (lastSpokenRef.current === text) {
         if (!isShort) return;
-        lastSpokenRef.current = "";
+        lastSpokenRef.current = '';
       }
 
-      // margin model
+      // --------------------
+      // Margin model
+      // --------------------
       const speechMargin = 0.035;
       const translationMargin = Math.min(0.08, translationDelay * 0.05);
       let margin = speechMargin + translationMargin;
-      if (isShort) {
-        margin *= 0.6;
-      }
+      if (isShort) margin *= 0.6;
 
-      // playback rate sync
+      // --------------------
+      // Playback rate sync
+      // --------------------
       if (playerRef.current?.setPlaybackRate) {
         const rate = computeAdjustedPlaybackRate({
           baselineWps,
@@ -573,10 +468,12 @@ export function useSpeechSync({
           lastRateRef: lastAdjustedRateRef,
         });
         let maxRate = 1.2;
-        if (["hi","mr","bn","kn","te"].includes(baseLang)) {
+
+        if (['hi', 'mr', 'bn', 'kn', 'te'].includes(baseLang)) {
           maxRate = 1.15;
         }
-        if (["ja","ko","zh"].includes(baseLang)) {
+
+        if (['ja', 'ko', 'zh'].includes(baseLang)) {
           maxRate = 1.1;
         }
         let minRate = 0.75;
@@ -584,12 +481,12 @@ export function useSpeechSync({
         if (duration <= 2) minRate = 0.9;
         if (duration <= 1.5) minRate = 0.95;
 
-        playerRef.current.setPlaybackRate(
-          Math.max(minRate, Math.min(maxRate, rate))
-        );
+        playerRef.current.setPlaybackRate(Math.max(minRate, Math.min(maxRate, rate)));
       }
 
+      // --------------------
       // Speak
+      // --------------------
       const utterance = new SpeechSynthesisUtterance(text);
       let wasCancelled = false;
       utterance.onstart = () => {
@@ -597,12 +494,12 @@ export function useSpeechSync({
         lastSpokenRef.current = text;
         activeSubtitleKeyRef.current = subtitleKey;
 
-        console.log("🗣️ TTS START", {
+        console.log('🗣️ TTS START', {
           text,
           duration,
           effectiveLang,
-          voice: utterance.voice?.name || "browser-default",
-          voiceURI: utterance.voice?.voiceURI || "none",
+          voice: utterance.voice?.name || 'browser-default',
+          voiceURI: utterance.voice?.voiceURI || 'none',
           baselineWpsUsed: baselineWps,
           unitCount,
           computedRate: lastAdjustedRateRef.current,
@@ -610,9 +507,9 @@ export function useSpeechSync({
         });
 
         if (!didInitialSyncRef.current && playerRef.current) {
-          if (typeof playerRef.current.play === "function") {
+          if (typeof playerRef.current.play === 'function') {
             playerRef.current.play();
-          } else if (typeof playerRef.current.playVideo === "function") {
+          } else if (typeof playerRef.current.playVideo === 'function') {
             playerRef.current.playVideo();
           }
         }
@@ -647,15 +544,13 @@ export function useSpeechSync({
         if (unitCount < 2) return;
 
         const overrun = actualDuration - duration;
-
         if (overrun > 0.12 && duration > 3) {
-          carryOverDebtRef.current = Math.min(
-            0.6,
-            carryOverDebtRef.current + overrun
-          );
+          carryOverDebtRef.current = Math.min(0.6, carryOverDebtRef.current + overrun);
         }
 
-        // learning code (unchanged)...
+        // --------------------
+        // Save learning (unchanged)
+        // --------------------
         const learnedKey2 = `voice_learned_wps_${effectiveLang}`;
         let learnedData = {};
 
@@ -680,50 +575,99 @@ export function useSpeechSync({
         if (ratio < 0.6 || ratio > 1.6) return;
 
         const durationWeight = Math.min(1.0, actualDuration / 6);
-        const weightedObserved =
-          prev * (1 - durationWeight) + observedWps * durationWeight;
-
+        const weightedObserved = prev * (1 - durationWeight) + observedWps * durationWeight;
         const alpha = getAdaptiveAlpha(samples);
 
-        let updatedWps =
-          prev * (1 - alpha) + weightedObserved * alpha;
+        let updatedWps = prev * (1 - alpha) + weightedObserved * alpha;
+        if (carryOverDebtRef.current > 0.25) updatedWps *= 0.96;
 
-        if (carryOverDebtRef.current > 0.25) {
-          updatedWps *= 0.96;
-        }
+        updatedWps = Math.max(40, Math.min(140, updatedWps));
 
-        updatedWps = Math.max(
-          40,
-          Math.min(140, updatedWps)
-        );
-
-        learnedData[voiceURI] = {
-          wps: parseFloat(updatedWps.toFixed(3)),
-          lastUpdated: Date.now(),
-        };
-
+        learnedData[voiceURI] = { wps: parseFloat(updatedWps.toFixed(3)), lastUpdated: Date.now() };
         samplesData[voiceURI] = samples + 1;
         localStorage.setItem(samplesKey, JSON.stringify(samplesData));
 
         const shouldPersist = samples < 5 || samples % 3 === 0;
+        if (shouldPersist) localStorage.setItem(learnedKey2, JSON.stringify(learnedData));
 
-        if (shouldPersist) {
-          localStorage.setItem(learnedKey2, JSON.stringify(learnedData));
-        }
+        console.log('📈 LEARN APPLY', { prev, observedWps, updatedWps, samplesBefore: samples, persisted: shouldPersist });
 
-        console.log("📈 LEARN APPLY", {
-          prev,
-          observedWps,
-          updatedWps,
-          samplesBefore: samples,
-          persisted: shouldPersist,
-        });
-
-        // --- NEW: schedule auto-fade after speech end for this subtitle ---
+        // --------------------
+        // NEW: schedule auto fade only if enough time left before next subtitle
+        // --------------------
         try {
-          scheduleAutoFadeAfterSpeech({ currentSub, currentTimeSec: currentTime });
+          // find index & next subtitle
+          const idx = subtitles.findIndex(
+            (s) => s.startSeconds === currentSub.startSeconds && s.endSeconds === currentSub.endSeconds
+          );
+          const nextSub = idx >= 0 && idx + 1 < subtitles.length ? subtitles[idx + 1] : null;
+
+          // speech end time in video timeline is the currentTime prop value now
+          const speechEndVideoTime = currentTime; // seconds
+          const timeLeft = nextSub ? nextSub.startSeconds - speechEndVideoTime : Infinity; // seconds
+
+          // total worst-case required time for wait + fade up + fade down
+          const REQUIRED = WAIT_AFTER_END + FADE_UP_TIME + FADE_DOWN_TIME; // seconds
+
+          // if not enough time, skip fades entirely
+          if (!isFinite(timeLeft) || timeLeft < REQUIRED) {
+            // do not schedule fades
+            // if Infinity (no next subtitle) it's fine to run fades (we used isFinite check)
+            if (!isFinite(timeLeft)) {
+              // last subtitle: we can still do a fade up & down with a gap after up
+              // but to be safe, schedule fade up then down after small pause
+              const fromVol = volume;
+              const toVol = 100;
+              fadeUpTimeoutRef.current = setTimeout(() => {
+                fadeVolumeLinear({ from: fromVol, to: toVol, durationMs: FADE_UP_TIME * 1000 });
+                // schedule fade down after a pause
+                fadeDownTimeoutRef.current = setTimeout(() => {
+                  fadeVolumeLinear({ from: toVol, to: 10, durationMs: FADE_DOWN_TIME * 1000 });
+                }, 1800);
+              }, WAIT_AFTER_END * 1000);
+            }
+            return;
+          }
+
+          // At this point we have enough room: schedule fade up after WAIT_AFTER_END,
+          // and schedule fade down such that it completes right before next subtitle start.
+          const fadeUpDelayMs = WAIT_AFTER_END * 1000;
+          const fadeUpDurationMs = FADE_UP_TIME * 1000;
+          const fadeDownDurationMs = FADE_DOWN_TIME * 1000;
+
+          // Compute when to start fade down (ms from now)
+          // we want fade-down to finish exactly at nextSub.startSeconds (video time)
+          // So startDownAt = (timeLeft - FADE_DOWN_TIME) seconds from now
+          const startDownInMs = Math.max(0, (timeLeft - FADE_DOWN_TIME) * 1000);
+
+          // Safety: if startDownInMs <= fadeUpDelayMs then there's a tiny window — but this shouldn't happen because we checked REQUIRED
+          // Schedule fade up
+          const fromVol = volume;
+          const toVol = 100;
+
+          fadeUpTimeoutRef.current = setTimeout(() => {
+            // re-check manual override
+            const sinceManual = performance.now() - (lastUserAdjustAtRef.current || 0);
+            if (userManualOverrideRef.current && sinceManual < MANUAL_OVERRIDE_GRACE_MS) {
+              cancelAutoFades();
+              return;
+            }
+            fadeVolumeLinear({ from: fromVol, to: toVol, durationMs: fadeUpDurationMs });
+          }, fadeUpDelayMs);
+
+          // Schedule fade down so it starts at startDownInMs
+          fadeDownTimeoutRef.current = setTimeout(() => {
+            const sinceManual = performance.now() - (lastUserAdjustAtRef.current || 0);
+            if (userManualOverrideRef.current && sinceManual < MANUAL_OVERRIDE_GRACE_MS) {
+              cancelAutoFades();
+              return;
+            }
+            // read current vol to use as 'from'. However, fadeVolumeLinear will read provided 'from' value,
+            // using 'toVol' is safe fallback.
+            fadeVolumeLinear({ from: (typeof volume === 'number' ? volume : toVol), to: 10, durationMs: fadeDownDurationMs });
+          }, startDownInMs);
         } catch (err) {
-          console.warn("Failed to schedule auto fade", err);
+          console.warn('Failed scheduling auto fades', err);
         }
       };
 
@@ -735,13 +679,13 @@ export function useSpeechSync({
       if (testedVoice) {
         utterance.voice = testedVoice;
       } else {
-        console.warn("⚠️ Tested voice not found, fallback in use");
+        console.warn('⚠️ Tested voice not found, fallback in use');
         utterance.voice = voice || null;
       }
 
       const synth = window.speechSynthesis;
 
-      console.log("BEFORE SPEAK", {
+      console.log('BEFORE SPEAK', {
         pending: synth.pending,
         speaking: synth.speaking,
         paused: synth.paused,
@@ -751,9 +695,9 @@ export function useSpeechSync({
       });
 
       if (!didInitialSyncRef.current && playerRef.current) {
-        if (typeof playerRef.current.pause === "function") {
+        if (typeof playerRef.current.pause === 'function') {
           playerRef.current.pause();
-        } else if (typeof playerRef.current.pauseVideo === "function") {
+        } else if (typeof playerRef.current.pauseVideo === 'function') {
           playerRef.current.pauseVideo();
         }
       }
@@ -761,6 +705,7 @@ export function useSpeechSync({
       if (cancelled) return;
       synth.resume();
 
+      // DO NOT re-speak while already speaking
       if (synth.speaking || synth.pending) {
         return;
       }
@@ -778,15 +723,7 @@ export function useSpeechSync({
     return () => {
       cancelled = true;
     };
-  }, [
-    isSpeaking,
-    showVideo,
-    currentSubtitle,
-    subtitles,
-    effectiveLang,
-    currentTime,
-    isSSMLSupported,
-  ]);
+  }, [isSpeaking, showVideo, currentSubtitle, subtitles, effectiveLang, currentTime, isSSMLSupported]);
 
   useEffect(() => {
     if (!isSpeaking && playerRef.current) {
@@ -796,7 +733,6 @@ export function useSpeechSync({
     }
   }, [isSpeaking, playerRef]);
 
-  // NOTE: Updated handleVolumeChange used; expose it as 'handleVolumeChange' for UI.
   return {
     isSpeaking,
     toggleSpeaking,
