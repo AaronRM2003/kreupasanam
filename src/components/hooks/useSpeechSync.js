@@ -372,7 +372,7 @@ if (
     // --------------------
 
     const voiceURI = localStorage.getItem(effectiveLang);
-    const testKey = `voice_test_data_${effectiveLang}`;
+    const testKey = `voice_test_${effectiveLang}`;
     const learnedKey = `voice_learned_wps_${effectiveLang}`;
 
     // 1️⃣ Load tested WPS

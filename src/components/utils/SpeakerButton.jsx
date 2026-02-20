@@ -76,7 +76,7 @@ const filteredVoices = allVoices.filter(voice =>
     setTestVoice(match);
 
     // Check if tested
-    const testKey = `voice_test_data_${effectiveLang}`;
+    const testKey = `voice_test_${effectiveLang}`;
     const storedData = localStorage.getItem(testKey);
     
     let tested = false;
@@ -234,7 +234,7 @@ function getVoicesWithRetry({
     if (hideTimeout) clearTimeout(hideTimeout);
     if (maxInteractionTimeout) clearTimeout(maxInteractionTimeout);
   };
-  const testKey = `voice_test_data_${effectiveLang}`;
+  const testKey = `voice_test_${effectiveLang}`;
   const storedData = localStorage.getItem(testKey);
   const tested = useMemo(() => {
   if (!storedData) return false;
@@ -390,7 +390,7 @@ const voiceAvailable = voices.some(
     return;
   }
 
-  const testKey = `voice_test_data_${effectiveLang}`;
+  const testKey = `voice_test_${effectiveLang}`;
   const storedData = localStorage.getItem(testKey);
   let needsTest = true;
 
@@ -494,7 +494,7 @@ function shortCode(langTag) {
         voiceURI: testVoice.voiceURI,
         lang: testVoice.lang,
       };
-      const testKey = `voice_test_data_${effectiveLang}`;
+      const testKey = `voice_test_${effectiveLang}`;
       const storedData = localStorage.getItem(testKey);
       let allTestData = {};
 
@@ -510,7 +510,7 @@ function shortCode(langTag) {
 
       localStorage.setItem(testKey, JSON.stringify(allTestData));
       localStorage.setItem(`${effectiveLang}`,testVoice.voiceURI);
-      console.log("accuratetest - ", localStorage.getItem(`voice_test_data_${effectiveLang}`), "langitem-",localStorage.getItem(`${effectiveLang}`));
+      console.log("accuratetest - ", localStorage.getItem(`voice_test_${effectiveLang}`), "langitem-",localStorage.getItem(`${effectiveLang}`));
       setAlreadyTested(true); // Mark tested after success
       setShowTestScreen(false);
       setIsLoadingTest(false);
@@ -555,7 +555,7 @@ function shortCode(langTag) {
     }
 
     // On voice change, check if this voice is already tested
-    const testKey = `voice_test_data_${effectiveLang}`;
+    const testKey = `voice_test_${effectiveLang}`;
     const storedData = localStorage.getItem(testKey);
     console.log("handleread - ", storedData);
 
@@ -711,7 +711,7 @@ function shortCode(langTag) {
           voices={systemVoices}
           alreadyTested={tested}
           onRetest={() => {
-            const testKey = `voice_test_data_${effectiveLang}`;
+            const testKey = `voice_test_${effectiveLang}`;
             const storedData = localStorage.getItem(testKey);
 
             if (storedData && testVoice?.voiceURI) {
