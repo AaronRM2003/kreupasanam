@@ -26,6 +26,9 @@ export function useSpeechSync({
   const lastVideoTimeRef = useRef(0);
   const carryOverDebtRef = useRef(0);
 
+
+
+
 const acceptedUserLang =
   lang === "en" &&
   isBrowserTranslateOn &&
@@ -35,6 +38,10 @@ const acceptedUserLang =
 const effectiveLang = acceptedUserLang ? userLang : lang;
   const translationDelayRef = useRef(0);
   const baseLang = (effectiveLang || "en").split("-")[0];
+
+
+
+
 
   const isSSMLSupported = useSSMLSupportTest();
 
@@ -143,6 +150,8 @@ useEffect(() => {
   return () => obs.disconnect();
 }, [isBrowserTranslateOn]);
 
+
+
   // Sync volume once player is available
   useEffect(() => {
     const interval = setInterval(() => {
@@ -175,8 +184,12 @@ useEffect(() => {
   }
 }, [isSpeaking, showVideo]);
 
+
+
+
 const maxStepUp = 0.5;
  // default margin
+
 
 const lastAdjustedRateRef = useRef(1);
 
@@ -205,9 +218,11 @@ function getSmoothedAdjustedRate(wps, rawRate, margin) {
   }
 }
 
+
 // --------------------
 // Speech timing helpers
 // --------------------
+
 
 function resolveVoiceByURI(uri) {
   if (!uri) return null;
@@ -262,6 +277,7 @@ function isLangAcceptedExactly(langTag) {
   return !!localStorage.getItem(langTag); // ✅ exact key only
 }
 
+
   const voice = useSelectedVoice(effectiveLang);
   // let translationDelaySec = 0;
 
@@ -270,6 +286,8 @@ function isLangAcceptedExactly(langTag) {
 
   const run = async () => {
     if (!isSpeaking || !showVideo || !currentSubtitle || !subtitles.length) return;
+
+    
 
     const shouldTranslate = acceptedUserLang;
 
@@ -308,6 +326,9 @@ function isLangAcceptedExactly(langTag) {
       translationDelay = delayMs / 1000;
     }
 
+   
+
+
     // --------------------
     // Subtitle timing
     // --------------------
@@ -325,19 +346,21 @@ function isLangAcceptedExactly(langTag) {
       return;
     }
 
-    duration = Math.max(0.7, duration - translationDelay);
-    if (
-      carryOverDebtRef.current > 0 &&
-      duration > 3 // never short subtitles
-    ) {
-      const payback = Math.min(
-        carryOverDebtRef.current,
-        duration * 0.25 // 🔒 max 25% compression
-      );
+duration = Math.max(0.7, duration - translationDelay);
+if (
+  carryOverDebtRef.current > 0 &&
+  duration > 3 // never short subtitles
+) {
+  const payback = Math.min(
+    carryOverDebtRef.current,
+    duration * 0.25 // 🔒 max 25% compression
+  );
 
-      duration -= payback;
-      carryOverDebtRef.current -= payback;
-    }
+  duration -= payback;
+  carryOverDebtRef.current -= payback;
+}
+
+
 
     // --------------------
     // Speech units
@@ -425,313 +448,177 @@ function isLangAcceptedExactly(langTag) {
     // --------------------
     // Speak
     // --------------------
-
-    // === BEGIN: Intentional-stretch helpers & logic ===
-    // Helper: find punctuation breakpoints (indices) where it's natural to insert pause
-    function findBreakpoints(text) {
-      const breakRegex = /[,;:—–-\.!?]+/g;
-      let m, idxs = [];
-      while ((m = breakRegex.exec(text)) !== null) {
-        idxs.push({ idx: m.index + m[0].length, sep: m[0] });
-      }
-      return idxs;
-    }
-
-    // Helper to build SSML string given breaks (only use when isSSMLSupported)
-    function buildSsmlWithBreaks(text, breaksMs) {
-      const parts = text.split(/([,;:—–-\.!?]+)/g); // keeps separators as items
-      let out = "<speak>";
-      let breakIndex = 0;
-      for (let i = 0; i < parts.length; i++) {
-        const seg = parts[i];
-        if (/^[,;:—–-\.!?]+$/.test(seg)) {
-          out += seg;
-          const ms = breaksMs[breakIndex++] ?? 0;
-          if (ms > 0) out += `<break time="${Math.round(ms)}ms"/>`;
-        } else {
-          out += seg;
-        }
-      }
-      out += "</speak>";
-      return out;
-    }
-
-    // Helper fallback: inject soft punctuation (if SSML unsupported)
-    function buildPlainTextWithEllipses(text, breaksMs) {
-      const parts = text.split(/([,;:—–-\.!?]+)/g);
-      let out = "";
-      let bi = 0;
-      for (let i = 0; i < parts.length; i++) {
-        const seg = parts[i];
-        if (/^[,;:—–-\.!?]+$/.test(seg)) {
-          out += seg;
-          const ms = breaksMs[bi++] ?? 0;
-          const dots = Math.min(6, Math.round(ms / 150));
-          if (dots > 0) out += " " + ".".repeat(dots);
-        } else {
-          out += seg;
-        }
-      }
-      if (bi === 0) {
-        const trailingDots = Math.min(10, Math.round((breaksMs.reduce((a,b)=>a+b,0)||0) / 150));
-        if (trailingDots) out += " " + ".".repeat(trailingDots);
-      }
-      return out;
-    }
-
-    // compute expected natural speech time
-    const expectedSpeechSec = unitCount / baselineWps;
-    const safetyBufferSec = 0.5; // small buffer so we don't chase perfect match
-    const extraMsWanted = Math.max(0, Math.round((duration - expectedSpeechSec - safetyBufferSec) * 1000));
-
-    let intentionalStretch = false;
-    let ssmlPayload = null;
-    let plainTextPayload = null;
-    let intentionalAppliedRate; // may be set below
-
-    if (extraMsWanted > 250 && duration > 3) { // only apply when substantial and not too short
-      intentionalStretch = true;
-
-      const breakpoints = findBreakpoints(text);
-      let breaksMs = [];
-      let trailingPauseMs = 0;
-
-      if (breakpoints.length) {
-        const capPer = 1500;
-        let remaining = extraMsWanted;
-        for (let i = 0; i < breakpoints.length; i++) {
-          const share = Math.min(capPer, Math.round(remaining / (breakpoints.length - i)));
-          breaksMs.push(share);
-          remaining -= share;
-        }
-        if (remaining > 0) {
-          breaksMs[breakpoints.length - 1] += remaining;
-        }
-      } else {
-        trailingPauseMs = Math.min(2000, extraMsWanted);
-      }
-
-      if (isSSMLSupported) {
-        ssmlPayload = buildSsmlWithBreaks(text, breaksMs);
-        if (trailingPauseMs > 0) {
-          ssmlPayload = ssmlPayload.replace("</speak>", `<break time="${trailingPauseMs}ms"/></speak>`);
-        }
-      } else {
-        plainTextPayload = buildPlainTextWithEllipses(text, breaksMs);
-        if ((!plainTextPayload || plainTextPayload === text) && trailingPauseMs > 0) {
-          const dots = Math.min(12, Math.round(trailingPauseMs / 150));
-          plainTextPayload = text + " " + ".".repeat(dots);
-        }
-      }
-
-      // also slightly reduce rate proportionally (but keep natural bounds)
-      const extraRatio = (expectedSpeechSec + extraMsWanted/1000) / Math.max(0.01, expectedSpeechSec);
-      let appliedRate = Math.max(0.65, Math.min(1.0, 1 / extraRatio));
-      intentionalAppliedRate = appliedRate;
-    }
-    // === END: Intentional-stretch helpers & logic ===
-
-    // create utterance (use SSML payload when supported)
-    let utterance;
-    if (ssmlPayload) {
-      // many browsers do not support native SSML in SpeechSynthesisUtterance;
-      // we still pass the SSML string as text and mark a flag so enhancers can detect it.
-      // If enhanceWithSsml exists and returns an utterance, you could adapt this,
-      // but to avoid touching other code paths we create a standard utterance.
-      utterance = new SpeechSynthesisUtterance(ssmlPayload);
-      utterance._isSsml = true;
-    } else {
-      const finalText = plainTextPayload ?? text;
-      utterance = new SpeechSynthesisUtterance(finalText);
-    }
-
-    // mark intentional-stretch so onend learning can skip it
-    utterance.intentionalStretch = !!intentionalStretch;
-
-    // apply the computed rate if present (clamp within your normal min/max)
-    if (typeof intentionalAppliedRate !== 'undefined') {
-      try {
-        utterance.rate = Math.max(0.60, Math.min(1.0, intentionalAppliedRate));
-      } catch (e) {
-        // ignore if browser doesn't allow rate change
-      }
-    }
-
-    let wasCancelled = false;
-    utterance.onstart = () => {
-
-      hasStartedSpeakingRef.current = true; // 🔥 REQUIRED
-      lastSpokenRef.current = text;
+const utterance = new SpeechSynthesisUtterance(text);
+let wasCancelled = false;
+utterance.onstart = () => {
+  
+    hasStartedSpeakingRef.current = true; // 🔥 REQUIRED
+    lastSpokenRef.current = text;
       activeSubtitleKeyRef.current = subtitleKey; // 🔒 LOCK
 
       console.log("🗣️ TTS START", {
-        text,
-        duration,
-        effectiveLang,
-        voice: utterance.voice?.name || "browser-default",
-        voiceURI: utterance.voice?.voiceURI || "none",
-        baselineWpsUsed: baselineWps,
-        unitCount,
-        computedRate: lastAdjustedRateRef.current,
-        carryOverDebt: carryOverDebtRef.current.toFixed(3),
-        intentionalStretch: utterance.intentionalStretch,
-        appliedRate: utterance.rate,
-      });
+    text,
+    duration,
+    effectiveLang,
+    voice: utterance.voice?.name || "browser-default",
+    voiceURI: utterance.voice?.voiceURI || "none",
+    baselineWpsUsed: baselineWps,
+    unitCount,
+    computedRate: lastAdjustedRateRef.current,
+    carryOverDebt: carryOverDebtRef.current.toFixed(3),
+  });
 
-      if (!didInitialSyncRef.current && playerRef.current) {
-        if (typeof playerRef.current.play === "function") {
-          playerRef.current.play();
-        } else if (typeof playerRef.current.playVideo === "function") {
-          playerRef.current.playVideo();
-        }
-      }
-      didInitialSyncRef.current = true;
-    };
-
-    utterance.onerror = () => {
-      wasCancelled = true;
-    };
-
-    utterance.onpause = () => {
-      wasCancelled = true;
-    };
-
-    // ✅ capture start time immediately after creation
-    const speechStart = performance.now();
-
-    // ✅ attach learning ONLY on successful end
-    utterance.onend = () => {
-      if (wasCancelled) return;
-
-      // If this utterance was intentionally stretched, skip learning and don't penalize.
-      if (utterance.intentionalStretch) {
-        activeSubtitleKeyRef.current = null; // 🔓 RELEASE
-        // don't update learned WPS, don't adjust carryOverDebt for this case
-        console.log("📏 Intentional stretch - skipping learning/penalty");
-        return;
-      }
-
-      if (duration <= 3) return;
-
-      activeSubtitleKeyRef.current = null; // 🔓 RELEASE
-
-      const speechEnd = performance.now();
-      const actualDuration = (speechEnd - speechStart) / 1000;
-
-      // --- guards ---
-      if (translationDelay > duration * 0.4) return;
-      if (!actualDuration || actualDuration < 0.5) return;
-      if (unitCount < 2) return;
-
-      const overrun = actualDuration - duration;
-
-      if (overrun > 0.12 && duration > 3) {
-        carryOverDebtRef.current = Math.min(
-          0.6,
-          carryOverDebtRef.current + overrun
-        );
-      }
-
-      // --------------------
-      // Load learned state FIRST
-      // --------------------
-      const learnedKey = `voice_learned_wps_${effectiveLang}`;
-      let learnedData = {};
-
-      const samplesKey = `voice_learned_samples_${effectiveLang}`;
-
-      let samplesData = {};
-      try {
-        samplesData = JSON.parse(localStorage.getItem(samplesKey) || '{}');
-      } catch {}
-
-      const samples = samplesData[voiceURI] ?? 0;
-
-      try {
-        learnedData = JSON.parse(localStorage.getItem(learnedKey) || '{}');
-      } catch {}
-
-      const prev = learnedData[voiceURI]?.wps ?? baselineWps;
-
-      // --------------------
-      // Observe speech
-      // --------------------
-      const observedWps = unitCount / actualDuration;
-      const ratio = observedWps / prev;
-
-      // Reject anomalies
-      if (ratio < 0.6 || ratio > 1.6) return;
-
-      // Weight long samples more
-      const durationWeight = Math.min(1.0, actualDuration / 6);
-      const weightedObserved =
-        prev * (1 - durationWeight) + observedWps * durationWeight;
-
-      // Adaptive learning rate
-      const alpha = getAdaptiveAlpha(samples);
-
-      let updatedWps =
-        prev * (1 - alpha) + weightedObserved * alpha;
-
-      // Penalize persistent overruns
-      if (carryOverDebtRef.current > 0.25) {
-        updatedWps *= 0.96;
-      }
-
-      updatedWps = Math.max(
-        40,    // lower bound
-        Math.min(140, updatedWps)
-      );
-      // --------------------
-      // Save
-      // --------------------
-      learnedData[voiceURI] = {
-        wps: parseFloat(updatedWps.toFixed(3)),
-        lastUpdated: Date.now(),
-      };
-
-      samplesData[voiceURI] = samples + 1;
-      localStorage.setItem(samplesKey, JSON.stringify(samplesData));
-
-      const shouldPersist = samples < 5 || samples % 3 === 0;
-
-      if (shouldPersist) {
-        localStorage.setItem(learnedKey, JSON.stringify(learnedData));
-      }
-
-      console.log("📈 LEARN APPLY", {
-        prev,
-        observedWps,
-        updatedWps,
-        samplesBefore: samples,
-        persisted: shouldPersist,
-      });
-    };
-
-    const testedVoiceURI = localStorage.getItem(effectiveLang);
-    const testedVoice = resolveVoiceByURI(testedVoiceURI);
-
-    utterance.lang = shouldTranslate ? userLang : (lang || 'en-US');
-
-    if (testedVoice) {
-      utterance.voice = testedVoice;
-    } else {
-      console.warn("⚠️ Tested voice not found, fallback in use");
-      utterance.voice = voice || null;
+  if (!didInitialSyncRef.current && playerRef.current) {
+    if (typeof playerRef.current.play === "function") {
+      playerRef.current.play();
+    } else if (typeof playerRef.current.playVideo === "function") {
+      playerRef.current.playVideo();
     }
+  }
+  didInitialSyncRef.current = true;
+};
+
+
+utterance.onerror = () => {
+  wasCancelled = true;
+};
+
+utterance.onpause = () => {
+  wasCancelled = true;
+};
+
+// ✅ capture start time immediately after creation
+const speechStart = performance.now();
+
+// ✅ attach learning ONLY on successful end
+utterance.onend = () => {
+  if (wasCancelled) return;
+  if (duration <= 3) return;
+
+  activeSubtitleKeyRef.current = null; // 🔓 RELEASE
+
+  const speechEnd = performance.now();
+  const actualDuration = (speechEnd - speechStart) / 1000;
+
+  // --- guards ---
+  if (translationDelay > duration * 0.4) return;
+  if (!actualDuration || actualDuration < 0.5) return;
+  if (unitCount < 2) return;
+
+  const overrun = actualDuration - duration;
+
+  if (overrun > 0.12 && duration > 3) {
+    carryOverDebtRef.current = Math.min(
+      0.6,
+      carryOverDebtRef.current + overrun
+    );
+  }
+
+  // --------------------
+  // Load learned state FIRST
+  // --------------------
+  const learnedKey = `voice_learned_wps_${effectiveLang}`;
+  let learnedData = {};
+
+  const samplesKey = `voice_learned_samples_${effectiveLang}`;
+
+  let samplesData = {};
+  try {
+    samplesData = JSON.parse(localStorage.getItem(samplesKey) || '{}');
+  } catch {}
+
+  const samples = samplesData[voiceURI] ?? 0;
+
+  try {
+    learnedData = JSON.parse(localStorage.getItem(learnedKey) || '{}');
+  } catch {}
+
+  const prev = learnedData[voiceURI]?.wps ?? baselineWps;
+
+  // --------------------
+  // Observe speech
+  // --------------------
+  const observedWps = unitCount / actualDuration;
+  const ratio = observedWps / prev;
+
+  // Reject anomalies
+  if (ratio < 0.6 || ratio > 1.6) return;
+
+  // Weight long samples more
+  const durationWeight = Math.min(1.0, actualDuration / 6);
+  const weightedObserved =
+    prev * (1 - durationWeight) + observedWps * durationWeight;
+
+  // Adaptive learning rate
+  const alpha = getAdaptiveAlpha(samples);
+
+  let updatedWps =
+    prev * (1 - alpha) + weightedObserved * alpha;
+
+  // Penalize persistent overruns
+  if (carryOverDebtRef.current > 0.25) {
+    updatedWps *= 0.96;
+  }
+
+updatedWps = Math.max(
+  40,    // lower bound
+  Math.min(140, updatedWps)
+);
+  // --------------------
+  // Save
+  // --------------------
+  learnedData[voiceURI] = {
+    wps: parseFloat(updatedWps.toFixed(3)),
+    lastUpdated: Date.now(),
+  };
+
+  samplesData[voiceURI] = samples + 1;
+  localStorage.setItem(samplesKey, JSON.stringify(samplesData));
+
+
+  const shouldPersist = samples < 5 || samples % 3 === 0;
+
+  if (shouldPersist) {
+    localStorage.setItem(learnedKey, JSON.stringify(learnedData));
+  }
+    
+  console.log("📈 LEARN APPLY", {
+    prev,
+    observedWps,
+    updatedWps,
+    samplesBefore: samples,
+    persisted: shouldPersist,
+  });
+
+};
+
+    
+
+   const testedVoiceURI = localStorage.getItem(effectiveLang);
+const testedVoice = resolveVoiceByURI(testedVoiceURI);
+
+utterance.lang = shouldTranslate ? userLang : (lang || 'en-US');
+
+if (testedVoice) {
+  utterance.voice = testedVoice;
+} else {
+  console.warn("⚠️ Tested voice not found, fallback in use");
+  utterance.voice = voice || null;
+}
+
 
     const synth = window.speechSynthesis;
 
-    console.log("BEFORE SPEAK", {
-      pending: synth.pending,
-      speaking: synth.speaking,
-      paused: synth.paused,
-      isShort,
-      text,
-      duration,
-      intentionalStretch: utterance.intentionalStretch,
-      appliedRate: utterance.rate,
-    });
+console.log("BEFORE SPEAK", {
+  pending: synth.pending,
+  speaking: synth.speaking,
+  paused: synth.paused,
+  isShort,
+  text,
+  duration,
+});
+
+
 
     if (!didInitialSyncRef.current && playerRef.current) {
       if (typeof playerRef.current.pause === "function") {
@@ -740,22 +627,23 @@ function isLangAcceptedExactly(langTag) {
         playerRef.current.pauseVideo();
       }
     }
+    
 
-    if (cancelled) return;
-    synth.resume();
+  if (cancelled) return;
+  synth.resume(); 
 
-    // 🔒 DO NOT re-speak while already speaking
-    if (synth.speaking || synth.pending) {
-      return;
-    }
+  // 🔒 DO NOT re-speak while already speaking
+if (synth.speaking || synth.pending) {
+  return;
+}
 
-    if (isShort) {
-      synth.speak(utterance); // 🔥 IMMEDIATE
-    } else {
-      setTimeout(() => {
-        synth.speak(utterance);
-      }, 80);
-    }
+   if (isShort) {
+  synth.speak(utterance); // 🔥 IMMEDIATE
+} else {
+  setTimeout(() => {
+    synth.speak(utterance);
+  }, 80);
+}
 
   };
 
@@ -772,6 +660,7 @@ function isLangAcceptedExactly(langTag) {
   currentTime,
   isSSMLSupported,
 ]);
+
 
   useEffect(() => {
     if (!isSpeaking && playerRef.current) {
@@ -805,6 +694,7 @@ function isLangAcceptedExactly(langTag) {
     }
   };
 
+  
   return {
     isSpeaking,
     toggleSpeaking,
@@ -812,5 +702,4 @@ function isLangAcceptedExactly(langTag) {
     volume,
     handleVolumeChange,
   };
-}  // end useSpeechSync
-
+} 
