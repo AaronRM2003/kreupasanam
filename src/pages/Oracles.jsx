@@ -338,6 +338,7 @@ function resolveOverlay(oracle, all) {
                     path={`${initialLang || 'en'}/oracles`}
                     duration={duration}
                     onImageLoad={handleImageLoad}
+                    overlayData={resolveOverlay(o, sortedOracles)}
                   />
                 );
               })

@@ -144,7 +144,7 @@ const filteredHistory = useMemo(() => {
               <h2 className={styles.testimoniesTitle}>History</h2>
             </div>
 
-            <p className={styles.testimoniesSubtitle}>Stories of healing, grace...</p>
+            <p className={styles.testimoniesSubtitle}>About the Apparition, Interviews...</p>
 
             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem', margin: '0.5rem' }}>
               {/* Language Dropdown */}
