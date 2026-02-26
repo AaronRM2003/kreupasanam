@@ -184,13 +184,13 @@
     "text": {
       "en": "At that time, my brothers would say to me, you do a lot of work for the church,",
       "hi": "उस समय मेरे भाई मुझसे कहा करते थे, कि तू कलीसिया के लिये बहुत काम करता है।",
-      "ta": "அந்த நேரத்தில், என் சகோதரர்கள் என்னிடம், \"நீ திருச்திருச்சபைக்காக நிறைய வேலை செய்கிறாய்,\" என்று கூறுவார்கள்.",
+      "ta": "அந்த நேரத்தில், என் சகோதரர்கள் என்னிடம், \"நீ திருச்திருச்திருச்சபைக்காக நிறைய வேலை செய்கிறாய்,\" என்று கூறுவார்கள்.",
       "bn": "সেই সময়, আমার ভাইয়েরা আমাকে বলত, তুমি গির্জার জন্য অনেক কাজ করো,",
       "te": "ఆ సమయంలో, నా సోదరులు నాతో, \"నువ్వు చర్చి కోసం చాలా పని చేస్తావు,\" అని అంటారు.",
       "mr": "त्यावेळी, माझे भाऊ मला म्हणायचे, तू कलीसियासाठी खूप काम करतोस,",
       "fr": "À cette époque, mes frères me disaient : « Tu fais beaucoup de travail pour l’Église »,",
       "es": "En aquel tiempo mis hermanos me decían: tú trabajas mucho en la iglesia,",
-      "zh": "那时，我的弟兄们会对我说，你为圣圣教会做了很多工作，",
+      "zh": "那时，我的弟兄们会对我说，你为圣圣圣教会做了很多工作，",
       "kn": "ಆ ಸಮಯದಲ್ಲಿ, ನನ್ನ ಸಹೋದರರು ನನಗೆ ಹೇಳುತ್ತಿದ್ದರು, ನೀನು ಚರ್ಚ್‌ಗಾಗಿ ಬಹಳಷ್ಟು ಕೆಲಸ ಮಾಡುತ್ತೀಯ,"
     }
   },
@@ -1793,7 +1793,7 @@
       "bn": "সেই নৈবেদ্য এবং ঐশ্বরিক উপাসনার গুণের কারণে, আমি প্রার্থনা করে কেঁদেছিলাম, \"দয়া করে আমার ছেলেকে সুস্থ করে তুলুন।\"",
       "te": "ఆ నైవేద్యం మరియు దైవ ప్రార్ధన యొక్క విలువ కారణంగా, నేను ప్రార్థించి, \"దయచేసి నా కొడుకును స్వస్థపరచుము\" అని అరిచాను.",
       "mr": "त्या अर्पणाच्या आणि दैवी लीटर्जीच्या गुणवत्तेमुळे, मी प्रार्थना केली आणि ओरडलो, \"कृपया माझ्या मुलाला बरे करा.\"",
-      "fr": "En raison du mésacrement de cette offrande et de la Divine Liturgie, j'ai prié et crié : « S'il vous plaît, guérissez mon fils. »",
+      "fr": "En raison du rite de cette offrande et de la Divine Liturgie, j'ai prié et crié : « S'il vous plaît, guérissez mon fils. »",
       "es": "Por el mésacramento de aquella ofrenda y de la Divina Liturgia, oré y clamé: «Por favor, sana a mi hijo».",
       "zh": "由于那次奉献和神圣礼仪的功德，我祈祷并哭喊道:“请治愈我的儿子。”",
       "kn": "ಆ ಅರ್ಪಣೆ ಮತ್ತು ದೈವಿಕ ಪ್ರಾರ್ಥನೆಯ ಅರ್ಹತೆಯಿಂದಾಗಿ, ನಾನು ಪ್ರಾರ್ಥಿಸಿದೆ ಮತ್ತು ಅಳುತ್ತಿದ್ದೆ, \"ದಯವಿಟ್ಟು ನನ್ನ ಮಗನನ್ನು ಗುಣಪಡಿಸು.\""
@@ -2237,13 +2237,13 @@
   {
     "start": "17:51",
     "text": {
-      "en": "All the relics of our sacrifice eucharistiques, just like Father Joseph says, are like his relics. Today, Sheeba here said",
+      "en": "All the relics of our sacrifices, just like Father Joseph says, are like his relics. Today, Sheeba here said",
       "hi": "हमारे बलिदानों के सभी अवशेष, जैसा कि फादर जोसेफ कहते हैं, उनके अवशेषों के समान हैं। आज, शीबा ने यहाँ कहा",
       "ta": "நமது தியாகங்களின் அனைத்து நினைவுச்சின்னங்களும், தந்தை ஜோசப் சொல்வது போல், அவரது நினைவுச்சின்னங்களைப் போன்றவை. இன்று, ஷீபா இங்கே கூறினார்",
       "bn": "আমাদের সকল ত্যাগের ধ্বংসাবশেষ, ঠিক যেমন ফাদার জোসেফ বলেছেন, তার ধ্বংসাবশেষের মতো। আজ, শিবা এখানে বলেছেন",
       "te": "ఫాదర్ జోసెఫ్ చెప్పినట్లుగా, మన త్యాగాల అవశేషాలన్నీ ఆయన అవశేషాల లాంటివే. ఈరోజు, షీబా ఇక్కడ ఇలా అన్నారు",
       "mr": "आपल्या बलिदानांचे सर्व अवशेष, जसे फादर जोसेफ म्हणतात, त्यांच्या अवशेषांसारखे आहेत. आज, शीबा येथे म्हणाली",
-      "fr": "Toutes les reliques de nos sacrifice eucharistiques, comme le dit le Père Joseph, sont comme ses reliques. Aujourd'hui, Sheeba a dit",
+      "fr": "Toutes les reliques de nos sacrifices, comme le dit le Père Joseph, sont comme ses reliques. Aujourd'hui, Sheeba a dit",
       "es": "Todas las reliquias de nuestros sacrificio eucarísticos, como dice el Padre José, son como sus reliquias. Hoy, Sheeba dijo aquí:",
       "zh": "正如约瑟夫神父所说，我们所有礼仪的遗物都像他的遗物一样。今天，希巴在这里说",
       "kn": "ಫಾದರ್ ಜೋಸೆಫ್ ಹೇಳಿದಂತೆ ನಮ್ಮ ತ್ಯಾಗಗಳ ಎಲ್ಲಾ ಅವಶೇಷಗಳು ಅವರ ಅವಶೇಷಗಳಂತೆ. ಇಂದು, ಶೀಬಾ ಇಲ್ಲಿ ಹೇಳಿದರು"
@@ -2255,8 +2255,8 @@
       "en": "that by the power of the Holy Sacrifice (Holy Mass), I pray to Jesus. From the holiness of all our lives,",
       "hi": "कि पवित्र बलिदान (पवित्र मास) की शक्ति से, मैं यीशु से प्रार्थना करता हूँ। हमारे समस्त जीवन की पवित्रता से,",
       "ta": "பரிசுத்த பலியின் (புனித திருப்பலி) சக்தியால், நான் இயேசுவிடம் பிரார்த்தனை செய்கிறேன். நம் அனைவரின் வாழ்வின் பரிசுத்தத்திலிருந்து,",
-      "bn": "পবিত্র পবিত্র বলিদানদানের (পবিত্র মাস) শক্তিতে, আমি যীশুর কাছে প্রার্থনা করি। আমাদের সকলের জীবনের পবিত্রতা থেকে,",
-      "te": "(పవిత్ర పరిశుద్ధ బలి (పవిత్ర ప్రార్థన) శక్తితో, నేను యేసును ప్రార్థిస్తున్నాను. మనందరి జీవితాల పవిత్రత నుండి,",
+      "bn": "পবিত্র পবিত্র পবিত্র বলিদানদানদানের (পবিত্র মাস) শক্তিতে, আমি যীশুর কাছে প্রার্থনা করি। আমাদের সকলের জীবনের পবিত্রতা থেকে,",
+      "te": "(పవిత్ర పరిశుద్ధ పరిశుద్ధ బలి (పవిత్ర ప్రార్థన) శక్తితో, నేను యేసును ప్రార్థిస్తున్నాను. మనందరి జీవితాల పవిత్రత నుండి,",
       "mr": "की पवित्र बलिदानाच्या (पवित्र मास) सामर्थ्याने, मी येशूला प्रार्थना करतो. आपल्या सर्व जीवनाच्या पवित्रतेतून,",
       "fr": "Par la puissance du Saint Sacrifice (Sainte Messe), je prie Jésus. De la sainteté de toute notre vie,",
       "es": "Que por el poder del Santo Sacrificio (Santa Misa), ruego a Jesús. Desde la santidad de todas nuestras vidas,",
