@@ -443,14 +443,14 @@ export function speechUnits(text, lang) {
 text.split(/\s+/).forEach(word => {
   let u = 1;
 
-  // Telugu/Kannada words are longer but spoken faster
-  if (!isIndic) {
-    if (word.length >= 8) u += 0.3;
-    if (word.length >= 12) u += 0.5;
-  } else {
-    // Indic: very small length penalty
-    if (word.length >= 10) u += 0.1;
-  }
+  // // Telugu/Kannada words are longer but spoken faster
+  // if (!isIndic) {
+  //   if (word.length >= 8) u += 0.3;
+  //   if (word.length >= 12) u += 0.5;
+  // } else {
+  //   // Indic: very small length penalty
+  //   if (word.length >= 10) u += 0.1;
+  // }
 
   // Numbers are slower in Indic, but not by much
   if (/\d/.test(word)) u += isIndic ? 0.15 : 0.6;
