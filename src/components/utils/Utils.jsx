@@ -420,8 +420,8 @@ export function speechUnits(text, lang) {
     }
 
     // long words (Indian & Romance languages benefit a lot from this)
-    if (word.length >= 8) u += 0.3;
-    if (word.length >= 12) u += 0.5;
+    if (word.length >= 8) u += 0.6;
+    if (word.length >= 12) u += 0.8;
 
     // proper names
     if (/^[A-Z][a-z]+/.test(word)) u += 0.15;
