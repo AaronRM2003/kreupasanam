@@ -463,7 +463,6 @@ export function speechUnits(text, lang) {
     if (word.length >= 8) u += 0.3;
 
     if (word.length >= 12) u += 0.5;
-    if (word.length >= 15) u += 0.7;
     // proper names
 
     if (/^[A-Z][a-z]+/.test(word)) u += 0.15;
