@@ -506,6 +506,11 @@ utterance.onend = () => {
   if (unitCount < 2) return;
 
   const overrun = actualDuration - duration;
+  console.log("⏱️ SPEECH END", {
+    actualDuration,
+    duration,
+    overrun,
+  });
 
   if (overrun > 0.12 && duration > 3) {
     carryOverDebtRef.current = Math.min(
