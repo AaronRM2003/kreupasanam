@@ -435,8 +435,8 @@ export function speechUnits(text, lang) {
 
     if (lang === "kn" || lang === "te" || lang === "ta") {
       // agglutinative / compound-heavy
-      if (word.length >= 8) u += 0.2;
-      if (word.length >= 12) u += 0.3;
+      if (word.length >= 8) u += 0.3;
+      if (word.length >= 12) u += 0.4;
     }
     const isIndic = ["te","kn","ta","ml","bn","mr"].includes(lang);
 
@@ -458,8 +458,8 @@ text.split(/\s+/).forEach(word => {
   units += u;
 });
 if (isIndic) {
-  units += (text.match(/,/g) || []).length * 0.25;
-  units += (text.match(/[.!?]/g) || []).length * 0.35;
+  units += (text.match(/,/g) || []).length * 0.3;
+  units += (text.match(/[.!?]/g) || []).length * 0.4;
 } else {
   units += (text.match(/,/g) || []).length * 0.4;
 }
