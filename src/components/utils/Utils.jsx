@@ -441,8 +441,8 @@ export function speechUnits(text, lang) {
     const isIndic = ["te","kn","ta","ml","bn","mr"].includes(lang);
 
 if (isIndic) {
-  units += (text.match(/,/g) || []).length * 0.25;
-  units += (text.match(/[.!?]/g) || []).length * 0.55;
+  units += (text.match(/,/g) || []).length * 0.15;
+  units += (text.match(/[.!?]/g) || []).length * 0.25;
 } else {
   units += (text.match(/,/g) || []).length * 0.4;
 }
