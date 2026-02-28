@@ -433,7 +433,7 @@ export function speechUnits(text, lang) {
       if (numberWords.has(lower)) u += 0.2;
     }
 
-    if (lang === "kn" || lang === "te") {
+    if (lang === "kn" || lang === "te" || lang === "ta") {
       // agglutinative / compound-heavy
       if (word.length >= 8) u += 0.2;
       if (word.length >= 12) u += 0.3;
