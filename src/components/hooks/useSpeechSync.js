@@ -562,7 +562,7 @@ utterance.onend = () => {
 
   // Penalize persistent overruns
   if (carryOverDebtRef.current > 0.25) {
-    updatedWps *= 0.96;
+    updatedWps *= 0.85;
   }
 
 updatedWps = Math.max(
