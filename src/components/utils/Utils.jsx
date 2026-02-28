@@ -380,76 +380,74 @@ function estimateIndicUnits(text) {
 export function speechUnits(text, lang) {
   if (!text) return 0;
 
-  // ---- CJK languages (character-timed) ----
+  // ---- Character-timed languages ----
   if (lang === "ja" || lang === "ko" || lang === "zh") {
     let units = text.length * 0.9;
     units += (text.match(/[、，,]/g) || []).length * 0.4;
     return units;
   }
 
+  const isIndic = ["ta","te","kn","ml","bn","mr","hi"].includes(lang);
   let units = 0;
-  
-  // Grouping Indic languages by structure
-  const isDravidian = ["ta", "te", "kn", "ml"].includes(lang);
-  const isIndicIndoAryan = ["hi", "bn", "mr"].includes(lang);
-  const isIndic = isDravidian || isIndicIndoAryan;
 
   const numberWords = new Set([
     "one","two","three","four","five","six","seven","eight","nine","ten",
     "first","second","third","fourth","fifth","sixth","seventh","eighth","ninth","tenth"
   ]);
 
-  // ---- Word-based languages ----
-  // We use exactly ONE clean loop to avoid duplicate/nested multiplication bugs
+  // ---- Word / syllable units ----
   text.split(/\s+/).forEach(word => {
     let u = 1;
     const lower = word.toLowerCase();
 
-    // Digits & English number words
-    if (/\d/.test(word) || numberWords.has(lower)) {
-      u += isIndic ? 0.2 : 0.6;
-    }
-
-    // Tens and Large numbers (Non-Indic)
-    if (/(twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety)/.test(lower)) u += 0.8;
-    if (/(hundred|thousand|million)/.test(lower)) u += 1.0;
-
-    // Romance languages
-    if (lang === "fr" || lang === "es") {
-      if (/(vingt|trente|quarante|cinquante|soixante|soixante-dix|quatre-vingt|quatre-vingt-dix)/.test(lower)) u += 0.7;
-      if (/(treinta|cuarenta|cincuenta|sesenta|setenta|ochenta|noventa)/.test(lower)) u += 0.7;
-    }
-
-    // ---- Length Penalties ----
-    if (isDravidian) {
-      // Dravidian heavily glues words. We must add strong progressive penalties
-      // so long compound words accurately represent their spoken length.
-      if (word.length >= 8) u += 0.3;
-      if (word.length >= 12) u += 0.5;
-      if (word.length >= 16) u += 0.7; // Catch massive agglutinative words
-    } else if (isIndicIndoAryan) {
-      // Hindi/Marathi/Bengali use spaces more often, smaller penalty needed
-      if (word.length >= 10) u += 0.15;
+    if (isIndic) {
+      // Indic languages: long words ≠ slow speech
+      if (word.length >= 10) u += 0.1;
+      if (/\d/.test(word)) u += 0.15;
     } else {
-      // English / European languages
+      // English / Romance
       if (word.length >= 8) u += 0.3;
       if (word.length >= 12) u += 0.5;
-      if (/^[A-Z][a-z]+/.test(word)) u += 0.15; // proper names
+      if (/\d/.test(word)) u += 0.6;
+
+      if (numberWords.has(lower)) u += 0.6;
+
+      if (/(twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety)/.test(lower)) {
+        u += 0.8;
+      }
+
+      if (/(hundred|thousand|million)/.test(lower)) {
+        u += 1.0;
+      }
+
+      // Proper names (English only)
+      if (/^[A-Z][a-z]+/.test(word)) u += 0.15;
+    }
+
+    // ---- Romance languages ----
+    if (!isIndic && (lang === "fr" || lang === "es")) {
+      if (/(vingt|trente|quarante|cinquante|soixante|quatre-vingt)/.test(lower)) {
+        u += 0.7;
+      }
+      if (/(treinta|cuarenta|cincuenta|sesenta|setenta|ochenta|noventa)/.test(lower)) {
+        u += 0.7;
+      }
     }
 
     units += u;
   });
 
-  // ---- Punctuation pauses ----
+  // ---- Pause model ----
   if (isIndic) {
-    units += (text.match(/,/g) || []).length * 0.25;
-    units += (text.match(/[.!?]/g) || []).length * 0.35;
+    units += (text.match(/,/g) || []).length * 0.2;
+    units += (text.match(/[.!?]/g) || []).length * 0.25;
+    units += (text.match(/:/g) || []).length * 0.25;
   } else {
     units += (text.match(/,/g) || []).length * 0.4;
+    units += (text.match(/[.!?]/g) || []).length * 0.45;
+    units += (text.match(/:/g) || []).length * 0.5;
+    units += (text.match(/[—–-]/g) || []).length * 0.3;
   }
-  
-  units += (text.match(/:/g) || []).length * 0.5;
-  units += (text.match(/[—–-]/g) || []).length * 0.3;
 
   return units;
 }

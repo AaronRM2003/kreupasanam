@@ -405,7 +405,7 @@ if (
     // --------------------
     // Margin model
     // --------------------
-    const speechMargin = 0.06;
+    const speechMargin = 0.035;
     const translationMargin = Math.min(0.08, translationDelay * 0.05);
     let margin = speechMargin + translationMargin;
     if (isShort) {
