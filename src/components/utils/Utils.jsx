@@ -376,84 +376,205 @@ function estimateIndicUnits(text) {
   // Count Unicode syllabic clusters
   return (text.match(/[\u0C80-\u0CFF\u0C00-\u0C7F\u0B80-\u0BFF\u0D00-\u0D7F]/g) || []).length / 2;
 }
-const graphemeSegmenter =
-  typeof Intl !== "undefined" && Intl.Segmenter
-    ? new Intl.Segmenter(undefined, { granularity: "grapheme" })
-    : null;
-
-function graphemeCount(text) {
-  if (!graphemeSegmenter) return Array.from(text).length;
-  return [...graphemeSegmenter.segment(text)].length;
-}
 
 export function speechUnits(text, lang) {
+
   if (!text) return 0;
+
+
+
+  // ---- CJK languages (character-timed) ----
+
+  // Japanese, Korean (Chinese handled similarly if added later)
+
+ if (lang === "ja" || lang === "ko" || lang === "zh") {
+
+    let units = text.length * 0.9;
+
+
+
+    const commaCount = (text.match(/[、，,]/g) || []).length;
+
+    units += commaCount * 0.4;
+
+
+
+    return units;
+
+  }
+
+
 
   let units = 0;
 
-  // ---- CJK (character timed) ----
-  if (lang === "ja" || lang === "ko" || lang === "zh") {
-    units += text.length * 0.9;
-    units += (text.match(/[、，,]/g) || []).length * 0.4;
-    return units;
-  }
 
-  const words = text.split(/\s+/);
-  const isIndic = ["ta", "ml", "te", "kn", "hi", "mr", "bn"].includes(lang);
 
-  for (const word of words) {
+  const numberWords = new Set([
+
+    "one","two","three","four","five","six","seven","eight","nine","ten",
+
+    "first","second","third","fourth","fifth","sixth","seventh","eighth","ninth","tenth"
+
+  ]);
+
+
+
+  // ---- Word-based languages ----
+
+  text.split(/\s+/).forEach(word => {
+
     let u = 1;
 
-    // ---- Tamil & Malayalam (grapheme timed) ----
-    if (lang === "ta" || lang === "ml") {
-      const g = graphemeCount(word);
+    const lower = word.toLowerCase();
 
-      // main timing driver
-      u += g * 0.18;
 
-      // very light long-word penalty
-      if (g > 12) u += 0.2;
-      if (g > 18) u += 0.3;
+
+    // digits
+
+    if (/\d/.test(word)) u += 0.6;
+
+
+
+    // English number words
+
+    if (numberWords.has(lower)) u += 0.6;
+
+
+
+    // tens (English / French / Spanish)
+
+    if (/(twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety)/.test(lower)) {
+
+      u += 0.8;
 
     }
 
-    // ---- Telugu / Kannada ----
-    else if (lang === "te" || lang === "kn") {
-      const g = graphemeCount(word);
-      u += g * 0.15;
-      if (g > 14) u += 0.25;
+
+
+    // large number words
+
+    if (/(hundred|thousand|million)/.test(lower)) {
+
+      u += 1.0;
+
+    }
+    // long words (Indian & Romance languages benefit a lot from this)
+
+    if (word.length >= 8) u += 0.3;
+
+    if (word.length >= 12) u += 0.5;
+    if (word.length >= 15) u += 0.7;
+    // proper names
+
+    if (/^[A-Z][a-z]+/.test(word)) u += 0.15;
+    // ---- Indian language tweaks ----
+
+    if (lang === "hi" || lang === "mr" || lang === "bn") {
+
+      // syllable-timed, numbers are slower
+
+      if (/\d/.test(word)) u += 0.2;
+
+      if (numberWords.has(lower)) u += 0.2;
+
+    }
+    if (lang === "kn" || lang === "te") {
+
+      // agglutinative / compound-heavy
+
+      if (word.length >= 8) u += 0.2;
+
+      if (word.length >= 12) u += 0.3;
+
     }
 
-    // ---- Hindi / Marathi / Bengali ----
-    else if (lang === "hi" || lang === "mr" || lang === "bn") {
-      u += word.length >= 8 ? 0.25 : 0;
-    }
+    const isIndic = ["te","kn","ta","ml","bn","mr"].includes(lang);
+text.split(/\s+/).forEach(word => {
 
-    // ---- English & Romance ----
-    else {
-      if (word.length >= 8) u += 0.3;
-      if (word.length >= 12) u += 0.5;
-      if (word.length >= 15) u += 0.7;
-    }
+  let u = 1;
+  // Telugu/Kannada words are longer but spoken faster
 
-    // ---- Numbers ----
-    if (/\d/.test(word)) {
-      u += isIndic ? 0.35 : 0.6;
-    }
+  if (!isIndic) {
 
-    units += u;
+    if (word.length >= 8) u += 0.3;
+
+    if (word.length >= 12) u += 0.5;
+
+  } else {
+
+    // Indic: very small length penalty
+
+    if (word.length >= 10) u += 0.5;
+
   }
+  // Numbers are slower in Indic, but not by much
+
+  if (/\d/.test(word)) u += isIndic ? 0.35 : 0.6;
+
+
+
+  units += u;
+
+});
+
+if (isIndic) {
+
+  units += (text.match(/,/g) || []).length * 0.35;
+
+  units += (text.match(/[.!?]/g) || []).length * 0.50;
+
+} else {
+
+  units += (text.match(/,/g) || []).length * 0.4;
+
+}
+    // ---- Romance languages ----
+
+    if (lang === "fr" || lang === "es") {
+
+      // smoother but number words are long
+
+      if (/(vingt|trente|quarante|cinquante|soixante|soixante-dix|quatre-vingt|quatre-vingt-dix)/.test(lower)) {
+
+        u += 0.7;
+
+      }
+
+      if (/(treinta|cuarenta|cincuenta|sesenta|setenta|ochenta|noventa)/.test(lower)) {
+
+        u += 0.7;
+
+      }
+
+    }
+    units += u;
+
+  });
+
+
 
   // ---- Punctuation pauses ----
-  if (isIndic) {
-    units += (text.match(/,/g) || []).length * 0.35;
-    units += (text.match(/[.!?]/g) || []).length * 0.5;
-  } else {
-    units += (text.match(/,/g) || []).length * 0.4;
-    units += (text.match(/[.!?]/g) || []).length * 0.6;
-  }
+
+  const commaCount = (text.match(/,/g) || []).length;
+
+  units += commaCount * 0.4;
+
+
+
+  const colonCount = (text.match(/:/g) || []).length;
+
+  units += colonCount * 0.5;
+
+
+
+  const dashCount = (text.match(/[—–-]/g) || []).length;
+
+  units += dashCount * 0.3;
+
+
 
   return units;
+
 }
 
 // Generate share text snippet for testimony preview

@@ -250,18 +250,12 @@ function computeAdjustedPlaybackRate({
   const rawRate = unitCount / duration;
   const target = Math.max(
     0,
-    Math.min(1, Math.pow(baselineWps / rawRate, 0.75) - margin)
+    Math.min(1, baselineWps / rawRate - margin)
   );
   if (duration <= 3) {
     lastRateRef.current = target;
     return target;
   }
-  console.log({
-  baselineWps,
-  rawRate,
-  linear: baselineWps / rawRate,
-  curved: Math.pow(baselineWps / rawRate, 0.75)
-});
 
   const last = lastRateRef.current;
 
