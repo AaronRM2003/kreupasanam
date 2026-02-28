@@ -380,114 +380,86 @@ function estimateIndicUnits(text) {
 export function speechUnits(text, lang) {
   if (!text) return 0;
 
-  // ---- CJK languages (character-timed) ----
-  // Japanese, Korean (Chinese handled similarly if added later)
- if (lang === "ja" || lang === "ko" || lang === "zh") {
+  // ---- CJK languages (Character-timed) ----
+  if (["ja", "ko", "zh"].includes(lang)) {
     let units = text.length * 0.9;
+    units += (text.match(/[、，,]/g) || []).length * 0.4;
+    return units;
+  }
 
-    const commaCount = (text.match(/[、，,]/g) || []).length;
-    units += commaCount * 0.4;
+  // ---- Dravidian / Agglutinative languages ----
+  // Tamil, Telugu, Kannada, Malayalam
+  // Because spaces are sparse, calculating by word count severely underestimates speaking time.
+  // Calculating by Unicode character length is much more accurate here.
+  if (["ta", "te", "kn", "ml"].includes(lang)) {
+    // A multiplier of ~0.22 to 0.25 per character roughly equals standard word-based timing.
+    // Tweak this multiplier up if they are STILL missing deadlines, or down if they finish too fast.
+    let units = text.length * 0.24; 
+
+    // Numbers take longer to pronounce in Indic languages
+    const digitsCount = (text.match(/\d/g) || []).length;
+    units += digitsCount * 0.5;
+
+    // Punctuation pauses
+    units += (text.match(/,/g) || []).length * 0.25;
+    units += (text.match(/[.!?]/g) || []).length * 0.35;
+    units += (text.match(/[-—–:]/g) || []).length * 0.3;
 
     return units;
   }
 
+  // ---- Word-based languages (English, Romance, Indo-Aryan) ----
   let units = 0;
-
   const numberWords = new Set([
     "one","two","three","four","five","six","seven","eight","nine","ten",
     "first","second","third","fourth","fifth","sixth","seventh","eighth","ninth","tenth"
   ]);
 
-  // ---- Word-based languages ----
+  const isIndicIndoAryan = ["hi", "bn", "mr"].includes(lang);
+
   text.split(/\s+/).forEach(word => {
-    let u = 1;
+    let u = 1; // Base unit for a space-separated word
     const lower = word.toLowerCase();
 
-    // digits
-    if (/\d/.test(word)) u += 0.6;
+    // Digits
+    if (/\d/.test(word)) {
+      u += isIndicIndoAryan ? 0.2 : 0.6;
+    }
 
     // English number words
-    if (numberWords.has(lower)) u += 0.6;
-
-    // tens (English / French / Spanish)
-    if (/(twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety)/.test(lower)) {
-      u += 0.8;
+    if (numberWords.has(lower)) {
+      u += isIndicIndoAryan ? 0.2 : 0.6;
     }
 
-    // large number words
-    if (/(hundred|thousand|million)/.test(lower)) {
+    // Tens & Large Numbers (English / French / Spanish)
+    if (/(twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand|million)/.test(lower)) {
       u += 1.0;
     }
-
-    // long words (Indian & Romance languages benefit a lot from this)
-    if (word.length >= 8) u += 0.3;
-    if (word.length >= 12) u += 0.5;
-
-    // proper names
-    if (/^[A-Z][a-z]+/.test(word)) u += 0.15;
-
-    // ---- Indian language tweaks ----
-    if (lang === "hi" || lang === "mr" || lang === "bn") {
-      // syllable-timed, numbers are slower
-      if (/\d/.test(word)) u += 0.2;
-      if (numberWords.has(lower)) u += 0.2;
+    if (["fr", "es"].includes(lang)) {
+      if (/(vingt|trente|quarante|cinquante|soixante|soixante-dix|quatre-vingt|quatre-vingt-dix)/.test(lower)) u += 0.7;
+      if (/(treinta|cuarenta|cincuenta|sesenta|setenta|ochenta|noventa)/.test(lower)) u += 0.7;
     }
 
-    if (lang === "kn" || lang === "te") {
-      // agglutinative / compound-heavy
-      if (word.length >= 8) u += 0.2;
-      if (word.length >= 12) u += 0.3;
-    }
-    const isIndic = ["te","kn","ta","ml","bn","mr"].includes(lang);
-
-text.split(/\s+/).forEach(word => {
-  let u = 1;
-
-  // Telugu/Kannada words are longer but spoken faster
-  if (!isIndic) {
-    if (word.length >= 8) u += 0.3;
-    if (word.length >= 12) u += 0.5;
-  } else {
-    // Indic: very small length penalty
-    if (word.length >= 10) u += 0.1;
-  }
-
-  // Numbers are slower in Indic, but not by much
-  if (/\d/.test(word)) u += isIndic ? 0.15 : 0.6;
-
-  units += u;
-});
-if (isIndic) {
-  units += (text.match(/,/g) || []).length * 0.25;
-  units += (text.match(/[.!?]/g) || []).length * 0.35;
-} else {
-  units += (text.match(/,/g) || []).length * 0.4;
-}
-
-
-    // ---- Romance languages ----
-    if (lang === "fr" || lang === "es") {
-      // smoother but number words are long
-      if (/(vingt|trente|quarante|cinquante|soixante|soixante-dix|quatre-vingt|quatre-vingt-dix)/.test(lower)) {
-        u += 0.7;
-      }
-      if (/(treinta|cuarenta|cincuenta|sesenta|setenta|ochenta|noventa)/.test(lower)) {
-        u += 0.7;
-      }
+    // Long word penalties (Skip for Indic as length is handled differently or naturally slower)
+    if (!isIndicIndoAryan) {
+      if (word.length >= 8) u += 0.3;
+      if (word.length >= 12) u += 0.5;
+    } else {
+      if (word.length >= 10) u += 0.1;
     }
 
     units += u;
   });
 
-  // ---- Punctuation pauses ----
-  const commaCount = (text.match(/,/g) || []).length;
-  units += commaCount * 0.4;
-
-  const colonCount = (text.match(/:/g) || []).length;
-  units += colonCount * 0.5;
-
-  const dashCount = (text.match(/[—–-]/g) || []).length;
-  units += dashCount * 0.3;
+  // ---- Punctuation pauses for Word-based languages ----
+  if (isIndicIndoAryan) {
+    units += (text.match(/,/g) || []).length * 0.25;
+    units += (text.match(/[.!?]/g) || []).length * 0.35;
+  } else {
+    units += (text.match(/,/g) || []).length * 0.4;
+  }
+  units += (text.match(/:/g) || []).length * 0.5;
+  units += (text.match(/[—–-]/g) || []).length * 0.3;
 
   return units;
 }
