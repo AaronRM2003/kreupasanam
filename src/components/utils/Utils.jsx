@@ -440,29 +440,12 @@ export function speechUnits(text, lang) {
     }
     const isIndic = ["te","kn","ta","ml","bn","mr"].includes(lang);
 
-text.split(/\s+/).forEach(word => {
-  let u = 1;
-
-  // Telugu/Kannada words are longer but spoken faster
-  if (!isIndic) {
-    if (word.length >= 8) u += 0.3;
-    if (word.length >= 12) u += 0.5;
-  } else {
-    // Indic: very small length penalty
-    if (word.length >= 10) u += 0.1;
-  }
-
-  // Numbers are slower in Indic, but not by much
-  if (/\d/.test(word)) u += isIndic ? 0.15 : 0.6;
-
-  units += u;
-});
-if (isIndic) {
-  units += (text.match(/,/g) || []).length * 0.25;
-  units += (text.match(/[.!?]/g) || []).length * 0.35;
-} else {
-  units += (text.match(/,/g) || []).length * 0.4;
-}
+// if (isIndic) {
+//   units += (text.match(/,/g) || []).length * 0.25;
+//   units += (text.match(/[.!?]/g) || []).length * 0.35;
+// } else {
+//   units += (text.match(/,/g) || []).length * 0.4;
+// }
 
 
     // ---- Romance languages ----
