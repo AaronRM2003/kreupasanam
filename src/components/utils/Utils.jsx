@@ -446,7 +446,7 @@ text.split(/\s+/).forEach(word => {
   // Telugu/Kannada words are longer but spoken faster
   if (!isIndic) {
     if (word.length >= 8) u += 0.3;
-    if (word.length >= 12) u += 0.5;
+    if (word.length >= 12) u += 0.6;
   } else {
     // Indic: very small length penalty
     if (word.length >= 10) u += 0.1;
