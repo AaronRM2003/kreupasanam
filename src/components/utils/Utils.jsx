@@ -433,19 +433,19 @@ export function speechUnits(text, lang) {
       if (numberWords.has(lower)) u += 0.2;
     }
 
-    if (lang === "kn" || lang === "te") {
+    if (lang === "kn" || lang === "te" || lang === "ta") {
       // agglutinative / compound-heavy
       if (word.length >= 8) u += 0.2;
       if (word.length >= 12) u += 0.3;
     }
     const isIndic = ["te","kn","ta","ml","bn","mr"].includes(lang);
 
-// if (isIndic) {
-//   units += (text.match(/,/g) || []).length * 0.25;
-//   units += (text.match(/[.!?]/g) || []).length * 0.35;
-// } else {
-//   units += (text.match(/,/g) || []).length * 0.4;
-// }
+if (isIndic) {
+  units += (text.match(/,/g) || []).length * 0.25;
+  units += (text.match(/[.!?]/g) || []).length * 0.55;
+} else {
+  units += (text.match(/,/g) || []).length * 0.4;
+}
 
 
     // ---- Romance languages ----
@@ -464,7 +464,7 @@ export function speechUnits(text, lang) {
 
   // ---- Punctuation pauses ----
   const commaCount = (text.match(/,/g) || []).length;
-  units += commaCount * 0.4;
+  units += commaCount * 0.5;
 
   const colonCount = (text.match(/:/g) || []).length;
   units += colonCount * 0.5;
