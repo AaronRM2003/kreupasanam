@@ -373,7 +373,7 @@ if (
 
     const voiceURI = localStorage.getItem(effectiveLang);
     const testKey = `tts_test_${effectiveLang}`;
-    const learnedKey = `voice_learned_wps_${effectiveLang}`;
+    const learnedKey = `tts_learned_wps_${effectiveLang}`;
 
     // 1️⃣ Load tested WPS
     try {
@@ -539,10 +539,10 @@ if (overrun < -0.3 && carryOverDebtRef.current > 0) {
   // --------------------
   // Load learned state FIRST
   // --------------------
-  const learnedKey = `voice_learned_wps_${effectiveLang}`;
+  const learnedKey = `tts_learned_wps_${effectiveLang}`;
   let learnedData = {};
 
-  const samplesKey = `voice_learned_samples_${effectiveLang}`;
+  const samplesKey = `tts_learned_samples_${effectiveLang}`;
 
   let samplesData = {};
   try {

@@ -427,6 +427,7 @@ function shortCode(langTag) {
 
   // Start the voice test reading and measure speed
   const startAccurateVoiceTest = (testSentence) => {
+    
   let sentence = (testSentence || "").trim();
 
   // ✅ If base language is not English, always use predefined sentence
@@ -712,8 +713,8 @@ function shortCode(langTag) {
           alreadyTested={tested}
           onRetest={() => {
   const testKey = `tts_test_${effectiveLang}`;
-  const learnedKey = `voice_learned_wps_${effectiveLang}`;
-  const samplesKey = `voice_learned_samples_${effectiveLang}`;
+  const learnedKey = `tts_learned_wps_${effectiveLang}`;
+  const samplesKey = `tts_learned_samples_${effectiveLang}`;
   const voiceURI = testVoice?.voiceURI;
 
   if (!voiceURI) return;
