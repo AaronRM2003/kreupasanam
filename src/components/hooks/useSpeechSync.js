@@ -438,6 +438,16 @@ if (
       if (isShort) minRate = 0.85;
       if (duration <= 2) minRate = 0.9;
       if (duration <= 1.5) minRate = 0.95;
+      console.log("🔢 RATE DEBUG", {
+  baselineWps: baselineWps.toFixed(1),
+  unitCount,
+  duration: duration.toFixed(2),
+  margin: margin.toFixed(3),
+  rawRate: (unitCount / duration).toFixed(2),
+  target: (baselineWps / (unitCount / duration) - margin).toFixed(3),
+  computed: rate.toFixed(3),
+  lastRate: lastAdjustedRateRef.current.toFixed(3)
+});
 
       playerRef.current.setPlaybackRate(
         Math.max(minRate, Math.min(maxRate, rate))
