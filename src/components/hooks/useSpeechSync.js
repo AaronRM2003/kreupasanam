@@ -365,7 +365,7 @@ if (
     // --------------------
     // Speech units
     // --------------------
-    let baselineWps = 80;
+    let baselineWps = 5.5;
 
     // --------------------
     // Load baseline WPS
