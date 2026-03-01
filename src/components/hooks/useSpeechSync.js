@@ -460,7 +460,10 @@ if (
     // --------------------
 const utterance = new SpeechSynthesisUtterance(text);
 let wasCancelled = false;
+let speechStart = 0;
+
 utterance.onstart = () => {
+   speechStart = performance.now();
   
     hasStartedSpeakingRef.current = true; // 🔥 REQUIRED
     lastSpokenRef.current = text;
@@ -498,8 +501,6 @@ utterance.onpause = () => {
 };
 
 // ✅ capture start time immediately after creation
-const speechStart = performance.now();
-
 // ✅ attach learning ONLY on successful end
 utterance.onend = () => {
   if (wasCancelled) return;
@@ -557,7 +558,7 @@ utterance.onend = () => {
   const ratio = observedWps / prev;
 
   // Reject anomalies
-  if (ratio < 0.6 || ratio > 1.6) return;
+  if (ratio < 0.75 || ratio > 1.35) return;
 
   // Weight long samples more
   const durationWeight = Math.min(1.0, actualDuration / 6);
@@ -576,8 +577,8 @@ utterance.onend = () => {
   }
 
 updatedWps = Math.max(
-  40,    // lower bound
-  Math.min(140, updatedWps)
+  3.5,    // lower bound
+  Math.min(8.5, updatedWps)
 );
   // --------------------
   // Save

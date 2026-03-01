@@ -383,49 +383,94 @@ const graphemeSegmenter =
     : null;
 
 function graphemeCount(text) {
+  if (!text) return 0;
   if (!graphemeSegmenter) return Array.from(text).length;
   return [...graphemeSegmenter.segment(text)].length;
 }
 
-export function speechUnits(text, lang) {
+// Cheap heuristic for Latin-like syllable estimate (not perfect, but good enough)
+function estimateSyllablesLatin(word) {
+  const w = (word || "")
+    .toLowerCase()
+    .replace(/[^a-zà-öø-ÿyœæ]/g, ""); // allow common latin-1 letters
+  if (!w) return 0;
+  if (w.length <= 3) return 1;
+  // strip common silent endings that inflate vowel groups
+  const stripped = w.replace(/(?:e|es|ed|le)$/i, "");
+  const groups = stripped.match(/[aeiouy]{1,2}/gi);
+  return Math.max(1, groups ? groups.length : 1);
+}
+
+/**
+ * speechUnits(text, lang)
+ *
+ * - Returns a syllable-like "unit" count suitable for computing units/sec.
+ * - Invariant: typical results for natural speech are in the 3.5–8.5 units/sec range (units are modelled, not raw chars).
+ */
+export function speechUnits(text = "", lang = "en-US") {
   if (!text) return 0;
 
-  let units = 0;
-  const baseLang = lang.split("-")[0];
+  const baseLang = (lang || "en").split("-")[0].toLowerCase();
 
-  // CJK unchanged
-  if (baseLang === "ja" || baseLang === "ko" || baseLang === "zh") {
-    return text.length * 1.1 + (text.match(/[、，,]/g) || []).length * 0.5;
+  // ---- CJK: character-timed (use grapheme count, add pause-for-commas)
+  if (["ja", "ko", "zh"].includes(baseLang)) {
+    const chars = graphemeCount(text);
+    const commaPauses = (text.match(/[、，,]/g) || []).length;
+    const sentPauses = (text.match(/[。？！!?]/g) || []).length;
+    // tuned constants: chars contribute less than syllables but more than single-word base
+    const units = chars * 0.45 + commaPauses * 0.9 + sentPauses * 1.2;
+    return Math.max(1, Math.round(units * 100) / 100);
   }
 
-  const words = text.split(/\s+/).filter(Boolean);
-  const isIndic = ["ta", "ml", "te", "kn", "hi", "mr", "bn"].includes(baseLang);
+  // split by whitespace for most languages; we'll cap per-word contribution later
+  const words = (text || "").split(/\s+/).filter(Boolean);
 
-  for (const word of words) {
+  // language families
+  const isIndic = ["ta", "ml", "te", "kn", "hi", "mr", "bn"].includes(baseLang);
+  // you can extend isSyllableRich to other languages if you want slightly different tuning
+  const isLatinLike = /[A-Za-zÀ-ÿ]/.test(text);
+
+  let units = 0;
+
+  for (const rawWord of words) {
+    const word = rawWord.trim();
+    if (!word) continue;
+
+    // base cost for any spoken "word chunk"
     let u = 1;
 
-    // 🔥 UNIVERSAL BASE SCALING (FIXES ALL LANGUAGES)
-    u += word.length * 0.35;  // "quick"(5) = +1.75, Tamil(10 chars) = +3.5
-    
-    // Language-specific boosts (ON TOP OF base scaling)
-    if (baseLang === "ta" || baseLang === "ml") {
+    if (isIndic) {
+      // Indic: grapheme count approximates syllable count well.
+      // Cap per-word contribution to avoid one huge compound demolishing units.
       const g = graphemeCount(word);
-      u += g * 0.6;  // Additional syllable boost
-    } 
-    // ... other Indic rules
+      const capped = Math.min(g, 8); // cap: no single word contributes more than 8 grapheme units
+      u += capped * 0.45; // tuned multiplier (45% per grapheme)
+    } else if (isLatinLike) {
+      // Latin-like: estimate syllables instead of characters (avoids overcounting)
+      const syl = estimateSyllablesLatin(word);
+      u += syl * 0.6; // tuned multiplier per syllable
+    } else {
+      // Fallback: unknown script — gentle character weight with cap
+      const g = graphemeCount(word);
+      const capped = Math.min(g, 20);
+      u += capped * 0.12;
+    }
 
-    // Numbers
-    if (/\d/.test(word)) u += isIndic ? 0.6 : 0.9;
+    // numbers read out more slowly
+    if (/\d/.test(word)) {
+      u += isIndic ? 0.5 : 0.8;
+    }
 
     units += u;
   }
 
-  // Punctuation unchanged
-  // ...
+  // small extra unit for sentence-ending punctuation (pauses)
+  const sentencePauses = (text.match(/[.!?…]+/g) || []).length;
+  units += sentencePauses * 0.5;
 
-  return Math.max(1, units);
+  // round to 2 decimals, never less than 1
+  return Math.max(1, Math.round(units * 100) / 100);
 }
-
 
 
 // Generate share text snippet for testimony preview
