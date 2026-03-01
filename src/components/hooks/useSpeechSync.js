@@ -522,7 +522,13 @@ utterance.onend = () => {
     duration,
     overrun,
   });
-
+  // 🟢 Underrun cancels existing debt
+if (overrun < -0.3 && carryOverDebtRef.current > 0) {
+  carryOverDebtRef.current = Math.max(
+    0,
+    carryOverDebtRef.current + overrun // overrun is negative
+  );
+}
   if (overrun > 0.12 && duration > 3) {
     carryOverDebtRef.current = Math.min(
       0.6,
