@@ -711,20 +711,37 @@ function shortCode(langTag) {
           voices={systemVoices}
           alreadyTested={tested}
           onRetest={() => {
-            const testKey = `voice_test_${effectiveLang}`;
-            const storedData = localStorage.getItem(testKey);
+  const testKey = `voice_test_${effectiveLang}`;
+  const learnedKey = `voice_learned_wps_${effectiveLang}`;
+  const samplesKey = `voice_learned_samples_${effectiveLang}`;
+  const voiceURI = testVoice?.voiceURI;
 
-            if (storedData && testVoice?.voiceURI) {
-              try {
-                const parsed = JSON.parse(storedData);
-                delete parsed[testVoice.voiceURI];   // 🔑 remove only this voice
-                localStorage.setItem(testKey, JSON.stringify(parsed));
-              } catch {}
-            }
+  if (!voiceURI) return;
 
-            setAlreadyTested(false);
-            setIsLoadingTest(false);
-          }}
+  // 1️⃣ Remove tested WPS for this voice
+  try {
+    const stored = JSON.parse(localStorage.getItem(testKey) || "{}");
+    delete stored[voiceURI];
+    localStorage.setItem(testKey, JSON.stringify(stored));
+  } catch {}
+
+  // 2️⃣ Remove learned WPS for this voice
+  try {
+    const learned = JSON.parse(localStorage.getItem(learnedKey) || "{}");
+    delete learned[voiceURI];
+    localStorage.setItem(learnedKey, JSON.stringify(learned));
+  } catch {}
+
+  // 3️⃣ Remove learned sample count for this voice
+  try {
+    const samples = JSON.parse(localStorage.getItem(samplesKey) || "{}");
+    delete samples[voiceURI];
+    localStorage.setItem(samplesKey, JSON.stringify(samples));
+  } catch {}
+
+  setAlreadyTested(false);
+  setIsLoadingTest(false);
+}}
 
         />
       )}
