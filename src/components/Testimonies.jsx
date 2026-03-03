@@ -61,30 +61,28 @@ export function TestimonyCard({
   /* -----------------------------
      Convert IST time string
   ------------------------------*/
-  const timeLeft = useMemo(() => {
-    if (!expectedIn) return null;
+  const formattedReleaseTime = useMemo(() => {
+  if (!expectedIn) return null;
 
-    const [hours, minutes] = expectedIn.split(":").map(Number);
+  const [hours, minutes] = expectedIn.split(":").map(Number);
 
-    const now = new Date();
+  const now = new Date();
 
-    const istNow = new Date(
-      now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
-    );
+  const istNow = new Date(
+    now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
+  );
 
-    const target = new Date(istNow);
-    target.setHours(hours, minutes, 0, 0);
+  const target = new Date(istNow);
+  target.setHours(hours, minutes, 0, 0);
 
-    const diff = target - istNow;
-    if (diff <= 0) return null;
+  return target.toLocaleTimeString(lang || "en-IN", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+}, [expectedIn, lang]);
 
-    const hrs = Math.floor(diff / (1000 * 60 * 60));
-    const mins = Math.floor((diff / (1000 * 60)) % 60);
-
-    return { hrs, mins };
-  }, [expectedIn]);
-
-  const isComingSoon = !!timeLeft;
+  const isComingSoon = !!expectedIn;
 
   const handleCardClick = () => {
     if (!isComingSoon) {
@@ -96,87 +94,67 @@ export function TestimonyCard({
      Translations
   ------------------------------*/
   const translations = {
-    en: {
-      releasing: "Releasing in",
-      coming: "Coming Soon",
-      watch: "Watch Now",
-      loading: "Loading...",
-      hour: "h",
-      minute: "m",
-    },
-    hi: {
-      releasing: "जारी होगा",
-      coming: "जल्द आ रहा है",
-      watch: "अभी देखें",
-      loading: "लोड हो रहा है...",
-      hour: "घं",
-      minute: "मि",
-    },
-    ta: {
-      releasing: "வெளியிடப்படும்",
-      coming: "விரைவில்",
-      watch: "இப்போது பார்க்கவும்",
-      loading: "ஏற்றுகிறது...",
-      hour: "ம",
-      minute: "நி",
-    },
-    bn: {
-      releasing: "প্রকাশ হবে",
-      coming: "শীঘ্রই আসছে",
-      watch: "এখন দেখুন",
-      loading: "লোড হচ্ছে...",
-      hour: "ঘ",
-      minute: "মি",
-    },
-    te: {
-      releasing: "విడుదల అవుతుంది",
-      coming: "త్వరలో వస్తోంది",
-      watch: "ఇప్పుడు చూడండి",
-      loading: "లోడ్ అవుతోంది...",
-      hour: "గం",
-      minute: "ని",
-    },
-    mr: {
-      releasing: "लवकरच प्रकाशित होईल",
-      coming: "लवकरच येत आहे",
-      watch: "आता पहा",
-      loading: "लोड होत आहे...",
-      hour: "ता",
-      minute: "मि",
-    },
-    fr: {
-      releasing: "Sortie dans",
-      coming: "Bientôt disponible",
-      watch: "Regarder",
-      loading: "Chargement...",
-      hour: "h",
-      minute: "m",
-    },
-    es: {
-      releasing: "Se estrena en",
-      coming: "Próximamente",
-      watch: "Ver ahora",
-      loading: "Cargando...",
-      hour: "h",
-      minute: "m",
-    },
-    zh: {
-      releasing: "将在",
-      coming: "即将推出",
-      watch: "立即观看",
-      loading: "加载中...",
-      hour: "小时",
-      minute: "分钟",
-    },
-    kn: {
-      releasing: "ಬಿಡುಗಡೆಯಾಗುತ್ತದೆ",
-      coming: "ಶೀಘ್ರದಲ್ಲೇ ಬರುತ್ತಿದೆ",
-      watch: "ಈಗ ವೀಕ್ಷಿಸಿ",
-      loading: "ಲೋಡ್ ಆಗುತ್ತಿದೆ...",
-      hour: "ಗಂ",
-      minute: "ನಿ",
-    },
-  };
+  en: {
+    releasing: "Expected at",
+    coming: "Coming Soon",
+    watch: "Watch Now",
+    loading: "Loading...",
+  },
+  hi: {
+    releasing: "अपेक्षित समय",
+    coming: "जल्द आ रहा है",
+    watch: "अभी देखें",
+    loading: "लोड हो रहा है...",
+  },
+  ta: {
+    releasing: "எதிர்பார்க்கப்படும் நேரம்",
+    coming: "விரைவில்",
+    watch: "இப்போது பார்க்கவும்",
+    loading: "ஏற்றுகிறது...",
+  },
+  bn: {
+    releasing: "প্রত্যাশিত সময়",
+    coming: "শীঘ্রই আসছে",
+    watch: "এখন দেখুন",
+    loading: "লোড হচ্ছে...",
+  },
+  te: {
+    releasing: "అంచనా సమయం",
+    coming: "త్వరలో వస్తోంది",
+    watch: "ఇప్పుడు చూడండి",
+    loading: "లోడ్ అవుతోంది...",
+  },
+  mr: {
+    releasing: "अपेक्षित वेळ",
+    coming: "लवकरच येत आहे",
+    watch: "आता पहा",
+    loading: "लोड होत आहे...",
+  },
+  fr: {
+    releasing: "Prévu à",
+    coming: "Bientôt disponible",
+    watch: "Regarder",
+    loading: "Chargement...",
+  },
+  es: {
+    releasing: "Programado para",
+    coming: "Próximamente",
+    watch: "Ver ahora",
+    loading: "Cargando...",
+  },
+  zh: {
+    releasing: "预计时间",
+    coming: "即将推出",
+    watch: "立即观看",
+    loading: "加载中...",
+  },
+  kn: {
+    releasing: "ನಿರೀಕ್ಷಿತ ಸಮಯ",
+    coming: "ಶೀಘ್ರದಲ್ಲೇ ಬರುತ್ತಿದೆ",
+    watch: "ಈಗ ವೀಕ್ಷಿಸಿ",
+    loading: "ಲೋಡ್ ಆಗುತ್ತಿದೆ...",
+  },
+};
 
   const t = translations[lang] || translations.en;
 
@@ -211,11 +189,9 @@ export function TestimonyCard({
             <div className={styles.overlayText}>
               {t.releasing}
             </div>
-            <div className={styles.overlayTime}>
-              {timeLeft.hrs > 0
-                ? `${timeLeft.hrs}${t.hour} ${timeLeft.mins}${t.minute}`
-                : `${timeLeft.mins}${t.minute}`}
-            </div>
+           <div className={styles.overlayTime}>
+  {formattedReleaseTime}
+</div>
           </div>
         )}
       </div>

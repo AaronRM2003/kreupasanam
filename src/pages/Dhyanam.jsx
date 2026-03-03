@@ -284,7 +284,7 @@ if (errorLoading) {
             {dhyanam.length > 0 ? (
              dhyanam
               .sort((a, b) => new Date(b.date) - new Date(a.date)) // Sort by date descending
-              .map(({ id, title, video, date,duration }) => {
+              .map(({ id, title, video, date,duration,expectedIn }) => {
                 const thumbnail = getYouTubeThumbnail(video);
                 return (
                   <TestimonyCard
@@ -296,6 +296,7 @@ if (errorLoading) {
                     lang={lang}
                     duration={duration}
                     path={`${initialLang || 'en'}/dhyanam`}
+                    expectedIn={expectedIn}
                   />
                 );
               })

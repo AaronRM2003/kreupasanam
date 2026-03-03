@@ -80,7 +80,9 @@ export default function PrayersPage({ lang: initialLang }) {
   }, []);
 
   // Find the prayers item by id (converted to number)
-  const prayersItemsearch = prayers?.find(item => item.id === Number(id));
+  const prayersItemsearch = prayers?.find(
+  item => item.id === Number(id) && !item.expectedIn
+);
 
   // Function to slugify text
   function slugify(text) {

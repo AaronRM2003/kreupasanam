@@ -98,7 +98,7 @@ export default function DhyanamPage({ lang: initialLang }) {
   return () => obs.disconnect();
 }, []);
   // Find the dhyanam item by id (converted to number)
-  const dhyanamItemsearch = dhyanam?.find(item => item.id === Number(id));
+  const dhyanamItemsearch = dhyanam?.find(item => item.id === Number(id) && !item.expectedIn);
 
   // Function to slugify text (you already have this)
   function slugify(text) {
