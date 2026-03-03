@@ -282,8 +282,9 @@ if (errorLoading) {
         {allImagesLoaded && (
           <div className={styles.testimoniesGrid}>
             {prayers.length > 0 ? (
-             prayers.map(({ id, title, video, date,duration }) => {
+              prayers.map(({ id, title, video, date, duration, expectedIn }) => {
                 const thumbnail = getYouTubeThumbnail(video);
+
                 return (
                   <TestimonyCard
                     key={id}
@@ -293,6 +294,7 @@ if (errorLoading) {
                     date={date}
                     lang={lang}
                     duration={duration}
+                    expectedIn={expectedIn}   // 👈 just pass it
                     path={`${initialLang || 'en'}/prayers`}
                   />
                 );

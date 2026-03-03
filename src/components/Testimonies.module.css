@@ -36,6 +36,40 @@
     );
 }
 
+.blurEffect img {
+  filter: blur(5px) brightness(0.9);
+  transition: 0.3s ease;
+}
+
+.comingSoonOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.112),
+    rgba(0, 0, 0, 0.216)
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  backdrop-filter: blur(2px);
+}
+
+.overlayText {
+  font-size: 14px;
+  opacity: 0.85;
+  letter-spacing: 1px;
+}
+
+.overlayTime {
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+
 @media (max-width: 768px) {
 .testimoniesSection {
   margin-top: 6rem;
@@ -314,6 +348,7 @@
   background: linear-gradient(135deg, #246bfd, #00b3ff);
   padding: 0.65rem 1.6rem;
   border-radius: 30px;
+  border: none;
   text-decoration: none;
   box-shadow: 0 6px 16px rgba(36, 107, 253, 0.35);
   transition: all 0.3s ease;
