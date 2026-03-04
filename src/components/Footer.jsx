@@ -157,6 +157,14 @@ export default function Footer({ lang = 'en' }) {
 </a>
 
 <a
+  href="https://chat.whatsapp.com/JqBoBALw2tB0x92P2I0AZr"
+  target="_blank"
+  rel="noopener noreferrer"
+  className={`${styles.iconBtn} ${styles.whatsapp}`}
+>
+  <FaWhatsapp />
+</a>
+<a
   href="https://www.youtube.com/@MarianCovenantDevotion"
   target="_blank"
   rel="noopener noreferrer"
