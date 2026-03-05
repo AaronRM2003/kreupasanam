@@ -296,10 +296,11 @@ function isLangAcceptedExactly(langTag) {
     // --------------------
     let text = currentSubtitle
       .replace(/\[[^\]]*\]/g, '')
+      .replace(/\([^)]*\)/g, '') 
       .replace(/\.{2,}/g, '')
       .replace(/[-*]{2,}/g, '')
       .replace(/\b(V\.P\.)\b/g, 'VP')
-      .replace(/\bKreupasanam\b/gi, 'Kri-paasenam')
+      .replace(/\bKreupasanam\b/gi, 'Krupaasanam')
       .trim();
 
     text = normalizeColonNumbers(text);
