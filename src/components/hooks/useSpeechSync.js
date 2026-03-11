@@ -705,18 +705,21 @@ if (synth.speaking || synth.pending) {
     if (newSpeaking) {
       setVolume(10);
 
-      // 🔎 Find current subtitle
       const currentSub = subtitles.find(
         s => currentTime >= s.startSeconds && currentTime < s.endSeconds
       );
 
-      if (currentSub && playerRef.current) {
-        const seekTime = Math.max(0, currentSub.startSeconds - 0.15);
+      if (
+        currentSub &&
+        playerRef.current &&
+        currentTime - currentSub.startSeconds > 0.35
+      ) {
+        const seekTime = currentSub.startSeconds + 0.02;
 
         if (typeof playerRef.current.seekTo === "function") {
-          playerRef.current.seekTo(seekTime, true); // YouTube
+          playerRef.current.seekTo(seekTime, true);
         } else if ("currentTime" in playerRef.current) {
-          playerRef.current.currentTime = seekTime; // HTML5 video
+          playerRef.current.currentTime = seekTime;
         }
       }
     }
