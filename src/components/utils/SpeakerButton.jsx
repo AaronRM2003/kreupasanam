@@ -26,6 +26,8 @@ export default function SubtitleVoiceControls({
   const [controlsVisible, setControlsVisible] = useState(false);
   const [showTestScreen, setShowTestScreen] = useState(false);
   const [isLoadingTest, setIsLoadingTest] = useState(false);
+  const [isIdle, setIsIdle] = useState(false);
+  const idleTimer = useRef(null);
   const effectiveLang = userLang || lang;
 
 
@@ -44,6 +46,34 @@ export default function SubtitleVoiceControls({
   
 
   // Load system voices on mount and when voices changed
+  const resetIdleTimer = () => {
+  setIsIdle(false);
+
+  if (idleTimer.current) clearTimeout(idleTimer.current);
+
+  idleTimer.current = setTimeout(() => {
+    setIsIdle(true);
+  }, 2000); // 2 seconds
+};
+  useEffect(() => {
+    const events = ['mousemove', 'mousedown', 'touchstart', 'keydown'];
+
+    const handleActivity = () => resetIdleTimer();
+
+    events.forEach(event =>
+      window.addEventListener(event, handleActivity)
+    );
+
+    resetIdleTimer();
+
+    return () => {
+      events.forEach(event =>
+        window.removeEventListener(event, handleActivity)
+      );
+
+      if (idleTimer.current) clearTimeout(idleTimer.current);
+    };
+}, []);
   useEffect(() => {
   function loadVoices() {
     const allVoices = window.speechSynthesis.getVoices();
@@ -612,7 +642,7 @@ function shortCode(langTag) {
     {!showControls && (
       <button
         onClick={toggleControls}
-        className="toggle-button"
+        className={`toggle-button ${isIdle ? "idle" : ""}`}
         style={{ width: `${buttonSize}px`, height: `${buttonSize}px` }}
         aria-label="Toggle Voice Controls"
       >
@@ -728,7 +758,7 @@ function shortCode(langTag) {
 
   // 2️⃣ Remove learned WPS for this voice
   try {
-    const learned = JSON.parse(localStorage.getItem(learnedKey) || "{}");
+    const learned = JSON.parse(localStorage.getItem(learnedKey) || "{}");a
     delete learned[voiceURI];
     localStorage.setItem(learnedKey, JSON.stringify(learned));
   } catch {}

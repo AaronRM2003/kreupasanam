@@ -19,6 +19,9 @@
   justify-content: center;
   transition: all 0.3s ease;
 }
+.toggle-button.idle {
+  opacity: 0.5;
+}
 
 .controls-panel {
   margin-top: 10px;

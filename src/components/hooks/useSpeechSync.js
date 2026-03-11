@@ -699,12 +699,31 @@ if (synth.speaking || synth.pending) {
   };
 
   const toggleSpeaking = () => {
-    setIsSpeaking((prev) => {
-      const newSpeaking = !prev;
-      if (newSpeaking) setVolume(10);
-      return newSpeaking;
-    });
-  };
+  setIsSpeaking((prev) => {
+    const newSpeaking = !prev;
+
+    if (newSpeaking) {
+      setVolume(10);
+
+      // 🔎 Find current subtitle
+      const currentSub = subtitles.find(
+        s => currentTime >= s.startSeconds && currentTime < s.endSeconds
+      );
+
+      if (currentSub && playerRef.current) {
+        const seekTime = Math.max(0, currentSub.startSeconds - 0.15);
+
+        if (typeof playerRef.current.seekTo === "function") {
+          playerRef.current.seekTo(seekTime, true); // YouTube
+        } else if ("currentTime" in playerRef.current) {
+          playerRef.current.currentTime = seekTime; // HTML5 video
+        }
+      }
+    }
+
+    return newSpeaking;
+  });
+};
 
   const stopSpeaking = () => {
     setIsSpeaking(false);
