@@ -756,21 +756,31 @@ if (synth.speaking || synth.pending || activeSubtitleKeyRef.current) {
     if (newSpeaking) {
       setVolume(10);
 
+      const player = playerRef.current;
+      if (!player) return newSpeaking;
+
+      let isPaused = false;
+
+      if (typeof player.getPlayerState === "function") {
+        // YouTube player
+        isPaused = player.getPlayerState() === 2;
+      } else if ("paused" in player) {
+        // HTML5 video
+        isPaused = player.paused;
+      }
+
       const currentSub = subtitles.find(
         s => currentTime >= s.startSeconds && currentTime < s.endSeconds
       );
 
-      if (
-        currentSub &&
-        playerRef.current &&
-        currentTime - currentSub.startSeconds > 0.35
-      ) {
+      // ✅ Only seek if video is already playing
+      if (!isPaused && currentSub) {
         const seekTime = currentSub.startSeconds + 0.02;
 
-        if (typeof playerRef.current.seekTo === "function") {
-          playerRef.current.seekTo(seekTime, true);
-        } else if ("currentTime" in playerRef.current) {
-          playerRef.current.currentTime = seekTime;
+        if (typeof player.seekTo === "function") {
+          player.seekTo(seekTime, true);
+        } else if ("currentTime" in player) {
+          player.currentTime = seekTime;
         }
       }
     }
