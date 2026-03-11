@@ -692,15 +692,6 @@ console.log("BEFORE SPEAK", {
   duration,
 });
 
-
-
-    if (!didInitialSyncRef.current && playerRef.current) {
-      if (typeof playerRef.current.pause === "function") {
-        playerRef.current.pause();
-      } else if (typeof playerRef.current.pauseVideo === "function") {
-        playerRef.current.pauseVideo();
-      }
-    }
     
 
   if (cancelled) return;
