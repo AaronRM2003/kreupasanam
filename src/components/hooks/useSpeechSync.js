@@ -25,6 +25,7 @@ export function useSpeechSync({
   const activeSubtitleKeyRef = useRef(null);
   const lastVideoTimeRef = useRef(0);
   const carryOverDebtRef = useRef(0);
+  const wasPausedByUserRef = useRef(false);
 
 
 
@@ -106,6 +107,56 @@ useEffect(() => {
     didInitialSyncRef.current = false;
   }
 }, [isSpeaking]);
+useEffect(() => {
+  const player = playerRef.current;
+  if (!player) return;
+
+  let interval;
+
+  const checkPause = () => {
+    let paused = false;
+
+    if (typeof player.getPlayerState === "function") {
+      // YouTube
+      paused = player.getPlayerState() === 2;
+    } else if ("paused" in player) {
+      // HTML5 video
+      paused = player.paused;
+    }
+
+    if (paused && !wasPausedByUserRef.current) {
+      wasPausedByUserRef.current = true;
+
+      // 🔇 cancel speech
+      window.speechSynthesis.cancel();
+      activeSubtitleKeyRef.current = null;
+      hasStartedSpeakingRef.current = false;
+    }
+
+    if (!paused && wasPausedByUserRef.current) {
+      wasPausedByUserRef.current = false;
+
+      // ▶ resume sync from current subtitle
+      const currentSub = subtitles.find(
+        s => currentTime >= s.startSeconds && currentTime < s.endSeconds
+      );
+
+      if (currentSub && playerRef.current) {
+        const seekTime = currentSub.startSeconds + 0.02;
+
+        if (typeof playerRef.current.seekTo === "function") {
+          playerRef.current.seekTo(seekTime, true);
+        } else if ("currentTime" in playerRef.current) {
+          playerRef.current.currentTime = seekTime;
+        }
+      }
+    }
+  };
+
+  interval = setInterval(checkPause, 200);
+
+  return () => clearInterval(interval);
+}, [playerRef, subtitles, currentTime]);
 
 
 useEffect(() => {
@@ -656,7 +707,7 @@ console.log("BEFORE SPEAK", {
   synth.resume(); 
 
   // 🔒 DO NOT re-speak while already speaking
-if (synth.speaking || synth.pending) {
+if (synth.speaking || synth.pending || activeSubtitleKeyRef.current) {
   return;
 }
 
