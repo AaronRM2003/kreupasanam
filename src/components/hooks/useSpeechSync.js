@@ -543,22 +543,37 @@ utterance.onstart = () => {
   didInitialSyncRef.current = true;
 };
 
-
 utterance.onerror = () => {
   wasCancelled = true;
+  // release lock so next subtitles won't get stuck
+  activeSubtitleKeyRef.current = null;
+  hasStartedSpeakingRef.current = false;
+  lastSpokenRef.current = '';
 };
 
 utterance.onpause = () => {
   wasCancelled = true;
+  activeSubtitleKeyRef.current = null;
+  hasStartedSpeakingRef.current = false;
+  lastSpokenRef.current = '';
 };
+
 
 // ✅ capture start time immediately after creation
 // ✅ attach learning ONLY on successful end
 utterance.onend = () => {
-  if (wasCancelled) return;
-  if (duration <= 3) return;
 
-  activeSubtitleKeyRef.current = null; // 🔓 RELEASE
+  // 🔓 ALWAYS release lock first
+  activeSubtitleKeyRef.current = null;
+  hasStartedSpeakingRef.current = false;
+
+  if (wasCancelled) return;
+
+  // short subtitles don't participate in learning
+  if (duration <= 3) {
+    lastSpokenRef.current = '';
+    return;
+  }
 
   const speechEnd = performance.now();
   const actualDuration = (speechEnd - speechStart) / 1000;
@@ -569,18 +584,22 @@ utterance.onend = () => {
   if (unitCount < 2) return;
 
   const overrun = actualDuration - duration;
+
   console.log("⏱️ SPEECH END", {
     actualDuration,
     duration,
     overrun,
   });
+
   // 🟢 Underrun cancels existing debt
-if (overrun < -0.3 && carryOverDebtRef.current > 0) {
-  carryOverDebtRef.current = Math.max(
-    0,
-    carryOverDebtRef.current + overrun // overrun is negative
-  );
-}
+  if (overrun < -0.3 && carryOverDebtRef.current > 0) {
+    carryOverDebtRef.current = Math.max(
+      0,
+      carryOverDebtRef.current + overrun
+    );
+  }
+
+  // 🔴 Overrun adds debt
   if (overrun > 0.12 && duration > 3) {
     carryOverDebtRef.current = Math.min(
       0.6,
@@ -589,14 +608,14 @@ if (overrun < -0.3 && carryOverDebtRef.current > 0) {
   }
 
   // --------------------
-  // Load learned state FIRST
+  // Load learned state
   // --------------------
   const learnedKey = `tts_learned_wps_${effectiveLang}`;
-  let learnedData = {};
-
   const samplesKey = `tts_learned_samples_${effectiveLang}`;
 
+  let learnedData = {};
   let samplesData = {};
+
   try {
     samplesData = JSON.parse(localStorage.getItem(samplesKey) || '{}');
   } catch {}
@@ -620,24 +639,28 @@ if (overrun < -0.3 && carryOverDebtRef.current > 0) {
 
   // Weight long samples more
   const durationWeight = Math.min(1.0, actualDuration / 6);
+
   const weightedObserved =
-    prev * (1 - durationWeight) + observedWps * durationWeight;
+    prev * (1 - durationWeight) +
+    observedWps * durationWeight;
 
   // Adaptive learning rate
   const alpha = getAdaptiveAlpha(samples);
 
   let updatedWps =
-    prev * (1 - alpha) + weightedObserved * alpha;
+    prev * (1 - alpha) +
+    weightedObserved * alpha;
 
   // Penalize persistent overruns
   if (carryOverDebtRef.current > 0.25) {
     updatedWps *= 0.90;
   }
 
-updatedWps = Math.max(
-  3.5,    // lower bound
-  Math.min(8.5, updatedWps)
-);
+  updatedWps = Math.max(
+    3.5,
+    Math.min(8.5, updatedWps)
+  );
+
   // --------------------
   // Save
   // --------------------
@@ -647,15 +670,15 @@ updatedWps = Math.max(
   };
 
   samplesData[voiceURI] = samples + 1;
-  localStorage.setItem(samplesKey, JSON.stringify(samplesData));
 
+  localStorage.setItem(samplesKey, JSON.stringify(samplesData));
 
   const shouldPersist = samples < 5 || samples % 3 === 0;
 
   if (shouldPersist) {
     localStorage.setItem(learnedKey, JSON.stringify(learnedData));
   }
-    
+
   console.log("📈 LEARN APPLY", {
     prev,
     observedWps,
@@ -664,7 +687,9 @@ updatedWps = Math.max(
     persisted: shouldPersist,
   });
 
+  lastSpokenRef.current = '';
 };
+
 
     
 
@@ -707,7 +732,11 @@ console.log("BEFORE SPEAK", {
   synth.resume(); 
 
   // 🔒 DO NOT re-speak while already speaking
-if (synth.speaking || synth.pending || activeSubtitleKeyRef.current) {
+if (
+  synth.speaking ||
+  synth.pending ||
+  (activeSubtitleKeyRef.current && activeSubtitleKeyRef.current !== subtitleKey)
+) {
   return;
 }
 
