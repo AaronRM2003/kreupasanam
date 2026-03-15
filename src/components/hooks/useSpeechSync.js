@@ -26,11 +26,6 @@ export function useSpeechSync({
   const lastVideoTimeRef = useRef(0);
   const carryOverDebtRef = useRef(0);
   const wasPausedByUserRef = useRef(false);
-  // track the actual SpeechSynthesisUtterance object we created
-const speakingUtteranceRef = useRef(null);
-
-// prevent immediate duplicate re-scheduling of the same subtitle
-const lastSpeakTimeRef = useRef({ key: null, ts: 0 });
 
 
 
@@ -132,15 +127,11 @@ useEffect(() => {
     if (paused && !wasPausedByUserRef.current) {
       wasPausedByUserRef.current = true;
 
+      // 🔇 cancel speech
       window.speechSynthesis.cancel();
-
-      // deterministic cleanup
-      speakingUtteranceRef.current = null;
       activeSubtitleKeyRef.current = null;
       hasStartedSpeakingRef.current = false;
-      lastSpokenRef.current = '';
     }
-
 
     if (!paused && wasPausedByUserRef.current) {
       wasPausedByUserRef.current = false;
@@ -176,20 +167,16 @@ useEffect(() => {
 
   // 🔥 seek detection: forward OR backward
   if (Math.abs(delta) > 0.8) {
-    // ... inside the seek-detection effect where you cancel on large delta:
-  window.speechSynthesis.cancel();
+    window.speechSynthesis.cancel();
 
-  // clear local tracked utterance immediately
-  if (speakingUtteranceRef.current) {
-    speakingUtteranceRef.current = null;
-  }
+    // full reset
+    activeSubtitleKeyRef.current = null;
+    hasStartedSpeakingRef.current = false;
+    lastSpokenRef.current = '';
+    didInitialSyncRef.current = false;
 
-  activeSubtitleKeyRef.current = null;
-  hasStartedSpeakingRef.current = false;
-  lastSpokenRef.current = '';
-  didInitialSyncRef.current = false;
-  carryOverDebtRef.current = 0;
-
+    // optional but recommended
+    carryOverDebtRef.current = 0;
   }
 
   lastVideoTimeRef.current = now;
@@ -523,20 +510,6 @@ if (
     // --------------------
     // Speak
     // --------------------
-    const now = performance.now();
-const speakKey = subtitleKey; // same key you compute above
-
-if (lastSpeakTimeRef.current.key === speakKey &&
-    now - lastSpeakTimeRef.current.ts < 500) {
-  // duplicate suppression: we just started the same subtitle very recently
-  return;
-}
-
-// if there's an existing utterance object tracked, cancel it and forget it
-if (speakingUtteranceRef.current) {
-  window.speechSynthesis.cancel();
-  speakingUtteranceRef.current = null;
-}
 const utterance = new SpeechSynthesisUtterance(text);
 let wasCancelled = false;
 let speechStart = 0;
@@ -570,37 +543,22 @@ utterance.onstart = () => {
   didInitialSyncRef.current = true;
 };
 
+
 utterance.onerror = () => {
   wasCancelled = true;
-  // release lock so next subtitles won't get stuck
-  activeSubtitleKeyRef.current = null;
-  hasStartedSpeakingRef.current = false;
-  lastSpokenRef.current = '';
 };
 
 utterance.onpause = () => {
   wasCancelled = true;
-  activeSubtitleKeyRef.current = null;
-  hasStartedSpeakingRef.current = false;
-  lastSpokenRef.current = '';
 };
-
 
 // ✅ capture start time immediately after creation
 // ✅ attach learning ONLY on successful end
 utterance.onend = () => {
-
-  // 🔓 ALWAYS release lock first
-  activeSubtitleKeyRef.current = null;
-  hasStartedSpeakingRef.current = false;
-
   if (wasCancelled) return;
+  if (duration <= 3) return;
 
-  // short subtitles don't participate in learning
-  if (duration <= 3) {
-    lastSpokenRef.current = '';
-    return;
-  }
+  activeSubtitleKeyRef.current = null; // 🔓 RELEASE
 
   const speechEnd = performance.now();
   const actualDuration = (speechEnd - speechStart) / 1000;
@@ -611,22 +569,18 @@ utterance.onend = () => {
   if (unitCount < 2) return;
 
   const overrun = actualDuration - duration;
-
   console.log("⏱️ SPEECH END", {
     actualDuration,
     duration,
     overrun,
   });
-
   // 🟢 Underrun cancels existing debt
-  if (overrun < -0.3 && carryOverDebtRef.current > 0) {
-    carryOverDebtRef.current = Math.max(
-      0,
-      carryOverDebtRef.current + overrun
-    );
-  }
-
-  // 🔴 Overrun adds debt
+if (overrun < -0.3 && carryOverDebtRef.current > 0) {
+  carryOverDebtRef.current = Math.max(
+    0,
+    carryOverDebtRef.current + overrun // overrun is negative
+  );
+}
   if (overrun > 0.12 && duration > 3) {
     carryOverDebtRef.current = Math.min(
       0.6,
@@ -635,14 +589,14 @@ utterance.onend = () => {
   }
 
   // --------------------
-  // Load learned state
+  // Load learned state FIRST
   // --------------------
   const learnedKey = `tts_learned_wps_${effectiveLang}`;
+  let learnedData = {};
+
   const samplesKey = `tts_learned_samples_${effectiveLang}`;
 
-  let learnedData = {};
   let samplesData = {};
-
   try {
     samplesData = JSON.parse(localStorage.getItem(samplesKey) || '{}');
   } catch {}
@@ -666,28 +620,24 @@ utterance.onend = () => {
 
   // Weight long samples more
   const durationWeight = Math.min(1.0, actualDuration / 6);
-
   const weightedObserved =
-    prev * (1 - durationWeight) +
-    observedWps * durationWeight;
+    prev * (1 - durationWeight) + observedWps * durationWeight;
 
   // Adaptive learning rate
   const alpha = getAdaptiveAlpha(samples);
 
   let updatedWps =
-    prev * (1 - alpha) +
-    weightedObserved * alpha;
+    prev * (1 - alpha) + weightedObserved * alpha;
 
   // Penalize persistent overruns
   if (carryOverDebtRef.current > 0.25) {
     updatedWps *= 0.90;
   }
 
-  updatedWps = Math.max(
-    3.5,
-    Math.min(8.5, updatedWps)
-  );
-
+updatedWps = Math.max(
+  3.5,    // lower bound
+  Math.min(8.5, updatedWps)
+);
   // --------------------
   // Save
   // --------------------
@@ -697,15 +647,15 @@ utterance.onend = () => {
   };
 
   samplesData[voiceURI] = samples + 1;
-
   localStorage.setItem(samplesKey, JSON.stringify(samplesData));
+
 
   const shouldPersist = samples < 5 || samples % 3 === 0;
 
   if (shouldPersist) {
     localStorage.setItem(learnedKey, JSON.stringify(learnedData));
   }
-
+    
   console.log("📈 LEARN APPLY", {
     prev,
     observedWps,
@@ -714,9 +664,7 @@ utterance.onend = () => {
     persisted: shouldPersist,
   });
 
-  lastSpokenRef.current = '';
 };
-
 
     
 
@@ -759,11 +707,7 @@ console.log("BEFORE SPEAK", {
   synth.resume(); 
 
   // 🔒 DO NOT re-speak while already speaking
-if (
-  synth.speaking ||
-  synth.pending ||
-  (activeSubtitleKeyRef.current && activeSubtitleKeyRef.current !== subtitleKey)
-) {
+if (synth.speaking || synth.pending || activeSubtitleKeyRef.current) {
   return;
 }
 
