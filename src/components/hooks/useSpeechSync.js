@@ -158,6 +158,8 @@ export function useSpeechSync({
     // 🔥 seek detection: forward OR backward
     if (Math.abs(delta) > 0.8) {
       window.speechSynthesis.cancel();
+      clearTimeout(pauseCheckRef.current);
+
 
       // full reset
       activeSubtitleKeyRef.current = null;
