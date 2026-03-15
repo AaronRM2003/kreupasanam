@@ -26,6 +26,11 @@ export function useSpeechSync({
   const lastVideoTimeRef = useRef(0);
   const carryOverDebtRef = useRef(0);
   const wasPausedByUserRef = useRef(false);
+  // track the actual SpeechSynthesisUtterance object we created
+const speakingUtteranceRef = useRef(null);
+
+// prevent immediate duplicate re-scheduling of the same subtitle
+const lastSpeakTimeRef = useRef({ key: null, ts: 0 });
 
 
 
@@ -127,11 +132,15 @@ useEffect(() => {
     if (paused && !wasPausedByUserRef.current) {
       wasPausedByUserRef.current = true;
 
-      // 🔇 cancel speech
       window.speechSynthesis.cancel();
+
+      // deterministic cleanup
+      speakingUtteranceRef.current = null;
       activeSubtitleKeyRef.current = null;
       hasStartedSpeakingRef.current = false;
+      lastSpokenRef.current = '';
     }
+
 
     if (!paused && wasPausedByUserRef.current) {
       wasPausedByUserRef.current = false;
@@ -167,16 +176,20 @@ useEffect(() => {
 
   // 🔥 seek detection: forward OR backward
   if (Math.abs(delta) > 0.8) {
-    window.speechSynthesis.cancel();
+    // ... inside the seek-detection effect where you cancel on large delta:
+  window.speechSynthesis.cancel();
 
-    // full reset
-    activeSubtitleKeyRef.current = null;
-    hasStartedSpeakingRef.current = false;
-    lastSpokenRef.current = '';
-    didInitialSyncRef.current = false;
+  // clear local tracked utterance immediately
+  if (speakingUtteranceRef.current) {
+    speakingUtteranceRef.current = null;
+  }
 
-    // optional but recommended
-    carryOverDebtRef.current = 0;
+  activeSubtitleKeyRef.current = null;
+  hasStartedSpeakingRef.current = false;
+  lastSpokenRef.current = '';
+  didInitialSyncRef.current = false;
+  carryOverDebtRef.current = 0;
+
   }
 
   lastVideoTimeRef.current = now;
@@ -510,6 +523,20 @@ if (
     // --------------------
     // Speak
     // --------------------
+    const now = performance.now();
+const speakKey = subtitleKey; // same key you compute above
+
+if (lastSpeakTimeRef.current.key === speakKey &&
+    now - lastSpeakTimeRef.current.ts < 500) {
+  // duplicate suppression: we just started the same subtitle very recently
+  return;
+}
+
+// if there's an existing utterance object tracked, cancel it and forget it
+if (speakingUtteranceRef.current) {
+  window.speechSynthesis.cancel();
+  speakingUtteranceRef.current = null;
+}
 const utterance = new SpeechSynthesisUtterance(text);
 let wasCancelled = false;
 let speechStart = 0;
