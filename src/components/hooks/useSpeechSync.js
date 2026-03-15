@@ -26,6 +26,7 @@ export function useSpeechSync({
   const lastVideoTimeRef = useRef(0);
   const carryOverDebtRef = useRef(0);
   const cancelledSubtitleKeyRef = useRef(null);
+  const lastPauseCheckTimeRef = useRef(0);
 
 
 
@@ -105,37 +106,41 @@ export function useSpeechSync({
   }
   const pauseCheckRef = useRef(null);
 
+
   useEffect(() => {
     clearTimeout(pauseCheckRef.current);
+
+    const observedTime = currentTime;
 
     pauseCheckRef.current = setTimeout(() => {
       if (!isSpeaking) return;
 
-      // video time stopped → paused
-      const currentSub = subtitles.find(
-        s => currentTime >= s.startSeconds && currentTime < s.endSeconds
-      );
+      // if time moved since scheduling → not paused
+      if (lastPauseCheckTimeRef.current !== observedTime) return;
 
+      const currentSub = subtitles.find(
+        s => observedTime >= s.startSeconds && observedTime < s.endSeconds
+      );
       if (!currentSub) return;
 
       const subtitleKey = `${currentSub.startSeconds}-${currentSub.endSeconds}`;
-      if (cancelledSubtitleKeyRef.current === subtitleKey) {
-        return;
-      }
 
+      if (cancelledSubtitleKeyRef.current === subtitleKey) return;
 
-      // cancel speech
+      // real pause detected
       window.speechSynthesis.cancel();
 
       activeSubtitleKeyRef.current = null;
       hasStartedSpeakingRef.current = false;
 
-      // mark this subtitle so it won't repeat
       cancelledSubtitleKeyRef.current = subtitleKey;
-    }, 400); // if time doesn't move for 400ms we treat it as pause
+    }, 700); // increase threshold
+
+    lastPauseCheckTimeRef.current = observedTime;
 
     return () => clearTimeout(pauseCheckRef.current);
   }, [currentTime, isSpeaking]);
+
 
   useEffect(() => {
     if (!isSpeaking) {
@@ -698,13 +703,15 @@ export function useSpeechSync({
       }
       activeSubtitleKeyRef.current = subtitleKey;
       if (isShort) {
-        synth.speak(utterance); // 🔥 IMMEDIATE
+        synth.speak(utterance);
       } else {
+        const keyAtSchedule = subtitleKey;
+
         setTimeout(() => {
+          if (activeSubtitleKeyRef.current !== keyAtSchedule) return;
           synth.speak(utterance);
         }, 80);
       }
-
     };
 
     run();
