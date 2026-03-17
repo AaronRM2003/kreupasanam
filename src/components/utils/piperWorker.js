@@ -1,5 +1,4 @@
-import { PiperTTS } from "@mintplex-labs/piper-tts-web";
-
+import PiperTTS from "@mintplex-labs/piper-tts-web";
 let piper = null;
 
 self.onmessage = async (e) => {
