@@ -5,7 +5,9 @@ export function getWorker() {
   if (!worker) {
 
     worker = new Worker(
-      new URL("../../workers/piperWorker.js", import.meta.url)
+      new URL("./piperWorker.js", import.meta.url),
+
+      { type: "module" }
     );
 
   }
