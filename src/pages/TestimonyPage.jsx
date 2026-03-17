@@ -21,7 +21,6 @@ import LangHelpOverlay from '../components/utils/LangHelpOverlay';
 import ImageWithBoxes from '../components/utils/ImageWithBoxes';
 import TranscriptModal from '../components/utils/TranscriptModel'
 import { normalizeToLocale } from '../components/utils/Utils';
-import { usePiperSpeechSync } from '../components/hooks/usePiperSpeechSync';
 
 export default function TestimonyPage({ lang: initialLang }) {
   const { idSlug } = useParams();  // Changed from id to idSlug
@@ -37,9 +36,6 @@ export default function TestimonyPage({ lang: initialLang }) {
   const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
   const [showTranscript, setShowTranscript] = useState(false);
   const [userLang, setUserLang] = useState(null);
-  const [ttsMode, setTtsMode] = useState(
-  localStorage.getItem("tts_mode") || null
-);
 
   // Parse id and slug from idSlug param
   // Assuming idSlug is from useParams()
@@ -182,7 +178,13 @@ const shareText = useMemo(() => {
   const isBrowserTranslateOn = !!userLang;
 
   // Speech sync & volume control hook
-const systemSpeech = ttsSupported
+const {
+  isSpeaking = false,
+  toggleSpeaking = () => {},
+  stopSpeaking = () => {},
+  volume = 100,
+  handleVolumeChange = () => {},
+} = ttsSupported
   ? useSpeechSync({
       playerRef,
       showVideo,
@@ -190,30 +192,11 @@ const systemSpeech = ttsSupported
       currentSubtitle,
       currentTime,
       lang,
+
       isBrowserTranslateOn,
-      userLang
+      userLang, // ✅ new
     })
   : {};
-
-const piperSpeech = usePiperSpeechSync({
-  playerRef,
-  showVideo,
-  subtitles,
-  currentSubtitle,
-  currentTime,
-  lang,
-  videoId
-});
-
-const speech = ttsMode === "piper" ? piperSpeech : systemSpeech;
-
-const {
-  isSpeaking = false,
-  toggleSpeaking = () => {},
-  stopSpeaking = () => {},
-  volume = 100,
-  handleVolumeChange = () => {}
-} = speech;
 useEffect(() => {
   const metaThemeColor = document.querySelector(
     'meta[name="theme-color"]'
@@ -510,8 +493,6 @@ const handleClick = () => {
       {/* Video player and subtitles */}
     {showVideo && (
   <FloatingVideoPlayer
-  ttsMode={ttsMode}
-  setTtsMode={setTtsMode}
     isSpeaking={isSpeaking}
     volume={volume}
     toggleSpeaking={toggleSpeaking}
