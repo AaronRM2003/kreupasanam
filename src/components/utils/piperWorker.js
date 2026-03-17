@@ -1,4 +1,7 @@
-import PiperTTS from "@mintplex-labs/piper-tts-web";
+/* eslint-disable no-restricted-globals */
+
+importScripts("https://cdn.jsdelivr.net/npm/@mintplex-labs/piper-tts-web/dist/piper-tts-web.js");
+
 let piper = null;
 
 self.onmessage = async (e) => {
@@ -11,7 +14,7 @@ self.onmessage = async (e) => {
 
       const { modelUrl, configUrl } = payload;
 
-      piper = await PiperTTS.create({
+      piper = await self.PiperTTS.create({
         modelUrl,
         configUrl
       });
