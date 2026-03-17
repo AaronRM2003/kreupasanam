@@ -4,8 +4,13 @@ import { useSelectedVoice } from '../hooks/useSelectedVoice';
 import './speakerControl.css';
 import VoiceTestScreen from './VoiceTestScreen';
 import { speechUnits } from './Utils';
+import { VoiceTypeScreen } from './VoiceTypeScreen';
+import PiperVoiceManager from './PiperVoiceManager';
+import { loadPiperVoice } from './piperEngine';
 
 export default function SubtitleVoiceControls({
+  ttsMode,
+  setTtsMode,
   isSpeaking,
   volume,
   toggleSpeaking,
@@ -28,7 +33,9 @@ export default function SubtitleVoiceControls({
   const [isLoadingTest, setIsLoadingTest] = useState(false);
   const [isIdle, setIsIdle] = useState(false);
   const idleTimer = useRef(null);
-  const effectiveLang = userLang || lang;
+  const effectiveLang = ttsMode === "piper" ? lang : (userLang || lang);
+  const [showVoiceType, setShowVoiceType] = useState(false);
+  const [showPiperManager, setShowPiperManager] = useState(false);
 
 
 
@@ -189,7 +196,19 @@ const filteredVoices = allVoices.filter(voice =>
   mr: "ही चाचणी भाषणाची सादरीकरण आणि उच्चारण यांची कमाल अचूकता सुनिश्चित करण्यासाठी तयार केली आहे. या प्रक्रियेदरम्यान आपल्या संयमाबद्दल आम्ही मनःपूर्वक आभारी आहोत.",
   kn: "ಈ ಪರೀಕ್ಷೆಯನ್ನು ಭಾಷಣದ ಪ್ರಸ್ತುತಿಕರಣ ಮತ್ತು ಉಚ್ಚಾರಣೆಯ ಗರಿಷ್ಠ ಖಚಿತತೆಯನ್ನು ಖಾತ್ರಿಪಡಿಸಲು ವಿನ್ಯಾಸಗೊಳಿಸಲಾಗಿದೆ. ಈ ಪ್ರಕ್ರಿಯೆಯ ಸಮಯದಲ್ಲಿ ನಿಮ್ಮ ಸಹನಕ್ಕೆ ನಾವು ಹೃದಯಪೂರ್ವಕ ಧನ್ಯವಾದಗಳನ್ನು ಸಲ್ಲಿಸುತ್ತೇವೆ.",
 };
+function selectVoiceType(type) {
+  localStorage.setItem("tts_mode", type);
+  setTtsMode(type);
+  setShowVoiceType(false);
 
+  if (type === "system") {
+    handleReadSubtitlesClick();
+  }
+
+  if (type === "piper") {
+    setShowPiperManager(true);
+  }
+}
 function getVoicesWithRetry({
   interval = 100,
   maxRetries = 15,
@@ -358,6 +377,21 @@ function getVoicesWithRetry({
 
   // Handle Read Subtitles click - show test screen if not tested
 const handleReadSubtitlesClick = async (forceTest = false) => {
+  if (ttsMode === "piper") {
+
+  const selectedVoice =
+    localStorage.getItem(`piper_selected_${lang}`);
+
+  if (!selectedVoice) {
+    setShowPiperManager(true);
+    return;
+  }
+
+  await loadPiperVoice(selectedVoice);
+
+  toggleSpeaking();
+  return;
+}
   if (isSpeaking) {
   toggleSpeaking();
   return;
@@ -758,7 +792,7 @@ function shortCode(langTag) {
 
   // 2️⃣ Remove learned WPS for this voice
   try {
-    const learned = JSON.parse(localStorage.getItem(learnedKey) || "{}");a
+    const learned = JSON.parse(localStorage.getItem(learnedKey) || "{}");
     delete learned[voiceURI];
     localStorage.setItem(learnedKey, JSON.stringify(learned));
   } catch {}
@@ -776,6 +810,39 @@ function shortCode(langTag) {
 
         />
       )}
+      {showVoiceType && (
+  <VoiceTypeScreen
+    onSelect={selectVoiceType}
+    onClose={() => setShowVoiceType(false)}
+  />
+)}
+{showPiperManager && (
+  <PiperVoiceManager
+    lang={lang}
+    onClose={() => setShowPiperManager(false)}
+    onVoiceSelected={async (voiceId) => {
+
+      try {
+
+        await loadPiperVoice(voiceId);
+
+        localStorage.setItem(`piper_selected_${lang}`, voiceId);
+
+        setShowPiperManager(false);
+
+        if (!isSpeaking)
+          toggleSpeaking();
+
+      } catch (err) {
+
+        console.error("Piper load failed", err);
+        alert("AI voice could not be loaded.");
+
+      }
+
+    }}
+  />
+)}
 </>
   );
 }
