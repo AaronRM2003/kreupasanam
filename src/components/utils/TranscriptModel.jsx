@@ -28,16 +28,24 @@ const cleanSubtitles = useMemo(() => {
 
   // Convert "0:10" or "1:02" → "00:00:10,000"
   const toSrtTime = (time = '0:00') => {
-    const parts = time.split(':').map(Number);
-    let h = 0, m = 0, s = 0;
+  const parts = time.split(':').map(Number);
 
-    if (parts.length === 3) [h, m, s] = parts;
-    if (parts.length === 2) [m, s] = parts;
-    if (parts.length === 1) s = parts[0];
+  let totalSeconds = 0;
 
-    return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')},000`;
-  };
+  if (parts.length === 3) {
+    totalSeconds = parts[0] * 3600 + parts[1] * 60 + parts[2];
+  } else if (parts.length === 2) {
+    totalSeconds = parts[0] * 60 + parts[1];
+  } else if (parts.length === 1) {
+    totalSeconds = parts[0];
+  }
 
+  const h = Math.floor(totalSeconds / 3600);
+  const m = Math.floor((totalSeconds % 3600) / 60);
+  const s = totalSeconds % 60;
+
+  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')},000`;
+};
   // SRT content
   const srtText = useMemo(() => {
     return cleanSubtitles
