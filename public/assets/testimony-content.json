@@ -4546,85 +4546,214 @@
     },
     "subtitles": "/assets/testimony-subtitle/14mar26.json",
     "duration": "12:22",
-    "overlay":{
-  "boxes": [
-    {
-      "x": 33,
-      "y": 8,
-      "w": 872,
-      "h": 358,
-      "background": "#ffffff",
-      "fontColor": "#fe0906"
-    },
-    {
-      "x": 30,
-      "y": 372,
-      "w": 980,
-      "h": 349,
-      "background": "#2b5e97",
-      "fontColor": "#fffffd"
-    },
-    {
-      "x": 1059,
-      "y": 12,
-      "w": 209,
-      "h": 80,
-      "background": "#ffffff",
-      "fontColor": "#040404"
+    "overlay": {
+      "boxes": [
+        {
+          "x": 33,
+          "y": 8,
+          "w": 872,
+          "h": 358,
+          "background": "#ffffff",
+          "fontColor": "#fe0906"
+        },
+        {
+          "x": 30,
+          "y": 372,
+          "w": 980,
+          "h": 349,
+          "background": "#2b5e97",
+          "fontColor": "#fffffd"
+        },
+        {
+          "x": 1059,
+          "y": 12,
+          "w": 209,
+          "h": 80,
+          "background": "#ffffff",
+          "fontColor": "#040404"
+        }
+      ],
+      "texts": {
+        "en": [
+          "Even if financial burdens lead us to suicide",
+          "The Covenant lifted us to the skies",
+          "Bengaluru"
+        ],
+        "hi": [
+          "यदि आर्थिक बोझ हमें आत्महत्या तक ले जाए",
+          "वाचा ने हमें आकाश तक उठा लिया",
+          "बेंगलुरु"
+        ],
+        "ta": [
+          "பொருளாதார சுமைகள் எங்களை தற்கொலையின் விளிம்புக்கு கொண்டு சென்றாலும்",
+          "உடன்படிக்கை எங்களை விண்ணளவு உயர்த்தியது",
+          "பெங்களூரு"
+        ],
+        "bn": [
+          "যদি আর্থিক বোঝা আমাদের আত্মহত্যার দিকে ঠেলে দেয়",
+          "চুক্তি আমাদের আকাশসম উচ্চতায় তুলে ধরেছে",
+          "বেঙ্গালুরু"
+        ],
+        "te": [
+          "ఆర్థిక భారాలు మమ్మల్ని ఆత్మహత్య అంచుకు తీసుకెళ్లినా",
+          "కోవెనెంట్ మమ్మల్ని ఆకాశాల వరకు ఎత్తింది",
+          "బెంగళూరు"
+        ],
+        "mr": [
+          "आर्थिक ओझ्यामुळे आम्हाला आत्महत्येच्या टोकापर्यंत नेले तरी",
+          "कराराने आम्हाला आकाशाएवढे उंच उचलले",
+          "बेंगळुरू"
+        ],
+        "fr": [
+          "Même si les difficultés financières nous poussent jusqu'au suicide",
+          "L’Alliance nous a élevés jusqu’aux cieux",
+          "Bengaluru"
+        ],
+        "es": [
+          "Aunque las cargas financieras nos lleven al borde del suicidio",
+          "El Pacto nos elevó hasta los cielos",
+          "Bengaluru"
+        ],
+        "zh": [
+          "即使经济负担把我们逼到自杀的边缘",
+          "盟约把我们提升到了天空之上",
+          "班加罗尔"
+        ],
+        "kn": [
+          "ಆರ್ಥಿಕ ಭಾರಗಳು ನಮ್ಮನ್ನು ಆತ್ಮಹತ್ಯೆಯ ಅಂಚಿಗೆ ತಳ್ಳಿದರೂ",
+          "ಒಪ್ಪಂದವು ನಮ್ಮನ್ನು ಆಕಾಶದ ಮಟ್ಟಿಗೆ ಎತ್ತಿತು",
+          "ಬೆಂಗಳೂರು"
+        ]
+      }
     }
-  ],
-  "texts": {
-  "en": [
-    "Even if financial burdens lead us to suicide",
-    "The Covenant lifted us to the skies",
-    "Bengaluru"
-  ],
-  "hi": [
-    "यदि आर्थिक बोझ हमें आत्महत्या तक ले जाए",
-    "वाचा ने हमें आकाश तक उठा लिया",
-    "बेंगलुरु"
-  ],
-  "ta": [
-    "பொருளாதார சுமைகள் எங்களை தற்கொலையின் விளிம்புக்கு கொண்டு சென்றாலும்",
-    "உடன்படிக்கை எங்களை விண்ணளவு உயர்த்தியது",
-    "பெங்களூரு"
-  ],
-  "bn": [
-    "যদি আর্থিক বোঝা আমাদের আত্মহত্যার দিকে ঠেলে দেয়",
-    "চুক্তি আমাদের আকাশসম উচ্চতায় তুলে ধরেছে",
-    "বেঙ্গালুরু"
-  ],
-  "te": [
-    "ఆర్థిక భారాలు మమ్మల్ని ఆత్మహత్య అంచుకు తీసుకెళ్లినా",
-    "కోవెనెంట్ మమ్మల్ని ఆకాశాల వరకు ఎత్తింది",
-    "బెంగళూరు"
-  ],
-  "mr": [
-    "आर्थिक ओझ्यामुळे आम्हाला आत्महत्येच्या टोकापर्यंत नेले तरी",
-    "कराराने आम्हाला आकाशाएवढे उंच उचलले",
-    "बेंगळुरू"
-  ],
-  "fr": [
-    "Même si les difficultés financières nous poussent jusqu'au suicide",
-    "L’Alliance nous a élevés jusqu’aux cieux",
-    "Bengaluru"
-  ],
-  "es": [
-    "Aunque las cargas financieras nos lleven al borde del suicidio",
-    "El Pacto nos elevó hasta los cielos",
-    "Bengaluru"
-  ],
-  "zh": [
-    "即使经济负担把我们逼到自杀的边缘",
-    "盟约把我们提升到了天空之上",
-    "班加罗尔"
-  ],
-  "kn": [
-    "ಆರ್ಥಿಕ ಭಾರಗಳು ನಮ್ಮನ್ನು ಆತ್ಮಹತ್ಯೆಯ ಅಂಚಿಗೆ ತಳ್ಳಿದರೂ",
-    "ಒಪ್ಪಂದವು ನಮ್ಮನ್ನು ಆಕಾಶದ ಮಟ್ಟಿಗೆ ಎತ್ತಿತು",
-    "ಬೆಂಗಳೂರು"
-  ]
-}
-}
+  },
+  {
+    "id": 65,
+    "title": {
+      "en": "Healing of Liver, Kidneys, and Voice and Missionary Life",
+      "hi": "यकृत, गुर्दे और आवाज़ की चंगाई और मिशनरी जीवन",
+      "ta": "கல்லீரல், சிறுநீரகம் மற்றும் குரல் குணமடைதலும் மிஷனரி வாழ்க்கையும்",
+      "bn": "যকৃত, কিডনি ও কণ্ঠস্বরের আরোগ্য এবং মিশনারি জীবন",
+      "te": "కాలేయం, మూత్రపిండాలు మరియు స్వరానికి స్వస్థత మరియు మిషనరీ జీవితం",
+      "mr": "यकृत, मूत्रपिंड आणि आवाजाच्या आरोग्यलाभासह मिशनरी जीवन",
+      "fr": "Guérison du foie, des reins et de la voix et vie missionnaire",
+      "es": "Sanación del hígado, los riñones y la voz y vida misionera",
+      "zh": "肝脏、肾脏和声音的治愈以及宣教生活",
+      "kn": "ಯಕೃತ್, ಮೂತ್ರಪಿಂಡಗಳು ಮತ್ತು ಧ್ವನಿಯ ಗುಣಮುಖತೆ ಮತ್ತು ಮಿಷನರಿ ಜೀವನ"
+    },
+    "date": "March 17, 2026",
+    "video": "https://youtu.be/DeWD7BPrBpY",
+    "content": {
+      "en": "Sindhu Nelson from Anchal in Kollam shares how she first came to know about Kreupasanam during a time of illness in 2019. While weak and praying before her home altar, she heard the word 'Kreupasanam' whispered in her ear. Searching her cupboard afterward, she found a Kreupasanam newsletter previously given by a nun. Through it she learned about the Covenant prayer, began praying it through YouTube, and convinced her husband to take her to Kreupasanam before undergoing an endoscopy. After making the Covenant there, the medical test showed no serious illness, which she experienced as her first testimony of grace.\n\nLater she faced several health fears, including suspected appendicitis and possible cirrhosis because of her family history. Trusting in prayer and the Covenant oil, she continued interceding until medical tests showed her liver was completely healthy, with no fatty liver or cirrhosis. At the same time, kidney stones that had troubled her for many years disappeared in later scans. Another trial came when she suddenly lost her voice due to vocal cord nodules, but after weeks of prayer and anointing with the Covenant oil, her voice returned completely without taking the prescribed medicine.\n\nThrough these experiences, Sindhu and her husband dedicated themselves to missionary work connected with the Covenant. They began visiting homes, bringing people to the shrine, distributing Marian newsletters, and forming a prayer group that includes both Christians and non-Christians. The group performs works of mercy such as helping the sick and supporting poor families. Sindhu says their mission is not just to seek personal blessings but to lead others to faith, prayer, and acts of mercy, offering their lives to glorify Jesus and Mother Mary.",
+      "hi": "कोल्लम के अंचल की सिंधु नेल्सन साझा करती हैं कि 2019 में अपनी बीमारी के दौरान उन्हें पहली बार कृपासनम के बारे में कैसे पता चला। जब वह कमज़ोर थीं और अपने घर की वेदी के सामने प्रार्थना कर रही थीं, तब उन्होंने अपने कान में 'कृपासनम' शब्द फुसफुसाते हुए सुना। बाद में अपनी अलमारी खोजने पर, उन्हें कृपासनम का एक न्यूज़लेटर मिला जो पहले एक सिस्टर ने दिया था। इसके ज़रिए उन्हें वाचा प्रार्थना के बारे में पता चला, उन्होंने यूट्यूब के ज़रिए प्रार्थना करना शुरू किया, और एंडोस्कोपी कराने से पहले अपने पति को कृपासनम ले जाने के लिए मना लिया। वहाँ वाचा करने के बाद, मेडिकल टेस्ट में कोई गंभीर बीमारी नहीं निकली, जिसे उन्होंने कृपा की अपनी पहली गवाही के रूप में अनुभव किया।\n\nबाद में उन्हें स्वास्थ्य संबंधी कई डर सताने लगे, जिनमें अपेंडिसाइटिस का शक और उनके परिवार की मेडिकल हिस्ट्री की वजह से सिरोसिस की संभावना शामिल थी। प्रार्थना और वाचा के तेल पर भरोसा करते हुए, वह लगातार मध्यस्थता करती रहीं, जब तक कि मेडिकल टेस्ट में उनका लिवर पूरी तरह से स्वस्थ नहीं निकला, जिसमें कोई फैटी लिवर या सिरोसिस नहीं था। उसी समय, कई सालों से उन्हें परेशान करने वाली किडनी की पथरी भी बाद के स्कैन में गायब हो गई। एक और परीक्षा तब आई जब वोकल कॉर्ड नोड्यूल्स की वजह से उनकी आवाज़ अचानक चली गई, लेकिन हफ्तों की प्रार्थना और वाचा के तेल से अभिषेक करने के बाद, डॉक्टर की बताई दवा लिए बिना ही उनकी आवाज़ पूरी तरह लौट आई।\n\nइन अनुभवों के ज़रिए, सिंधु और उनके पति ने वाचा से जुड़े मिशनरी काम के लिए खुद को समर्पित कर दिया। उन्होंने घरों में जाना, लोगों को तीर्थस्थान पर लाना, मारियन न्यूज़लेटर बाँटना और एक ऐसा प्रार्थना समूह बनाना शुरू किया जिसमें ईसाई और गैर-ईसाई दोनों शामिल हैं। यह समूह बीमारों की मदद करने और गरीब परिवारों को सपोर्ट करने जैसे दया के काम करता है। सिंधु कहती हैं कि उनका मिशन सिर्फ़ व्यक्तिगत आशीष पाना नहीं है, बल्कि दूसरों को विश्वास, प्रार्थना और दया के कामों की ओर ले जाना है, और अपना जीवन यीशु और माता मरियम की महिमा के लिए अर्पित करना है।",
+      "ta": "கொல்லம் அஞ்சலைச் சேர்ந்த சிந்து நெல்சன், 2019 ஆம் ஆண்டு உடல்நலம் குன்றியிருந்த காலத்தில் கிருபாசனம் பற்றி எப்படி முதன்முதலில் தெரிந்துகொண்டார் என்பதைப் பகிர்ந்துகொள்கிறார். பலவீனமாகி தனது வீட்டு பீடத்தின் முன் ஜெபித்துக் கொண்டிருந்தபோது, ​​'கிருபாசனம்' என்ற வார்த்தை தன் காதில் கிசுகிசுக்கப்படுவதைக் கேட்டார். பின்னர் தனது பீரோவில் தேடியபோது, ​​முன்பு ஒரு சிஸ்டர் கொடுத்த கிருபாசனம் நியூஸ்லெட்டரை அவர் கண்டுபிடித்தார். அதன் மூலம் அவர் உடன்படிக்கை ஜெபத்தைப் பற்றி அறிந்துகொண்டார், யூடியூப் மூலம் அதை ஜெபிக்கத் தொடங்கினார், மேலும் எண்டோஸ்கோபி செய்வதற்கு முன்பு கிருபாசனத்திற்கு தன்னை அழைத்துச் செல்லுமாறு கணவரை சமாதானப்படுத்தினார். அங்கு உடன்படிக்கை செய்த பிறகு, மெடிக்கல் டெஸ்டில் எந்த தீவிர நோயும் இல்லை என்று வந்தது, இதுவே அருளின் முதல் சாட்சியாக அவர் அனுபவித்தார்.\n\nபின்னர், குடல்வால் அழற்சி மற்றும் அவரது குடும்பத்தின் மெடிக்கல் ஹிஸ்டரி காரணமாக சிரோசிஸ் வருவதற்கான சாத்தியக்கூறுகள் உட்பட பல உடல்நல பயங்களை அவர் எதிர்கொண்டார். ஜெபம் மற்றும் உடன்படிக்கை எண்ணெயில் நம்பிக்கை வைத்து, மெடிக்கல் டெஸ்டில் அவரது கல்லீரல் முழுமையாக ஆரோக்கியமாக இருப்பதாகவும், ஃபேட்டி லிவர் அல்லது சிரோசிஸ் இல்லை என்றும் வரும் வரை தொடர்ந்து பரிந்துரை ஜெபம் செய்தார். அதே நேரத்தில், பல ஆண்டுகளாக அவரைத் தொந்தரவு செய்த சிறுநீரகக் கற்களும் பின்னாளைய ஸ்கேன்களில் மறைந்துவிட்டன. குரல்நாண் கட்டிகளால் அவர் திடீரென தனது குரலை இழந்தபோது மற்றொரு சோதனை வந்தது, ஆனால் வாரக்கணக்கான ஜெபம் மற்றும் உடன்படிக்கை எண்ணெயால் அபிஷேகம் செய்த பிறகு, பரிந்துரைக்கப்பட்ட மருந்துகளை எடுக்காமலேயே அவரது குரல் முழுமையாகத் திரும்பியது.\n\nஇந்த அனுபவங்களின் மூலம், சிந்துவும் அவரது கணவரும் உடன்படிக்கையுடன் தொடர்புடைய மிஷனரி பணிகளுக்காக தங்களை அர்ப்பணித்தனர். அவர்கள் வீடுகளுக்குச் செல்லவும், மக்களை திருத்தலத்திற்குக் கொண்டு வரவும், அன்னை மரியாவின் நியூஸ்லெட்டர்களை விநியோகிக்கவும், கிறிஸ்தவர்கள் மற்றும் கிறிஸ்தவர் அல்லாதவர்களை உள்ளடக்கிய ஒரு ஜெபக் குழுவை உருவாக்கவும் தொடங்கினர். இக்குழு நோயாளிகளுக்கு உதவுதல் மற்றும் ஏழைக் குடும்பங்களுக்கு சப்போர்ட் செய்தல் போன்ற இரக்கச் செயல்களைச் செய்கிறது. தனிப்பட்ட ஆசீர்வாதங்களைத் தேடுவது மட்டுமல்ல, மற்றவர்களை விசுவாசம், ஜெபம் மற்றும் இரக்கச் செயல்களுக்கு வழிநடத்துவதும், இயேசு மற்றும் அன்னை மரியாவை மகிமைப்படுத்த தங்கள் வாழ்க்கையை ஒப்புக்கொடுப்பதுமே தங்களின் மிஷன் என்று சிந்து கூறுகிறார்.",
+      "bn": "কোল্লামের আঞ্চাল থেকে সিন্ধু নেলসন শেয়ার করেছেন কীভাবে তিনি ২০১৯ সালে অসুস্থতার সময় প্রথম কৃপাসনম সম্পর্কে জানতে পেরেছিলেন। দুর্বল অবস্থায় তার বাড়ির বেদীর সামনে প্রার্থনা করার সময়, তিনি তার কানে 'কৃপাসনম' শব্দটি ফিসফিস করে শুনতে পান। পরে তার আলমারি খোঁজার সময়, তিনি আগে একজন সিস্টারের দেওয়া একটি কৃপাসনম নিউজলেটার খুঁজে পান। এর মাধ্যমে তিনি চুক্তি (Covenant) প্রার্থনা সম্পর্কে জানতে পারেন, ইউটিউব-এর মাধ্যমে এটি প্রার্থনা করতে শুরু করেন এবং এন্ডোস্কোপি করার আগে তাকে কৃপাসনমে নিয়ে যাওয়ার জন্য তার স্বামীকে রাজি করান। সেখানে চুক্তি করার পরে, মেডিকেল টেস্ট-এ কোনও গুরুতর অসুস্থতা দেখা যায়নি, যা তিনি অনুগ্রহের প্রথম সাক্ষ্য হিসাবে অনুভব করেছিলেন।\n\nপরে তিনি সন্দেহভাজন অ্যাপেন্ডিসাইটিস এবং তার পরিবারের মেডিকেল হিস্ট্রি-র কারণে সিরোসিসের সম্ভাবনা সহ বেশ কয়েকটি স্বাস্থ্য ঝুঁকির সম্মুখীন হন। প্রার্থনা এবং চুক্তির তেলের উপর বিশ্বাস রেখে, তিনি ক্রমাগত মধ্যস্থতা প্রার্থনা চালিয়ে যান যতক্ষণ না মেডিকেল টেস্ট-এ দেখা যায় তার লিভার সম্পূর্ণ সুস্থ, কোনও ফ্যাটি লিভার বা সিরোসিস নেই। একই সময়ে, বহু বছর ধরে তাকে সমস্যায় ফেলা কিডনির পাথরগুলিও পরবর্তী স্ক্যান-এ অদৃশ্য হয়ে যায়। আরেকটি পরীক্ষা আসে যখন ভোকাল কর্ড নডিউলস-এর কারণে তিনি হঠাৎ তার কণ্ঠস্বর হারিয়ে ফেলেন, কিন্তু কয়েক সপ্তাহ প্রার্থনা এবং চুক্তির তেল দিয়ে অভিষেক করার পরে, নির্ধারিত ওষুধ না নিয়েই তার কণ্ঠস্বর পুরোপুরি ফিরে আসে।\n\nএই অভিজ্ঞতাগুলির মাধ্যমে, সিন্ধু এবং তার স্বামী চুক্তির সাথে যুক্ত মিশনারি কাজে নিজেদের উৎসর্গ করেছিলেন। তারা বাড়িতে বাড়িতে যাওয়া, মানুষকে তীর্থস্থানে নিয়ে আসা, মারিয়ান নিউজলেটার বিতরণ করা এবং খ্রিষ্টান ও অ-খ্রিষ্টান উভয়কে নিয়ে একটি প্রার্থনা গ্রুপ তৈরি করা শুরু করেন। গ্রুপটি অসুস্থদের সাহায্য করা এবং দরিদ্র পরিবারগুলিকে সাপোর্ট করার মতো দয়ার কাজ করে। সিন্ধু বলেন, তাদের মিশন কেবল ব্যক্তিগত আশীর্বাদ খোঁজা নয়, বরং অন্যদের বিশ্বাস, প্রার্থনা এবং দয়ার কাজের দিকে নিয়ে যাওয়া এবং যিশু ও মা মেরিকে মহিমান্বিত করার জন্য তাদের জীবন উৎসর্গ করা।",
+      "te": "కొల్లంలోని అంచల్‌కు చెందిన సింధు నెల్సన్ 2019లో తన అనారోగ్య సమయంలో కృపాసనం గురించి మొదటిసారి ఎలా తెలుసుకున్నారో పంచుకున్నారు. బలహీనంగా ఉండి తన ఇంటి బలిపీఠం ముందు ప్రార్థిస్తున్నప్పుడు, ఆమె చెవిలో 'కృపాసనం' అనే పదం గుసగుసలాడినట్లు వినబడింది. ఆ తర్వాత తన కప్‌బోర్డ్ వెతికినప్పుడు, గతంలో ఒక సిస్టర్ ఇచ్చిన కృపాసనం న్యూస్‌లెటర్ ఆమెకు దొరికింది. దాని ద్వారా ఆమె నిబంధన ప్రార్థన గురించి తెలుసుకుంది, యూట్యూబ్ ద్వారా ప్రార్థించడం ప్రారంభించింది, మరియు ఎండోస్కోపీ చేయించుకునే ముందు తనను కృపాసనంకు తీసుకెళ్లమని భర్తను ఒప్పించింది. అక్కడ నిబంధన చేసుకున్న తర్వాత, మెడికల్ టెస్ట్‌లో ఎలాంటి తీవ్రమైన అనారోగ్యం లేదని తేలింది, దీనిని ఆమె దేవుని కృపకు తన మొదటి సాక్ష్యంగా అనుభవించింది.\n\nతరువాత ఆమెకు అపెండిసైటిస్ అనుమానం మరియు తన కుటుంబ మెడికల్ హిస్టరీ కారణంగా సిర్రోసిస్ వచ్చే అవకాశం ఉందనే భయాలతో సహా అనేక ఆరోగ్యపరమైన భయాలు ఎదురయ్యాయి. ప్రార్థన మరియు నిబంధన నూనెపై విశ్వాసంతో, మెడికల్ టెస్ట్‌లలో తన కాలేయం పూర్తిగా ఆరోగ్యంగా ఉందని, ఫ్యాటీ లివర్ లేదా సిర్రోసిస్ లేదని తేలేంత వరకు ఆమె విజ్ఞాపన చేస్తూనే ఉంది. అదే సమయంలో, చాలా సంవత్సరాలుగా ఆమెను ఇబ్బంది పెట్టిన కిడ్నీ స్టోన్స్ కూడా తరువాతి స్కాన్‌లలో మాయమయ్యాయి. వోకల్ కార్డ్ నోడ్యూల్స్ కారణంగా ఆమె అకస్మాత్తుగా తన స్వరాన్ని కోల్పోయినప్పుడు మరో పరీక్ష ఎదురైంది, కానీ వారాల పాటు ప్రార్థన మరియు నిబంధన నూనెతో అభిషేకం చేసిన తర్వాత, డాక్టర్ రాసిచ్చిన మందులు వాడకుండానే ఆమె స్వరం పూర్తిగా తిరిగి వచ్చింది.\n\nఈ అనుభవాల ద్వారా, సింధు మరియు ఆమె భర్త నిబంధనకు సంబంధించిన మిషనరీ పని కోసం తమను తాము అంకితం చేసుకున్నారు. వారు ఇళ్లను సందర్శించడం, ప్రజలను పుణ్యక్షేత్రానికి తీసుకురావడం, మేరియన్ న్యూస్‌లెటర్‌లను పంపిణీ చేయడం మరియు క్రైస్తవులు మరియు క్రైస్తవేతరులు ఇద్దరూ ఉండే ఒక ప్రార్థనా బృందాన్ని ఏర్పాటు చేయడం ప్రారంభించారు. ఈ బృందం రోగులకు సహాయం చేయడం మరియు పేద కుటుంబాలకు సపోర్ట్ చేయడం వంటి దయగల పనులు చేస్తుంది. తమ మిషన్ కేవలం వ్యక్తిగత ఆశీర్వాదాలను కోరుకోవడం మాత్రమే కాదని, ఇతరులను విశ్వాసం, ప్రార్థన మరియు దయగల పనుల వైపు నడిపించడం మరియు యేసు మరియు మాతా మరియను మహిమపరచడానికి తమ జీవితాలను అర్పించడం అని సింధు చెబుతున్నారు.",
+      "mr": "कोल्लममधील अंचल येथील सिंधू नेल्सन २०२९ मध्ये आजारपणाच्या काळात त्यांना पहिल्यांदा कृपासनमबद्दल कसे समजले हे शेअर करतात. अशक्त असताना आणि आपल्या घरातील वेदीसमोर प्रार्थना करत असताना, त्यांना 'कृपासनम' हा शब्द त्यांच्या कानात कुजबुजल्यासारखा ऐकू आला. त्यानंतर कपाट शोधत असताना, त्यांना पूर्वी एका सिस्टरने दिलेले कृपासनम न्यूजलेटर सापडले. त्याद्वारे त्यांना करार (Covenant) प्रार्थनेबद्दल माहिती मिळाली, त्यांनी यूट्यूबद्वारे प्रार्थना करण्यास सुरुवात केली आणि एंडोस्कोपी करण्यापूर्वी त्यांच्या पतीला कृपासनमला घेऊन जाण्यास पटवून दिले. तिथे करार केल्यानंतर, मेडिकल टेस्टमध्ये कोणताही गंभीर आजार नसल्याचे दिसून आले, ज्याचा त्यांनी कृपेची पहिली साक्ष म्हणून अनुभव घेतला.\n\nनंतर त्यांना अपेंडिसायटिसचा संशय आणि कुटुंबाच्या मेडिकल हिस्टरीमुळे सिरोसिसची शक्यता यासह आरोग्याच्या अनेक भीतींचा सामना करावा लागला. प्रार्थना आणि कराराच्या तेलावर विश्वास ठेवून, त्यांनी मध्यस्थी करणे चालू ठेवले जोपर्यंत मेडिकल टेस्टमध्ये त्यांचे यकृत पूर्णपणे निरोगी असल्याचे, कोणतीही फॅटी लिव्हर किंवा सिरोसिस नसल्याचे दिसून आले नाही. त्याच वेळी, अनेक वर्षांपासून त्यांना त्रास देणारे किडनी स्टोन देखील नंतरच्या स्कॅनमध्ये गायब झाले. व्होकल कॉर्ड नोड्यूल्समुळे त्यांचा आवाज अचानक गेला तेव्हा आणखी एक परीक्षा आली, परंतु आठवडेभर प्रार्थना आणि कराराच्या तेलाने अभिषेक केल्यानंतर, सांगितलेली औषधे न घेताच त्यांचा आवाज पूर्णपणे परत आला.\n\nया अनुभवांद्वारे, सिंधू आणि त्यांच्या पतीने कराराशी संबंधित मिशनरी कामासाठी स्वतःला वाहून घेतले. त्यांनी घरांना भेटी देणे, लोकांना तीर्थक्षेत्री आणणे, मारियन न्यूजलेटर्स वाटणे आणि ख्रिश्चन आणि बिगर-ख्रिश्चन दोघांचाही समावेश असलेला एक प्रार्थना गट तयार करण्यास सुरुवात केली. हा गट आजारी लोकांना मदत करणे आणि गरीब कुटुंबांना सपोर्ट करणे यासारखी दयेची कामे करतो. सिंधू म्हणतात की त्यांचे मिशन केवळ वैयक्तिक आशीर्वाद मिळवणे हे नाही, तर इतरांना विश्वास, प्रार्थना आणि दयेच्या कामांकडे नेणे आणि येशू व माता मरीयेचा गौरव करण्यासाठी आपले जीवन अर्पण करणे हे आहे.",
+      "fr": "Sindhu Nelson, originaire d'Anchal à Kollam, raconte comment elle a entendu parler de Kreupasanam pour la première fois pendant une période de maladie en 2019. Alors qu'elle était faible et priait devant l'autel de sa maison, elle a entendu le mot « Kreupasanam » murmuré à son oreille. En fouillant ensuite dans son placard, elle a trouvé une newsletter de Kreupasanam qu'une religieuse lui avait donnée auparavant. Grâce à cela, elle a découvert la prière de l'Alliance, a commencé à la prier via YouTube, et a convaincu son mari de l'emmener à Kreupasanam avant de subir une endoscopie. Après y avoir fait l'Alliance, les examens médicaux n'ont révélé aucune maladie grave, ce qu'elle a vécu comme son premier témoignage de grâce.\n\nPlus tard, elle a fait face à plusieurs craintes pour sa santé, notamment une suspicion d'appendicite et une possible cirrhose en raison de ses antécédents familiaux. Confiante dans la prière et l'huile de l'Alliance, elle a continué son intercession jusqu'à ce que les examens médicaux montrent que son foie était complètement sain, sans foie gras ni cirrhose. Dans le même temps, des calculs rénaux qui la troublaient depuis de nombreuses années ont disparu lors des scanners ultérieurs. Une autre épreuve est survenue lorsqu'elle a soudainement perdu la voix à cause de nodules sur les cordes vocales, mais après des semaines de prière et d'onction avec l'huile de l'Alliance, sa voix est revenue complètement sans prendre les médicaments prescrits.\n\nÀ travers ces expériences, Sindhu et son mari se sont consacrés à l'œuvre missionnaire liée à l'Alliance. Ils ont commencé à visiter des maisons, à amener les gens au sanctuaire, à distribuer des newsletters mariales et à former un groupe de prière comprenant à la fois des chrétiens et des non-chrétiens. Le groupe accomplit des œuvres de miséricorde telles que l'aide aux malades et le soutien aux familles pauvres. Sindhu affirme que leur mission n'est pas seulement de rechercher des bénédictions personnelles, mais de guider les autres vers la foi, la prière et les actes de miséricorde, en offrant leur vie pour glorifier Jésus et Mère Marie.",
+      "es": "Sindhu Nelson, de Anchal en Kollam, comparte cómo escuchó hablar por primera vez de Kreupasanam durante un tiempo de enfermedad en 2019. Mientras estaba débil y oraba ante el altar de su casa, escuchó la palabra 'Kreupasanam' susurrada en su oído. Al buscar en su armario después, encontró un boletín de Kreupasanam que le había dado una monja anteriormente. A través de él, aprendió sobre la oración de la Alianza, comenzó a rezarla a través de YouTube y convenció a su esposo para que la llevara a Kreupasanam antes de someterse a una endoscopia. Después de hacer la Alianza allí, la prueba médica no mostró ninguna enfermedad grave, lo que experimentó como su primer testimonio de gracia.\n\nMás tarde, enfrentó varios temores de salud, incluida una sospecha de apendicitis y posible cirrosis debido a sus antecedentes familiares. Confiando en la oración y el aceite de la Alianza, continuó con su intercesión hasta que las pruebas médicas mostraron que su hígado estaba completamente sano, sin hígado graso ni cirrosis. Al mismo tiempo, los cálculos renales que la habían preocupado durante muchos años desaparecieron en escáneres posteriores. Otra prueba llegó cuando de repente perdió la voz debido a nódulos en las cuerdas vocales, pero después de semanas de oración y unción con el aceite de la Alianza, su voz regresó por completo sin tomar la medicina recetada.\n\nA través de estas experiencias, Sindhu y su esposo se dedicaron a la obra misionera relacionada con la Alianza. Comenzaron a visitar hogares, llevar personas al santuario, distribuir boletines marianos y formar un grupo de oración que incluye tanto a cristianos como a no cristianos. El grupo realiza obras de misericordia, como ayudar a los enfermos y apoyar a las familias pobres. Sindhu dice que su misión no es solo buscar bendiciones personales, sino llevar a otros a la fe, la oración y las obras de misericordia, ofreciendo sus vidas para glorificar a Jesús y a la Madre María.",
+      "zh": "来自科兰（Kollam）安恰尔（Anchal）的 Sindhu Nelson 分享了她在 2019 年生病期间第一次知道 Kreupasanam 的经历。当她虚弱地在家里的祭坛前祈祷时，她听到耳边有人低语“Kreupasanam”这个词。之后在翻找衣柜时，她发现了一份之前一位修女给的 Kreupasanam 通讯。通过它，她了解了盟约（Covenant）祈祷，开始通过 YouTube 跟着祈祷，并说服她的丈夫在做内窥镜检查之前带她去 Kreupasanam。在那里立下盟约后，医学检查显示没有严重的疾病，她将这视为她获得的第一个恩典见证。\n\n后来，她面临着几次健康恐慌，包括怀疑是阑尾炎以及由于家族病史可能患有的肝硬化。怀着对祈祷和盟约之油（Covenant oil）的信任，她继续代祷，直到医学检查显示她的肝脏完全健康，没有脂肪肝或肝硬化。与此同时，困扰她多年的肾结石在随后的扫描中也消失了。另一个考验发生在由于声带结节她突然失声时，但在用盟约之油祈祷和傅油几周后，她的声音完全恢复了，而且没有服用医生开的药。\n\n通过这些经历，Sindhu 和她的丈夫献身于与盟约相关的传教工作。他们开始探访家庭，带人们去朝圣地，分发圣母通讯，并组建了一个包括基督徒和非基督徒在内的祈祷小组。该小组开展慈善工作，例如帮助病人和支持贫困家庭。Sindhu 说他们的使命不仅仅是寻求个人的祝福，而是带领他人走向信仰、祈祷和怜悯的行动，奉献他们的生命来荣耀耶稣和圣母玛利亚。",
+      "kn": "ಕೊಲ್ಲಂನ ಅಂಚಲ್‌ನ ಸಿಂಧು ನೆಲ್ಸನ್ ಅವರು 2019 ರಲ್ಲಿ ತಮ್ಮ ಅನಾರೋಗ್ಯದ ಸಮಯದಲ್ಲಿ ಕೃಪಾಸನಂ ಬಗ್ಗೆ ಮೊದಲು ಹೇಗೆ ತಿಳಿದುಕೊಂಡರು ಎಂಬುದನ್ನು ಹಂಚಿಕೊಂಡಿದ್ದಾರೆ. ದುರ್ಬಲರಾಗಿದ್ದಾಗ ಮತ್ತು ತಮ್ಮ ಮನೆಯ ಬಲಿಪೀಠದ ಮುಂದೆ ಪ್ರಾರ್ಥಿಸುತ್ತಿದ್ದಾಗ, ಅವರ ಕಿವಿಯಲ್ಲಿ 'ಕೃಪಾಸನಂ' ಎಂಬ ಪದ ಪಿಸುಗುಟ್ಟಿದಂತೆ ಕೇಳಿಸಿತು. ನಂತರ ತಮ್ಮ ಕಪಾಟನ್ನು ಹುಡುಕಿದಾಗ, ಮೊದಲು ಒಬ್ಬ ಸಿಸ್ಟರ್ ನೀಡಿದ್ದ ಕೃಪಾಸನಂ ನ್ಯೂಸ್‌ಲೆಟರ್ ಅವರಿಗೆ ಸಿಕ್ಕಿತು. ಅದರ ಮೂಲಕ ಅವರು ಒಡಂಬಡಿಕೆಯ (Covenant) ಪ್ರಾರ್ಥನೆಯ ಬಗ್ಗೆ ತಿಳಿದುಕೊಂಡರು, ಯೂಟ್ಯೂಬ್ ಮೂಲಕ ಪ್ರಾರ್ಥಿಸಲು ಪ್ರಾರಂಭಿಸಿದರು ಮತ್ತು ಎಂಡೋಸ್ಕೋಪಿ ಮಾಡಿಸಿಕೊಳ್ಳುವ ಮೊದಲು ತಮ್ಮನ್ನು ಕೃಪಾಸನಂಗೆ ಕರೆದೊಯ್ಯುವಂತೆ ಪತಿಗೆ ಮನವರಿಕೆ ಮಾಡಿದರು. ಅಲ್ಲಿ ಒಡಂಬಡಿಕೆ ಮಾಡಿದ ನಂತರ, ಮೆಡಿಕಲ್ ಟೆಸ್ಟ್‌ನಲ್ಲಿ ಯಾವುದೇ ಗಂಭೀರ ಅನಾರೋಗ್ಯ ಕಂಡುಬರಲಿಲ್ಲ, ಇದನ್ನು ಅವರು ಕೃಪೆಯ ತಮ್ಮ ಮೊದಲ ಸಾಕ್ಷ್ಯವಾಗಿ ಅನುಭವಿಸಿದರು.\n\nನಂತರ ಅವರು ಅಪೆಂಡಿಸೈಟಿಸ್ ಶಂಕೆ ಮತ್ತು ತಮ್ಮ ಕುಟುಂಬದ ಮೆಡಿಕಲ್ ಹಿಸ್ಟರಿಯ ಕಾರಣದಿಂದಾಗಿ ಸಿರೋಸಿಸ್ ಬರುವ ಸಾಧ್ಯತೆ ಸೇರಿದಂತೆ ಹಲವಾರು ಆರೋಗ್ಯದ ಭೀತಿಗಳನ್ನು ಎದುರಿಸಿದರು. ಪ್ರಾರ್ಥನೆ ಮತ್ತು ಒಡಂಬಡಿಕೆಯ ಎಣ್ಣೆಯಲ್ಲಿ ನಂಬಿಕೆಯಿಟ್ಟು, ಮೆಡಿಕಲ್ ಟೆಸ್ಟ್‌ಗಳಲ್ಲಿ ತಮ್ಮ ಲಿವರ್ ಸಂಪೂರ್ಣವಾಗಿ ಆರೋಗ್ಯಕರವಾಗಿದೆ, ಯಾವುದೇ ಫ್ಯಾಟಿ ಲಿವರ್ ಅಥವಾ ಸಿರೋಸಿಸ್ ಇಲ್ಲ ಎಂದು ತೋರಿಸುವವರೆಗೆ ಅವರು ನಿರಂತರವಾಗಿ ಮಧ್ಯಸ್ಥಿಕೆ ಪ್ರಾರ್ಥನೆ ಮಾಡುತ್ತಲೇ ಇದ್ದರು. ಅದೇ ಸಮಯದಲ್ಲಿ, ಹಲವು ವರ್ಷಗಳಿಂದ ಅವರನ್ನು ಕಾಡುತ್ತಿದ್ದ ಕಿಡ್ನಿ ಸ್ಟೋನ್ಸ್ ಕೂಡ ನಂತರದ ಸ್ಕ್ಯಾನ್‌ಗಳಲ್ಲಿ ಮಾಯವಾದವು. ವೋಕಲ್ ಕಾರ್ಡ್ ನೋಡ್ಯೂಲ್ಸ್‌ನಿಂದಾಗಿ ಅವರು ಇದ್ದಕ್ಕಿದ್ದಂತೆ ತಮ್ಮ ಧ್ವನಿಯನ್ನು ಕಳೆದುಕೊಂಡಾಗ ಮತ್ತೊಂದು ಪರೀಕ್ಷೆ ಎದುರಾಯಿತು, ಆದರೆ ವಾರಗಳ ಪ್ರಾರ್ಥನೆ ಮತ್ತು ಒಡಂಬಡಿಕೆಯ ಎಣ್ಣೆಯಿಂದ ಅಭಿಷೇಕ ಮಾಡಿದ ನಂತರ, ಸೂಚಿಸಿದ ಔಷಧಿಯನ್ನು ತೆಗೆದುಕೊಳ್ಳದೆಯೇ ಅವರ ಧ್ವನಿ ಸಂಪೂರ್ಣವಾಗಿ ಹಿಂದಿರುಗಿತು.\n\nಈ ಅನುಭವಗಳ ಮೂಲಕ, ಸಿಂಧು ಮತ್ತು ಅವರ ಪತಿ ಒಡಂಬಡಿಕೆಗೆ ಸಂಬಂಧಿಸಿದ ಮಿಷನರಿ ಕೆಲಸಕ್ಕಾಗಿ ತಮ್ಮನ್ನು ತಾವು ಮುಡಿಪಾಗಿಟ್ಟರು. ಅವರು ಮನೆಗಳಿಗೆ ಭೇಟಿ ನೀಡುವುದು, ಜನರನ್ನು ಪುಣ್ಯಕ್ಷೇತ್ರಕ್ಕೆ ಕರೆತರುವುದು, ಮೇರಿಯನ್ ನ್ಯೂಸ್‌ಲೆಟರ್‌ಗಳನ್ನು ವಿತರಿಸುವುದು ಮತ್ತು ಕ್ರಿಶ್ಚಿಯನ್ನರು ಮತ್ತು ಕ್ರಿಶ್ಚಿಯನ್ನೇತರರನ್ನು ಒಳಗೊಂಡ ಪ್ರಾರ್ಥನಾ ಗುಂಪನ್ನು ರಚಿಸುವುದನ್ನು ಪ್ರಾರಂಭಿಸಿದರು. ಈ ಗುಂಪು ರೋಗಿಗಳಿಗೆ ಸಹಾಯ ಮಾಡುವುದು ಮತ್ತು ಬಡ ಕುಟುಂಬಗಳಿಗೆ ಸಪೋರ್ಟ್ ಮಾಡುವುದರಂತಹ ಕರುಣೆಯ ಕಾರ್ಯಗಳನ್ನು ಮಾಡುತ್ತದೆ. ತಮ್ಮ ಮಿಷನ್ ಕೇವಲ ವೈಯಕ್ತಿಕ ಆಶೀರ್ವಾದಗಳನ್ನು ಹುಡುಕುವುದು ಮಾತ್ರವಲ್ಲ, ಬದಲಿಗೆ ಇತರರನ್ನು ನಂಬಿಕೆ, ಪ್ರಾರ್ಥನೆ ಮತ್ತು ಕರುಣೆಯ ಕಾರ್ಯಗಳತ್ತ ಮುನ್ನಡೆಸುವುದು ಮತ್ತು ಯೇಸು ಹಾಗೂ ಮಾತೆ ಮರಿಯಳನ್ನು ಮಹಿಮೆಪಡಿಸಲು ತಮ್ಮ ಜೀವನವನ್ನು ಅರ್ಪಿಸುವುದು ಎಂದು ಸಿಂಧು ಹೇಳುತ್ತಾರೆ."
+    },
+    "subtitles": "/assets/testimony-subtitle/17mar26.json",
+    "duration": "24:13",
+    "overlay": {
+      "boxes": [
+        {
+          "x": 31,
+          "y": 13,
+          "w": 771,
+          "h": 254,
+          "background": "#5b45a7",
+          "fontColor": "#fdfd05"
+        },
+        {
+          "x": 19,
+          "y": 271,
+          "w": 837,
+          "h": 279,
+          "background": "#192637",
+          "fontColor": "#fffeff"
+        },
+        {
+          "x": 25,
+          "y": 560,
+          "w": 1045,
+          "h": 153,
+          "background": "#fffc01",
+          "fontColor": "#796ba8"
+        },
+        {
+          "x": 1105,
+          "y": 7,
+          "w": 169,
+          "h": 52,
+          "background": "#917eb6",
+          "fontColor": "#fdfeff"
+        }
+      ],
+      "texts": {
+        "en": [
+          "I Don’t Write Personal Intentions in My Covenant",
+          "This happened when I prayed that Mother Mary’s liver be tested instead of mine",
+          "This is why Sindhu received so many blessings",
+          "Kollam"
+        ],
+        "hi": [
+          "मैं अपने वाचा में व्यक्तिगत अभिप्राय नहीं लिखता/लिखती",
+          "यह तब हुआ जब मैंने प्रार्थना की कि मेरी जगह माँ मरियम का यकृत जाँचा जाए",
+          "इसी कारण सिंधु को इतने आशीर्वाद मिले",
+          "कोल्लम"
+        ],
+        "ta": [
+          "என் உடன்படிக்கையில் நான் தனிப்பட்ட வேண்டுதல்களை எழுதுவதில்லை",
+          "என் கல்லீரலுக்கு பதிலாக அன்னை மரியாவின் கல்லீரல் பரிசோதிக்கப்படட்டும் என்று நான் ஜெபித்தபோது இது நடந்தது",
+          "இதனால்தான் சிந்து இவ்வளவு ஆசீர்வாதங்களை பெற்றார்",
+          "கொல்லம்"
+        ],
+        "bn": [
+          "আমি আমার চুক্তিতে ব্যক্তিগত প্রার্থনার বিষয় লিখি না",
+          "আমি প্রার্থনা করেছিলাম যেন আমার পরিবর্তে মা মেরির যকৃত পরীক্ষা করা হয়—তখনই এটি ঘটেছিল",
+          "এই কারণেই সিন্ধু এত আশীর্বাদ পেয়েছেন",
+          "কোল্লাম"
+        ],
+        "te": [
+          "నేను నా ఒడంబడికలో వ్యక్తిగత ప్రార్థనా అభ్యర్థనలు రాయను",
+          "నా బదులు అమ్మ మరియమ్మ గారి కాలేయాన్ని పరీక్షించమని నేను ప్రార్థించినప్పుడు ఇది జరిగింది",
+          "అందుకే సింధు ఎంతో ఆశీర్వాదాలు పొందింది",
+          "కొల్లం"
+        ],
+        "mr": [
+          "मी माझ्या करारात वैयक्तिक प्रार्थना हेतू लिहीत नाही",
+          "माझ्या ऐवजी माता मरियेचे यकृत तपासले जावे अशी मी प्रार्थना केली तेव्हा हे घडले",
+          "म्हणूनच सिंधुला इतक्या आशीर्वाद मिळाले",
+          "कोल्लम"
+        ],
+        "fr": [
+          "Je n’écris pas d’intentions personnelles dans mon Alliance",
+          "Cela s’est produit lorsque j’ai prié pour que le foie de la Vierge Marie soit examiné à la place du mien",
+          "C’est pour cela que Sindhu a reçu tant de bénédictions",
+          "Kollam"
+        ],
+        "es": [
+          "No escribo intenciones personales en mi Alianza",
+          "Esto ocurrió cuando oré para que el hígado de la Virgen María fuera examinado en lugar del mío",
+          "Por eso Sindhu recibió tantas bendiciones",
+          "Kollam"
+        ],
+        "zh": [
+          "我不会在我的盟约中写个人祈求",
+          "当我祈祷让圣母玛利亚的肝脏代替我的接受检查时，这件事发生了",
+          "这就是辛杜得到如此多祝福的原因",
+          "科拉姆"
+        ],
+        "kn": [
+          "ನಾನು ನನ್ನ ಒಡಂಬಡಿಕೆಯಲ್ಲಿ ವೈಯಕ್ತಿಕ ಉದ್ದೇಶಗಳನ್ನು ಬರೆಯುವುದಿಲ್ಲ",
+          "ನನ್ನ ಬದಲು ತಾಯಿ ಮರಿಯಮ್ಮನ ಯಕೃತನ್ನು ಪರೀಕ್ಷಿಸಲಿ ಎಂದು ನಾನು ಪ್ರಾರ್ಥಿಸಿದಾಗ ಇದು ನಡೆಯಿತು",
+          "ಅದರ ಕಾರಣದಿಂದಲೇ ಸಿಂಧು ಅನೇಕ ಆಶೀರ್ವಾದಗಳನ್ನು ಪಡೆದಳು",
+          "ಕೊಲ್ಲಂ"
+        ]
+      }
+    }
   }
 ]
