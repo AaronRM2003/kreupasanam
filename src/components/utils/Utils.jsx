@@ -392,13 +392,21 @@ function graphemeCount(text) {
 function estimateSyllablesLatin(word) {
   const w = (word || "")
     .toLowerCase()
-    .replace(/[^a-zà-öø-ÿyœæ]/g, ""); // allow common latin-1 letters
+    .replace(/[^a-zà-öø-ÿyœæ]/g, "");
+
   if (!w) return 0;
   if (w.length <= 3) return 1;
-  // strip common silent endings that inflate vowel groups
-  const stripped = w.replace(/(?:e|es|ed|le)$/i, "");
+
+  const stripped = w.replace(/(?:e|es|ed)$/i, "");
   const groups = stripped.match(/[aeiouy]{1,2}/gi);
-  return Math.max(1, groups ? groups.length : 1);
+
+  let syllables = groups ? groups.length : 1;
+
+  if (/[^aeiou]le$/i.test(w)) {
+    syllables += 1;
+  }
+
+  return Math.max(1, Math.min(syllables, 6));
 }
 
 /**
@@ -414,14 +422,33 @@ export function speechUnits(text = "", lang = "en-US") {
 
   // ---- CJK: character-timed (use grapheme count, add pause-for-commas)
   if (["ja", "ko", "zh"].includes(baseLang)) {
-    const chars = graphemeCount(text);
-    const commaPauses = (text.match(/[、，,]/g) || []).length;
-    const sentPauses = (text.match(/[。？！!?]/g) || []).length;
-    // tuned constants: chars contribute less than syllables but more than single-word base
-    const units = chars * 0.45 + commaPauses * 0.9 + sentPauses * 1.2;
-    return Math.max(1, Math.round(units * 100) / 100);
+  const chars = graphemeCount(text);
+
+  const commaPauses = (text.match(/[、，,]/g) || []).length;
+  const sentPauses = (text.match(/[。？！!?]/g) || []).length;
+
+  // --- language-specific tuning
+  let charWeight = 0.45;     // default (Chinese)
+  let commaWeight = 0.7;
+  let sentenceWeight = 1.4;
+
+  if (baseLang === "ja") {
+    // Japanese: compensate for mora timing (graphemes undercount)
+    charWeight = 0.5;
+  } else if (baseLang === "ko") {
+    // Korean: slightly slower pacing + stronger pauses
+    charWeight = 0.5;
+    commaWeight = 0.75;
+    sentenceWeight = 1.5;
   }
 
+  const units =
+    chars * charWeight +
+    commaPauses * commaWeight +
+    sentPauses * sentenceWeight;
+
+  return Math.max(1, Math.round(units * 100) / 100);
+}
   // split by whitespace for most languages; we'll cap per-word contribution later
   const words = (text || "").split(/\s+/).filter(Boolean);
 
