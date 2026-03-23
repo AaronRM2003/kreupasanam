@@ -27,8 +27,6 @@ export function useSpeechSync({
   const carryOverDebtRef = useRef(0);
   const cancelledSubtitleKeyRef = useRef(null);
   const lastPauseCheckTimeRef = useRef(0);
-  const skipNextRef = useRef(null); // stores next seek target
-  const lastSkipTimeRef = useRef(0); // prevent rapid skipping
 
 
 
@@ -388,10 +386,9 @@ export function useSpeechSync({
       const subtitleKey = `${currentSub.startSeconds}-${currentSub.endSeconds}`;
 
       // 🔒 HARD LOCK — EXIT IMMEDIATELY
-      if (
-        activeSubtitleKeyRef.current === subtitleKey &&
-        lastSpokenRef.current === text
-      ) return;
+      if (activeSubtitleKeyRef.current === subtitleKey) {
+        return;
+      }
 
       duration = Math.max(0.7, duration - translationDelay);
       if (
@@ -440,37 +437,7 @@ export function useSpeechSync({
       } catch { }
 
       let unitCount = speechUnits(text, effectiveLang);
-      let estimatedSpeechTime = unitCount / baselineWps;
-      let gap = duration - estimatedSpeechTime;
-      let gapRatio = gap / duration;
-
-      // 🔒 never touch short subtitles
       const isShort = duration <= 3;
-
-      // --------------------
-      // Decide skip strategy
-      // --------------------
-      let shouldSkipAhead = false;
-      let nextStart = null;
-
-      if (!isShort) {
-        // find next subtitle
-        const nextSub = subtitles.find(
-          s => s.startSeconds > currentSub.startSeconds
-        );
-
-        nextStart = nextSub?.startSeconds ?? null;
-
-        // 🔥 adaptive condition (better than fixed)
-        if (gapRatio > 0.35 && duration > 4 && nextStart != null) {
-          shouldSkipAhead = true;
-        }
-      }
-
-      // store decision (don’t act yet)
-      skipNextRef.current = shouldSkipAhead
-        ? { nextStart, subtitleKey }
-        : null;
       if (isShort) {
         const cap = duration * baselineWps * 1.3;
         unitCount = Math.min(unitCount, cap);
@@ -488,7 +455,6 @@ export function useSpeechSync({
       if (isShort) {
         margin *= 0.6;
       }
-
 
       // --------------------
       // Playback rate sync
@@ -614,184 +580,155 @@ export function useSpeechSync({
             carryOverDebtRef.current + overrun
           );
         }
-        const skipData = skipNextRef.current;
-        const currentSubNow = subtitles.find(
-          s => currentTime >= s.startSeconds && currentTime < s.endSeconds
+
+        // --------------------
+        // Load learned state FIRST
+        // --------------------
+        const learnedKey = `tts_learned_wps_${effectiveLang}`;
+        let learnedData = {};
+
+        const samplesKey = `tts_learned_samples_${effectiveLang}`;
+
+        let samplesData = {};
+        try {
+          samplesData = JSON.parse(localStorage.getItem(samplesKey) || '{}');
+        } catch { }
+
+        const samples = samplesData[voiceURI] ?? 0;
+
+        try {
+          learnedData = JSON.parse(localStorage.getItem(learnedKey) || '{}');
+        } catch { }
+
+        const prev = learnedData[voiceURI]?.wps ?? baselineWps;
+
+        // --------------------
+        // Observe speech
+        // --------------------
+        const observedWps = unitCount / actualDuration;
+        const ratio = observedWps / prev;
+
+        // Reject anomalies
+        if (ratio < 0.75 || ratio > 1.35) return;
+
+        // Weight long samples more
+        const durationWeight = Math.min(1.0, actualDuration / 6);
+        const weightedObserved =
+          prev * (1 - durationWeight) + observedWps * durationWeight;
+
+        // Adaptive learning rate
+        const alpha = getAdaptiveAlpha(samples);
+
+        let updatedWps =
+          prev * (1 - alpha) + weightedObserved * alpha;
+
+        // Penalize persistent overruns
+        if (carryOverDebtRef.current > 0.25) {
+          updatedWps *= 0.90;
+        }
+
+        updatedWps = Math.max(
+          3.5,    // lower bound
+          Math.min(8.5, updatedWps)
         );
-
-        const stillSameSub =
-          currentSubNow &&
-          `${currentSubNow.startSeconds}-${currentSubNow.endSeconds}` === subtitleKey;
-
-        if (skipData && stillSameSub) {
-            const now = Date.now();
-
-            // prevent rapid skipping
-            if (now - lastSkipTimeRef.current > 1500) {
-              const player = playerRef.current;
-
-              if (player?.seekTo && skipData.nextStart != null) {
-                console.log("⏩ SKIPPING GAP", {
-                  from: currentSub.startSeconds,
-                  to: skipData.nextStart,
-                  gap,
-                  gapRatio
-                });
-
-                player.seekTo(skipData.nextStart + 0.01);
-                lastSkipTimeRef.current = now;
-              }
-            }
-          }
-
-          skipNextRef.current = null; // clear after use
-
-          // --------------------
-          // Load learned state FIRST
-          // --------------------
-          const learnedKey = `tts_learned_wps_${effectiveLang}`;
-          let learnedData = {};
-
-          const samplesKey = `tts_learned_samples_${effectiveLang}`;
-
-          let samplesData = {};
-          try {
-            samplesData = JSON.parse(localStorage.getItem(samplesKey) || '{}');
-          } catch { }
-
-          const samples = samplesData[voiceURI] ?? 0;
-
-          try {
-            learnedData = JSON.parse(localStorage.getItem(learnedKey) || '{}');
-          } catch { }
-
-          const prev = learnedData[voiceURI]?.wps ?? baselineWps;
-
-          // --------------------
-          // Observe speech
-          // --------------------
-          const observedWps = unitCount / actualDuration;
-          const ratio = observedWps / prev;
-
-          // Reject anomalies
-          if (ratio < 0.75 || ratio > 1.35) return;
-
-          // Weight long samples more
-          const durationWeight = Math.min(1.0, actualDuration / 6);
-          const weightedObserved =
-            prev * (1 - durationWeight) + observedWps * durationWeight;
-
-          // Adaptive learning rate
-          const alpha = getAdaptiveAlpha(samples);
-
-          let updatedWps =
-            prev * (1 - alpha) + weightedObserved * alpha;
-
-          // Penalize persistent overruns
-          if (carryOverDebtRef.current > 0.25) {
-            updatedWps *= 0.90;
-          }
-
-          updatedWps = Math.max(
-            3.5,    // lower bound
-            Math.min(8.5, updatedWps)
-          );
-          // --------------------
-          // Save
-          // --------------------
-          learnedData[voiceURI] = {
-            wps: parseFloat(updatedWps.toFixed(3)),
-            lastUpdated: Date.now(),
-          };
-
-          samplesData[voiceURI] = samples + 1;
-          localStorage.setItem(samplesKey, JSON.stringify(samplesData));
-
-
-          const shouldPersist = samples < 5 || samples % 3 === 0;
-
-          if (shouldPersist) {
-            localStorage.setItem(learnedKey, JSON.stringify(learnedData));
-          }
-
-          console.log("📈 LEARN APPLY", {
-            prev,
-            observedWps,
-            updatedWps,
-            samplesBefore: samples,
-            persisted: shouldPersist,
-          });
-
+        // --------------------
+        // Save
+        // --------------------
+        learnedData[voiceURI] = {
+          wps: parseFloat(updatedWps.toFixed(3)),
+          lastUpdated: Date.now(),
         };
 
+        samplesData[voiceURI] = samples + 1;
+        localStorage.setItem(samplesKey, JSON.stringify(samplesData));
 
 
-        const testedVoiceURI = localStorage.getItem(effectiveLang);
-        const testedVoice = resolveVoiceByURI(testedVoiceURI);
+        const shouldPersist = samples < 5 || samples % 3 === 0;
 
-        utterance.lang = shouldTranslate ? userLang : (lang || 'en-US');
-
-        if (testedVoice) {
-          utterance.voice = testedVoice;
-        } else {
-          console.warn("⚠️ Tested voice not found, fallback in use");
-          utterance.voice = voice || null;
+        if (shouldPersist) {
+          localStorage.setItem(learnedKey, JSON.stringify(learnedData));
         }
 
-
-        const synth = window.speechSynthesis;
-
-        console.log("BEFORE SPEAK", {
-          pending: synth.pending,
-          speaking: synth.speaking,
-          paused: synth.paused,
-          isShort,
-          text,
-          duration,
+        console.log("📈 LEARN APPLY", {
+          prev,
+          observedWps,
+          updatedWps,
+          samplesBefore: samples,
+          persisted: shouldPersist,
         });
 
+      };
 
 
-        if (!didInitialSyncRef.current && playerRef.current) {
-          if (typeof playerRef.current.pause === "function") {
-            playerRef.current.pause();
-          } else if (typeof playerRef.current.pauseVideo === "function") {
-            playerRef.current.pauseVideo();
-          }
+
+      const testedVoiceURI = localStorage.getItem(effectiveLang);
+      const testedVoice = resolveVoiceByURI(testedVoiceURI);
+
+      utterance.lang = shouldTranslate ? userLang : (lang || 'en-US');
+
+      if (testedVoice) {
+        utterance.voice = testedVoice;
+      } else {
+        console.warn("⚠️ Tested voice not found, fallback in use");
+        utterance.voice = voice || null;
+      }
+
+
+      const synth = window.speechSynthesis;
+
+      console.log("BEFORE SPEAK", {
+        pending: synth.pending,
+        speaking: synth.speaking,
+        paused: synth.paused,
+        isShort,
+        text,
+        duration,
+      });
+
+
+
+      if (!didInitialSyncRef.current && playerRef.current) {
+        if (typeof playerRef.current.pause === "function") {
+          playerRef.current.pause();
+        } else if (typeof playerRef.current.pauseVideo === "function") {
+          playerRef.current.pauseVideo();
         }
+      }
 
 
-        if (cancelled) return;
-        synth.resume();
+      if (cancelled) return;
+      synth.resume();
 
-        // 🔒 DO NOT re-speak while already speaking
-        if (synth.speaking && activeSubtitleKeyRef.current === subtitleKey) return;
-        activeSubtitleKeyRef.current = subtitleKey;
-        if (isShort) {
+      // 🔒 DO NOT re-speak while already speaking
+      if (synth.speaking || synth.pending) {
+        return;
+      }
+      activeSubtitleKeyRef.current = subtitleKey;
+      if (isShort) {
+        synth.speak(utterance);
+      } else {
+        const keyAtSchedule = subtitleKey;
+
+        setTimeout(() => {
+          if (activeSubtitleKeyRef.current !== keyAtSchedule) return;
           synth.speak(utterance);
-        } else {
-          const keyAtSchedule = subtitleKey;
+        }, 80);
+      }
+    };
 
-          setTimeout(() => {
-            if (activeSubtitleKeyRef.current !== keyAtSchedule) return;
-            synth.speak(utterance);
-          }, 80);
-        }
-      };
-
-      run();
-      return () => {
-        cancelled = true;
-      };
-    }, [
-      isSpeaking,
-      showVideo,
-      currentSubtitle,
-      subtitles,
-      effectiveLang,
-      currentTime,
-      isSSMLSupported,
-    ]);
+    run();
+    return () => {
+      cancelled = true;
+    };
+  }, [
+    isSpeaking,
+    showVideo,
+    currentSubtitle,
+    subtitles,
+    effectiveLang,
+    currentTime,
+    isSSMLSupported,
+  ]);
 
 
   useEffect(() => {
