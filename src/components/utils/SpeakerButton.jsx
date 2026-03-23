@@ -41,6 +41,7 @@ export default function SubtitleVoiceControls({
 
   const utteranceRef = useRef(null);
   const pauseCheckInterval = useRef(null);
+  const toggleLockRef = useRef(false);
 
   const voiceFromHook = useSelectedVoice(effectiveLang);
   
@@ -358,10 +359,37 @@ function getVoicesWithRetry({
 
   // Handle Read Subtitles click - show test screen if not tested
 const handleReadSubtitlesClick = async (forceTest = false) => {
+
+  // 🔥 allow Change Voice to bypass lock
+  if (!forceTest) {
+    if (toggleLockRef.current) return;
+
+    toggleLockRef.current = true;
+    setTimeout(() => {
+      toggleLockRef.current = false;
+    }, 200);
+  }
+
+  // 🔥 Change Voice / Test flow FIRST
+  if (forceTest) {
+    if (isSpeaking) {
+      toggleSpeaking(); // stop first
+    }
+
+    // slight delay → avoids UI flicker
+    setTimeout(() => {
+      setShowTestScreen(true);
+      pauseVideo();
+    }, 50);
+
+    return;
+  }
+
+  // 🔥 Normal toggle
   if (isSpeaking) {
-  toggleSpeaking();
-  return;
-}
+    toggleSpeaking();
+    return;
+  }
   if (!('speechSynthesis' in window)) {
     alert("Text-to-Speech is not supported by your browser/device.");
     return;
@@ -448,7 +476,9 @@ if (storedData) {
     return;
   }
 
+  setTimeout(() => {
   toggleSpeaking();
+}, 50);
 };
 
 function shortCode(langTag) {
@@ -547,8 +577,9 @@ function shortCode(langTag) {
       setIsLoadingTest(false);
 
       playVideo();
-      if(!isSpeaking)
-        toggleSpeaking();
+      setTimeout(() => {
+        if (!isSpeaking) toggleSpeaking();
+      }, 100);
 
       utteranceRef.current = null;
     };
@@ -581,8 +612,6 @@ function shortCode(langTag) {
     console.log("alreadytested",alreadyTested);
     if(alreadyTested){
       localStorage.setItem(`${effectiveLang}`, newVoice.voiceURI);
-      if(!isSpeaking)
-        toggleSpeaking();
     }
 
     // On voice change, check if this voice is already tested
