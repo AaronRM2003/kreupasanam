@@ -27,7 +27,7 @@ export function useSpeechSync({
   const carryOverDebtRef = useRef(0);
   const cancelledSubtitleKeyRef = useRef(null);
   const lastPauseCheckTimeRef = useRef(0);
-
+  const prevSpeakingRef = useRef(false);  
 
 
 
@@ -104,6 +104,39 @@ export function useSpeechSync({
     // timeout
     return { text: null, delayMs: performance.now() - start };
   }
+  useEffect(() => {
+  const justStarted = isSpeaking && !prevSpeakingRef.current;
+
+  if (!justStarted) {
+    prevSpeakingRef.current = isSpeaking;
+    return;
+  }
+
+  // 🔍 find current subtitle
+  const currentSub = subtitles.find(
+    s =>
+      currentTime >= s.startSeconds &&
+      currentTime < s.endSeconds
+  );
+
+  if (!currentSub) {
+    prevSpeakingRef.current = isSpeaking;
+    return;
+  }
+
+  const player = playerRef.current;
+
+  if (player?.seekTo) {
+    console.log("🔁 SEEK ON SPEAK START", {
+      from: currentTime,
+      to: currentSub.startSeconds,
+    });
+
+    player.seekTo(currentSub.startSeconds + 0.01);
+  }
+
+  prevSpeakingRef.current = isSpeaking;
+}, [isSpeaking, currentTime, subtitles, playerRef]);
   const pauseCheckRef = useRef(null);
 
 
