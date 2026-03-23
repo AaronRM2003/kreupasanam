@@ -293,7 +293,7 @@ export function useSpeechSync({
     const rawRate = unitCount / duration;
     const target = Math.max(
       0,
-      Math.min(1, baselineWps / rawRate - margin)
+      Math.min(1.2, baselineWps / rawRate - margin)
     );
     if (duration <= 3) {
       lastRateRef.current = target;
