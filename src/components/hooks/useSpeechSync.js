@@ -55,22 +55,6 @@ export function useSpeechSync({
       .trim()
       .toLowerCase();
   }
-function addNaturalFill(text, gapRatio) {
-  let filled;
-
-  if (gapRatio > 0.4) {
-    filled = text + "... " + text.split(" ").slice(-2).join(" ");
-  } else {
-    filled = text + "...";
-  }
-
-  // 🔥 guarantee change
-  if (filled === text) {
-    filled = text + "...";
-  }
-
-  return filled;
-}
   const translatedDomRef = useRef("");
   function readSubtitleDom() {
     const el = document.getElementById("subtitle-dom");
@@ -402,10 +386,7 @@ function addNaturalFill(text, gapRatio) {
       const subtitleKey = `${currentSub.startSeconds}-${currentSub.endSeconds}`;
 
       // 🔒 HARD LOCK — EXIT IMMEDIATELY
-      if (
-        activeSubtitleKeyRef.current === subtitleKey &&
-        lastSpokenRef.current === text
-      ) {
+      if (activeSubtitleKeyRef.current === subtitleKey) {
         return;
       }
 
@@ -465,20 +446,6 @@ function addNaturalFill(text, gapRatio) {
         if (!isShort) return;
         lastSpokenRef.current = "";
       }
-      let estimatedSpeechTime = unitCount / baselineWps;
-      let gap = duration - estimatedSpeechTime;
-      let gapRatio = gap / duration;
-
-      if (gap > 0.5) {
-        text = addNaturalFill(text, gapRatio);
-
-        // ✅ recompute after modifying text
-        unitCount = speechUnits(text, effectiveLang);
-        estimatedSpeechTime = unitCount / baselineWps;
-        gap = duration - estimatedSpeechTime;
-        gapRatio = gap / duration;
-      }
-      
       // --------------------
       // Margin model
       // --------------------
