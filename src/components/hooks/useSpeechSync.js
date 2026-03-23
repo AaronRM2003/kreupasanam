@@ -55,6 +55,19 @@ export function useSpeechSync({
       .trim()
       .toLowerCase();
   }
+  function addNaturalFill(text, gapRatio) {
+  if (gapRatio < 0.25) return text;
+
+  if (text.length < 40) {
+    return text + "...";
+  }
+
+  if (gapRatio > 0.4) {
+    return text + "... " + text.split(" ").slice(-2).join(" ");
+  }
+
+  return text + "...";
+}
   const translatedDomRef = useRef("");
   function readSubtitleDom() {
     const el = document.getElementById("subtitle-dom");
@@ -437,6 +450,19 @@ export function useSpeechSync({
       } catch { }
 
       let unitCount = speechUnits(text, effectiveLang);
+      const estimatedSpeechTime = unitCount / baselineWps;
+      const gap = duration - estimatedSpeechTime;
+      const gapRatio = gap / duration;
+
+      if (gap > 0.5) {
+        text = addNaturalFill(text, gapRatio);
+
+        // ✅ recompute after modifying text
+        unitCount = speechUnits(text, effectiveLang);
+        estimatedSpeechTime = unitCount / baselineWps;
+        gap = duration - estimatedSpeechTime;
+        gapRatio = gap / duration;
+      }
       const isShort = duration <= 3;
       if (isShort) {
         const cap = duration * baselineWps * 1.3;
