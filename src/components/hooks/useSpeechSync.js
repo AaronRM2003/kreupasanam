@@ -402,7 +402,10 @@ function addNaturalFill(text, gapRatio) {
       const subtitleKey = `${currentSub.startSeconds}-${currentSub.endSeconds}`;
 
       // 🔒 HARD LOCK — EXIT IMMEDIATELY
-      if (activeSubtitleKeyRef.current === subtitleKey) {
+      if (
+        activeSubtitleKeyRef.current === subtitleKey &&
+        lastSpokenRef.current === text
+      ) {
         return;
       }
 
