@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { enhanceWithSsml } from './useSsml';
 import { useIsGoogleTTS } from './useIsGoogleTts';
 import { useSSMLSupportTest } from './useIsSsmlSupport';
@@ -28,6 +28,7 @@ export function useSpeechSync({
   const cancelledSubtitleKeyRef = useRef(null);
   const lastPauseCheckTimeRef = useRef(0);
   const prevSpeakingRef = useRef(false);  
+  const DEBUG = false;
 
 
 
@@ -41,6 +42,11 @@ export function useSpeechSync({
   const effectiveLang = acceptedUserLang ? userLang : lang;
   const translationDelayRef = useRef(0);
   const baseLang = (effectiveLang || "en").split("-")[0];
+  const currentSub = useMemo(() => {
+  return subtitles.find(
+    s => currentTime >= s.startSeconds && currentTime < s.endSeconds
+  );
+}, [currentTime, subtitles]);
 
 
 
@@ -112,12 +118,6 @@ export function useSpeechSync({
     return;
   }
 
-  // 🔍 find current subtitle
-  const currentSub = subtitles.find(
-    s =>
-      currentTime >= s.startSeconds &&
-      currentTime < s.endSeconds
-  );
 
   if (!currentSub) {
     prevSpeakingRef.current = isSpeaking;
@@ -127,12 +127,14 @@ export function useSpeechSync({
   const player = playerRef.current;
 
   if (player?.seekTo) {
-    console.log("🔁 SEEK ON SPEAK START", {
+    if (DEBUG) console.log("🔁 SEEK ON SPEAK START", {
       from: currentTime,
       to: currentSub.startSeconds,
     });
 
-    player.seekTo(currentSub.startSeconds + 0.01);
+    if (Math.abs(currentTime - currentSub.startSeconds) > 0.3) {
+  player.seekTo(currentSub.startSeconds + 0.01);
+};
   }
 
   prevSpeakingRef.current = isSpeaking;
@@ -145,8 +147,12 @@ export function useSpeechSync({
 
     const observedTime = currentTime;
 
-    pauseCheckRef.current = setTimeout(() => {
-      if (!isSpeaking) return;
+    pauseCheckRef.current = setTimeout(() => { 
+      if (
+        !isSpeaking ||
+        !hasStartedSpeakingRef.current ||
+        !window.speechSynthesis.speaking
+      ) return;
 
       // if time moved since scheduling → not paused
       if (lastPauseCheckTimeRef.current !== observedTime) return;
@@ -159,8 +165,6 @@ export function useSpeechSync({
       const subtitleKey = `${currentSub.startSeconds}-${currentSub.endSeconds}`;
 
       if (cancelledSubtitleKeyRef.current === subtitleKey) return;
-
-      // real pause detected
       window.speechSynthesis.cancel();
 
       activeSubtitleKeyRef.current = null;
@@ -358,11 +362,16 @@ export function useSpeechSync({
   // let translationDelaySec = 0;
 
   useEffect(() => {
+    if (
+    !isSpeaking ||
+    !showVideo ||
+    !currentSubtitle ||
+    !subtitles.length ||
+    !currentSub
+  ) return;
     let cancelled = false;
 
     const run = async () => {
-      if (!isSpeaking || !showVideo || !currentSubtitle || !subtitles.length) return;
-
 
 
       const shouldTranslate = acceptedUserLang;
@@ -409,9 +418,7 @@ export function useSpeechSync({
       // --------------------
       // Subtitle timing
       // --------------------
-      const currentSub = subtitles.find(
-        s => currentTime >= s.startSeconds && currentTime < s.endSeconds
-      );
+    
 
       let duration = currentSub?.duration ?? 3;
       if (!currentSub) return;
@@ -515,7 +522,7 @@ export function useSpeechSync({
         if (isShort) minRate = 0.85;
         if (duration <= 2) minRate = 0.9;
         if (duration <= 1.5) minRate = 0.95;
-        console.log("🔢 RATE DEBUG", {
+        if (DEBUG) console.log("🔢 RATE DEBUG", {
           baselineWps: baselineWps.toFixed(1),
           unitCount,
           duration: duration.toFixed(2),
@@ -547,7 +554,7 @@ export function useSpeechSync({
         lastSpokenRef.current = text;
         activeSubtitleKeyRef.current = subtitleKey; // 🔒 LOCK
 
-        console.log("🗣️ TTS START", {
+        if (DEBUG) console.log("🗣️ TTS START", {
           text,
           duration,
           effectiveLang,
@@ -595,7 +602,7 @@ export function useSpeechSync({
         if (unitCount < 2) return;
 
         const overrun = actualDuration - duration;
-        console.log("⏱️ SPEECH END", {
+        if (DEBUG) console.log("⏱️ SPEECH END", {
           actualDuration,
           duration,
           overrun,
@@ -682,7 +689,7 @@ export function useSpeechSync({
           localStorage.setItem(learnedKey, JSON.stringify(learnedData));
         }
 
-        console.log("📈 LEARN APPLY", {
+        if (DEBUG) console.log("📈 LEARN APPLY", {
           prev,
           observedWps,
           updatedWps,
@@ -702,14 +709,14 @@ export function useSpeechSync({
       if (testedVoice) {
         utterance.voice = testedVoice;
       } else {
-        console.warn("⚠️ Tested voice not found, fallback in use");
+        if (DEBUG) console.warn("⚠️ Tested voice not found, fallback in use");
         utterance.voice = voice || null;
       }
 
 
       const synth = window.speechSynthesis;
 
-      console.log("BEFORE SPEAK", {
+      if (DEBUG) console.log("BEFORE SPEAK", {
         pending: synth.pending,
         speaking: synth.speaking,
         paused: synth.paused,
@@ -760,6 +767,7 @@ export function useSpeechSync({
     subtitles,
     effectiveLang,
     currentTime,
+    currentSub,
     isSSMLSupported,
   ]);
 

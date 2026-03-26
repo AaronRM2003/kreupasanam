@@ -29,6 +29,7 @@ export default function SubtitleVoiceControls({
   const [isIdle, setIsIdle] = useState(false);
   const idleTimer = useRef(null);
   const effectiveLang = userLang || lang;
+  const retryRef = useRef(0);
 
 
 
@@ -88,7 +89,11 @@ const filteredVoices = allVoices.filter(voice =>
   }
 
   loadVoices();
-  window.speechSynthesis.onvoiceschanged = loadVoices;
+  window.speechSynthesis.addEventListener('voiceschanged', loadVoices);
+
+  return () => {
+    window.speechSynthesis.removeEventListener('voiceschanged', loadVoices);
+  };
 }, [effectiveLang]);
 
 
@@ -358,10 +363,10 @@ function getVoicesWithRetry({
   };
 
   // Handle Read Subtitles click - show test screen if not tested
-const handleReadSubtitlesClick = async (forceTest = false) => {
+const handleReadSubtitlesClick = async (forceTest = false,isRetry = false) => {
 
   // 🔥 allow Change Voice to bypass lock
-  if (!forceTest) {
+  if (!forceTest && !isRetry) {
     if (toggleLockRef.current) return;
 
     toggleLockRef.current = true;
@@ -395,16 +400,42 @@ const handleReadSubtitlesClick = async (forceTest = false) => {
     return;
   }
 
-  const voices = await getVoicesWithRetry();
+await new Promise((resolve) => {
+  const voices = speechSynthesis.getVoices();
+  if (voices.length) return resolve();
+
+  let resolved = false;
+
+  const handler = () => {
+    if (resolved) return;
+    resolved = true;
+    speechSynthesis.removeEventListener("voiceschanged", handler);
+    resolve();
+  };
+
+  speechSynthesis.addEventListener("voiceschanged", handler);
+
+  setTimeout(() => {
+    if (resolved) return;
+    resolved = true;
+    speechSynthesis.removeEventListener("voiceschanged", handler);
+    resolve();
+  }, 3000);
+});
+const voices = speechSynthesis.getVoices();
 
 if (!voices.length) {
-  alert(
-    "Text-to-Speech voices are still loading.\n" +
-    "Please wait a moment and try again."
-  );
+  if (retryRef.current < 5) {
+    retryRef.current++;
+    setTimeout(() => handleReadSubtitlesClick(false, true), 500);
+  } else {
+    alert("Voice loading is taking too long. Please try again.");
+    retryRef.current = 0;
+  }
   return;
 }
 
+retryRef.current = 0;
 
   if (!testVoice) {
     alert("No suitable voice found for your language. Please check your device's Text-to-Speech settings.");
@@ -787,7 +818,7 @@ function shortCode(langTag) {
 
   // 2️⃣ Remove learned WPS for this voice
   try {
-    const learned = JSON.parse(localStorage.getItem(learnedKey) || "{}");a
+    const learned = JSON.parse(localStorage.getItem(learnedKey) || "{}");
     delete learned[voiceURI];
     localStorage.setItem(learnedKey, JSON.stringify(learned));
   } catch {}
