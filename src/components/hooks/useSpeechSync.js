@@ -154,8 +154,9 @@ export function useSpeechSync({
         !window.speechSynthesis.speaking
       ) return;
 
-      // if time moved since scheduling → not paused
-      if (lastPauseCheckTimeRef.current !== observedTime) return;
+      const timeDiff = Math.abs(lastPauseCheckTimeRef.current - observedTime);
+
+      if (timeDiff > 0.3) return;
 
       const currentSub = subtitles.find(
         s => observedTime >= s.startSeconds && observedTime < s.endSeconds
