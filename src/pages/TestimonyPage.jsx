@@ -379,12 +379,6 @@ const handleClick = () => {
                    {isMobileOrTablet && (  <h2 className={styles.testimonyHeading}>Testimony</h2>)}
 
 
-  <div
-    className={styles.bgBlur}
-    style={{
-      backgroundImage: `url(${thumbnailUrl})`
-    }}
-  />
           {videoId && !showVideo ? (
   <div
     className={styles.thumbnailWrapper}

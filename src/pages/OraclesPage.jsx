@@ -366,12 +366,7 @@ useEffect(() => {
 
         <div className={styles.testimonyInner}>
             {isMobileOrTablet && (  <h2 className={styles.testimonyHeading}>Living Oracles</h2>)}
-                       <div
-                          className={styles.bgBlur}
-                          style={{
-                            backgroundImage: `url(${thumbnailUrl})`
-                          }}
-                        />
+                 
           {videoId && !showVideo ? (
   <div
     className={styles.thumbnailWrapper}
