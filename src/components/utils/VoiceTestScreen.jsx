@@ -147,8 +147,7 @@ export default function VoiceTestScreen({
           }}
           role="note"
         >
-          Note: On some devices, like newer Android phones, changing the voice
-          may not actually affect the spoken output.
+          Note: On some devices, such as newer Android phones, changing the voice here may not take effect. Please adjust it in your phone’s settings instead and then run the test again.
         </p>
       </div>
     </>
