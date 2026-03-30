@@ -207,7 +207,7 @@ useEffect(() => {
 
     console.log("Review check:", { used, done });
 
-    if (used === "true") {
+    if (used === "true" && !done) {
       setTimeout(() => {
         setShowReview(true);
       }, 400);
