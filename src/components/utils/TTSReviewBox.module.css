@@ -1,0 +1,96 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  padding: 20px;
+  animation: slideUp 0.3s ease;
+  position: relative;
+}
+
+.title {
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.section {
+  margin: 12px 0;
+}
+
+.stars {
+  display: flex;
+  gap: 6px;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.star {
+  color: #ccc;
+  transition: transform 0.15s;
+}
+
+.star:hover {
+  transform: scale(1.2);
+}
+
+.active {
+  color: #fbbc04;
+}
+
+.textarea {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  resize: none;
+  height: 70px;
+}
+
+.submitBtn {
+  width: 100%;
+  margin-top: 14px;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: #4caf50;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.submitBtn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.thankYou {
+  text-align: center;
+  padding: 20px;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}

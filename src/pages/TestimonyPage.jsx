@@ -21,6 +21,7 @@ import LangHelpOverlay from '../components/utils/LangHelpOverlay';
 import ImageWithBoxes from '../components/utils/ImageWithBoxes';
 import TranscriptModal from '../components/utils/TranscriptModel'
 import { normalizeToLocale } from '../components/utils/Utils';
+import TTSReviewBox from '../components/utils/TTSReviewBox';
 
 export default function TestimonyPage({ lang: initialLang }) {
   const { idSlug } = useParams();  // Changed from id to idSlug
@@ -36,6 +37,7 @@ export default function TestimonyPage({ lang: initialLang }) {
   const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
   const [showTranscript, setShowTranscript] = useState(false);
   const [userLang, setUserLang] = useState(null);
+  const [showReview, setShowReview] = useState(false);
 
   // Parse id and slug from idSlug param
   // Assuming idSlug is from useParams()
@@ -197,6 +199,24 @@ const {
       userLang, // ✅ new
     })
   : {};
+
+useEffect(() => {
+  if (!showVideo) {
+    const used = localStorage.getItem("tts_used");
+    const done = localStorage.getItem("tts_review_done");
+
+    console.log("Review check:", { used, done });
+
+    if (used === "true" && !done) {
+      setTimeout(() => {
+        setShowReview(true);
+      }, 400);
+
+      localStorage.removeItem("tts_used");
+    }
+  }
+}, [showVideo]);
+
 useEffect(() => {
   const metaThemeColor = document.querySelector(
     'meta[name="theme-color"]'
@@ -499,6 +519,9 @@ const handleClick = () => {
 
     userLang={userLang}
   />
+)}
+{showReview && (
+  <TTSReviewBox onClose={() => setShowReview(false)} />
 )}
 
     </div>

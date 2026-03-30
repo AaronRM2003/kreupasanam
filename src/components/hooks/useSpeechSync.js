@@ -27,7 +27,7 @@ export function useSpeechSync({
   const carryOverDebtRef = useRef(0);
   const cancelledSubtitleKeyRef = useRef(null);
   const lastPauseCheckTimeRef = useRef(0);
-  const prevSpeakingRef = useRef(false);  
+  const prevSpeakingRef = useRef(false);
   const DEBUG = false;
 
 
@@ -43,10 +43,10 @@ export function useSpeechSync({
   const translationDelayRef = useRef(0);
   const baseLang = (effectiveLang || "en").split("-")[0];
   const currentSub = useMemo(() => {
-  return subtitles.find(
-    s => currentTime >= s.startSeconds && currentTime < s.endSeconds
-  );
-}, [currentTime, subtitles]);
+    return subtitles.find(
+      s => currentTime >= s.startSeconds && currentTime < s.endSeconds
+    );
+  }, [currentTime, subtitles]);
 
 
 
@@ -111,34 +111,34 @@ export function useSpeechSync({
     return { text: null, delayMs: performance.now() - start };
   }
   useEffect(() => {
-  const justStarted = isSpeaking && !prevSpeakingRef.current;
+    const justStarted = isSpeaking && !prevSpeakingRef.current;
 
-  if (!justStarted) {
+    if (!justStarted) {
+      prevSpeakingRef.current = isSpeaking;
+      return;
+    }
+
+
+    if (!currentSub) {
+      prevSpeakingRef.current = isSpeaking;
+      return;
+    }
+
+    const player = playerRef.current;
+
+    if (player?.seekTo) {
+      if (DEBUG) console.log("🔁 SEEK ON SPEAK START", {
+        from: currentTime,
+        to: currentSub.startSeconds,
+      });
+
+      if (Math.abs(currentTime - currentSub.startSeconds) > 0.3) {
+        player.seekTo(currentSub.startSeconds + 0.01);
+      };
+    }
+
     prevSpeakingRef.current = isSpeaking;
-    return;
-  }
-
-
-  if (!currentSub) {
-    prevSpeakingRef.current = isSpeaking;
-    return;
-  }
-
-  const player = playerRef.current;
-
-  if (player?.seekTo) {
-    if (DEBUG) console.log("🔁 SEEK ON SPEAK START", {
-      from: currentTime,
-      to: currentSub.startSeconds,
-    });
-
-    if (Math.abs(currentTime - currentSub.startSeconds) > 0.3) {
-  player.seekTo(currentSub.startSeconds + 0.01);
-};
-  }
-
-  prevSpeakingRef.current = isSpeaking;
-}, [isSpeaking, currentTime, subtitles, playerRef]);
+  }, [isSpeaking, currentTime, subtitles, playerRef]);
   const pauseCheckRef = useRef(null);
 
 
@@ -147,7 +147,7 @@ export function useSpeechSync({
 
     const observedTime = currentTime;
 
-    pauseCheckRef.current = setTimeout(() => { 
+    pauseCheckRef.current = setTimeout(() => {
       if (
         !isSpeaking ||
         !hasStartedSpeakingRef.current ||
@@ -364,12 +364,12 @@ export function useSpeechSync({
 
   useEffect(() => {
     if (
-    !isSpeaking ||
-    !showVideo ||
-    !currentSubtitle ||
-    !subtitles.length ||
-    !currentSub
-  ) return;
+      !isSpeaking ||
+      !showVideo ||
+      !currentSubtitle ||
+      !subtitles.length ||
+      !currentSub
+    ) return;
     let cancelled = false;
 
     const run = async () => {
@@ -419,7 +419,7 @@ export function useSpeechSync({
       // --------------------
       // Subtitle timing
       // --------------------
-    
+
 
       let duration = currentSub?.duration ?? 3;
       if (!currentSub) return;
@@ -552,6 +552,12 @@ export function useSpeechSync({
         cancelledSubtitleKeyRef.current = null;
 
         hasStartedSpeakingRef.current = true; // 🔥 REQUIRED
+
+        // ✅ mark that user REALLY used TTS
+        if (!localStorage.getItem("tts_used")) {
+          localStorage.setItem("tts_used", "true");
+        }
+
         lastSpokenRef.current = text;
         activeSubtitleKeyRef.current = subtitleKey; // 🔒 LOCK
 
