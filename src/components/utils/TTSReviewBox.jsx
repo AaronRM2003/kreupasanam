@@ -19,6 +19,7 @@ export default function TTSReviewBox({ onClose }) {
     try {
       await fetch(SCRIPT_URL, {
         method: "POST",
+        mode: "no-cors",   // ✅ KEY FIX
         body: JSON.stringify({
           videoRating,
           voiceRating,
