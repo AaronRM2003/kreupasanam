@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./TTSReviewBox.module.css";
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzNwuHVWL5S5ynaEriKScf1lhF7tUGtimxcIbIBUrcLKX-vxuT6SRIDpYD6xI6VSstO/exec"; // replace
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzNwuHVWL5S5ynaEriKScf1lhF7tUGtimxcIbIBUrcLKX-vxuT6SRIDpYD6xI6VSstO/exec";
 
 function getDeviceInfo() {
   const ua = navigator.userAgent;
@@ -16,8 +16,8 @@ function getDeviceInfo() {
 
   let browser = "Unknown";
   if (ua.includes("Chrome")) browser = "Chrome";
-  if (ua.includes("Safari") && !ua.includes("Chrome")) browser = "Safari";
-  if (ua.includes("Firefox")) browser = "Firefox";
+  else if (ua.includes("Safari")) browser = "Safari";
+  else if (ua.includes("Firefox")) browser = "Firefox";
 
   return {
     device: isMobile ? "Mobile" : "Desktop",
@@ -27,37 +27,44 @@ function getDeviceInfo() {
     language: navigator.language,
   };
 }
+
 export default function TTSReviewBox({ onClose }) {
   const [videoRating, setVideoRating] = useState(0);
   const [voiceRating, setVoiceRating] = useState(0);
   const [feedback, setFeedback] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const deviceInfo = getDeviceInfo();
+
   const handleSubmit = async () => {
     if (loading) return;
     if (!videoRating || !voiceRating) return;
 
     setLoading(true);
 
+    const payload = {
+      videoRating,
+      voiceRating,
+      feedback,
+      page: window.location.pathname,
+      ...getDeviceInfo(),
+      timestamp: new Date().toISOString(),
+    };
+
+    console.log("📦 FINAL PAYLOAD:", payload); // ✅ DEBUG
+
     try {
       await fetch(SCRIPT_URL, {
         method: "POST",
-        mode: "no-cors",   // ✅ KEY FIX
-        body: JSON.stringify({
-          videoRating,
-          voiceRating,
-          feedback,
-          page: window.location.pathname,
-          lang: navigator.language,
-          ...deviceInfo,
-          timestamp: new Date().toISOString(),
-        }),
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8", // 🔥 CRITICAL FIX
+        },
+        body: JSON.stringify(payload),
       });
 
-      console.log("✅ Review sent");
+      console.log("✅ Sent to Google Sheet");
     } catch (err) {
-      console.error("❌ Error:", err);
+      console.error("❌ Network error:", err);
     }
 
     localStorage.setItem("tts_review_done", "true");
@@ -66,21 +73,19 @@ export default function TTSReviewBox({ onClose }) {
     setTimeout(() => onClose(), 1500);
   };
 
-  const StarRow = ({ value, setValue }) => {
-    return (
-      <div className={styles.stars}>
-        {[1, 2, 3, 4, 5].map((i) => (
-          <span
-            key={i}
-            className={`${styles.star} ${i <= value ? styles.active : ""}`}
-            onClick={() => setValue(i)}
-          >
-            ★
-          </span>
-        ))}
-      </div>
-    );
-  };
+  const StarRow = ({ value, setValue }) => (
+    <div className={styles.stars}>
+      {[1, 2, 3, 4, 5].map((i) => (
+        <span
+          key={i}
+          className={`${styles.star} ${i <= value ? styles.active : ""}`}
+          onClick={() => setValue(i)}
+        >
+          ★
+        </span>
+      ))}
+    </div>
+  );
 
   return (
     <div className={styles.overlay}>
