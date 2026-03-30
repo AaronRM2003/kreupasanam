@@ -21,6 +21,7 @@ import { useSpeechSync } from '../components/hooks/useSpeechSync';
 import FloatingVideoPlayer from '../components/utils/FloatingVideoPlayer';
 import LangHelpOverlay from '../components/utils/LangHelpOverlay';
 import TranscriptModal from '../components/utils/TranscriptModel';
+import TTSReviewBox from '../components/utils/TTSReviewBox';
 
 export default function DhyanamPage({ lang: initialLang }) {
   const { idSlug } = useParams();  // changed from id to idSlug
@@ -38,6 +39,7 @@ export default function DhyanamPage({ lang: initialLang }) {
   const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
       const [showTranscript, setShowTranscript] = useState(false);
       const [userLang, setUserLang] = useState(null);
+  const [showReview, setShowReview] = useState(false);
 
 
   const navigate = useNavigate();
@@ -129,6 +131,22 @@ export default function DhyanamPage({ lang: initialLang }) {
   const videoId = getYouTubeVideoID(video);
   const thumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : '';
 
+    useEffect(() => {
+  if (!showVideo) {
+    const used = localStorage.getItem("tts_used");
+    const done = localStorage.getItem("tts_review_done");
+
+    console.log("Review check:", { used, done });
+
+    if (used === "true" && !done) {
+      setTimeout(() => {
+        setShowReview(true);
+      }, 400);
+
+      localStorage.removeItem("tts_used");
+    }
+  }
+}, [showVideo]);
   // Preload background + thumbnail images
   useEffect(() => {
     const allImages = [...cssBackgroundImages];
@@ -495,6 +513,9 @@ useEffect(() => {
            userLang={userLang}
         />
       )}
+       {showReview && (
+              <TTSReviewBox onClose={() => setShowReview(false)} />
+            )}
     </div>
   );
 }

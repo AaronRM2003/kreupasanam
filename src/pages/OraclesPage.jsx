@@ -22,6 +22,7 @@ import FloatingVideoPlayer from '../components/utils/FloatingVideoPlayer';
 import LangHelpOverlay from '../components/utils/LangHelpOverlay';
 import ImageWithBoxes from '../components/utils/ImageWithBoxes';
 import TranscriptModal from '../components/utils/TranscriptModel';
+import TTSReviewBox from '../components/utils/TTSReviewBox';
 
 export default function OraclesPage({ lang: initialLang }) {
   const { idSlug } = useParams(); // changed from id to idSlug
@@ -36,6 +37,7 @@ export default function OraclesPage({ lang: initialLang }) {
   const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
       const [showTranscript, setShowTranscript] = useState(false);
       const [userLang, setUserLang] = useState(null);
+  const [showReview, setShowReview] = useState(false);
 
 
 
@@ -103,6 +105,24 @@ export default function OraclesPage({ lang: initialLang }) {
   const cssBackgroundImages = ['/assets/angel3.webp', '/assets/angel3.webp', '/assets/cloud.webp'];
     const ttsSupported = typeof window !== 'undefined' && !!window.speechSynthesis;
   // Preload all necessary images (background + thumbnail)
+
+  useEffect(() => {
+  if (!showVideo) {
+    const used = localStorage.getItem("tts_used");
+    const done = localStorage.getItem("tts_review_done");
+
+    console.log("Review check:", { used, done });
+
+    if (used === "true" && !done) {
+      setTimeout(() => {
+        setShowReview(true);
+      }, 400);
+
+      localStorage.removeItem("tts_used");
+    }
+  }
+}, [showVideo]);
+
   useEffect(() => {
     const allImages = [...cssBackgroundImages];
     if (thumbnailUrl) allImages.push(thumbnailUrl);
@@ -126,6 +146,7 @@ useEffect(() => {
     metaThemeColor.setAttribute("content", "#ffffff");
   };
 }, [showVideo]);
+
 
   // Show language help overlay for specific language key
   useEffect(() => {
@@ -471,6 +492,9 @@ useEffect(() => {
 
            userLang={userLang}
         />
+      )}
+      {showReview && (
+        <TTSReviewBox onClose={() => setShowReview(false)} />
       )}
     </div>
   );

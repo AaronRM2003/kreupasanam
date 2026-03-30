@@ -21,6 +21,7 @@ import { useSpeechSync } from '../components/hooks/useSpeechSync';
 import FloatingVideoPlayer from '../components/utils/FloatingVideoPlayer';
 import LangHelpOverlay from '../components/utils/LangHelpOverlay';
 import TranscriptModal from '../components/utils/TranscriptModel';
+import TTSReviewBox from '../components/utils/TTSReviewBox';
 
 export default function PrayersPage({ lang: initialLang }) {
   const { idSlug } = useParams();  // changed from id to idSlug
@@ -38,6 +39,7 @@ export default function PrayersPage({ lang: initialLang }) {
   const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
     const [showTranscript, setShowTranscript] = useState(false);
     const [userLang, setUserLang] = useState(null);
+  const [showReview, setShowReview] = useState(false);
 
 
   const navigate = useNavigate();
@@ -83,6 +85,23 @@ export default function PrayersPage({ lang: initialLang }) {
   const prayersItemsearch = prayers?.find(
   item => item.id === Number(id) && !item.expectedIn
 );
+useEffect(() => {
+  if (!showVideo) {
+    const used = localStorage.getItem("tts_used");
+    const done = localStorage.getItem("tts_review_done");
+
+    console.log("Review check:", { used, done });
+
+    if (used === "true" && !done) {
+      setTimeout(() => {
+        setShowReview(true);
+      }, 400);
+
+      localStorage.removeItem("tts_used");
+    }
+  }
+}, [showVideo]);
+
 
   // Function to slugify text
   function slugify(text) {
@@ -494,6 +513,9 @@ useEffect(() => {
 
            userLang={userLang}
         />
+      )}
+      {showReview && (
+        <TTSReviewBox onClose={() => setShowReview(false)} />
       )}
     </div>
   );
