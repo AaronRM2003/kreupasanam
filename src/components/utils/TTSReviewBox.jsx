@@ -3,13 +3,37 @@ import styles from "./TTSReviewBox.module.css";
 
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzNwuHVWL5S5ynaEriKScf1lhF7tUGtimxcIbIBUrcLKX-vxuT6SRIDpYD6xI6VSstO/exec"; // replace
 
+function getDeviceInfo() {
+  const ua = navigator.userAgent;
+
+  const isMobile = /Mobi|Android/i.test(ua);
+
+  let os = "Unknown";
+  if (ua.includes("Android")) os = "Android";
+  else if (ua.includes("iPhone") || ua.includes("iPad")) os = "iOS";
+  else if (ua.includes("Windows")) os = "Windows";
+  else if (ua.includes("Mac")) os = "Mac";
+
+  let browser = "Unknown";
+  if (ua.includes("Chrome")) browser = "Chrome";
+  if (ua.includes("Safari") && !ua.includes("Chrome")) browser = "Safari";
+  if (ua.includes("Firefox")) browser = "Firefox";
+
+  return {
+    device: isMobile ? "Mobile" : "Desktop",
+    os,
+    browser,
+    screen: `${window.innerWidth}x${window.innerHeight}`,
+    language: navigator.language,
+  };
+}
 export default function TTSReviewBox({ onClose }) {
   const [videoRating, setVideoRating] = useState(0);
   const [voiceRating, setVoiceRating] = useState(0);
   const [feedback, setFeedback] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const deviceInfo = getDeviceInfo();
   const handleSubmit = async () => {
     if (loading) return;
     if (!videoRating || !voiceRating) return;
@@ -26,6 +50,7 @@ export default function TTSReviewBox({ onClose }) {
           feedback,
           page: window.location.pathname,
           lang: navigator.language,
+          ...deviceInfo,
           timestamp: new Date().toISOString(),
         }),
       });
