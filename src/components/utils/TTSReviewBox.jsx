@@ -108,7 +108,7 @@ export default function TTSReviewBox({ onClose }) {
 
             <textarea
               className={styles.textarea}
-              placeholder="Optional feedback..."
+              placeholder="Tell us what you liked or what we can improve..."
               value={feedback}
               onChange={(e) => setFeedback(e.target.value)}
             />
