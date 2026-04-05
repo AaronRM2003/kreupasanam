@@ -358,7 +358,6 @@ export function useSpeechSync({
     return !!localStorage.getItem(langTag); // ✅ exact key only
   }
 
-
   const voice = useSelectedVoice(effectiveLang);
   // let translationDelaySec = 0;
 
@@ -385,7 +384,8 @@ export function useSpeechSync({
         .replace(/\([^)]*\)/g, '')
         .replace(/\.{2,}/g, '')
         .replace(/[-*]{2,}/g, '')
-        .replace(/\b(V\.P\.)\b/g, 'VP')
+        .replace(/\bV\.\s*P\.\b/g, 'VP')
+        .replace(/\bSt\.\s?/g, 'Saint ') 
         .replace(/\bKreupasanam\b/gi, 'Krupaasanam')
         .trim();
 
