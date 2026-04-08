@@ -2,15 +2,24 @@ import { useState, useEffect } from "react";
 import { Button, Dropdown } from "react-bootstrap";
 import "./FeaturedTestimonySection.css";
 
-function truncateWords(text, wordLimit) {
+function truncateText(text, limit, lang = "en") {
   if (!text || typeof text !== "string") return "";
-  const words = text.split(" ");
-  if (words.length <= wordLimit) {
-    return text;
-  }
-  return words.slice(0, wordLimit).join(" ") + "...";
-}
 
+  // Languages without spaces → use character slicing
+  const noSpaceLangs = ["zh", "ja", "ko"];
+
+  if (noSpaceLangs.includes(lang)) {
+    return text.length <= limit
+      ? text
+      : text.slice(0, limit) + "...";
+  }
+
+  // Default → word-based truncation
+  const words = text.split(" ");
+  return words.length <= limit
+    ? text
+    : words.slice(0, limit).join(" ") + "...";
+}
 export default function FeaturedTestimonySection({ lang: initialLang }) {
   const [lang, setLang] = useState(initialLang || "en");
   const [testimonies, setTestimonies] = useState([]);
@@ -95,7 +104,7 @@ export default function FeaturedTestimonySection({ lang: initialLang }) {
               {title[lang] || title["en"]}
             </h3>
             <p className="testimony-content">
-              {truncateWords(content[lang] || content["en"], 50)}
+              {truncateText(content[lang] || content["en"], 50, lang)}
             </p>
             <Button
               variant="primary"
