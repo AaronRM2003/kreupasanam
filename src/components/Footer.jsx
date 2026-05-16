@@ -12,7 +12,7 @@ const translations = {
     placeholder: 'Your email',
     subscribe: 'Subscribe',
     thankYou: 'Thank you for subscribing!',
-    footerNote: 'Kreupasanam Testimonies. Shared with love. Not affiliated with the official shrine.',
+    footerNote: 'Kreupasanam Testimonies. Shared with love.',
   },
   hi: {
     contact: 'संपर्क करें',
@@ -20,7 +20,7 @@ const translations = {
     placeholder: 'आपका ईमेल',
     subscribe: 'सदस्यता लें',
     thankYou: 'सदस्यता के लिए धन्यवाद!',
-    footerNote: 'क्रुपासनम गवाही। प्रेम से साझा किया गया। आधिकारिक श्राइन से संबद्ध नहीं।',
+    footerNote: 'क्रुपासनम गवाही। प्रेम से साझा किया गया।',
   },
   bn: {
     contact: 'আমাদের সাথে যোগাযোগ করুন',
@@ -28,7 +28,7 @@ const translations = {
     placeholder: 'আপনার ইমেইল',
     subscribe: 'সাবস্ক্রাইব করুন',
     thankYou: 'সাবস্ক্রিপশনের জন্য ধন্যবাদ!',
-    footerNote: 'ক্রুপাসানম সাক্ষ্য। ভালোবাসা দিয়ে শেয়ার করা হয়েছে। অফিসিয়াল মন্দিরের সাথে সম্পর্কিত নয়।',
+    footerNote: 'ক্রুপাসানম সাক্ষ্য। ভালোবাসা দিয়ে শেয়ার করা হয়েছে।',
   },
   ta: {
     contact: 'எங்களை தொடர்பு கொள்ளவும்',
@@ -36,7 +36,7 @@ const translations = {
     placeholder: 'உங்கள் மின்னஞ்சல்',
     subscribe: 'சந்தா செய்க',
     thankYou: 'சந்தா செய்ததற்கு நன்றி!',
-    footerNote: 'க்ருபாசனம் சாட்சி. காதலுடன் பகிரப்பட்டது. அதிகாரப்பூர்வ ஆலயத்துடன் தொடர்பு இல்லை.',
+    footerNote: 'க்ருபாசனம் சாட்சி. காதலுடன் பகிரப்பட்டது.',
   },
   te: {
     contact: 'మమ్మల్ని సంప్రదించండి',
@@ -44,7 +44,7 @@ const translations = {
     placeholder: 'మీ ఇమెయిల్',
     subscribe: 'చందా చేయండి',
     thankYou: 'చందా కోసం ధన్యవాదాలు!',
-    footerNote: 'క్రుపాసనమ్ సాక్ష్యాలు. ప్రేమతో పంచబడింది. అధికారిక ఆలయంతో సంబంధం లేదు.',
+    footerNote: 'క్రుపాసనమ్ సాక్ష్యాలు. ప్రేమతో పంచబడింది.',
   },
   fr: {
     contact: 'Contactez-nous',
@@ -52,7 +52,7 @@ const translations = {
     placeholder: 'Votre email',
     subscribe: "S'abonner",
     thankYou: 'Merci pour votre abonnement !',
-    footerNote: 'Témoignages de Kreupasanam. Partagé avec amour. Non affilié au sanctuaire officiel.',
+    footerNote: 'Témoignages de Kreupasanam. Partagé avec amour.',
   },
   es: {
     contact: 'Contáctanos',
@@ -60,7 +60,7 @@ const translations = {
     placeholder: 'Tu correo electrónico',
     subscribe: 'Suscribirse',
     thankYou: '¡Gracias por suscribirte!',
-    footerNote: 'Testimonios de Kreupasanam. Compartido con amor. No afiliado al santuario oficial.',
+    footerNote: 'Testimonios de Kreupasanam. Compartido con amor.',
   },
   mr: {
     contact: 'संपर्क साधा',
@@ -68,7 +68,7 @@ const translations = {
     placeholder: 'आपला ईमेल',
     subscribe: 'सदस्यता घ्या',
     thankYou: 'सदस्यतेसाठी धन्यवाद!',
-    footerNote: 'क्रुपासनम साक्ष्य. प्रेमाने शेअर केले. अधिकृत तीर्थाशी संबंधित नाही.',
+    footerNote: 'क्रुपासनम साक्ष्य. प्रेमाने शेअर केले.',
   },
   kn: {
     contact: 'ನಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸಿ',
@@ -76,7 +76,7 @@ const translations = {
     placeholder: 'ನಿಮ್ಮ ಇಮೇಲ್',
     subscribe: 'ಸಬ್ಸ್ಕ್ರೈಬ್ ಮಾಡಿ',
     thankYou: 'ಸಬ್ಸ್ಕ್ರಿಪ್ಷನ್‌ಗಾಗಿ ಧನ್ಯವಾದಗಳು!',
-    footerNote: 'ಕ್ರುಪಾಸನಮ್ ಸಾಕ್ಷ್ಯಗಳು. ಪ್ರೀತಿಯಿಂದ ಹಂಚಲಾಗಿದೆ. ಅಧಿಕೃತ ದೇವಾಲಯಕ್ಕೆ ಸಂಬಂಧಿಸಿದಿಲ್ಲ.',
+    footerNote: 'ಕ್ರುಪಾಸನಮ್ ಸಾಕ್ಷ್ಯಗಳು. ಪ್ರೀತಿಯಿಂದ ಹಂಚಲಾಗಿದೆ.',
   },
   zh: {
     contact: '联系我们',
@@ -84,7 +84,7 @@ const translations = {
     placeholder: '您的邮箱',
     subscribe: '订阅',
     thankYou: '感谢您的订阅！',
-    footerNote: '克鲁帕萨纳姆见证。满怀爱心分享。与官方圣地无关。',
+    footerNote: '克鲁帕萨纳姆见证。满怀爱心分享。',
   },
 };
 

@@ -217,7 +217,7 @@ if (errorLoading) {
             </h2>
           </div>
 
-          <p className={styles.testimoniesSubtitle}>Let's meditate on these prayers...</p>
+          <p className={styles.testimoniesSubtitle}>Daily Bread uploaded within 7AM</p>
 
           <div
             style={{

@@ -217,7 +217,7 @@ if (errorLoading) {
             </h2>
           </div>
 
-          <p className={styles.testimoniesSubtitle}>Stories of healing, grace...</p>
+          <p className={styles.testimoniesSubtitle}>Usually Uploaded on Wednesday</p>
 
           <div
             style={{

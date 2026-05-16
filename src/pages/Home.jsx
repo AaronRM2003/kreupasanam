@@ -177,9 +177,8 @@ export default function Home({ lang }) {
 
             {/* Testimonies and Footer */}
             <FadeInOnScroll delay={0.3}>
-              <section className="section">
+
                 <Testimonies lang={lang} />
-              </section>
             </FadeInOnScroll>
 
             <FadeInOnScroll delay={0.4}>
