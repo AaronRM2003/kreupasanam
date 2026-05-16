@@ -6052,7 +6052,7 @@
     }
   },
   {
-    "id": 75,
+    "id": 76,
     "title": {
       "en": "Missing Kidney Miraculously Restored Through the Marian Covenant",
       "hi": "मरियन वाचा के माध्यम से गायब हुई किडनी चमत्कारिक रूप से पुनर्स्थापित हुई",
@@ -6101,9 +6101,9 @@
     },
     {
       "x": 0,
-      "y": 431,
+      "y": 420,
       "w": 800,
-      "h": 261,
+      "h": 281,
       "background": "#f74902",
       "fontColor": "#ffffff"
     },
