@@ -5694,361 +5694,490 @@
     },
     "subtitles": "/assets/testimony-subtitle/27apr26.json",
     "duration": "18:29",
-    "overlay":{
-  "boxes": [
-    {
-      "x": 30,
-      "y": 9,
-      "w": 972,
-      "h": 162,
-      "background": "#015653",
-      "fontColor": "#fffdfe"
-    },
-    {
-      "x": 43,
-      "y": 170,
-      "w": 785,
-      "h": 234,
-      "background": "#c80003",
-      "fontColor": "#fdfef8"
-    },
-    {
-      "x": 42,
-      "y": 427,
-      "w": 1019,
-      "h": 256,
-      "background": "#00413d",
-      "fontColor": "#fdf703"
-    },
-    {
-      "x": 997,
-      "y": 6,
-      "w": 277,
-      "h": 57,
-      "background": "#256d62",
-      "fontColor": "#feffff"
+    "overlay": {
+      "boxes": [
+        {
+          "x": 30,
+          "y": 9,
+          "w": 972,
+          "h": 162,
+          "background": "#015653",
+          "fontColor": "#fffdfe"
+        },
+        {
+          "x": 43,
+          "y": 170,
+          "w": 785,
+          "h": 234,
+          "background": "#c80003",
+          "fontColor": "#fdfef8"
+        },
+        {
+          "x": 42,
+          "y": 427,
+          "w": 1019,
+          "h": 256,
+          "background": "#00413d",
+          "fontColor": "#fdf703"
+        },
+        {
+          "x": 997,
+          "y": 6,
+          "w": 277,
+          "h": 57,
+          "background": "#256d62",
+          "fontColor": "#feffff"
+        }
+      ],
+      "texts": {
+        "en": [
+          "The Mother of God who appeared in Kreupasanam",
+          "Was standing in my bedroom at 12 o'clock",
+          "Chippy's astonishing covenant experiences, led and guided constantly by the Blessed Mother",
+          "Trivandrum"
+        ],
+        "hi": [
+          "कृपासानम में प्रकट हुई परमेश्वर की माता",
+          "रात 12 बजे मेरे शयनकक्ष में खड़ी थीं",
+          "धन्य माता द्वारा निरंतर मार्गदर्शन में चिप्पी के अद्भुत वाचा अनुभव",
+          "तिरुवनंतपुरम"
+        ],
+        "ta": [
+          "கிருபாசனம் தோன்றிய தேவமாதா",
+          "இரவு 12 மணிக்கு என் படுக்கையறையில் நின்றிருந்தார்",
+          "திருவுளத்தில் தொடர்ந்து வழிநடத்தப்பட்ட சிப்பியின் அதிசய உடன்படிக்கை அனுபவங்கள்",
+          "திருவனந்தபுரம்"
+        ],
+        "bn": [
+          "কৃপারাসানামে প্রকাশিত ঈশ্বরের মাতা",
+          "রাত ১২টায় আমার শোবার ঘরে দাঁড়িয়ে ছিলেন",
+          "ধন্য মাতার দ্বারা সর্বদা পরিচালিত চিপ্পির বিস্ময়কর চুক্তির অভিজ্ঞতা",
+          "তিরুবনন্তপুরম"
+        ],
+        "te": [
+          "క్రుపాసనంలో ప్రత్యక్షమైన దేవుని తల్లి",
+          "రాత్రి 12 గంటలకు నా పడకగదిలో నిలబడి ఉన్నారు",
+          "మేరీ తల్లి మార్గదర్శకత్వంలో చిప్పీ యొక్క ఆశ్చర్యకరమైన ఒడంబడిక అనుభవాలు",
+          "తిరువనంతపురం"
+        ],
+        "mr": [
+          "कृपासनामध्ये प्रकट झालेली देवाची माता",
+          "रात्री १२ वाजता माझ्या शयनकक्षात उभी होती",
+          "मदर मेरीच्या सततच्या मार्गदर्शनाखाली चिप्पीचे आश्चर्यकारक करार अनुभव",
+          "तिरुवनंतपुरम"
+        ],
+        "fr": [
+          "La Mère de Dieu apparue à Kreupasanam",
+          "Se tenait dans ma chambre à 12 heures",
+          "Les expériences étonnantes de l’Alliance de Chippy, guidées constamment par la Sainte Vierge",
+          "Trivandrum"
+        ],
+        "es": [
+          "La Madre de Dios que apareció en Kreupasanam",
+          "Estaba de pie en mi habitación a las 12 en punto",
+          "Las asombrosas experiencias del pacto de Chippy, guiadas constantemente por la Virgen María",
+          "Trivandrum"
+        ],
+        "zh": [
+          "在Kreupasanam显现的天主之母",
+          "在午夜12点站在我的卧室里",
+          "在圣母持续引导下，Chippy惊人的盟约经历",
+          "特里凡得琅"
+        ],
+        "kn": [
+          "ಕೃಪಾಸನದಲ್ಲಿ ಕಾಣಿಸಿಕೊಂಡ ದೇವರ ತಾಯಿ",
+          "ರಾತ್ರಿ 12 ಗಂಟೆಗೆ ನನ್ನ ಮಲಗುವ ಕೋಣೆಯಲ್ಲಿ ನಿಂತಿದ್ದರು",
+          "ಮದರ್ ಮೇರಿಯ ನಿರಂತರ ಮಾರ್ಗದರ್ಶನದಲ್ಲಿ ಚಿಪ್ಪಿಯ ಅದ್ಭುತ ಒಡಂಬಡಿಕೆ ಅನುಭವಗಳು",
+          "ತಿರುವನಂತಪುರಂ"
+        ]
+      }
     }
-  ],
-  "texts": {
-  "en": [
-    "The Mother of God who appeared in Kreupasanam",
-    "Was standing in my bedroom at 12 o'clock",
-    "Chippy's astonishing covenant experiences, led and guided constantly by the Blessed Mother",
-    "Trivandrum"
-  ],
-  "hi": [
-    "कृपासानम में प्रकट हुई परमेश्वर की माता",
-    "रात 12 बजे मेरे शयनकक्ष में खड़ी थीं",
-    "धन्य माता द्वारा निरंतर मार्गदर्शन में चिप्पी के अद्भुत वाचा अनुभव",
-    "तिरुवनंतपुरम"
-  ],
-  "ta": [
-    "கிருபாசனம் தோன்றிய தேவமாதா",
-    "இரவு 12 மணிக்கு என் படுக்கையறையில் நின்றிருந்தார்",
-    "திருவுளத்தில் தொடர்ந்து வழிநடத்தப்பட்ட சிப்பியின் அதிசய உடன்படிக்கை அனுபவங்கள்",
-    "திருவனந்தபுரம்"
-  ],
-  "bn": [
-    "কৃপারাসানামে প্রকাশিত ঈশ্বরের মাতা",
-    "রাত ১২টায় আমার শোবার ঘরে দাঁড়িয়ে ছিলেন",
-    "ধন্য মাতার দ্বারা সর্বদা পরিচালিত চিপ্পির বিস্ময়কর চুক্তির অভিজ্ঞতা",
-    "তিরুবনন্তপুরম"
-  ],
-  "te": [
-    "క్రుపాసనంలో ప్రత్యక్షమైన దేవుని తల్లి",
-    "రాత్రి 12 గంటలకు నా పడకగదిలో నిలబడి ఉన్నారు",
-    "మేరీ తల్లి మార్గదర్శకత్వంలో చిప్పీ యొక్క ఆశ్చర్యకరమైన ఒడంబడిక అనుభవాలు",
-    "తిరువనంతపురం"
-  ],
-  "mr": [
-    "कृपासनामध्ये प्रकट झालेली देवाची माता",
-    "रात्री १२ वाजता माझ्या शयनकक्षात उभी होती",
-    "मदर मेरीच्या सततच्या मार्गदर्शनाखाली चिप्पीचे आश्चर्यकारक करार अनुभव",
-    "तिरुवनंतपुरम"
-  ],
-  "fr": [
-    "La Mère de Dieu apparue à Kreupasanam",
-    "Se tenait dans ma chambre à 12 heures",
-    "Les expériences étonnantes de l’Alliance de Chippy, guidées constamment par la Sainte Vierge",
-    "Trivandrum"
-  ],
-  "es": [
-    "La Madre de Dios que apareció en Kreupasanam",
-    "Estaba de pie en mi habitación a las 12 en punto",
-    "Las asombrosas experiencias del pacto de Chippy, guiadas constantemente por la Virgen María",
-    "Trivandrum"
-  ],
-  "zh": [
-    "在Kreupasanam显现的天主之母",
-    "在午夜12点站在我的卧室里",
-    "在圣母持续引导下，Chippy惊人的盟约经历",
-    "特里凡得琅"
-  ],
-  "kn": [
-    "ಕೃಪಾಸನದಲ್ಲಿ ಕಾಣಿಸಿಕೊಂಡ ದೇವರ ತಾಯಿ",
-    "ರಾತ್ರಿ 12 ಗಂಟೆಗೆ ನನ್ನ ಮಲಗುವ ಕೋಣೆಯಲ್ಲಿ ನಿಂತಿದ್ದರು",
-    "ಮದರ್ ಮೇರಿಯ ನಿರಂತರ ಮಾರ್ಗದರ್ಶನದಲ್ಲಿ ಚಿಪ್ಪಿಯ ಅದ್ಭುತ ಒಡಂಬಡಿಕೆ ಅನುಭವಗಳು",
-    "ತಿರುವನಂತಪುರಂ"
-  ]
-}
-}
   },
   {
     "id": 74,
     "title": {
-  "en": "From Sheena to Dr. Sheena through Kreupasanam Marian Covenant",
-  "hi": "शीना से डॉ. शीना तक, क्रुपासनम मरियम वाचा के माध्यम से",
-  "ta": "ஷீனாவிலிருந்து டாக்டர் ஷீனாவாக, கிருபாசனம் மரியன் உடன்படிக்கையின் மூலம்",
-  "bn": "শীনা থেকে ড. শীনা, ক্রুপাসানাম মারিয়ান চুক্তির মাধ্যমে",
-  "te": "షీనా నుండి డా. షీనా వరకు, క్రుపాసనం మారియన్ ఒడంబడిక ద్వారా",
-  "mr": "शीना पासून डॉ. शीना पर्यंत, क्रुपासनम मरियन कराराद्वारे",
-  "fr": "De Sheena à Dr Sheena, à travers l’Alliance mariale de Kreupasanam",
-  "es": "De Sheena a Dra. Sheena, a través del Pacto Mariano de Kreupasanam",
-  "zh": "从Sheena到Sheena博士，通过克鲁帕萨南的玛利亚盟约",
-  "kn": "ಶೀನಾ ಇಂದ ಡಾ. ಶೀನಾ ವರೆಗೆ, ಕ್ರುಪಾಸನಂ ಮರಿಯನ್ ಒಡಂಬಡಿಕೆಯ ಮೂಲಕ"
-},
+      "en": "From Sheena to Dr. Sheena through Kreupasanam Marian Covenant",
+      "hi": "शीना से डॉ. शीना तक, क्रुपासनम मरियम वाचा के माध्यम से",
+      "ta": "ஷீனாவிலிருந்து டாக்டர் ஷீனாவாக, கிருபாசனம் மரியன் உடன்படிக்கையின் மூலம்",
+      "bn": "শীনা থেকে ড. শীনা, ক্রুপাসানাম মারিয়ান চুক্তির মাধ্যমে",
+      "te": "షీనా నుండి డా. షీనా వరకు, క్రుపాసనం మారియన్ ఒడంబడిక ద్వారా",
+      "mr": "शीना पासून डॉ. शीना पर्यंत, क्रुपासनम मरियन कराराद्वारे",
+      "fr": "De Sheena à Dr Sheena, à travers l’Alliance mariale de Kreupasanam",
+      "es": "De Sheena a Dra. Sheena, a través del Pacto Mariano de Kreupasanam",
+      "zh": "从Sheena到Sheena博士，通过克鲁帕萨南的玛利亚盟约",
+      "kn": "ಶೀನಾ ಇಂದ ಡಾ. ಶೀನಾ ವರೆಗೆ, ಕ್ರುಪಾಸನಂ ಮರಿಯನ್ ಒಡಂಬಡಿಕೆಯ ಮೂಲಕ"
+    },
     "date": "April 20, 2026",
     "video": "https://youtu.be/XoexZESot14",
     "content": {
-  "en": "Dr. Sheena George shares a powerful testimony of how, after nearly ten years of struggle, rejection, and deep mental distress in completing her PhD, she encountered divine intervention through the Blessed Mother. Despite facing harassment from her guide, rejection by the university, and even having her file closed, she reached a point of complete despair. It was during this time that she heard a mysterious call leading her to Kreupasanam, where she entered into a Marian Covenant, even without fully understanding it at first.\n\nFollowing her commitment, a series of extraordinary events unfolded. Through prayer, intercession, and unwavering trust, situations that once seemed impossible began to change rapidly—uncooperative authorities became supportive, her guide completed pending work, and her thesis was accepted and processed in a remarkably short time. Her PhD, once considered impossible, was not only completed but also highly appreciated internationally, which she attributes entirely to the Blessed Mother’s intervention and grace.\n\nBeyond academic success, her life underwent a deep spiritual transformation. She experienced personal encounters with the Blessed Mother and Baby Jesus, grew in humility, and dedicated herself to acts of service such as helping the poor, distributing spiritual materials, and comforting the suffering. She emphasizes that more than the external blessings, it is the inner transformation and closeness to God that brought her the greatest joy, and she now lives as a witness to divine grace and Marian intercession.",
-  "hi": "डॉ. शीना जॉर्ज अपनी शक्तिशाली गवाही में बताती हैं कि लगभग दस वर्षों के संघर्ष, अस्वीकृति और गहरे मानसिक कष्ट के बाद, जब वह अपने पीएचडी को पूरा करने की कोशिश कर रही थीं, तब उन्होंने धन्य माता के माध्यम से दिव्य हस्तक्षेप का अनुभव किया। अपने गाइड की प्रताड़ना, विश्वविद्यालय द्वारा अस्वीकृति और फाइल बंद हो जाने के बावजूद, वह पूरी तरह निराश हो चुकी थीं। इसी समय उन्होंने एक रहस्यमयी आवाज़ सुनी जिसने उन्हें क्रुपासनम ले जाया, जहाँ उन्होंने बिना पूरी समझ के मरियम के साथ एक वाचा में प्रवेश किया।\n\nअपनी प्रतिबद्धता के बाद, कई अद्भुत घटनाएँ होने लगीं। प्रार्थना, मध्यस्थता और अटूट विश्वास के द्वारा असंभव लगने वाली परिस्थितियाँ बदलने लगीं—असहयोगी अधिकारी सहयोगी बन गए, उनके गाइड ने कार्य पूरा किया, और उनकी थीसिस बहुत कम समय में स्वीकार कर ली गई। जो पीएचडी पहले असंभव लग रही थी, वह न केवल पूरी हुई बल्कि अंतरराष्ट्रीय स्तर पर सराही भी गई, जिसे वह पूरी तरह धन्य माता की कृपा मानती हैं।\n\nशैक्षणिक सफलता से परे, उनके जीवन में गहरा आध्यात्मिक परिवर्तन आया। उन्होंने धन्य माता और बाल यीशु के साथ व्यक्तिगत अनुभव किए, नम्रता में बढ़ीं, और गरीबों की सहायता, आध्यात्मिक सामग्री वितरित करने तथा पीड़ितों को सांत्वना देने जैसे सेवाकार्यों में स्वयं को समर्पित कर दिया। वह कहती हैं कि बाहरी आशीषों से अधिक, आंतरिक परिवर्तन और परमेश्वर के साथ निकटता ही उनके लिए सबसे बड़ा आनंद है।",
-  "ta": "டாக்டர் ஷீனா ஜார்ஜ் தனது சக்திவாய்ந்த சாட்சியத்தில், பத்து ஆண்டுகளுக்கு நெருங்கிய போராட்டம், நிராகரிப்பு மற்றும் ஆழ்ந்த மனவேதனைக்குப் பிறகு, தனது PhDயை முடிக்க முயன்றபோது, மாதாவின் தலையீட்டின் மூலம் தெய்வீக அனுபவத்தை பெற்றதாக கூறுகிறார். வழிகாட்டியின் தொல்லை, பல்கலைக்கழகத்தின் நிராகரிப்பு மற்றும் கோப்பு மூடப்பட்ட பின்னரும், அவர் முழுமையான நம்பிக்கையிழப்பை அடைந்தார். அந்த நேரத்தில் ஒரு மர்மமான அழைப்பு அவரை கிருபாசனம் நோக்கி அழைத்துச் சென்றது, அங்கு முழுமையாக புரியாமல் இருந்தபோதிலும் அவர் மரியன் உடன்படிக்கையில் சேர்ந்தார்.\n\nஅதன்பிறகு அதிசயமான நிகழ்வுகள் நடந்தன. ஜெபம், நடுவுரைத்தல் மற்றும் உறுதியான நம்பிக்கை மூலம் முடியாததாக தோன்றிய சூழ்நிலைகள் மாறின—ஒத்துழைக்காத அதிகாரிகள் உதவத் தொடங்கினர், அவரது வழிகாட்டி பணிகளை முடித்தார், மற்றும் அவரது ஆய்வு விரைவாக ஏற்றுக்கொள்ளப்பட்டது. முடியாததாக தோன்றிய அவரது PhD நிறைவேறியது மட்டுமல்லாமல், சர்வதேச அளவில் பாராட்டப்பட்டது, இதனை அவர் மாதாவின் கிருபைக்கு ஒப்படைக்கிறார்.\n\nகல்வி வெற்றியைத் தாண்டி, அவரது வாழ்க்கையில் ஆழ்ந்த ஆன்மீக மாற்றம் ஏற்பட்டது. மாதாவையும் குழந்தை இயேசுவையும் நேரடியாக அனுபவித்தார், தாழ்மையில் வளர்ந்தார், ஏழைகளுக்கு உதவுதல், ஆன்மீக செய்திகளை பகிர்தல் மற்றும் துன்பப்படுவோருக்கு ஆறுதல் அளித்தல் போன்ற சேவைகளில் ஈடுபட்டார். வெளிப்புற ஆசீர்வாதங்களை விட உள்ளார்ந்த மாற்றமும் தேவனுடன் நெருக்கமும் தான் மிகப் பெரிய சந்தோஷம் என்று அவர் கூறுகிறார்.",
-  "bn": "ডাঃ শীনা জর্জ তার শক্তিশালী সাক্ষ্যে জানান যে প্রায় দশ বছরের সংগ্রাম, প্রত্যাখ্যান এবং গভীর মানসিক যন্ত্রণার পর, পিএইচডি সম্পন্ন করার পথে তিনি আশীর্বাদধন্য মাতার মাধ্যমে ঈশ্বরীয় হস্তক্ষেপ অনুভব করেন। গাইডের হয়রানি, বিশ্ববিদ্যালয়ের প্রত্যাখ্যান এবং ফাইল বন্ধ হয়ে যাওয়ার পর তিনি সম্পূর্ণ হতাশ হয়ে পড়েছিলেন। সেই সময় তিনি এক রহস্যময় আহ্বান শুনেছিলেন যা তাকে ক্রুপাসানামে নিয়ে যায়, যেখানে তিনি সম্পূর্ণভাবে না বুঝেই মারিয়ান চুক্তিতে প্রবেশ করেন।\n\nতার এই প্রতিশ্রুতির পর অসাধারণ পরিবর্তন ঘটে। প্রার্থনা, মধ্যস্থতা এবং অটল বিশ্বাসের মাধ্যমে অসম্ভব মনে হওয়া পরিস্থিতি বদলে যায়—অসহযোগী কর্মকর্তারা সহযোগিতা করতে শুরু করেন, তার গাইড কাজ সম্পন্ন করেন, এবং তার থিসিস খুব অল্প সময়ে গৃহীত হয়। তার পিএইচডি, যা একসময় অসম্ভব মনে হচ্ছিল, তা শুধু সম্পন্নই হয়নি, আন্তর্জাতিকভাবে প্রশংসিতও হয়েছে, যা তিনি সম্পূর্ণভাবে মাতার কৃপা হিসেবে দেখেন।\n\nশিক্ষাগত সাফল্যের বাইরে, তার জীবনে গভীর আধ্যাত্মিক পরিবর্তন ঘটে। তিনি মাতার এবং শিশু যীশুর ব্যক্তিগত উপস্থিতি অনুভব করেন, নম্রতায় বৃদ্ধি পান এবং দরিদ্রদের সাহায্য, আধ্যাত্মিক উপকরণ বিতরণ ও কষ্টভোগীদের সান্ত্বনা দেওয়ার কাজে নিজেকে নিয়োজিত করেন। তিনি বলেন, বাহ্যিক আশীর্বাদের চেয়ে অন্তরের পরিবর্তন এবং ঈশ্বরের সঙ্গে ঘনিষ্ঠতাই তার কাছে সবচেয়ে বড় আনন্দ।",
-  "te": "డా. షీనా జార్జ్ తన శక్తివంతమైన సాక్ష్యంలో, దాదాపు పది సంవత్సరాల పోరాటం, నిరాకరణ మరియు తీవ్రమైన మానసిక వేదన తర్వాత, తన పీహెచ్‌డీ పూర్తి చేసే సమయంలో ఆశీర్వాద మాత ద్వారా దైవీయ జోక్యాన్ని అనుభవించినట్లు చెబుతున్నారు. గైడ్ వేధింపులు, యూనివర్సిటీ తిరస్కరణ మరియు ఫైల్ మూసివేయబడినప్పటికీ, ఆమె పూర్తిగా నిరాశకు గురయ్యారు. ఆ సమయంలో ఒక రహస్యమైన పిలుపు ఆమెను క్రుపాసనం వైపు నడిపించింది, అక్కడ ఆమె పూర్తిగా అర్థం చేసుకోకపోయినా మారియన్ ఒడంబడికలో ప్రవేశించింది.\n\nఆమె ఈ నిర్ణయం తర్వాత అద్భుతమైన మార్పులు చోటుచేసుకున్నాయి. ప్రార్థన, మధ్యవర్తిత్వం మరియు దృఢమైన విశ్వాసంతో అసాధ్యంగా కనిపించిన పరిస్థితులు మారాయి—సహకరించని అధికారులు సహకరించడం ప్రారంభించారు, ఆమె గైడ్ పనులను పూర్తి చేశాడు, మరియు ఆమె థీసిస్ చాలా తక్కువ సమయంలో ఆమోదించబడింది. అసాధ్యంగా కనిపించిన పీహెచ్‌డీ పూర్తయి అంతర్జాతీయంగా ప్రశంసలు పొందింది, ఇది పూర్తిగా మాత కృపగా ఆమె భావిస్తుంది.\n\nవిద్యా విజయాన్ని మించి, ఆమె జీవితంలో లోతైన ఆధ్యాత్మిక మార్పు చోటుచేసుకుంది. ఆమె ఆశీర్వాద మాత మరియు బాల యేసు సాన్నిధ్యాన్ని అనుభవించారు, వినయాన్ని పెంపొందించుకున్నారు, మరియు పేదలకు సహాయం చేయడం, ఆధ్యాత్మిక సమాచారాన్ని పంచడం, బాధపడుతున్నవారిని ఆదరించడం వంటి సేవా కార్యక్రమాలకు తనను అంకితం చేసుకున్నారు. ఆమెకు బాహ్య ఆశీర్వాదాల కంటే అంతర్గత మార్పు మరియు దేవునితో సన్నిహితతే అత్యంత ఆనందాన్ని ఇస్తుందని చెబుతున్నారు.",
-  "mr": "डॉ. शीना जॉर्ज त्यांच्या प्रभावी साक्षीत सांगतात की जवळपास दहा वर्षांच्या संघर्ष, नकार आणि तीव्र मानसिक वेदनेनंतर, पीएचडी पूर्ण करण्याच्या प्रवासात त्यांनी धन्य मातेमार्फत दैवी हस्तक्षेप अनुभवला. मार्गदर्शकाचा छळ, विद्यापीठाचा नकार आणि फाईल बंद होऊनही त्या पूर्णपणे निराश झाल्या होत्या. त्याच काळात त्यांना एक रहस्यमय आवाज ऐकू आला ज्याने त्यांना क्रुपासनम येथे नेले, जिथे त्यांनी पूर्ण समज नसतानाही मरियन करार केला.\n\nया वचनबद्धतेनंतर अनेक अद्भुत घडामोडी घडल्या. प्रार्थना, मध्यस्थी आणि दृढ विश्वासामुळे अशक्य वाटणाऱ्या परिस्थिती बदलल्या—असहकार्य करणारे अधिकारी सहकार्य करू लागले, मार्गदर्शकाने काम पूर्ण केले आणि त्यांचा प्रबंध अतिशय कमी वेळेत स्वीकारला गेला. जे पीएचडी अशक्य वाटत होते ते पूर्ण झालेच नाही तर आंतरराष्ट्रीय स्तरावर गौरविले गेले, ज्याचे श्रेय त्या पूर्णपणे मातेला देतात.\n\nशैक्षणिक यशापलीकडे, त्यांच्या जीवनात खोल आध्यात्मिक परिवर्तन झाले. त्यांनी धन्य माता आणि बाल येशू यांचा अनुभव घेतला, नम्रतेत वाढ केली आणि गरीबांना मदत करणे, आध्यात्मिक साहित्य वाटणे व दुःखी लोकांना आधार देणे अशा सेवेत स्वतःला समर्पित केले. त्या सांगतात की बाह्य आशीर्वादांपेक्षा अंतर्गत परिवर्तन आणि देवाजवळीक हाच खरा आनंद आहे.",
-  "fr": "Le Dr Sheena George partage un témoignage puissant sur la manière dont, après près de dix ans de lutte, de rejet et de détresse mentale en poursuivant son doctorat, elle a vécu une intervention divine par l’intermédiaire de la Sainte Vierge. Malgré le harcèlement de son directeur, le rejet de l’université et la fermeture de son dossier, elle est arrivée à un point de désespoir total. C’est alors qu’elle a entendu un appel mystérieux qui l’a conduite à Kreupasanam, où elle est entrée dans une alliance mariale sans en comprendre pleinement le sens.\n\nAprès cet engagement, une série d’événements extraordinaires s’est produite. Par la prière, l’intercession et une confiance inébranlable, des situations autrefois impossibles ont changé rapidement—les autorités sont devenues favorables, son directeur a complété le travail et sa thèse a été acceptée en très peu de temps. Son doctorat, autrefois impossible, a non seulement été achevé mais aussi hautement apprécié à l’international, ce qu’elle attribue entièrement à la grâce de la Sainte Vierge.\n\nAu-delà de la réussite académique, sa vie a connu une profonde transformation spirituelle. Elle a vécu des expériences personnelles avec la Sainte Vierge et l’Enfant Jésus, a grandi en humilité et s’est consacrée au service des autres, notamment en aidant les pauvres, en distribuant des ressources spirituelles et en réconfortant les souffrants. Elle souligne que plus que les bénédictions extérieures, c’est la transformation intérieure et la proximité avec Dieu qui lui apportent la plus grande joie.",
-  "es": "La Dra. Sheena George comparte un poderoso testimonio de cómo, después de casi diez años de lucha, rechazo y profundo sufrimiento mental al intentar completar su doctorado, experimentó una intervención divina a través de la Santísima Virgen. A pesar del acoso de su guía, el rechazo de la universidad y el cierre de su expediente, llegó a un punto de total desesperación. Fue entonces cuando escuchó una llamada misteriosa que la llevó a Kreupasanam, donde entró en un pacto mariano sin comprenderlo completamente al principio.\n\nDespués de su compromiso, ocurrieron una serie de eventos extraordinarios. A través de la oración, la intercesión y una fe inquebrantable, situaciones que parecían imposibles comenzaron a cambiar rápidamente—las autoridades se volvieron favorables, su guía completó el trabajo y su tesis fue aceptada en muy poco tiempo. Su doctorado, que antes parecía imposible, no solo se completó, sino que también fue altamente valorado a nivel internacional, lo cual ella atribuye completamente a la gracia de la Virgen.\n\nMás allá del éxito académico, su vida experimentó una profunda transformación espiritual. Tuvo encuentros personales con la Virgen y el Niño Jesús, creció en humildad y se dedicó al servicio, ayudando a los pobres, distribuyendo materiales espirituales y consolando a los que sufren. Ella enfatiza que, más que las bendiciones externas, es la transformación interior y la cercanía con Dios lo que le ha dado mayor alegría.",
-  "zh": "谢娜·乔治博士分享了一个有力的见证：在近十年的挣扎、拒绝和深重的精神痛苦中，她在完成博士学位的过程中，通过圣母经历了神圣的干预。尽管她受到导师的刁难、大学的拒绝，甚至档案被关闭，她仍陷入完全的绝望。就在那时，她听到一个神秘的呼唤，带领她前往克鲁帕萨南，并在那里进入了一个玛利亚的盟约，尽管起初她并未完全理解其意义。\n\n在她作出承诺之后，一系列非凡的事情发生了。通过祈祷、代祷和坚定的信心，看似不可能的情况迅速发生了改变——原本不合作的官员变得支持，她的导师完成了工作，她的论文在极短时间内被接受。她曾认为不可能完成的博士学位不仅完成了，还在国际上获得了高度评价，她将这一切完全归功于圣母的恩典。\n\n除了学术上的成功，她的生命也经历了深刻的属灵转变。她亲身体验到圣母和婴孩耶稣的临在，在谦卑中成长，并投身于服务他人，例如帮助穷人、分发属灵资料和安慰受苦的人。她强调，比起外在的祝福，内心的转变以及与天主的亲近才是她最大的喜乐。",
-  "kn": "ಡಾ. ಶೀನಾ ಜಾರ್ಜ್ ತಮ್ಮ ಶಕ್ತಿಯುತ ಸಾಕ್ಷ್ಯದಲ್ಲಿ, ಸುಮಾರು ಹತ್ತು ವರ್ಷಗಳ ಹೋರಾಟ, ತಿರಸ್ಕಾರ ಮತ್ತು ಮಾನಸಿಕ ವೇದನೆಯ ನಂತರ, ತಮ್ಮ ಪಿಎಚ್‌ಡಿ ಪೂರ್ಣಗೊಳಿಸುವ ಪ್ರಯತ್ನದಲ್ಲಿ ಆಶೀರ್ವಾದಿತ ತಾಯಿಯ ಮೂಲಕ ದೈವಿಕ ಹಸ್ತಕ್ಷೇಪವನ್ನು ಅನುಭವಿಸಿದ್ದಾಗಿ ವಿವರಿಸುತ್ತಾರೆ. ಮಾರ್ಗದರ್ಶಕರ ಹಿಂಸೆ, ವಿಶ್ವವಿದ್ಯಾಲಯದ ತಿರಸ್ಕಾರ ಮತ್ತು ಕಡತ ಮುಚ್ಚಲ್ಪಟ್ಟಿದ್ದರೂ, ಅವರು ಸಂಪೂರ್ಣ ನಿರಾಶೆಗೆ ಒಳಗಾದರು. ಇದೇ ಸಮಯದಲ್ಲಿ ಒಂದು ರಹಸ್ಯ ಕರೆಯು ಅವರನ್ನು ಕ್ರುಪಾಸನಂ ಕಡೆಗೆ ನಡೆಸಿತು, ಅಲ್ಲಿ ಅವರು ಸಂಪೂರ್ಣವಾಗಿ ಅರ್ಥಮಾಡಿಕೊಳ್ಳದೇ ಮರಿಯನ್ ಒಡಂಬಡಿಕೆಗೆ ಪ್ರವೇಶಿಸಿದರು.\n\nಅವರ ಈ ನಿರ್ಧಾರದ ನಂತರ ಅನೇಕ ಅದ್ಭುತ ಘಟನೆಗಳು ನಡೆದವು. ಪ್ರಾರ್ಥನೆ, ಮಧ್ಯಸ್ಥಿಕೆ ಮತ್ತು ದೃಢ ನಂಬಿಕೆಯ ಮೂಲಕ ಅಸಾಧ್ಯವೆನಿಸಿದ ಪರಿಸ್ಥಿತಿಗಳು ಬದಲಾಗಲು ಪ್ರಾರಂಭಿಸಿದವು—ಸಹಕರಿಸದ ಅಧಿಕಾರಿಗಳು ಸಹಾಯಕರಾದರು, ಅವರ ಮಾರ್ಗದರ್ಶಕ ಕೆಲಸ ಪೂರ್ಣಗೊಳಿಸಿದರು ಮತ್ತು ಅವರ ಪ್ರಬಂಧವು ಅತಿ ಕಡಿಮೆ ಸಮಯದಲ್ಲಿ ಅಂಗೀಕರಿಸಲ್ಪಟ್ಟಿತು. ಅಸಾಧ್ಯವೆನಿಸಿದ್ದ ಪಿಎಚ್‌ಡಿ ಪೂರ್ಣಗೊಂಡಷ್ಟೇ ಅಲ್ಲದೆ, ಅಂತರರಾಷ್ಟ್ರೀಯವಾಗಿ ಮೆಚ್ಚುಗೆ ಪಡೆದಿತು, ಇದನ್ನೆಲ್ಲಾ ಅವರು ತಾಯಿಯ ಕೃಪೆಗೆ ಸಲ್ಲಿಸುತ್ತಾರೆ.\n\nಶೈಕ್ಷಣಿಕ ಯಶಸ್ಸಿನ ಪಾರವಾಗಿ, ಅವರ ಜೀವನದಲ್ಲಿ ಆಳವಾದ ಆತ್ಮಿಕ ಪರಿವರ್ತನೆ ಸಂಭವಿಸಿತು. ಅವರು ಆಶೀರ್ವಾದಿತ ತಾಯಿ ಮತ್ತು ಬಾಲ ಯೇಸುವಿನ ಅನುಭವಗಳನ್ನು ಹೊಂದಿದರು, ವಿನಯದಲ್ಲಿ ಬೆಳೆಯುತ್ತಾ ಬಡವರಿಗೆ ಸಹಾಯ ಮಾಡುವುದು, ಆತ್ಮಿಕ ವಿಷಯಗಳನ್ನು ಹಂಚಿಕೊಳ್ಳುವುದು ಮತ್ತು ಸಂಕಷ್ಟದಲ್ಲಿರುವವರನ್ನು ಸಮಾಧಾನಪಡಿಸುವ ಸೇವೆಗೆ ತಮ್ಮನ್ನು ಸಮರ್ಪಿಸಿದರು. ಅವರು ಹೇಳುವಂತೆ, ಬಾಹ್ಯ ಆಶೀರ್ವಾದಗಳಿಗಿಂತ ಒಳಗಿನ ಪರಿವರ್ತನೆ ಮತ್ತು ದೇವರ ಸಮೀಪತೆ ಅವರಿಗೇ ಹೆಚ್ಚಿನ ಸಂತೋಷವನ್ನು ನೀಡಿದೆ."
-},
+      "en": "Dr. Sheena George shares a powerful testimony of how, after nearly ten years of struggle, rejection, and deep mental distress in completing her PhD, she encountered divine intervention through the Blessed Mother. Despite facing harassment from her guide, rejection by the university, and even having her file closed, she reached a point of complete despair. It was during this time that she heard a mysterious call leading her to Kreupasanam, where she entered into a Marian Covenant, even without fully understanding it at first.\n\nFollowing her commitment, a series of extraordinary events unfolded. Through prayer, intercession, and unwavering trust, situations that once seemed impossible began to change rapidly—uncooperative authorities became supportive, her guide completed pending work, and her thesis was accepted and processed in a remarkably short time. Her PhD, once considered impossible, was not only completed but also highly appreciated internationally, which she attributes entirely to the Blessed Mother’s intervention and grace.\n\nBeyond academic success, her life underwent a deep spiritual transformation. She experienced personal encounters with the Blessed Mother and Baby Jesus, grew in humility, and dedicated herself to acts of service such as helping the poor, distributing spiritual materials, and comforting the suffering. She emphasizes that more than the external blessings, it is the inner transformation and closeness to God that brought her the greatest joy, and she now lives as a witness to divine grace and Marian intercession.",
+      "hi": "डॉ. शीना जॉर्ज अपनी शक्तिशाली गवाही में बताती हैं कि लगभग दस वर्षों के संघर्ष, अस्वीकृति और गहरे मानसिक कष्ट के बाद, जब वह अपने पीएचडी को पूरा करने की कोशिश कर रही थीं, तब उन्होंने धन्य माता के माध्यम से दिव्य हस्तक्षेप का अनुभव किया। अपने गाइड की प्रताड़ना, विश्वविद्यालय द्वारा अस्वीकृति और फाइल बंद हो जाने के बावजूद, वह पूरी तरह निराश हो चुकी थीं। इसी समय उन्होंने एक रहस्यमयी आवाज़ सुनी जिसने उन्हें क्रुपासनम ले जाया, जहाँ उन्होंने बिना पूरी समझ के मरियम के साथ एक वाचा में प्रवेश किया।\n\nअपनी प्रतिबद्धता के बाद, कई अद्भुत घटनाएँ होने लगीं। प्रार्थना, मध्यस्थता और अटूट विश्वास के द्वारा असंभव लगने वाली परिस्थितियाँ बदलने लगीं—असहयोगी अधिकारी सहयोगी बन गए, उनके गाइड ने कार्य पूरा किया, और उनकी थीसिस बहुत कम समय में स्वीकार कर ली गई। जो पीएचडी पहले असंभव लग रही थी, वह न केवल पूरी हुई बल्कि अंतरराष्ट्रीय स्तर पर सराही भी गई, जिसे वह पूरी तरह धन्य माता की कृपा मानती हैं।\n\nशैक्षणिक सफलता से परे, उनके जीवन में गहरा आध्यात्मिक परिवर्तन आया। उन्होंने धन्य माता और बाल यीशु के साथ व्यक्तिगत अनुभव किए, नम्रता में बढ़ीं, और गरीबों की सहायता, आध्यात्मिक सामग्री वितरित करने तथा पीड़ितों को सांत्वना देने जैसे सेवाकार्यों में स्वयं को समर्पित कर दिया। वह कहती हैं कि बाहरी आशीषों से अधिक, आंतरिक परिवर्तन और परमेश्वर के साथ निकटता ही उनके लिए सबसे बड़ा आनंद है।",
+      "ta": "டாக்டர் ஷீனா ஜார்ஜ் தனது சக்திவாய்ந்த சாட்சியத்தில், பத்து ஆண்டுகளுக்கு நெருங்கிய போராட்டம், நிராகரிப்பு மற்றும் ஆழ்ந்த மனவேதனைக்குப் பிறகு, தனது PhDயை முடிக்க முயன்றபோது, மாதாவின் தலையீட்டின் மூலம் தெய்வீக அனுபவத்தை பெற்றதாக கூறுகிறார். வழிகாட்டியின் தொல்லை, பல்கலைக்கழகத்தின் நிராகரிப்பு மற்றும் கோப்பு மூடப்பட்ட பின்னரும், அவர் முழுமையான நம்பிக்கையிழப்பை அடைந்தார். அந்த நேரத்தில் ஒரு மர்மமான அழைப்பு அவரை கிருபாசனம் நோக்கி அழைத்துச் சென்றது, அங்கு முழுமையாக புரியாமல் இருந்தபோதிலும் அவர் மரியன் உடன்படிக்கையில் சேர்ந்தார்.\n\nஅதன்பிறகு அதிசயமான நிகழ்வுகள் நடந்தன. ஜெபம், நடுவுரைத்தல் மற்றும் உறுதியான நம்பிக்கை மூலம் முடியாததாக தோன்றிய சூழ்நிலைகள் மாறின—ஒத்துழைக்காத அதிகாரிகள் உதவத் தொடங்கினர், அவரது வழிகாட்டி பணிகளை முடித்தார், மற்றும் அவரது ஆய்வு விரைவாக ஏற்றுக்கொள்ளப்பட்டது. முடியாததாக தோன்றிய அவரது PhD நிறைவேறியது மட்டுமல்லாமல், சர்வதேச அளவில் பாராட்டப்பட்டது, இதனை அவர் மாதாவின் கிருபைக்கு ஒப்படைக்கிறார்.\n\nகல்வி வெற்றியைத் தாண்டி, அவரது வாழ்க்கையில் ஆழ்ந்த ஆன்மீக மாற்றம் ஏற்பட்டது. மாதாவையும் குழந்தை இயேசுவையும் நேரடியாக அனுபவித்தார், தாழ்மையில் வளர்ந்தார், ஏழைகளுக்கு உதவுதல், ஆன்மீக செய்திகளை பகிர்தல் மற்றும் துன்பப்படுவோருக்கு ஆறுதல் அளித்தல் போன்ற சேவைகளில் ஈடுபட்டார். வெளிப்புற ஆசீர்வாதங்களை விட உள்ளார்ந்த மாற்றமும் தேவனுடன் நெருக்கமும் தான் மிகப் பெரிய சந்தோஷம் என்று அவர் கூறுகிறார்.",
+      "bn": "ডাঃ শীনা জর্জ তার শক্তিশালী সাক্ষ্যে জানান যে প্রায় দশ বছরের সংগ্রাম, প্রত্যাখ্যান এবং গভীর মানসিক যন্ত্রণার পর, পিএইচডি সম্পন্ন করার পথে তিনি আশীর্বাদধন্য মাতার মাধ্যমে ঈশ্বরীয় হস্তক্ষেপ অনুভব করেন। গাইডের হয়রানি, বিশ্ববিদ্যালয়ের প্রত্যাখ্যান এবং ফাইল বন্ধ হয়ে যাওয়ার পর তিনি সম্পূর্ণ হতাশ হয়ে পড়েছিলেন। সেই সময় তিনি এক রহস্যময় আহ্বান শুনেছিলেন যা তাকে ক্রুপাসানামে নিয়ে যায়, যেখানে তিনি সম্পূর্ণভাবে না বুঝেই মারিয়ান চুক্তিতে প্রবেশ করেন।\n\nতার এই প্রতিশ্রুতির পর অসাধারণ পরিবর্তন ঘটে। প্রার্থনা, মধ্যস্থতা এবং অটল বিশ্বাসের মাধ্যমে অসম্ভব মনে হওয়া পরিস্থিতি বদলে যায়—অসহযোগী কর্মকর্তারা সহযোগিতা করতে শুরু করেন, তার গাইড কাজ সম্পন্ন করেন, এবং তার থিসিস খুব অল্প সময়ে গৃহীত হয়। তার পিএইচডি, যা একসময় অসম্ভব মনে হচ্ছিল, তা শুধু সম্পন্নই হয়নি, আন্তর্জাতিকভাবে প্রশংসিতও হয়েছে, যা তিনি সম্পূর্ণভাবে মাতার কৃপা হিসেবে দেখেন।\n\nশিক্ষাগত সাফল্যের বাইরে, তার জীবনে গভীর আধ্যাত্মিক পরিবর্তন ঘটে। তিনি মাতার এবং শিশু যীশুর ব্যক্তিগত উপস্থিতি অনুভব করেন, নম্রতায় বৃদ্ধি পান এবং দরিদ্রদের সাহায্য, আধ্যাত্মিক উপকরণ বিতরণ ও কষ্টভোগীদের সান্ত্বনা দেওয়ার কাজে নিজেকে নিয়োজিত করেন। তিনি বলেন, বাহ্যিক আশীর্বাদের চেয়ে অন্তরের পরিবর্তন এবং ঈশ্বরের সঙ্গে ঘনিষ্ঠতাই তার কাছে সবচেয়ে বড় আনন্দ।",
+      "te": "డా. షీనా జార్జ్ తన శక్తివంతమైన సాక్ష్యంలో, దాదాపు పది సంవత్సరాల పోరాటం, నిరాకరణ మరియు తీవ్రమైన మానసిక వేదన తర్వాత, తన పీహెచ్‌డీ పూర్తి చేసే సమయంలో ఆశీర్వాద మాత ద్వారా దైవీయ జోక్యాన్ని అనుభవించినట్లు చెబుతున్నారు. గైడ్ వేధింపులు, యూనివర్సిటీ తిరస్కరణ మరియు ఫైల్ మూసివేయబడినప్పటికీ, ఆమె పూర్తిగా నిరాశకు గురయ్యారు. ఆ సమయంలో ఒక రహస్యమైన పిలుపు ఆమెను క్రుపాసనం వైపు నడిపించింది, అక్కడ ఆమె పూర్తిగా అర్థం చేసుకోకపోయినా మారియన్ ఒడంబడికలో ప్రవేశించింది.\n\nఆమె ఈ నిర్ణయం తర్వాత అద్భుతమైన మార్పులు చోటుచేసుకున్నాయి. ప్రార్థన, మధ్యవర్తిత్వం మరియు దృఢమైన విశ్వాసంతో అసాధ్యంగా కనిపించిన పరిస్థితులు మారాయి—సహకరించని అధికారులు సహకరించడం ప్రారంభించారు, ఆమె గైడ్ పనులను పూర్తి చేశాడు, మరియు ఆమె థీసిస్ చాలా తక్కువ సమయంలో ఆమోదించబడింది. అసాధ్యంగా కనిపించిన పీహెచ్‌డీ పూర్తయి అంతర్జాతీయంగా ప్రశంసలు పొందింది, ఇది పూర్తిగా మాత కృపగా ఆమె భావిస్తుంది.\n\nవిద్యా విజయాన్ని మించి, ఆమె జీవితంలో లోతైన ఆధ్యాత్మిక మార్పు చోటుచేసుకుంది. ఆమె ఆశీర్వాద మాత మరియు బాల యేసు సాన్నిధ్యాన్ని అనుభవించారు, వినయాన్ని పెంపొందించుకున్నారు, మరియు పేదలకు సహాయం చేయడం, ఆధ్యాత్మిక సమాచారాన్ని పంచడం, బాధపడుతున్నవారిని ఆదరించడం వంటి సేవా కార్యక్రమాలకు తనను అంకితం చేసుకున్నారు. ఆమెకు బాహ్య ఆశీర్వాదాల కంటే అంతర్గత మార్పు మరియు దేవునితో సన్నిహితతే అత్యంత ఆనందాన్ని ఇస్తుందని చెబుతున్నారు.",
+      "mr": "डॉ. शीना जॉर्ज त्यांच्या प्रभावी साक्षीत सांगतात की जवळपास दहा वर्षांच्या संघर्ष, नकार आणि तीव्र मानसिक वेदनेनंतर, पीएचडी पूर्ण करण्याच्या प्रवासात त्यांनी धन्य मातेमार्फत दैवी हस्तक्षेप अनुभवला. मार्गदर्शकाचा छळ, विद्यापीठाचा नकार आणि फाईल बंद होऊनही त्या पूर्णपणे निराश झाल्या होत्या. त्याच काळात त्यांना एक रहस्यमय आवाज ऐकू आला ज्याने त्यांना क्रुपासनम येथे नेले, जिथे त्यांनी पूर्ण समज नसतानाही मरियन करार केला.\n\nया वचनबद्धतेनंतर अनेक अद्भुत घडामोडी घडल्या. प्रार्थना, मध्यस्थी आणि दृढ विश्वासामुळे अशक्य वाटणाऱ्या परिस्थिती बदलल्या—असहकार्य करणारे अधिकारी सहकार्य करू लागले, मार्गदर्शकाने काम पूर्ण केले आणि त्यांचा प्रबंध अतिशय कमी वेळेत स्वीकारला गेला. जे पीएचडी अशक्य वाटत होते ते पूर्ण झालेच नाही तर आंतरराष्ट्रीय स्तरावर गौरविले गेले, ज्याचे श्रेय त्या पूर्णपणे मातेला देतात.\n\nशैक्षणिक यशापलीकडे, त्यांच्या जीवनात खोल आध्यात्मिक परिवर्तन झाले. त्यांनी धन्य माता आणि बाल येशू यांचा अनुभव घेतला, नम्रतेत वाढ केली आणि गरीबांना मदत करणे, आध्यात्मिक साहित्य वाटणे व दुःखी लोकांना आधार देणे अशा सेवेत स्वतःला समर्पित केले. त्या सांगतात की बाह्य आशीर्वादांपेक्षा अंतर्गत परिवर्तन आणि देवाजवळीक हाच खरा आनंद आहे.",
+      "fr": "Le Dr Sheena George partage un témoignage puissant sur la manière dont, après près de dix ans de lutte, de rejet et de détresse mentale en poursuivant son doctorat, elle a vécu une intervention divine par l’intermédiaire de la Sainte Vierge. Malgré le harcèlement de son directeur, le rejet de l’université et la fermeture de son dossier, elle est arrivée à un point de désespoir total. C’est alors qu’elle a entendu un appel mystérieux qui l’a conduite à Kreupasanam, où elle est entrée dans une alliance mariale sans en comprendre pleinement le sens.\n\nAprès cet engagement, une série d’événements extraordinaires s’est produite. Par la prière, l’intercession et une confiance inébranlable, des situations autrefois impossibles ont changé rapidement—les autorités sont devenues favorables, son directeur a complété le travail et sa thèse a été acceptée en très peu de temps. Son doctorat, autrefois impossible, a non seulement été achevé mais aussi hautement apprécié à l’international, ce qu’elle attribue entièrement à la grâce de la Sainte Vierge.\n\nAu-delà de la réussite académique, sa vie a connu une profonde transformation spirituelle. Elle a vécu des expériences personnelles avec la Sainte Vierge et l’Enfant Jésus, a grandi en humilité et s’est consacrée au service des autres, notamment en aidant les pauvres, en distribuant des ressources spirituelles et en réconfortant les souffrants. Elle souligne que plus que les bénédictions extérieures, c’est la transformation intérieure et la proximité avec Dieu qui lui apportent la plus grande joie.",
+      "es": "La Dra. Sheena George comparte un poderoso testimonio de cómo, después de casi diez años de lucha, rechazo y profundo sufrimiento mental al intentar completar su doctorado, experimentó una intervención divina a través de la Santísima Virgen. A pesar del acoso de su guía, el rechazo de la universidad y el cierre de su expediente, llegó a un punto de total desesperación. Fue entonces cuando escuchó una llamada misteriosa que la llevó a Kreupasanam, donde entró en un pacto mariano sin comprenderlo completamente al principio.\n\nDespués de su compromiso, ocurrieron una serie de eventos extraordinarios. A través de la oración, la intercesión y una fe inquebrantable, situaciones que parecían imposibles comenzaron a cambiar rápidamente—las autoridades se volvieron favorables, su guía completó el trabajo y su tesis fue aceptada en muy poco tiempo. Su doctorado, que antes parecía imposible, no solo se completó, sino que también fue altamente valorado a nivel internacional, lo cual ella atribuye completamente a la gracia de la Virgen.\n\nMás allá del éxito académico, su vida experimentó una profunda transformación espiritual. Tuvo encuentros personales con la Virgen y el Niño Jesús, creció en humildad y se dedicó al servicio, ayudando a los pobres, distribuyendo materiales espirituales y consolando a los que sufren. Ella enfatiza que, más que las bendiciones externas, es la transformación interior y la cercanía con Dios lo que le ha dado mayor alegría.",
+      "zh": "谢娜·乔治博士分享了一个有力的见证：在近十年的挣扎、拒绝和深重的精神痛苦中，她在完成博士学位的过程中，通过圣母经历了神圣的干预。尽管她受到导师的刁难、大学的拒绝，甚至档案被关闭，她仍陷入完全的绝望。就在那时，她听到一个神秘的呼唤，带领她前往克鲁帕萨南，并在那里进入了一个玛利亚的盟约，尽管起初她并未完全理解其意义。\n\n在她作出承诺之后，一系列非凡的事情发生了。通过祈祷、代祷和坚定的信心，看似不可能的情况迅速发生了改变——原本不合作的官员变得支持，她的导师完成了工作，她的论文在极短时间内被接受。她曾认为不可能完成的博士学位不仅完成了，还在国际上获得了高度评价，她将这一切完全归功于圣母的恩典。\n\n除了学术上的成功，她的生命也经历了深刻的属灵转变。她亲身体验到圣母和婴孩耶稣的临在，在谦卑中成长，并投身于服务他人，例如帮助穷人、分发属灵资料和安慰受苦的人。她强调，比起外在的祝福，内心的转变以及与天主的亲近才是她最大的喜乐。",
+      "kn": "ಡಾ. ಶೀನಾ ಜಾರ್ಜ್ ತಮ್ಮ ಶಕ್ತಿಯುತ ಸಾಕ್ಷ್ಯದಲ್ಲಿ, ಸುಮಾರು ಹತ್ತು ವರ್ಷಗಳ ಹೋರಾಟ, ತಿರಸ್ಕಾರ ಮತ್ತು ಮಾನಸಿಕ ವೇದನೆಯ ನಂತರ, ತಮ್ಮ ಪಿಎಚ್‌ಡಿ ಪೂರ್ಣಗೊಳಿಸುವ ಪ್ರಯತ್ನದಲ್ಲಿ ಆಶೀರ್ವಾದಿತ ತಾಯಿಯ ಮೂಲಕ ದೈವಿಕ ಹಸ್ತಕ್ಷೇಪವನ್ನು ಅನುಭವಿಸಿದ್ದಾಗಿ ವಿವರಿಸುತ್ತಾರೆ. ಮಾರ್ಗದರ್ಶಕರ ಹಿಂಸೆ, ವಿಶ್ವವಿದ್ಯಾಲಯದ ತಿರಸ್ಕಾರ ಮತ್ತು ಕಡತ ಮುಚ್ಚಲ್ಪಟ್ಟಿದ್ದರೂ, ಅವರು ಸಂಪೂರ್ಣ ನಿರಾಶೆಗೆ ಒಳಗಾದರು. ಇದೇ ಸಮಯದಲ್ಲಿ ಒಂದು ರಹಸ್ಯ ಕರೆಯು ಅವರನ್ನು ಕ್ರುಪಾಸನಂ ಕಡೆಗೆ ನಡೆಸಿತು, ಅಲ್ಲಿ ಅವರು ಸಂಪೂರ್ಣವಾಗಿ ಅರ್ಥಮಾಡಿಕೊಳ್ಳದೇ ಮರಿಯನ್ ಒಡಂಬಡಿಕೆಗೆ ಪ್ರವೇಶಿಸಿದರು.\n\nಅವರ ಈ ನಿರ್ಧಾರದ ನಂತರ ಅನೇಕ ಅದ್ಭುತ ಘಟನೆಗಳು ನಡೆದವು. ಪ್ರಾರ್ಥನೆ, ಮಧ್ಯಸ್ಥಿಕೆ ಮತ್ತು ದೃಢ ನಂಬಿಕೆಯ ಮೂಲಕ ಅಸಾಧ್ಯವೆನಿಸಿದ ಪರಿಸ್ಥಿತಿಗಳು ಬದಲಾಗಲು ಪ್ರಾರಂಭಿಸಿದವು—ಸಹಕರಿಸದ ಅಧಿಕಾರಿಗಳು ಸಹಾಯಕರಾದರು, ಅವರ ಮಾರ್ಗದರ್ಶಕ ಕೆಲಸ ಪೂರ್ಣಗೊಳಿಸಿದರು ಮತ್ತು ಅವರ ಪ್ರಬಂಧವು ಅತಿ ಕಡಿಮೆ ಸಮಯದಲ್ಲಿ ಅಂಗೀಕರಿಸಲ್ಪಟ್ಟಿತು. ಅಸಾಧ್ಯವೆನಿಸಿದ್ದ ಪಿಎಚ್‌ಡಿ ಪೂರ್ಣಗೊಂಡಷ್ಟೇ ಅಲ್ಲದೆ, ಅಂತರರಾಷ್ಟ್ರೀಯವಾಗಿ ಮೆಚ್ಚುಗೆ ಪಡೆದಿತು, ಇದನ್ನೆಲ್ಲಾ ಅವರು ತಾಯಿಯ ಕೃಪೆಗೆ ಸಲ್ಲಿಸುತ್ತಾರೆ.\n\nಶೈಕ್ಷಣಿಕ ಯಶಸ್ಸಿನ ಪಾರವಾಗಿ, ಅವರ ಜೀವನದಲ್ಲಿ ಆಳವಾದ ಆತ್ಮಿಕ ಪರಿವರ್ತನೆ ಸಂಭವಿಸಿತು. ಅವರು ಆಶೀರ್ವಾದಿತ ತಾಯಿ ಮತ್ತು ಬಾಲ ಯೇಸುವಿನ ಅನುಭವಗಳನ್ನು ಹೊಂದಿದರು, ವಿನಯದಲ್ಲಿ ಬೆಳೆಯುತ್ತಾ ಬಡವರಿಗೆ ಸಹಾಯ ಮಾಡುವುದು, ಆತ್ಮಿಕ ವಿಷಯಗಳನ್ನು ಹಂಚಿಕೊಳ್ಳುವುದು ಮತ್ತು ಸಂಕಷ್ಟದಲ್ಲಿರುವವರನ್ನು ಸಮಾಧಾನಪಡಿಸುವ ಸೇವೆಗೆ ತಮ್ಮನ್ನು ಸಮರ್ಪಿಸಿದರು. ಅವರು ಹೇಳುವಂತೆ, ಬಾಹ್ಯ ಆಶೀರ್ವಾದಗಳಿಗಿಂತ ಒಳಗಿನ ಪರಿವರ್ತನೆ ಮತ್ತು ದೇವರ ಸಮೀಪತೆ ಅವರಿಗೇ ಹೆಚ್ಚಿನ ಸಂತೋಷವನ್ನು ನೀಡಿದೆ."
+    },
     "subtitles": "/assets/testimony-subtitle/20apr26.json",
     "duration": "26:04",
-    "overlay":{
-  "boxes": [
-    {
-      "x": 30,
-      "y": 14,
-      "w": 772,
-      "h": 374,
-      "background": "#0169a6",
-      "fontColor": "#feffff"
-    },
-    {
-      "x": 16,
-      "y": 385,
-      "w": 770,
-      "h": 129,
-      "background": "#ffeb01",
-      "fontColor": "#fb0200"
-    },
-    {
-      "x": 28,
-      "y": 523,
-      "w": 1022,
-      "h": 197,
-      "background": "#004e7c",
-      "fontColor": "#ffe902"
-    },
-    {
-      "x": 1070,
-      "y": 4,
-      "w": 204,
-      "h": 67,
-      "background": "#066698",
-      "fontColor": "#fffefb"
+    "overlay": {
+      "boxes": [
+        {
+          "x": 30,
+          "y": 14,
+          "w": 772,
+          "h": 374,
+          "background": "#0169a6",
+          "fontColor": "#feffff"
+        },
+        {
+          "x": 16,
+          "y": 385,
+          "w": 770,
+          "h": 129,
+          "background": "#ffeb01",
+          "fontColor": "#fb0200"
+        },
+        {
+          "x": 28,
+          "y": 523,
+          "w": 1022,
+          "h": 197,
+          "background": "#004e7c",
+          "fontColor": "#ffe902"
+        },
+        {
+          "x": 1070,
+          "y": 4,
+          "w": 204,
+          "h": 67,
+          "background": "#066698",
+          "fontColor": "#fffefb"
+        }
+      ],
+      "texts": {
+        "en": [
+          "Dr. Sheena's Shocking Covenant Experiences After Hearing the Voice of the Blessed Mother",
+          "From Sheena to Dr. Sheena",
+          "The Astonishing Miracle Performed by the Blessed Mother Who Approached in a Blue Radiant Light!!!",
+          "Kottayam"
+        ],
+        "hi": [
+          "धन्य माता की आवाज़ सुनने के बाद डॉ. शीना के चौंकाने वाले वाचा अनुभव",
+          "शीना से डॉ. शीना तक",
+          "नीली दिव्य रोशनी में प्रकट हुई धन्य माता द्वारा किया गया अद्भुत चमत्कार!!!",
+          "कोट्टायम"
+        ],
+        "ta": [
+          "தெய்வ அன்னையின் குரலைக் கேட்ட பிறகு டாக்டர் ஷீனாவின் அதிர்ச்சியூட்டும் உடன்படிக்கை அனுபவங்கள்",
+          "ஷீனாவிலிருந்து டாக்டர் ஷீனா வரை",
+          "நீல ஒளியில் அணுகிய தெய்வ அன்னை செய்த அதிசயமான அற்புதம்!!!",
+          "கோட்டயம்"
+        ],
+        "bn": [
+          "ধন্য মাতার কণ্ঠস্বর শোনার পর ডা. শীনার চমকপ্রদ চুক্তির অভিজ্ঞতা",
+          "শীনা থেকে ডা. শীনা",
+          "নীল দীপ্তিময় আলোতে এগিয়ে আসা ধন্য মাতার বিস্ময়কর অলৌকিক ঘটনা!!!",
+          "কোট্টায়াম"
+        ],
+        "te": [
+          "పవిత్ర తల్లి స్వరాన్ని విన్న తర్వాత డా. షీనా యొక్క ఆశ్చర్యకరమైన ఒడంబడిక అనుభవాలు",
+          "షీనా నుండి డా. షీనా వరకు",
+          "నీలి ప్రకాశవంతమైన కాంతిలో సమీపించిన పవిత్ర తల్లి చేసిన ఆశ్చర్యకరమైన అద్భుతం!!!",
+          "కొట్టాయం"
+        ],
+        "mr": [
+          "धन्य मातोश्रीचा आवाज ऐकल्यानंतर डॉ. शीना यांचे धक्कादायक करार अनुभव",
+          "शीना पासून डॉ. शीना पर्यंत",
+          "निळ्या तेजस्वी प्रकाशात प्रकट झालेल्या धन्य मातोश्रीने केलेले आश्चर्यकारक चमत्कार!!!",
+          "कोट्टायम"
+        ],
+        "fr": [
+          "Les expériences d’alliance bouleversantes de Dr Sheena après avoir entendu la voix de la Sainte Vierge",
+          "De Sheena à Dr Sheena",
+          "Le miracle étonnant accompli par la Sainte Vierge apparue dans une lumière bleue éclatante !!!",
+          "Kottayam"
+        ],
+        "es": [
+          "Las impactantes experiencias de alianza de la Dra. Sheena tras escuchar la voz de la Santísima Virgen",
+          "De Sheena a Dra. Sheena",
+          "¡El asombroso milagro realizado por la Santísima Virgen que se acercó en una luz azul radiante!!!",
+          "Kottayam"
+        ],
+        "zh": [
+          "在听到圣母的声音之后，谢娜医生令人震惊的盟约经历",
+          "从谢娜到谢娜医生",
+          "在蓝色光辉中显现的圣母所行的惊人奇迹！！！",
+          "科塔亚姆"
+        ],
+        "kn": [
+          "ಪವಿತ್ರ ತಾಯಿಯ ಧ್ವನಿಯನ್ನು ಕೇಳಿದ ನಂತರ ಡಾ. ಶೀನಾ ಅವರ ಆಶ್ಚರ್ಯಕರ ಒಡಂಬಡಿಕೆ ಅನುಭವಗಳು",
+          "ಶೀನಾ ಇಂದ ಡಾ. ಶೀನಾ ವರೆಗೆ",
+          "ನೀಲ ಕಿರಣದ ಬೆಳಕಿನಲ್ಲಿ ಸಮೀಪಿಸಿದ ಪವಿತ್ರ ತಾಯಿ ಮಾಡಿದ ಅದ್ಭುತ ಚಮತ್ಕಾರ!!!",
+          "ಕೊಟ್ಟಾಯಂ"
+        ]
+      }
     }
-  ],
-  "texts": {
-  "en": [
-    "Dr. Sheena's Shocking Covenant Experiences After Hearing the Voice of the Blessed Mother",
-    "From Sheena to Dr. Sheena",
-    "The Astonishing Miracle Performed by the Blessed Mother Who Approached in a Blue Radiant Light!!!",
-    "Kottayam"
-  ],
-  "hi": [
-    "धन्य माता की आवाज़ सुनने के बाद डॉ. शीना के चौंकाने वाले वाचा अनुभव",
-    "शीना से डॉ. शीना तक",
-    "नीली दिव्य रोशनी में प्रकट हुई धन्य माता द्वारा किया गया अद्भुत चमत्कार!!!",
-    "कोट्टायम"
-  ],
-  "ta": [
-    "தெய்வ அன்னையின் குரலைக் கேட்ட பிறகு டாக்டர் ஷீனாவின் அதிர்ச்சியூட்டும் உடன்படிக்கை அனுபவங்கள்",
-    "ஷீனாவிலிருந்து டாக்டர் ஷீனா வரை",
-    "நீல ஒளியில் அணுகிய தெய்வ அன்னை செய்த அதிசயமான அற்புதம்!!!",
-    "கோட்டயம்"
-  ],
-  "bn": [
-    "ধন্য মাতার কণ্ঠস্বর শোনার পর ডা. শীনার চমকপ্রদ চুক্তির অভিজ্ঞতা",
-    "শীনা থেকে ডা. শীনা",
-    "নীল দীপ্তিময় আলোতে এগিয়ে আসা ধন্য মাতার বিস্ময়কর অলৌকিক ঘটনা!!!",
-    "কোট্টায়াম"
-  ],
-  "te": [
-    "పవిత్ర తల్లి స్వరాన్ని విన్న తర్వాత డా. షీనా యొక్క ఆశ్చర్యకరమైన ఒడంబడిక అనుభవాలు",
-    "షీనా నుండి డా. షీనా వరకు",
-    "నీలి ప్రకాశవంతమైన కాంతిలో సమీపించిన పవిత్ర తల్లి చేసిన ఆశ్చర్యకరమైన అద్భుతం!!!",
-    "కొట్టాయం"
-  ],
-  "mr": [
-    "धन्य मातोश्रीचा आवाज ऐकल्यानंतर डॉ. शीना यांचे धक्कादायक करार अनुभव",
-    "शीना पासून डॉ. शीना पर्यंत",
-    "निळ्या तेजस्वी प्रकाशात प्रकट झालेल्या धन्य मातोश्रीने केलेले आश्चर्यकारक चमत्कार!!!",
-    "कोट्टायम"
-  ],
-  "fr": [
-    "Les expériences d’alliance bouleversantes de Dr Sheena après avoir entendu la voix de la Sainte Vierge",
-    "De Sheena à Dr Sheena",
-    "Le miracle étonnant accompli par la Sainte Vierge apparue dans une lumière bleue éclatante !!!",
-    "Kottayam"
-  ],
-  "es": [
-    "Las impactantes experiencias de alianza de la Dra. Sheena tras escuchar la voz de la Santísima Virgen",
-    "De Sheena a Dra. Sheena",
-    "¡El asombroso milagro realizado por la Santísima Virgen que se acercó en una luz azul radiante!!!",
-    "Kottayam"
-  ],
-  "zh": [
-    "在听到圣母的声音之后，谢娜医生令人震惊的盟约经历",
-    "从谢娜到谢娜医生",
-    "在蓝色光辉中显现的圣母所行的惊人奇迹！！！",
-    "科塔亚姆"
-  ],
-  "kn": [
-    "ಪವಿತ್ರ ತಾಯಿಯ ಧ್ವನಿಯನ್ನು ಕೇಳಿದ ನಂತರ ಡಾ. ಶೀನಾ ಅವರ ಆಶ್ಚರ್ಯಕರ ಒಡಂಬಡಿಕೆ ಅನುಭವಗಳು",
-    "ಶೀನಾ ಇಂದ ಡಾ. ಶೀನಾ ವರೆಗೆ",
-    "ನೀಲ ಕಿರಣದ ಬೆಳಕಿನಲ್ಲಿ ಸಮೀಪಿಸಿದ ಪವಿತ್ರ ತಾಯಿ ಮಾಡಿದ ಅದ್ಭುತ ಚಮತ್ಕಾರ!!!",
-    "ಕೊಟ್ಟಾಯಂ"
-  ]
-}
-}
   },
   {
     "id": 75,
     "title": {
-  "en": "From Failure to Victory with Marian Signs, Hearts, and Flowers",
-  "hi": "मरियम के चिन्हों, दिलों और फूलों के साथ असफलता से विजय तक",
-  "ta": "மரிய அன்னையின் அடையாளங்கள், இதயங்கள் மற்றும் மலர்களுடன் தோல்வியிலிருந்து வெற்றிவரை",
-  "bn": "মারিয়ান চিহ্ন, হৃদয় ও ফুলের মাধ্যমে ব্যর্থতা থেকে বিজয় পর্যন্ত",
-  "te": "మరియన్ సూచనలు, హృదయాలు మరియు పుష్పాలతో అపజయం నుండి విజయానికి",
-  "mr": "मरियन चिन्हे, हृदये आणि फुलांसह अपयशापासून विजयापर्यंत",
-  "fr": "De l’échec à la victoire avec des signes marials, des cœurs et des fleurs",
-  "es": "Del fracaso a la victoria con señales marianas, corazones y flores",
-  "zh": "借着圣母的标记、爱心与花朵，从失败走向胜利",
-  "kn": "ಮರಿಯಮ್ಮನ ಸೂಚನೆಗಳು, ಹೃದಯಗಳು ಮತ್ತು ಹೂಗಳೊಂದಿಗೆ ವಿಫಲತೆಯಿಂದ ವಿಜಯದವರೆಗೆ"
-},
+      "en": "From Failure to Victory with Marian Signs, Hearts, and Flowers",
+      "hi": "मरियम के चिन्हों, दिलों और फूलों के साथ असफलता से विजय तक",
+      "ta": "மரிய அன்னையின் அடையாளங்கள், இதயங்கள் மற்றும் மலர்களுடன் தோல்வியிலிருந்து வெற்றிவரை",
+      "bn": "মারিয়ান চিহ্ন, হৃদয় ও ফুলের মাধ্যমে ব্যর্থতা থেকে বিজয় পর্যন্ত",
+      "te": "మరియన్ సూచనలు, హృదయాలు మరియు పుష్పాలతో అపజయం నుండి విజయానికి",
+      "mr": "मरियन चिन्हे, हृदये आणि फुलांसह अपयशापासून विजयापर्यंत",
+      "fr": "De l’échec à la victoire avec des signes marials, des cœurs et des fleurs",
+      "es": "Del fracaso a la victoria con señales marianas, corazones y flores",
+      "zh": "借着圣母的标记、爱心与花朵，从失败走向胜利",
+      "kn": "ಮರಿಯಮ್ಮನ ಸೂಚನೆಗಳು, ಹೃದಯಗಳು ಮತ್ತು ಹೂಗಳೊಂದಿಗೆ ವಿಫಲತೆಯಿಂದ ವಿಜಯದವರೆಗೆ"
+    },
     "date": "April 29, 2026",
     "video": "https://youtu.be/R_LRGjcOr2A",
     "content": {
-  "en": "Spiritual Awakening and Miraculous Signs. Dona Saju, a devoted nurse, experienced a profound spiritual awakening that led her to embrace the Kreupasanam Marian Covenant. Although she previously focused her prayers solely on Jesus, she felt a sudden, strong calling to pray the Rosary. Upon dedicating herself to this devotion, she began witnessing numerous miraculous signs, including the shapes of hearts, flowers, and images of Mother Mary appearing in candle flames. She also recounts extraordinary encounters, such as feeling an invisible hand wake her for prayer and smelling the miraculous scent of jasmine flowers (anointing of fragrance) while performing charitable acts.\n\nAcademic and Personal Triumphs. Trusting entirely in her faith, Dona surrendered her academic and personal challenges to Mother Mary. While pursuing German language studies in Mysore and navigating difficult exams, she faced setbacks, including failing an initial module. However, guided by prayer and the use of Kreupasanam salt and holy oil, she eventually passed all her exams—which miraculously fell on Tuesdays, a day of personal spiritual significance. Similarly, she credits Mother Mary's direct intervention for helping her pass her driving test, noting that the examiners inexplicably overlooked critical errors that would normally result in an immediate failure.\n\nDedication to Charity and Apostolic Work. A central pillar of Dona's testimony is her unwavering commitment to acts of mercy and spreading her faith. She actively volunteers at care homes, providing physical care, medical check-ups, and therapies to the elderly and disabled. She highlights a miraculous moment in Mysore where strict volunteering restrictions were instantly bypassed when she unexpectedly encountered a friend who happened to be the facility's nursing officer. Beyond her charitable work, Dona passionately engages in apostolic duties by rescuing discarded Kreupasanam literature, distributing prayer materials, and sharing her personal miracles to inspire others to deepen their faith.",
-  "hi": "आध्यात्मिक जागृति और चमत्कारिक चिन्ह। एक समर्पित नर्स (nurse), डोना साजू ने एक गहरे आध्यात्मिक जागरण का अनुभव किया जिसने उन्हें कृपासनम मैरियन कोवेनेंट (Covenant) को अपनाने के लिए प्रेरित किया। हालाँकि वह पहले अपनी प्रार्थनाएँ केवल यीशु पर केंद्रित करती थीं, उन्हें रोज़री (Rosary) प्रार्थना करने की एक अचानक, मजबूत बुलाहट महसूस हुई। खुद को इस भक्ति के लिए समर्पित करने पर, उन्होंने मोमबत्ती की लपटों में दिल, फूलों और मदर मैरी की छवियों सहित कई चमत्कारिक चिन्ह देखना शुरू किया। वह असाधारण अनुभवों को भी साझा करती हैं, जैसे प्रार्थना के लिए जगाने वाला एक अदृश्य हाथ महसूस करना और चैरिटी के काम करते समय चमेली के फूलों की चमत्कारी खुशबू (anointing of fragrance) को महसूस करना।\n\nअकादमिक और व्यक्तिगत जीत। अपने विश्वास पर पूरी तरह से भरोसा करते हुए, डोना ने अपनी अकादमिक और व्यक्तिगत चुनौतियों को मदर मैरी को समर्पित कर दिया। मैसूर में जर्मन भाषा की पढ़ाई करते हुए और कठिन एग्जाम्स (exams) देते हुए, उन्हें असफलताओं का सामना करना पड़ा, जिसमें एक शुरुआती मॉड्यूल (module) में फेल (fail) होना शामिल था। हालाँकि, प्रार्थना और कृपासनम नमक और पवित्र तेल के उपयोग से निर्देशित, उन्होंने अंततः अपने सभी एग्जाम्स पास (pass) कर लिए - जो चमत्कारिक रूप से मंगलवार को पड़े। इसी तरह, वह अपने ड्राइविंग टेस्ट (driving test) को पास (pass) करने में मदद करने के लिए मदर मैरी के सीधे हस्तक्षेप को श्रेय देती हैं, यह देखते हुए कि परीक्षकों ने गंभीर गलतियों को अनदेखा कर दिया जिसके परिणामस्वरूप तुरंत फेल (fail) होना तय था।\n\nचैरिटी और प्रेरितिक कार्यों के प्रति समर्पण। डोना की गवाही का एक मुख्य स्तंभ दया के कार्यों (acts of mercy) और अपने विश्वास को फैलाने के प्रति उनकी अटूट प्रतिबद्धता है। वह केयर होम्स (care homes) में सक्रिय रूप से वॉलंटियर (volunteer) करती हैं, बुजुर्गों और विकलांगों को शारीरिक देखभाल, मेडिकल चेक-अप्स (medical check-ups) और थेरेपी (therapies) प्रदान करती हैं। वह मैसूर में एक चमत्कारिक क्षण को उजागर करती हैं जहाँ कठोर प्रतिबंधों को तुरंत दरकिनार कर दिया गया जब वह अप्रत्याशित रूप से एक दोस्त से मिली जो उस सुविधा का नर्सिंग ऑफिसर (nursing officer) था। अपने चैरिटी के काम से परे, डोना फेंके गए कृपासनम साहित्य को बचाने, प्रार्थना सामग्री बांटने और दूसरों को अपने विश्वास को गहरा करने के लिए प्रेरित करने के लिए अपने व्यक्तिगत चमत्कारों को शेयर (share) करके प्रेरितिक कर्तव्यों (apostolic duties) में पूरी लगन से संलग्न हैं।",
-  "ta": "ஆன்மீக விழிப்புணர்வு மற்றும் அற்புதமான அடையாளங்கள். ஒரு அர்ப்பணிப்புள்ள நர்ஸ் (nurse), டோனா சாஜு, கிருபாசனம் அன்னை மரியாளின் உடன்படிக்கையை (Covenant) ஏற்க வழிவகுத்த ஆழமான ஆன்மீக விழிப்புணர்வை அனுபவித்தார். அவர் முன்பு தனது ஜெபங்களை இயேசுவிடம் மட்டுமே செலுத்தியிருந்தாலும், ஜெபமாலை (Rosary) ஜெபிக்க வேண்டும் என்ற திடீர், வலுவான அழைப்பை உணர்ந்தார். இந்த பக்திக்கு தன்னை அர்ப்பணித்தவுடன், மெழுகுவர்த்தி தீபங்களில் இதயங்கள், பூக்கள் மற்றும் அன்னை மரியாளின் உருவங்கள் தோன்றுவது உட்பட பல அற்புதமான அடையாளங்களை அவர் காணத் தொடங்கினார். ஜெபத்திற்காக தன்னை எழுப்பிய ஒரு கண்ணுக்குத் தெரியாத கையை உணர்ந்தது மற்றும் கருணைப் பணிகளைச் செய்யும்போது மல்லிகைப் பூக்களின் அற்புதமான நறுமண அபிஷேகத்தை (anointing of fragrance) உணர்ந்தது போன்ற அசாதாரண அனுபவங்களையும் அவர் கூறுகிறார்.\n\nகல்வி மற்றும் தனிப்பட்ட வெற்றிகள். தனது விசுவாசத்தை முழுமையாக நம்பி, டோனா தனது கல்வி மற்றும் தனிப்பட்ட சவால்களை அன்னை மரியாளிடம் ஒப்புக்கொடுத்தார். மைசூரில் ஜெர்மன் மொழிப் படிப்பைத் தொடரும்போதும், கடினமான எக்ஸாம்ஸ் (exams) எழுதும்போதும், ஆரம்ப மாட்யூலில் (module) ஃபெயில் (fail) ஆனது உட்பட பல பின்னடைவுகளை அவர் எதிர்கொண்டார். இருப்பினும், ஜெபம் மற்றும் கிருபாசனம் உப்பு மற்றும் புனித எண்ணெயைப் பயன்படுத்தியதன் மூலம் வழிகாட்டப்பட்டு, அவர் இறுதியில் தனது அனைத்து எக்ஸாம்ஸிலும் பாஸ் (pass) ஆனார் - அவை அற்புதமாக செவ்வாய்க்கிழமைகளில் நடந்தன. அதேபோல், தனது டிரைவிங் டெஸ்டில் (driving test) பாஸ் (pass) ஆக அன்னை மரியாளின் நேரடி தலையீடே காரணம் என்று அவர் கூறுகிறார், உடனடியாக ஃபெயில் (fail) ஆக்கக்கூடிய முக்கியமான தவறுகளை அதிகாரிகள் விளக்கமுடியாதபடி கவனிக்காமல் விட்டுவிட்டனர் என்று அவர் குறிப்பிடுகிறார்.\n\nதொண்டு மற்றும் அப்போஸ்தலிக்க பணிக்கான அர்ப்பணிப்பு. டோனாவின் சாட்சியத்தின் ஒரு முக்கிய தூண், கருணைச் செயல்கள் (acts of mercy) மற்றும் தனது விசுவாசத்தைப் பரப்புவதற்கான அவரது அசைக்க முடியாத அர்ப்பணிப்பு ஆகும். அவர் கேர் ஹோம்ஸில் (care homes) தீவிரமாக வாலண்டியர் (volunteer) செய்கிறார், முதியோர்களுக்கும் மாற்றுத்திறனாளிகளுக்கும் உடல் பராமரிப்பு, மெடிக்கல் செக்-அப்ஸ் (medical check-ups) மற்றும் தெரபி (therapies) ஆகியவற்றை வழங்குகிறார். அந்த வசதியின் நர்சிங் ஆஃபீசராக (nursing officer) இருந்த ஒரு நண்பரை எதிர்பாராதவிதமாகச் சந்தித்தபோது, மைசூரில் கடுமையான கட்டுப்பாடுகள் உடனடியாகத் தவிர்க்கப்பட்ட ஒரு அற்புதமான தருணத்தை அவர் சிறப்பித்துக் காட்டுகிறார். அவரது தொண்டுப் பணிகளுக்கு அப்பால், நிராகரிக்கப்பட்ட கிருபாசனம் தாள்களை மீட்டெடுப்பதன் மூலமும், ஜெபப் பொருட்களை விநியோகிப்பதன் மூலமும், மற்றவர்கள் தங்கள் விசுவாசத்தை ஆழப்படுத்த தூண்டுவதற்காக தனது தனிப்பட்ட அற்புதங்களை ஷேர் (share) செய்வதன் மூலமும் டோனா அப்போஸ்தலிக்க கடமைகளில் (apostolic duties) ஆர்வமுடன் ஈடுபடுகிறார்.",
-  "bn": "আধ্যাত্মিক জাগরণ এবং অলৌকিক চিহ্ন। একজন নিবেদিত নার্স (nurse), ডোনা সাজু, একটি গভীর আধ্যাত্মিক জাগরণ অনুভব করেছিলেন যা তাকে কৃপাসনম মারিয়ান কভেন্যান্ট (Covenant) গ্রহণ করতে পরিচালিত করেছিল। যদিও তিনি আগে তার প্রার্থনা কেবল যীশুর প্রতি নিবদ্ধ করেছিলেন, তিনি রোজারি (Rosary) প্রার্থনা করার জন্য হঠাৎ, একটি শক্তিশালী ডাক অনুভব করেছিলেন। নিজেকে এই ভক্তির প্রতি নিবেদিত করার পরে, তিনি মোমবাতির শিখায় হৃদয়, ফুল এবং মাদার মেরির প্রতিচ্ছবি সহ অসংখ্য অলৌকিক চিহ্ন দেখতে শুরু করেন। তিনি অসাধারণ অভিজ্ঞতার কথাও বর্ণনা করেন, যেমন প্রার্থনার জন্য জাগানোর জন্য একটি অদৃশ্য হাত অনুভব করা এবং দাতব্য কাজ করার সময় জুঁই ফুলের চমৎকার সুগন্ধের অভিষেক (anointing of fragrance) অনুভব করা।\n\nএকাডেমিক এবং ব্যক্তিগত বিজয়। তার বিশ্বাসের উপর পুরোপুরি ভরসা করে, ডোনা তার একাডেমিক এবং ব্যক্তিগত চ্যালেঞ্জগুলি মাদার মেরির কাছে সমর্পণ করেছিলেন। মহীশূরে জার্মান ভাষার পড়াশোনা করার সময় এবং কঠিন এক্সামস (exams) দেওয়ার সময়, একটি প্রাথমিক মডিউলে (module) ফেইল (fail) হওয়া সহ তিনি পিছিয়ে পড়েছিলেন। যাইহোক, প্রার্থনা এবং কৃপাসনম লবণ এবং পবিত্র তেলের ব্যবহার দ্বারা পরিচালিত হয়ে, তিনি শেষ পর্যন্ত তার সমস্ত এক্সামস পাস (pass) করেন - যা অলৌকিকভাবে মঙ্গলবারে পড়েছিল। একইভাবে, তিনি তার ড্রাইভিং টেস্ট (driving test) পাস (pass) করার ক্ষেত্রে মাদার মেরির সরাসরি হস্তক্ষেপের কৃতিত্ব দেন, উল্লেখ্য যে পরীক্ষকরা অবর্ণনীয়ভাবে গুরুতর ভুলগুলি উপেক্ষা করেছিলেন যা সাধারণত তাত্ক্ষণিক ফেইল (fail) হওয়ার কারণ হত।\n\nদাতব্য এবং প্রেরিতিক কাজের প্রতি উত্সর্গ। ডোনার সাক্ষ্যের একটি কেন্দ্রীয় স্তম্ভ হ'ল করুণার কাজ (acts of mercy) এবং তার বিশ্বাস ছড়িয়ে দেওয়ার প্রতি তার অটল প্রতিশ্রুতি। তিনি কেয়ার হোমস (care homes)-এ সক্রিয়ভাবে ভলান্টিয়ার (volunteer) করেন, বয়স্ক এবং প্রতিবন্ধীদের শারীরিক যত্ন, মেডিকেল চেক-আপস (medical check-ups) এবং থেরাপি (therapies) প্রদান করেন। তিনি মহীশূরের একটি অলৌকিক মুহুর্ত তুলে ধরেছেন যেখানে তিনি অপ্রত্যাশিতভাবে এমন একজন বন্ধুর মুখোমুখি হয়েছিলেন যিনি সেই সুবিধার নার্সিং অফিসার (nursing officer) ছিলেন, তখন কঠোর বিধিনিষেধগুলি সঙ্গে সঙ্গে এড়িয়ে যাওয়া হয়েছিল। তার দাতব্য কাজের বাইরে, ডোনা বাতিল করা কৃপাসনম সাহিত্য উদ্ধার করে, প্রার্থনার উপকরণ বিতরণ করে এবং অন্যদের তাদের বিশ্বাসকে আরও গভীর করতে অনুপ্রাণিত করার জন্য তার ব্যক্তিগত অলৌকিক ঘটনাগুলি শেয়ার (share) করে প্রেরিতিক কর্তব্যে (apostolic duties) আবেগের সাথে জড়িত থাকেন।",
-  "te": "ఆధ్యాత్మిక మేల్కొలుపు మరియు అద్భుత సంకేతాలు. అంకితభావం గల నర్సు (nurse), డోనా సాజు, ఒక లోతైన ఆధ్యాత్మిక మేల్కొలుపును అనుభవించారు, ఇది కృపాసనం మరియన్ కవనెంట్ (Covenant) ను స్వీకరించడానికి ఆమెను నడిపించింది. ఆమె అంతకుముందు తన ప్రార్థనలను కేవలం యేసుపై మాత్రమే కేంద్రీకరించినప్పటికీ, ఆమె జపమాల (Rosary) ప్రార్థన చేయాలనే ఆకస్మిక, బలమైన పిలుపును అనుభవించింది. ఈ భక్తికి తనను తాను అంకితం చేసుకున్న తర్వాత, ఆమె కొవ్వొత్తి మంటలలో హృదయాలు, పువ్వులు మరియు మదర్ మేరీ చిత్రాల ఆకారాలతో సహా అనేక అద్భుత సంకేతాలను చూడటం ప్రారంభించింది. ప్రార్థన కోసం ఆమెను నిద్రలేపడానికి అదృశ్యంగా ఒక చేయి తాకినట్లు అనిపించడం మరియు స్వచ్ఛంద సేవా కార్యక్రమాలు చేస్తున్నప్పుడు మల్లెపూల అద్భుత సువాసన అభిషేకం (anointing of fragrance) వంటి అసాధారణ అనుభవాలను కూడా ఆమె వివరిస్తుంది.\n\nఅకడమిక్ మరియు వ్యక్తిగత విజయాలు. తన విశ్వాసంపై పూర్తిగా నమ్మకంతో, డోనా తన అకడమిక్ మరియు వ్యక్తిగత సవాళ్లను మదర్ మేరీకి సమర్పించుకుంది. మైసూర్‌లో జర్మన్ భాషా అధ్యయనాలు చేస్తున్నప్పుడు మరియు కష్టమైన ఎగ్జామ్స్ (exams) రాస్తున్నప్పుడు, ఆమె ప్రారంభ మాడ్యూల్‌లో (module) ఫెయిల్ (fail) అవ్వడం వంటి ఎదురుదెబ్బలను ఎదుర్కొంది. ఏది ఏమైనప్పటికీ, ప్రార్థన మరియు కృపాసనం ఉప్పు మరియు పవిత్ర నూనె వాడకం ద్వారా మార్గనిర్దేశం చేయబడి, ఆమె చివరికి తన ఎగ్జామ్స్ అన్నింటినీ పాస్ (pass) చేసింది—అవి అద్భుతంగా మంగళవారాల్లో పడ్డాయి. అదేవిధంగా, ఆమె తన డ్రైవింగ్ టెస్ట్ (driving test) పాస్ (pass) కావడంలో సహాయం చేసినందుకు మదర్ మేరీ ప్రత్యక్ష జోక్యానికి ఘనత ఇస్తుంది, సాధారణంగా తక్షణమే ఫెయిల్ (fail) అయ్యేలా చేసే క్లిష్టమైన తప్పులను ఎగ్జామినర్లు వివరించలేని విధంగా విస్మరించారని ఆమె పేర్కొంది.\n\nస్వచ్ఛంద సేవ మరియు అపోస్టోలిక్ పనికి అంకితభావం. డోనా సాక్ష్యానికి కేంద్ర స్తంభం దయగల పనులు (acts of mercy) మరియు ఆమె విశ్వాసాన్ని వ్యాప్తి చేయడంలో ఆమెకున్న అచంచలమైన నిబద్ధత. ఆమె వృద్ధులకు మరియు వికలాంగులకు శారీరక సంరక్షణ, మెడికల్ చెకప్స్ (medical check-ups) మరియు థెరపీలు (therapies) అందిస్తూ, కేర్ హోమ్స్ (care homes) లో చురుకుగా వాలంటీర్ (volunteer) చేస్తుంది. ఆ సౌకర్యానికి నర్సింగ్ ఆఫీసర్‌గా (nursing officer) ఉన్న ఒక స్నేహితుడిని ఆమె అనుకోకుండా కలుసుకున్నప్పుడు మైసూర్‌లో కఠినమైన పరిమితులు తక్షణమే దాటవేయబడిన అద్భుతమైన క్షణాన్ని ఆమె హైలైట్ చేసింది. ఆమె స్వచ్ఛంద సేవా కార్యక్రమాలే కాకుండా, విస్మరించబడిన కృపాసనం ప్రార్థన పత్రాలను రక్షించడం, ప్రార్థన సామగ్రిని పంపిణీ చేయడం మరియు ఇతరులు తమ విశ్వాసాన్ని మరింతగా పెంచుకోవడానికి స్ఫూర్తినిచ్చేలా తన వ్యక్తిగత అద్భుతాలను షేర్ (share) చేయడం ద్వారా అపోస్టోలిక్ విధుల్లో (apostolic duties) డోనా ఉద్వేగభరితంగా పాల్గొంటుంది.",
-  "mr": "आध्यात्मिक प्रबोधन आणि चमत्कारिक चिन्हे. एक समर्पित नर्स (nurse), डोना साजू यांनी एक सखोल आध्यात्मिक प्रबोधन अनुभवले ज्यामुळे त्यांना कृपासनम मारियन कोव्हेनंट (Covenant) स्वीकारण्याची प्रेरणा मिळाली. जरी त्यांनी यापूर्वी त्यांच्या प्रार्थना केवळ येशूवर केंद्रित केल्या असल्या तरी, त्यांना अचानक रोझरी (Rosary) प्रार्थना करण्याची तीव्र हाक जाणवली. स्वतःला या भक्तीसाठी समर्पित केल्यावर, त्यांना मेणबत्तीच्या ज्वालांमध्ये अंतःकरणे, फुले आणि मदर मेरीच्या प्रतिमांसह असंख्य चमत्कारिक चिन्हे दिसू लागली. प्रार्थनेसाठी जागे करण्यासाठी एका अदृश्य हाताचा स्पर्श जाणवणे आणि धर्मादाय कामे करत असताना चमेलीच्या फुलांचा चमत्कारी सुगंधी अभिषेक (anointing of fragrance) अनुभवणे यांसारखे असाधारण अनुभवही त्या सांगतात.\n\nशैक्षणिक आणि वैयक्तिक विजय. त्यांच्या विश्वासावर पूर्ण भरवसा ठेवून, डोनाने तिची शैक्षणिक आणि वैयक्तिक आव्हाने मदर मेरीला समर्पित केली. म्हैसूरमध्ये जर्मन भाषेचे शिक्षण घेत असताना आणि कठीण एक्झाम्स (exams) देत असताना, सुरुवातीच्या मॉड्यूलमध्ये (module) फेल (fail) होण्यासह त्यांना अनेक अडचणींचा सामना करावा लागला. तथापि, प्रार्थना आणि कृपासनम मीठ आणि पवित्र तेलाच्या वापराने मार्गदर्शन मिळवून, त्यांनी अखेरीस त्यांच्या सर्व एक्झाम्स पास (pass) केल्या - ज्या चमत्कारिकरित्या मंगळवारी आल्या. त्याचप्रमाणे, त्यांचा ड्रायव्हिंग टेस्ट (driving test) पास (pass) करण्यात मदत केल्याबद्दल त्या मदर मेरीच्या थेट हस्तक्षेपाला श्रेय देतात, हे लक्षात घेऊन की परीक्षकांनी अशा गंभीर चुकांकडे दुर्लक्ष केले ज्यामुळे सहसा लगेच फेल (fail) केले जाते.\n\nधर्मादाय आणि प्रेषित कार्यासाठी समर्पण. डोनाच्या साक्षीत दयेची कामे (acts of mercy) आणि त्यांचा विश्वास पसरवण्याची त्यांची अटळ बांधिलकी हा एक मध्यवर्ती स्तंभ आहे. त्या केअर होम्समध्ये (care homes) सक्रियपणे व्हॉलंटियर (volunteer) करतात, वृद्धांना आणि अपंगांना शारीरिक काळजी, मेडिकल चेक-अप्स (medical check-ups) आणि थेरपी (therapies) देतात. त्या म्हैसूरमधील एका चमत्कारिक क्षणावर प्रकाश टाकतात जिथे त्यांना अनपेक्षितपणे एक मित्र भेटला जो त्या सुविधेचा नर्सिंग ऑफिसर (nursing officer) होता, आणि कठोर निर्बंध त्वरित दूर झाले. त्यांच्या धर्मादाय कार्यापलीकडे, डोना फेकून दिलेले कृपासनम साहित्य वाचवून, प्रार्थना साहित्य वाटून आणि इतरांना त्यांच्या विश्वासात वाढ करण्यासाठी प्रेरित करण्यासाठी त्यांचे वैयक्तिक चमत्कार शेअर (share) करून प्रेषितांच्या कर्तव्यात (apostolic duties) आवेशाने गुंतलेली असते.",
-  "fr": "Éveil spirituel et signes miraculeux. Dona Saju, une infirmière dévouée, a connu un profond éveil spirituel qui l'a amenée à embrasser l'Alliance (Covenant) Mariale de Kreupasanam. Bien qu'elle ait auparavant concentré ses prières uniquement sur Jésus, elle a ressenti un appel soudain et fort à prier le Rosaire. En se consacrant à cette dévotion, elle a commencé à voir de nombreux signes miraculeux, notamment des formes de cœurs, de fleurs et des images de la Vierge Marie apparaissant dans les flammes des bougies. Elle raconte également des rencontres extraordinaires, comme le fait de sentir une main invisible la réveiller pour la prière et de sentir le parfum miraculeux des fleurs de jasmin (onction de parfum) tout en accomplissant des œuvres de charité.\n\nTriomphes académiques et personnels. Faisant entièrement confiance à sa foi, Dona a abandonné ses défis académiques et personnels à la Vierge Marie. Tout en poursuivant des études de langue allemande à Mysore et en passant des examens difficiles, elle a fait face à des revers, notamment l'échec à un module initial. Cependant, guidée par la prière et l'utilisation du sel et de l'huile sainte de Kreupasanam, elle a finalement réussi tous ses examens, qui tombaient miraculeusement les mardis, un jour de signification spirituelle personnelle. De même, elle attribue à l'intervention directe de la Vierge Marie le fait de l'avoir aidée à obtenir son permis de conduire, notant que les examinateurs ont inexplicablement négligé des erreurs critiques qui entraîneraient normalement un échec immédiat.\n\nDévouement à la charité et au travail apostolique. Un pilier central du témoignage de Dona est son engagement inébranlable envers les actes de miséricorde et la diffusion de sa foi. Elle fait activement du bénévolat dans des maisons de soins, fournissant des soins physiques, des examens médicaux et des thérapies aux personnes âgées et handicapées. Elle souligne un moment miraculeux à Mysore où des restrictions strictes de bénévolat ont été instantanément contournées lorsqu'elle a rencontré de manière inattendue un ami qui s'est avéré être l'infirmier en chef de l'établissement. Au-delà de son travail caritatif, Dona s'engage passionnément dans les devoirs apostoliques en sauvant la littérature de Kreupasanam jetée, en distribuant du matériel de prière et en partageant ses miracles personnels pour inspirer les autres à approfondir leur foi.",
-  "es": "Despertar espiritual y signos milagrosos. Dona Saju, una enfermera dedicada, experimentó un profundo despertar espiritual que la llevó a abrazar la Alianza (Covenant) Mariana de Kreupasanam. Aunque anteriormente centraba sus oraciones únicamente en Jesús, sintió un llamado repentino y fuerte a rezar el Rosario. Al dedicarse a esta devoción, comenzó a presenciar numerosos signos milagrosos, incluidas formas de corazones, flores e imágenes de la Virgen María que aparecían en las llamas de las velas. También relata encuentros extraordinarios, como sentir una mano invisible que la despierta para orar y oler el aroma milagroso de las flores de jazmín (unción de fragancia) mientras realiza obras de caridad.\n\nTriunfos académicos y personales. Confiando plenamente en su fe, Dona entregó sus desafíos académicos y personales a la Virgen María. Mientras realizaba estudios de alemán en Mysore y se enfrentaba a exámenes difíciles, sufrió reveses, incluido el suspenso en un módulo inicial. Sin embargo, guiada por la oración y el uso de la sal y el aceite sagrado de Kreupasanam, finalmente aprobó todos sus exámenes, que milagrosamente cayeron en martes, un día de importancia espiritual personal. Del mismo modo, ella atribuye a la intervención directa de la Virgen María haberla ayudado a aprobar su examen de conducir, y señala que los examinadores pasaron por alto inexplicablemente errores críticos que normalmente resultarían en un suspenso inmediato.\n\nDedicación a la caridad y al trabajo apostólico. Un pilar central del testimonio de Dona es su inquebrantable compromiso con las obras de misericordia y la difusión de su fe. Es voluntaria activa en residencias de ancianos, proporcionando atención física, revisiones médicas y terapias a ancianos y discapacitados. Destaca un momento milagroso en Mysore en el que se eludieron al instante unas estrictas restricciones de voluntariado cuando se encontró inesperadamente con un amigo que resultó ser el jefe de enfermería de las instalaciones. Más allá de su trabajo caritativo, Dona se involucra apasionadamente en deberes apostólicos rescatando literatura de Kreupasanam desechada, distribuyendo materiales de oración y compartiendo sus milagros personales para inspirar a otros a profundizar en su fe.",
-  "zh": "属灵的觉醒与奇迹的迹象。多娜·萨茹（Dona Saju）是一位敬业的护士，她经历了一次深刻的属灵觉醒，引导她接受了克鲁帕萨南（Kreupasanam）圣母的圣约（Covenant）。虽然她以前只向耶稣祈祷，但她突然感到一种强烈的呼召去祈祷玫瑰经。在致力于这种奉献之后，她开始目睹许多奇迹的迹象，包括在烛光中出现的心形、花朵和圣母玛利亚的图像。她还讲述了非凡的经历，比如感觉到一只无形的手唤醒她去祈祷，以及在做慈善工作时闻到茉莉花奇迹般的香味（香气的恩膏）。\n\n学业与个人的胜利。多娜完全相信她的信仰，将她的学业和个人挑战交托给圣母玛利亚。在迈索尔学习德语并应对艰难的考试时，她遇到了挫折，包括在最初的模块中不及格。然而，在祈祷以及使用克鲁帕萨南盐和圣油的引导下，她最终通过了所有的考试——这些考试奇迹般地都安排在星期二，这对她来说具有个人的属灵意义。同样，她将通过驾驶考试归功于圣母玛利亚的直接干预，并指出考官莫名其妙地忽略了通常会导致立即不及格的严重错误。\n\n致力于慈善和使徒工作。多娜见证的一个核心支柱是她对怜悯作为和传播信仰的坚定承诺。她积极在护理中心做志愿者，为老人和残疾人提供身体护理、医疗检查和治疗。她强调了在迈索尔的一个奇迹时刻，当她意外地遇到一位恰好是该机构护理主任的朋友时，严格的志愿者限制瞬间被绕过了。除了慈善工作外，多娜还热情地参与使徒工作，收集被丢弃的克鲁帕萨南传单，分发祈祷材料，并分享她个人的奇迹，以激励他人加深信仰。",
-  "kn": "ಆಧ್ಯಾತ್ಮಿಕ ಜಾಗೃತಿ ಮತ್ತು ಅದ್ಭುತ ಚಿಹ್ನೆಗಳು. ಸಮರ್ಪಿತ ನರ್ಸ್ (nurse) ಆಗಿರುವ ಡೋನಾ ಸಾಜು ಅವರು, ಕೃಪಾಸನಂ ಮರಿಯನ್ ಕವೆನೆಂಟ್ (Covenant) ಅನ್ನು ಸ್ವೀಕರಿಸಲು ಕಾರಣವಾದ ಆಳವಾದ ಆಧ್ಯಾತ್ಮಿಕ ಜಾಗೃತಿಯನ್ನು ಅನುಭವಿಸಿದರು. ಅವರು ಈ ಹಿಂದೆ ಕೇವಲ ಯೇಸುವಿನ ಮೇಲೆ ಮಾತ್ರ ತಮ್ಮ ಪ್ರಾರ್ಥನೆಗಳನ್ನು ಕೇಂದ್ರೀಕರಿಸಿದ್ದರೂ, ರೋಸರಿ (Rosary) ಪ್ರಾರ್ಥನೆ ಮಾಡಲು ಅವರಿಗೆ ಹಠಾತ್, ಬಲವಾದ ಕರೆಬಂದಂತಾಯಿತು. ಈ ಭಕ್ತಿಗೆ ತನ್ನನ್ನು ತಾನು ಅರ್ಪಿಸಿಕೊಂಡ ನಂತರ, ಅವರು ಮೇಣದಬತ್ತಿಯ ಜ್ವಾಲೆಯಲ್ಲಿ ಹೃದಯಗಳು, ಹೂವುಗಳು ಮತ್ತು ಮದರ್ ಮೇರಿಯ ಚಿತ್ರಗಳು ಕಾಣಿಸಿಕೊಳ್ಳುವುದು ಸೇರಿದಂತೆ ಹಲವಾರು ಅದ್ಭುತ ಚಿಹ್ನೆಗಳನ್ನು ನೋಡಲು ಪ್ರಾರಂಭಿಸಿದರು. ಪ್ರಾರ್ಥನೆಗಾಗಿ ತನ್ನನ್ನು ಎಚ್ಚರಗೊಳಿಸಲು ಅದೃಶ್ಯ ಕೈಯೊಂದನ್ನು ಅನುಭವಿಸುವುದು ಮತ್ತು ದತ್ತಿ ಕಾರ್ಯಗಳನ್ನು ಮಾಡುವಾಗ ಮಲ್ಲಿಗೆ ಹೂವುಗಳ ಅದ್ಭುತ ಸುಗಂಧ ಅಭಿಷೇಕವನ್ನು (anointing of fragrance) ಅನುಭವಿಸುವಂತಹ ಅಸಾಧಾರಣ ಅನುಭವಗಳನ್ನು ಸಹ ಅವರು ವಿವರಿಸುತ್ತಾರೆ.\n\nಶೈಕ್ಷಣಿಕ ಮತ್ತು ವೈಯಕ್ತಿಕ ವಿಜಯಗಳು. ತನ್ನ ನಂಬಿಕೆಯ ಮೇಲೆ ಸಂಪೂರ್ಣವಾಗಿ ಭರವಸೆ ಇಟ್ಟು, ಡೋನಾ ತನ್ನ ಶೈಕ್ಷಣಿಕ ಮತ್ತು ವೈಯಕ್ತಿಕ ಸವಾಲುಗಳನ್ನು ಮದರ್ ಮೇರಿಗೆ ಒಪ್ಪಿಸಿದರು. ಮೈಸೂರಿನಲ್ಲಿ ಜರ್ಮನ್ ಭಾಷೆಯ ಅಧ್ಯಯನವನ್ನು ಮುಂದುವರಿಸುತ್ತಿರುವಾಗ ಮತ್ತು ಕಷ್ಟಕರವಾದ ಎಕ್ಸಾಮ್ಸ್ (exams) ಬರೆಯುವಾಗ, ಆರಂಭಿಕ ಮಾಡ್ಯೂಲ್‌ನಲ್ಲಿ (module) ಫೇಲ್ (fail) ಆಗುವುದು ಸೇರಿದಂತೆ ಹಲವು ಹಿನ್ನಡೆಗಳನ್ನು ಅವರು ಎದುರಿಸಿದರು. ಆದಾಗ್ಯೂ, ಪ್ರಾರ್ಥನೆ ಮತ್ತು ಕೃಪಾಸನಂ ಉಪ್ಪು ಮತ್ತು ಪವಿತ್ರ ಎಣ್ಣೆಯ ಬಳಕೆಯಿಂದ ಮಾರ್ಗದರ್ಶನ ಪಡೆದು, ಅವರು ಅಂತಿಮವಾಗಿ ತಮ್ಮ ಎಲ್ಲಾ ಎಕ್ಸಾಮ್ಸ್ ಅನ್ನು ಪಾಸ್ (pass) ಮಾಡಿದರು - ಅವುಗಳು ಅದ್ಭುತವಾಗಿ ಮಂಗಳವಾರದಂದೇ ಬಂದವು. ಅಂತೆಯೇ, ತಮ್ಮ ಡ್ರೈವಿಂಗ್ ಟೆಸ್ಟ್ (driving test) ಅನ್ನು ಪಾಸ್ (pass) ಮಾಡಲು ಸಹಾಯ ಮಾಡಿದ್ದಕ್ಕಾಗಿ ಮದರ್ ಮೇರಿಯ ನೇರ ಹಸ್ತಕ್ಷೇಪವೇ ಕಾರಣ ಎಂದು ಅವರು ಹೇಳುತ್ತಾರೆ, ಸಾಮಾನ್ಯವಾಗಿ ತಕ್ಷಣ ಫೇಲ್ (fail) ಆಗಲು ಕಾರಣವಾಗುವಂತಹ ನಿರ್ಣಾಯಕ ತಪ್ಪುಗಳನ್ನು ಪರೀಕ್ಷಕರು ವಿವರಿಸಲಾಗದ ರೀತಿಯಲ್ಲಿ ನಿರ್ಲಕ್ಷಿಸಿದ್ದಾರೆ ಎಂದು ಅವರು ಗಮನಸೆಳೆಯುತ್ತಾರೆ.\n\nಚಾರಿಟಿ ಮತ್ತು ಅಪೋಸ್ಟೋಲಿಕ್ ಕೆಲಸದ ಕಡೆಗೆ ಸಮರ್ಪಣೆ. ಡೋನಾ ಅವರ ಸಾಕ್ಷ್ಯದ ಕೇಂದ್ರ ಆಧಾರ ಸ್ತಂಭವೆಂದರೆ ಕರುಣೆಯ ಕಾರ್ಯಗಳು (acts of mercy) ಮತ್ತು ತನ್ನ ನಂಬಿಕೆಯನ್ನು ಹರಡುವ ಬಗ್ಗೆ ಅವರಿಗಿರುವ ಅಚಲ ಬದ್ಧತೆ. ಅವರು ಕೇರ್ ಹೋಮ್ಸ್‌ನಲ್ಲಿ (care homes) ಸಕ್ರಿಯವಾಗಿ ವಾಲಂಟಿಯರ್ (volunteer) ಮಾಡುತ್ತಾರೆ, ವೃದ್ಧರು ಮತ್ತು ಅಂಗವಿಕಲರಿಗೆ ದೈಹಿಕ ಆರೈಕೆ, ಮೆಡಿಕಲ್ ಚೆಕ್-ಅಪ್ಸ್ (medical check-ups) ಮತ್ತು ಥೆರಪಿ (therapies) ಒದಗಿಸುತ್ತಾರೆ. ಆ ಸೌಲಭ್ಯದ ನರ್ಸಿಂಗ್ ಆಫೀಸರ್ (nursing officer) ಆಗಿದ್ದ ಸ್ನೇಹಿತನನ್ನು ಅವರು ಅನಿರೀಕ್ಷಿತವಾಗಿ ಭೇಟಿಯಾದಾಗ, ಕಟ್ಟುನಿಟ್ಟಾದ ನಿರ್ಬಂಧಗಳನ್ನು ತಕ್ಷಣವೇ ಬೈಪಾಸ್ ಮಾಡಿದ ಮೈಸೂರಿನಲ್ಲಿ ನಡೆದ ಒಂದು ಅದ್ಭುತ ಕ್ಷಣವನ್ನು ಅವರು ಹೈಲೈಟ್ ಮಾಡುತ್ತಾರೆ. ತನ್ನ ಚಾರಿಟಿ ಕೆಲಸದಾಚೆಗೆ, ಎಸೆಯಲ್ಪಟ್ಟ ಕೃಪಾಸನಂ ಸಾಹಿತ್ಯವನ್ನು ರಕ್ಷಿಸುವ ಮೂಲಕ, ಪ್ರಾರ್ಥನಾ ಸಾಮಗ್ರಿಗಳನ್ನು ವಿತರಿಸುವ ಮೂಲಕ ಮತ್ತು ಇತರರು ತಮ್ಮ ನಂಬಿಕೆಯನ್ನು ಗಾಢವಾಗಿಸಲು ಪ್ರೇರೇಪಿಸುವ ಸಲುವಾಗಿ ತನ್ನ ವೈಯಕ್ತಿಕ ಪವಾಡಗಳನ್ನು ಶೇರ್ (share) ಮಾಡುವ ಮೂಲಕ ಡೋನಾ ಅವರು ಅಪೋಸ್ಟೋಲಿಕ್ ಕರ್ತವ್ಯಗಳಲ್ಲಿ (apostolic duties) ಉತ್ಸಾಹದಿಂದ ತೊಡಗಿಸಿಕೊಳ್ಳುತ್ತಾರೆ."
-},
+      "en": "Spiritual Awakening and Miraculous Signs. Dona Saju, a devoted nurse, experienced a profound spiritual awakening that led her to embrace the Kreupasanam Marian Covenant. Although she previously focused her prayers solely on Jesus, she felt a sudden, strong calling to pray the Rosary. Upon dedicating herself to this devotion, she began witnessing numerous miraculous signs, including the shapes of hearts, flowers, and images of Mother Mary appearing in candle flames. She also recounts extraordinary encounters, such as feeling an invisible hand wake her for prayer and smelling the miraculous scent of jasmine flowers (anointing of fragrance) while performing charitable acts.\n\nAcademic and Personal Triumphs. Trusting entirely in her faith, Dona surrendered her academic and personal challenges to Mother Mary. While pursuing German language studies in Mysore and navigating difficult exams, she faced setbacks, including failing an initial module. However, guided by prayer and the use of Kreupasanam salt and holy oil, she eventually passed all her exams—which miraculously fell on Tuesdays, a day of personal spiritual significance. Similarly, she credits Mother Mary's direct intervention for helping her pass her driving test, noting that the examiners inexplicably overlooked critical errors that would normally result in an immediate failure.\n\nDedication to Charity and Apostolic Work. A central pillar of Dona's testimony is her unwavering commitment to acts of mercy and spreading her faith. She actively volunteers at care homes, providing physical care, medical check-ups, and therapies to the elderly and disabled. She highlights a miraculous moment in Mysore where strict volunteering restrictions were instantly bypassed when she unexpectedly encountered a friend who happened to be the facility's nursing officer. Beyond her charitable work, Dona passionately engages in apostolic duties by rescuing discarded Kreupasanam literature, distributing prayer materials, and sharing her personal miracles to inspire others to deepen their faith.",
+      "hi": "आध्यात्मिक जागृति और चमत्कारिक चिन्ह। एक समर्पित नर्स (nurse), डोना साजू ने एक गहरे आध्यात्मिक जागरण का अनुभव किया जिसने उन्हें कृपासनम मैरियन कोवेनेंट (Covenant) को अपनाने के लिए प्रेरित किया। हालाँकि वह पहले अपनी प्रार्थनाएँ केवल यीशु पर केंद्रित करती थीं, उन्हें रोज़री (Rosary) प्रार्थना करने की एक अचानक, मजबूत बुलाहट महसूस हुई। खुद को इस भक्ति के लिए समर्पित करने पर, उन्होंने मोमबत्ती की लपटों में दिल, फूलों और मदर मैरी की छवियों सहित कई चमत्कारिक चिन्ह देखना शुरू किया। वह असाधारण अनुभवों को भी साझा करती हैं, जैसे प्रार्थना के लिए जगाने वाला एक अदृश्य हाथ महसूस करना और चैरिटी के काम करते समय चमेली के फूलों की चमत्कारी खुशबू (anointing of fragrance) को महसूस करना।\n\nअकादमिक और व्यक्तिगत जीत। अपने विश्वास पर पूरी तरह से भरोसा करते हुए, डोना ने अपनी अकादमिक और व्यक्तिगत चुनौतियों को मदर मैरी को समर्पित कर दिया। मैसूर में जर्मन भाषा की पढ़ाई करते हुए और कठिन एग्जाम्स (exams) देते हुए, उन्हें असफलताओं का सामना करना पड़ा, जिसमें एक शुरुआती मॉड्यूल (module) में फेल (fail) होना शामिल था। हालाँकि, प्रार्थना और कृपासनम नमक और पवित्र तेल के उपयोग से निर्देशित, उन्होंने अंततः अपने सभी एग्जाम्स पास (pass) कर लिए - जो चमत्कारिक रूप से मंगलवार को पड़े। इसी तरह, वह अपने ड्राइविंग टेस्ट (driving test) को पास (pass) करने में मदद करने के लिए मदर मैरी के सीधे हस्तक्षेप को श्रेय देती हैं, यह देखते हुए कि परीक्षकों ने गंभीर गलतियों को अनदेखा कर दिया जिसके परिणामस्वरूप तुरंत फेल (fail) होना तय था।\n\nचैरिटी और प्रेरितिक कार्यों के प्रति समर्पण। डोना की गवाही का एक मुख्य स्तंभ दया के कार्यों (acts of mercy) और अपने विश्वास को फैलाने के प्रति उनकी अटूट प्रतिबद्धता है। वह केयर होम्स (care homes) में सक्रिय रूप से वॉलंटियर (volunteer) करती हैं, बुजुर्गों और विकलांगों को शारीरिक देखभाल, मेडिकल चेक-अप्स (medical check-ups) और थेरेपी (therapies) प्रदान करती हैं। वह मैसूर में एक चमत्कारिक क्षण को उजागर करती हैं जहाँ कठोर प्रतिबंधों को तुरंत दरकिनार कर दिया गया जब वह अप्रत्याशित रूप से एक दोस्त से मिली जो उस सुविधा का नर्सिंग ऑफिसर (nursing officer) था। अपने चैरिटी के काम से परे, डोना फेंके गए कृपासनम साहित्य को बचाने, प्रार्थना सामग्री बांटने और दूसरों को अपने विश्वास को गहरा करने के लिए प्रेरित करने के लिए अपने व्यक्तिगत चमत्कारों को शेयर (share) करके प्रेरितिक कर्तव्यों (apostolic duties) में पूरी लगन से संलग्न हैं।",
+      "ta": "ஆன்மீக விழிப்புணர்வு மற்றும் அற்புதமான அடையாளங்கள். ஒரு அர்ப்பணிப்புள்ள நர்ஸ் (nurse), டோனா சாஜு, கிருபாசனம் அன்னை மரியாளின் உடன்படிக்கையை (Covenant) ஏற்க வழிவகுத்த ஆழமான ஆன்மீக விழிப்புணர்வை அனுபவித்தார். அவர் முன்பு தனது ஜெபங்களை இயேசுவிடம் மட்டுமே செலுத்தியிருந்தாலும், ஜெபமாலை (Rosary) ஜெபிக்க வேண்டும் என்ற திடீர், வலுவான அழைப்பை உணர்ந்தார். இந்த பக்திக்கு தன்னை அர்ப்பணித்தவுடன், மெழுகுவர்த்தி தீபங்களில் இதயங்கள், பூக்கள் மற்றும் அன்னை மரியாளின் உருவங்கள் தோன்றுவது உட்பட பல அற்புதமான அடையாளங்களை அவர் காணத் தொடங்கினார். ஜெபத்திற்காக தன்னை எழுப்பிய ஒரு கண்ணுக்குத் தெரியாத கையை உணர்ந்தது மற்றும் கருணைப் பணிகளைச் செய்யும்போது மல்லிகைப் பூக்களின் அற்புதமான நறுமண அபிஷேகத்தை (anointing of fragrance) உணர்ந்தது போன்ற அசாதாரண அனுபவங்களையும் அவர் கூறுகிறார்.\n\nகல்வி மற்றும் தனிப்பட்ட வெற்றிகள். தனது விசுவாசத்தை முழுமையாக நம்பி, டோனா தனது கல்வி மற்றும் தனிப்பட்ட சவால்களை அன்னை மரியாளிடம் ஒப்புக்கொடுத்தார். மைசூரில் ஜெர்மன் மொழிப் படிப்பைத் தொடரும்போதும், கடினமான எக்ஸாம்ஸ் (exams) எழுதும்போதும், ஆரம்ப மாட்யூலில் (module) ஃபெயில் (fail) ஆனது உட்பட பல பின்னடைவுகளை அவர் எதிர்கொண்டார். இருப்பினும், ஜெபம் மற்றும் கிருபாசனம் உப்பு மற்றும் புனித எண்ணெயைப் பயன்படுத்தியதன் மூலம் வழிகாட்டப்பட்டு, அவர் இறுதியில் தனது அனைத்து எக்ஸாம்ஸிலும் பாஸ் (pass) ஆனார் - அவை அற்புதமாக செவ்வாய்க்கிழமைகளில் நடந்தன. அதேபோல், தனது டிரைவிங் டெஸ்டில் (driving test) பாஸ் (pass) ஆக அன்னை மரியாளின் நேரடி தலையீடே காரணம் என்று அவர் கூறுகிறார், உடனடியாக ஃபெயில் (fail) ஆக்கக்கூடிய முக்கியமான தவறுகளை அதிகாரிகள் விளக்கமுடியாதபடி கவனிக்காமல் விட்டுவிட்டனர் என்று அவர் குறிப்பிடுகிறார்.\n\nதொண்டு மற்றும் அப்போஸ்தலிக்க பணிக்கான அர்ப்பணிப்பு. டோனாவின் சாட்சியத்தின் ஒரு முக்கிய தூண், கருணைச் செயல்கள் (acts of mercy) மற்றும் தனது விசுவாசத்தைப் பரப்புவதற்கான அவரது அசைக்க முடியாத அர்ப்பணிப்பு ஆகும். அவர் கேர் ஹோம்ஸில் (care homes) தீவிரமாக வாலண்டியர் (volunteer) செய்கிறார், முதியோர்களுக்கும் மாற்றுத்திறனாளிகளுக்கும் உடல் பராமரிப்பு, மெடிக்கல் செக்-அப்ஸ் (medical check-ups) மற்றும் தெரபி (therapies) ஆகியவற்றை வழங்குகிறார். அந்த வசதியின் நர்சிங் ஆஃபீசராக (nursing officer) இருந்த ஒரு நண்பரை எதிர்பாராதவிதமாகச் சந்தித்தபோது, மைசூரில் கடுமையான கட்டுப்பாடுகள் உடனடியாகத் தவிர்க்கப்பட்ட ஒரு அற்புதமான தருணத்தை அவர் சிறப்பித்துக் காட்டுகிறார். அவரது தொண்டுப் பணிகளுக்கு அப்பால், நிராகரிக்கப்பட்ட கிருபாசனம் தாள்களை மீட்டெடுப்பதன் மூலமும், ஜெபப் பொருட்களை விநியோகிப்பதன் மூலமும், மற்றவர்கள் தங்கள் விசுவாசத்தை ஆழப்படுத்த தூண்டுவதற்காக தனது தனிப்பட்ட அற்புதங்களை ஷேர் (share) செய்வதன் மூலமும் டோனா அப்போஸ்தலிக்க கடமைகளில் (apostolic duties) ஆர்வமுடன் ஈடுபடுகிறார்.",
+      "bn": "আধ্যাত্মিক জাগরণ এবং অলৌকিক চিহ্ন। একজন নিবেদিত নার্স (nurse), ডোনা সাজু, একটি গভীর আধ্যাত্মিক জাগরণ অনুভব করেছিলেন যা তাকে কৃপাসনম মারিয়ান কভেন্যান্ট (Covenant) গ্রহণ করতে পরিচালিত করেছিল। যদিও তিনি আগে তার প্রার্থনা কেবল যীশুর প্রতি নিবদ্ধ করেছিলেন, তিনি রোজারি (Rosary) প্রার্থনা করার জন্য হঠাৎ, একটি শক্তিশালী ডাক অনুভব করেছিলেন। নিজেকে এই ভক্তির প্রতি নিবেদিত করার পরে, তিনি মোমবাতির শিখায় হৃদয়, ফুল এবং মাদার মেরির প্রতিচ্ছবি সহ অসংখ্য অলৌকিক চিহ্ন দেখতে শুরু করেন। তিনি অসাধারণ অভিজ্ঞতার কথাও বর্ণনা করেন, যেমন প্রার্থনার জন্য জাগানোর জন্য একটি অদৃশ্য হাত অনুভব করা এবং দাতব্য কাজ করার সময় জুঁই ফুলের চমৎকার সুগন্ধের অভিষেক (anointing of fragrance) অনুভব করা।\n\nএকাডেমিক এবং ব্যক্তিগত বিজয়। তার বিশ্বাসের উপর পুরোপুরি ভরসা করে, ডোনা তার একাডেমিক এবং ব্যক্তিগত চ্যালেঞ্জগুলি মাদার মেরির কাছে সমর্পণ করেছিলেন। মহীশূরে জার্মান ভাষার পড়াশোনা করার সময় এবং কঠিন এক্সামস (exams) দেওয়ার সময়, একটি প্রাথমিক মডিউলে (module) ফেইল (fail) হওয়া সহ তিনি পিছিয়ে পড়েছিলেন। যাইহোক, প্রার্থনা এবং কৃপাসনম লবণ এবং পবিত্র তেলের ব্যবহার দ্বারা পরিচালিত হয়ে, তিনি শেষ পর্যন্ত তার সমস্ত এক্সামস পাস (pass) করেন - যা অলৌকিকভাবে মঙ্গলবারে পড়েছিল। একইভাবে, তিনি তার ড্রাইভিং টেস্ট (driving test) পাস (pass) করার ক্ষেত্রে মাদার মেরির সরাসরি হস্তক্ষেপের কৃতিত্ব দেন, উল্লেখ্য যে পরীক্ষকরা অবর্ণনীয়ভাবে গুরুতর ভুলগুলি উপেক্ষা করেছিলেন যা সাধারণত তাত্ক্ষণিক ফেইল (fail) হওয়ার কারণ হত।\n\nদাতব্য এবং প্রেরিতিক কাজের প্রতি উত্সর্গ। ডোনার সাক্ষ্যের একটি কেন্দ্রীয় স্তম্ভ হ'ল করুণার কাজ (acts of mercy) এবং তার বিশ্বাস ছড়িয়ে দেওয়ার প্রতি তার অটল প্রতিশ্রুতি। তিনি কেয়ার হোমস (care homes)-এ সক্রিয়ভাবে ভলান্টিয়ার (volunteer) করেন, বয়স্ক এবং প্রতিবন্ধীদের শারীরিক যত্ন, মেডিকেল চেক-আপস (medical check-ups) এবং থেরাপি (therapies) প্রদান করেন। তিনি মহীশূরের একটি অলৌকিক মুহুর্ত তুলে ধরেছেন যেখানে তিনি অপ্রত্যাশিতভাবে এমন একজন বন্ধুর মুখোমুখি হয়েছিলেন যিনি সেই সুবিধার নার্সিং অফিসার (nursing officer) ছিলেন, তখন কঠোর বিধিনিষেধগুলি সঙ্গে সঙ্গে এড়িয়ে যাওয়া হয়েছিল। তার দাতব্য কাজের বাইরে, ডোনা বাতিল করা কৃপাসনম সাহিত্য উদ্ধার করে, প্রার্থনার উপকরণ বিতরণ করে এবং অন্যদের তাদের বিশ্বাসকে আরও গভীর করতে অনুপ্রাণিত করার জন্য তার ব্যক্তিগত অলৌকিক ঘটনাগুলি শেয়ার (share) করে প্রেরিতিক কর্তব্যে (apostolic duties) আবেগের সাথে জড়িত থাকেন।",
+      "te": "ఆధ్యాత్మిక మేల్కొలుపు మరియు అద్భుత సంకేతాలు. అంకితభావం గల నర్సు (nurse), డోనా సాజు, ఒక లోతైన ఆధ్యాత్మిక మేల్కొలుపును అనుభవించారు, ఇది కృపాసనం మరియన్ కవనెంట్ (Covenant) ను స్వీకరించడానికి ఆమెను నడిపించింది. ఆమె అంతకుముందు తన ప్రార్థనలను కేవలం యేసుపై మాత్రమే కేంద్రీకరించినప్పటికీ, ఆమె జపమాల (Rosary) ప్రార్థన చేయాలనే ఆకస్మిక, బలమైన పిలుపును అనుభవించింది. ఈ భక్తికి తనను తాను అంకితం చేసుకున్న తర్వాత, ఆమె కొవ్వొత్తి మంటలలో హృదయాలు, పువ్వులు మరియు మదర్ మేరీ చిత్రాల ఆకారాలతో సహా అనేక అద్భుత సంకేతాలను చూడటం ప్రారంభించింది. ప్రార్థన కోసం ఆమెను నిద్రలేపడానికి అదృశ్యంగా ఒక చేయి తాకినట్లు అనిపించడం మరియు స్వచ్ఛంద సేవా కార్యక్రమాలు చేస్తున్నప్పుడు మల్లెపూల అద్భుత సువాసన అభిషేకం (anointing of fragrance) వంటి అసాధారణ అనుభవాలను కూడా ఆమె వివరిస్తుంది.\n\nఅకడమిక్ మరియు వ్యక్తిగత విజయాలు. తన విశ్వాసంపై పూర్తిగా నమ్మకంతో, డోనా తన అకడమిక్ మరియు వ్యక్తిగత సవాళ్లను మదర్ మేరీకి సమర్పించుకుంది. మైసూర్‌లో జర్మన్ భాషా అధ్యయనాలు చేస్తున్నప్పుడు మరియు కష్టమైన ఎగ్జామ్స్ (exams) రాస్తున్నప్పుడు, ఆమె ప్రారంభ మాడ్యూల్‌లో (module) ఫెయిల్ (fail) అవ్వడం వంటి ఎదురుదెబ్బలను ఎదుర్కొంది. ఏది ఏమైనప్పటికీ, ప్రార్థన మరియు కృపాసనం ఉప్పు మరియు పవిత్ర నూనె వాడకం ద్వారా మార్గనిర్దేశం చేయబడి, ఆమె చివరికి తన ఎగ్జామ్స్ అన్నింటినీ పాస్ (pass) చేసింది—అవి అద్భుతంగా మంగళవారాల్లో పడ్డాయి. అదేవిధంగా, ఆమె తన డ్రైవింగ్ టెస్ట్ (driving test) పాస్ (pass) కావడంలో సహాయం చేసినందుకు మదర్ మేరీ ప్రత్యక్ష జోక్యానికి ఘనత ఇస్తుంది, సాధారణంగా తక్షణమే ఫెయిల్ (fail) అయ్యేలా చేసే క్లిష్టమైన తప్పులను ఎగ్జామినర్లు వివరించలేని విధంగా విస్మరించారని ఆమె పేర్కొంది.\n\nస్వచ్ఛంద సేవ మరియు అపోస్టోలిక్ పనికి అంకితభావం. డోనా సాక్ష్యానికి కేంద్ర స్తంభం దయగల పనులు (acts of mercy) మరియు ఆమె విశ్వాసాన్ని వ్యాప్తి చేయడంలో ఆమెకున్న అచంచలమైన నిబద్ధత. ఆమె వృద్ధులకు మరియు వికలాంగులకు శారీరక సంరక్షణ, మెడికల్ చెకప్స్ (medical check-ups) మరియు థెరపీలు (therapies) అందిస్తూ, కేర్ హోమ్స్ (care homes) లో చురుకుగా వాలంటీర్ (volunteer) చేస్తుంది. ఆ సౌకర్యానికి నర్సింగ్ ఆఫీసర్‌గా (nursing officer) ఉన్న ఒక స్నేహితుడిని ఆమె అనుకోకుండా కలుసుకున్నప్పుడు మైసూర్‌లో కఠినమైన పరిమితులు తక్షణమే దాటవేయబడిన అద్భుతమైన క్షణాన్ని ఆమె హైలైట్ చేసింది. ఆమె స్వచ్ఛంద సేవా కార్యక్రమాలే కాకుండా, విస్మరించబడిన కృపాసనం ప్రార్థన పత్రాలను రక్షించడం, ప్రార్థన సామగ్రిని పంపిణీ చేయడం మరియు ఇతరులు తమ విశ్వాసాన్ని మరింతగా పెంచుకోవడానికి స్ఫూర్తినిచ్చేలా తన వ్యక్తిగత అద్భుతాలను షేర్ (share) చేయడం ద్వారా అపోస్టోలిక్ విధుల్లో (apostolic duties) డోనా ఉద్వేగభరితంగా పాల్గొంటుంది.",
+      "mr": "आध्यात्मिक प्रबोधन आणि चमत्कारिक चिन्हे. एक समर्पित नर्स (nurse), डोना साजू यांनी एक सखोल आध्यात्मिक प्रबोधन अनुभवले ज्यामुळे त्यांना कृपासनम मारियन कोव्हेनंट (Covenant) स्वीकारण्याची प्रेरणा मिळाली. जरी त्यांनी यापूर्वी त्यांच्या प्रार्थना केवळ येशूवर केंद्रित केल्या असल्या तरी, त्यांना अचानक रोझरी (Rosary) प्रार्थना करण्याची तीव्र हाक जाणवली. स्वतःला या भक्तीसाठी समर्पित केल्यावर, त्यांना मेणबत्तीच्या ज्वालांमध्ये अंतःकरणे, फुले आणि मदर मेरीच्या प्रतिमांसह असंख्य चमत्कारिक चिन्हे दिसू लागली. प्रार्थनेसाठी जागे करण्यासाठी एका अदृश्य हाताचा स्पर्श जाणवणे आणि धर्मादाय कामे करत असताना चमेलीच्या फुलांचा चमत्कारी सुगंधी अभिषेक (anointing of fragrance) अनुभवणे यांसारखे असाधारण अनुभवही त्या सांगतात.\n\nशैक्षणिक आणि वैयक्तिक विजय. त्यांच्या विश्वासावर पूर्ण भरवसा ठेवून, डोनाने तिची शैक्षणिक आणि वैयक्तिक आव्हाने मदर मेरीला समर्पित केली. म्हैसूरमध्ये जर्मन भाषेचे शिक्षण घेत असताना आणि कठीण एक्झाम्स (exams) देत असताना, सुरुवातीच्या मॉड्यूलमध्ये (module) फेल (fail) होण्यासह त्यांना अनेक अडचणींचा सामना करावा लागला. तथापि, प्रार्थना आणि कृपासनम मीठ आणि पवित्र तेलाच्या वापराने मार्गदर्शन मिळवून, त्यांनी अखेरीस त्यांच्या सर्व एक्झाम्स पास (pass) केल्या - ज्या चमत्कारिकरित्या मंगळवारी आल्या. त्याचप्रमाणे, त्यांचा ड्रायव्हिंग टेस्ट (driving test) पास (pass) करण्यात मदत केल्याबद्दल त्या मदर मेरीच्या थेट हस्तक्षेपाला श्रेय देतात, हे लक्षात घेऊन की परीक्षकांनी अशा गंभीर चुकांकडे दुर्लक्ष केले ज्यामुळे सहसा लगेच फेल (fail) केले जाते.\n\nधर्मादाय आणि प्रेषित कार्यासाठी समर्पण. डोनाच्या साक्षीत दयेची कामे (acts of mercy) आणि त्यांचा विश्वास पसरवण्याची त्यांची अटळ बांधिलकी हा एक मध्यवर्ती स्तंभ आहे. त्या केअर होम्समध्ये (care homes) सक्रियपणे व्हॉलंटियर (volunteer) करतात, वृद्धांना आणि अपंगांना शारीरिक काळजी, मेडिकल चेक-अप्स (medical check-ups) आणि थेरपी (therapies) देतात. त्या म्हैसूरमधील एका चमत्कारिक क्षणावर प्रकाश टाकतात जिथे त्यांना अनपेक्षितपणे एक मित्र भेटला जो त्या सुविधेचा नर्सिंग ऑफिसर (nursing officer) होता, आणि कठोर निर्बंध त्वरित दूर झाले. त्यांच्या धर्मादाय कार्यापलीकडे, डोना फेकून दिलेले कृपासनम साहित्य वाचवून, प्रार्थना साहित्य वाटून आणि इतरांना त्यांच्या विश्वासात वाढ करण्यासाठी प्रेरित करण्यासाठी त्यांचे वैयक्तिक चमत्कार शेअर (share) करून प्रेषितांच्या कर्तव्यात (apostolic duties) आवेशाने गुंतलेली असते.",
+      "fr": "Éveil spirituel et signes miraculeux. Dona Saju, une infirmière dévouée, a connu un profond éveil spirituel qui l'a amenée à embrasser l'Alliance (Covenant) Mariale de Kreupasanam. Bien qu'elle ait auparavant concentré ses prières uniquement sur Jésus, elle a ressenti un appel soudain et fort à prier le Rosaire. En se consacrant à cette dévotion, elle a commencé à voir de nombreux signes miraculeux, notamment des formes de cœurs, de fleurs et des images de la Vierge Marie apparaissant dans les flammes des bougies. Elle raconte également des rencontres extraordinaires, comme le fait de sentir une main invisible la réveiller pour la prière et de sentir le parfum miraculeux des fleurs de jasmin (onction de parfum) tout en accomplissant des œuvres de charité.\n\nTriomphes académiques et personnels. Faisant entièrement confiance à sa foi, Dona a abandonné ses défis académiques et personnels à la Vierge Marie. Tout en poursuivant des études de langue allemande à Mysore et en passant des examens difficiles, elle a fait face à des revers, notamment l'échec à un module initial. Cependant, guidée par la prière et l'utilisation du sel et de l'huile sainte de Kreupasanam, elle a finalement réussi tous ses examens, qui tombaient miraculeusement les mardis, un jour de signification spirituelle personnelle. De même, elle attribue à l'intervention directe de la Vierge Marie le fait de l'avoir aidée à obtenir son permis de conduire, notant que les examinateurs ont inexplicablement négligé des erreurs critiques qui entraîneraient normalement un échec immédiat.\n\nDévouement à la charité et au travail apostolique. Un pilier central du témoignage de Dona est son engagement inébranlable envers les actes de miséricorde et la diffusion de sa foi. Elle fait activement du bénévolat dans des maisons de soins, fournissant des soins physiques, des examens médicaux et des thérapies aux personnes âgées et handicapées. Elle souligne un moment miraculeux à Mysore où des restrictions strictes de bénévolat ont été instantanément contournées lorsqu'elle a rencontré de manière inattendue un ami qui s'est avéré être l'infirmier en chef de l'établissement. Au-delà de son travail caritatif, Dona s'engage passionnément dans les devoirs apostoliques en sauvant la littérature de Kreupasanam jetée, en distribuant du matériel de prière et en partageant ses miracles personnels pour inspirer les autres à approfondir leur foi.",
+      "es": "Despertar espiritual y signos milagrosos. Dona Saju, una enfermera dedicada, experimentó un profundo despertar espiritual que la llevó a abrazar la Alianza (Covenant) Mariana de Kreupasanam. Aunque anteriormente centraba sus oraciones únicamente en Jesús, sintió un llamado repentino y fuerte a rezar el Rosario. Al dedicarse a esta devoción, comenzó a presenciar numerosos signos milagrosos, incluidas formas de corazones, flores e imágenes de la Virgen María que aparecían en las llamas de las velas. También relata encuentros extraordinarios, como sentir una mano invisible que la despierta para orar y oler el aroma milagroso de las flores de jazmín (unción de fragancia) mientras realiza obras de caridad.\n\nTriunfos académicos y personales. Confiando plenamente en su fe, Dona entregó sus desafíos académicos y personales a la Virgen María. Mientras realizaba estudios de alemán en Mysore y se enfrentaba a exámenes difíciles, sufrió reveses, incluido el suspenso en un módulo inicial. Sin embargo, guiada por la oración y el uso de la sal y el aceite sagrado de Kreupasanam, finalmente aprobó todos sus exámenes, que milagrosamente cayeron en martes, un día de importancia espiritual personal. Del mismo modo, ella atribuye a la intervención directa de la Virgen María haberla ayudado a aprobar su examen de conducir, y señala que los examinadores pasaron por alto inexplicablemente errores críticos que normalmente resultarían en un suspenso inmediato.\n\nDedicación a la caridad y al trabajo apostólico. Un pilar central del testimonio de Dona es su inquebrantable compromiso con las obras de misericordia y la difusión de su fe. Es voluntaria activa en residencias de ancianos, proporcionando atención física, revisiones médicas y terapias a ancianos y discapacitados. Destaca un momento milagroso en Mysore en el que se eludieron al instante unas estrictas restricciones de voluntariado cuando se encontró inesperadamente con un amigo que resultó ser el jefe de enfermería de las instalaciones. Más allá de su trabajo caritativo, Dona se involucra apasionadamente en deberes apostólicos rescatando literatura de Kreupasanam desechada, distribuyendo materiales de oración y compartiendo sus milagros personales para inspirar a otros a profundizar en su fe.",
+      "zh": "属灵的觉醒与奇迹的迹象。多娜·萨茹（Dona Saju）是一位敬业的护士，她经历了一次深刻的属灵觉醒，引导她接受了克鲁帕萨南（Kreupasanam）圣母的圣约（Covenant）。虽然她以前只向耶稣祈祷，但她突然感到一种强烈的呼召去祈祷玫瑰经。在致力于这种奉献之后，她开始目睹许多奇迹的迹象，包括在烛光中出现的心形、花朵和圣母玛利亚的图像。她还讲述了非凡的经历，比如感觉到一只无形的手唤醒她去祈祷，以及在做慈善工作时闻到茉莉花奇迹般的香味（香气的恩膏）。\n\n学业与个人的胜利。多娜完全相信她的信仰，将她的学业和个人挑战交托给圣母玛利亚。在迈索尔学习德语并应对艰难的考试时，她遇到了挫折，包括在最初的模块中不及格。然而，在祈祷以及使用克鲁帕萨南盐和圣油的引导下，她最终通过了所有的考试——这些考试奇迹般地都安排在星期二，这对她来说具有个人的属灵意义。同样，她将通过驾驶考试归功于圣母玛利亚的直接干预，并指出考官莫名其妙地忽略了通常会导致立即不及格的严重错误。\n\n致力于慈善和使徒工作。多娜见证的一个核心支柱是她对怜悯作为和传播信仰的坚定承诺。她积极在护理中心做志愿者，为老人和残疾人提供身体护理、医疗检查和治疗。她强调了在迈索尔的一个奇迹时刻，当她意外地遇到一位恰好是该机构护理主任的朋友时，严格的志愿者限制瞬间被绕过了。除了慈善工作外，多娜还热情地参与使徒工作，收集被丢弃的克鲁帕萨南传单，分发祈祷材料，并分享她个人的奇迹，以激励他人加深信仰。",
+      "kn": "ಆಧ್ಯಾತ್ಮಿಕ ಜಾಗೃತಿ ಮತ್ತು ಅದ್ಭುತ ಚಿಹ್ನೆಗಳು. ಸಮರ್ಪಿತ ನರ್ಸ್ (nurse) ಆಗಿರುವ ಡೋನಾ ಸಾಜು ಅವರು, ಕೃಪಾಸನಂ ಮರಿಯನ್ ಕವೆನೆಂಟ್ (Covenant) ಅನ್ನು ಸ್ವೀಕರಿಸಲು ಕಾರಣವಾದ ಆಳವಾದ ಆಧ್ಯಾತ್ಮಿಕ ಜಾಗೃತಿಯನ್ನು ಅನುಭವಿಸಿದರು. ಅವರು ಈ ಹಿಂದೆ ಕೇವಲ ಯೇಸುವಿನ ಮೇಲೆ ಮಾತ್ರ ತಮ್ಮ ಪ್ರಾರ್ಥನೆಗಳನ್ನು ಕೇಂದ್ರೀಕರಿಸಿದ್ದರೂ, ರೋಸರಿ (Rosary) ಪ್ರಾರ್ಥನೆ ಮಾಡಲು ಅವರಿಗೆ ಹಠಾತ್, ಬಲವಾದ ಕರೆಬಂದಂತಾಯಿತು. ಈ ಭಕ್ತಿಗೆ ತನ್ನನ್ನು ತಾನು ಅರ್ಪಿಸಿಕೊಂಡ ನಂತರ, ಅವರು ಮೇಣದಬತ್ತಿಯ ಜ್ವಾಲೆಯಲ್ಲಿ ಹೃದಯಗಳು, ಹೂವುಗಳು ಮತ್ತು ಮದರ್ ಮೇರಿಯ ಚಿತ್ರಗಳು ಕಾಣಿಸಿಕೊಳ್ಳುವುದು ಸೇರಿದಂತೆ ಹಲವಾರು ಅದ್ಭುತ ಚಿಹ್ನೆಗಳನ್ನು ನೋಡಲು ಪ್ರಾರಂಭಿಸಿದರು. ಪ್ರಾರ್ಥನೆಗಾಗಿ ತನ್ನನ್ನು ಎಚ್ಚರಗೊಳಿಸಲು ಅದೃಶ್ಯ ಕೈಯೊಂದನ್ನು ಅನುಭವಿಸುವುದು ಮತ್ತು ದತ್ತಿ ಕಾರ್ಯಗಳನ್ನು ಮಾಡುವಾಗ ಮಲ್ಲಿಗೆ ಹೂವುಗಳ ಅದ್ಭುತ ಸುಗಂಧ ಅಭಿಷೇಕವನ್ನು (anointing of fragrance) ಅನುಭವಿಸುವಂತಹ ಅಸಾಧಾರಣ ಅನುಭವಗಳನ್ನು ಸಹ ಅವರು ವಿವರಿಸುತ್ತಾರೆ.\n\nಶೈಕ್ಷಣಿಕ ಮತ್ತು ವೈಯಕ್ತಿಕ ವಿಜಯಗಳು. ತನ್ನ ನಂಬಿಕೆಯ ಮೇಲೆ ಸಂಪೂರ್ಣವಾಗಿ ಭರವಸೆ ಇಟ್ಟು, ಡೋನಾ ತನ್ನ ಶೈಕ್ಷಣಿಕ ಮತ್ತು ವೈಯಕ್ತಿಕ ಸವಾಲುಗಳನ್ನು ಮದರ್ ಮೇರಿಗೆ ಒಪ್ಪಿಸಿದರು. ಮೈಸೂರಿನಲ್ಲಿ ಜರ್ಮನ್ ಭಾಷೆಯ ಅಧ್ಯಯನವನ್ನು ಮುಂದುವರಿಸುತ್ತಿರುವಾಗ ಮತ್ತು ಕಷ್ಟಕರವಾದ ಎಕ್ಸಾಮ್ಸ್ (exams) ಬರೆಯುವಾಗ, ಆರಂಭಿಕ ಮಾಡ್ಯೂಲ್‌ನಲ್ಲಿ (module) ಫೇಲ್ (fail) ಆಗುವುದು ಸೇರಿದಂತೆ ಹಲವು ಹಿನ್ನಡೆಗಳನ್ನು ಅವರು ಎದುರಿಸಿದರು. ಆದಾಗ್ಯೂ, ಪ್ರಾರ್ಥನೆ ಮತ್ತು ಕೃಪಾಸನಂ ಉಪ್ಪು ಮತ್ತು ಪವಿತ್ರ ಎಣ್ಣೆಯ ಬಳಕೆಯಿಂದ ಮಾರ್ಗದರ್ಶನ ಪಡೆದು, ಅವರು ಅಂತಿಮವಾಗಿ ತಮ್ಮ ಎಲ್ಲಾ ಎಕ್ಸಾಮ್ಸ್ ಅನ್ನು ಪಾಸ್ (pass) ಮಾಡಿದರು - ಅವುಗಳು ಅದ್ಭುತವಾಗಿ ಮಂಗಳವಾರದಂದೇ ಬಂದವು. ಅಂತೆಯೇ, ತಮ್ಮ ಡ್ರೈವಿಂಗ್ ಟೆಸ್ಟ್ (driving test) ಅನ್ನು ಪಾಸ್ (pass) ಮಾಡಲು ಸಹಾಯ ಮಾಡಿದ್ದಕ್ಕಾಗಿ ಮದರ್ ಮೇರಿಯ ನೇರ ಹಸ್ತಕ್ಷೇಪವೇ ಕಾರಣ ಎಂದು ಅವರು ಹೇಳುತ್ತಾರೆ, ಸಾಮಾನ್ಯವಾಗಿ ತಕ್ಷಣ ಫೇಲ್ (fail) ಆಗಲು ಕಾರಣವಾಗುವಂತಹ ನಿರ್ಣಾಯಕ ತಪ್ಪುಗಳನ್ನು ಪರೀಕ್ಷಕರು ವಿವರಿಸಲಾಗದ ರೀತಿಯಲ್ಲಿ ನಿರ್ಲಕ್ಷಿಸಿದ್ದಾರೆ ಎಂದು ಅವರು ಗಮನಸೆಳೆಯುತ್ತಾರೆ.\n\nಚಾರಿಟಿ ಮತ್ತು ಅಪೋಸ್ಟೋಲಿಕ್ ಕೆಲಸದ ಕಡೆಗೆ ಸಮರ್ಪಣೆ. ಡೋನಾ ಅವರ ಸಾಕ್ಷ್ಯದ ಕೇಂದ್ರ ಆಧಾರ ಸ್ತಂಭವೆಂದರೆ ಕರುಣೆಯ ಕಾರ್ಯಗಳು (acts of mercy) ಮತ್ತು ತನ್ನ ನಂಬಿಕೆಯನ್ನು ಹರಡುವ ಬಗ್ಗೆ ಅವರಿಗಿರುವ ಅಚಲ ಬದ್ಧತೆ. ಅವರು ಕೇರ್ ಹೋಮ್ಸ್‌ನಲ್ಲಿ (care homes) ಸಕ್ರಿಯವಾಗಿ ವಾಲಂಟಿಯರ್ (volunteer) ಮಾಡುತ್ತಾರೆ, ವೃದ್ಧರು ಮತ್ತು ಅಂಗವಿಕಲರಿಗೆ ದೈಹಿಕ ಆರೈಕೆ, ಮೆಡಿಕಲ್ ಚೆಕ್-ಅಪ್ಸ್ (medical check-ups) ಮತ್ತು ಥೆರಪಿ (therapies) ಒದಗಿಸುತ್ತಾರೆ. ಆ ಸೌಲಭ್ಯದ ನರ್ಸಿಂಗ್ ಆಫೀಸರ್ (nursing officer) ಆಗಿದ್ದ ಸ್ನೇಹಿತನನ್ನು ಅವರು ಅನಿರೀಕ್ಷಿತವಾಗಿ ಭೇಟಿಯಾದಾಗ, ಕಟ್ಟುನಿಟ್ಟಾದ ನಿರ್ಬಂಧಗಳನ್ನು ತಕ್ಷಣವೇ ಬೈಪಾಸ್ ಮಾಡಿದ ಮೈಸೂರಿನಲ್ಲಿ ನಡೆದ ಒಂದು ಅದ್ಭುತ ಕ್ಷಣವನ್ನು ಅವರು ಹೈಲೈಟ್ ಮಾಡುತ್ತಾರೆ. ತನ್ನ ಚಾರಿಟಿ ಕೆಲಸದಾಚೆಗೆ, ಎಸೆಯಲ್ಪಟ್ಟ ಕೃಪಾಸನಂ ಸಾಹಿತ್ಯವನ್ನು ರಕ್ಷಿಸುವ ಮೂಲಕ, ಪ್ರಾರ್ಥನಾ ಸಾಮಗ್ರಿಗಳನ್ನು ವಿತರಿಸುವ ಮೂಲಕ ಮತ್ತು ಇತರರು ತಮ್ಮ ನಂಬಿಕೆಯನ್ನು ಗಾಢವಾಗಿಸಲು ಪ್ರೇರೇಪಿಸುವ ಸಲುವಾಗಿ ತನ್ನ ವೈಯಕ್ತಿಕ ಪವಾಡಗಳನ್ನು ಶೇರ್ (share) ಮಾಡುವ ಮೂಲಕ ಡೋನಾ ಅವರು ಅಪೋಸ್ಟೋಲಿಕ್ ಕರ್ತವ್ಯಗಳಲ್ಲಿ (apostolic duties) ಉತ್ಸಾಹದಿಂದ ತೊಡಗಿಸಿಕೊಳ್ಳುತ್ತಾರೆ."
+    },
     "subtitles": "/assets/testimony-subtitle/29apr26.json",
     "duration": "20:56",
+    "overlay": {
+      "boxes": [
+        {
+          "x": 37,
+          "y": 18,
+          "w": 840,
+          "h": 233,
+          "background": "#3c61bc",
+          "fontColor": "#fffa06"
+        },
+        {
+          "x": 6,
+          "y": 251,
+          "w": 948,
+          "h": 199,
+          "background": "#ffffff",
+          "fontColor": "#c51a3c"
+        },
+        {
+          "x": 19,
+          "y": 430,
+          "w": 1112,
+          "h": 277,
+          "background": "#3861bd",
+          "fontColor": "#fbfd02"
+        },
+        {
+          "x": 1028,
+          "y": 3,
+          "w": 245,
+          "h": 64,
+          "background": "#3664ba",
+          "fontColor": "#ffffff"
+        }
+      ],
+      "texts": {
+        "en": [
+          "From Never Praying the Rosary to Loving It Daily",
+          "Through miraculous experiences of divine presence!",
+          "I received an outpouring of blessings!",
+          "Kannur"
+        ],
+        "hi": [
+          "कभी रोज़री प्रार्थना न करने से लेकर उसे प्रतिदिन प्रेम करने तक",
+          "दैवीय उपस्थिति के चमत्कारी अनुभवों के माध्यम से!",
+          "मुझे आशीषों की भरपूर वर्षा प्राप्त हुई!",
+          "कन्नूर"
+        ],
+        "ta": [
+          "ஒருபோதும் ஜெபமாலை ஜெபிக்காத நிலையிலிருந்து அதை தினமும் நேசித்து ஜெபிப்பதுவரை",
+          "தெய்வீக சன்னிதியின் அதிசயமான அனுபவங்கள் மூலம்!",
+          "ஆசீர்வாதங்களின் பெருவெள்ளத்தை நான் பெற்றேன்!",
+          "கண்ணூர்"
+        ],
+        "bn": [
+          "কখনও রোজারি প্রার্থনা না করা থেকে প্রতিদিন তা ভালোবেসে প্রার্থনা করা পর্যন্ত",
+          "ঈশ্বরীয় উপস্থিতির অলৌকিক অভিজ্ঞতার মাধ্যমে!",
+          "আমি আশীর্বাদের এক প্রবল প্রবাহ লাভ করেছি!",
+          "কান্নুর"
+        ],
+        "te": [
+          "ఎప్పుడూ జపమాల ప్రార్థించని నేను దానిని ప్రతిరోజూ ప్రేమతో ప్రార్థించే స్థితికి చేరాను",
+          "దైవిక సన్నిధి యొక్క అద్భుత అనుభవాల ద్వారా!",
+          "నేను ఆశీర్వాదాల ప్రవాహాన్ని పొందాను!",
+          "కన్నూర్"
+        ],
+        "mr": [
+          "कधीही रोजरी प्रार्थना न करणाऱ्या अवस्थेतून ती दररोज प्रेमाने प्रार्थना करण्यापर्यंत",
+          "दैवी उपस्थितीच्या चमत्कारिक अनुभवांद्वारे!",
+          "मला आशीर्वादांचा भरभरून वर्षाव मिळाला!",
+          "कन्नूर"
+        ],
+        "fr": [
+          "De ne jamais prier le Rosaire à l’aimer chaque jour",
+          "À travers des expériences miraculeuses de la présence divine !",
+          "J’ai reçu une abondance de bénédictions !",
+          "Kannur"
+        ],
+        "es": [
+          "De nunca rezar el Rosario a amarlo cada día",
+          "¡A través de experiencias milagrosas de la presencia divina!",
+          "¡Recibí una abundancia de bendiciones!",
+          "Kannur"
+        ],
+        "zh": [
+          "从从不诵念玫瑰经到每天喜爱诵念它",
+          "通过神圣临在的奇妙经历！",
+          "我领受了满溢的祝福！",
+          "坎努尔"
+        ],
+        "kn": [
+          "ಒಂದೂ ಸಲ ಜಪಮಾಲೆ ಪ್ರಾರ್ಥಿಸದ ನಾನು ಅದನ್ನು ಪ್ರತಿದಿನ ಪ್ರೀತಿಯಿಂದ ಪ್ರಾರ್ಥಿಸಲು ಆರಂಭಿಸಿದೆ",
+          "ದೈವಿಕ ಸನ್ನಿಧಿಯ ಅದ್ಭುತ ಅನುಭವಗಳ ಮೂಲಕ!",
+          "ನಾನು ಆಶೀರ್ವಾದಗಳ ಮಹಾಪ್ರವಾಹವನ್ನು ಹೊಂದಿದೆ!",
+          "ಕಣ್ಣೂರು"
+        ]
+      }
+    }
+  },
+  {
+    "id": 75,
+    "title": {
+      "en": "Missing Kidney Miraculously Restored Through the Marian Covenant",
+      "hi": "मरियन वाचा के माध्यम से गायब हुई किडनी चमत्कारिक रूप से पुनर्स्थापित हुई",
+      "ta": "மரிய அன்னையின் உடன்படிக்கையின் மூலம் காணாமல் இருந்த சிறுநீரகம் அதிசயமாக மீண்டும் உருவானது",
+      "bn": "মারিয়ান চুক্তির মাধ্যমে হারিয়ে যাওয়া কিডনি অলৌকিকভাবে পুনরুদ্ধার হয়েছিল",
+      "te": "మరియన్ ఒడంబడిక ద్వారా కనిపించని మూత్రపిండం అద్భుతంగా పునరుద్ధరించబడింది",
+      "mr": "मरियन कराराद्वारे गायब झालेली मूत्रपिंड चमत्कारिकरित्या पुन्हा निर्माण झाली",
+      "fr": "Un rein manquant miraculeusement restauré grâce à l’Alliance Mariale",
+      "es": "Un riñón desaparecido fue restaurado milagrosamente a través de la Alianza Mariana",
+      "zh": "借着圣母盟约，缺失的肾脏奇迹般地恢复了",
+      "kn": "ಮರಿಯಮ್ಮನ ಒಡಂಬಡಿಕೆಯ ಮೂಲಕ ಕಾಣೆಯಾಗಿದ್ದ ಮೂತ್ರಪಿಂಡ ಅದ್ಭುತವಾಗಿ ಮರುಸ್ಥಾಪಿಸಲಾಯಿತು"
+    },
+    "date": "May 12, 2026",
+    "video": "https://youtu.be/738j1AzlbJ8",
+    "content": {
+      "en": "Neethu from St. Joseph’s Parish in Thiruvananthapuram shared a touching testimony received through the intercession of Mother of Kreupasanam. After making the Covenant in 2022, she moved to the UK with her family. During her second pregnancy, doctors repeatedly said that her baby boy did not have a right kidney and that it would never develop. Though deeply saddened and afraid, Neethu continued to pray with faith, using the Covenant oil and blessed salt, reciting prayers, and entrusting her baby completely to Mother Mary.\n\nEven after many scans continued to show the kidney was missing, she never lost hope. She faithfully attended Covenant prayers, renewed her Covenant even while abroad, and prayed every day for her baby’s healing. Along with this, she shared her faith by distributing Kreupasanam newsletters, praying for sick people she cared for, and reading the Bible to lonely patients in the UK. Hearing another miracle testimony strengthened her faith that nothing is impossible for Jesus.\n\nAfter her son Emmanuel was born, doctors arranged another scan. During the scan, the doctors were shocked to find a fully developed right kidney along with the left one. The same kidney they had earlier declared missing had appeared completely healthy. Neethu testified that this miracle removed all her fears and brought her much closer to Jesus and Mother Mary. Today, she lives with strong faith and gratitude, praying especially for more people to experience God’s grace.",
+      "hi": "तिरुवनंतपुरम के सेंट जोसेफ पैरिश की नीथू ने क्रेउपासानम माता की मध्यस्थता से मिली एक भावुक गवाही साझा की। 2022 में वाचा करने के बाद वह अपने परिवार के साथ यूके चली गईं। अपनी दूसरी गर्भावस्था के दौरान डॉक्टरों ने कई बार कहा कि उनके बेटे के दाहिने गुर्दे का विकास नहीं हुआ है और वह कभी विकसित नहीं होगा। बहुत दुख और डर के बावजूद, नीथू ने विश्वास के साथ प्रार्थना करना जारी रखा, वाचा का तेल और आशीषित नमक इस्तेमाल किया, प्रार्थनाएँ कीं और अपने बच्चे को पूरी तरह माता मरियम को सौंप दिया।\n\nकई स्कैन में गुर्दा दिखाई न देने के बाद भी उन्होंने आशा नहीं छोड़ी। उन्होंने नियमित रूप से वाचा प्रार्थनाओं में भाग लिया, विदेश में रहते हुए भी वाचा को नवीनीकृत किया और हर दिन अपने बच्चे के चंगाई के लिए प्रार्थना की। साथ ही उन्होंने क्रेउपासानम की पत्रिकाएँ बाँटीं, जिन बीमार लोगों की देखभाल करती थीं उनके लिए प्रार्थना की और अकेले मरीजों को बाइबल पढ़कर सुनाई। एक और चमत्कारिक गवाही सुनकर उनका विश्वास और मजबूत हो गया कि यीशु के लिए कुछ भी असंभव नहीं है।\n\nउनके बेटे इमैनुएल के जन्म के बाद डॉक्टरों ने फिर से स्कैन किया। स्कैन के दौरान डॉक्टर यह देखकर चकित रह गए कि बच्चे के दोनों गुर्दे पूरी तरह विकसित थे। वही गुर्दा जिसे पहले गायब बताया गया था, अब पूरी तरह स्वस्थ दिखाई दिया। नीथू ने गवाही दी कि इस चमत्कार ने उनका सारा डर दूर कर दिया और उन्हें यीशु और माता मरियम के और करीब ला दिया। आज वह गहरे विश्वास और कृतज्ञता के साथ जीवन जी रही हैं।",
+      "ta": "திருவனந்தபுரம் செயிண்ட் ஜோசப் பேராலயத்தைச் சேர்ந்த நீதூ, கிருபாசனம் മാതாவின் மத்தியஸ்தத்தால் கிடைத்த அதிசய அனுபவத்தை பகிர்ந்தார். 2022ல் உடன்படிக்கை செய்த பிறகு, குடும்பத்துடன் இங்கிலாந்துக்கு சென்றார். இரண்டாவது கர்ப்ப காலத்தில், அவரது ஆண் குழந்தைக்கு வலது சிறுநீரகம் இல்லை என்றும் அது ஒருபோதும் வளராது என்றும் மருத்துவர்கள் பல முறை கூறினர். மிகுந்த துயரமும் பயமும் இருந்தபோதிலும், நீதூ நம்பிக்கையுடன் தொடர்ந்து ஜெபித்தார், உடன்படிக்கை எண்ணெய் மற்றும் ஆசீர்வதிக்கப்பட்ட உப்பைப் பயன்படுத்தினார், ஜெபங்களை சொல்லி, தனது குழந்தையை முழுவதுமாக அன்னை மரியாளிடம் ஒப்படைத்தார்.\n\nபல ஸ்கேன்களிலும் சிறுநீரகம் தெரியவில்லை என்றாலும், அவர் நம்பிக்கையை இழக்கவில்லை. அவர் உடன்படிக்கை ஜெபங்களில் தொடர்ந்து பங்கேற்றார், வெளிநாட்டிலிருந்தபோதும் உடன்படிக்கையை புதுப்பித்தார், தினமும் குழந்தைக்காக ஜெபித்தார். அதோடு கிருபாசனம் இதழ்களை பகிர்ந்தார், நோயாளிகளுக்காக ஜெபித்தார், தனிமையில் இருந்தவர்களுக்கு வேதாகமம் வாசித்துக் காட்டினார். மற்றொரு அதிசய சாட்சியத்தை கேட்டது, இயேசுவுக்கு எதுவும் அசாதியம் இல்லை என்ற நம்பிக்கையை மேலும் அதிகரித்தது.\n\nஎம்மானுவேல் பிறந்த பிறகு மீண்டும் ஸ்கேன் செய்யப்பட்டது. அப்போது குழந்தையின் இரு சிறுநீரகங்களும் முழுமையாக இருந்ததை பார்த்து மருத்துவர்கள் அதிர்ச்சியடைந்தனர். முன்பு இல்லை என்று கூறப்பட்ட சிறுநீரகம் இப்போது ஆரோக்கியமாக இருந்தது. இந்த அதிசயம் தனது பயங்களை அகற்றி, இயேசுவுக்கும் அன்னை மரியாளுக்கும் மேலும் நெருக்கமாக்கியது என்று நீதூ சாட்சி கூறினார். இன்று அவர் நன்றியுடனும் உறுதியான விசுவாசத்துடனும் வாழ்கிறார்.",
+      "bn": "তিরুবনন্তপুরমের সেন্ট জোসেফ প্যারিশের নীতু ক্রুপাসানাম মাতার মধ্যস্থতায় পাওয়া এক শক্তিশালী সাক্ষ্য ভাগ করে নিয়েছেন। ২০২২ সালে কোভেন্যান্ট করার পর তিনি পরিবারের সঙ্গে যুক্তরাজ্যে যান। দ্বিতীয় গর্ভাবস্থার সময় ডাক্তাররা বারবার বলেন যে তার ছেলের ডান কিডনি নেই এবং তা আর কখনও গড়ে উঠবে না। গভীর দুঃখ ও ভয়ের মধ্যেও নীতু বিশ্বাস নিয়ে প্রার্থনা চালিয়ে যান, কোভেন্যান্ট তেল ও আশীর্বাদিত লবণ ব্যবহার করেন এবং শিশুকে পুরোপুরি মা মেরির হাতে সমর্পণ করেন।\n\nঅনেক স্ক্যানেও কিডনি না দেখা গেলেও তিনি আশা হারাননি। তিনি নিয়মিত কোভেন্যান্ট প্রার্থনায় অংশ নিতেন, বিদেশে থেকেও কোভেন্যান্ট নবায়ন করতেন এবং প্রতিদিন সন্তানের আরোগ্যের জন্য প্রার্থনা করতেন। পাশাপাশি তিনি ক্রুপাসানাম পত্রিকা বিলি করতেন, অসুস্থ রোগীদের জন্য প্রার্থনা করতেন এবং একাকী মানুষদের বাইবেল পড়ে শোনাতেন। আরেকটি অলৌকিক সাক্ষ্য শুনে তার বিশ্বাস আরও দৃঢ় হয় যে যীশুর কাছে কিছুই অসম্ভব নয়।\n\nছেলে ইমানুয়েলের জন্মের পর আবার স্ক্যান করা হয়। স্ক্যানের সময় ডাক্তাররা অবাক হয়ে দেখেন যে শিশুর দুইটি কিডনিই সম্পূর্ণভাবে গড়ে উঠেছে। যে কিডনিকে আগে অনুপস্থিত বলা হয়েছিল, সেটিই এখন সম্পূর্ণ সুস্থ অবস্থায় দেখা গেল। নীতু সাক্ষ্য দেন যে এই অলৌকিক ঘটনা তার সব ভয় দূর করেছে এবং তাকে যীশু ও মা মেরির আরও কাছে নিয়ে এসেছে। আজ তিনি গভীর বিশ্বাস ও কৃতজ্ঞতার সঙ্গে জীবনযাপন করছেন।",
+      "te": "తిరువనంతపురంలోని సెయింట్ జోసెఫ్ ప్యారిష్‌కు చెందిన నీతు, క్రెుపాసనం తల్లియొక్క మధ్యవర్తిత్వం ద్వారా పొందిన అద్భుత సాక్ష్యాన్ని పంచుకున్నారు. 2022లో ఒడంబడిక చేసిన తరువాత ఆమె తన కుటుంబంతో కలిసి యూకేకు వెళ్లింది. రెండవ గర్భధారణ సమయంలో, తన బిడ్డకు కుడి మూత్రపిండం లేదని మరియు అది ఎప్పటికీ అభివృద్ధి చెందదని వైద్యులు పలుమార్లు చెప్పారు. చాలా బాధ, భయం ఉన్నప్పటికీ, నీతు విశ్వాసంతో ప్రార్థనలు కొనసాగించింది, ఒడంబడిక నూనె మరియు ఆశీర్వదించిన ఉప్పు ఉపయోగించింది, తన బిడ్డను పూర్తిగా తల్లి మరియమ్మకు అప్పగించింది.\n\nఅనేక స్కాన్లలో కూడా మూత్రపిండం కనిపించకపోయినా, ఆమె ఆశను కోల్పోలేదు. ఆమె నిత్యం ఒడంబడిక ప్రార్థనల్లో పాల్గొంది, విదేశంలో ఉన్నప్పటికీ ఒడంబడికను పునరుద్ధరించింది మరియు ప్రతిరోజూ తన బిడ్డ స్వస్థత కోసం ప్రార్థించింది. అలాగే క్రెుపాసనం పత్రికలను పంచింది, రోగుల కోసం ప్రార్థించింది, ఒంటరిగా ఉన్నవారికి బైబిల్ చదివి వినిపించింది. మరొక అద్భుత సాక్ష్యాన్ని విన్న తరువాత యేసుకు అసాధ్యం ఏదీ లేదన్న విశ్వాసం మరింత పెరిగింది.\n\nఆమె కుమారుడు ఎమ్మానుయేలు జన్మించిన తరువాత మళ్లీ స్కాన్ చేశారు. ఆ స్కాన్‌లో బిడ్డకు రెండు మూత్రపిండాలూ పూర్తిగా ఉన్నాయని చూసి వైద్యులు ఆశ్చర్యపోయారు. ముందుగా లేదని చెప్పిన మూత్రపిండమే ఇప్పుడు ఆరోగ్యంగా కనిపించింది. ఈ అద్భుతం తన భయాలన్నింటినీ తొలగించి, యేసు మరియు తల్లి మరియమ్మకు మరింత దగ్గర చేసింది అని నీతు సాక్ష్యం చెప్పింది. ఇప్పుడు ఆమె బలమైన విశ్వాసంతో మరియు కృతజ్ఞతతో జీవిస్తోంది.",
+      "mr": "तिरुवनंतपुरम येथील सेंट जोसेफ पॅरिशमधील नीथूने क्रुपासनम मातेमार्फत मिळालेल्या अद्भुत कृपेची साक्ष दिली. 2022 मध्ये करार केल्यानंतर ती आपल्या कुटुंबासह यूकेला गेली. दुसऱ्या गर्भधारणेदरम्यान डॉक्टरांनी वारंवार सांगितले की तिच्या बाळाच्या उजव्या मूत्रपिंडाचा विकास झालेला नाही आणि तो कधीच होणार नाही. खूप दुःख आणि भीती असूनही, नीथूने विश्वासाने प्रार्थना सुरू ठेवली, कराराचे तेल आणि आशीर्वादित मीठ वापरले आणि आपल्या बाळाला पूर्णपणे माता मरियेला अर्पण केले.\n\nअनेक स्कॅनमध्ये मूत्रपिंड दिसत नसतानाही तिने आशा सोडली नाही. ती नियमितपणे करार प्रार्थनांमध्ये सहभागी होत राहिली, परदेशात असतानाही करार नूतनीकरण करत राहिली आणि रोज आपल्या बाळाच्या आरोग्यासाठी प्रार्थना करत राहिली. त्याचबरोबर तिने क्रुपासनमची पत्रके वाटली, रुग्णांसाठी प्रार्थना केली आणि एकाकी लोकांना बायबल वाचून दाखवले. दुसऱ्या एका चमत्कारिक साक्षीने तिचा विश्वास आणखी दृढ झाला की येशूसाठी काहीही अशक्य नाही.\n\nतिचा मुलगा इमॅन्युएल जन्मल्यानंतर पुन्हा स्कॅन करण्यात आला. स्कॅनदरम्यान डॉक्टरांनी पाहिले की बाळाची दोन्ही मूत्रपिंडे पूर्णपणे विकसित झाली आहेत. जे मूत्रपिंड आधी नसल्याचे सांगितले होते, ते आता पूर्णपणे निरोगी दिसत होते. नीथूने सांगितले की या चमत्कारामुळे तिची सर्व भीती दूर झाली आणि ती येशू व माता मरियेकडे अधिक जवळ आली. आज ती दृढ विश्वास आणि कृतज्ञतेने जीवन जगत आहे.",
+      "fr": "Neethu, de la paroisse Saint-Joseph de Thiruvananthapuram, a partagé un témoignage touchant reçu par l’intercession de la Mère de Kreupasanam. Après avoir fait l’Alliance en 2022, elle est partie vivre au Royaume-Uni avec sa famille. Pendant sa deuxième grossesse, les médecins ont dit à plusieurs reprises que son bébé n’avait pas de rein droit et qu’il ne se développerait jamais. Malgré sa tristesse et sa peur, Neethu a continué à prier avec foi, en utilisant l’huile de l’Alliance et le sel béni, et en confiant totalement son enfant à la Sainte Vierge.\n\nMême après plusieurs examens montrant toujours l’absence du rein, elle n’a jamais perdu espoir. Elle participait fidèlement aux prières de l’Alliance, renouvelait son Alliance même à l’étranger et priait chaque jour pour la guérison de son bébé. Elle distribuait aussi les journaux de Kreupasanam, priait pour les malades dont elle s’occupait et lisait la Bible aux personnes seules. Un autre témoignage de miracle a encore renforcé sa foi que rien n’est impossible pour Jésus.\n\nAprès la naissance de son fils Emmanuel, les médecins ont effectué un nouveau scanner. À leur grande surprise, ils ont découvert que le bébé avait bien deux reins complètement développés. Le rein qui avait été déclaré absent était maintenant parfaitement visible et en bonne santé. Neethu a témoigné que ce miracle a enlevé toutes ses peurs et l’a rapprochée davantage de Jésus et de la Sainte Vierge. Aujourd’hui, elle vit avec une foi profonde et beaucoup de reconnaissance.",
+      "es": "Neethu, de la parroquia de San José en Thiruvananthapuram, compartió un poderoso testimonio recibido por la intercesión de la Madre de Kreupasanam. Después de hacer el Pacto en 2022, se mudó al Reino Unido con su familia. Durante su segundo embarazo, los médicos dijeron varias veces que su bebé no tenía el riñón derecho y que nunca se desarrollaría. Aunque estaba muy triste y asustada, Neethu siguió orando con fe, usando el aceite y la sal bendita del Pacto y entregando completamente a su hijo a la Virgen María.\n\nAunque muchos estudios seguían mostrando la ausencia del riñón, ella nunca perdió la esperanza. Participó fielmente en las oraciones del Pacto, renovó su Pacto incluso estando en el extranjero y oró todos los días por la sanación de su bebé. También compartió su fe distribuyendo revistas de Kreupasanam, orando por los enfermos que cuidaba y leyendo la Biblia a personas solitarias. Escuchar otro testimonio milagroso fortaleció aún más su fe de que nada es imposible para Jesús.\n\nDespués del nacimiento de su hijo Emmanuel, los médicos hicieron otro examen. Durante el estudio quedaron sorprendidos al encontrar un riñón derecho completamente desarrollado junto con el izquierdo. El mismo riñón que antes habían dicho que faltaba apareció totalmente sano. Neethu dio testimonio de que este milagro quitó todos sus miedos y la acercó más a Jesús y a la Virgen María. Hoy vive con una fe fuerte y mucha gratitud.",
+      "zh": "来自特里凡得琅圣若瑟堂区的Neethu分享了一则通过克雷乌帕萨南圣母代祷而获得的感人见证。她在2022年立下盟约后，和家人一起搬到了英国。在第二次怀孕期间，医生多次告诉她，她腹中的男婴没有右肾，而且永远不会长出来。虽然她非常伤心和害怕，但她仍然怀着信德不断祈祷，使用盟约圣油和祝圣盐，并把孩子完全交托给圣母玛利亚。\n\n尽管多次扫描结果都显示右肾缺失，Neethu依然没有失去希望。她坚持参加盟约祈祷，即使在国外也继续更新盟约，并每天为孩子的痊愈祈祷。同时，她还分发克雷乌帕萨南刊物，为病人祈祷，并给孤独的人阅读圣经。另一个神迹见证更加强了她的信念，让她相信耶稣没有不可能的事。\n\n儿子Emmanuel出生后，医生安排了再次检查。在扫描过程中，医生震惊地发现孩子不仅有左肾，右肾也已经完全长好了。之前被宣告不存在的肾脏，如今健康清晰地出现了。Neethu见证说，这个奇迹除去了她所有的恐惧，也让她更加亲近耶稣和圣母玛利亚。如今，她怀着坚定的信德和感恩生活。",
+      "kn": "ತಿರುವನಂತಪುರದ ಸೆಂಟ್ ಜೋಸೆಫ್ ಪಾರಿಷ್‌ನ ನೀತು ಅವರು ಕ್ರೆಉಪಾಸನಂ ತಾಯಿಯ ಮಧ್ಯಸ್ಥಿಕೆಯಿಂದ ಪಡೆದ ಅದ್ಭುತ ಸಾಕ್ಷಿಯನ್ನು ಹಂಚಿಕೊಂಡರು. 2022ರಲ್ಲಿ ಒಡಂಬಡಿಕೆ ಮಾಡಿದ ನಂತರ ಅವರು ತಮ್ಮ ಕುಟುಂಬದೊಂದಿಗೆ ಯುಕೆಗೆ ತೆರಳಿದರು. ಎರಡನೇ ಗರ್ಭಧಾರಣೆಯ ಸಮಯದಲ್ಲಿ, ವೈದ್ಯರು ಹಲವು ಬಾರಿ ಮಗುವಿಗೆ ಬಲ ಮೂತ್ರಪಿಂಡ ಇಲ್ಲ ಮತ್ತು ಅದು ಎಂದಿಗೂ ಬೆಳೆಯುವುದಿಲ್ಲ ಎಂದು ಹೇಳಿದರು. ತುಂಬಾ ದುಃಖ ಮತ್ತು ಭಯ ಇದ್ದರೂ, ನೀತು ವಿಶ್ವಾಸದಿಂದ ಪ್ರಾರ್ಥನೆ ಮುಂದುವರಿಸಿದರು, ಒಡಂಬಡಿಕೆ ಎಣ್ಣೆ ಮತ್ತು ಆಶೀರ್ವದಿತ ಉಪ್ಪನ್ನು ಬಳಸಿದರು ಮತ್ತು ತಮ್ಮ ಮಗುವನ್ನು ಸಂಪೂರ್ಣವಾಗಿ ತಾಯಿ ಮೇರಿಗೆ ಒಪ್ಪಿಸಿದರು.\n\nಹಲವಾರು ಸ್ಕ್ಯಾನ್‌ಗಳಲ್ಲಿಯೂ ಮೂತ್ರಪಿಂಡ ಕಾಣಿಸದಿದ್ದರೂ, ಅವರು ಆಶೆಯನ್ನು ಕಳೆದುಕೊಳ್ಳಲಿಲ್ಲ. ಅವರು ನಿಷ್ಠೆಯಿಂದ ಒಡಂಬಡಿಕೆ ಪ್ರಾರ್ಥನೆಗಳಲ್ಲಿ ಭಾಗವಹಿಸಿದರು, ವಿದೇಶದಲ್ಲಿದ್ದರೂ ಒಡಂಬಡಿಕೆಯನ್ನು ನವೀಕರಿಸಿದರು ಮತ್ತು ಪ್ರತಿದಿನ ಮಗುವಿನ ಗುಣಮುಖತೆಗೆ ಪ್ರಾರ್ಥಿಸಿದರು. ಜೊತೆಗೆ ಅವರು ಕ್ರೆಉಪಾಸನಂ ಪತ್ರಿಕೆಗಳನ್ನು ಹಂಚಿದರು, ರೋಗಿಗಳಿಗಾಗಿ ಪ್ರಾರ್ಥಿಸಿದರು ಮತ್ತು ಒಂಟಿಯಾಗಿದ್ದವರಿಗೆ ಬೈಬಲ್ ಓದಿ ಕೇಳಿಸಿದರು. ಮತ್ತೊಂದು ಅದ್ಭುತ ಸಾಕ್ಷಿ ಕೇಳಿದ ನಂತರ ಯೇಸುವಿಗೆ ಯಾವುದೂ ಅಸಾಧ್ಯವಲ್ಲ ಎಂಬ ವಿಶ್ವಾಸ ಇನ್ನಷ್ಟು ಬಲವಾಯಿತು.\n\nಅವರ ಮಗ ಎಮ್ಮಾನುಯೇಲ್ ಜನಿಸಿದ ನಂತರ ಮತ್ತೆ ಸ್ಕ್ಯಾನ್ ಮಾಡಲಾಯಿತು. ಆ ಸಮಯದಲ್ಲಿ ವೈದ್ಯರು ಮಗುವಿಗೆ ಎರಡೂ ಮೂತ್ರಪಿಂಡಗಳು ಸಂಪೂರ್ಣವಾಗಿ ಬೆಳದಿರುವುದನ್ನು ನೋಡಿ ಆಶ್ಚರ್ಯಪಟ್ಟರು. ಮೊದಲು ಇಲ್ಲ ಎಂದು ಹೇಳಲಾಗಿದ್ದ ಮೂತ್ರಪಿಂಡ ಈಗ ಸಂಪೂರ್ಣ ಆರೋಗ್ಯವಾಗಿತ್ತು. ಈ ಅದ್ಭುತವು ತನ್ನ ಎಲ್ಲಾ ಭಯಗಳನ್ನು ದೂರಮಾಡಿ, ಯೇಸು ಮತ್ತು ತಾಯಿ ಮೇರಿಗೆ ಇನ್ನಷ್ಟು ಹತ್ತಿರ ಮಾಡಿತು ಎಂದು ನೀತು ಸಾಕ್ಷಿ ಹೇಳಿದರು. ಇಂದು ಅವರು ಗಾಢವಾದ ವಿಶ್ವಾಸ ಮತ್ತು ಕೃತಜ್ಞತೆಯೊಂದಿಗೆ ಬದುಕುತ್ತಿದ್ದಾರೆ."
+    },
+    "subtitles": "/assets/testimony-subtitle/12may26.json",
+    "duration": "23:28",
     "overlay":{
   "boxes": [
     {
-      "x": 37,
-      "y": 18,
-      "w": 840,
-      "h": 233,
-      "background": "#3c61bc",
-      "fontColor": "#fffa06"
+      "x": 32,
+      "y": 20,
+      "w": 934,
+      "h": 135,
+      "background": "#3a658f",
+      "fontColor": "#fff70d"
     },
     {
-      "x": 6,
-      "y": 251,
-      "w": 948,
-      "h": 199,
-      "background": "#ffffff",
-      "fontColor": "#c51a3c"
+      "x": 58,
+      "y": 151,
+      "w": 788,
+      "h": 281,
+      "background": "#38638d",
+      "fontColor": "#fffcf9"
     },
     {
-      "x": 19,
-      "y": 430,
-      "w": 1112,
-      "h": 277,
-      "background": "#3861bd",
-      "fontColor": "#fbfd02"
-    },
-    {
-      "x": 1028,
-      "y": 3,
-      "w": 245,
-      "h": 64,
-      "background": "#3664ba",
+      "x": 0,
+      "y": 431,
+      "w": 800,
+      "h": 261,
+      "background": "#f74902",
       "fontColor": "#ffffff"
+    },
+    {
+      "x": 985,
+      "y": 3,
+      "w": 286,
+      "h": 63,
+      "background": "#63819b",
+      "fontColor": "#fefffd"
     }
   ],
   "texts": {
   "en": [
-    "From Never Praying the Rosary to Loving It Daily",
-    "Through miraculous experiences of divine presence!",
-    "I received an outpouring of blessings!",
-    "Kannur"
+    "A Shocking Covenant Testimony of a Mother",
+    "Who Prayed with the Covenant Oil",
+    "for Her Baby Boy's Missing Organ!",
+    "Trivandrum"
   ],
   "hi": [
-    "कभी रोज़री प्रार्थना न करने से लेकर उसे प्रतिदिन प्रेम करने तक",
-    "दैवीय उपस्थिति के चमत्कारी अनुभवों के माध्यम से!",
-    "मुझे आशीषों की भरपूर वर्षा प्राप्त हुई!",
-    "कन्नूर"
+    "एक माँ की चौंका देने वाली वाचा गवाही",
+    "जिसने वाचा के तेल के साथ प्रार्थना की",
+    "अपने बेटे के गायब अंग के लिए!",
+    "तिरुवनंतपुरम"
   ],
   "ta": [
-    "ஒருபோதும் ஜெபமாலை ஜெபிக்காத நிலையிலிருந்து அதை தினமும் நேசித்து ஜெபிப்பதுவரை",
-    "தெய்வீக சன்னிதியின் அதிசயமான அனுபவங்கள் மூலம்!",
-    "ஆசீர்வாதங்களின் பெருவெள்ளத்தை நான் பெற்றேன்!",
-    "கண்ணூர்"
+    "ஒரு தாயின் அதிர்ச்சியூட்டும் உடன்படிக்கை சாட்சி",
+    "உடன்படிக்கை எண்ணெயுடன் ஜெபித்தார்",
+    "தன் ஆண் குழந்தையின் காணாமல் இருந்த உறுப்பு కోసం!",
+    "திருவனந்தபுரம்"
   ],
   "bn": [
-    "কখনও রোজারি প্রার্থনা না করা থেকে প্রতিদিন তা ভালোবেসে প্রার্থনা করা পর্যন্ত",
-    "ঈশ্বরীয় উপস্থিতির অলৌকিক অভিজ্ঞতার মাধ্যমে!",
-    "আমি আশীর্বাদের এক প্রবল প্রবাহ লাভ করেছি!",
-    "কান্নুর"
+    "এক মায়ের বিস্ময়কর বিধান সাক্ষ্য",
+    "যিনি বিধানের তেল দিয়ে প্রার্থনা করেছিলেন",
+    "তার শিশুপুত্রের অনুপস্থিত অঙ্গের জন্য!",
+    "তিরুবনন্তপুরম"
   ],
   "te": [
-    "ఎప్పుడూ జపమాల ప్రార్థించని నేను దానిని ప్రతిరోజూ ప్రేమతో ప్రార్థించే స్థితికి చేరాను",
-    "దైవిక సన్నిధి యొక్క అద్భుత అనుభవాల ద్వారా!",
-    "నేను ఆశీర్వాదాల ప్రవాహాన్ని పొందాను!",
-    "కన్నూర్"
+    "ఒక తల్లి యొక్క ఆశ్చర్యకరమైన ఒడంబడిక సాక్ష్యం",
+    "ఒడంబడిక నూనెతో ప్రార్థించిన ఆమె",
+    "తన బిడ్డ అబ్బాయి కనిపించని అవయవం కోసం!",
+    "తిరువనంతపురం"
   ],
   "mr": [
-    "कधीही रोजरी प्रार्थना न करणाऱ्या अवस्थेतून ती दररोज प्रेमाने प्रार्थना करण्यापर्यंत",
-    "दैवी उपस्थितीच्या चमत्कारिक अनुभवांद्वारे!",
-    "मला आशीर्वादांचा भरभरून वर्षाव मिळाला!",
-    "कन्नूर"
+    "एका आईची धक्कादायक करार साक्ष",
+    "जिने कराराच्या तेलाने प्रार्थना केली",
+    "तिच्या बाळ मुलाच्या गायब झालेल्या अवयवासाठी!",
+    "तिरुवनंतपुरम"
   ],
   "fr": [
-    "De ne jamais prier le Rosaire à l’aimer chaque jour",
-    "À travers des expériences miraculeuses de la présence divine !",
-    "J’ai reçu une abondance de bénédictions !",
-    "Kannur"
+    "Le témoignage bouleversant d’une mère sous l’Alliance",
+    "Qui a prié avec l’huile de l’Alliance",
+    "pour l’organe manquant de son petit garçon !",
+    "Trivandrum"
   ],
   "es": [
-    "De nunca rezar el Rosario a amarlo cada día",
-    "¡A través de experiencias milagrosas de la presencia divina!",
-    "¡Recibí una abundancia de bendiciones!",
-    "Kannur"
+    "El impactante testimonio de alianza de una madre",
+    "Que oró con el aceite de la Alianza",
+    "¡por el órgano faltante de su bebé!",
+    "Trivandrum"
   ],
   "zh": [
-    "从从不诵念玫瑰经到每天喜爱诵念它",
-    "通过神圣临在的奇妙经历！",
-    "我领受了满溢的祝福！",
-    "坎努尔"
+    "一位母亲令人震惊的盟约见证",
+    "她用盟约圣油祈祷",
+    "为她男婴缺失的器官祈求！",
+    "特里凡得琅"
   ],
   "kn": [
-    "ಒಂದೂ ಸಲ ಜಪಮಾಲೆ ಪ್ರಾರ್ಥಿಸದ ನಾನು ಅದನ್ನು ಪ್ರತಿದಿನ ಪ್ರೀತಿಯಿಂದ ಪ್ರಾರ್ಥಿಸಲು ಆರಂಭಿಸಿದೆ",
-    "ದೈವಿಕ ಸನ್ನಿಧಿಯ ಅದ್ಭುತ ಅನುಭವಗಳ ಮೂಲಕ!",
-    "ನಾನು ಆಶೀರ್ವಾದಗಳ ಮಹಾಪ್ರವಾಹವನ್ನು ಹೊಂದಿದೆ!",
-    "ಕಣ್ಣೂರು"
+    "ಒಬ್ಬ ತಾಯಿಯ ಆಶ್ಚರ್ಯಕರ ಒಡಂಬಡಿಕೆ ಸಾಕ್ಷ್ಯ",
+    "ಒಡಂಬಡಿಕೆಯ ಎಣ್ಣೆಯಿಂದ ಪ್ರಾರ್ಥಿಸಿದ ತಾಯಿ",
+    "ತನ್ನ ಗಂಡು ಮಗುವಿನ ಕಾಣೆಯಾಗಿದ್ದ ಅಂಗಕ್ಕಾಗಿ!",
+    "ತಿರುವನಂತಪುರಂ"
   ]
 }
 }
-}
+  }
 ]
