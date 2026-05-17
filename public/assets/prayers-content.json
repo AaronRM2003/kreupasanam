@@ -2,17 +2,17 @@
   {
     "id": 1,
     "title": {
-      "zh": "圣母契约祈祷",
-      "bn": "মেরিয়ান চুক্তি প্রার্থনা",
-      "en": "Marian Covenant Prayer",
-      "hi": "मरियन करार प्रार्थना",
-      "ta": "மேரியன் ஏற்பாடு பிரார்த்தனை",
-      "te": "మేరియాన్ కవెనెంట్ ప్రార్థన",
-      "fr": "Prière du Pacte Marial",
-      "es": "Oración del Pacto Mariano",
-      "kn": "ಮೇರಿಯನ್ ಒಪ್ಪಂದ ಪ್ರಾರ್ಥನೆ",
-      "mr": "मरियन करार प्रार्थना"
-    },
+  "zh": "圣母盟约祈祷",
+  "bn": "মাতৃমরিয়মের চুক্তির প্রার্থনা",
+  "en": "Marian Covenant Prayer",
+  "hi": "मरियम वाचा प्रार्थना",
+  "ta": "அன்னை மரியாள் உடன்படிக்கை ஜெபம்",
+  "te": "పరిశుద్ధ మరియమ్మ ఒడంబడిక ప్రార్థన",
+  "fr": "Prière de l’Alliance Mariale",
+  "es": "Oración de la Alianza Mariana",
+  "kn": "ಪವಿತ್ರ ಮರಿಯಮ್ಮನ ಒಡಂಬಡಿಕೆ ಪ್ರಾರ್ಥನೆ",
+  "mr": "मरियम करार प्रार्थना"
+},
     "date": "September 14, 2025",
     "video": "https://youtu.be/a8QHxmbTD_U",
     "content": {
