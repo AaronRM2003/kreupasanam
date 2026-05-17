@@ -3,7 +3,7 @@
   padding: 0rem; 
   max-width: 1400px;
   margin: 0 auto;
-  margin-top: 7rem;
+  margin-top: 8rem;
    background-size: cover;
 }
 .testimoniesSectionContainer {
@@ -27,19 +27,8 @@
     padding: 2rem 1rem;
   }
 }
-.testimoniesSection {
-  background:
-    linear-gradient(
-      180deg,
-      rgba(245, 248, 255, 0.9),
-      rgba(235, 242, 255, 0.6)
-    );
-}
 
-.blurEffect img {
-  filter: blur(5px) brightness(0.9);
-  transition: 0.3s ease;
-}
+
 
 .comingSoonOverlay {
   position: absolute;
