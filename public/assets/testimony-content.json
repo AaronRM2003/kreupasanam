@@ -6081,101 +6081,230 @@
     },
     "subtitles": "/assets/testimony-subtitle/12may26.json",
     "duration": "23:28",
+    "overlay": {
+      "boxes": [
+        {
+          "x": 32,
+          "y": 20,
+          "w": 934,
+          "h": 135,
+          "background": "#3a658f",
+          "fontColor": "#fff70d"
+        },
+        {
+          "x": 58,
+          "y": 151,
+          "w": 788,
+          "h": 281,
+          "background": "#38638d",
+          "fontColor": "#fffcf9"
+        },
+        {
+          "x": 0,
+          "y": 420,
+          "w": 800,
+          "h": 281,
+          "background": "#f74902",
+          "fontColor": "#ffffff"
+        },
+        {
+          "x": 985,
+          "y": 3,
+          "w": 286,
+          "h": 63,
+          "background": "#63819b",
+          "fontColor": "#fefffd"
+        }
+      ],
+      "texts": {
+        "en": [
+          "A Shocking Covenant Testimony of a Mother",
+          "Who Prayed with the Covenant Oil",
+          "for Her Baby Boy's Missing Organ!",
+          "Trivandrum"
+        ],
+        "hi": [
+          "एक माँ की चौंका देने वाली वाचा गवाही",
+          "जिसने वाचा के तेल के साथ प्रार्थना की",
+          "अपने बेटे के गायब अंग के लिए!",
+          "तिरुवनंतपुरम"
+        ],
+        "ta": [
+          "ஒரு தாயின் அதிர்ச்சியூட்டும் உடன்படிக்கை சாட்சி",
+          "உடன்படிக்கை எண்ணெயுடன் ஜெபித்தார்",
+          "தன் ஆண் குழந்தையின் காணாமல் இருந்த உறுப்பு కోసం!",
+          "திருவனந்தபுரம்"
+        ],
+        "bn": [
+          "এক মায়ের বিস্ময়কর বিধান সাক্ষ্য",
+          "যিনি বিধানের তেল দিয়ে প্রার্থনা করেছিলেন",
+          "তার শিশুপুত্রের অনুপস্থিত অঙ্গের জন্য!",
+          "তিরুবনন্তপুরম"
+        ],
+        "te": [
+          "ఒక తల్లి యొక్క ఆశ్చర్యకరమైన ఒడంబడిక సాక్ష్యం",
+          "ఒడంబడిక నూనెతో ప్రార్థించిన ఆమె",
+          "తన బిడ్డ అబ్బాయి కనిపించని అవయవం కోసం!",
+          "తిరువనంతపురం"
+        ],
+        "mr": [
+          "एका आईची धक्कादायक करार साक्ष",
+          "जिने कराराच्या तेलाने प्रार्थना केली",
+          "तिच्या बाळ मुलाच्या गायब झालेल्या अवयवासाठी!",
+          "तिरुवनंतपुरम"
+        ],
+        "fr": [
+          "Le témoignage bouleversant d’une mère sous l’Alliance",
+          "Qui a prié avec l’huile de l’Alliance",
+          "pour l’organe manquant de son petit garçon !",
+          "Trivandrum"
+        ],
+        "es": [
+          "El impactante testimonio de alianza de una madre",
+          "Que oró con el aceite de la Alianza",
+          "¡por el órgano faltante de su bebé!",
+          "Trivandrum"
+        ],
+        "zh": [
+          "一位母亲令人震惊的盟约见证",
+          "她用盟约圣油祈祷",
+          "为她男婴缺失的器官祈求！",
+          "特里凡得琅"
+        ],
+        "kn": [
+          "ಒಬ್ಬ ತಾಯಿಯ ಆಶ್ಚರ್ಯಕರ ಒಡಂಬಡಿಕೆ ಸಾಕ್ಷ್ಯ",
+          "ಒಡಂಬಡಿಕೆಯ ಎಣ್ಣೆಯಿಂದ ಪ್ರಾರ್ಥಿಸಿದ ತಾಯಿ",
+          "ತನ್ನ ಗಂಡು ಮಗುವಿನ ಕಾಣೆಯಾಗಿದ್ದ ಅಂಗಕ್ಕಾಗಿ!",
+          "ತಿರುವನಂತಪುರಂ"
+        ]
+      }
+    }
+  },
+  {
+    "id": 77,
+    "title": {
+      "en": "Doctors Cancel Chemotherapy for Child with Blood Cancer and Covenant Oil Miracle",
+      "hi": "रक्त कैंसर से पीड़ित बच्चे की कीमोथेरेपी डॉक्टरों ने रद्द की और वाचा के तेल का चमत्कार",
+      "ta": "இரத்தப் புற்றுநோயால் பாதிக்கப்பட்ட குழந்தையின் கீமோதெரபியை மருத்துவர்கள் நிறுத்தினர் மற்றும் உடன்படிக்கை எண்ணெயின் அதிசயம்",
+      "bn": "রক্তের ক্যান্সারে আক্রান্ত শিশুর কেমোথেরাপি বন্ধ করলেন চিকিৎসকরা এবং চুক্তির তেলের অলৌকিক ঘটনা",
+      "te": "రక్త క్యాన్సర్‌తో బాధపడుతున్న చిన్నారి కీమోథెరపీని వైద్యులు నిలిపివేశారు మరియు ఒడంబడిక నూనె అద్భుతం",
+      "mr": "रक्ताच्या कर्करोगाने ग्रस्त मुलाची केमोथेरपी डॉक्टरांनी थांबवली आणि कराराच्या तेलाचा चमत्कार",
+      "fr": "Les médecins annulent la chimiothérapie d’un enfant atteint d’un cancer du sang et le miracle de l’huile de l’Alliance",
+      "es": "Los médicos cancelan la quimioterapia de un niño con cáncer de sangre y el milagro del aceite de la Alianza",
+      "zh": "医生取消了患血癌儿童的化疗，以及盟约圣油的奇迹",
+      "kn": "ರಕ್ತ ಕ್ಯಾನ್ಸರ್‌ನಿಂದ ಬಳಲುತ್ತಿದ್ದ ಮಗುವಿನ ಕೀಮೋಥೆರಪಿಯನ್ನು ವೈದ್ಯರು ನಿಲ್ಲಿಸಿದರು ಮತ್ತು ಒಡಂಬಡಿಕೆ ಎಣ್ಣೆಯ ಅದ್ಭುತ"
+    },
+    "date": "June 2, 2026",
+    "video": "https://youtu.be/ScdeWIputUw",
+    "content": {
+      "en": "Bindu, a Hindu mother from Pathanapuram in Kollam district, shared how her son Aravind was healed after a long battle with blood cancer. In 2022, Aravind was diagnosed with the disease after suffering from frequent fevers and very low blood counts. The chemotherapy treatment caused severe side effects, leaving him weak and in constant pain. During this difficult time, Bindu came across a Kreupasanam testimony about cancer healing, which inspired her to pray and trust in Jesus and Mother Mary. She then took the Covenant and regularly used the blessed oil, salt, and honey while praying for her son's recovery.\n\nAs time passed, Bindu saw her son's health improve. She also experienced what she believed were special blessings, including an empty bottle of Covenant oil becoming filled again and a serious wound healing after prayer and the application of the oil. Later, when doctors said Aravind would need more chemotherapy, Bindu felt that Mother Mary appeared to her and assured her of his healing. Soon afterward, doctors informed the family that no further chemotherapy or medicines were needed.\n\nToday, Bindu believes that her son's complete healing came through the grace of Jesus and Mother Mary. Out of gratitude, she shares testimonies, distributes devotional materials, and encourages others to pray with faith. Her story is a message of hope, perseverance, and trust in God during life's most difficult situations.",
+      "hi": "कोल्लम जिले के पथानापुरम की रहने वाली बिंदु ने अपने बेटे अरविंद के चंगाई पाने की गवाही साझा की। 2022 में बार-बार बुखार और खून की कमी के बाद अरविंद को ब्लड कैंसर होने का पता चला। कीमोथेरेपी के कारण उसे बहुत तकलीफ और कमजोरी हुई। इसी कठिन समय में बिंदु ने कैंसर से चंगाई की एक क्रेपासनम गवाही सुनी, जिससे उसे यीशु और माता मरियम पर भरोसा करने की प्रेरणा मिली। उसने वाचा ली और अपने बेटे के लिए प्रार्थना करते हुए आशीषित तेल, नमक और शहद का नियमित उपयोग किया।\n\nसमय के साथ अरविंद की तबीयत में सुधार होने लगा। बिंदु ने कुछ विशेष अनुभव भी किए, जैसे लगभग खाली तेल की बोतल का फिर से भर जाना और प्रार्थना के बाद एक गंभीर घाव का ठीक हो जाना। बाद में जब डॉक्टरों ने कहा कि अरविंद को और कीमोथेरेपी की जरूरत होगी, तब बिंदु को लगा कि माता मरियम ने उसे उसके बेटे की चंगाई का आश्वासन दिया। कुछ ही समय बाद डॉक्टरों ने बताया कि अब किसी और कीमोथेरेपी या दवा की आवश्यकता नहीं है।\n\nआज बिंदु मानती हैं कि उनके बेटे की पूरी चंगाई यीशु और माता मरियम की कृपा से हुई। कृतज्ञता के रूप में वह गवाहियां साझा करती हैं, आध्यात्मिक सामग्री बांटती हैं और लोगों को विश्वास के साथ प्रार्थना करने के लिए प्रेरित करती हैं। उनकी कहानी आशा, धैर्य और परमेश्वर पर भरोसा रखने का संदेश देती है।",
+      "ta": "கொல்லம் மாவட்டம் பத்தனாபுரத்தைச் சேர்ந்த இந்து தாயான பிந்து, தனது மகன் அரவிந்தின் குணமடைந்த அனுபவத்தை பகிர்ந்தார். 2022 ஆம் ஆண்டு தொடர்ந்து காய்ச்சல் மற்றும் இரத்த அணுக்கள் குறைவாக இருந்ததால் அரவிந்துக்கு இரத்தப் புற்றுநோய் இருப்பது கண்டறியப்பட்டது. கீமோதெரபி சிகிச்சையால் அவர் மிகவும் பலவீனமடைந்து கடுமையான வலியையும் அனுபவித்தார். இந்த கடினமான நேரத்தில் பிந்து, புற்றுநோயிலிருந்து குணமடைந்த ஒருவரின் கிருபாசனம் சாட்சியத்தை கேட்டு, இயேசுவிலும் அன்னை மரியாவிலும் நம்பிக்கை வைக்கத் தொடங்கினார். பின்னர் அவர் உடன்படிக்கையை ஏற்று, ஆசீர்வதிக்கப்பட்ட எண்ணெய், உப்பு மற்றும் தேனை பயன்படுத்தி தனது மகனுக்காக தொடர்ந்து ஜெபித்தார்.\n\nகாலப்போக்கில் அரவிந்தின் உடல்நிலை மேம்படத் தொடங்கியது. காலியாக இருந்த எண்ணெய் பாட்டில் மீண்டும் நிரம்பியது மற்றும் ஜெபத்திற்குப் பிறகு ஒரு கடுமையான காயம் குணமானது போன்ற அனுபவங்களையும் பிந்து பகிர்ந்தார். பின்னர் மேலும் கீமோதெரபி தேவைப்படும் என்று மருத்துவர்கள் கூறியபோது, அன்னை மரியா தனது மகனின் குணமடைவதை உறுதிப்படுத்த வந்ததாக அவர் நம்பினார். அதற்குப் பிறகு மருத்துவர்கள் மேலும் எந்த சிகிச்சையோ மருந்தோ தேவையில்லை என்று தெரிவித்தனர்.\n\nஇன்று தனது மகனின் முழு குணமடைவதும் இயேசுவின் மற்றும் அன்னை மரியாவின் அருளால் ஏற்பட்டது என்று பிந்து நம்புகிறார். நன்றியுடன் அவர் சாட்சியங்களை பகிர்ந்து, பக்திப் பொருட்களை வழங்கி, மற்றவர்களையும் நம்பிக்கையுடன் ஜெபிக்க ஊக்குவிக்கிறார். அவரது சாட்சி நம்பிக்கை, பொறுமை மற்றும் கடவுளின் மீது விசுவாசம் வைப்பதன் முக்கியத்துவத்தை எடுத்துக்காட்டுகிறது.",
+      "bn": "কোল্লাম জেলার পাঠানাপুরামের বাসিন্দা বিন্দু তার ছেলে অরবিন্দের সুস্থ হয়ে ওঠার সাক্ষ্য ভাগ করে নিয়েছেন। ২০২২ সালে বারবার জ্বর এবং রক্তের মাত্রা খুব কমে যাওয়ার পর অরবিন্দের ব্লাড ক্যান্সার ধরা পড়ে। কেমোথেরাপির কারণে সে খুব দুর্বল হয়ে পড়ে এবং প্রচণ্ড কষ্ট পায়। এই কঠিন সময়ে বিন্দু ক্যান্সার থেকে সুস্থ হওয়ার একটি ক্রুপাসনাম সাক্ষ্য শোনেন, যা তাকে যিশু ও মা মরিয়মের ওপর ভরসা করতে অনুপ্রাণিত করে। এরপর তিনি চুক্তি গ্রহণ করেন এবং আশীর্বাদপ্রাপ্ত তেল, লবণ ও মধু ব্যবহার করে ছেলের জন্য নিয়মিত প্রার্থনা করতে থাকেন।\n\nসময়ের সঙ্গে অরবিন্দের স্বাস্থ্যের উন্নতি হতে থাকে। বিন্দু আরও কিছু বিশেষ অভিজ্ঞতার কথা বলেন, যেমন প্রায় খালি তেলের বোতল আবার ভরে যাওয়া এবং প্রার্থনার পর একটি গুরুতর ক্ষত সেরে যাওয়া। পরে ডাক্তাররা যখন আরও কেমোথেরাপির প্রয়োজনের কথা বলেন, তখন বিন্দু বিশ্বাস করেন যে মা মরিয়ম তাকে তার ছেলের আরোগ্যের আশ্বাস দিয়েছেন। অল্প সময়ের মধ্যেই ডাক্তাররা জানান যে আর কোনো কেমোথেরাপি বা ওষুধের প্রয়োজন নেই।\n\nআজ বিন্দু বিশ্বাস করেন যে তার ছেলের সম্পূর্ণ সুস্থতা যিশু ও মা মরিয়মের কৃপায় হয়েছে। কৃতজ্ঞতাস্বরূপ তিনি সাক্ষ্য ভাগ করেন, ধর্মীয় সামগ্রী বিতরণ করেন এবং অন্যদের বিশ্বাসের সঙ্গে প্রার্থনা করতে উৎসাহিত করেন। তার গল্প আশা, ধৈর্য এবং ঈশ্বরের ওপর আস্থার একটি শক্তিশালী বার্তা বহন করে।",
+      "te": "కొల్లం జిల్లాలోని పతనాపురానికి చెందిన బిందు తన కుమారుడు అరవింద్ స్వస్థత పొందిన అనుభవాన్ని పంచుకున్నారు. 2022లో తరచూ జ్వరాలు రావడం మరియు రక్తపు కణాల సంఖ్య చాలా తగ్గిపోవడంతో అరవింద్‌కు రక్త క్యాన్సర్ ఉన్నట్లు నిర్ధారణ అయింది. కీమోథెరపీ కారణంగా అతను చాలా బలహీనమై తీవ్రమైన నొప్పిని అనుభవించాడు. ఈ కష్టకాలంలో బిందు క్యాన్సర్ స్వస్థత గురించి ఒక క్రూపాసనం సాక్ష్యాన్ని విని, యేసు మరియు మాత మరియమ్మపై విశ్వాసం ఉంచడం ప్రారంభించారు. తరువాత ఆమె ఒడంబడిక తీసుకొని ఆశీర్వదించబడిన నూనె, ఉప్పు మరియు తేనెను ఉపయోగిస్తూ తన కుమారుని కోసం ప్రార్థించారు.\n\nకొంతకాలానికి అరవింద్ ఆరోగ్యం మెరుగుపడటం ప్రారంభమైంది. దాదాపు ఖాళీగా ఉన్న నూనె సీసా మళ్లీ నిండిపోవడం మరియు ప్రార్థన తర్వాత ఒక తీవ్రమైన గాయం నయం కావడం వంటి ప్రత్యేక అనుభవాలను కూడా బిందు పంచుకున్నారు. తరువాత వైద్యులు మరిన్ని కీమోథెరపీ చికిత్సలు అవసరమని చెప్పినప్పుడు, మాత మరియమ్మ తన కుమారుడి స్వస్థతను ధృవీకరించినట్లు ఆమె భావించారు. కొద్దికాలానికే వైద్యులు ఇకపై కీమోథెరపీ లేదా మందులు అవసరం లేదని తెలిపారు.\n\nఈరోజు తన కుమారుడి పూర్తి స్వస్థత యేసు మరియు మాత మరియమ్మ కృప వల్లే జరిగిందని బిందు నమ్ముతున్నారు. కృతజ్ఞతగా ఆమె సాక్ష్యాలను పంచుకుంటూ, భక్తి సామగ్రిని పంపిణీ చేస్తూ, ఇతరులను కూడా విశ్వాసంతో ప్రార్థించమని ప్రోత్సహిస్తున్నారు. ఆమె కథ ఆశ, సహనం మరియు దేవునిపై నమ్మకానికి ఒక ప్రేరణాత్మక సందేశం.",
+      "mr": "कोल्लम जिल्ह्यातील पथानापूरम येथील बिंदू यांनी आपल्या मुलगा अरविंदच्या बरे होण्याची साक्ष सांगितली. 2022 मध्ये वारंवार ताप येणे आणि रक्तातील पेशींची संख्या खूप कमी होणे यानंतर अरविंदला रक्ताचा कर्करोग असल्याचे निदान झाले. केमोथेरपीमुळे त्याला खूप त्रास, अशक्तपणा आणि वेदना सहन कराव्या लागल्या. या कठीण काळात बिंदू यांनी कर्करोगातून बरे झालेल्या एका क्रुपासनम साक्षीविषयी ऐकले आणि त्यांना येशू व माता मरियम यांच्यावर विश्वास ठेवण्याची प्रेरणा मिळाली. त्यानंतर त्यांनी करार स्वीकारला आणि आशीर्वादित तेल, मीठ व मध वापरत आपल्या मुलासाठी नियमित प्रार्थना केली.\n\nकाळ जसजसा पुढे गेला तसतसे अरविंदची तब्येत सुधारू लागली. जवळजवळ रिकामी झालेली तेलाची बाटली पुन्हा भरल्याचा आणि प्रार्थनेनंतर एक गंभीर जखम बरी झाल्याचा अनुभवही बिंदूंनी सांगितला. नंतर डॉक्टरांनी आणखी केमोथेरपीची गरज असल्याचे सांगितले असताना, माता मरियमने आपल्या मुलाच्या आरोग्याबद्दल आश्वासन दिल्याचा अनुभव त्यांना आला. काही दिवसांनी डॉक्टरांनी सांगितले की आता कोणत्याही पुढील केमोथेरपी किंवा औषधांची गरज नाही.\n\nआज बिंदू यांचा विश्वास आहे की त्यांच्या मुलाचे पूर्ण बरे होणे हे येशू आणि माता मरियम यांच्या कृपेने झाले. कृतज्ञतेपोटी त्या साक्षी शेअर करतात, भक्ती साहित्य वाटतात आणि इतरांनाही श्रद्धेने प्रार्थना करण्यास प्रोत्साहित करतात. त्यांची कथा आशा, चिकाटी आणि देवावरील विश्वास यांचा संदेश देते.",
+      "fr": "Bindu, une mère hindoue de Pathanapuram dans le district de Kollam, a partagé le témoignage de la guérison de son fils Aravind. En 2022, Aravind a été diagnostiqué d'un cancer du sang après avoir souffert de fortes fièvres répétées et d'un faible taux sanguin. La chimiothérapie a provoqué de graves effets secondaires, le laissant très faible et souffrant constamment. Pendant cette période difficile, Bindu a entendu un témoignage de guérison du cancer à Kreupasanam, ce qui l'a encouragée à mettre sa confiance en Jésus et en la Vierge Marie. Elle a ensuite pris l'Alliance et a utilisé régulièrement l'huile, le sel et le miel bénis tout en priant pour son fils.\n\nAvec le temps, l'état de santé d'Aravind s'est amélioré. Bindu raconte également avoir vécu plusieurs expériences qu'elle considère comme des bénédictions spéciales, notamment une bouteille d'huile presque vide qui s'est remplie à nouveau et une blessure grave qui a guéri après la prière et l'application de l'huile. Plus tard, alors que les médecins prévoyaient d'autres séances de chimiothérapie, Bindu a cru voir la Vierge Marie lui assurer la guérison de son fils. Peu après, les médecins ont annoncé qu'aucun autre traitement ni médicament n'était nécessaire.\n\nAujourd'hui, Bindu est convaincue que la guérison complète de son fils est due à la grâce de Jésus et de la Vierge Marie. En signe de reconnaissance, elle partage des témoignages, distribue du matériel de dévotion et encourage les autres à prier avec foi. Son histoire transmet un message d'espérance, de persévérance et de confiance en Dieu.",
+      "es": "Bindu, una madre hindú de Pathanapuram en el distrito de Kollam, compartió el testimonio de la sanación de su hijo Aravind. En 2022, a Aravind le diagnosticaron cáncer de sangre después de sufrir fiebres frecuentes y niveles sanguíneos muy bajos. La quimioterapia le causó graves efectos secundarios, dejándolo muy débil y con mucho dolor. Durante ese tiempo difícil, Bindu escuchó un testimonio de sanación del cáncer en Kreupasanam, lo que la inspiró a confiar en Jesús y en la Virgen María. Luego hizo la Alianza y utilizó regularmente el aceite, la sal y la miel bendecidos mientras oraba por la recuperación de su hijo.\n\nCon el paso del tiempo, la salud de Aravind comenzó a mejorar. Bindu también relató varias experiencias que considera bendiciones especiales, como una botella de aceite casi vacía que volvió a llenarse y una herida grave que sanó después de la oración y la aplicación del aceite. Más adelante, cuando los médicos esperaban que necesitara más sesiones de quimioterapia, Bindu sintió que la Virgen María le aseguró la sanación de su hijo. Poco después, los médicos informaron que ya no necesitaba más quimioterapia ni medicamentos.\n\nHoy, Bindu cree que la sanación completa de su hijo ocurrió por la gracia de Jesús y de la Virgen María. Como muestra de gratitud, comparte testimonios, distribuye materiales devocionales y anima a otros a orar con fe. Su historia transmite un mensaje de esperanza, perseverancia y confianza en Dios.",
+      "zh": "来自科拉姆县帕塔纳普拉姆的印度教母亲宾杜分享了儿子阿拉文德康复的见证。2022年，阿拉文德因反复发烧和血液指标严重下降，被诊断患有血癌。化疗带来了严重的副作用，使他极度虚弱并长期忍受疼痛。在这段艰难时期，宾杜偶然听到了一个关于癌症痊愈的克鲁帕萨南见证，这激励她开始信靠耶稣和圣母玛利亚。随后，她参加了盟约祈祷，并持续使用祝圣油、盐和蜂蜜，为儿子的康复祈祷。\n\n随着时间的推移，阿拉文德的健康逐渐好转。宾杜还分享了一些她认为是特别恩典的经历，例如几乎空了的圣油瓶再次充满，以及一个严重伤口在祈祷和涂抹圣油后痊愈。后来，当医生认为他还需要继续化疗时，宾杜相信圣母玛利亚向她显现，并向她保证儿子会得到医治。不久之后，医生告诉他们不再需要任何化疗或药物治疗。\n\n如今，宾杜相信儿子的完全康复来自耶稣和圣母玛利亚的恩典。为了表达感恩，她积极分享见证、分发信仰资料，并鼓励他人以信心祈祷。她的故事传递了希望、坚持以及信靠天主的重要信息。",
+      "kn": "ಕೊಲ್ಲಂ ಜಿಲ್ಲೆಯ ಪಥನಾಪುರಂನ ಬಿಂದು ತಮ್ಮ ಮಗ ಅರವಿಂದ್ ಗುಣಮುಖನಾದ ಅನುಭವವನ್ನು ಹಂಚಿಕೊಂಡರು. 2022ರಲ್ಲಿ ನಿರಂತರ ಜ್ವರ ಮತ್ತು ರಕ್ತದ ಪ್ರಮಾಣ ತುಂಬಾ ಕಡಿಮೆಯಾಗಿದ್ದ ಕಾರಣ ಅರವಿಂದ್‌ಗೆ ರಕ್ತ ಕ್ಯಾನ್ಸರ್ ಇದೆ ಎಂದು ವೈದ್ಯರು ತಿಳಿಸಿದರು. ಕೀಮೋಥೆರಪಿ ಚಿಕಿತ್ಸೆಯಿಂದ ಅವನು ತುಂಬಾ ದುರ್ಬಲನಾಗಿ ತೀವ್ರವಾದ ನೋವನ್ನು ಅನುಭವಿಸಿದನು. ಈ ಕಷ್ಟದ ಸಮಯದಲ್ಲಿ ಬಿಂದು ಕ್ಯಾನ್ಸರ್ ಗುಣಮುಖವಾದ ಬಗ್ಗೆ ಒಂದು ಕ್ರೆಪಾಸನಂ ಸಾಕ್ಷ್ಯವನ್ನು ಕೇಳಿದರು. ಅದು ಅವರಿಗೆ ಯೇಸು ಮತ್ತು ತಾಯಿ ಮರಿಯಮ್ಮನಲ್ಲಿ ನಂಬಿಕೆ ಇಡಲು ಪ್ರೇರಣೆ ನೀಡಿತು. ನಂತರ ಅವರು ಒಡಂಬಡಿಕೆಯನ್ನು ಸ್ವೀಕರಿಸಿ ಆಶೀರ್ವದಿತ ಎಣ್ಣೆ, ಉಪ್ಪು ಮತ್ತು ಜೇನನ್ನು ಬಳಸುತ್ತಾ ತಮ್ಮ ಮಗನಿಗಾಗಿ ನಿರಂತರವಾಗಿ ಪ್ರಾರ್ಥಿಸಿದರು.\n\nಕಾಲಕ್ರಮೇಣ ಅರವಿಂದ್‌ನ ಆರೋಗ್ಯ ಸುಧಾರಿಸಲು ಆರಂಭವಾಯಿತು. ಬಹುತೇಕ ಖಾಲಿಯಾಗಿದ್ದ ಎಣ್ಣೆಯ ಬಾಟಲಿ ಮತ್ತೆ ತುಂಬಿದ ಅನುಭವ ಮತ್ತು ಪ್ರಾರ್ಥನೆಯ ನಂತರ ಒಂದು ಗಂಭೀರ ಗಾಯ ಗುಣವಾದ ಅನುಭವವನ್ನು ಕೂಡ ಬಿಂದು ಹಂಚಿಕೊಂಡರು. ನಂತರ ವೈದ್ಯರು ಇನ್ನಷ್ಟು ಕೀಮೋಥೆರಪಿ ಬೇಕೆಂದು ಹೇಳಿದಾಗ, ತಾಯಿ ಮರಿಯಮ್ಮ ತಮ್ಮ ಮಗ ಗುಣಮುಖನಾಗುವ ಬಗ್ಗೆ ಭರವಸೆ ನೀಡಿದಂತೆ ಅವರಿಗೆ ಅನಿಸಿತು. ಸ್ವಲ್ಪ ಸಮಯದ ಬಳಿಕ ವೈದ್ಯರು ಇನ್ನೂ ಯಾವುದೇ ಕೀಮೋಥೆರಪಿ ಅಥವಾ ಔಷಧಿಗಳ ಅಗತ್ಯವಿಲ್ಲ ಎಂದು ತಿಳಿಸಿದರು.\n\nಇಂದು ಬಿಂದು ತಮ್ಮ ಮಗನ ಸಂಪೂರ್ಣ ಗುಣಮುಖತೆ ಯೇಸು ಮತ್ತು ತಾಯಿ ಮರಿಯಮ್ಮನ ಕೃಪೆಯಿಂದಲೇ ಸಂಭವಿಸಿದೆ ಎಂದು ನಂಬುತ್ತಾರೆ. ಕೃತಜ್ಞತೆಯಿಂದ ಅವರು ಸಾಕ್ಷ್ಯಗಳನ್ನು ಹಂಚಿಕೊಳ್ಳುತ್ತಾರೆ, ಭಕ್ತಿಪರ ವಸ್ತುಗಳನ್ನು ವಿತರಿಸುತ್ತಾರೆ ಮತ್ತು ಇತರರನ್ನು ನಂಬಿಕೆಯಿಂದ ಪ್ರಾರ್ಥಿಸಲು ಪ್ರೋತ್ಸಾಹಿಸುತ್ತಾರೆ. ಅವರ ಕಥೆ ಆಶೆ, ಸಹನೆ ಮತ್ತು ದೇವರ ಮೇಲಿನ ಭರವಸೆಯ ಸಂದೇಶವನ್ನು ನೀಡುತ್ತದೆ."
+    },
+    "subtitles": "/assets/testimony-subtitle/02june26.json",
+    "duration": "14:38",
     "overlay":{
   "boxes": [
     {
-      "x": 32,
-      "y": 20,
-      "w": 934,
-      "h": 135,
-      "background": "#3a658f",
-      "fontColor": "#fff70d"
+      "x": 31,
+      "y": 21,
+      "w": 774,
+      "h": 380,
+      "background": "#1d4791",
+      "fontColor": "#fffffd"
     },
     {
-      "x": 58,
-      "y": 151,
-      "w": 788,
-      "h": 281,
-      "background": "#38638d",
-      "fontColor": "#fffcf9"
+      "x": 13,
+      "y": 390,
+      "w": 777,
+      "h": 185,
+      "background": "#000000",
+      "fontColor": "#faf505"
     },
     {
-      "x": 0,
-      "y": 420,
-      "w": 800,
-      "h": 281,
-      "background": "#f74902",
-      "fontColor": "#ffffff"
+      "x": 26,
+      "y": 573,
+      "w": 1039,
+      "h": 138,
+      "background": "#ffffff",
+      "fontColor": "#ff4a04"
     },
     {
-      "x": 985,
-      "y": 3,
-      "w": 286,
-      "h": 63,
-      "background": "#63819b",
-      "fontColor": "#fefffd"
+      "x": 1066,
+      "y": 8,
+      "w": 202,
+      "h": 55,
+      "background": "#78863b",
+      "fontColor": "#fef7f1"
     }
   ],
   "texts": {
   "en": [
-    "A Shocking Covenant Testimony of a Mother",
-    "Who Prayed with the Covenant Oil",
-    "for Her Baby Boy's Missing Organ!",
-    "Trivandrum"
+    "Mother Mary Visited Our Home to Heal a Child with Blood Cancer!",
+    "An Empty Bottle of Covenant Oil Was Miraculously Refilled",
+    "Bindu's Astonishing Testimony",
+    "Kollam"
   ],
   "hi": [
-    "एक माँ की चौंका देने वाली वाचा गवाही",
-    "जिसने वाचा के तेल के साथ प्रार्थना की",
-    "अपने बेटे के गायब अंग के लिए!",
-    "तिरुवनंतपुरम"
+    "रक्त कैंसर से पीड़ित बच्चे को चंगा करने के लिए माता मरियम हमारे घर आईं!",
+    "खाली वाचा के तेल की बोतल चमत्कारिक रूप से फिर से भर गई",
+    "बिंदु की चौंका देने वाली गवाही",
+    "कोल्लम"
   ],
   "ta": [
-    "ஒரு தாயின் அதிர்ச்சியூட்டும் உடன்படிக்கை சாட்சி",
-    "உடன்படிக்கை எண்ணெயுடன் ஜெபித்தார்",
-    "தன் ஆண் குழந்தையின் காணாமல் இருந்த உறுப்பு కోసం!",
-    "திருவனந்தபுரம்"
+    "இரத்தப் புற்றுநோயால் பாதிக்கப்பட்ட குழந்தையை குணப்படுத்த அன்னை மரியா எங்கள் வீட்டிற்கு வந்தார்!",
+    "காலியான உடன்படிக்கை எண்ணெய் பாட்டில் அதிசயமாக மீண்டும் நிரம்பியது",
+    "பிந்துவின் ஆச்சரியமூட்டும் சாட்சி",
+    "கொல்லம்"
   ],
   "bn": [
-    "এক মায়ের বিস্ময়কর বিধান সাক্ষ্য",
-    "যিনি বিধানের তেল দিয়ে প্রার্থনা করেছিলেন",
-    "তার শিশুপুত্রের অনুপস্থিত অঙ্গের জন্য!",
-    "তিরুবনন্তপুরম"
+    "রক্তের ক্যান্সারে আক্রান্ত শিশুকে সুস্থ করতে মা মরিয়ম আমাদের বাড়িতে এসেছিলেন!",
+    "খালি চুক্তির তেলের বোতল অলৌকিকভাবে আবার ভরে গেল",
+    "বিন্দুর বিস্ময়কর সাক্ষ্য",
+    "কোল্লাম"
   ],
   "te": [
-    "ఒక తల్లి యొక్క ఆశ్చర్యకరమైన ఒడంబడిక సాక్ష్యం",
-    "ఒడంబడిక నూనెతో ప్రార్థించిన ఆమె",
-    "తన బిడ్డ అబ్బాయి కనిపించని అవయవం కోసం!",
-    "తిరువనంతపురం"
+    "రక్త క్యాన్సర్‌తో బాధపడుతున్న చిన్నారిని స్వస్థపరచడానికి మాత మరియమ్మ మా ఇంటికి వచ్చారు!",
+    "ఖాళీగా ఉన్న ఒడంబడిక నూనె సీసా అద్భుతంగా మళ్లీ నిండిపోయింది",
+    "బిందు యొక్క ఆశ్చర్యకరమైన సాక్ష్యం",
+    "కొల్లం"
   ],
   "mr": [
-    "एका आईची धक्कादायक करार साक्ष",
-    "जिने कराराच्या तेलाने प्रार्थना केली",
-    "तिच्या बाळ मुलाच्या गायब झालेल्या अवयवासाठी!",
-    "तिरुवनंतपुरम"
+    "रक्ताच्या कर्करोगाने ग्रस्त मुलाला बरे करण्यासाठी माता मरियम आमच्या घरी आल्या!",
+    "रिकामी झालेली कराराच्या तेलाची बाटली चमत्कारिकरित्या पुन्हा भरली",
+    "बिंदूची आश्चर्यचकित करणारी साक्ष",
+    "कोल्लम"
   ],
   "fr": [
-    "Le témoignage bouleversant d’une mère sous l’Alliance",
-    "Qui a prié avec l’huile de l’Alliance",
-    "pour l’organe manquant de son petit garçon !",
-    "Trivandrum"
+    "La Vierge Marie est venue chez nous pour guérir un enfant atteint d’un cancer du sang !",
+    "Une bouteille vide d’huile de l’Alliance s’est miraculeusement remplie à nouveau",
+    "Le témoignage étonnant de Bindu",
+    "Kollam"
   ],
   "es": [
-    "El impactante testimonio de alianza de una madre",
-    "Que oró con el aceite de la Alianza",
-    "¡por el órgano faltante de su bebé!",
-    "Trivandrum"
+    "¡La Virgen María visitó nuestro hogar para sanar a un niño con cáncer de sangre!",
+    "Una botella vacía de aceite de la Alianza se llenó milagrosamente de nuevo",
+    "El asombroso testimonio de Bindu",
+    "Kollam"
   ],
   "zh": [
-    "一位母亲令人震惊的盟约见证",
-    "她用盟约圣油祈祷",
-    "为她男婴缺失的器官祈求！",
-    "特里凡得琅"
+    "圣母玛利亚来到我们家，医治患有血癌的孩子！",
+    "空了的盟约圣油瓶奇迹般地再次装满了",
+    "宾杜令人惊叹的见证",
+    "科拉姆"
   ],
   "kn": [
-    "ಒಬ್ಬ ತಾಯಿಯ ಆಶ್ಚರ್ಯಕರ ಒಡಂಬಡಿಕೆ ಸಾಕ್ಷ್ಯ",
-    "ಒಡಂಬಡಿಕೆಯ ಎಣ್ಣೆಯಿಂದ ಪ್ರಾರ್ಥಿಸಿದ ತಾಯಿ",
-    "ತನ್ನ ಗಂಡು ಮಗುವಿನ ಕಾಣೆಯಾಗಿದ್ದ ಅಂಗಕ್ಕಾಗಿ!",
-    "ತಿರುವನಂತಪುರಂ"
+    "ರಕ್ತ ಕ್ಯಾನ್ಸರ್‌ನಿಂದ ಬಳಲುತ್ತಿದ್ದ ಮಗುವನ್ನು ಗುಣಪಡಿಸಲು ತಾಯಿ ಮರಿಯಮ್ಮ ನಮ್ಮ ಮನೆಗೆ ಬಂದರು!",
+    "ಖಾಲಿಯಾಗಿದ್ದ ಒಡಂಬಡಿಕೆ ಎಣ್ಣೆಯ ಬಾಟಲಿ ಅದ್ಭುತವಾಗಿ ಮತ್ತೆ ತುಂಬಿತು",
+    "ಬಿಂದು ಅವರ ಆಶ್ಚರ್ಯಕರ ಸಾಕ್ಷ್ಯ",
+    "ಕೊಲ್ಲಂ"
   ]
 }
 }
