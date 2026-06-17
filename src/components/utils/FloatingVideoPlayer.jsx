@@ -190,37 +190,23 @@ React.useEffect(() => {
             </button>
           )}
 
-          {/* Controls (only if TTS supported) */}
-          {ttsSupported && (
-            <div
-              style={{
-                position: 'absolute',
-                top: '50%',
-                right: 10,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '8px',
-                zIndex: 1000,
-              }}
-            >
-              <SubtitleVoiceControls
-                isSpeaking={isSpeaking}
-                volume={volume}
-                toggleSpeaking={toggleSpeaking}
-                handleVolumeChange={handleVolumeChange}
-                playerRef={playerRef}
-                lang={lang}
+</div>
 
-                userLang={userLang}
-                isVoiceTestActiveRef={isVoiceTestActiveRef}
-                setHideSubtitles={setHideSubtitles}
-                hideSubtitles={hideSubtitles}
-
-              />
-            </div>
-          )}
-        </div>
+        {/* Controls moved OUTSIDE .floatingVideo to prevent clipping */}
+        {ttsSupported && (
+          <SubtitleVoiceControls
+            isSpeaking={isSpeaking}
+            volume={volume}
+            toggleSpeaking={toggleSpeaking}
+            handleVolumeChange={handleVolumeChange}
+            playerRef={playerRef}
+            lang={lang}
+            userLang={userLang}
+            isVoiceTestActiveRef={isVoiceTestActiveRef}
+            setHideSubtitles={setHideSubtitles}
+            hideSubtitles={hideSubtitles}
+          />
+        )}
 
      <div id="subtitle-wrapper">
   {!hideSubtitles && currentSubtitle && (

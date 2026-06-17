@@ -517,66 +517,37 @@ function shortCode(langTag) {
 }
 
   // Start the voice test reading and measure speed
-  const startAccurateVoiceTest = (testSentence) => {
-    
-  let sentence = (testSentence || "").trim();
+ const startAccurateVoiceTest = (testSentence) => {
+    let sentence = (testSentence || "").trim();
 
-  // ✅ If base language is not English, always use predefined sentence
-  if (lang !== "en") {
-    sentence =
-      testSentences[shortCode(effectiveLang)] ||
-      "This is a quick test to ensure subtitles are read correctly in your selected voice.";
-  }
-  if (!sentence) return;
-    if (!testVoice) return;
+    if (lang !== "en") {
+      sentence =
+        testSentences[shortCode(effectiveLang)] ||
+        "This is a quick test to ensure subtitles are read correctly in your selected voice.";
+    }
+    
+    if (!sentence || !testVoice) return;
 
     setIsLoadingTest(true);
-     const utterance = new SpeechSynthesisUtterance(sentence);
+    const utterance = new SpeechSynthesisUtterance(sentence);
     utterance.voice = testVoice;
     utterance.lang = effectiveLang;
 
     utteranceRef.current = utterance;
-
     let speechStartTime = null;
+    let isCompleted = false; // Flag to prevent double execution
 
-    utterance.onstart = () => {
-      speechStartTime = performance.now();
-    };
-
-    utterance.onerror = (e) => {
-  // ✅ interrupted is normal when we cancel/replace speech
-  if (e?.error === "interrupted" || e?.error === "canceled") {
-    setIsLoadingTest(false);
-    // ✅ DO NOT close test screen
-    utteranceRef.current = null;
-    return;
-  }
-
-  console.error("Speech synthesis error", e);
-  setIsLoadingTest(false);
-  // ✅ Keep screen open so user can retry
-  utteranceRef.current = null;
-};
-
-
-   utterance.onpause = () => {
-  setIsLoadingTest(false);
-  // ✅ do not close screen automatically
-  utteranceRef.current = null;
-};
-
-
-    utterance.onend = () => {
-      if (!utteranceRef.current) return;
+    // Unified completion handler
+    const handleSuccess = () => {
+      if (isCompleted || !utteranceRef.current) return;
+      isCompleted = true;
 
       const speechEndTime = performance.now();
-      const elapsedSeconds = (speechEndTime - speechStartTime) / 1000;
+      const elapsedSeconds = (speechEndTime - (speechStartTime || performance.now() - 1000)) / 1000;
       
       const baseLang = shortCode(effectiveLang);
       const unitCount = speechUnits(sentence, baseLang);
-
       const wps = unitCount / elapsedSeconds;
-
 
       console.log(`Accurate WPS for "${testVoice.name}": ${wps.toFixed(2)} (time=${elapsedSeconds.toFixed(2)}s)`);
 
@@ -586,24 +557,20 @@ function shortCode(langTag) {
         voiceURI: testVoice.voiceURI,
         lang: testVoice.lang,
       };
+      
       const testKey = `tts_test_${effectiveLang}`;
-      const storedData = localStorage.getItem(testKey);
       let allTestData = {};
+      const storedData = localStorage.getItem(testKey);
 
       if (storedData) {
-        try {
-          allTestData = JSON.parse(storedData);
-        } catch {
-          allTestData = {};
-        }
+        try { allTestData = JSON.parse(storedData); } catch {}
       }
 
       allTestData[testVoice.voiceURI] = testData;
-
       localStorage.setItem(testKey, JSON.stringify(allTestData));
-      localStorage.setItem(`${effectiveLang}`,testVoice.voiceURI);
-      console.log("accuratetest - ", localStorage.getItem(`tts_test_${effectiveLang}`), "langitem-",localStorage.getItem(`${effectiveLang}`));
-      setAlreadyTested(true); // Mark tested after success
+      localStorage.setItem(`${effectiveLang}`, testVoice.voiceURI);
+
+      setAlreadyTested(true); 
       setShowTestScreen(false);
       setIsLoadingTest(false);
 
@@ -614,8 +581,51 @@ function shortCode(langTag) {
 
       utteranceRef.current = null;
     };
+
+    utterance.onstart = () => {
+      speechStartTime = performance.now();
+    };
+
+    utterance.onerror = (e) => {
+      if (isCompleted) return;
+      
+      // iOS WebKit often fires "interrupted" right as speech finishes successfully.
+      // If it's been playing for more than 1 second, treat it as a success to avoid getting stuck.
+      if ((e?.error === "interrupted" || e?.error === "canceled") && speechStartTime && (performance.now() - speechStartTime > 1000)) {
+        handleSuccess();
+        return;
+      }
+
+      console.error("Speech synthesis error", e);
+      setIsLoadingTest(false);
+      // Force close the screen so the user is not permanently trapped
+      setShowTestScreen(false);
+      utteranceRef.current = null;
+    };
+
+    utterance.onpause = () => {
+      setIsLoadingTest(false);
+      utteranceRef.current = null;
+    };
+
+    utterance.onend = handleSuccess;
+
     speechSynthesis.cancel();
-    speechSynthesis.speak(utterance);
+    
+    // Fix for iOS WebKit: A slight delay ensures the new utterance events fire correctly
+    setTimeout(() => {
+      speechSynthesis.speak(utterance);
+      
+      // Failsafe for iOS Brave: If the OS drops the events entirely, force completion
+      const estimatedTimeMs = (sentence.length * 90) + 3000; // Approx reading time + buffer
+      setTimeout(() => {
+        if (!isCompleted && utteranceRef.current === utterance) {
+          console.warn("TTS Failsafe triggered: forcing test completion on iOS");
+          handleSuccess();
+        }
+      }, estimatedTimeMs);
+      
+    }, 50);
   };
 
   const cancelVoiceTest = () => {
