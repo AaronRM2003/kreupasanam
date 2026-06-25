@@ -156,6 +156,18 @@
   transition: transform 0.3s ease, text-shadow 0.3s ease;
 }
 
+.watchProgress {
+  height: 4px;
+  width: 100%;
+  background: rgba(255,255,255,.15);
+  overflow: hidden;
+}
+
+.watchProgressFill {
+  height: 100%;
+  background: #ff0000;
+  transition: width .3s;
+}
 
 .testimoniesTitle:hover {
   transform: scale(1.03);
