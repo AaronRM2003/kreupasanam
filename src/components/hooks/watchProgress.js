@@ -1,8 +1,8 @@
-export function saveWatchProgress(id, currentTime, duration) {
-  if (!id || !duration) return;
+export function saveWatchProgress(videoId, currentTime, duration) {
+  if (!videoId || !duration) return;
 
   localStorage.setItem(
-    `watch_progress_${id}`,
+    `watch_progress_${videoId}`,
     JSON.stringify({
       currentTime,
       duration,
@@ -11,8 +11,10 @@ export function saveWatchProgress(id, currentTime, duration) {
   );
 }
 
-export function getWatchProgress(id) {
-  const raw = localStorage.getItem(`watch_progress_${id}`);
+export function getWatchProgress(videoId) {
+  if (!videoId) return null;
+
+  const raw = localStorage.getItem(`watch_progress_${videoId}`);
 
   if (!raw) return null;
 
@@ -23,6 +25,8 @@ export function getWatchProgress(id) {
   }
 }
 
-export function removeWatchProgress(id) {
-  localStorage.removeItem(`watch_progress_${id}`);
+export function removeWatchProgress(videoId) {
+  if (!videoId) return;
+
+  localStorage.removeItem(`watch_progress_${videoId}`);
 }
