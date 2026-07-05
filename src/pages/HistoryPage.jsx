@@ -22,6 +22,7 @@ import ImageWithBoxes from '../components/utils/ImageWithBoxes';
 import TranscriptModal from '../components/utils/TranscriptModel'
 import { normalizeToLocale } from '../components/utils/Utils';
 import TTSReviewBox from '../components/utils/TTSReviewBox';
+import WatchProgressBar from '../components/utils/WatchProgressBar';
 
 export default function HistoryPage({ lang: initialLang }) {
   const { idSlug } = useParams();  // Changed from id to idSlug
@@ -432,6 +433,7 @@ const handleClick = () => {
         </svg>
       </div>
     )}
+    {thumbnailLoaded && <WatchProgressBar videoId={videoId} />}
   </div>
 ) : (
   <div className={styles.thumbnailWrapper}>
