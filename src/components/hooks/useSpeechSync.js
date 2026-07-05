@@ -770,7 +770,7 @@ export function useSpeechSync({
 
   // --- Add this helper near the top of your hook ---
   const getIsIOS = () => {
-    if (typeof window === 'undefined') return True; // SSR fallback
+    if (typeof window === 'undefined') return false;
     return /iPad|iPhone|iPod/.test(navigator.userAgent) || 
            (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   };

@@ -50,8 +50,8 @@ export default function SubtitleVoiceControls({
 
   useEffect(() => {
     setIsIOS(
-     !( /iPad|iPhone|iPod/.test(navigator.userAgent) || 
-      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1))
+      /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
     );
   }, []);
   
