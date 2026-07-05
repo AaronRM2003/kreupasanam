@@ -589,10 +589,11 @@ export default function AutoFitText({
 }) {
   const ref = useRef(null);
   const [fontSize, setFontSize] = useState(12);
-   const shadowColor = getAdaptiveShadow(color, backgroundColor);
+  const shadowColor = getAdaptiveShadow(color, backgroundColor);
+  
   useEffect(() => {
-  setFontSize(12);
-}, [lang]);
+    setFontSize(12);
+  }, [lang]);
 
   useEffect(() => {
     const el = ref.current;
@@ -606,22 +607,26 @@ export default function AutoFitText({
 
     const fit = () => {
       let min = 6;
-      let max = Math.min(width, height);
+      let max = Math.floor(Math.min(width, height));
       let best = min;
+      
+      // 🛡️ BULLETPROOF FIX: Prevent any chance of infinite loops
+      let iterations = 0; 
 
-      while (min <= max) {
+      while (min <= max && iterations < 100) {
+        iterations++;
         const mid = Math.floor((min + max) / 2);
+        
         el.style.fontSize = `${mid}px`;
         el.style.maxWidth = `${effectiveWidth}px`;
 
-        const fitsHeight =
-          el.scrollHeight <= height - padding * 2 - 4;
+        const fitsHeight = el.scrollHeight <= height - padding * 2 - 4;
 
         if (fitsHeight) {
           best = mid;
-          min = mid + 0.8;
+          min = mid + 1; // 👈 Changed from +0.8 to +1
         } else {
-          max = mid - 0.8;
+          max = mid - 1; // 👈 Changed from -0.8 to -1
         }
       }
 
@@ -629,49 +634,46 @@ export default function AutoFitText({
     };
 
     document.fonts?.ready ? document.fonts.ready.then(fit) : fit();
-  }, [text, width, height, padding, fontFamily,lang]);
+  }, [text, width, height, padding, fontFamily, lang]);
 
   return (
-  <div
-    style={{
-      width,
-      height,
-      padding,
-      boxSizing: "border-box",
-      overflow: "hidden",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      textAlign: "center",
-    }}
-  >
-  
+    <div
+      style={{
+        width,
+        height,
+        padding,
+        boxSizing: "border-box",
+        overflow: "hidden",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        textAlign: "center",
+      }}
+    >
+      <span
+        ref={ref}
+        style={{
+          color,
+          fontFamily,
+          fontWeight,
+          fontSize,
+          lineHeight: 1.3,
+          maxWidth: "100%",
+          whiteSpace: "pre-wrap",
+          overflowWrap: "break-word",
+          display: "block",
 
-<span
-  ref={ref}
-  style={{
-    color,
-    fontFamily,
-    fontWeight,
-    fontSize,
-    lineHeight: 1.3,
-    maxWidth: "100%",
-    whiteSpace: "pre-wrap",
-    overflowWrap: "break-word",
-    display: "block",
-
-    // 🔥 adaptive shadow
-    textShadow: `
-      0 1px 2px ${shadowColor},
-      0 2px 6px ${shadowColor}
-    `,
-  }}
->
-  {text}
-</span>
-
-  </div>
-);
+          // 🔥 adaptive shadow
+          textShadow: `
+            0 1px 2px ${shadowColor},
+            0 2px 6px ${shadowColor}
+          `,
+        }}
+      >
+        {text}
+      </span>
+    </div>
+  );
 }
 
 function hexToRgb(hex) {

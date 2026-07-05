@@ -161,7 +161,7 @@ React.useEffect(() => {
           style={{ position: 'relative' }}
         >
           
-          <div id="yt-player" style={{ width: '100%' }} ref={playerRef}></div>
+          <div id="yt-player" style={{ width: '100%' }}></div>
 
           {/* Close button (portrait) */}
           {showCloseButton && !isLandscape && (

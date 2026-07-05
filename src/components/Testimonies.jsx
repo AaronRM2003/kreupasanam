@@ -1,12 +1,13 @@
-import React, { useState,useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Testimonies.module.css';
 import { Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { formatDuration } from './utils/Utils';
 import ImageWithBoxes from './utils/ImageWithBoxes';
+import WatchProgressBar from './utils/WatchProgressBar';
 
-  const languageMap = {
+const languageMap = {
   en: 'English',
   hi: 'हिन्दी',
   zh: '中文',
@@ -18,19 +19,19 @@ import ImageWithBoxes from './utils/ImageWithBoxes';
   mr: 'मराठी',
   kn: 'ಕನ್ನಡ',
 };
-const getYouTubeThumbnail = (url) => {
-    try {
-      const videoIdMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([\w-]{11})/);
-      const videoId = videoIdMatch ? videoIdMatch[1] : null;
-      if (videoId) {
-        return `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
-      }
-      return null;
-    } catch {
-      return null;
-    }
-  };
 
+const getYouTubeThumbnail = (url) => {
+  try {
+    const videoIdMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([\w-]{11})/);
+    const videoId = videoIdMatch ? videoIdMatch[1] : null;
+    if (videoId) {
+      return `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+};
 
 function slugify(text) {
   return text
@@ -44,6 +45,7 @@ function slugify(text) {
 
 export function TestimonyCard({
   id,
+  videoId, // 👈 2. Add videoId prop
   title,
   image,
   date,
@@ -62,25 +64,25 @@ export function TestimonyCard({
      Convert IST time string
   ------------------------------*/
   const formattedReleaseTime = useMemo(() => {
-  if (!expectedIn) return null;
+    if (!expectedIn) return null;
 
-  const [hours, minutes] = expectedIn.split(":").map(Number);
+    const [hours, minutes] = expectedIn.split(":").map(Number);
 
-  const now = new Date();
+    const now = new Date();
 
-  const istNow = new Date(
-    now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
-  );
+    const istNow = new Date(
+      now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
+    );
 
-  const target = new Date(istNow);
-  target.setHours(hours, minutes, 0, 0);
+    const target = new Date(istNow);
+    target.setHours(hours, minutes, 0, 0);
 
-  return target.toLocaleTimeString(lang || "en-IN", {
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
-  });
-}, [expectedIn, lang]);
+    return target.toLocaleTimeString(lang || "en-IN", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+  }, [expectedIn, lang]);
 
   const isComingSoon = !!expectedIn;
 
@@ -94,67 +96,17 @@ export function TestimonyCard({
      Translations
   ------------------------------*/
   const translations = {
-  en: {
-    releasing: "Expected at",
-    coming: "Coming Soon",
-    watch: "Watch Now",
-    loading: "Loading...",
-  },
-  hi: {
-    releasing: "अपेक्षित समय",
-    coming: "जल्द आ रहा है",
-    watch: "अभी देखें",
-    loading: "लोड हो रहा है...",
-  },
-  ta: {
-    releasing: "எதிர்பார்க்கப்படும் நேரம்",
-    coming: "விரைவில்",
-    watch: "இப்போது பார்க்கவும்",
-    loading: "ஏற்றுகிறது...",
-  },
-  bn: {
-    releasing: "প্রত্যাশিত সময়",
-    coming: "শীঘ্রই আসছে",
-    watch: "এখন দেখুন",
-    loading: "লোড হচ্ছে...",
-  },
-  te: {
-    releasing: "అంచనా సమయం",
-    coming: "త్వరలో వస్తోంది",
-    watch: "ఇప్పుడు చూడండి",
-    loading: "లోడ్ అవుతోంది...",
-  },
-  mr: {
-    releasing: "अपेक्षित वेळ",
-    coming: "लवकरच येत आहे",
-    watch: "आता पहा",
-    loading: "लोड होत आहे...",
-  },
-  fr: {
-    releasing: "Prévu à",
-    coming: "Bientôt disponible",
-    watch: "Regarder",
-    loading: "Chargement...",
-  },
-  es: {
-    releasing: "Programado para",
-    coming: "Próximamente",
-    watch: "Ver ahora",
-    loading: "Cargando...",
-  },
-  zh: {
-    releasing: "预计时间",
-    coming: "即将推出",
-    watch: "立即观看",
-    loading: "加载中...",
-  },
-  kn: {
-    releasing: "ನಿರೀಕ್ಷಿತ ಸಮಯ",
-    coming: "ಶೀಘ್ರದಲ್ಲೇ ಬರುತ್ತಿದೆ",
-    watch: "ಈಗ ವೀಕ್ಷಿಸಿ",
-    loading: "ಲೋಡ್ ಆಗುತ್ತಿದೆ...",
-  },
-};
+    en: { releasing: "Expected at", coming: "Coming Soon", watch: "Watch Now", loading: "Loading..." },
+    hi: { releasing: "अपेक्षित समय", coming: "जल्द आ रहा है", watch: "अभी देखें", loading: "लोड हो रहा है..." },
+    ta: { releasing: "எதிர்பார்க்கப்படும் நேரம்", coming: "விரைவில்", watch: "இப்போது பார்க்கவும்", loading: "ஏற்றுகிறது..." },
+    bn: { releasing: "প্রত্যাশিত সময়", coming: "শীঘ্রই আসছে", watch: "এখন দেখুন", loading: "লোড হচ্ছে..." },
+    te: { releasing: "అంచనా సమయం", coming: "త్వరలో వస్తోంది", watch: "ఇప్పుడు చూడండి", loading: "లోడ్ అవుతోంది..." },
+    mr: { releasing: "अपेक्षित वेळ", coming: "लवकरच येत आहे", watch: "आता पहा", loading: "लोड होत आहे..." },
+    fr: { releasing: "Prévu à", coming: "Bientôt disponible", watch: "Regarder", loading: "Chargement..." },
+    es: { releasing: "Programado para", coming: "Próximamente", watch: "Ver ahora", loading: "Cargando..." },
+    zh: { releasing: "预计时间", coming: "即将推出", watch: "立即观看", loading: "加载中..." },
+    kn: { releasing: "ನಿರೀಕ್ಷಿತ ಸಮಯ", coming: "ಶೀಘ್ರದಲ್ಲೇ ಬರುತ್ತಿದೆ", watch: "ಈಗ ವೀಕ್ಷಿಸಿ", loading: "ಲೋಡ್ ಆಗುತ್ತಿದೆ..." },
+  };
 
   const t = translations[lang] || translations.en;
 
@@ -174,6 +126,11 @@ export function TestimonyCard({
           onImageLoad={() => setIsLoaded(true)}
         />
 
+        {/* 👈 3. Drop in the WatchProgressBar */}
+        {!isComingSoon && isLoaded && videoId && (
+          <WatchProgressBar videoId={videoId} />
+        )}
+
         {duration && !isComingSoon && (
           <span
             className={`${styles.durationBadge} ${
@@ -189,9 +146,9 @@ export function TestimonyCard({
             <div className={styles.overlayText}>
               {t.releasing}
             </div>
-           <div className={styles.overlayTime}>
-  {formattedReleaseTime}
-</div>
+            <div className={styles.overlayTime}>
+              {formattedReleaseTime}
+            </div>
           </div>
         )}
       </div>
@@ -231,7 +188,6 @@ export function TestimonyCard({
   );
 }
 
-
 export default function Testimonies({ lang: initialLang }) {
   const [lang, setLang] = useState(initialLang || 'en');
   const [testimonies, setTestimonies] = useState([]);
@@ -241,8 +197,6 @@ export default function Testimonies({ lang: initialLang }) {
     fetch('/assets/testimony-content.json')
       .then((res) => res.json())
       .then(async (data) => {
-        
-
         setTestimonies(data);
         setIsLoading(false);
       })
@@ -253,35 +207,34 @@ export default function Testimonies({ lang: initialLang }) {
   }, []);
 
   // Render shimmer skeleton cards
-const renderSkeletons = () => {
-  return Array.from({ length: 3 }).map((_, idx) => (
-    <div key={idx} className={styles.testimonySkeletonCard}>
-      <div className={`${styles.testimonySkeletonImage} ${styles.skeleton}`}></div>
-      <div className={`${styles.testimonySkeletonText} ${styles.skeleton}`}></div>
-      <div className={`${styles.testimonySkeletonSmall} ${styles.skeleton}`}></div>
-      <div className={`${styles.testimonySkeletonButton} ${styles.skeleton}`}></div>
-    </div>
-  ));
-};
+  const renderSkeletons = () => {
+    return Array.from({ length: 3 }).map((_, idx) => (
+      <div key={idx} className={styles.testimonySkeletonCard}>
+        <div className={`${styles.testimonySkeletonImage} ${styles.skeleton}`}></div>
+        <div className={`${styles.testimonySkeletonText} ${styles.skeleton}`}></div>
+        <div className={`${styles.testimonySkeletonSmall} ${styles.skeleton}`}></div>
+        <div className={`${styles.testimonySkeletonButton} ${styles.skeleton}`}></div>
+      </div>
+    ));
+  };
+
   function resolveOverlay(testimony, all) {
-  // direct overlay
-  if (testimony.overlay) return testimony.overlay;
+    // direct overlay
+    if (testimony.overlay) return testimony.overlay;
 
-  // reuse overlay
-  if (testimony.overlayRef != null) {
-    const base = all.find(t => t.id === testimony.overlayRef);
-    if (!base?.overlay) return null;
+    // reuse overlay
+    if (testimony.overlayRef != null) {
+      const base = all.find(t => t.id === testimony.overlayRef);
+      if (!base?.overlay) return null;
 
-    return {
-      ...base.overlay,
-      texts: testimony.overlayTexts ?? base.overlay.texts
-    };
+      return {
+        ...base.overlay,
+        texts: testimony.overlayTexts ?? base.overlay.texts
+      };
+    }
+
+    return null;
   }
-
-  return null;
-}
-
-
 
   return (
     <section className={styles.testimoniesSection}>
@@ -310,23 +263,29 @@ const renderSkeletons = () => {
           ) : (
             testimonies
               .filter(({ id }) => [62, 22, 44].includes(id))
-              .map((t) => (
-  <TestimonyCard
-    key={t.id}
-    id={t.id}
-    title={t.title}
-    image={getYouTubeThumbnail(t.video)}
-    date={t.date}
-    lang={lang}
-    path={`${initialLang || 'en'}/testimony`}
-    duration={t.duration}
-    overlayData={resolveOverlay(t, testimonies)} // 👈 HERE
-  />
-))
+              .map((t) => {
+                // 👈 4. Extract Video ID to pass into the card
+                const videoIdMatch = t.video?.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([\w-]{11})/);
+                const extractedVideoId = videoIdMatch ? videoIdMatch[1] : null;
+
+                return (
+                  <TestimonyCard
+                    key={t.id}
+                    id={t.id}
+                    videoId={extractedVideoId} // 👈 5. Pass it down here
+                    title={t.title}
+                    image={getYouTubeThumbnail(t.video)}
+                    date={t.date}
+                    lang={lang}
+                    path={`${initialLang || 'en'}/testimony`}
+                    duration={t.duration}
+                    overlayData={resolveOverlay(t, testimonies)} 
+                  />
+                );
+              })
           )}
         </div>
       </div>
     </section>
   );
 }
-
