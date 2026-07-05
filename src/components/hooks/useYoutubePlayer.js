@@ -3,14 +3,22 @@ import { useEffect, useRef, useState } from 'react';
 export function useYouTubePlayer(videoId, isPlaying) {
   const playerRef = useRef(null);
   const intervalRef = useRef(null);
-  const lastSavedTimeRef = useRef(0); // 👈 NEW: Tracks when we last saved to disk
+  const lastSavedTimeRef = useRef(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
+  // 🚀 BULLETPROOF CATEGORY DETECTION
   const getCategory = () => {
     if (typeof window === 'undefined') return 'general';
-    const pathSegment = window.location.pathname.split('/')[2];
-    return pathSegment ? pathSegment.toLowerCase() : 'general'; 
+    const path = window.location.href.toLowerCase();
+    
+    if (path.includes('testimon')) return 'testimony';
+    if (path.includes('oracle')) return 'oracles';
+    if (path.includes('prayer')) return 'prayers';
+    if (path.includes('dhyanam')) return 'dhyanam';
+    if (path.includes('history')) return 'history';
+    
+    return 'general'; 
   };
   
   const PROGRESS_KEY = `yt_watch_progress_${getCategory()}`;
@@ -59,7 +67,7 @@ export function useYouTubePlayer(videoId, isPlaying) {
             const dur = player.getDuration?.();
             if (dur) setDuration(dur);
 
-            // 🚀 Fast 500ms interval for perfect TTS sync
+            // Fast 500ms interval for perfect TTS sync
             intervalRef.current = setInterval(() => {
               if (playerRef.current?.getCurrentTime) {
                 const currTime = playerRef.current.getCurrentTime();
@@ -70,23 +78,20 @@ export function useYouTubePlayer(videoId, isPlaying) {
                 const d = playerRef.current.getDuration?.() || 0;
                 if (d && d !== duration) setDuration(d);
 
-                // 2. SAVE TO DISK SLOWLY (Only save every 3 seconds to prevent crashes)
+                // 2. SAVE TO DISK SLOWLY (Every 3 seconds to prevent crashes)
                 if (currTime > 3 && d > 0 && Math.abs(currTime - lastSavedTimeRef.current) >= 3) {
-                  lastSavedTimeRef.current = currTime; // Update tracker
+                  lastSavedTimeRef.current = currTime; 
                   
                   try {
                     const storedProgress = JSON.parse(localStorage.getItem(PROGRESS_KEY) || '{}');
                     storedProgress[videoId] = { progress: currTime, duration: d, lastWatched: Date.now() };
                     localStorage.setItem(PROGRESS_KEY, JSON.stringify(storedProgress));
                     
-                    // Dispatch specific event
-                    window.dispatchEvent(new CustomEvent('yt_progress_updated', {
-                      detail: { videoId: videoId, progress: currTime, duration: d }
-                    }));
+                    window.dispatchEvent(new CustomEvent('yt_progress_updated'));
                   } catch (e) {}
                 }
               }
-            }, 500); // 👈 Back to 500ms interval
+            }, 500); 
           },
           onStateChange: (event) => {
             if (event.data === 1 && !hasSeeked && startSeconds > 3) {

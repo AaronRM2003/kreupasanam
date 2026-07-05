@@ -1,343 +1,146 @@
-import  { useState, useEffect ,useMemo} from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import styles from '../components/Testimonies.module.css';
 import { TestimonyCard } from '../components/Testimonies';
 import { Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { HiOutlineEmojiSad } from 'react-icons/hi';
 import AppBar from '../components/AppBar';
-import { formatDuration } from '../components/utils/Utils';
-import FadeInOnScroll from '../framer';
 import Footer from '../components/Footer';
+import FadeInOnScroll from '../framer';
+
+const languageMap = {
+  en: 'English', hi: 'हिन्दी', zh: '中文', bn: 'বাংলা', ta: 'தமிழ்',
+  te: 'తెలుగు', fr: 'Français', es: 'Español', mr: 'मराठी', kn: 'ಕನ್ನಡ',
+};
 
 export default function Prayers({ lang: initialLang }) {
   const [lang, setLang] = useState(initialLang || 'en');
   const [prayers, setPrayers] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
-  const [errorLoading, setErrorLoading] = useState(false);
-  const [imagesLoaded, setImagesLoaded] = useState(0);
-  const [allImagesLoaded, setAllImagesLoaded] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  
+  // 👈 Stores the progress data for the red lines
+  const [allProgressData, setAllProgressData] = useState({});
 
-  const languageMap = {
-    en: 'English',
-    hi: 'हिन्दी',
-    zh: '中文',
-    bn: 'বাংলা',
-    ta: 'தமிழ்',
-    te: 'తెలుగు',
-    fr: 'Français',
-    es: 'Español',
-    mr: 'मराठी',
-    kn: 'ಕನ್ನಡ',
-  };
-
-  // Fetch prayers-content.json on mount
-  useEffect(() => {
-    setLoadingData(true);
-    setErrorLoading(false);
-    fetch('/assets/prayers-content.json')
-      .then((res) => {
-        if (!res.ok) throw new Error('Failed to fetch data');
-        return res.json();
-      })
-      .then(async (data) => {
-        
-        setPrayers(data);
-        setLoadingData(false);
-      })
-      .catch((err) => {
-        console.error('Error loading prayers content:', err);
-        setErrorLoading(true);
-        setLoadingData(false);
-      });
-  }, []);
-
-  const getYouTubeThumbnail = (url) => {
-    try {
-      const videoIdMatch = url.match(
-        /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([\w-]{11})/
-      );
-      const videoId = videoIdMatch ? videoIdMatch[1] : null;
-      if (videoId) {
-        return `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
-      }
-      return null;
-    } catch {
-      return null;
-    }
-  };
-
-  // Extract all valid thumbnail URLs once prayers data is loaded
-  const thumbnails = useMemo(() => {
-  return prayers.map(({ video }) => getYouTubeThumbnail(video)).filter(Boolean);
-}, [prayers]);
-
-useEffect(() => {
-  if (thumbnails.length > 0) {
-    setImagesLoaded(0);
-    setAllImagesLoaded(false);
-  } else {
-    setAllImagesLoaded(true);
-  }
-}, [thumbnails.length]);
-
-const handleImageLoad = () => {
-  setImagesLoaded((prev) => prev + 1);
-};
-
-const MIN_IMAGES_TO_SHOW = 1; // show grid once at least 5 thumbnails loaded
-
-// Count loaded images and mark when threshold reached
-useEffect(() => {
-  if (thumbnails.length > 0 && imagesLoaded >= Math.min(MIN_IMAGES_TO_SHOW, thumbnails.length)) {
-    setAllImagesLoaded(true);
-  }
-}, [imagesLoaded, thumbnails.length]);
-
-const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  useEffect(() => { if (initialLang && initialLang !== lang) setLang(initialLang); }, [initialLang]);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
-
     window.addEventListener('resize', handleResize);
-
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  if (loadingData) {
-  return (
-    <div
-      style={{
-        position: 'fixed',
-        inset: 0,
-        backgroundColor: 'rgba(255, 255, 255, 0.9)',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: 9999,
-      }}
-    >
-      <div
-        style={{
-          border: '6px solid #f3f3f3',
-         borderTop: '4px solid #246bfd',
-          borderRadius: '50%',
-          width: '48px',
-          height: '48px',
-          animation: 'spin 1s linear infinite',
-          marginBottom: '1rem',
-        }}
-      />
-      <p style={{ fontSize: '1.25rem', color: '#333' }}>Loading content...</p>
-
-      {/* Add the keyframes for spin animation */}
-      <style>
-        {`
-          @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+  // 🚀 Process Overlays and URLs safely
+  useEffect(() => {
+    let isMounted = true; 
+    setLoadingData(true);
+    fetch("/assets/prayers-content.json") 
+      .then(res => res.json())
+      .then(data => {
+        if (!isMounted) return; 
+        
+        const preCalculatedData = data.map(item => {
+          let finalOverlay = item.overlay || null;
+          if (!finalOverlay && item.overlayRef != null) {
+            const base = data.find(t => t.id === item.overlayRef);
+            if (base && base.overlay) {
+              finalOverlay = { ...base.overlay, texts: item.overlayTexts || base.overlay.texts };
+            }
           }
-        `}
-      </style>
-    </div>
-  );
-}
 
-if (errorLoading) {
-  return (
-    <div
-      style={{
-        display: 'flex',
-        height: '100vh',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#fefefe',
-        flexDirection: 'column',
-        padding: '1rem',
-        textAlign: 'center',
-      }}
-    >
-      <span
-        style={{
-          fontSize: '6rem',
-          fontWeight: 'bold',
-          color: '#e74c3c',
-          marginBottom: '1rem',
-        }}
-      >
-        500
-      </span>
-      <h1
-        style={{
-          fontSize: '2rem',
-          marginBottom: '0.5rem',
-          color: '#333',
-        }}
-      >
-        Error Loading Prayers
-      </h1>
-      <p style={{ fontSize: '1.125rem', color: '#666', marginBottom: '1rem' }}>
-        There was a problem loading the content. Please try again later.
-      </p>
-      {/* Optional: Add a refresh or go back button here */}
-    </div>
-  );
-}
+          const match = item.video?.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([\w-]{11})/);
+          const extractedVideoId = match ? match[1] : null;
+          const thumbnail = extractedVideoId ? `https://img.youtube.com/vi/${extractedVideoId}/sddefault.jpg` : null;
+
+          return { ...item, finalOverlay, extractedVideoId, thumbnail };
+        });
+
+        setPrayers(preCalculatedData);
+        setLoadingData(false);
+      })
+      .catch(() => { if (isMounted) setLoadingData(false); });
+
+    return () => { isMounted = false; };
+  }, []); 
+
+  // 🛡️ Read the local storage for Prayers to get the red lines
+  useEffect(() => {
+    if (prayers.length === 0) return;
+    try {
+      const stored = JSON.parse(localStorage.getItem('yt_watch_progress_prayers') || '{}');
+      setAllProgressData(prev => JSON.stringify(prev) === JSON.stringify(stored) ? prev : stored);
+    } catch (e) {}
+  }, [prayers]);
 
   return (
-    <div >
-          <AppBar lang={initialLang || 'en'}/>
-             <section
-    className={styles.testimoniesSection}
-    style={{ 
-      marginBottom:'2rem', 
-      backgroundColor: windowWidth <= 768 ? '#fff' : 'transparent' 
-    }}
-  >
-                <img src="/assets/logo.png" alt="Logo" className="floating-logo" />
-      <div className={styles.testimoniesSectionContainer} style={{ margin: '0 0rem' }}>
-        <div className={styles.testimoniesHeader}>
-          <div style={{ position: 'relative', textAlign: 'center' }}>
-            <button
-              className={styles.backButton}
-              onClick={() => window.history.back()}
-              style={{
-                position: 'absolute',
-                left: 0,
-                top: '50%',
-                transform: 'translateY(-50%)',
-                display: window.innerWidth <= 768 ? 'none' : 'block',
-              }}
-            >
-              &#8592; <span>Back</span>
-            </button>
+    <div>
+      <AppBar lang={lang} />
+      <img src="/assets/logo.png" alt="Logo" className="floating-logo" />
 
-            <h2 className={styles.testimoniesTitle} style={{ margin: 0 }}>
-              Prayers
-            </h2>
-          </div>
-
-          <p className={styles.testimoniesSubtitle}>Daily Bread uploaded within 7AM</p>
-
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              justifyContent: 'center',
-              gap: '1rem',
-            }}
-          >
-            <Dropdown onSelect={(e) => setLang(e)}>
-              <Dropdown.Toggle variant="outline-secondary" id="dropdown-lang">
-                {languageMap[lang] || lang}
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                {Object.entries(languageMap).map(([key, label]) => (
-                  <Dropdown.Item key={key} eventKey={key}>
-                    {label}
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
-        </div>
-
-        {/* Loading Screen */}
-        {!allImagesLoaded && (
-          <div
-            style={{
-              height: 300,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              flexDirection: 'column',
-              color: '#246bfd',
-              fontSize: '1.2rem',
-              marginBottom:'12rem'
-            }}
-          >
-            <div
-              style={{
-                width: 40,
-                height: 40,
-                border: '4px solid #d3e3ff',
-                borderTop: '4px solid #246bfd',
-                borderRadius: '50%',
-                animation: 'spin 1s linear infinite',
-                marginBottom: 16,
-              }}
-            ></div>
-            Loading Prayers...
-            <style>{`
-              @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-              }
-            `}</style>
-          </div>
-        )}
-
-        {/* Show content only after images loaded */}
-        {allImagesLoaded && (
-          <div className={styles.testimoniesGrid}>
-            {prayers.length > 0 ? (
-              prayers.map(({ id, title, video, date, duration, expectedIn }) => {
-                const thumbnail = getYouTubeThumbnail(video);
-
-                return (
-                  <TestimonyCard
-                    key={id}
-                    id={id}
-                    title={title}
-                    image={thumbnail || ''}
-                    date={date}
-                    lang={lang}
-                    duration={duration}
-                    expectedIn={expectedIn}   // 👈 just pass it
-                    path={`${initialLang || 'en'}/prayers`}
-                  />
-                );
-              })
-            ) : (
-              <div
-                className={styles.testimoniesCard}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '3rem 1rem',
-                  border: '2px dashed #a2c4ff',
-                  borderRadius: 20,
-                  backgroundColor: 'rgba(240, 245, 255, 0.5)',
-                  maxWidth: 600,
-                  margin: '3rem auto',
-                  textAlign: 'center',
-                  boxShadow: '0 8px 24px rgba(36, 107, 253, 0.08)',
-                  backdropFilter: 'blur(8px)',
-                }}
+      <section className={styles.testimoniesSection} style={{ marginBottom: '2rem', backgroundColor: windowWidth <= 768 ? '#fff' : 'transparent' }}>
+        <div className={styles.testimoniesSectionContainer}>
+          
+          <div className={styles.testimoniesHeader}>
+            <div style={{ position: 'relative', textAlign: 'center' }}>
+              <button
+                className={styles.backButton} onClick={() => window.history.back()}
+                style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', display: windowWidth <= 768 ? 'none' : 'block' }}
               >
-                <HiOutlineEmojiSad size={50} color="#246bfd" style={{ marginBottom: 16 }} />
-                <h3 style={{ color: '#246bfd', fontWeight: 600, fontSize: '1.4rem' }}>
-                  No Prayers Available
-                </h3>
-              </div>
-            )}
-          </div>
-        )}
+                &#8592; <span>Back</span>
+              </button>
+              <h2 className={styles.testimoniesTitle}>Prayers</h2>
+            </div>
+            
+            <p className={styles.testimoniesSubtitle}>Daily Bread uploaded within 7AM</p>
 
-        {/* Hidden images to preload */}
-        <div style={{ display: 'none' }}>
-          {thumbnails.map((src, idx) => (
-            <img key={idx} src={src} alt="" onLoad={handleImageLoad} />
-          ))}
+            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem', margin: '0.5rem' }}>
+              <Dropdown onSelect={(e) => e !== lang && setLang(e)}>
+                <Dropdown.Toggle variant="outline-secondary">{languageMap[lang] ?? languageMap['en']}</Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {Object.entries(languageMap).map(([key, label]) => (
+                    <Dropdown.Item key={key} eventKey={key}>{label}</Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+          </div>
+
+          {loadingData ? (
+            <div style={{ height: 300, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', color: '#246bfd', fontSize: '1.2rem', marginBottom: '10rem' }}>
+              <div style={{ width: 40, height: 40, border: '4px solid #d3e3ff', borderTop: '4px solid #246bfd', borderRadius: '50%', animation: 'spin 1s linear infinite', marginBottom: 16 }} />
+              Loading Prayers...
+              <style>{`@keyframes spin {0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); }}`}</style>
+            </div>
+          ) : (
+            <div className={styles.testimoniesGrid}>
+              {prayers.length > 0 ? (
+                prayers.map((t) => (
+                  <TestimonyCard
+                    key={t.id} 
+                    id={t.id} 
+                    videoId={t.extractedVideoId} 
+                    title={t.title} 
+                    image={t.thumbnail} 
+                    date={t.date} 
+                    lang={lang}
+                    path={`${initialLang || 'en'}/prayers`} 
+                    duration={t.duration} 
+                    overlayData={t.finalOverlay} 
+                    savedProgress={allProgressData[t.extractedVideoId]} // 👈 Powers the red line
+                    expectedIn={t.expectedIn}
+                  />
+                ))
+              ) : (
+                <div className={styles.testimoniesCard} style={{ gridColumn: "1 / -1", display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '4rem 2rem', border: '2px dashed #a2c4ff', borderRadius: '24px', backgroundColor: 'rgba(240,245,255,0.5)', margin: '2rem auto 8rem auto', textAlign: 'center', boxShadow: '0 8px 24px rgba(36,107,253,0.08)' }}>
+                  <div style={{ background: '#e6f0ff', padding: '1.5rem', borderRadius: '50%', marginBottom: '1.5rem' }}><HiOutlineEmojiSad size={50} color="#246bfd" /></div>
+                  <h3 style={{ color: '#1e2b5a', fontWeight: '700', fontSize: '1.5rem', marginBottom: '0.5rem' }}>No Prayers Found</h3>
+                </div>
+              )}
+            </div>
+          )}
         </div>
-      </div>
-    </section>
-    <FadeInOnScroll delay={0.4}>
-                        <Footer lang={lang} />
-                      </FadeInOnScroll>
+      </section>
+      <FadeInOnScroll delay={0.4}><Footer lang={lang} /></FadeInOnScroll>
     </div>
   );
 }

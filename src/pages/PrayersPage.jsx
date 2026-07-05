@@ -22,6 +22,7 @@ import FloatingVideoPlayer from '../components/utils/FloatingVideoPlayer';
 import LangHelpOverlay from '../components/utils/LangHelpOverlay';
 import TranscriptModal from '../components/utils/TranscriptModel';
 import TTSReviewBox from '../components/utils/TTSReviewBox';
+import WatchProgressBar from '../components/utils/WatchProgressBar';
 
 export default function PrayersPage({ lang: initialLang }) {
   const { idSlug } = useParams();  // changed from id to idSlug
@@ -432,6 +433,7 @@ useEffect(() => {
                   </svg>
                 </div>
               )}
+               {thumbnailLoaded && <WatchProgressBar videoId={videoId} />}
             </div>
           ) : (
             <div className={styles.thumbnailWrapper}>
