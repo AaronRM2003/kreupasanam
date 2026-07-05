@@ -45,6 +45,15 @@ export default function SubtitleVoiceControls({
   const toggleLockRef = useRef(false);
 
   const voiceFromHook = useSelectedVoice(effectiveLang);
+
+  const [isIOS, setIsIOS] = useState(false);
+
+  useEffect(() => {
+    setIsIOS(
+     !( /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1))
+    );
+  }, []);
   
 
   // Load system voices on mount and when voices changed
@@ -761,17 +770,23 @@ function shortCode(langTag) {
   </button>
 )}
 
-        {/* Volume Control */}
+       {/* Volume Control */}
         <div className="volume-control">
           <div className="volume-label">
             <FaVolumeUp />
-            <span>Volume: {volume}%</span>
+            {/* Show Mute/Unmute text for iOS, percentage for others */}
+            <span>
+              {isIOS 
+                ? (volume === 0 ? 'Muted' : 'Unmuted') 
+                : `Volume: ${volume}%`}
+            </span>
           </div>
 
           <input
             type="range"
             min="0"
             max="100"
+            step={isIOS ? 100 : 1} // Forces the drag to snap between 0 and 100 on iOS
             value={volume}
             onChange={handleVolumeChange}
             onMouseDown={() => setIsInteracting(true)}

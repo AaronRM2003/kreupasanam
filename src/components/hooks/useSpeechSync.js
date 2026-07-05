@@ -233,25 +233,6 @@ export function useSpeechSync({
 
 
 
-  // Sync volume once player is available
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const player = playerRef.current;
-      if (player?.setVolume instanceof Function) {
-        player.setVolume(volume);
-        setPlayerReady(true);
-        clearInterval(interval);
-      }
-    }, 200);
-
-    return () => clearInterval(interval);
-  }, [volume, playerRef]);
-
-  useEffect(() => {
-    if (playerReady && playerRef.current?.setVolume instanceof Function) {
-      playerRef.current.setVolume(volume);
-    }
-  }, [volume, playerReady, playerRef]);
 
   useEffect(() => {
     if (!isSpeaking || !showVideo) {
@@ -787,15 +768,77 @@ export function useSpeechSync({
     }
   }, [isSpeaking, playerRef]);
 
+  // --- Add this helper near the top of your hook ---
+  const getIsIOS = () => {
+    if (typeof window === 'undefined') return True; // SSR fallback
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+           (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  };
+
+  // --- Replace your existing Volume Sync Effects with these ---
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const player = playerRef.current;
+      if (player) {
+        const isIOS = getIsIOS();
+        
+        if (isIOS) {
+          // iOS strictly requires muting instead of volume setting
+          if (volume === 0) {
+            if (typeof player.mute === 'function') player.mute(); // YouTube API
+            else player.muted = true; // HTML5 Video
+          } else {
+            if (typeof player.unMute === 'function') player.unMute();
+            else player.muted = false;
+          }
+        } else if (typeof player.setVolume === 'function') {
+          player.setVolume(volume);
+        }
+        
+        setPlayerReady(true);
+        clearInterval(interval);
+      }
+    }, 200);
+
+    return () => clearInterval(interval);
+  }, [volume, playerRef]);
+
+  useEffect(() => {
+    if (playerReady && playerRef.current) {
+      const player = playerRef.current;
+      const isIOS = getIsIOS();
+      
+      if (isIOS) {
+        if (volume === 0) {
+          if (typeof player.mute === 'function') player.mute();
+          else player.muted = true;
+        } else {
+          if (typeof player.unMute === 'function') player.unMute();
+          else player.muted = false;
+        }
+      } else if (typeof player.setVolume === 'function') {
+        player.setVolume(volume);
+      }
+    }
+  }, [volume, playerReady, playerRef]);
+
+  // --- Update handleVolumeChange ---
   const handleVolumeChange = (e) => {
-    const newVol = Number(e.target.value);
+    let newVol = Number(e.target.value);
+    
+    // If iOS, snap to either 0 or 100 based on drag threshold
+    if (getIsIOS()) {
+      newVol = newVol < 50 ? 0 : 100;
+    }
     setVolume(newVol);
   };
 
+  // --- Update toggleSpeaking to fully mute on iOS instead of 10% ---
   const toggleSpeaking = () => {
     setIsSpeaking((prev) => {
       const newSpeaking = !prev;
-      if (newSpeaking) setVolume(10);
+      // On iOS, 10% volume is ignored (plays at 100%). We MUST mute it completely.
+      if (newSpeaking) setVolume(getIsIOS() ? 0 : 10);
       return newSpeaking;
     });
   };
