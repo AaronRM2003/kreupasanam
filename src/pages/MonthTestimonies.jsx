@@ -178,7 +178,7 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
   useEffect(() => {
     if (testimonies.length === 0) return;
     try {
-      const stored = JSON.parse(localStorage.getItem('yt_watch_progress') || '{}');
+      const stored = JSON.parse(localStorage.getItem('yt_watch_progress_testimony') || '{}');
       
       // Strict equivalence check stops re-renders on "Back" navigation
       setAllProgressData(prev => JSON.stringify(prev) === JSON.stringify(stored) ? prev : stored);
