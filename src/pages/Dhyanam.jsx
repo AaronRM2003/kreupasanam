@@ -91,6 +91,33 @@ useEffect(() => {
     };
   }, [dataList]);
 
+  useEffect(() => {
+  console.log("Progress effect fired");
+  console.log("dataList =", dataList.length);
+
+  if (dataList.length === 0) {
+    console.log("Returning because dataList is empty");
+    return;
+  }
+
+  console.log("About to call syncProgress");
+
+  const syncProgress = () => {
+    console.log("syncProgress running");
+
+    const raw = localStorage.getItem("yt_watch_progress_dhyanam");
+    console.log("Raw localStorage:", raw);
+
+    const stored = JSON.parse(raw || "{}");
+    console.log("Parsed:", stored);
+
+    setAllProgressData(stored);
+  };
+
+  syncProgress();
+
+}, [dataList]);
+
   // 🚀 HEAVILY LOGGED AND BULLETPROOF CONTINUED WATCHING CALCULATOR
   const continueWatchingItem = useMemo(() => {
     if (!dataList.length || Object.keys(allProgressData).length === 0) return null;
