@@ -1473,6 +1473,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   animation: fadeIn 0.5s ease-in;
 }
 
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
