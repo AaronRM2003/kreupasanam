@@ -63,7 +63,7 @@ export default function Dhyanam({ lang: initialLang }) {
     return () => { isMounted = false; };
   }, []); 
 
-  // 🚀 PERFECT SYNC: Event listeners
+  // 🚀 PERFECT SYNC: Handles old storage data & instantly updates on "Back" navigation
   useEffect(() => {
     if (dataList.length === 0) return;
 
@@ -78,8 +78,11 @@ export default function Dhyanam({ lang: initialLang }) {
         for (const [vId, data] of Object.entries(stored)) {
           if (data && data.duration > 0) {
             const percent = data.progress / data.duration;
-            if (percent < 0.95 && data.lastWatched > maxTimestamp) {
-              maxTimestamp = data.lastWatched;
+            // 🛡️ FALLBACK FIX: If old localstorage data doesn't have lastWatched, force it to work!
+            const timestamp = data.lastWatched || 1; 
+
+            if (percent < 0.95 && timestamp > maxTimestamp) {
+              maxTimestamp = timestamp;
               latestVideoId = vId;
             }
           }
@@ -94,6 +97,7 @@ export default function Dhyanam({ lang: initialLang }) {
       } catch (e) {}
     };
 
+    // Run immediately, then listen for browser events
     syncProgress();
     window.addEventListener('yt_progress_updated', syncProgress);
     window.addEventListener('pageshow', syncProgress);
@@ -133,7 +137,7 @@ export default function Dhyanam({ lang: initialLang }) {
               <h2 className={styles.testimoniesTitle}>Dhyanam</h2>
             </div>
             
-            <p className={styles.testimoniesSubtitle}>Usually Uploaded on Tuesday...</p>
+            <p className={styles.testimoniesSubtitle}>Usually Uploaded on Wednesday...</p>
 
             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem', margin: '0.5rem' }}>
               <Dropdown onSelect={(e) => e !== lang && setLang(e)}>
@@ -147,75 +151,95 @@ export default function Dhyanam({ lang: initialLang }) {
             </div>
           </div>
 
-          {loadingData ? (
+          {loadingData && (
             <div style={{ height: 300, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', color: '#246bfd', fontSize: '1.2rem', marginBottom: '10rem' }}>
               <div style={{ width: 40, height: 40, border: '4px solid #d3e3ff', borderTop: '4px solid #246bfd', borderRadius: '50%', animation: 'spin 1s linear infinite', marginBottom: 16 }} />
               Loading Dhyanam...
               <style>{`@keyframes spin {0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); }}`}</style>
             </div>
-          ) : (
-            <>
-              {/* 🎬 MERGED GRID */}
-              <div className={styles.testimoniesGrid}>
-                
-                {/* 1. Continue Watching Card (Rendered as FIRST grid item) */}
-                {continueWatchingItem && (
-                  <div style={{ 
-                    background: 'linear-gradient(135deg, rgba(36, 107, 253, 0.05), rgba(0, 179, 255, 0.1))', 
-                    borderRadius: '24px', 
-                    padding: '12px',
-                    border: '2px solid rgba(36, 107, 253, 0.3)', 
-                    boxShadow: '0 8px 20px rgba(36, 107, 253, 0.08)',
-                    display: 'flex',
-                    flexDirection: 'column'
-                  }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '0 4px 10px 4px' }}>
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#246bfd" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12 6 12 12 16 14"></polyline>
-                      </svg>
-                      <span style={{ color: '#1e2b5a', margin: 0, fontWeight: '800', fontSize: '1.05rem', letterSpacing: '-0.3px' }}>
-                        Continue Watching
-                      </span>
-                    </div>
+          )}
 
-                    <TestimonyCard
-                      key={`continue-${continueWatchingItem.id}`} id={continueWatchingItem.id} videoId={continueWatchingItem.extractedVideoId} 
-                      title={continueWatchingItem.title} image={continueWatchingItem.thumbnail} date={continueWatchingItem.date} lang={lang}
-                      path={`${initialLang || 'en'}/dhyanam`} duration={continueWatchingItem.duration} overlayData={continueWatchingItem.finalOverlay} 
-                      savedProgress={allProgressData[continueWatchingItem.extractedVideoId]} expectedIn={continueWatchingItem.expectedIn}
-                    />
+          {!loadingData && (
+            <div className={styles.testimoniesGrid}>
+              
+              {/* 🎬 1. CONTINUE WATCHING BLOCK (Merged cleanly into grid Column 1!) */}
+              {continueWatchingItem && (
+                <div style={{ 
+                  background: 'linear-gradient(135deg, rgba(36, 107, 253, 0.05), rgba(0, 179, 255, 0.1))', 
+                  borderRadius: '24px', 
+                  padding: '12px',
+                  border: '2px solid rgba(36, 107, 253, 0.3)', 
+                  boxShadow: '0 8px 20px rgba(36, 107, 253, 0.08)',
+                  display: 'flex',
+                  flexDirection: 'column'
+                }}>
+                  {/* Highlight Badge */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '0 4px 10px 4px' }}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#246bfd" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span style={{ color: '#1e2b5a', margin: 0, fontWeight: '800', fontSize: '1.05rem', letterSpacing: '-0.3px' }}>
+                      Continue Watching
+                    </span>
                   </div>
-                )}
 
-                {/* 2. Standard Cards (Seamlessly fill the rest of the row) */}
-                {displayedData.length > 0 ? (
-                  displayedData.map((t) => (
-                    <TestimonyCard
-                      key={t.id} id={t.id} videoId={t.extractedVideoId} title={t.title} image={t.thumbnail} date={t.date} lang={lang}
-                      path={`${initialLang || 'en'}/dhyanam`} duration={t.duration} overlayData={t.finalOverlay} 
-                      savedProgress={allProgressData[t.extractedVideoId]} expectedIn={t.expectedIn}
-                    />
-                  ))
-                ) : (
-                  !continueWatchingItem && (
-                    <div className={styles.testimoniesCard} style={{ gridColumn: "1 / -1", display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '4rem 2rem', border: '2px dashed #a2c4ff', borderRadius: '24px', backgroundColor: 'rgba(240,245,255,0.5)', margin: '2rem auto 8rem auto', textAlign: 'center', boxShadow: '0 8px 24px rgba(36,107,253,0.08)' }}>
-                      <div style={{ background: '#e6f0ff', padding: '1.5rem', borderRadius: '50%', marginBottom: '1.5rem' }}><HiOutlineEmojiSad size={50} color="#246bfd" /></div>
-                      <h3 style={{ color: '#1e2b5a', fontWeight: '700', fontSize: '1.5rem', marginBottom: '0.5rem' }}>No Dhyanam Found</h3>
-                    </div>
-                  )
-                )}
-              </div>
-
-              {visibleCount < filteredData.length && (
-                <div style={{ textAlign: 'center', marginTop: '3.5rem', marginBottom: '3rem' }}>
-                  <button onClick={() => setVisibleCount(prev => prev + 12)} style={{ padding: '12px 32px', borderRadius: '30px', background: '#246bfd', color: 'white', border: 'none', fontWeight: '700', fontSize: '1.1rem', cursor: 'pointer', boxShadow: '0 8px 20px rgba(36, 107, 253, 0.25)', transition: 'transform 0.2s ease, box-shadow 0.2s ease' }}>
-                    Load More
-                  </button>
+                  <TestimonyCard
+                    key={`continue-${continueWatchingItem.id}`} 
+                    id={continueWatchingItem.id} 
+                    videoId={continueWatchingItem.extractedVideoId} 
+                    title={continueWatchingItem.title} 
+                    image={continueWatchingItem.thumbnail} 
+                    date={continueWatchingItem.date} 
+                    lang={lang}
+                    path={`${initialLang || 'en'}/dhyanam`} 
+                    duration={continueWatchingItem.duration} 
+                    overlayData={continueWatchingItem.finalOverlay} 
+                    savedProgress={allProgressData[continueWatchingItem.extractedVideoId]} 
+                    expectedIn={continueWatchingItem.expectedIn}
+                  />
                 </div>
               )}
-            </>
+
+              {/* 🎬 2. STANDARD CARDS (Filling the rest of the row naturally) */}
+              {displayedData.length > 0 ? (
+                displayedData.map((t) => (
+                  <TestimonyCard
+                    key={t.id} 
+                    id={t.id} 
+                    videoId={t.extractedVideoId} 
+                    title={t.title} 
+                    image={t.thumbnail} 
+                    date={t.date} 
+                    lang={lang}
+                    path={`${initialLang || 'en'}/dhyanam`} 
+                    duration={t.duration} 
+                    overlayData={t.finalOverlay} 
+                    savedProgress={allProgressData[t.extractedVideoId]} 
+                    expectedIn={t.expectedIn}
+                  />
+                ))
+              ) : (
+                !continueWatchingItem && (
+                  <div className={styles.testimoniesCard} style={{ gridColumn: "1 / -1", display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '4rem 2rem', border: '2px dashed #a2c4ff', borderRadius: '24px', backgroundColor: 'rgba(240,245,255,0.5)', margin: '2rem auto 8rem auto', textAlign: 'center', boxShadow: '0 8px 24px rgba(36,107,253,0.08)' }}>
+                    <div style={{ background: '#e6f0ff', padding: '1.5rem', borderRadius: '50%', marginBottom: '1.5rem' }}><HiOutlineEmojiSad size={50} color="#246bfd" /></div>
+                    <h3 style={{ color: '#1e2b5a', fontWeight: '700', fontSize: '1.5rem', marginBottom: '0.5rem' }}>No Content Found</h3>
+                  </div>
+                )
+              )}
+
+            </div>
           )}
+
+          {/* Pagination */}
+          {!loadingData && visibleCount < filteredData.length && (
+            <div style={{ textAlign: 'center', marginTop: '3.5rem', marginBottom: '3rem' }}>
+              <button onClick={() => setVisibleCount(prev => prev + 12)} style={{ padding: '12px 32px', borderRadius: '30px', background: '#246bfd', color: 'white', border: 'none', fontWeight: '700', fontSize: '1.1rem', cursor: 'pointer', boxShadow: '0 8px 20px rgba(36, 107, 253, 0.25)', transition: 'transform 0.2s ease, box-shadow 0.2s ease' }}>
+                Load More
+              </button>
+            </div>
+          )}
+
         </div>
       </section>
       <FadeInOnScroll delay={0.4}><Footer lang={lang} /></FadeInOnScroll>
