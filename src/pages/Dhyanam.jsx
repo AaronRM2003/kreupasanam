@@ -133,7 +133,7 @@ export default function Dhyanam({ lang: initialLang }) {
               <h2 className={styles.testimoniesTitle}>Dhyanam</h2>
             </div>
             
-            <p className={styles.testimoniesSubtitle}>Usually Uploaded on Wednesday...</p>
+            <p className={styles.testimoniesSubtitle}>Usually Uploaded on Tuesday...</p>
 
             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem', margin: '0.5rem' }}>
               <Dropdown onSelect={(e) => e !== lang && setLang(e)}>
