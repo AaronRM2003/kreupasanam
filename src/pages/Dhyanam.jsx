@@ -19,8 +19,7 @@ export default function Dhyanam({ lang: initialLang }) {
   const [loadingData, setLoadingData] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   
-  // 🚀 FIX: Reverted to a rock-solid useState so Netlify forces a re-render!
-  const [continueWatchingItem, setContinueWatchingItem] = useState(null);
+  const [allProgressData, setAllProgressData] = useState({});
   const [visibleCount, setVisibleCount] = useState(12);
 
   useEffect(() => { if (initialLang && initialLang !== lang) setLang(initialLang); }, [initialLang]);
@@ -63,52 +62,85 @@ export default function Dhyanam({ lang: initialLang }) {
     return () => { isMounted = false; };
   }, []); 
 
-  // 🚀 PERFECT SYNC: Calculates the block directly and forces UI update
   useEffect(() => {
     if (dataList.length === 0) return;
 
     const syncProgress = () => {
       try {
         const stored = JSON.parse(localStorage.getItem('yt_watch_progress_dhyanam') || '{}');
-        
-        let bestMatch = null;
-        let maxTimestamp = 0;
-
-        for (const [vId, data] of Object.entries(stored)) {
-          if (data && data.duration > 0) {
-            const percent = data.progress / data.duration;
-            const timestamp = data.lastWatched || 1; 
-
-            if (percent < 0.95 && timestamp > maxTimestamp) {
-              // 🛡️ VERIFY: Is this video actually in the Dhyanam list?
-              const match = dataList.find(t => t.extractedVideoId === vId);
-              if (match) {
-                maxTimestamp = timestamp;
-                bestMatch = match;
-              }
-            }
-          }
-        }
-
-        // 🔥 Force React to render the block
-        setContinueWatchingItem(bestMatch);
+        setAllProgressData(prev => JSON.stringify(prev) === JSON.stringify(stored) ? prev : stored);
       } catch (e) {}
     };
 
-    // Run immediately and listen for browser updates
     syncProgress();
     window.addEventListener('yt_progress_updated', syncProgress);
     window.addEventListener('pageshow', syncProgress);
     window.addEventListener('focus', syncProgress);
-    window.addEventListener('storage', syncProgress); // Catch cross-tab updates
 
     return () => {
       window.removeEventListener('yt_progress_updated', syncProgress);
       window.removeEventListener('pageshow', syncProgress);
       window.removeEventListener('focus', syncProgress);
-      window.removeEventListener('storage', syncProgress);
     };
   }, [dataList]);
+
+  // 🚀 HEAVILY LOGGED AND BULLETPROOF CONTINUED WATCHING CALCULATOR
+  const continueWatchingItem = useMemo(() => {
+    if (!dataList.length || Object.keys(allProgressData).length === 0) return null;
+
+    console.log("----- STARTING CONTINUE WATCHING CALCULATION -----");
+    console.log("Total DataList Items:", dataList.length);
+    console.log("LocalStorage Data:", allProgressData);
+
+    let bestMatch = null;
+    let maxTimestamp = 0;
+
+    for (const [vId, data] of Object.entries(allProgressData)) {
+      console.log(`\nInspecting stored video ID: ${vId}`);
+      
+      // 🛡️ FALLBACK 1: If data is corrupted, force it to calculate
+      if (!data) {
+         console.warn(`Data for ${vId} is null or undefined! Skipping.`);
+         continue;
+      }
+
+      // 🛡️ FALLBACK 2: Force a duration of 1 if missing so it doesn't crash on divide-by-zero
+      const duration = data.duration || 1; 
+      const progress = data.progress || 0;
+      const percent = progress / duration;
+      
+      // 🛡️ FALLBACK 3: Force a timestamp if missing
+      const timestamp = data.lastWatched || 1; 
+
+      console.log(`   - Progress: ${progress}`);
+      console.log(`   - Duration: ${duration}`);
+      console.log(`   - Percent Watched: ${(percent * 100).toFixed(2)}%`);
+      console.log(`   - Last Watched Timestamp: ${timestamp}`);
+
+      // We only care if they've watched more than 0%, and less than 95%
+      if (percent > 0 && percent < 0.95 && timestamp > maxTimestamp) {
+        console.log(`   ✅ Passed time constraints! Looking for match in JSON...`);
+        
+        // Find it in our JSON array
+        const match = dataList.find(t => t.extractedVideoId === vId);
+        
+        if (match) {
+          console.log(`   🎉 MATCH FOUND! Title: ${match.title?.en || "Unknown Title"}`);
+          maxTimestamp = timestamp;
+          bestMatch = match;
+        } else {
+          console.log(`   ❌ NO MATCH FOUND in dhyanam-content.json for ID: ${vId}`);
+        }
+      } else {
+         console.log(`   ⏭️ Skipped because percent > 95%, percent is 0, or timestamp is older.`);
+      }
+    }
+
+    console.log("\n----- FINAL RESULT -----");
+    console.log("Best Match:", bestMatch ? bestMatch.title?.en : "NULL");
+    return bestMatch;
+
+  }, [dataList, allProgressData]); 
 
   const filteredData = useMemo(() => {
     return dataList
