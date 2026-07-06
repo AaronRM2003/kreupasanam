@@ -63,32 +63,47 @@ export default function Oracles({ lang: initialLang }) {
     return () => { isMounted = false; };
   }, []); 
 
+  // 🚀 PERFECT SYNC: Event listeners
   useEffect(() => {
     if (dataList.length === 0) return;
-    try {
-      const stored = JSON.parse(localStorage.getItem('yt_watch_progress_oracles') || '{}');
-      setAllProgressData(prev => JSON.stringify(prev) === JSON.stringify(stored) ? prev : stored);
 
-      let latestVideoId = null;
-      let maxTimestamp = 0;
+    const syncProgress = () => {
+      try {
+        const stored = JSON.parse(localStorage.getItem('yt_watch_progress_oracles') || '{}');
+        setAllProgressData(prev => JSON.stringify(prev) === JSON.stringify(stored) ? prev : stored);
 
-      for (const [vId, data] of Object.entries(stored)) {
-        if (data && data.duration > 0) {
-          const percent = data.progress / data.duration;
-          if (percent < 0.95 && data.lastWatched > maxTimestamp) {
-            maxTimestamp = data.lastWatched;
-            latestVideoId = vId;
+        let latestVideoId = null;
+        let maxTimestamp = 0;
+
+        for (const [vId, data] of Object.entries(stored)) {
+          if (data && data.duration > 0) {
+            const percent = data.progress / data.duration;
+            if (percent < 0.95 && data.lastWatched > maxTimestamp) {
+              maxTimestamp = data.lastWatched;
+              latestVideoId = vId;
+            }
           }
         }
-      }
 
-      if (latestVideoId) {
-        const match = dataList.find(t => t.extractedVideoId === latestVideoId);
-        setContinueWatchingItem(prev => prev?.id === match?.id ? prev : (match || null));
-      } else {
-        setContinueWatchingItem(null);
-      }
-    } catch (e) {}
+        if (latestVideoId) {
+          const match = dataList.find(t => t.extractedVideoId === latestVideoId);
+          setContinueWatchingItem(prev => prev?.id === match?.id ? prev : (match || null));
+        } else {
+          setContinueWatchingItem(null);
+        }
+      } catch (e) {}
+    };
+
+    syncProgress();
+    window.addEventListener('yt_progress_updated', syncProgress);
+    window.addEventListener('pageshow', syncProgress);
+    window.addEventListener('focus', syncProgress);
+
+    return () => {
+      window.removeEventListener('yt_progress_updated', syncProgress);
+      window.removeEventListener('pageshow', syncProgress);
+      window.removeEventListener('focus', syncProgress);
+    };
   }, [dataList]);
 
   const filteredData = useMemo(() => {
@@ -120,7 +135,6 @@ export default function Oracles({ lang: initialLang }) {
             
             <p className={styles.testimoniesSubtitle}>Divine Revelations and Guidance...</p>
 
-            {/* 🔄 REVERTED TO SIMPLE DROPDOWNS */}
             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem', margin: '0.5rem' }}>
               <Dropdown onSelect={(e) => e !== lang && setLang(e)}>
                 <Dropdown.Toggle variant="outline-secondary">{languageMap[lang] ?? languageMap['en']}</Dropdown.Toggle>
@@ -133,23 +147,38 @@ export default function Oracles({ lang: initialLang }) {
             </div>
           </div>
 
-          {loadingData && (
+          {loadingData ? (
             <div style={{ height: 300, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', color: '#246bfd', fontSize: '1.2rem', marginBottom: '10rem' }}>
               <div style={{ width: 40, height: 40, border: '4px solid #d3e3ff', borderTop: '4px solid #246bfd', borderRadius: '50%', animation: 'spin 1s linear infinite', marginBottom: 16 }} />
               Loading Oracles...
               <style>{`@keyframes spin {0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); }}`}</style>
             </div>
-          )}
-
-          {!loadingData && (
+          ) : (
             <>
-              {continueWatchingItem && (
-                <div style={{ marginBottom: '1rem', padding: windowWidth <= 768 ? '1rem 1rem' : '2.5rem', background: 'linear-gradient(135deg, rgba(36, 107, 253, 0.04), rgba(0, 179, 255, 0.08))', borderRadius: '24px', border: '1px solid rgba(36, 107, 253, 0.15)', boxShadow: '0 10px 30px rgba(36, 107, 253, 0.05)' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.5rem' }}>
-                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#246bfd" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                    <h3 style={{ color: '#1e2b5a', margin: 0, fontWeight: '800', fontSize: '1rem', letterSpacing: '-0.3px' }}>Continue Watching</h3>
-                  </div>
-                  <div className={styles.testimoniesGrid}>
+              {/* 🎬 MERGED GRID */}
+              <div className={styles.testimoniesGrid}>
+                
+                {/* 1. Continue Watching Card (Rendered as FIRST grid item) */}
+                {continueWatchingItem && (
+                  <div style={{ 
+                    background: 'linear-gradient(135deg, rgba(36, 107, 253, 0.05), rgba(0, 179, 255, 0.1))', 
+                    borderRadius: '24px', 
+                    padding: '12px',
+                    border: '2px solid rgba(36, 107, 253, 0.3)', 
+                    boxShadow: '0 8px 20px rgba(36, 107, 253, 0.08)',
+                    display: 'flex',
+                    flexDirection: 'column'
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '0 4px 10px 4px' }}>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#246bfd" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                      </svg>
+                      <span style={{ color: '#1e2b5a', margin: 0, fontWeight: '800', fontSize: '1.05rem', letterSpacing: '-0.3px' }}>
+                        Continue Watching
+                      </span>
+                    </div>
+
                     <TestimonyCard
                       key={`continue-${continueWatchingItem.id}`} id={continueWatchingItem.id} videoId={continueWatchingItem.extractedVideoId} 
                       title={continueWatchingItem.title} image={continueWatchingItem.thumbnail} date={continueWatchingItem.date} lang={lang}
@@ -157,10 +186,9 @@ export default function Oracles({ lang: initialLang }) {
                       savedProgress={allProgressData[continueWatchingItem.extractedVideoId]} expectedIn={continueWatchingItem.expectedIn}
                     />
                   </div>
-                </div>
-              )}
+                )}
 
-              <div className={styles.testimoniesGrid}>
+                {/* 2. Standard Cards */}
                 {displayedData.length > 0 ? (
                   displayedData.map((t) => (
                     <TestimonyCard
@@ -170,10 +198,12 @@ export default function Oracles({ lang: initialLang }) {
                     />
                   ))
                 ) : (
-                  <div className={styles.testimoniesCard} style={{ gridColumn: "1 / -1", display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '4rem 2rem', border: '2px dashed #a2c4ff', borderRadius: '24px', backgroundColor: 'rgba(240,245,255,0.5)', margin: '2rem auto 8rem auto', textAlign: 'center', boxShadow: '0 8px 24px rgba(36,107,253,0.08)' }}>
-                    <div style={{ background: '#e6f0ff', padding: '1.5rem', borderRadius: '50%', marginBottom: '1.5rem' }}><HiOutlineEmojiSad size={50} color="#246bfd" /></div>
-                    <h3 style={{ color: '#1e2b5a', fontWeight: '700', fontSize: '1.5rem', marginBottom: '0.5rem' }}>No Oracles Found</h3>
-                  </div>
+                  !continueWatchingItem && (
+                    <div className={styles.testimoniesCard} style={{ gridColumn: "1 / -1", display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '4rem 2rem', border: '2px dashed #a2c4ff', borderRadius: '24px', backgroundColor: 'rgba(240,245,255,0.5)', margin: '2rem auto 8rem auto', textAlign: 'center', boxShadow: '0 8px 24px rgba(36,107,253,0.08)' }}>
+                      <div style={{ background: '#e6f0ff', padding: '1.5rem', borderRadius: '50%', marginBottom: '1.5rem' }}><HiOutlineEmojiSad size={50} color="#246bfd" /></div>
+                      <h3 style={{ color: '#1e2b5a', fontWeight: '700', fontSize: '1.5rem', marginBottom: '0.5rem' }}>No Oracles Found</h3>
+                    </div>
+                  )
                 )}
               </div>
 
