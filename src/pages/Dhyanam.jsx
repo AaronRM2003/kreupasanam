@@ -14,7 +14,6 @@ const languageMap = {
 };
 
 export default function Dhyanam({ lang: initialLang }) {
-  console.log("Dhyanam component rendered");
   const [lang, setLang] = useState(initialLang || 'en');
   const [dataList, setDataList] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
@@ -31,12 +30,19 @@ export default function Dhyanam({ lang: initialLang }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  useEffect(() => {
-    let isMounted = true; 
-    setLoadingData(true);
-    fetch("/assets/dhyanam-content.json") 
-      .then(res => res.json())
-      .then(data => {
+useEffect(() => {
+  console.log("Fetch effect started");
+
+  let isMounted = true;
+  setLoadingData(true);
+
+  fetch("/assets/dhyanam-content.json")
+    .then(res => {
+      console.log("Fetch response:", res.status);
+      return res.json();
+    })
+    .then(data => {
+      console.log("JSON loaded:", data.length);
         if (!isMounted) return; 
         
         const preCalculatedData = data.map(item => {
@@ -167,7 +173,7 @@ export default function Dhyanam({ lang: initialLang }) {
               >
                 &#8592; <span>Back</span>
               </button>
-              <h2 className={styles.testimoniesTitle}>Dhyanam TEST 123</h2>
+              <h2 className={styles.testimoniesTitle}>Dhyanam</h2>
             </div>
             
             <p className={styles.testimoniesSubtitle}>Usually Uploaded on Wednesday...</p>
