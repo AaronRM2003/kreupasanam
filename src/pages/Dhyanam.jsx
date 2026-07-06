@@ -19,7 +19,7 @@ export default function Dhyanam({ lang: initialLang }) {
   const [loadingData, setLoadingData] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   
-  const [continueWatchingItem, setContinueWatchingItem] = useState(null);
+  // 🚀 FIX: We removed continueWatchingItem from state!
   const [allProgressData, setAllProgressData] = useState({});
   const [visibleCount, setVisibleCount] = useState(12);
 
@@ -63,7 +63,7 @@ export default function Dhyanam({ lang: initialLang }) {
     return () => { isMounted = false; };
   }, []); 
 
-  // 🚀 PERFECT SYNC: Handles old storage data & instantly updates on "Back" navigation
+  // 🚀 FIX: This now ONLY fetches storage. No complicated logic to get swallowed.
   useEffect(() => {
     if (dataList.length === 0) return;
 
@@ -71,33 +71,9 @@ export default function Dhyanam({ lang: initialLang }) {
       try {
         const stored = JSON.parse(localStorage.getItem('yt_watch_progress_dhyanam') || '{}');
         setAllProgressData(prev => JSON.stringify(prev) === JSON.stringify(stored) ? prev : stored);
-
-        let latestVideoId = null;
-        let maxTimestamp = 0;
-
-        for (const [vId, data] of Object.entries(stored)) {
-          if (data && data.duration > 0) {
-            const percent = data.progress / data.duration;
-            // 🛡️ FALLBACK FIX: If old localstorage data doesn't have lastWatched, force it to work!
-            const timestamp = data.lastWatched || 1; 
-
-            if (percent < 0.95 && timestamp > maxTimestamp) {
-              maxTimestamp = timestamp;
-              latestVideoId = vId;
-            }
-          }
-        }
-
-        if (latestVideoId) {
-          const match = dataList.find(t => t.extractedVideoId === latestVideoId);
-          setContinueWatchingItem(prev => prev?.id === match?.id ? prev : (match || null));
-        } else {
-          setContinueWatchingItem(null);
-        }
       } catch (e) {}
     };
 
-    // Run immediately, then listen for browser events
     syncProgress();
     window.addEventListener('yt_progress_updated', syncProgress);
     window.addEventListener('pageshow', syncProgress);
@@ -109,6 +85,30 @@ export default function Dhyanam({ lang: initialLang }) {
       window.removeEventListener('focus', syncProgress);
     };
   }, [dataList]);
+
+  // 🚀 FIX: The Continue block is now DERIVED directly from the red line data!
+  const continueWatchingItem = useMemo(() => {
+    if (!dataList.length) return null;
+
+    let bestMatch = null;
+    let maxTimestamp = 0;
+
+    for (const [vId, data] of Object.entries(allProgressData)) {
+      if (data && data.duration > 0) {
+        const percent = data.progress / data.duration;
+        const timestamp = data.lastWatched || 1; 
+
+        if (percent < 0.95 && timestamp > maxTimestamp) {
+          const match = dataList.find(t => t.extractedVideoId === vId);
+          if (match) {
+            maxTimestamp = timestamp;
+            bestMatch = match;
+          }
+        }
+      }
+    }
+    return bestMatch;
+  }, [dataList, allProgressData]); // Recalculates automatically if red lines update
 
   const filteredData = useMemo(() => {
     return dataList
@@ -162,7 +162,7 @@ export default function Dhyanam({ lang: initialLang }) {
           {!loadingData && (
             <div className={styles.testimoniesGrid}>
               
-              {/* 🎬 1. CONTINUE WATCHING BLOCK (Merged cleanly into grid Column 1!) */}
+              {/* 🎬 1. CONTINUE WATCHING BLOCK */}
               {continueWatchingItem && (
                 <div style={{ 
                   background: 'linear-gradient(135deg, rgba(36, 107, 253, 0.05), rgba(0, 179, 255, 0.1))', 
@@ -173,7 +173,6 @@ export default function Dhyanam({ lang: initialLang }) {
                   display: 'flex',
                   flexDirection: 'column'
                 }}>
-                  {/* Highlight Badge */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '0 4px 10px 4px' }}>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#246bfd" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <circle cx="12" cy="12" r="10"></circle>
@@ -201,7 +200,7 @@ export default function Dhyanam({ lang: initialLang }) {
                 </div>
               )}
 
-              {/* 🎬 2. STANDARD CARDS (Filling the rest of the row naturally) */}
+              {/* 🎬 2. STANDARD CARDS */}
               {displayedData.length > 0 ? (
                 displayedData.map((t) => (
                   <TestimonyCard
