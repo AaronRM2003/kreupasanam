@@ -19,8 +19,8 @@ export default function Dhyanam({ lang: initialLang }) {
   const [loadingData, setLoadingData] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   
-  // 🚀 FIX: We removed continueWatchingItem from state!
-  const [allProgressData, setAllProgressData] = useState({});
+  // 🚀 FIX: Reverted to a rock-solid useState so Netlify forces a re-render!
+  const [continueWatchingItem, setContinueWatchingItem] = useState(null);
   const [visibleCount, setVisibleCount] = useState(12);
 
   useEffect(() => { if (initialLang && initialLang !== lang) setLang(initialLang); }, [initialLang]);
@@ -63,52 +63,52 @@ export default function Dhyanam({ lang: initialLang }) {
     return () => { isMounted = false; };
   }, []); 
 
-  // 🚀 FIX: This now ONLY fetches storage. No complicated logic to get swallowed.
+  // 🚀 PERFECT SYNC: Calculates the block directly and forces UI update
   useEffect(() => {
     if (dataList.length === 0) return;
 
     const syncProgress = () => {
       try {
         const stored = JSON.parse(localStorage.getItem('yt_watch_progress_dhyanam') || '{}');
-        setAllProgressData(prev => JSON.stringify(prev) === JSON.stringify(stored) ? prev : stored);
+        
+        let bestMatch = null;
+        let maxTimestamp = 0;
+
+        for (const [vId, data] of Object.entries(stored)) {
+          if (data && data.duration > 0) {
+            const percent = data.progress / data.duration;
+            const timestamp = data.lastWatched || 1; 
+
+            if (percent < 0.95 && timestamp > maxTimestamp) {
+              // 🛡️ VERIFY: Is this video actually in the Dhyanam list?
+              const match = dataList.find(t => t.extractedVideoId === vId);
+              if (match) {
+                maxTimestamp = timestamp;
+                bestMatch = match;
+              }
+            }
+          }
+        }
+
+        // 🔥 Force React to render the block
+        setContinueWatchingItem(bestMatch);
       } catch (e) {}
     };
 
+    // Run immediately and listen for browser updates
     syncProgress();
     window.addEventListener('yt_progress_updated', syncProgress);
     window.addEventListener('pageshow', syncProgress);
     window.addEventListener('focus', syncProgress);
+    window.addEventListener('storage', syncProgress); // Catch cross-tab updates
 
     return () => {
       window.removeEventListener('yt_progress_updated', syncProgress);
       window.removeEventListener('pageshow', syncProgress);
       window.removeEventListener('focus', syncProgress);
+      window.removeEventListener('storage', syncProgress);
     };
   }, [dataList]);
-
-  // 🚀 FIX: The Continue block is now DERIVED directly from the red line data!
-  const continueWatchingItem = useMemo(() => {
-    if (!dataList.length) return null;
-
-    let bestMatch = null;
-    let maxTimestamp = 0;
-
-    for (const [vId, data] of Object.entries(allProgressData)) {
-      if (data && data.duration > 0) {
-        const percent = data.progress / data.duration;
-        const timestamp = data.lastWatched || 1; 
-
-        if (percent < 0.95 && timestamp > maxTimestamp) {
-          const match = dataList.find(t => t.extractedVideoId === vId);
-          if (match) {
-            maxTimestamp = timestamp;
-            bestMatch = match;
-          }
-        }
-      }
-    }
-    return bestMatch;
-  }, [dataList, allProgressData]); // Recalculates automatically if red lines update
 
   const filteredData = useMemo(() => {
     return dataList
@@ -194,7 +194,6 @@ export default function Dhyanam({ lang: initialLang }) {
                     path={`${initialLang || 'en'}/dhyanam`} 
                     duration={continueWatchingItem.duration} 
                     overlayData={continueWatchingItem.finalOverlay} 
-                    savedProgress={allProgressData[continueWatchingItem.extractedVideoId]} 
                     expectedIn={continueWatchingItem.expectedIn}
                   />
                 </div>
@@ -214,7 +213,6 @@ export default function Dhyanam({ lang: initialLang }) {
                     path={`${initialLang || 'en'}/dhyanam`} 
                     duration={t.duration} 
                     overlayData={t.finalOverlay} 
-                    savedProgress={allProgressData[t.extractedVideoId]} 
                     expectedIn={t.expectedIn}
                   />
                 ))
