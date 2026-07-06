@@ -14,6 +14,7 @@ const languageMap = {
 };
 
 export default function Dhyanam({ lang: initialLang }) {
+  console.log("Dhyanam component rendered");
   const [lang, setLang] = useState(initialLang || 'en');
   const [dataList, setDataList] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
@@ -166,7 +167,7 @@ export default function Dhyanam({ lang: initialLang }) {
               >
                 &#8592; <span>Back</span>
               </button>
-              <h2 className={styles.testimoniesTitle}>Dhyanam</h2>
+              <h2 className={styles.testimoniesTitle}>Dhyanam TEST 123</h2>
             </div>
             
             <p className={styles.testimoniesSubtitle}>Usually Uploaded on Wednesday...</p>
