@@ -9,13 +9,15 @@ export function useWatchProgress(videoId) {
     // 🚀 MATCHES THE PLAYER EXACTLY
     const getCategory = () => {
       if (typeof window === 'undefined') return 'general';
-      const path = window.location.href.toLowerCase();
       
-       if (path.includes('testimony') || path.includes('testimonies')) return 'testimony';
-    if (path.includes('oracles')) return 'oracles';
-    if (path.includes('prayers')) return 'prayers';
-    if (path.includes('dhyanam')) return 'dhyanam';
-    if (path.includes('history')) return 'history';
+      // 🛡️ THE FIX: Use .pathname instead of .href!
+      const path = window.location.pathname.toLowerCase();
+      
+      if (path.includes('/testimony') || path.includes('/testimonies')) return 'testimony';
+      if (path.includes('/oracles')) return 'oracles';
+      if (path.includes('/prayers')) return 'prayers';
+      if (path.includes('/dhyanam')) return 'dhyanam';
+      if (path.includes('/history')) return 'history';
       
       return 'general';
     };
