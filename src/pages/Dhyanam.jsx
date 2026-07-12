@@ -15,6 +15,7 @@ const languageMap = {
 
 export default function Dhyanam({ lang: initialLang }) {
   const [lang, setLang] = useState(initialLang || 'en');
+  const [filterType, setFilterType] = useState('latest'); 
   const [dataList, setDataList] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -30,19 +31,13 @@ export default function Dhyanam({ lang: initialLang }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-useEffect(() => {
-  console.log("Fetch effect started");
+  useEffect(() => {
+    let isMounted = true;
+    setLoadingData(true);
 
-  let isMounted = true;
-  setLoadingData(true);
-
-  fetch("/assets/dhyanam-content.json")
-    .then(res => {
-      console.log("Fetch response:", res.status);
-      return res.json();
-    })
-    .then(data => {
-      console.log("JSON loaded:", data.length);
+    fetch("/assets/dhyanam-content.json")
+      .then(res => res.json())
+      .then(data => {
         if (!isMounted) return; 
         
         const preCalculatedData = data.map(item => {
@@ -91,96 +86,44 @@ useEffect(() => {
     };
   }, [dataList]);
 
-  useEffect(() => {
-  console.log("Progress effect fired");
-  console.log("dataList =", dataList.length);
-
-  if (dataList.length === 0) {
-    console.log("Returning because dataList is empty");
-    return;
-  }
-
-  console.log("About to call syncProgress");
-
-  const syncProgress = () => {
-    console.log("syncProgress running");
-
-    const raw = localStorage.getItem("yt_watch_progress_dhyanam");
-    console.log("Raw localStorage:", raw);
-
-    const stored = JSON.parse(raw || "{}");
-    console.log("Parsed:", stored);
-
-    setAllProgressData(stored);
-  };
-
-  syncProgress();
-
-}, [dataList]);
-
-  // 🚀 HEAVILY LOGGED AND BULLETPROOF CONTINUED WATCHING CALCULATOR
   const continueWatchingItem = useMemo(() => {
     if (!dataList.length || Object.keys(allProgressData).length === 0) return null;
-
-    console.log("----- STARTING CONTINUE WATCHING CALCULATION -----");
-    console.log("Total DataList Items:", dataList.length);
-    console.log("LocalStorage Data:", allProgressData);
 
     let bestMatch = null;
     let maxTimestamp = 0;
 
     for (const [vId, data] of Object.entries(allProgressData)) {
-      console.log(`\nInspecting stored video ID: ${vId}`);
-      
-      // 🛡️ FALLBACK 1: If data is corrupted, force it to calculate
-      if (!data) {
-         console.warn(`Data for ${vId} is null or undefined! Skipping.`);
-         continue;
-      }
+      if (!data) continue;
 
-      // 🛡️ FALLBACK 2: Force a duration of 1 if missing so it doesn't crash on divide-by-zero
       const duration = data.duration || 1; 
       const progress = data.progress || 0;
       const percent = progress / duration;
-      
-      // 🛡️ FALLBACK 3: Force a timestamp if missing
       const timestamp = data.lastWatched || 1; 
 
-      console.log(`   - Progress: ${progress}`);
-      console.log(`   - Duration: ${duration}`);
-      console.log(`   - Percent Watched: ${(percent * 100).toFixed(2)}%`);
-      console.log(`   - Last Watched Timestamp: ${timestamp}`);
-
-      // We only care if they've watched more than 0%, and less than 95%
       if (percent > 0 && percent < 0.95 && timestamp > maxTimestamp) {
-        console.log(`   ✅ Passed time constraints! Looking for match in JSON...`);
-        
-        // Find it in our JSON array
         const match = dataList.find(t => t.extractedVideoId === vId);
         
         if (match) {
-          console.log(`   🎉 MATCH FOUND! Title: ${match.title?.en || "Unknown Title"}`);
           maxTimestamp = timestamp;
           bestMatch = match;
-        } else {
-          console.log(`   ❌ NO MATCH FOUND in dhyanam-content.json for ID: ${vId}`);
         }
-      } else {
-         console.log(`   ⏭️ Skipped because percent > 95%, percent is 0, or timestamp is older.`);
       }
     }
-
-    console.log("\n----- FINAL RESULT -----");
-    console.log("Best Match:", bestMatch ? bestMatch.title?.en : "NULL");
     return bestMatch;
-
   }, [dataList, allProgressData]); 
 
   const filteredData = useMemo(() => {
-    return dataList
+    let baseFiltered = dataList
       .filter(t => t.id !== continueWatchingItem?.id)
-      .sort((a, b) => new Date(b.date) - new Date(a.date));
-  }, [dataList, continueWatchingItem]);
+      // 🔴 SORT BY ID DESCENDING INSTEAD OF DATE
+      .sort((a, b) => b.id - a.id);
+
+    if (filterType === 'featured') {
+      return baseFiltered.filter(t => t.featured === true);
+    }
+
+    return baseFiltered; 
+  }, [dataList, continueWatchingItem, filterType]);
 
   const displayedData = filteredData.slice(0, visibleCount);
 
@@ -206,6 +149,16 @@ useEffect(() => {
             <p className={styles.testimoniesSubtitle}>Usually Uploaded on Wednesday...</p>
 
             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem', margin: '0.5rem' }}>
+              <Dropdown onSelect={(e) => setFilterType(e)}>
+                <Dropdown.Toggle variant="outline-secondary">
+                  {filterType === 'featured' ? 'Featured' : 'Latest'}
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item eventKey="latest">Latest</Dropdown.Item>
+                  <Dropdown.Item eventKey="featured">Featured</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+
               <Dropdown onSelect={(e) => e !== lang && setLang(e)}>
                 <Dropdown.Toggle variant="outline-secondary">{languageMap[lang] ?? languageMap['en']}</Dropdown.Toggle>
                 <Dropdown.Menu>
@@ -228,7 +181,6 @@ useEffect(() => {
           {!loadingData && (
             <div className={styles.testimoniesGrid}>
               
-              {/* 🎬 1. CONTINUE WATCHING BLOCK */}
               {continueWatchingItem && (
                 <div style={{ 
                   background: 'linear-gradient(135deg, rgba(36, 107, 253, 0.05), rgba(0, 179, 255, 0.1))', 
@@ -261,26 +213,28 @@ useEffect(() => {
                     duration={continueWatchingItem.duration} 
                     overlayData={continueWatchingItem.finalOverlay} 
                     expectedIn={continueWatchingItem.expectedIn}
+                    isFeatured={continueWatchingItem.featured}
                   />
                 </div>
               )}
 
-              {/* 🎬 2. STANDARD CARDS */}
-              {displayedData.length > 0 ? (
+             {displayedData.length > 0 ? (
                 displayedData.map((t) => (
-                  <TestimonyCard
-                    key={t.id} 
-                    id={t.id} 
-                    videoId={t.extractedVideoId} 
-                    title={t.title} 
-                    image={t.thumbnail} 
-                    date={t.date} 
-                    lang={lang}
-                    path={`${initialLang || 'en'}/retreat`} 
-                    duration={t.duration} 
-                    overlayData={t.finalOverlay} 
-                    expectedIn={t.expectedIn}
-                  />
+                  <div key={t.id} style={{ position: 'relative', transition: 'all 0.3s ease' }}>
+                    <TestimonyCard
+                      id={t.id} 
+                      videoId={t.extractedVideoId} 
+                      title={t.title} 
+                      image={t.thumbnail} 
+                      date={t.date} 
+                      lang={lang}
+                      path={`${initialLang || 'en'}/retreat`} 
+                      duration={t.duration} 
+                      overlayData={t.finalOverlay} 
+                      expectedIn={t.expectedIn}
+                      isFeatured={t.featured}
+                    />
+                  </div>
                 ))
               ) : (
                 !continueWatchingItem && (
@@ -294,7 +248,6 @@ useEffect(() => {
             </div>
           )}
 
-          {/* Pagination */}
           {!loadingData && visibleCount < filteredData.length && (
             <div style={{ textAlign: 'center', marginTop: '3.5rem', marginBottom: '3rem' }}>
               <button onClick={() => setVisibleCount(prev => prev + 12)} style={{ padding: '12px 32px', borderRadius: '30px', background: '#246bfd', color: 'white', border: 'none', fontWeight: '700', fontSize: '1.1rem', cursor: 'pointer', boxShadow: '0 8px 20px rgba(36, 107, 253, 0.25)', transition: 'transform 0.2s ease, box-shadow 0.2s ease' }}>

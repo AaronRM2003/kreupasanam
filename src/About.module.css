@@ -1,284 +1,248 @@
-/* 1. General layout & background */
+/* =========================================================
+   ABOUT PAGE - PREMIUM UI (Native App Aesthetic)
+   ========================================================= */
+
+/* ===== 1. GLOBAL LAYOUT ===== */
 .wrapper {
   position: relative;
-  padding: 1rem 0.7rem;
-  min-height: 90vh;
-  font-family: 'Poppins', sans-serif;
-  background: none;
+  width: 100%;
+  max-width: 1400px;
+  margin: 6rem auto 2rem;
+  padding: 0 1.5rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   z-index: 0;
-  max-width: 100%;
-  margin-top: 8rem;
-}
-
-/* Universal fixes */
-html, body {
-  max-width: 100%;
-}
-
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-/* Container */
-.container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 1rem auto;
-  padding: 1rem;
-}
-
-/* Grid wrapper */
-.gridWrapper {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-  padding: 0 0.75rem;
-  width: 100%;
-  max-width: 100%;
-}
-
-/* Optional: prevent layout shift */
-.card, .faqItem {
-  min-width: 0;
-  word-wrap: break-word;
-}
-
-.wrapper::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0);
-  z-index: -1;
 }
 
 .sectionWrapper {
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #fafcff, #d6e8ff);
-  border-radius: 30px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  padding: 0rem;
-  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+  border-radius: 32px;
+  padding: 4rem;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.03);
+  border: 1px solid #e2e8f0; /* Soft slate border */
   transition: all 0.3s ease;
 }
 
-/* 2. Heading */
-.heading {
-  text-align: center;
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  background: linear-gradient(90deg, #007cf0, #00dfd8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  transition: transform 0.3s ease;
-}
-.heading:hover {
-  transform: scale(1.03);
-}
-
-/* 3. Grid for tablet and up */
-@media (min-width: 600px) {
-  .gridWrapper {
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.5rem;
-    margin: 0 auto;
-    max-width: 1200px;
-  }
-}
-
-/* 4. Enhanced for large screens */
-@media (min-width: 1024px) {
-  .wrapper { padding: 1rem 6rem; }
-  .heading { font-size: 3rem; }
-  .gridWrapper {
-    gap: 2rem;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  .gridWrapper > .card:first-child {
-    grid-column: span 2;
-    font-size: 1.1rem;
-    padding: 2.5rem;
-  }
-  .gridWrapper > .card:first-child h1,
-  .gridWrapper > .card:first-child h2 { font-size: 2.2rem; }
-  .gridWrapper > .card:first-child h2,
-  .gridWrapper > .card:first-child p,
-  .gridWrapper > .card:first-child li { font-size: 1.15rem; }
-}
-
-/* 5. FAQ List */
-.faqList {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.25rem;
-  padding-bottom: 3rem; /* breathing room for last answer */
-}
-
-@media (min-width: 768px) {
-  .faqList {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-}
-
-/* 6. Cards & FAQ Items */
-.card, .faqItem {
-  background: rgba(255, 255, 255, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 20px 30px rgba(0,0,0,0.08);
-  transition: all 0.3s ease;
-  border-radius: 24px;
-  padding: 2rem;
-  margin-bottom: 1rem;
-  position: relative; /* required for faq answer absolute */
-  transition: height 0.3s ease;
-}
-
-.card:hover, .faqItem:hover {
-  background: rgba(255, 255, 255, 0.88);
-  box-shadow: 0 25px 40px rgba(0,0,0,0.15);
-}
-
-/* Hover ripple effect */
-.card::after, .faqItem::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle, rgba(85,156,255,0.045) 10%, transparent 10.01%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-  z-index: -1; /* ensures FAQ answers stay on top */
-}
-.card:hover::after, .faqItem:hover::after { opacity: 1; }
-
-/* 7. Typography */
-.card h1, .card h2 { color: #1a3b7c; font-weight: 700; letter-spacing: -0.5px; }
-.card p, .faqItem p, .faqAnswer { color: #333; font-size: 1.05rem; line-height: 1.75; }
-
-/* 8. Buttons */
-.card button, .faqItem button {
-  margin-top: 0;
-  padding: 0.6rem 1.25rem;
-  background: linear-gradient(90deg, #007cf0, #00dfd8);
-  border: none;
-  border-radius: 30px;
-  color: #fff;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
-}
-.card button:hover, .faqItem button:hover {
-  background: linear-gradient(90deg, #0059d1, #00b3aa);
-  transform: scale(1.03);
-}
-
-/* 9. FAQ Answer overlay */
-.faqAnswer {
-  position: absolute;
-  left: 0;
-  top: 90%; /* immediately below question */
+.container {
   width: 100%;
-  background: rgba(255,255,255,0.95);
-  border-radius: 0 0 24px 24px;
-  padding: 1rem 0.75rem;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  z-index: 10;
-  overflow-y: visible;
-}
-/* Show when open */
-.faqItem.open .faqAnswer { opacity: 1; visibility: visible; transform: translateY(0); }
-
-
-/* FAQ Question */
-.faqQuestion {
-  background: none;
-  border: none;
-  font-weight: 600;
-  text-align: left;
-  padding: 0;
-  cursor: pointer;
-  font-size: 1rem;
-  color: #2a4d9e;
-  transition: color 0.3s ease;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* 10. Lists */
-.list { padding-left: 1.25rem; color: #333; }
+/* ===== 2. HEADER & TYPOGRAPHY ===== */
+.headerWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 3.5rem;
+}
 
-/* 11. Header & Back Button */
-.headerWrapper { position: relative; text-align: center; margin-bottom: 2rem; }
+.heading {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 800;
+  color: hsl(208, 100%, 59%); /* Slate 900 */
+  letter-spacing: -1px;
+  margin: 0;
+}
+
 .backButton {
   position: absolute;
   left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #fff;
-  border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 50px;
-  padding: 0.5rem 1.25rem;
+  background: transparent;
+  border: none;
   font-size: 1rem;
   font-weight: 600;
-  color: #246bfd;
+  color: #64748b;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.07);
-  transition: all 0.3s ease;
-  user-select: none;
-  text-decoration: none;
-  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s ease;
 }
-.backButton:hover { background: rgba(36,107,253,0.1); transform: translateY(-50%) translateY(-2px); color: #1a1a1a; }
 
-/* 12. Mobile floating wrapper */
+.backButton:hover {
+  color: #0f172a;
+}
+
+/* ===== 3. DESKTOP GRID & CARDS ===== */
+.gridWrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+/* Make the first "About Me" card span full width for hierarchy */
+.gridWrapper > .featuredCard {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-color: #e2e8f0;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.06);
+  border-color: #e2e8f0;
+}
+
+.card h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  letter-spacing: -0.3px;
+}
+
+.card p {
+  font-size: 1.05rem;
+  color: #475569; /* Slate 600 */
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.list {
+  padding-left: 1.5rem;
+  margin: 0;
+  color: #475569;
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+.list li {
+  margin-bottom: 0.5rem;
+}
+
+/* ===== 4. PREMIUM FAQ ACCORDION ===== */
+.faqList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.faqItem {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.faqQuestion {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  padding: 1.25rem 1.5rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #0f172a;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.faqQuestion:hover {
+  background: #f1f5f9;
+}
+
+.faqAnswer {
+  max-height: 0;
+  opacity: 0;
+  padding: 0 1.5rem;
+  color: #475569;
+  font-size: 1rem;
+  line-height: 1.6;
+  overflow: hidden;
+  transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Active FAQ State */
+.faqItem.open {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.05);
+}
+
+.faqItem.open .faqQuestion {
+  color: #246bfd;
+}
+
+.faqItem.open .faqAnswer {
+  max-height: 300px; /* Expands smoothly */
+  opacity: 1;
+  padding-bottom: 1.25rem;
+}
+
+
+/* =========================================================
+   5. MOBILE UI (Background Bleed & Native Feel)
+   ========================================================= */
 @media (max-width: 768px) {
   .wrapper {
-    position: relative;
-    border-radius: 30px;
-    overflow: visible;
-    background: linear-gradient(135deg,#fafcff,#d6e8ff);
-    padding: 0rem;
-    margin: 6rem 0rem 2rem 0rem;
-    box-shadow: 0 20px 30px rgba(0,0,0,0.08);
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
   }
 
+  /* Perfectly matched to your Testimonies page */
+  .sectionWrapper {
+    margin-top: 0;
+    padding: 110px 1.25rem 4rem; /* Safe area below floating App Bar */
+    background: linear-gradient(180deg, #f1f5f9 0%, #ffffff 15%);
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    min-height: 100vh;
+  }
+
+  /* Remove old laggy fading borders */
+  .sectionWrapper::after,
   .wrapper::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    border-radius: 30px;
-    pointer-events: none;
-    border: 3px solid rgba(36,148,253,0.6);
-    -webkit-mask-image: linear-gradient(to bottom, black 10%, transparent 30%);
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-clip: border-box;
-    -webkit-mask-composite: destination-in;
-    mask-image: linear-gradient(to bottom, black 10%, transparent 30%);
-    mask-repeat: no-repeat;
-    mask-clip: border-box;
-    mask-composite: intersect;
+    display: none !important;
+    animation: none !important;
   }
-.faqAnswer {
-  max-height: 0;           /* collapsed by default */
-  overflow: hidden;
-  transition: max-height 0.35s ease, padding 0.35s ease;
-  background: rgba(255,255,255,0.95);
-  border-radius: 0 0 24px 24px;
-  padding: 0 0.75rem;      /* no padding when collapsed */
-}
 
-/* When open */
-.open .faqAnswer {
-  max-height: 500px;       /* large enough to fit your content */
-  padding: 1rem 0.75rem;   /* restore padding */
-}
+  .headerWrapper {
+    margin-bottom: 2rem;
+  }
 
+  .heading {
+    font-size: 2.25rem;
+  }
+
+  .gridWrapper {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .card {
+    padding: 1.5rem;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+    transition: none; /* Disable hover jumps on touch screens */
+  }
+
+  .card:hover {
+    transform: none;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+  }
+
+  .card h2 {
+    font-size: 1.2rem;
+  }
+  
+  .card p, .list {
+    font-size: 1rem;
+  }
 }

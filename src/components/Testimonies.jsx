@@ -5,19 +5,11 @@ import { Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { formatDuration } from './utils/Utils';
 import ImageWithBoxes from './utils/ImageWithBoxes';
-import WatchProgressBar from './utils/WatchProgressBar'; // 👈 IMPORT ADDED
+import WatchProgressBar from './utils/WatchProgressBar'; 
 
 const languageMap = {
-  en: 'English',
-  hi: 'हिन्दी',
-  zh: '中文',
-  bn: 'বাংলা',
-  ta: 'தமிழ்',
-  te: 'తెలుగు',
-  fr: 'Français',
-  es: 'Español',
-  mr: 'मराठी',
-  kn: 'ಕನ್ನಡ',
+  en: 'English', hi: 'हिन्दी', zh: '中文', bn: 'বাংলা', ta: 'தமிழ்',
+  te: 'తెలుగు', fr: 'Français', es: 'Español', mr: 'मराठी', kn: 'ಕನ್ನಡ',
 };
 
 const getYouTubeThumbnail = (url) => {
@@ -38,14 +30,14 @@ function slugify(text) {
     .toString()
     .toLowerCase()
     .trim()
-    .replace(/\s+/g, '-')         // Replace spaces with -
-    .replace(/[^\w\-]+/g, '')     // Remove all non-word chars
-    .replace(/\-\-+/g, '-');      // Replace multiple - with single -
+    .replace(/\s+/g, '-')         
+    .replace(/[^\w\-]+/g, '')     
+    .replace(/\-\-+/g, '-');      
 }
 
 export function TestimonyCard({
   id,
-  videoId, // 👈 PROP ADDED
+  videoId, 
   title,
   image,
   date,
@@ -53,7 +45,8 @@ export function TestimonyCard({
   path,
   duration,
   overlayData,
-  expectedIn, // IST time string like "2:30"
+  expectedIn, 
+  isFeatured, 
 }) {
   const navigate = useNavigate();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -109,7 +102,22 @@ export function TestimonyCard({
   const t = translations[lang] || translations.en;
 
   return (
-    <div className={styles.testimoniesCard}>
+    <div 
+      className={styles.testimoniesCard}
+style={{
+  ...(isFeatured
+    ? {
+        border: '1px solid rgba(218, 165, 32, 0.35)',
+        background:
+          'linear-gradient(145deg, rgba(255, 248, 220, 0.75) 0%, rgba(255, 255, 255, 1) 55%, rgba(255, 250, 235, 0.85) 100%)',
+        boxShadow:
+          '0 12px 32px rgba(218, 165, 32, 0.18), 0 3px 10px rgba(0, 0, 0, 0.05)',
+        transform: 'translateY(-4px)',
+      }
+    : {})
+}}
+
+    >
       <div
         className={`${styles.testimoniesImageWrapper} ${
           isComingSoon ? styles.blurEffect : ""
@@ -124,7 +132,6 @@ export function TestimonyCard({
           onImageLoad={() => setIsLoaded(true)}
         />
 
-        {/* 🔴 INJECT PROGRESS BAR HERE */}
         {!isComingSoon && isLoaded && videoId && (
           <WatchProgressBar videoId={videoId} />
         )}
@@ -151,7 +158,6 @@ export function TestimonyCard({
         )}
       </div>
 
-      {/* Title */}
       <h3
         className={`${styles.testimoniesCardTitle} ${
           isLoaded ? styles.visible : ""
@@ -160,7 +166,6 @@ export function TestimonyCard({
         {title[lang]}
       </h3>
 
-      {/* Date */}
       <p
         className={`${styles.testimoniesDate} ${
           isLoaded ? styles.visible : ""
@@ -175,6 +180,16 @@ export function TestimonyCard({
         }`}
         onClick={handleCardClick}
         disabled={!isLoaded || isComingSoon}
+          style={{
+    ...(isFeatured && !isComingSoon
+      ? {
+          background: 'linear-gradient(135deg, #B8860B, #D4A017)',
+          color: '#FFFFFF',
+          border: 'none',
+          boxShadow: '0 5px 14px rgba(184, 134, 11, 0.25)',
+        }
+      : {})
+  }}
       >
         {!isLoaded
           ? t.loading
@@ -204,7 +219,6 @@ export default function Testimonies({ lang: initialLang }) {
       });
   }, []);
 
-  // Render shimmer skeleton cards
   const renderSkeletons = () => {
     return Array.from({ length: 3 }).map((_, idx) => (
       <div key={idx} className={styles.testimonySkeletonCard}>
@@ -217,10 +231,8 @@ export default function Testimonies({ lang: initialLang }) {
   };
 
   function resolveOverlay(testimony, all) {
-    // direct overlay
     if (testimony.overlay) return testimony.overlay;
 
-    // reuse overlay
     if (testimony.overlayRef != null) {
       const base = all.find(t => t.id === testimony.overlayRef);
       if (!base?.overlay) return null;
@@ -262,7 +274,6 @@ export default function Testimonies({ lang: initialLang }) {
             testimonies
               .filter(({ id }) => [62, 22, 44].includes(id))
               .map((t) => {
-                // 👈 Extract videoId for the home page widget
                 const videoIdMatch = t.video?.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([\w-]{11})/);
                 const extractedVideoId = videoIdMatch ? videoIdMatch[1] : null;
 
@@ -270,7 +281,7 @@ export default function Testimonies({ lang: initialLang }) {
                   <TestimonyCard
                     key={t.id}
                     id={t.id}
-                    videoId={extractedVideoId} // 👈 Passed down so WatchProgressBar can see it!
+                    videoId={extractedVideoId} 
                     title={t.title}
                     image={getYouTubeThumbnail(t.video)}
                     date={t.date}
@@ -278,6 +289,7 @@ export default function Testimonies({ lang: initialLang }) {
                     path={`${initialLang || 'en'}/testimony`}
                     duration={t.duration}
                     overlayData={resolveOverlay(t, testimonies)} 
+                    isFeatured={t.featured} 
                   />
                 );
               })

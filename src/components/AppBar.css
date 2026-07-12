@@ -209,49 +209,51 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
 @media (max-width: 1068px) and (orientation: portrait) {
 
  /* ===== DYNAMIC CAPSULE APP BAR (NEW MOBILE UI) ===== */
-.app-bar {
-  /* Positioning: Perfectly centered floating pill */
-  position: absolute;
-  top: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100vw - 32px); /* 16px margin on each side */
-  height: 64px;
-  padding: 0 0.8rem;
+/* ===== DYNAMIC CAPSULE APP BAR (NEW MOBILE UI) ===== */
+  .app-bar {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100vw - 32px);
+    height: 64px;
+    padding: 0 0.8rem;
 
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-  /* Premium Frosted Glass */
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
+    /* Slightly more opaque for better legibility */
+    background: rgba(255, 255, 255, 0.85);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
 
-  /* Perfect Pill Shape */
-  border-radius: 100px; 
-  border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 100px; 
+    
+    /* 🔑 THE FIX: A subtle dark border instead of white */
+    border: 1px solid rgba(0, 0, 0, 0.272);
 
-  /* Soft diffused shadow */
-  box-shadow: 
-    0 8px 32px -8px rgba(36, 107, 253, 0.15),
-    0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+    /* 🔑 THE DEPTH: A soft drop shadow + a sharp inner white highlight */
+    box-shadow: 
+      0 12px 32px -10px rgba(0, 0, 0, 0.08),
+      0 1px 0px 0px inset rgba(255, 255, 255, 1);
 
-  /* Smooth layout animations */
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  z-index: 9999;
-}
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 99999 !important;
+  }
 
-/* Scrolled State: The capsule shrinks slightly */
-.app-bar.scrolled {
-  top: 8px;
-  width: calc(100vw - 64px); 
-  height: 52px;
-  background: rgba(255, 255, 255, 0.88);
-  box-shadow: 
-    0 4px 20px -6px rgba(0, 0, 0, 0.15),
-    0 0 0 1px rgba(255, 255, 255, 0.6) inset;
-}
+  .app-bar.scrolled {
+    top: 8px;
+    width: calc(100vw - 64px); 
+    height: 52px;
+    background: rgba(255, 255, 255, 0.95);
+    
+    /* Border gets just a tiny bit darker when scrolled to maintain contrast */
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    
+    box-shadow: 
+      0 8px 24px -8px rgba(0, 0, 0, 0.12),
+      0 1px 0px 0px inset rgba(255, 255, 255, 1);
+  }
 
 /* ===== LOGO ===== */
 .logo {

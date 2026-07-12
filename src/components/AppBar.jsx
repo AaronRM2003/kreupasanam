@@ -54,12 +54,13 @@ export default function AppBar({ lang }) {
   // Array mapping for cleaner code and guaranteed active styling
   const navItems = [
     { path: "home", label: "Home" },
-    { path: "about", label: "About" },
-    { path: "testimonies", label: "Testimonies" },
-    { path: "oracles", label: "Oracles" },
-    { path: "retreat", label: "Retreat" },
     { path: "prayers", label: "Prayers" },
-    { path: "history", label: "History" }
+    { path: "testimonies", label: "Testimonies" },
+    { path: "retreat", label: "Retreat" },
+    { path: "oracles", label: "Oracles" },
+    { path: "history", label: "History" },
+    { path: "about", label: "About" }
+    
   ];
 
   const navJSX = (

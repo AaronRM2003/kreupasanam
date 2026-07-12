@@ -60,77 +60,63 @@
 
 
 @media (max-width: 768px) {
-.testimoniesSection {
-  margin-top: 5.5rem;
-  position: relative;
-  background-color: #fff;
-  border-radius: 30px;
-  padding-top: 2rem;
-  box-shadow: 0 8px 24px rgba(36, 107, 253, 0.08);
-  overflow: hidden;
-  min-height: 100vh;
-}
-
-/* Fading border */
-.testimoniesSection {
-  background-color: #fff;
-  border-radius: 30px;
-  padding-top: 2rem;
-  margin-left: 0rem;
-  margin-right: 0rem;
-  box-shadow: 0 8px 24px rgba(36, 107, 253, 0.08);
-  overflow: hidden;
-
-  /* Floating animation */
-  animation: floatUpDown 8s ease-in-out infinite alternate;
-}
-
-/* Fading border */
-.testimoniesSection::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 30px;
-  pointer-events: none;
-
-  border: 3px solid rgba(36, 148, 253, 0.6);
-
-  -webkit-mask-image: linear-gradient(to bottom, black 10%, transparent 30%);
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-clip: border-box;
-  -webkit-mask-composite: destination-in;
-
-  mask-image: linear-gradient(to bottom, black 10%, transparent 30%);
-  mask-repeat: no-repeat;
-  mask-clip: border-box;
-  mask-composite: intersect;
-}
-
-/* Floating animation keyframes */
-@keyframes floatUpDown {
-  0% {
-    transform: translateY(0);
+  /* 1. The Premium Grid Background */
+  .testimoniesSection {
+    margin-top: 0;
+    padding-top: 100px;
+    position: relative;
+    
+    /* Base color */
+    background-color: #ffffff;
+    
+    /* 🆕 The "Lines": Ultra-subtle, high-end tech grid */
+    background-image: 
+      linear-gradient(rgba(36, 107, 253, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(36, 107, 253, 0.04) 1px, transparent 1px);
+    background-size: 32px 32px; /* Perfect spacing for mobile */
+    background-position: center top;
+    
+    border-radius: 0;
+    box-shadow: none;
+    overflow: hidden; /* Contains the grid */
+    min-height: 100vh;
+    animation: none;
   }
-  50% {
-    transform: translateY(-3px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
 
+  /* 2. The Fade-Out Mask */
+  /* This gently fades the grid lines into pure white as you scroll down */
+  .testimoniesSection::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 0%, #ffffff 35%);
+    pointer-events: none; /* Lets clicks pass through to your buttons */
+    z-index: 0;
+    display: block; /* Overrides your previous display: none */
+    
+    /* Strips out the old fading blue border completely */
+    border: none;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  /* 3. The Content Container */
   .testimoniesSectionContainer {
+    position: relative;
+    z-index: 1; /* Pops the text & cards ABOVE the grid and fade */
     background: transparent;
     border-radius: 0;
     box-shadow: none;
-    padding: 0.3rem;
+    padding: 0 0rem;
     margin: 0;
   }
+
+  /* 4. Modern Typography */
   .testimoniesTitle {
-    font-size: 2rem !important;
+    font-size: 2.25rem !important;
+    letter-spacing: -0.5px;
+    text-shadow: none; 
+    margin-bottom: 0.5rem;
   }
 }
 
