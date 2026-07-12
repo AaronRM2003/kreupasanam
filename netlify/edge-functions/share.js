@@ -30,7 +30,7 @@ export default async (request) => {
     // Map type → content JSON
     const jsonMap = {
       testimony: "/assets/testimony-content.json",
-      dhyanam: "/assets/dhyanam-content.json",
+      retreat: "/assets/dhyanam-content.json",
       oracles: "/assets/oracles-content.json",
       prayers:"/assets/prayers-content.json",
       history:"/assets/history-content.json"
