@@ -16,7 +16,7 @@ export function useWatchProgress(videoId) {
       if (path.includes('/testimony') || path.includes('/testimonies')) return 'testimony';
       if (path.includes('/oracles')) return 'oracles';
       if (path.includes('/prayers')) return 'prayers';
-      if (path.includes('/retreat')) return 'retreat';
+      if (path.includes('/retreat')) return 'dhyanam';
       if (path.includes('/history')) return 'history';
       
       return 'general';
