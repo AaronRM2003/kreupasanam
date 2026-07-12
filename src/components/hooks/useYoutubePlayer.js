@@ -19,7 +19,7 @@ export function useYouTubePlayer(videoId, isPlaying) {
     if (path.includes('/testimony') || path.includes('/testimonies')) return 'testimony';
     if (path.includes('/oracles')) return 'oracles';
     if (path.includes('/prayers')) return 'prayers';
-    if (path.includes('/dhyanam')) return 'dhyanam';
+    if (path.includes('/retreat')) return 'dhyanam';
     if (path.includes('/history')) return 'history';
     
     return 'general'; 
