@@ -89,8 +89,8 @@ const DailyBread = ({ videoId = "CsHxPaqGVhw", lang = "en" }) => {
   const t = translations[lang] || translations.en;
 
   const dailyBreadUrl = `/${lang}/prayers`;
-  const dailyBreadvideoUrl = `/${lang}/dhyanam/24-covenant-worship-23122025`;
-  const covenantUrl = `/${lang}/dhyanam`; // <-- Change to actual link if different
+  const dailyBreadvideoUrl = `/${lang}/retreat/24-covenant-worship-23122025`;
+  const covenantUrl = `/${lang}/retreat`; // <-- Change to actual link if different
   const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 
   return (

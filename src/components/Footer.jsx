@@ -180,7 +180,7 @@ export default function Footer({ lang = 'en' }) {
   <NavLink to={`/${urlLang}/about`} className={styles.footerNavLink}>About</NavLink>
   <NavLink to={`/${urlLang}/testimonies`} className={styles.footerNavLink}>Testimonies</NavLink>
   <NavLink to={`/${urlLang}/oracles`} className={styles.footerNavLink}>Oracles</NavLink>
-  <NavLink to={`/${urlLang}/dhyanam`} className={styles.footerNavLink}>Dhyanam</NavLink>
+  <NavLink to={`/${urlLang}/retreat`} className={styles.footerNavLink}>Retreat</NavLink>
   <NavLink to={`/${urlLang}/prayers`} className={styles.footerNavLink}>Prayers</NavLink>
   <NavLink to={`/${urlLang}/history`} className={styles.footerNavLink}>History</NavLink>
 </div>

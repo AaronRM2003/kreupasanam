@@ -470,7 +470,7 @@ const handleClick = () => {
   <NavLink to={`/${initialLang}/about`} className={styles.footerNavLink}>About</NavLink>
   <NavLink to={`/${initialLang}/testimonies`} className={styles.footerNavLink}>Testimonies</NavLink>
   <NavLink to={`/${initialLang}/oracles`} className={styles.footerNavLink}>Oracles</NavLink>
-  <NavLink to={`/${initialLang}/dhyanam`} className={styles.footerNavLink}>Dhyanam</NavLink>
+  <NavLink to={`/${initialLang}/retreat`} className={styles.footerNavLink}>Retreat</NavLink>
   <NavLink to={`/${initialLang}/prayers`} className={styles.footerNavLink}>Prayers</NavLink>
   <NavLink to={`/${initialLang}/history`} className={styles.footerNavLink}>History</NavLink>
 </div>

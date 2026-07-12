@@ -200,7 +200,7 @@ useEffect(() => {
               >
                 &#8592; <span>Back</span>
               </button>
-              <h2 className={styles.testimoniesTitle}>Dhyanam</h2>
+              <h2 className={styles.testimoniesTitle}>Retreat</h2>
             </div>
             
             <p className={styles.testimoniesSubtitle}>Usually Uploaded on Wednesday...</p>
@@ -220,7 +220,7 @@ useEffect(() => {
           {loadingData && (
             <div style={{ height: 300, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', color: '#246bfd', fontSize: '1.2rem', marginBottom: '10rem' }}>
               <div style={{ width: 40, height: 40, border: '4px solid #d3e3ff', borderTop: '4px solid #246bfd', borderRadius: '50%', animation: 'spin 1s linear infinite', marginBottom: 16 }} />
-              Loading Dhyanam...
+              Loading Retreat...
               <style>{`@keyframes spin {0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); }}`}</style>
             </div>
           )}
@@ -257,7 +257,7 @@ useEffect(() => {
                     image={continueWatchingItem.thumbnail} 
                     date={continueWatchingItem.date} 
                     lang={lang}
-                    path={`${initialLang || 'en'}/dhyanam`} 
+                    path={`${initialLang || 'en'}/retreat`} 
                     duration={continueWatchingItem.duration} 
                     overlayData={continueWatchingItem.finalOverlay} 
                     expectedIn={continueWatchingItem.expectedIn}
@@ -276,7 +276,7 @@ useEffect(() => {
                     image={t.thumbnail} 
                     date={t.date} 
                     lang={lang}
-                    path={`${initialLang || 'en'}/dhyanam`} 
+                    path={`${initialLang || 'en'}/retreat`} 
                     duration={t.duration} 
                     overlayData={t.finalOverlay} 
                     expectedIn={t.expectedIn}

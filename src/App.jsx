@@ -79,8 +79,8 @@ function App() {
           <Route path="testimonies" element={<LangRoute element={MonthlyTestimonies} />} />
           <Route path="oracles" element={<LangRoute element={Oracles} />} />
           <Route path="oracles/:idSlug" element={<LangRoute element={OraclesPage} />} />
-          <Route path="dhyanam" element={<LangRoute element={Dhyanam} />} />
-          <Route path="dhyanam/:idSlug" element={<LangRoute element={DhyanamPage} />} />
+          <Route path="retreat" element={<LangRoute element={Dhyanam} />} />
+          <Route path="retreat/:idSlug" element={<LangRoute element={DhyanamPage} />} />
           <Route path="prayers" element={<LangRoute element={Prayers} />} />
           <Route path="prayers/:idSlug" element={<LangRoute element={PrayersPage} />} />
           <Route path="history" element={<LangRoute element={History} />} />

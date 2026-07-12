@@ -318,64 +318,195 @@
   word-break: break-word;      /* Breaks long words if needed */
   overflow-wrap: break-word;
 }
+
+
 /* ================== Mobile Adjustments ================== */
+/* =========================================================
+   PREMIUM MOBILE UI (Native App Aesthetic)
+   ========================================================= */
 @media (max-width: 768px) {
-
-  /* Header */
-  .testimonyHeader {
-    width: 95%; /* take more screen width */
-    padding: 0.5rem 0.8rem;
-    border-radius: 16px;
-  }
-
-  /* Back button */
-  .backButton {
-    padding: 0.5rem 1rem;
-    font-size: 0.95rem;
-  }
-
   
-
-  /* Centered title */
+  /* --- 1. THE HEADER (Dynamic Pill) --- */
+  .testimonyHeader {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: calc(100% - 32px) !important;
+    margin: 12px auto 0 !important;
+    padding: 0.4rem 0.5rem !important;
+    position: fixed !important;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.6) !important;
+    border-radius: 100px !important;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1) !important;
+    z-index: 1000;
+  }
+  /* --- 1. THE HEADER (With your 1.55rem Title) --- */
+  .testimonyHeader {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: calc(100% - 32px) !important;
+    margin: 12px auto 0 !important;
+    padding: 0.4rem 0.5rem !important;
+    position: fixed !important;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    background: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.6) !important;
+    border-radius: 100px !important;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1) !important;
+    z-index: 1000;
+  }
+  
   .testimonyHeading {
-    margin-bottom: 1.5rem;
-    font-size: 2rem;
+    font-size: 1.55rem !important;
+    font-weight: 700 !important;
+    margin: 0 !important;
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    color: #0f172a !important;
+    text-shadow: none !important;
+    letter-spacing: -0.3px !important;
+    text-transform: none !important;
+    text-align: center;
+    flex: 1;
+  }
+  
+  .testimonyHeading::after { 
+    display: none !important; 
   }
 
-  /* Container */
+  /* --- 2. THE PAGE (Layered White Background) --- */
+  /* --- 2. THE PAGE (Deepened Grey-to-White Gradient) --- */
+  .testimonyPage {
+    /* Premium layered gradient: Pronounced Slate-grey fading into pure white */
+    background: linear-gradient(145deg, #f6f9fb 0%, #ffffff 100%) !important;
+    padding: 0 !important;
+    min-height: 100vh !important;
+  }
+  .backButton {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    padding: 0 !important;
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 50% !important;
+    background: #f1f5f9 !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    color: #0f172a !important;
+  }
+  .backText { display: none !important; }
+  .languageDropdown { width: auto !important; margin: 0 !important; }
+  .dropdownToggle {
+    padding: 0.4rem 0.8rem !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    border-radius: 100px !important;
+    background: #f1f5f9 !important;
+    color: #0f172a !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+
   .testimonyContainer {
     width: 100%;
-    padding: 1.5rem 0rem;
-    margin-top: 5.5rem;
-    border: 0;
-    box-shadow: none;
-    border-radius: 0%;
+    margin-top: 5rem; /* Space for the floating header */
+    padding: 1.5rem 1.25rem 4rem !important; /* More breathing room */
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
   }
 
-  
-
-  /* Language Dropdown */
-  .dropdownToggle {
-    font-size: 1rem !important;
-    padding: 0.7rem 1.2rem !important;
-    border-radius: 12px !important;
-    box-shadow: 0 4px 18px rgba(36, 107, 253, 0.15) !important;
+  /* --- 3. MODERN TYPOGRAPHY --- */
+  .testimonyTitle {
+    font-size: 1.75rem !important;
+    font-weight: 800 !important;
+    color: #0f172a !important; /* Deep Slate instead of pure black */
+    text-shadow: none !important; /* Strip the dated drop-shadow */
+    line-height: 1.2 !important;
+    letter-spacing: -0.5px !important;
+    margin-bottom: 0.5rem !important;
+    text-align: left !important;
+  }
+  .testimonyDate {
+    font-size: 0.9rem !important;
+    color: #64748b !important;
+    margin-bottom: 1.5rem !important;
+    text-align: left !important;
+    font-weight: 500 !important;
+  }
+  .testimonyContent {
+    font-size: 1.05rem !important;
+    line-height: 1.65 !important;
+    color: #334155 !important;
+    text-align: left !important; /* 🔑 CRITICAL: Never justify text on mobile */
+    white-space: pre-wrap !important;
+    /* Use system fonts for a native feel */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
   }
 
-  /* Dropdown items */
-
-  /* Video Button */
+  /* --- 4. THE THUMBNAIL & VIDEO BUTTON --- */
+  .imageWrapper, .thumbnailWrapper {
+    border-radius: 20px !important;
+    box-shadow: 0 8px 24px -8px rgba(0,0,0,0.12) !important;
+    margin-bottom: 1.5rem !important;
+    overflow: hidden;
+  }
   .videoButton {
-    padding: 0.85rem 1.5rem;
-    font-size: 0.95rem;
-    width: 100%;
-    justify-content: center;
+    width: 100% !important;
+    justify-content: center !important;
+    background: #ef4444 !important; /* Sleek YouTube Red, not pale pink */
+    border: none !important;
+    padding: 1rem !important;
+    border-radius: 16px !important;
+    /* Soft flat shadow instead of heavy drop shadow */
+    box-shadow: 0 4px 12px -2px rgba(239, 68, 68, 0.3) !important; 
+    transition: transform 0.2s ease !important;
   }
-
+  .videoButton:active {
+    transform: scale(0.97) !important; /* Native app "tap down" feel */
+  }
   .youtubeIcon {
-    font-size: 1.3rem;
+    color: #ffffff !important; /* White icon on red button */
+    font-size: 1.4rem !important;
+  }
+  .videoText {
+    color: #ffffff !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
   }
 
+  /* --- 5. ACTION BUTTONS (Like, Share, etc.) --- */
+  .actionRow {
+    margin-top: 2rem !important;
+    gap: 0.8rem !important;
+    justify-content: flex-start !important; /* Align left with text */
+  }
+  .actionButton {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important; /* Clean, subtle border */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02) !important;
+    padding: 0.5rem 1rem !important;
+    font-size: 0.9rem !important;
+    border-radius: 100px !important;
+  }
 }
 /* Mobile Styles */
 

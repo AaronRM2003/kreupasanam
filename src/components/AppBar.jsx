@@ -3,18 +3,6 @@ import { NavLink } from "react-router-dom";
 import NavButton from "./NavButton";
 import "./AppBar.css";
 
-export function NavLinks({ lang, navOpen, navRef, closeNav }) {
-  return (
-    <nav ref={navRef} className={`nav-links ${navOpen ? "open" : ""}`}>
-      <NavLink to={`/${lang}/home`} onClick={closeNav}>Home</NavLink>
-      <NavLink to={`/${lang}/about`} onClick={closeNav}>About</NavLink>
-      <NavLink to={`/${lang}/testimonies`} onClick={closeNav}>Testimonies</NavLink>
-      <NavLink to={`/${lang}/oracles`} onClick={closeNav}>Oracles</NavLink>
-      <NavLink to={`/${lang}/dhyanam`} onClick={closeNav}>Dhyanam</NavLink>
-    </nav>
-  );
-}
-
 export default function AppBar({ lang }) {
   const [navOpen, setNavOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -26,6 +14,7 @@ export default function AppBar({ lang }) {
   );
 
   const toggleNav = () => setNavOpen((prev) => !prev);
+  const closeNav = () => setNavOpen(false);
 
   // resize/orientation tracking
   useEffect(() => {
@@ -62,15 +51,28 @@ export default function AppBar({ lang }) {
     };
   }, [navOpen]);
 
+  // Array mapping for cleaner code and guaranteed active styling
+  const navItems = [
+    { path: "home", label: "Home" },
+    { path: "about", label: "About" },
+    { path: "testimonies", label: "Testimonies" },
+    { path: "oracles", label: "Oracles" },
+    { path: "retreat", label: "Retreat" },
+    { path: "prayers", label: "Prayers" },
+    { path: "history", label: "History" }
+  ];
+
   const navJSX = (
     <nav ref={navRef} className={`nav-links ${navOpen ? "open" : ""}`}>
-      <NavLink to={`/${lang}/home`}>Home</NavLink>
-      <NavLink to={`/${lang}/about`}>About</NavLink>
-      <NavLink to={`/${lang}/testimonies`}>Testimonies</NavLink>
-      <NavLink to={`/${lang}/oracles`}>Oracles</NavLink>
-      <NavLink to={`/${lang}/dhyanam`}>Dhyanam</NavLink>
-      <NavLink to={`/${lang}/prayers`}>Prayers</NavLink>
-      <NavLink to={`/${lang}/history`}>History</NavLink>
+      {navItems.map((item) => (
+        <NavLink 
+          key={item.path} 
+          to={`/${lang}/${item.path}`} 
+          onClick={closeNav}
+        >
+          {item.label}
+        </NavLink>
+      ))}
     </nav>
   );
 
@@ -81,7 +83,6 @@ export default function AppBar({ lang }) {
           Kreupasanam Testimonies
         </h1>
 
-        {/* Reusable NavButton */}
         <NavButton navOpen={navOpen} toggleNav={toggleNav} />
 
         {(!isMobile || isLandscape) && navJSX}

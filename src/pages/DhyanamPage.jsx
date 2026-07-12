@@ -172,7 +172,7 @@ export default function DhyanamPage({ lang: initialLang }) {
     safeDhyanamItem,
     lang,
     shareUrl,
-    "Dhyanam meditation",
+    "Retreat summary",
     includeSummary,
     video
   );
@@ -322,11 +322,11 @@ useEffect(() => {
       <div className={styles.notFoundPage}>
         <div className={styles.notFoundContainer}>
           <span className={styles.notFoundCode}>500</span>
-          <h1 className={styles.notFoundTitle}>Error Loading Dhyanam</h1>
+          <h1 className={styles.notFoundTitle}>Error Loading Retreat</h1>
           <p className={styles.notFoundText}>
             There was a problem loading the content. Please try again later.
           </p>
-          <Link to={`/${lang || 'en'}/dhyanam`} className={styles.notFoundButton}>
+          <Link to={`/${lang || 'en'}/retreat`} className={styles.notFoundButton}>
             Go Back
           </Link>
         </div>
@@ -339,11 +339,11 @@ useEffect(() => {
       <div className={styles.notFoundPage}>
         <div className={styles.notFoundContainer}>
           <span className={styles.notFoundCode}>404</span>
-          <h1 className={styles.notFoundTitle}>Dhyanam Not Found</h1>
+          <h1 className={styles.notFoundTitle}>Retreat Not Found</h1>
           <p className={styles.notFoundText}>
-            The episode you’re looking for doesn’t exist or may have been removed.
+            The video you’re looking for doesn’t exist or may have been removed.
           </p>
-          <Link to={`/${lang || 'en'}/dhyanam`} className={styles.notFoundButton}>
+          <Link to={`/${lang || 'en'}/retreat`} className={styles.notFoundButton}>
             Browse More
           </Link>
         </div>
@@ -373,7 +373,7 @@ useEffect(() => {
 
         <div className={styles.testimonyCenter}>
           <div className={styles.animatedLineLeft}></div>
-          <h2 className={styles.testimonyHeading}>Dhyanam</h2>
+          <h2 className={styles.testimonyHeading}>Retreat</h2>
           <div className={styles.animatedLineRight}></div>
         </div>
 
@@ -404,7 +404,7 @@ useEffect(() => {
                <img src="/assets/logo.png" alt="Logo" className="floating-logo" />
 
         <div className={styles.testimonyInner}>
-            {isMobileOrTablet && (  <h2 className={styles.testimonyHeading}>Dhyanam</h2>)}
+            {isMobileOrTablet && (  <h2 className={styles.testimonyHeading}>Retreat</h2>)}
                 
 {videoId && !showVideo ? (
   <div
@@ -458,7 +458,7 @@ useEffect(() => {
           </div>
 
           <div className={styles.shareSection}>
-            <p style={{ fontWeight: '600',marginTop:"1rem" }}>Share this meditation:</p>
+            <p style={{ fontWeight: '600',marginTop:"1rem" }}>Share this retreat:</p>
              <div className={styles.actionRow}>
                      
                        <button className={`${styles.actionButton} ${styles.share}`} onClick={() => setShowShareModal(true)}>
@@ -473,7 +473,7 @@ useEffect(() => {
   <NavLink to={`/${initialLang}/about`} className={styles.footerNavLink}>About</NavLink>
   <NavLink to={`/${initialLang}/testimonies`} className={styles.footerNavLink}>Testimonies</NavLink>
   <NavLink to={`/${initialLang}/oracles`} className={styles.footerNavLink}>Oracles</NavLink>
-  <NavLink to={`/${initialLang}/dhyanam`} className={styles.footerNavLink}>Dhyanam</NavLink>
+  <NavLink to={`/${initialLang}/retreat`} className={styles.footerNavLink}>Retreat</NavLink>
   <NavLink to={`/${initialLang}/prayers`} className={styles.footerNavLink}>Prayers</NavLink>
   <NavLink to={`/${initialLang}/history`} className={styles.footerNavLink}>History</NavLink>
 </div>
@@ -481,7 +481,7 @@ useEffect(() => {
             <ShareModal
               show={showShareModal}
               onHide={() => setShowShareModal(false)}
-              title="Dhyanam"
+              title="Retreat"
               shareText={shareText}
               fbShareUrl={fbShareUrl}
               waShareUrl={waShareUrl}
