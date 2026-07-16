@@ -217,7 +217,7 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
     transform: translateX(-50%);
     width: calc(100vw - 32px);
     height: 64px;
-    padding: 0 0.8rem;
+    padding: 0 0.5rem;
 
     display: flex;
     align-items: center;
