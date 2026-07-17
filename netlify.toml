@@ -3,7 +3,7 @@
   function = "share"
 
 [[edge_functions]]
-  path = "/*/dhyanam/*"
+  path = "/*/retreat/*"
   function = "share"
 
 [[edge_functions]]
