@@ -1294,7 +1294,15 @@ input[type="range"]::-webkit-slider-thumb:hover {
   font-size: 13px;
   opacity: 0.9;
 }
-
+.subtitleDucked {
+  opacity: 0.25 !important;
+  transform: translateX(-50%) translateY(-35px) !important;
+  background: transparent !important;
+  backdrop-filter: blur(0px) !important;
+  -webkit-backdrop-filter: blur(0px) !important;
+  border-color: transparent !important;
+  text-shadow: none !important;
+}
 /* Remove absolute positioning for subtitle box */
 .subtitleBox {
   /* Typography: Larger, crisper, and more legible */
@@ -1321,6 +1329,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   /* Pure fade-in appearance with absolutely zero movement */
   opacity: 0;
   animation: pureFadeIn 350ms ease-in forwards; 
+  transition: transform 0.3s ease, opacity 0.3s ease, background 0.3s ease;
 }
 
 /* A strict, opacity-only transition */

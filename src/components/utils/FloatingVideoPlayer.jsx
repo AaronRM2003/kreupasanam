@@ -27,6 +27,7 @@ export default function FloatingVideoPlayer({
   // Loading and Ducking states
   const [isVideoReady, setIsVideoReady] = React.useState(false);
   const [isPlayerDucked, setIsPlayerDucked] = React.useState(false);
+  const duckTimeoutRef = React.useRef(null);
 
   // Initial Load Check & Safety Timeout
   React.useEffect(() => {
@@ -54,21 +55,37 @@ export default function FloatingVideoPlayer({
   }, [playerRef]);
 
   // Track Dragging / Seeking (State 2 = Paused, 3 = Buffering)
+  // Track Buffering (State 3) with a debounce to prevent resume flashes
   React.useEffect(() => {
-    const seekCheckInterval = setInterval(() => {
+    const stateCheckInterval = setInterval(() => {
       if (playerRef?.current?.getPlayerState) {
         const state = playerRef.current.getPlayerState();
-        // When a user grabs the seek bar, YouTube triggers state 2 (Paused) or 3 (Buffering)
-        if (state === 2 || state === 3) {
-          setIsPlayerDucked(true);
+        
+        if (state === 3) {
+          // If buffering starts, wait 400ms before ducking to ignore micro-stutters
+          if (!duckTimeoutRef.current && !isPlayerDucked) {
+            duckTimeoutRef.current = setTimeout(() => {
+              setIsPlayerDucked(true);
+            }, 400);
+          }
         } else {
-          setIsPlayerDucked(false);
+          // If it's playing (1) or paused (2), immediately un-duck and cancel any pending ducks
+          if (duckTimeoutRef.current) {
+            clearTimeout(duckTimeoutRef.current);
+            duckTimeoutRef.current = null;
+          }
+          if (isPlayerDucked) {
+            setIsPlayerDucked(false);
+          }
         }
       }
-    }, 200);
+    }, 100); // Polling slightly faster (100ms) for a snappier return
 
-    return () => clearInterval(seekCheckInterval);
-  }, [playerRef]);
+    return () => {
+      clearInterval(stateCheckInterval);
+      if (duckTimeoutRef.current) clearTimeout(duckTimeoutRef.current);
+    };
+  }, [playerRef, isPlayerDucked]);
 
   React.useEffect(() => {
     setSubtitleKey(prev => prev + 1);
