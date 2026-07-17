@@ -28,20 +28,28 @@ export default function FloatingVideoPlayer({
 const [isVideoReady, setIsVideoReady] = React.useState(false);
 
 React.useEffect(() => {
+  // Safety timeout: If it doesn't load in 6 seconds, force it open
+  const timeoutId = setTimeout(() => {
+    setIsVideoReady(true);
+  }, 6000);
+
   const checkPlayerInterval = setInterval(() => {
     if (playerRef?.current?.getPlayerState && playerRef?.current?.getCurrentTime) {
       const state = playerRef.current.getPlayerState();
       const time = playerRef.current.getCurrentTime();
       
-      // 1 = PLAYING. We also ensure time > 0.05s so we know frames are actually rendering.
       if (state === 1 && time > 0.05) {
         setIsVideoReady(true);
+        clearTimeout(timeoutId); // Clear the timeout if it loads normally
         clearInterval(checkPlayerInterval);
       }
     }
-  }, 100); // Dropped to 100ms for a slightly snappier response
+  }, 100);
 
-  return () => clearInterval(checkPlayerInterval);
+  return () => {
+    clearTimeout(timeoutId);
+    clearInterval(checkPlayerInterval);
+  };
 }, [playerRef]);
 
 
