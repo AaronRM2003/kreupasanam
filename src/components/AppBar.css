@@ -116,8 +116,10 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
   display: flex;
   gap: 1.5rem;
   align-items: center;
-  transition: all 0.3s ease;
   z-index: 2;
+  
+  /* 🔑 CHANGE THIS LINE: Do not use 'all' here */
+  transition: right 0.3s ease, gap 0.3s ease, color 0.25s ease; 
 }
 
 .nav-links a {
@@ -319,6 +321,20 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
   /* Fun animation: Spins 90 degrees when opening the menu */
   transform: rotate(90deg); 
 }
+/* Overrides the desktop hover/focus jump on mobile */
+  .menu-toggle:hover,
+  .menu-toggle:focus {
+    background: transparent;
+    box-shadow: none;
+    transform: none; 
+  }
+
+  /* Ensures it stays rotated even if tapped while active */
+  .menu-toggle.active:hover,
+  .menu-toggle.active:focus {
+    background: rgba(36, 107, 253, 0.12);
+    transform: rotate(90deg);
+  }
 
 /* Scrolled state shrinks the button slightly to fit the smaller pill */
 .app-bar.scrolled .menu-toggle {
