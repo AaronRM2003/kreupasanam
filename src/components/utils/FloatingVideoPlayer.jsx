@@ -24,6 +24,25 @@ export default function FloatingVideoPlayer({
   const [copied, setCopied] = React.useState(false);
   const [subtitleKey, setSubtitleKey] = React.useState(0);
   const [hideSubtitles, setHideSubtitles] = React.useState(false);
+  // Add this near your other React.useState declarations in FloatingVideoPlayer.jsx
+const [isVideoReady, setIsVideoReady] = React.useState(false);
+
+React.useEffect(() => {
+  const checkPlayerInterval = setInterval(() => {
+    if (playerRef?.current?.getPlayerState && playerRef?.current?.getCurrentTime) {
+      const state = playerRef.current.getPlayerState();
+      const time = playerRef.current.getCurrentTime();
+      
+      // 1 = PLAYING. We also ensure time > 0.05s so we know frames are actually rendering.
+      if (state === 1 && time > 0.05) {
+        setIsVideoReady(true);
+        clearInterval(checkPlayerInterval);
+      }
+    }
+  }, 100); // Dropped to 100ms for a slightly snappier response
+
+  return () => clearInterval(checkPlayerInterval);
+}, [playerRef]);
 
 
 React.useEffect(() => {
@@ -155,12 +174,31 @@ React.useEffect(() => {
     Rotate for full screen
   </div>
 )}
-        <div
-          className={styles.floatingVideo}
-          onClick={handleVideoClick}
-          style={{ position: 'relative' }}
-        >
-          
+          <div
+  className={styles.floatingVideo}
+  onClick={handleVideoClick}
+  style={{ position: 'relative' }}
+>
+  
+  {/* NEW: Loading Screen Overlay */}
+  {!isVideoReady && (
+    <div style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      backgroundColor: '#000000', // Pitch black to blend nicely
+      zIndex: 10,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }}>
+      {/* Reusing your existing spinner class */}
+      <div className={styles.spinner}></div>
+    </div>
+  )}
+
           <div id="yt-player" style={{ width: '100%' }}></div>
 
           {/* Close button (portrait) */}
@@ -193,7 +231,7 @@ React.useEffect(() => {
 </div>
 
         {/* Controls moved OUTSIDE .floatingVideo to prevent clipping */}
-        {ttsSupported && (
+        {ttsSupported && isVideoReady && (
           <SubtitleVoiceControls
             isSpeaking={isSpeaking}
             volume={volume}
@@ -209,7 +247,7 @@ React.useEffect(() => {
         )}
 
      <div id="subtitle-wrapper">
-  {!hideSubtitles && currentSubtitle && (
+  {!hideSubtitles && currentSubtitle && isVideoReady && (
     <div
       key={subtitleKey}
       id="subtitle-dom"
