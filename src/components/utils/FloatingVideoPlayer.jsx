@@ -13,7 +13,6 @@ export default function FloatingVideoPlayer({
   currentSubtitle,
   onClose,
   ttsSupported = false,
-
   userLang = null,
   isVoiceTestActiveRef
 }) {
@@ -24,91 +23,103 @@ export default function FloatingVideoPlayer({
   const [copied, setCopied] = React.useState(false);
   const [subtitleKey, setSubtitleKey] = React.useState(0);
   const [hideSubtitles, setHideSubtitles] = React.useState(false);
-  // Add this near your other React.useState declarations in FloatingVideoPlayer.jsx
-const [isVideoReady, setIsVideoReady] = React.useState(false);
+  
+  // Loading and Ducking states
+  const [isVideoReady, setIsVideoReady] = React.useState(false);
+  const [isPlayerDucked, setIsPlayerDucked] = React.useState(false);
 
-React.useEffect(() => {
-  // Safety timeout: If it doesn't load in 6 seconds, force it open
-  const timeoutId = setTimeout(() => {
-    setIsVideoReady(true);
-  }, 6000);
+  // Initial Load Check & Safety Timeout
+  React.useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setIsVideoReady(true);
+    }, 6000);
 
-  const checkPlayerInterval = setInterval(() => {
-    if (playerRef?.current?.getPlayerState && playerRef?.current?.getCurrentTime) {
-      const state = playerRef.current.getPlayerState();
-      const time = playerRef.current.getCurrentTime();
-      
-      if (state === 1 && time > 0.05) {
-        setIsVideoReady(true);
-        clearTimeout(timeoutId); // Clear the timeout if it loads normally
-        clearInterval(checkPlayerInterval);
+    const checkPlayerInterval = setInterval(() => {
+      if (playerRef?.current?.getPlayerState && playerRef?.current?.getCurrentTime) {
+        const state = playerRef.current.getPlayerState();
+        const time = playerRef.current.getCurrentTime();
+        
+        if (state === 1 && time > 0.05) {
+          setIsVideoReady(true);
+          clearTimeout(timeoutId); 
+          clearInterval(checkPlayerInterval);
+        }
       }
+    }, 100);
+
+    return () => {
+      clearTimeout(timeoutId);
+      clearInterval(checkPlayerInterval);
+    };
+  }, [playerRef]);
+
+  // Track Dragging / Seeking (State 2 = Paused, 3 = Buffering)
+  React.useEffect(() => {
+    const seekCheckInterval = setInterval(() => {
+      if (playerRef?.current?.getPlayerState) {
+        const state = playerRef.current.getPlayerState();
+        // When a user grabs the seek bar, YouTube triggers state 2 (Paused) or 3 (Buffering)
+        if (state === 2 || state === 3) {
+          setIsPlayerDucked(true);
+        } else {
+          setIsPlayerDucked(false);
+        }
+      }
+    }, 200);
+
+    return () => clearInterval(seekCheckInterval);
+  }, [playerRef]);
+
+  React.useEffect(() => {
+    setSubtitleKey(prev => prev + 1);
+  }, [currentSubtitle]);
+
+  async function copyLink() {
+    const text = window.location.href;
+
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.style.position = "fixed";
+        textarea.style.left = "-9999px";
+        textarea.style.top = "-9999px";
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        document.execCommand("copy");
+        textarea.remove();
+      }
+
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      alert("Could not copy link. Please copy it manually.");
     }
-  }, 100);
-
-  return () => {
-    clearTimeout(timeoutId);
-    clearInterval(checkPlayerInterval);
-  };
-}, [playerRef]);
-
-
-React.useEffect(() => {
-  setSubtitleKey(prev => prev + 1);
-}, [currentSubtitle]);
-
-
-async function copyLink() {
-  const text = window.location.href;
-
-  try {
-    if (navigator.clipboard && window.isSecureContext) {
-      await navigator.clipboard.writeText(text);
-    } else {
-      // Fallback for older browsers/webviews (like Instagram)
-      const textarea = document.createElement("textarea");
-      textarea.value = text;
-      textarea.style.position = "fixed";
-      textarea.style.left = "-9999px";
-      textarea.style.top = "-9999px";
-      document.body.appendChild(textarea);
-      textarea.focus();
-      textarea.select();
-      document.execCommand("copy");
-      textarea.remove();
-    }
-
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  } catch (err) {
-    alert("Could not copy link. Please copy it manually.");
   }
-}
 
-
-
-function enterFullscreen() {
-  const el = document.documentElement;
-
-  if (el.requestFullscreen) el.requestFullscreen();
-  else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
-}
-
-React.useEffect(() => {
-  enterFullscreen();
-
-  return () => {
-    if (document.fullscreenElement) {
-      document.exitFullscreen?.();
-    }
-  };
-}, []);
-React.useEffect(() => {
-  if (!isSpeaking && hideSubtitles) {
-    setHideSubtitles(false);
+  function enterFullscreen() {
+    const el = document.documentElement;
+    if (el.requestFullscreen) el.requestFullscreen();
+    else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
   }
-}, [isSpeaking, hideSubtitles]);
 
+  React.useEffect(() => {
+    enterFullscreen();
+    return () => {
+      if (document.fullscreenElement) {
+        document.exitFullscreen?.();
+      }
+    };
+  }, []);
+
+  React.useEffect(() => {
+    if (!isSpeaking && hideSubtitles) {
+      setHideSubtitles(false);
+    }
+  }, [isSpeaking, hideSubtitles]);
 
   React.useEffect(() => {
     const handleResize = () => setIsLandscape(window.innerWidth > window.innerHeight);
@@ -135,81 +146,75 @@ React.useEffect(() => {
     }
   }
 
-  // ✅ Render warning via portal outside wrapper
- const warningDialog = !ttsSupported && showTtsWarning
-  ? ReactDOM.createPortal(
-      <div className={styles.ttsWarningOverlay}>
-        <div className={styles.ttsWarningBox}>
-          <h3>Speech Not Supported</h3>
-
-          <p>
-            Oops! Your browser doesn’t support the speech feature.  
-            For the best experience, please try using Chrome, Edge, or Safari.
-          </p>
-
-          <p style={{ fontSize: "13px", opacity: 0.8 }}>
-            Tip: If you're using Instagram browser → tap ⋮ and choose <b>Open in Browser</b>.
-          </p>
-
-          <div style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
-            <button
-              className={styles.ttsWarningButton}
-              onClick={copyLink}
-            >
-              {copied ? "Copied ✅" : "Copy Link"}
-            </button>
-
-            <button
-              className={styles.ttsWarningButton}
-              onClick={() => setShowTtsWarning(false)}
-            >
-              OK
-            </button>
+  const warningDialog = !ttsSupported && showTtsWarning
+    ? ReactDOM.createPortal(
+        <div className={styles.ttsWarningOverlay}>
+          <div className={styles.ttsWarningBox}>
+            <h3>Speech Not Supported</h3>
+            <p>
+              Oops! Your browser doesn’t support the speech feature.  
+              For the best experience, please try using Chrome, Edge, or Safari.
+            </p>
+            <p style={{ fontSize: "13px", opacity: 0.8 }}>
+              Tip: If you're using Instagram browser → tap ⋮ and choose <b>Open in Browser</b>.
+            </p>
+            <div style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
+              <button className={styles.ttsWarningButton} onClick={copyLink}>
+                {copied ? "Copied ✅" : "Copy Link"}
+              </button>
+              <button className={styles.ttsWarningButton} onClick={() => setShowTtsWarning(false)}>
+                OK
+              </button>
+            </div>
           </div>
-        </div>
-      </div>,
-      document.body
-    )
-  : null;
-
+        </div>,
+        document.body
+      )
+    : null;
 
   return (
     <>
       <div className={styles.floatingVideoWrapper} onClick={handleWrapperClick}>
-          {!isLandscape && (
-  <div className={styles.rotateHint}>
-    <span className={styles.rotateIcon}>↻</span>
-    Rotate for full screen
-  </div>
-)}
-          <div
-  className={styles.floatingVideo}
-  onClick={handleVideoClick}
-  style={{ position: 'relative' }}
->
-  
-  {/* NEW: Loading Screen Overlay */}
-  {!isVideoReady && (
-    <div style={{
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      backgroundColor: '#000000', // Pitch black to blend nicely
-      zIndex: 10,
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center'
-    }}>
-      {/* Reusing your existing spinner class */}
-      <div className={styles.spinner}></div>
-    </div>
-  )}
+        {!isLandscape && (
+          <div className={styles.rotateHint}>
+            <span className={styles.rotateIcon}>↻</span>
+            Rotate for full screen
+          </div>
+        )}
+        
+        <div
+          className={styles.floatingVideo}
+          onClick={handleVideoClick}
+          style={{ position: 'relative' }}
+        >
+          {/* Loading Screen Overlay */}
+          {!isVideoReady && (
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              backgroundColor: '#000000',
+              zIndex: 10,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              color: 'white',
+              textAlign: 'center',
+              padding: '20px'
+            }}>
+              <div className={styles.spinner} style={{ marginBottom: '20px' }}></div>
+              <p>Loading video...</p>
+              <p style={{ fontSize: '12px', marginTop: '10px', opacity: 0.7 }}>
+                If it stays black, tap the center to play.
+              </p>
+            </div>
+          )}
 
           <div id="yt-player" style={{ width: '100%' }}></div>
 
-          {/* Close button (portrait) */}
           {showCloseButton && !isLandscape && (
             <button className={styles.closeButton} onClick={onClose} aria-label="Close video">
               <svg width="24" height="24" viewBox="0 0 24 24" stroke="white" strokeWidth="2">
@@ -219,7 +224,6 @@ React.useEffect(() => {
             </button>
           )}
 
-          {/* Close button (landscape) */}
           {isLandscape && (
             <button
               className={styles.closeButtonLandscape}
@@ -235,10 +239,8 @@ React.useEffect(() => {
               </svg>
             </button>
           )}
+        </div>
 
-</div>
-
-        {/* Controls moved OUTSIDE .floatingVideo to prevent clipping */}
         {ttsSupported && isVideoReady && (
           <SubtitleVoiceControls
             isSpeaking={isSpeaking}
@@ -254,21 +256,19 @@ React.useEffect(() => {
           />
         )}
 
-     <div id="subtitle-wrapper">
-  {!hideSubtitles && currentSubtitle && isVideoReady && (
-    <div
-      key={subtitleKey}
-      id="subtitle-dom"
-      className={styles.subtitleBox}
-    >
-      {currentSubtitle}
-    </div>
-  )}
-</div>
-
+        <div id="subtitle-wrapper">
+          {!hideSubtitles && currentSubtitle && isVideoReady && (
+            <div
+              key={subtitleKey}
+              id="subtitle-dom"
+              // Only apply ducked styling when the player state shifts to Seeking/Paused/Buffering
+              className={`${styles.subtitleBox} ${isPlayerDucked ? styles.subtitleDucked : ''}`}
+            >
+              {currentSubtitle}
+            </div>
+          )}
+        </div>
       </div>
-
-      {/* Warning overlay injected outside wrapper */}
       {warningDialog}
     </>
   );

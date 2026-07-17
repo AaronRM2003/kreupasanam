@@ -1297,25 +1297,40 @@ input[type="range"]::-webkit-slider-thumb:hover {
 
 /* Remove absolute positioning for subtitle box */
 .subtitleBox {
-  position: relative; /* stack below video */
-  margin-top: 1rem;   /* spacing below the video */
-  max-width: 960px;
-  width: 90vw;        /* responsive width */
-  background-color: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  padding: 8px 16px;
-  font-size: clamp(0.85rem, 1.5vw, 1.2rem); /* responsive font size */
+  /* Typography: Larger, crisper, and more legible */
+  font-family: 'Poppins', -apple-system, sans-serif;
   font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.3px;
+  line-height: 1.45;
   text-align: center;
+  
+  /* Cinematic Background: Deeper contrast, higher blur */
+  background: rgba(0, 0, 0, 0.75); 
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  
+  /* Sleek Borders & Spacing */
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  pointer-events: none;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
-  font-family: 'Poppins', sans-serif;
-  box-sizing: border-box;
-  transition: opacity 0.3s ease;
-  white-space: normal;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
+  padding: 10px 24px;
+  
+  /* Shadow: Sharp drop shadow directly on the text for max readability */
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.85);
+  
+  /* Pure fade-in appearance with absolutely zero movement */
+  opacity: 0;
+  animation: pureFadeIn 350ms ease-in forwards; 
+}
+
+/* A strict, opacity-only transition */
+@keyframes pureFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 @media (orientation: landscape) {
   .subtitleBox {
