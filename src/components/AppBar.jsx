@@ -63,7 +63,7 @@ export default function AppBar({ lang }) {
     { path: "prayers", label: "Prayers" },
     { path: "testimonies", label: "Testimonies" },
     { path: "retreat", label: "Retreat" },
-    { path: "Channel", label: "Channel" },    
+  { path: "Channel", label: "Channel", isNew: true },
     { path: "oracles", label: "Oracles" },
     { path: "history", label: "History" },
     { path: "about", label: "About" }
@@ -73,13 +73,14 @@ export default function AppBar({ lang }) {
   const navJSX = (
     <nav ref={navRef} className={`nav-links ${navOpen ? "open" : ""}`}>
       {navItems.map((item) => (
-        <NavLink 
-          key={item.path} 
-          to={`/${lang}/${item.path}`} 
-          onClick={closeNav}
-        >
-          {item.label}
-        </NavLink>
+        <NavLink
+  key={item.path}
+  to={`/${lang}/${item.path}`}
+  onClick={closeNav}
+>
+  {item.label}
+  {item.isNew && <span className="new-badge">NEW</span>}
+</NavLink>
       ))}
     </nav>
   );
@@ -114,13 +115,14 @@ return (
     {isMobile && !isLandscape && (
       <nav ref={navRef} className={`nav-links ${navOpen ? "open" : ""}`}>
         {navItems.map((item) => (
-          <NavLink 
-            key={item.path} 
-            to={`/${lang}/${item.path}`} 
-            onClick={closeNav}
-          >
-            {item.label}
-          </NavLink>
+          <NavLink
+  key={item.path}
+  to={`/${lang}/${item.path}`}
+  onClick={closeNav}
+>
+  {item.label}
+  {item.isNew && <span className="new-badge">NEW</span>}
+</NavLink>
         ))}
       </nav>
     )}

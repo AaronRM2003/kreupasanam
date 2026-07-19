@@ -452,7 +452,18 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
     padding-top: 200px;
   }
 }
-
+.new-badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 5px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #fff;
+  background: #ff3b30;
+  border-radius: 999px;
+  line-height: 1.4;
+  vertical-align: middle;
+}
 /* Landscape Mobile = Desktop styles */
 /* Landscape Mobile = Desktop styles with adjustments */
 @media (max-width: 1200px) and (orientation: landscape) {
