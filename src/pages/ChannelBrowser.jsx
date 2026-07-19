@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { HiOutlineEmojiSad } from 'react-icons/hi';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -8,7 +8,7 @@ import FadeInOnScroll from '../framer';
 
 // Used for displaying the language in the UI Dropdown
 const languageMap = {
-  en: 'English', hi: 'हिन्दी', bn: 'বাংলা', ta: 'தமிழ்', kn: 'ಕನ್ನಡ',it: 'Italiano',
+  en: 'English', hi: 'हिन्दी', bn: 'বাংলা', ta: 'தமிழ்', kn: 'ಕನ್ನಡ', it: 'Italiano',
 };
 
 // Used strictly for filtering the JSON data which is written in English
@@ -29,6 +29,156 @@ const parseDuration = (duration) => {
   return result;
 };
 
+// THE RED LINE COMPONENT
+const ChannelProgressBar = ({ videoId }) => {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const updateProgress = () => {
+      try {
+        const data = JSON.parse(localStorage.getItem('yt_watch_progress_channel') || '{}');
+        if (data[videoId] && data[videoId].duration > 0) {
+          const percent = (data[videoId].progress / data[videoId].duration) * 100;
+          setProgress(Math.min(Math.max(percent, 0), 100));
+        }
+      } catch (e) {}
+    };
+
+    updateProgress();
+    window.addEventListener('yt_progress_updated', updateProgress);
+    return () => window.removeEventListener('yt_progress_updated', updateProgress);
+  }, [videoId]);
+
+  if (progress === 0) return null;
+
+  return (
+    <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', height: '5px', backgroundColor: 'rgba(255,255,255,0.3)', zIndex: 15 }}>
+      <div style={{ width: `${progress}%`, height: '100%', backgroundColor: '#ff0000', transition: 'width 0.5s ease' }}></div>
+    </div>
+  );
+};
+
+// INDIVIDUAL VIDEO CARD TO HANDLE YT API, AUTO-PAUSE, AND LOCALSTORAGE
+const VideoCardItem = ({ video, lang, playingVideoId, setPlayingVideoId }) => {
+  const isPlaying = playingVideoId === video.id;
+  const wrapperRef = useRef(null);
+  const playerRef = useRef(null);
+  const intervalRef = useRef(null);
+
+  // Initialize YouTube API & Track Progress
+  useEffect(() => {
+    if (!isPlaying) return;
+
+    const initPlayer = () => {
+      playerRef.current = new window.YT.Player(`yt-player-${video.id}`, {
+        videoId: video.id,
+        playerVars: { autoplay: 1, rel: 0, enablejsapi: 1, playsinline: 1 },
+        events: {
+          onStateChange: (event) => {
+            // PLAYING STATE = 1
+            if (event.data === 1) {
+              intervalRef.current = setInterval(() => {
+                if (playerRef.current && playerRef.current.getCurrentTime) {
+                  const currentTime = playerRef.current.getCurrentTime();
+                  const duration = playerRef.current.getDuration();
+                  
+                  if (currentTime > 0 && duration > 0) {
+                    const saved = JSON.parse(localStorage.getItem('yt_watch_progress_channel') || '{}');
+                    saved[video.id] = { progress: currentTime, duration, lastWatched: Date.now() };
+                    localStorage.setItem('yt_watch_progress_channel', JSON.stringify(saved));
+                    
+                    // Trigger custom event so the red line updates immediately
+                    window.dispatchEvent(new Event('yt_progress_updated'));
+                  }
+                }
+              }, 3000); // Save every 3 seconds
+            } else {
+              clearInterval(intervalRef.current);
+            }
+          }
+        }
+      });
+    };
+
+    if (window.YT && window.YT.Player) {
+      initPlayer();
+    } else {
+      const handleReady = () => initPlayer();
+      window.addEventListener('ytApiReady', handleReady);
+      return () => window.removeEventListener('ytApiReady', handleReady);
+    }
+
+    return () => {
+      clearInterval(intervalRef.current);
+      if (playerRef.current && playerRef.current.destroy) {
+        playerRef.current.destroy();
+      }
+    };
+  }, [isPlaying, video.id]);
+
+  // Intersection Observer for Auto-Pause
+  useEffect(() => {
+    if (!isPlaying) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // If it goes out of view, pause it
+        if (!entry.isIntersecting && playerRef.current && typeof playerRef.current.pauseVideo === 'function') {
+          playerRef.current.pauseVideo();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (wrapperRef.current) observer.observe(wrapperRef.current);
+    return () => observer.disconnect();
+  }, [isPlaying]);
+
+  return (
+    <div className={styles.videoCard} ref={wrapperRef}>
+      <div 
+        className={styles.thumbnailWrapper} 
+        onClick={() => setPlayingVideoId(video.id)}
+      >
+        {isPlaying ? (
+          <div className={styles.videoPlayer}>
+            <div id={`yt-player-${video.id}`} style={{ width: '100%', height: '100%' }}></div>
+          </div>
+        ) : (
+          <>
+            <img src={video.thumbnail} alt={video.title} loading="lazy" />
+            
+            {/* Play Button Overlay */}
+            <div className={styles.playOverlay}>
+              <svg viewBox="0 0 24 24" fill="currentColor" width="48" height="48">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </div>
+            
+            <ChannelProgressBar videoId={video.id} />
+            
+            <span className={styles.durationBadge}>{parseDuration(video.duration)}</span>
+            <span className={styles.typeBadge}>{video.type}</span>
+          </>
+        )}
+      </div>
+
+      <div className={styles.videoInfo}>
+        <a 
+          href={`https://www.youtube.com/watch?v=${video.id}`} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className={styles.titleLink}
+        >
+          <h3 className={styles.videoTitle}>{video.title}</h3>
+        </a>
+        <p className={styles.videoDate}>
+          {new Date(video.date).toLocaleDateString(lang || 'en-IN', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </p>
+      </div>
+    </div>
+  );
+};
+
 export default function ChannelBrowser({ lang: initialLang }) {
   const [lang, setLang] = useState(initialLang || 'en');
   const [filterType, setFilterType] = useState('All'); 
@@ -36,11 +186,27 @@ export default function ChannelBrowser({ lang: initialLang }) {
   const [loading, setLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(12);
   
-  // 🔴 STATE FOR TRACKING THE CURRENTLY PLAYING VIDEO
   const [playingVideoId, setPlayingVideoId] = useState(null);
+  
+  // 🔴 STATE FOR TRACKING WATCH PROGRESS ACROSS THE APP
+  const [allProgressData, setAllProgressData] = useState({});
 
   useEffect(() => { if (initialLang && initialLang !== lang) setLang(initialLang); }, [initialLang]);
 
+  // Load YouTube IFrame API Script Globally
+  useEffect(() => {
+    if (!window.YT) {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      window.onYouTubeIframeAPIReady = () => {
+        window.dispatchEvent(new Event('ytApiReady'));
+      };
+      const firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }
+  }, []);
+
+  // Fetch JSON
   useEffect(() => {
     fetch('/assets/channel-videos.json')
       .then(res => res.json())
@@ -54,15 +220,63 @@ export default function ChannelBrowser({ lang: initialLang }) {
       });
   }, []);
 
+  // 🔴 SYNC ALL PROGRESS FOR CALCULATING CONTINUE WATCHING
+  useEffect(() => {
+    if (videos.length === 0) return;
+
+    const syncProgress = () => {
+      try {
+        const stored = JSON.parse(localStorage.getItem('yt_watch_progress_channel') || '{}');
+        setAllProgressData(prev => JSON.stringify(prev) === JSON.stringify(stored) ? prev : stored);
+      } catch (e) {}
+    };
+
+    syncProgress();
+    window.addEventListener('yt_progress_updated', syncProgress);
+    return () => window.removeEventListener('yt_progress_updated', syncProgress);
+  }, [videos]);
+
+  // 🔴 CALCULATE WHICH VIDEO SHOULD BE IN "CONTINUE WATCHING"
+  const continueWatchingItem = useMemo(() => {
+    if (!videos.length || Object.keys(allProgressData).length === 0) return null;
+
+    let bestMatch = null;
+    let maxTimestamp = 0;
+
+    for (const [vId, data] of Object.entries(allProgressData)) {
+      if (!data) continue;
+
+      const duration = data.duration || 1; 
+      const progress = data.progress || 0;
+      const percent = progress / duration;
+      const timestamp = data.lastWatched || 1; 
+
+      // If they have watched more than 0% but less than 95%, and it's the most recent one
+      if (percent > 0 && percent < 0.95 && timestamp > maxTimestamp) {
+        const match = videos.find(t => t.id === vId);
+        
+        if (match) {
+          maxTimestamp = timestamp;
+          bestMatch = match;
+        }
+      }
+    }
+    return bestMatch;
+  }, [videos, allProgressData]); 
+
+  // 🔴 FILTER VIDEOS (AND REMOVE CONTINUE WATCHING ITEM FROM MAIN LIST)
   const filteredVideos = useMemo(() => {
     const targetLanguage = languageToEnglishMap[lang] || 'English'; 
     
     return videos.filter(video => {
+      // Don't show the continue watching video in the main grid
+      if (continueWatchingItem && video.id === continueWatchingItem.id) return false;
+
       const matchesLanguage = video.language === targetLanguage;
       const matchesType = filterType === 'All' || video.type === filterType;
       return matchesLanguage && matchesType;
     }).sort((a, b) => new Date(b.date) - new Date(a.date)); 
-  }, [videos, lang, filterType]);
+  }, [videos, lang, filterType, continueWatchingItem]);
 
   const displayedVideos = filteredVideos.slice(0, visibleCount);
 
@@ -122,6 +336,26 @@ export default function ChannelBrowser({ lang: initialLang }) {
           </div>
         </div>
 
+        {/* --- 🔴 NEW CONTINUE WATCHING BLOCK --- */}
+        {!loading && continueWatchingItem && (
+          <div className={styles.continueWatchingContainer}>
+            <div className={styles.continueHeader}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#246bfd" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              Continue Watching
+            </div>
+            
+            <VideoCardItem
+              video={continueWatchingItem}
+              lang={lang}
+              playingVideoId={playingVideoId}
+              setPlayingVideoId={setPlayingVideoId}
+            />
+          </div>
+        )}
+
         {/* --- VIDEO GRID --- */}
         {loading ? (
           <div className={styles.loadingState}>
@@ -132,63 +366,27 @@ export default function ChannelBrowser({ lang: initialLang }) {
           <div className={styles.videoGrid}>
             {displayedVideos.length > 0 ? (
               displayedVideos.map((video) => (
-                <div key={video.id} className={styles.videoCard}>
-                  
-                  {/* 🔴 INLINE VIDEO PLAYER LOGIC */}
-                  <div 
-                    className={styles.thumbnailWrapper} 
-                    onClick={() => setPlayingVideoId(video.id)}
-                  >
-                    {playingVideoId === video.id ? (
-                      <iframe 
-                        className={styles.videoPlayer}
-                        src={`https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0`} 
-                        title={video.title} 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" 
-                        allowFullScreen
-                      ></iframe>
-                    ) : (
-                      <>
-                        <img src={video.thumbnail} alt={video.title} loading="lazy" />
-                        
-                        {/* Play Button Overlay */}
-                        <div className={styles.playOverlay}>
-                          <svg viewBox="0 0 24 24" fill="currentColor" width="48" height="48">
-                            <path d="M8 5v14l11-7z" />
-                          </svg>
-                        </div>
-                        
-                        <span className={styles.durationBadge}>{parseDuration(video.duration)}</span>
-                        <span className={styles.typeBadge}>{video.type}</span>
-                      </>
-                    )}
-                  </div>
-
-                  <div className={styles.videoInfo}>
-                    <a 
-                      href={`https://www.youtube.com/watch?v=${video.id}`} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className={styles.titleLink}
-                    >
-                      <h3 className={styles.videoTitle}>{video.title}</h3>
-                    </a>
-                    <p className={styles.videoDate}>
-                      {new Date(video.date).toLocaleDateString(lang || 'en-IN', { year: 'numeric', month: 'long', day: 'numeric' })}
-                    </p>
-                  </div>
-                </div>
+                <VideoCardItem
+                  key={video.id}
+                  video={video}
+                  lang={lang}
+                  playingVideoId={playingVideoId}
+                  setPlayingVideoId={setPlayingVideoId}
+                />
               ))
             ) : (
-              <div className={styles.emptyState}>
-                <div className={styles.emptyIconWrapper}>
-                  <HiOutlineEmojiSad size={50} color="#246bfd" />
+              // Only show empty state if there's no continue watching item either
+              !continueWatchingItem && (
+                <div className={styles.emptyState}>
+                  <div className={styles.emptyIconWrapper}>
+                    <HiOutlineEmojiSad size={50} color="#246bfd" />
+                  </div>
+                  <h3 className={styles.emptyStateTitle}>No Videos Found</h3>
+                  <p className={styles.emptyStateText}>
+                    We couldn't find any {filterType !== 'All' ? filterType.toLowerCase() : ''} videos in {languageMap[lang]}.
+                  </p>
                 </div>
-                <h3 className={styles.emptyStateTitle}>No Videos Found</h3>
-                <p className={styles.emptyStateText}>
-                  We couldn't find any {filterType !== 'All' ? filterType.toLowerCase() : ''} videos in {languageMap[lang]}.
-                </p>
-              </div>
+              )
             )}
           </div>
         )}
