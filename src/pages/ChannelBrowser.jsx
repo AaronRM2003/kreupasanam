@@ -6,6 +6,9 @@ import styles from './ChannelBrowser.module.css';
 import Footer from '../components/Footer';
 import FadeInOnScroll from '../framer';
 
+// 🔴 UNIFIED STORAGE KEY - Ensures it perfectly syncs with the Dhyanam page too!
+const STORAGE_KEY = 'yt_watch_progress';
+
 // Used for displaying the language in the UI Dropdown
 const languageMap = {
   en: 'English', hi: 'हिन्दी', bn: 'বাংলা', ta: 'தமிழ்', kn: 'ಕನ್ನಡ', it: 'Italiano',
@@ -36,7 +39,7 @@ const ChannelProgressBar = ({ videoId }) => {
   useEffect(() => {
     const updateProgress = () => {
       try {
-        const data = JSON.parse(localStorage.getItem('yt_watch_progress_channel') || '{}');
+        const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
         if (data[videoId] && data[videoId].duration > 0) {
           const percent = (data[videoId].progress / data[videoId].duration) * 100;
           setProgress(Math.min(Math.max(percent, 0), 100));
@@ -70,6 +73,9 @@ const VideoCardItem = ({ video, lang, playingVideoId, setPlayingVideoId }) => {
     if (!isPlaying) return;
 
     const initPlayer = () => {
+      // Small safety check to ensure the DOM element exists before attaching YT Player
+      if (!document.getElementById(`yt-player-${video.id}`)) return;
+
       playerRef.current = new window.YT.Player(`yt-player-${video.id}`, {
         videoId: video.id,
         playerVars: { autoplay: 1, rel: 0, enablejsapi: 1, playsinline: 1 },
@@ -78,14 +84,15 @@ const VideoCardItem = ({ video, lang, playingVideoId, setPlayingVideoId }) => {
             // PLAYING STATE = 1
             if (event.data === 1) {
               intervalRef.current = setInterval(() => {
-                if (playerRef.current && playerRef.current.getCurrentTime) {
+                // 🔴 SAFER CHECK: Ensures the API has fully loaded the getCurrentTime function
+                if (playerRef.current && typeof playerRef.current.getCurrentTime === 'function') {
                   const currentTime = playerRef.current.getCurrentTime();
                   const duration = playerRef.current.getDuration();
                   
                   if (currentTime > 0 && duration > 0) {
-                    const saved = JSON.parse(localStorage.getItem('yt_watch_progress_channel') || '{}');
+                    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
                     saved[video.id] = { progress: currentTime, duration, lastWatched: Date.now() };
-                    localStorage.setItem('yt_watch_progress_channel', JSON.stringify(saved));
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
                     
                     // Trigger custom event so the red line updates immediately
                     window.dispatchEvent(new Event('yt_progress_updated'));
@@ -110,7 +117,7 @@ const VideoCardItem = ({ video, lang, playingVideoId, setPlayingVideoId }) => {
 
     return () => {
       clearInterval(intervalRef.current);
-      if (playerRef.current && playerRef.current.destroy) {
+      if (playerRef.current && typeof playerRef.current.destroy === 'function') {
         playerRef.current.destroy();
       }
     };
@@ -121,7 +128,7 @@ const VideoCardItem = ({ video, lang, playingVideoId, setPlayingVideoId }) => {
     if (!isPlaying) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // If it goes out of view, pause it
+        // If it goes out of view, pause it safely
         if (!entry.isIntersecting && playerRef.current && typeof playerRef.current.pauseVideo === 'function') {
           playerRef.current.pauseVideo();
         }
@@ -147,7 +154,6 @@ const VideoCardItem = ({ video, lang, playingVideoId, setPlayingVideoId }) => {
           <>
             <img src={video.thumbnail} alt={video.title} loading="lazy" />
             
-            {/* Play Button Overlay */}
             <div className={styles.playOverlay}>
               <svg viewBox="0 0 24 24" fill="currentColor" width="48" height="48">
                 <path d="M8 5v14l11-7z" />
@@ -187,9 +193,8 @@ export default function ChannelBrowser({ lang: initialLang }) {
   const [visibleCount, setVisibleCount] = useState(12);
   
   const [playingVideoId, setPlayingVideoId] = useState(null);
-  
-  // 🔴 STATE FOR TRACKING WATCH PROGRESS ACROSS THE APP
   const [allProgressData, setAllProgressData] = useState({});
+  const [continueWatchingId, setContinueWatchingId] = useState(null);
 
   useEffect(() => { if (initialLang && initialLang !== lang) setLang(initialLang); }, [initialLang]);
 
@@ -220,13 +225,13 @@ export default function ChannelBrowser({ lang: initialLang }) {
       });
   }, []);
 
-  // 🔴 SYNC ALL PROGRESS FOR CALCULATING CONTINUE WATCHING
+  // SYNC ALL PROGRESS
   useEffect(() => {
     if (videos.length === 0) return;
 
     const syncProgress = () => {
       try {
-        const stored = JSON.parse(localStorage.getItem('yt_watch_progress_channel') || '{}');
+        const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
         setAllProgressData(prev => JSON.stringify(prev) === JSON.stringify(stored) ? prev : stored);
       } catch (e) {}
     };
@@ -236,11 +241,13 @@ export default function ChannelBrowser({ lang: initialLang }) {
     return () => window.removeEventListener('yt_progress_updated', syncProgress);
   }, [videos]);
 
-  // 🔴 CALCULATE WHICH VIDEO SHOULD BE IN "CONTINUE WATCHING"
-  const continueWatchingItem = useMemo(() => {
-    if (!videos.length || Object.keys(allProgressData).length === 0) return null;
+  // CALCULATE CONTINUE WATCHING ID (FREEZES WHILE PLAYING)
+  useEffect(() => {
+    if (playingVideoId) return; // Freezes the block layout so it doesn't jump while watching
 
-    let bestMatch = null;
+    if (!videos.length || Object.keys(allProgressData).length === 0) return;
+
+    let bestMatchId = null;
     let maxTimestamp = 0;
 
     for (const [vId, data] of Object.entries(allProgressData)) {
@@ -251,20 +258,22 @@ export default function ChannelBrowser({ lang: initialLang }) {
       const percent = progress / duration;
       const timestamp = data.lastWatched || 1; 
 
-      // If they have watched more than 0% but less than 95%, and it's the most recent one
       if (percent > 0 && percent < 0.95 && timestamp > maxTimestamp) {
         const match = videos.find(t => t.id === vId);
-        
         if (match) {
           maxTimestamp = timestamp;
-          bestMatch = match;
+          bestMatchId = vId;
         }
       }
     }
-    return bestMatch;
-  }, [videos, allProgressData]); 
+    setContinueWatchingId(bestMatchId);
+  }, [videos, allProgressData, playingVideoId]);
 
-  // 🔴 FILTER VIDEOS (AND REMOVE CONTINUE WATCHING ITEM FROM MAIN LIST)
+  const continueWatchingItem = useMemo(() => {
+    return videos.find(v => v.id === continueWatchingId) || null;
+  }, [videos, continueWatchingId]);
+
+  // FILTER VIDEOS
   const filteredVideos = useMemo(() => {
     const targetLanguage = languageToEnglishMap[lang] || 'English'; 
     
@@ -336,7 +345,7 @@ export default function ChannelBrowser({ lang: initialLang }) {
           </div>
         </div>
 
-        {/* --- 🔴 NEW CONTINUE WATCHING BLOCK --- */}
+        {/* --- CONTINUE WATCHING BLOCK --- */}
         {!loading && continueWatchingItem && (
           <div className={styles.continueWatchingContainer}>
             <div className={styles.continueHeader}>
@@ -375,7 +384,6 @@ export default function ChannelBrowser({ lang: initialLang }) {
                 />
               ))
             ) : (
-              // Only show empty state if there's no continue watching item either
               !continueWatchingItem && (
                 <div className={styles.emptyState}>
                   <div className={styles.emptyIconWrapper}>
