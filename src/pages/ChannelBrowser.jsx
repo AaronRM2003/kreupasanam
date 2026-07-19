@@ -212,11 +212,15 @@ export default function ChannelBrowser({ lang: initialLang }) {
   }, []);
 
   // Fetch JSON
+  // Fetch JSON
   useEffect(() => {
     fetch('/assets/channel-videos.json')
       .then(res => res.json())
       .then(data => {
-        setVideos(data);
+        // 🔴 STRICT DEDUPLICATION: Ensures no two videos can ever share the same ID
+        const uniqueVideos = Array.from(new Map(data.map(v => [v.id, v])).values());
+        
+        setVideos(uniqueVideos);
         setLoading(false);
       })
       .catch(err => {
