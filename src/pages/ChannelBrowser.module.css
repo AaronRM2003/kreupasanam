@@ -1,0 +1,386 @@
+.pageContainer {
+  background-color: #fafcff;
+  min-height: 100vh;
+}
+
+/* --- Header Banner --- */
+.bannerWrapper {
+  width: 100%;
+}
+
+.headerBanner {
+  background: linear-gradient(135deg, #1e2b5a 0%, #246bfd 100%);
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: white;
+  border-bottom-left-radius: 32px;
+  border-bottom-right-radius: 32px;
+  box-shadow: 0 12px 32px rgba(36, 107, 253, 0.2);
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.backButton {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s ease, transform 0.2s ease;
+  backdrop-filter: blur(8px);
+}
+
+.backButton:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateX(-4px); 
+}
+
+.headerLogoWrapper {
+  width: 100px;
+  height: 100px;
+  background-color: white;
+  margin: 0 auto 1rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  overflow: hidden;
+}
+
+.headerLogo {
+  width: 95%;
+  height: 95%;
+  object-fit: contain;
+}
+
+.headerTitle {
+  font-weight: 800;
+  font-size: 2rem;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.5px;
+}
+
+.headerSubtitle {
+  opacity: 0.9;
+  margin: 0 auto;
+  font-size: 1rem;
+  max-width: 600px;
+}
+
+/* --- Layout --- */
+.contentContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.filterSection {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1.5rem;
+}
+
+.filterTitle {
+  color: #1e2b5a;
+  font-weight: 700;
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.filterControls {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.dropdownToggle {
+  border-radius: 20px !important;
+  font-weight: 600 !important;
+  padding: 0.4rem 1.2rem !important;
+}
+
+/* --- Video Grid & Cards --- */
+.videoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.videoCard {
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: transparent;
+}
+
+.videoCard:hover {
+  transform: translateY(-4px);
+}
+
+.thumbnailWrapper {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  aspect-ratio: 16/9;
+  background-color: #000; /* Black background behind iframe/img */
+  cursor: pointer;
+}
+
+.thumbnailWrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  opacity: 0.9; /* Slight dimming so the play button stands out */
+}
+
+.videoCard:hover .thumbnailWrapper img {
+  transform: scale(1.05);
+}
+
+/* 🔴 New Video Player Styles */
+.videoPlayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: black;
+  z-index: 10; /* Ensures it covers badges */
+}
+
+/* 🔴 Play Button Overlay */
+.playOverlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  background: rgba(36, 108, 253, 0.418); /* Primary brand color */
+  border-radius: 50%;
+  padding: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.9;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(2px);
+}
+
+.videoCard:hover .playOverlay {
+  transform: translate(-50%, -50%) scale(1.1);
+  background: rgba(36, 107, 253, 1);
+}
+
+/* --- Badges --- */
+.durationBadge {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  z-index: 5;
+}
+
+.typeBadge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(36, 108, 253, 0.577);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.4rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  z-index: 5;
+}
+
+/* --- Video Typography --- */
+.videoInfo {
+  padding: 0 0.5rem;
+}
+
+.titleLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.titleLink:hover .videoTitle {
+  color: #246bfd;
+}
+
+.videoTitle {
+  color: #1e2b5a;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.2s ease;
+}
+
+.videoDate {
+  color: #667085;
+  font-size: 0.85rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* --- UI States (Loading & Empty) --- */
+.loadingState {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #246bfd;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #d3e3ff;
+  border-top: 4px solid #246bfd;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.emptyState {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: rgba(240, 245, 255, 0.5);
+  border-radius: 24px;
+  border: 2px dashed #a2c4ff;
+  box-shadow: 0 8px 24px rgba(36,107,253,0.08);
+  margin: 2rem auto;
+  max-width: 600px;
+  width: 100%;
+}
+
+.emptyIconWrapper {
+  background: #e6f0ff;
+  padding: 1.5rem;
+  border-radius: 50%;
+  display: inline-block;
+  margin-bottom: 1.5rem;
+}
+
+.emptyStateTitle {
+  color: #1e2b5a;
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.emptyStateText {
+  color: #667085;
+  margin: 0;
+}
+
+/* --- Load More --- */
+.loadMoreContainer {
+  text-align: center;
+  margin: 3.5rem 0;
+}
+
+.loadMoreBtn {
+  padding: 12px 32px;
+  border-radius: 30px;
+  background: #246bfd;
+  color: white;
+  border: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(36, 107, 253, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.loadMoreBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(36, 107, 253, 0.35);
+}
+
+/* --- Mobile-Only Enhancements --- */
+@media (max-width: 768px) {
+  .headerBanner {
+    padding: 3rem 1rem 2rem 1rem; 
+    border-radius: 0 0 24px 24px;
+  }
+
+  .backButton {
+    top: 1rem;
+    left: 1rem;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+
+  .headerTitle {
+    font-size: 1.5rem;
+  }
+  
+  .filterSection {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .videoGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+    
+  .thumbnailWrapper {
+    border-radius: 16px; 
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); 
+    border: 1px solid rgba(0, 0, 0, 0.05); 
+    margin-bottom: 1.25rem; 
+  }
+
+  /* Note: removing the inner inset shadow overlay from mobile when playing so it doesn't overlap the video player */
+  .thumbnailWrapper:not(:has(iframe))::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+    pointer-events: none; 
+  }
+}

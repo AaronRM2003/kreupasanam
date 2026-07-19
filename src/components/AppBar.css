@@ -126,7 +126,7 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
   position: relative;
   color: #1f2937;
   text-decoration: none;
-  font-size: 0.84rem;
+  font-size: 0.80rem;
   font-weight: 600;
   padding: 2px 0;
   cursor: pointer;
@@ -208,7 +208,7 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
 }
 
 /* Mobile Portrait Styles */
-@media (max-width: 1068px) and (orientation: portrait) {
+@media (max-width: 1200px) and (orientation: portrait) {
 
  /* ===== DYNAMIC CAPSULE APP BAR (NEW MOBILE UI) ===== */
 /* ===== DYNAMIC CAPSULE APP BAR (NEW MOBILE UI) ===== */
@@ -455,7 +455,7 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
 
 /* Landscape Mobile = Desktop styles */
 /* Landscape Mobile = Desktop styles with adjustments */
-@media (max-width: 1068px) and (orientation: landscape) {
+@media (max-width: 1200px) and (orientation: landscape) {
   .app-bar {
     display: flex;
     justify-content: space-between;
@@ -501,7 +501,7 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
   }
 }
 
-@media (max-width: 1068px) and (orientation: landscape) {
+@media (max-width: 1200px) and (orientation: landscape) {
   .app-bar {
     height: 120px; /* taller than scrolled variant */
     padding: 1rem 2rem;
@@ -518,7 +518,7 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
 
 
 /* Desktop Styles */
-@media (min-width: 1068px) {
+@media (min-width: 1200px) {
   .nav-links {
     opacity: 1 !important;
     visibility: visible !important;
@@ -537,7 +537,7 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
   }
 }
 
-@media (max-width: 1068px) and (orientation: landscape) {
+@media (max-width: 1200px) and (orientation: landscape) {
   .nav-links {
     gap: 0.3rem;
   }

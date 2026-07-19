@@ -16,6 +16,7 @@ import PrayersPage from './pages/PrayersPage';
 import Prayers from './pages/Prayers';
 import History from './pages/History';
 import HistoryPage from './pages/HistoryPage';
+import ChannelBrowser from './pages/ChannelBrowser';
 
 const supportedLangs = ['en', 'hi', 'zh', 'bn', 'ta', 'te', 'fr', 'es', 'mr', 'kn'];
 
@@ -85,6 +86,7 @@ function App() {
           <Route path="prayers/:idSlug" element={<LangRoute element={PrayersPage} />} />
           <Route path="history" element={<LangRoute element={History} />} />
           <Route path="history/:idSlug" element={<LangRoute element={HistoryPage} />} />
+          <Route path="channel" element={<LangRoute element={ChannelBrowser} />} />
 
           {/* ✅ Catch invalid paths like /en/invalid or /ml/xyz */}
           <Route path="*" element={<NotFoundPage />} />
