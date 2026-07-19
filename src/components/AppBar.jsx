@@ -63,7 +63,7 @@ export default function AppBar({ lang }) {
     { path: "prayers", label: "Prayers" },
     { path: "testimonies", label: "Testimonies" },
     { path: "retreat", label: "Retreat" },
-  { path: "Channel", label: "Channel", isNew: true },
+  { path: "channel", label: "Channel", isNew: true },
     { path: "oracles", label: "Oracles" },
     { path: "history", label: "History" },
     { path: "about", label: "About" }

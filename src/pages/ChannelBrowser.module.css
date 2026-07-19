@@ -241,7 +241,6 @@
   margin: 0 0 0.5rem 0;
   line-height: 1.4;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   transition: color 0.2s ease;
@@ -371,7 +370,7 @@
     border-radius: 16px; 
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); 
     border: 1px solid rgba(0, 0, 0, 0.05); 
-    margin-bottom: 1.25rem; 
+    margin-bottom: 1rem; 
   }
 
   /* Note: removing the inner inset shadow overlay from mobile when playing so it doesn't overlap the video player */
@@ -416,3 +415,4 @@
     max-width: 100%;
   }
 }
+
