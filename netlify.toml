@@ -13,3 +13,11 @@
 [[edge_functions]]
   path = "/*/prayers/*"
   function = "share"
+
+[[edge_functions]]
+  path = "/*/history/*"
+  function = "share"
+
+[[edge_functions]]
+  path = "/*/channel/*"
+  function = "share"
