@@ -345,16 +345,15 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
 .app-bar.scrolled::before {
   width: 36px; /* Matches shrunk menu toggle */
 }
- /* ===== FULL-SCREEN GLASS REVEAL MENU (NEW MOBILE UI) ===== */
+/* ===== FULL-SCREEN GLASS REVEAL MENU (NEW MOBILE UI) ===== */
 .nav-links {
-  position: fixed; /* Locks to the entire screen */
+  position: fixed; 
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   max-height: 100vh;
 
-  /* Layout for full screen */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -362,29 +361,44 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
   padding: 0 2rem;
   gap: 0.5rem;
 
-  /* Heavy Glass Overlay */
-  background: rgba(248, 250, 255, 0.95);
-  backdrop-filter: blur(30px) saturate(180%);
-  -webkit-backdrop-filter: blur(30px) saturate(180%);
-
-  /* Reset previous dropdown styling */
+  /* 🔴 REMOVED background, backdrop-filter, and clip-path from here */
+  background: transparent;
   border: none;
   border-radius: 0;
   box-shadow: none;
-  transform: none; /* override previous translate */
 
-  /* 🌟 The Circular Reveal Animation Setup */
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  /* Starts as a 0px circle at the exact position of the hamburger menu */
-  clip-path: circle(0px at calc(100vw - 2.5rem) 45px); 
+  
   transition:
     opacity 0.4s ease,
-    visibility 0.4s ease,
-    clip-path 0.7s cubic-bezier(0.77, 0, 0.175, 1);
+    visibility 0.4s ease;
 
-  z-index: 10000; /* Just below your z-index: 10001 menu toggle */
+  z-index: 10000; 
+}
+
+/* 🔴 THE FIX: The Expanding Glass Circle */
+/* We create a hidden circle behind the menu button and scale it up 100x */
+.nav-links::before {
+  content: "";
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  
+  /* The heavy glass effect is applied here instead */
+  background: rgba(248, 250, 255, 0.95);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  
+  /* Starts tiny */
+  transform: scale(0);
+  transform-origin: center;
+  transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+  z-index: -1; /* Keeps it behind your text links */
 }
 
 /* Open State */
@@ -392,8 +406,11 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  /* Expands to cover the whole screen */
-  clip-path: circle(150% at calc(100vw - 2.5rem) 45px); 
+}
+
+/* Expand the glass circle when open */
+.nav-links.open::before {
+  transform: scale(100); /* Blows up the circle to cover the entire screen */
 }
 
 /* ===== NAV ITEMS (MODERN MOBILE TYPOGRAPHY) ===== */
@@ -401,7 +418,7 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
   width: 100%;
   justify-content: center;
   text-align: center;
-  font-size: 1.8rem; /* Large, bold, breathable text */
+  font-size: 1.8rem; 
   font-weight: 700;
   letter-spacing: -0.5px;
   color: #1f2937;
@@ -411,7 +428,9 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
   border-radius: 16px;
   min-height: auto;
 
-  /* Staggered Entrance Animation Setup */
+  /* Hardware acceleration for ultra-smooth text staggered entrance */
+  will-change: transform, opacity;
+  
   opacity: 0;
   transform: translateY(30px) scale(0.95);
   transition:
