@@ -223,9 +223,6 @@ export default function Testimonies({ lang: initialLang }) {
     return Array.from({ length: 3 }).map((_, idx) => (
       <div key={idx} className={styles.testimonySkeletonCard}>
         <div className={`${styles.testimonySkeletonImage} ${styles.skeleton}`}></div>
-        <div className={`${styles.testimonySkeletonText} ${styles.skeleton}`}></div>
-        <div className={`${styles.testimonySkeletonSmall} ${styles.skeleton}`}></div>
-        <div className={`${styles.testimonySkeletonButton} ${styles.skeleton}`}></div>
       </div>
     ));
   };
