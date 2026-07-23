@@ -23,6 +23,7 @@ import LangHelpOverlay from '../components/utils/LangHelpOverlay';
 import TranscriptModal from '../components/utils/TranscriptModel';
 import TTSReviewBox from '../components/utils/TTSReviewBox';
 import WatchProgressBar from '../components/utils/WatchProgressBar';
+import ImageWithBoxes from '../components/utils/ImageWithBoxes'; // Add this line
 
 export default function DhyanamPage({ lang: initialLang }) {
   const { idSlug } = useParams();  // changed from id to idSlug
@@ -60,7 +61,23 @@ export default function DhyanamPage({ lang: initialLang }) {
       slug = idSlug.substring(separatorIndex + 1);
     }
   }
+function resolveOverlay(item, all) {
+    // direct overlay
+    if (item.overlay) return item.overlay;
 
+    // reuse overlay
+    if (item.overlayRef != null) {
+      const base = all.find(t => t.id === item.overlayRef);
+      if (!base?.overlay) return null;
+
+      return {
+        ...base.overlay,
+        texts: item.overlayTexts ?? base.overlay.texts
+      };
+    }
+
+    return null;
+  }
   // Fetch dhyanam content JSON dynamically
   useEffect(() => {
     setLoadingData(true);
@@ -417,12 +434,11 @@ useEffect(() => {
       <div className={styles.thumbnailSkeleton}></div>
     )}
 
-    <img
+   <ImageWithBoxes
       src={thumbnailUrl}
-      alt="Video Thumbnail"
-      className={`${styles.thumbnailImage} ${thumbnailLoaded ? styles.visible : styles.hidden}`}
-      onLoad={() => setThumbnailLoaded(true)}
-      onError={() => setThumbnailLoaded(true)} // fallback
+      data={resolveOverlay(safeDhyanamItem, dhyanam || [])}
+      lang={lang}
+      onImageLoad={() => setThumbnailLoaded(true)}
     />
 
     {thumbnailLoaded && (
