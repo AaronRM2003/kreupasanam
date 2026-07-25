@@ -1509,7 +1509,105 @@
       "fr": "Kurian et Swapna de Melbourne partagent un témoignage extraordinaire d'intervention divine dans la vie de leur deuxième fille, Bella. Le 17 octobre 2023, Bella a subi un arrêt cardiaque soudain après être tombée de son lit, la laissant presque sans vie avec seulement un faible battement de cœur. Malgré une RCP continue pendant plus d'une heure et les soins intensifs de plusieurs équipes d'ambulance, elle n'a montré aucun signe d'amélioration. À l'hôpital, les médecins ont averti ses parents que Bella avait subi de graves lésions cérébrales et avait très peu de chances de survie, prédisant qu'elle pourrait ne jamais retrouver ses capacités normales. Dans ce désespoir, la famille s'est tournée pleinement vers la prière, guidée par le pacte et les objets bénis de Kreupasanam, invoquant la Sainte Vierge Marie et le Saint Fils pour la guérison et la force.\n\nGrâce à une foi inébranlable et à une prière persistante, même avant de prendre formellement le pacte, des signes miraculeux ont commencé à apparaître. Bella a enduré d'énormes douleurs et traumatismes physiques, mais la famille a remarqué un parfum doux dans l'unité de soins intensifs — un signe céleste de la présence divine. Progressivement, par la prière, le Saint Rosaire et l'utilisation des objets bénis, Bella a commencé à se rétablir. Les médecins ont été stupéfaits de constater l'amélioration de son état jour après jour — elle a retrouvé ses mouvements, a commencé à manger sans tubes et les fonctions de son cerveau et de son corps ont été complètement restaurées. Ceux qui disaient autrefois que la récupération était impossible ont été témoins de sa guérison miraculeuse, reconnaissant qu'aucune explication médicale ne pouvait justifier une transformation aussi complète.\n\nLa guérison de Bella a atteint son apogée lorsqu'elle est revenue complètement à la vie normale — sa vue, sa mobilité et son intellect entièrement rétablis, allant maintenant à l'école comme n'importe quel autre enfant. À la même époque, Swapna, qui était au huitième mois de grossesse, a également vécu un accouchement sûr et paisible sous la même protection divine. L'incroyable rétablissement de Bella est devenu le sujet de conversation de l'hôpital — les médecins et infirmières qui avaient perdu espoir l'ont qualifié de véritable miracle. Son histoire s'est répandue au-delà des murs de l'hôpital et a ensuite été publiée dans un article de journal, témoignant du pouvoir de la foi et de la prière. La famille déclare avec joie que ces miracles n'ont pas seulement redonné la vie à Bella, mais ont également renouvelé leur propre foi, les remplissant de courage inébranlable, de paix et d'espoir. Leur témoignage se tient comme un brillant témoignage du pouvoir guérisseur, protecteur et vital de la prière et de la dévotion au pacte, inspirant chacun à faire confiance à l'intercession de la Mère Marie et à être témoin des miracles de Dieu dans leur vie."
     },
     "subtitles": "/assets/testimony-subtitle/06oct.json",
-    "duration": "28:22"
+    "duration": "28:22",
+    "overlay":{
+  "boxes": [
+    {
+      "x": 16,
+      "y": 4,
+      "w": 1043,
+      "h": 197,
+      "background": "#ffffff",
+      "fontColor": "#c6316b"
+    },
+    {
+      "x": 18,
+      "y": 194,
+      "w": 1048,
+      "h": 137,
+      "background": "#1661be",
+      "fontColor": "#fcfd00"
+    },
+    {
+      "x": 23,
+      "y": 324,
+      "w": 908,
+      "h": 154,
+      "background": "#bb235c",
+      "fontColor": "#f5fbfb"
+    },
+    {
+      "x": 25,
+      "y": 477,
+      "w": 957,
+      "h": 221,
+      "background": "#fdfe00",
+      "fontColor": "#185caf"
+    }
+  ],
+  "texts": {
+  "en": [
+    "My daughter was asleep when she suffered a cardiac arrest and fell off the bed.",
+    "When the priest arrived to administer the Last Rites,",
+    "The people who were with me gave me Kreupasanam Covenant items.",
+    "Through the Online Covenant, she recovered from brain damage, became brighter than before, and is now standing at the Kreupasanam altar."
+  ],
+  "hi": [
+    "मेरी बेटी सो रही थी तभी उसे दिल का दौरा पड़ा और वह बिस्तर से नीचे गिर गई।",
+    "जब पादरी अंतिम अभिषेक (Last Rites) देने आए,",
+    "जो लोग मेरे साथ थे, उन्होंने मुझे क्रेउपासनम वाचा की वस्तुएँ दीं।",
+    "ऑनलाइन वाचा के द्वारा वह मस्तिष्क की क्षति से पूरी तरह ठीक हो गई, पहले से भी अधिक होशियार बन गई, और आज क्रेउपासनम वेदी पर गवाही दे रही है।"
+  ],
+  "ta": [
+    "என் மகள் தூங்கிக் கொண்டிருந்தபோது திடீரென இதயத் துடிப்பு நின்று படுக்கையிலிருந்து கீழே விழுந்தாள்.",
+    "அருட்தந்தை இறுதி அருள்பணி வழங்க வந்தபோது,",
+    "என்னுடன் இருந்தவர்கள் எனக்கு கிருபாசனம் உடன்படிக்கைப் பொருட்களை கொடுத்தார்கள்.",
+    "ஆன்லைன் உடன்படிக்கையின் மூலம் அவள் மூளை பாதிப்பிலிருந்து முழுமையாக குணமடைந்து, முன்பைவிட புத்திசாலியாகி, இன்று கிருபாசனம் பலிபீடத்தில் நிற்கிறாள்."
+  ],
+  "bn": [
+    "আমার মেয়ে ঘুমিয়ে ছিল। তখনই তার হার্ট অ্যাটাক হয় এবং সে খাট থেকে নিচে পড়ে যায়।",
+    "যখন ফাদার শেষ ধর্মীয় আচার (Last Rites) দিতে এলেন,",
+    "আমার সঙ্গে থাকা লোকেরা আমাকে ক্রুপাসানাম চুক্তির সামগ্রী দিয়েছিলেন।",
+    "অনলাইন চুক্তির মাধ্যমে সে মস্তিষ্কের ক্ষতি থেকে সুস্থ হয়ে ওঠে, আগের চেয়েও মেধাবী হয়ে যায়, আর আজ ক্রুপাসানামের বেদীর সামনে দাঁড়িয়ে সাক্ষ্য দিচ্ছে।"
+  ],
+  "te": [
+    "నా కుమార్తె నిద్రలో ఉండగా ఒక్కసారిగా గుండె ఆగిపోయి మంచం మీద నుంచి కింద పడిపోయింది.",
+    "ఫాదర్ చివరి అభిషేకం ఇవ్వడానికి వచ్చినప్పుడు,",
+    "నాతో ఉన్నవారు నాకు క్రుపాసనం ఒడంబడిక వస్తువులు ఇచ్చారు.",
+    "ఆన్‌లైన్ ఒడంబడిక ద్వారా ఆమె మెదడు దెబ్బతిన్న స్థితి నుంచి పూర్తిగా కోలుకుని, మునుపటి కంటే మరింత తెలివిగా మారి, ఇప్పుడు క్రుపాసనం బలిపీఠం వద్ద నిలబడి ఉంది."
+  ],
+  "mr": [
+    "माझी मुलगी झोपेत असताना तिला हृदयविकाराचा झटका आला आणि ती पलंगावरून खाली पडली.",
+    "फादर अंतिम अभिषेक देण्यासाठी आले तेव्हा,",
+    "माझ्यासोबत असलेल्या लोकांनी मला क्रुपासनम करारातील पवित्र वस्तू दिल्या.",
+    "ऑनलाइन करारामुळे ती मेंदूच्या दुखापतीतून पूर्णपणे बरी झाली, पूर्वीपेक्षा अधिक हुशार झाली आणि आज क्रुपासनमच्या वेदीसमोर उभी आहे."
+  ],
+  "fr": [
+    "Ma fille dormait lorsqu'elle a fait un arrêt cardiaque et est tombée du lit.",
+    "Lorsque le prêtre est arrivé pour lui administrer les derniers sacrements,",
+    "Les personnes qui étaient avec moi m'ont donné les objets de l'Alliance de Kreupasanam.",
+    "Grâce à l'Alliance en ligne, elle s'est remise de ses lésions cérébrales, elle est devenue plus vive qu'avant et aujourd'hui elle se tient devant l'autel de Kreupasanam."
+  ],
+  "es": [
+    "Mi hija estaba dormida cuando sufrió un paro cardíaco y se cayó de la cama.",
+    "Cuando el sacerdote llegó para administrarle la Unción de los Enfermos,",
+    "Las personas que estaban conmigo me dieron los artículos del Pacto de Kreupasanam.",
+    "A través del Pacto en Línea, se recuperó del daño cerebral, quedó más despierta que antes y hoy está de pie ante el altar de Kreupasanam."
+  ],
+  "zh": [
+    "我女儿睡觉时突然心脏骤停，从床上摔了下来。",
+    "当神父前来为她施行临终圣事时，",
+    "和我在一起的人把克雷乌帕萨南盟约圣物交给了我。",
+    "借着线上盟约，她从脑损伤中康复，比以前更加聪明，如今已经站在克雷乌帕萨南祭台前作见证。"
+  ],
+  "kn": [
+    "ನನ್ನ ಮಗಳು ಮಲಗಿದ್ದಾಗಲೇ ಆಕೆಗೆ ಹೃದಯಾಘಾತವಾಗಿ ಹಾಸಿಗೆಯಿಂದ ಕೆಳಗೆ ಬಿದ್ದಳು.",
+    "ಪಾದ್ರಿಯವರು ಅಂತಿಮ ಅಭಿಷೇಕ ನೀಡಲು ಬಂದಾಗ,",
+    "ನನ್ನ ಜೊತೆಯಲ್ಲಿದ್ದವರು ನನಗೆ ಕ್ರೆಉಪಾಸನಂ ಒಡಂಬಡಿಕೆಯ ವಸ್ತುಗಳನ್ನು ನೀಡಿದರು.",
+    "ಆನ್‌ಲೈನ್ ಒಡಂಬಡಿಕೆಯ ಮೂಲಕ ಆಕೆ ಮೆದುಳಿನ ಹಾನಿಯಿಂದ ಸಂಪೂರ್ಣವಾಗಿ ಚೇತರಿಸಿಕೊಂಡಳು, ಮೊದಲಿಗಿಂತ ಹೆಚ್ಚು ಚುರುಕಾದಳು ಮತ್ತು ಇಂದು ಕ್ರೆಉಪಾಸನಂ ಬಲಿಪೀಠದ ಮುಂದೆ ನಿಂತಿದ್ದಾಳೆ."
+  ]
+}
+}
   },
   {
     "id": 39,
@@ -6455,5 +6553,152 @@
   ]
 }
 }
-  }
+  },
+  {
+    "id": 79,
+    "title": {
+  "en": "From Addiction, Debt, and Despair to a Life of Miracles, Faith and Marian Presence",
+  "hi": "नशे, कर्ज़ और निराशा से चमत्कारों से भरे जीवन तक — विश्वास और मरियम की उपस्थिति",
+  "ta": "மதுபோதையும், கடனும், நம்பிக்கையிழப்பும் நிறைந்த வாழ்க்கையிலிருந்து அற்புதங்கள் நிறைந்த வாழ்விற்கு – விசுவாசமும் அன்னை மரியாவின் உடனிருப்பும்",
+  "bn": "আসক্তি, ঋণ ও হতাশা থেকে অলৌকিকতায় ভরা জীবনের পথে — বিশ্বাস ও মা মরিয়মের উপস্থিতি",
+  "te": "వ్యసనం, అప్పులు, నిరాశ నుంచి అద్భుతాలతో నిండిన జీవితానికి — విశ్వాసం మరియు మరియమ్మ సన్నిధి",
+  "mr": "व्यसन, कर्ज आणि निराशेतून चमत्कारांनी भरलेल्या जीवनाकडे — विश्वास आणि माता मरियेची सान्निध्यता",
+  "fr": "De l'addiction, des dettes et du désespoir à une vie de miracles — Foi et présence de Marie",
+  "es": "De la adicción, las deudas y la desesperación a una vida de milagros — Fe y presencia de María",
+  "zh": "从成瘾、债务与绝望，到充满奇迹的人生——信德与圣母玛利亚的临在",
+  "kn": "ವ್ಯಸನ, ಸಾಲ ಮತ್ತು ನಿರಾಶೆಯಿಂದ ಅದ್ಭುತಗಳಿಂದ ತುಂಬಿದ ಜೀವನದವರೆಗೆ — ನಂಬಿಕೆ ಮತ್ತು ಮಾತೆ ಮರಿಯಮ್ಮನ ಸಾನ್ನಿಧ್ಯ"
+},
+    "date": "July 24, 2026",
+    "video": "https://youtu.be/H4ao-_ohMXE",
+    "content": {
+  "en": "Stephy came to the Kreupasanam altar burdened by severe debt and took the Covenant in November 2024, initially praying for a local job to support her family. Against all odds, she received an opportunity to work as a caregiver in Israel, despite lacking a nursing background and facing insurmountable financial hurdles. Through her fervent prayers and deep faith in Mother Mary, she miraculously received the exact funds required for her visa and travel expenses. She also passed a challenging interview despite not knowing Hebrew and was ultimately blessed with a placement in an English-speaking family in Israel.\n\nThe miraculous interventions extended deeply into Stephy's family life, bringing profound healing and transformation. Her husband, Bibin, who had struggled with severe alcoholism for 12 years and previously mocked her faith, decided to take the Covenant himself and was completely delivered from his addiction within a month. Additionally, Bibin experienced a miraculous healing from debilitating leg pain during a Rosary rally, and their young son, Abel, was miraculously cured of a severe medical issue without the need for a previously recommended surgery after the family prayed using the Covenant oil and salt.\n\nTransformed by these experiences, the family now leads a deeply devout life, with Bibin actively leading their household prayers. Stephy continues to share her faith in Israel by distributing Kreupasanam materials, caring for the elderly, and praying for others in need using the Covenant sacramentals. Their shared testimony serves as a powerful declaration of their gratitude to Jesus and Mother Mary, illustrating how steadfast faith and prayer during life's greatest crises can bring about complete deliverance and spiritual renewal.",
+  "hi": "स्टेफी भारी कर्ज के बोझ तले कृपासनम वेदी पर आईं और अपने परिवार को सपोर्ट करने के लिए लोकल जॉब की प्रार्थना करते हुए नवंबर 2024 में वाचा लिया। सभी बाधाओं के बावजूद, नर्सिंग बैकग्राउंड न होने और भारी आर्थिक तंगी के बाद भी, उन्हें इज़राइल में केयरगिवर के रूप में काम करने का मौका मिला। मदर मैरी में अपने गहरे विश्वास और प्रार्थनाओं के द्वारा, उन्हें चमत्कारिक रूप से अपने वीज़ा और यात्रा खर्च के लिए आवश्यक पूरे पैसे मिल गए। हिब्रू न जानने के बावजूद उन्होंने एक कठिन इंटरव्यू पास किया और इज़राइल में एक इंग्लिश बोलने वाले परिवार में उन्हें प्लेसमेंट मिला।\n\nचमत्कारिक हस्तक्षेप स्टेफी के पारिवारिक जीवन तक भी पहुंचे, जिससे उन्हें गहरी चंगाई और बदलाव मिला। उनके पति बिबिन, जो 12 साल से शराब की लत से जूझ रहे थे और पहले उनके विश्वास का मजाक उड़ाते थे, उन्होंने खुद वाचा लेने का फैसला किया और एक महीने के भीतर अपनी लत से पूरी तरह मुक्त हो गए। इसके अलावा, एक रोज़री रैली के दौरान बिबिन को पैरों के भयंकर दर्द से चमत्कारिक चंगाई मिली, और उनके छोटे बेटे एबेल को एक गंभीर मेडिकल समस्या से बिना सर्जरी के चमत्कारिक रूप से ठीक कर दिया गया, जब परिवार ने वाचा तेल और नमक का उपयोग करके प्रार्थना की।\n\nइन अनुभवों से बदलकर, यह परिवार अब एक गहरा भक्तिपूर्ण जीवन जी रहा है, और बिबिन अब घर की प्रार्थनाओं की अगुवाई करते हैं। स्टेफी इज़राइल में कृपासनम सामग्री शेयर करके, बुजुर्गों की देखभाल करके और वाचा की पवित्र वस्तुओं का उपयोग करके जरूरतमंदों के लिए प्रार्थना करके अपने विश्वास को बांटना जारी रखती हैं। उनकी यह गवाही यीशु और मदर मैरी के प्रति उनकी कृतज्ञता की एक शक्तिशाली घोषणा है, जो यह दिखाती है कि जीवन के सबसे बड़े संकटों के दौरान अटूट विश्वास और प्रार्थना कैसे पूरी तरह से छुटकारा और आध्यात्मिक नवीनीकरण ला सकती है।",
+  "ta": "ஸ்டெஃபி கடுமையான கடனோடு கிருபாசனம் பீடத்திற்கு வந்து, தனது குடும்பத்தை சப்போர்ட் செய்ய ஒரு லோக்கல் வேலைக்காக வேண்டி நவம்பர் 2024-ல் உடன்படிக்கை எடுத்தார். நர்சிங் பின்னணி இல்லாத நிலையிலும், மிகப்பெரிய பண நெருக்கடிகளுக்கு மத்தியிலும், இஸ்ரேலில் ஒரு கேர்கிவராக வேலை செய்யும் வாய்ப்பு அவருக்கு கிடைத்தது. அன்னை மரியா மீதான அவரது ஆழ்ந்த விசுவாசம் மற்றும் ஜெபங்கள் வழியாக, அவரது விசா மற்றும் பயணச் செலவுகளுக்கான முழுப் பணமும் அற்புதமாக கிடைத்தது. எபிரேய மொழி தெரியாவிட்டாலும் அவர் ஒரு கடினமான இன்டர்வியூவை பாஸ் செய்தார், மேலும் இஸ்ரேலில் இங்கிலீஷ் பேசும் ஒரு குடும்பத்தில் பிளேஸ்மென்ட் பெற்றார்.\n\nஇந்த அற்புதமான தலையீடுகள் ஸ்டெஃபியின் குடும்ப வாழ்க்கையிலும் ஆழமாகப் பரவி, குணமளிப்பையும் மாற்றத்தையும் கொண்டுவந்தன. 12 ஆண்டுகளாக கடுமையான குடிப்பழக்கத்தால் பாதிக்கப்பட்டு, முன்பு அவரது விசுவாசத்தை கேலி செய்த அவரது கணவர் பிபின், தானும் உடன்படிக்கை எடுக்க முடிவு செய்து, ஒரு மாதத்திற்குள் தனது அடிமைத்தனத்திலிருந்து முழுமையாக விடுவிக்கப்பட்டார். மேலும், ஒரு ஜெபமாலை பவனியின் போது பிபினுக்கு இருந்த கடுமையான கால் வலி அற்புதமாக குணமாகியது. குடும்பத்தினர் உடன்படிக்கை எண்ணெய் மற்றும் உப்பைப் பயன்படுத்தி ஜெபித்த பிறகு, அவர்களின் இளைய மகன் ஆபேலுக்கு இருந்த ஒரு கடுமையான மெடிக்கல் பிரச்சினைக்கு, முன்பு பரிந்துரைக்கப்பட்ட சர்ஜரி இல்லாமலேயே அற்புதமாக சுகம் கிடைத்தது.\n\nஇந்த அனுபவங்களால் மாற்றப்பட்டு, குடும்பம் இப்போது ஒரு ஆழ்ந்த பக்திமிக்க வாழ்க்கையை வாழ்கிறது, பிபின் இப்போது வீட்டில் ஜெபங்களை லீட் செய்கிறார். ஸ்டெஃபி இஸ்ரேலில் கிருபாசனம் பொருட்களை விநியோகிப்பதன் மூலமும், முதியோர்களைக் கவனித்துக்கொள்வதன் மூலமும், உடன்படிக்கை அருளடையாளங்களைப் பயன்படுத்தி தேவைப்படுபவர்களுக்காக ஜெபிப்பதன் மூலமும் தனது விசுவாசத்தை தொடர்ந்து ஷேர் செய்கிறார். அவர்களின் இந்த சாட்சியம் இயேசுவுக்கும் அன்னை மரியாவுக்கும் அவர்கள் செலுத்தும் நன்றியின் சக்திவாய்ந்த அறிவிப்பாகும்; வாழ்க்கையின் மிகப்பெரிய நெருக்கடிகளில் உறுதியான விசுவாசமும் ஜெபமும் எவ்வாறு முழுமையான விடுதலையையும் ஆன்மீகப் புதுப்பித்தலையும் கொண்டுவரும் என்பதை இது காட்டுகிறது.",
+  "bn": "স্টেফি প্রচণ্ড ঋণের বোঝা নিয়ে কৃপাসনম বেদীতে এসেছিলেন এবং তার পরিবারকে সাপোর্ট করার জন্য একটি লোকাল চাকরির প্রার্থনা করে 2024 সালের নভেম্বরে বাচা গ্রহণ করেছিলেন। নার্সিং ব্যাকগ্রাউন্ড না থাকা এবং প্রবল আর্থিক সংকট সত্ত্বেও, তিনি ইসরায়েলে কেয়ারগিভার হিসেবে কাজ করার সুযোগ পান। মাদার মেরির প্রতি তার গভীর বিশ্বাস এবং প্রার্থনার মাধ্যমে, তিনি তার ভিসা এবং ভ্রমণের খরচের জন্য প্রয়োজনীয় পুরো টাকা অলৌকিকভাবে পেয়েছিলেন। হিব্রু না জানা সত্ত্বেও তিনি একটি কঠিন ইন্টারভিউ পাস করেন এবং ইসরায়েলে একটি ইংলিশভাষী পরিবারে প্লেসমেন্ট পান।\n\nএই অলৌকিক হস্তক্ষেপগুলি স্টেফির পারিবারিক জীবনেও গভীরভাবে প্রভাব ফেলেছিল, যা নিরাময় এবং রূপান্তর নিয়ে এসেছিল। তার স্বামী, বিবিন, যিনি 12 বছর ধরে মারাত্মক অ্যালকোহলিজমে ভুগছিলেন এবং আগে তার বিশ্বাসের উপহাস করতেন, তিনি নিজেই বাচা নেওয়ার সিদ্ধান্ত নেন এবং এক মাসের মধ্যে তার আসক্তি থেকে সম্পূর্ণ মুক্তি পান। এছাড়াও, একটি রোজারি র্যালির সময় বিবিন তার পায়ের মারাত্মক ব্যথা থেকে অলৌকিকভাবে নিরাময় লাভ করেন, এবং তাদের ছোট ছেলে আবেল একটি গুরুতর মেডিকেল সমস্যা থেকে অলৌকিকভাবে সুস্থ হয়ে ওঠে। পরিবার বাচা তেল এবং লবণ ব্যবহার করে প্রার্থনা করার পরে তার জন্য আগে সাজেস্ট করা সার্জারির আর প্রয়োজন হয়নি।\n\nএই অভিজ্ঞতাগুলির মাধ্যমে পরিবর্তিত হয়ে, পরিবারটি এখন একটি গভীর ভক্তিমূলক জীবনযাপন করছে, এবং বিবিন এখন তাদের বাড়ির প্রার্থনাগুলি লিড করেন। স্টেফি ইসরায়েলে কৃপাসনমের উপকরণ বিতরণ করে, বয়স্কদের যত্ন নিয়ে এবং বাচার পবিত্র বস্তুগুলি ব্যবহার করে অভাবগ্রস্তদের জন্য প্রার্থনা করে তার বিশ্বাস শেয়ার করে চলেছেন। তাদের এই সাক্ষ্য যীশু এবং মাদার মেরির প্রতি তাদের কৃতজ্ঞতার একটি শক্তিশালী ঘোষণা, যা প্রমাণ করে যে জীবনের সবচেয়ে বড় সংকটের সময় অবিচল বিশ্বাস এবং প্রার্থনা কীভাবে সম্পূর্ণ মুক্তি এবং আধ্যাত্মিক পুনর্নবীকরণ আনতে পারে।",
+  "te": "స్టెఫీ తీవ్రమైన అప్పుల భారంతో కృపాసనం బలిపీఠం వద్దకు వచ్చి, తన కుటుంబాన్ని సపోర్ట్ చేయడానికి లోకల్ జాబ్ కోసం ప్రార్థిస్తూ నవంబర్ 2024లో వాచా తీసుకుంది. నర్సింగ్ బ్యాక్‌గ్రౌండ్ లేకపోయినా మరియు తీవ్రమైన ఆర్థిక ఇబ్బందులు ఉన్నప్పటికీ, ఆమెకు ఇజ్రాయెల్‌లో కేర్‌గివర్‌గా పనిచేసే అవకాశం లభించింది. మదర్ మేరీపై ఉన్న ఆమె గాఢమైన విశ్వాసం మరియు ప్రార్థనల ద్వారా, తన వీసా మరియు ప్రయాణ ఖర్చులకు అవసరమైన డబ్బును ఆమె అద్భుతమైన రీతిలో పొందింది. హిబ్రూ భాష రాకపోయినా ఆమె ఒక కఠినమైన ఇంటర్వ్యూ పాస్ అయ్యింది మరియు ఇజ్రాయెల్‌లో ఇంగ్లీష్ మాట్లాడే కుటుంబంలో ప్లేస్‌మెంట్ పొందింది.\n\nఈ అద్భుతమైన జోక్యాలు స్టెఫీ కుటుంబ జీవితంలో కూడా లోతుగా వ్యాపించి, స్వస్థత మరియు మార్పును తీసుకువచ్చాయి. 12 సంవత్సరాలుగా తీవ్రమైన మద్యపాన వ్యసనంతో బాధపడుతూ, గతంలో ఆమె విశ్వాసాన్ని ఎగతాళి చేసిన ఆమె భర్త బిబిన్, స్వయంగా వాచా తీసుకోవాలని నిర్ణయించుకున్నాడు మరియు ఒక నెల వ్యవధిలో తన వ్యసనం నుండి పూర్తిగా విముక్తి పొందాడు. అదనంగా, ఒక రోజరీ ర్యాలీ సమయంలో బిబిన్ కాలి నొప్పి నుండి అద్భుతమైన స్వస్థత పొందాడు, మరియు వారి చిన్న కుమారుడు అబెల్ కు ఉన్న తీవ్రమైన మెడికల్ సమస్య, కుటుంబం వాచా నూనె మరియు ఉప్పును ఉపయోగించి ప్రార్థించిన తర్వాత, గతంలో సిఫార్సు చేసిన సర్జరీ అవసరం లేకుండానే అద్భుతంగా నయమైంది.\n\nఈ అనుభవాల ద్వారా రూపాంతరం చెంది, ఆ కుటుంబం ఇప్పుడు లోతైన భక్తితో జీవిస్తోంది, మరియు బిబిన్ ఇప్పుడు ఇంటి ప్రార్థనలను లీడ్ చేస్తున్నాడు. స్టెఫీ ఇజ్రాయెల్‌లో కృపాసనం మెటీరియల్స్ పంపిణీ చేయడం ద్వారా, వృద్ధులను చూసుకోవడం ద్వారా మరియు వాచా పవిత్ర వస్తువులను ఉపయోగించి అవసరంలో ఉన్నవారి కోసం ప్రార్థించడం ద్వారా తన విశ్వాసాన్ని షేర్ చేయడం కొనసాగిస్తోంది. వారి ఈ సాక్ష్యం యేసు మరియు మదర్ మేరీ పట్ల వారి కృతజ్ఞతకు ఒక శక్తివంతమైన ప్రకటనగా నిలుస్తుంది, జీవితంలోని అతిపెద్ద సంక్షోభాల సమయంలో స్థిరమైన విశ్వాసం మరియు ప్రార్థనలు ఎలా సంపూర్ణ విముక్తిని మరియు ఆధ్యాత్మిక నవీకరణను తీసుకువస్తాయో ఇది చూపిస్తుంది.",
+  "mr": "स्टेफी मोठ्या कर्जाच्या ओझ्याखाली कृपासनम वेदीवर आली आणि आपल्या कुटुंबाला सपोर्ट करण्यासाठी लोकल जॉब मिळवण्यासाठी तिने नोव्हेंबर 2024 मध्ये वाचा घेतला. नर्सिंग बॅकग्राउंड नसतानाही आणि मोठ्या आर्थिक अडचणी असूनही, तिला इस्रायलमध्ये केअरगिव्हर म्हणून काम करण्याची संधी मिळाली. मदर मेरीवरील तिचा गाढ विश्वास आणि प्रार्थनेमुळे, तिला तिचा विसा आणि प्रवासाच्या खर्चासाठी लागणारे सर्व पैसे चमत्कारिकरीत्या मिळाले. हिब्रू येत नसतानाही तिने एक कठीण इंटरव्ह्यू पास केला आणि इस्रायलमध्ये एका इंग्लिश बोलणाऱ्या कुटुंबात तिला प्लेसमेंट मिळाली.\n\nहे चमत्कारिक हस्तक्षेप स्टेफीच्या कौटुंबिक जीवनातही खोलवर पोहोचले, ज्यामुळे त्यांना मोठी चंगाई आणि परिवर्तन मिळाले. तिचे पती बिबिन, जे 12 वर्षांपासून दारूच्या व्यसनात अडकले होते आणि आधी तिच्या विश्वासाची चेष्टा करत होते, त्यांनी स्वतः वाचा घेण्याचा निर्णय घेतला आणि एका महिन्यात ते आपल्या व्यसनातून पूर्णपणे मुक्त झाले. याशिवाय, एका रोझरी रॅली दरम्यान बिबिनला त्याच्या पायाच्या भयंकर दुखण्यातून चमत्कारिक चंगाई मिळाली, आणि त्यांच्या लहान मुलाला, एबेलला असलेल्या गंभीर मेडिकल समस्येवर, कुटुंबाने वाचा तेल आणि मीठ वापरून प्रार्थना केल्यानंतर, आधी सुचवलेल्या सर्जरीची गरज न लागता तो चमत्कारिकरीत्या बरा झाला.\n\nया अनुभवांनी बदलून, हे कुटुंब आता एक अत्यंत भक्तीमय जीवन जगत आहे, आणि बिबिन आता घरातल्या प्रार्थना लीड करतात. स्टेफी इस्रायलमध्ये कृपासनमचे साहित्य वाटून, वृद्धांची काळजी घेऊन आणि वाचाच्या पवित्र वस्तूंचा वापर करून गरजूंसाठी प्रार्थना करून आपला विश्वास शेअर करत आहे. त्यांची ही साक्ष येशू आणि मदर मेरीबद्दलच्या त्यांच्या कृतज्ञतेची एक शक्तिशाली घोषणा आहे, जी दर्शवते की जीवनातील सर्वात मोठ्या संकटांच्या वेळी अढळ विश्वास आणि प्रार्थना कशा प्रकारे पूर्ण सुटका आणि आध्यात्मिक नूतनीकरण घडवून आणू शकतात.",
+  "fr": "Stephy est venue à l'autel de Kreupasanam accablée par de lourdes dettes et a pris l'Alliance en novembre 2024, priant initialement pour trouver un emploi local afin de soutenir sa famille. Contre toute attente, elle a reçu l'opportunité de travailler comme aide-soignante en Israël, bien qu'elle n'ait aucune formation d'infirmière et qu'elle fasse face à des obstacles financiers insurmontables. Grâce à ses prières ferventes et à sa foi profonde en la Vierge Marie, elle a reçu miraculeusement les fonds exacts nécessaires pour son visa et ses frais de voyage. Elle a également réussi un entretien difficile bien qu'elle ne parle pas hébreu et a finalement été bénie par un placement dans une famille anglophone en Israël.\n\nLes interventions miraculeuses se sont étendues profondément à la vie familiale de Stephy, apportant une guérison et une transformation profondes. Son mari, Bibin, qui luttait contre un alcoolisme sévère depuis 12 ans et qui se moquait auparavant de sa foi, a décidé de prendre l'Alliance lui-même et a été complètement délivré de son addiction en un mois. De plus, Bibin a connu une guérison miraculeuse d'une douleur débilitante à la jambe lors d'une procession du Rosaire, et leur jeune fils, Abel, a été miraculeusement guéri d'un grave problème médical sans avoir besoin de l'opération chirurgicale précédemment recommandée, après que la famille ait prié en utilisant l'huile et le sel de l'Alliance.\n\nTransformée par ces expériences, la famille mène maintenant une vie profondément dévote, Bibin dirigeant activement les prières de leur foyer. Stephy continue de partager sa foi en Israël en distribuant le matériel de Kreupasanam, en s'occupant des personnes âgées et en priant pour d'autres personnes dans le besoin en utilisant les sacramentaux de l'Alliance. Leur témoignage commun sert de puissante déclaration de leur gratitude envers Jésus et la Vierge Marie, illustrant comment une foi et une prière inébranlables lors des plus grandes crises de la vie peuvent apporter une délivrance complète et un renouveau spirituel.",
+  "es": "Stephy llegó al altar de Kreupasanam agobiada por graves deudas y tomó la Alianza en noviembre de 2024, rezando inicialmente por un trabajo local para mantener a su familia. Contra todo pronóstico, recibió la oportunidad de trabajar como cuidadora en Israel, a pesar de no tener experiencia en enfermería y de enfrentarse a obstáculos financieros insuperables. A través de sus fervientes oraciones y su profunda fe en la Virgen María, recibió milagrosamente los fondos exactos necesarios para su visa y gastos de viaje. También pasó una difícil entrevista a pesar de no saber hebreo y finalmente fue bendecida con un puesto en una familia de habla inglesa en Israel.\n\nLas intervenciones milagrosas se extendieron profundamente en la vida familiar de Stephy, trayendo una sanación y transformación profundas. Su esposo, Bibin, que había luchado contra el alcoholismo severo durante 12 años y antes se burlaba de su fe, decidió tomar la Alianza él mismo y fue completamente liberado de su adicción en un mes. Además, Bibin experimentó una sanación milagrosa de un dolor debilitante en la pierna durante una procesión del Rosario, y su hijo pequeño, Abel, se curó milagrosamente de un grave problema médico sin necesidad de una cirugía previamente recomendada, después de que la familia rezara utilizando el aceite y la sal de la Alianza.\n\nTransformada por estas experiencias, la familia lleva ahora una vida profundamente devota, y Bibin dirige activamente las oraciones en su hogar. Stephy sigue compartiendo su fe en Israel distribuyendo materiales de Kreupasanam, cuidando a los ancianos y rezando por otras personas necesitadas utilizando los sacramentales de la Alianza. Su testimonio compartido sirve como una poderosa declaración de su gratitud a Jesús y a la Virgen María, ilustrando cómo la fe y la oración inquebrantables durante las mayores crisis de la vida pueden lograr una completa liberación y renovación espiritual.",
+  "zh": "Stephy 带着沉重的债务负担来到 Kreupasanam 的祭台前，并于 2024 年 11 月立下了盟约（Covenant），起初她祈求能找到一份当地的工作来养家糊口。尽管困难重重，而且她没有护理背景并面临无法克服的经济障碍，她还是得到了去以色列做看护的机会。通过她热切的祈祷和对圣母玛利亚深厚的信仰，她奇迹般地获得了办理签证和旅行费用所需的确切资金。尽管不懂希伯来语，她还是通过了艰难的面试，最终蒙受祝福，被安置在以色列的一个英语家庭中。\n\n奇迹般的干预深深地延伸到了 Stephy 的家庭生活中，带来了深刻的医治和转变。她的丈夫 Bibin 曾与严重的酗酒问题抗争了 12 年，以前还嘲笑过她的信仰，但他决定亲自立下盟约，并在不到一个月的时间里完全摆脱了酒瘾。此外，在一次玫瑰经游行中，Bibin 令人衰弱的腿痛奇迹般地痊愈了；在家人使用盟约的油和盐进行祈祷后，他们的小儿子 Abel 严重的医疗问题也奇迹般地痊愈了，不需要进行之前建议的手术。\n\n这些经历使这个家庭发生了转变，他们现在过着非常虔诚的生活，Bibin 积极带领着他们家的祈祷。Stephy 在以色列继续分享她的信仰，分发 Kreupasanam 的材料，照顾老人，并使用盟约的圣物为其他有需要的人祈祷。他们共同的见证有力地宣告了他们对耶稣和圣母玛利亚的感激之情，表明在生命中最大的危机时刻，坚定的信仰和祈祷如何能够带来完全的解脱和灵性的更新。",
+  "kn": "ಸ್ಟೆಫಿ ಭಾರಿ ಸಾಲದ ಹೊರೆಯೊಂದಿಗೆ ಕೃಪಾಸನಂ ಬಲಿಪೀಠಕ್ಕೆ ಬಂದು, ತನ್ನ ಕುಟುಂಬವನ್ನು ಸಪೋರ್ಟ್ ಮಾಡಲು ಲೋಕಲ್ ಜಾಬ್‌ಗಾಗಿ ಪ್ರಾರ್ಥಿಸುತ್ತಾ ನವೆಂಬರ್ 2024 ರಲ್ಲಿ ಒಡಂಬಡಿಕೆ ತೆಗೆದುಕೊಂಡಳು. ನರ್ಸಿಂಗ್ ಬ್ಯಾಕ್‌ಗ್ರೌಂಡ್ ಇಲ್ಲದಿದ್ದರೂ ಮತ್ತು ಭಾರಿ ಆರ್ಥಿಕ ಕಷ್ಟಗಳಿದ್ದರೂ, ಅವಳಿಗೆ ಇಸ್ರೇಲ್‌ನಲ್ಲಿ ಕೇರ್‌ಗಿವರ್ ಆಗಿ ಕೆಲಸ ಮಾಡುವ ಅವಕಾಶ ಸಿಕ್ಕಿತು. ಮದರ್ ಮೇರಿಯ ಮೇಲಿನ ಅವಳ ಆಳವಾದ ವಿಶ್ವಾಸ ಮತ್ತು ಪ್ರಾರ್ಥನೆಗಳ ಮೂಲಕ, ತನ್ನ ವೀಸಾ ಮತ್ತು ಪ್ರಯಾಣದ ಖರ್ಚುಗಳಿಗೆ ಬೇಕಾದ ಸಂಪೂರ್ಣ ಹಣವನ್ನು ಅವಳು ಪವಾಡಸದೃಶವಾಗಿ ಪಡೆದಳು. ಹಿಬ್ರೂ ಭಾಷೆ ಬರದಿದ್ದರೂ ಅವಳು ಒಂದು ಕಷ್ಟಕರವಾದ ಇಂಟರ್ವ್ಯೂ ಪಾಸ್ ಮಾಡಿದಳು ಮತ್ತು ಇಸ್ರೇಲ್‌ನಲ್ಲಿ ಇಂಗ್ಲಿಷ್ ಮಾತನಾಡುವ ಕುಟುಂಬದಲ್ಲಿ ಪ್ಲೇಸ್‌ಮೆಂಟ್ ಪಡೆದಳು.\n\nಈ ಪವಾಡಸದೃಶವಾದ ಮಧ್ಯಸ್ಥಿಕೆಗಳು ಸ್ಟೆಫಿಯ ಕೌಟುಂಬಿಕ ಜೀವನಕ್ಕೂ ಆಳವಾಗಿ ತಲುಪಿ, ಸ್ವಸ್ಥತೆ ಮತ್ತು ಬದಲಾವಣೆಯನ್ನು ತಂದವು. 12 ವರ್ಷಗಳಿಂದ ತೀವ್ರವಾದ ಮದ್ಯಪಾನ ಚಟದಿಂದ ಬಳಲುತ್ತಿದ್ದ ಮತ್ತು ಮೊದಲು ಅವಳ ವಿಶ್ವಾಸವನ್ನು ಗೇಲಿ ಮಾಡುತ್ತಿದ್ದ ಅವಳ ಪತಿ ಬಿಬಿನ್, ತಾನೇ ಒಡಂಬಡಿಕೆ ತೆಗೆದುಕೊಳ್ಳಲು ನಿರ್ಧರಿಸಿದನು ಮತ್ತು ಒಂದು ತಿಂಗಳೊಳಗೆ ತನ್ನ ಚಟದಿಂದ ಸಂಪೂರ್ಣವಾಗಿ ಬಿಡುಗಡೆ ಹೊಂದಿದನು. ಜೊತೆಗೆ, ಒಂದು ರೋಸರಿ ರ್ಯಾಲಿಯ ಸಮಯದಲ್ಲಿ ಬಿಬಿನ್‌ಗೆ ತನ್ನ ಕಾಲಿನ ತೀವ್ರವಾದ ನೋವಿನಿಂದ ಪವಾಡಸದೃಶವಾಗಿ ಸ್ವಸ್ಥತೆ ಸಿಕ್ಕಿತು, ಮತ್ತು ಅವರ ಕಿರಿಯ ಮಗ ಅಬೆಲ್‌ಗೆ ಇದ್ದ ಒಂದು ಗಂಭೀರವಾದ ಮೆಡಿಕಲ್ ಸಮಸ್ಯೆಗೆ, ಕುಟುಂಬವು ಒಡಂಬಡಿಕೆ ಎಣ್ಣೆ ಮತ್ತು ಉಪ್ಪನ್ನು ಬಳಸಿ ಪ್ರಾರ್ಥಿಸಿದ ನಂತರ, ಮೊದಲು ಸೂಚಿಸಲಾಗಿದ್ದ ಸರ್ಜರಿ ಇಲ್ಲದೆಯೇ ಪವಾಡಸದೃಶವಾಗಿ ವಾಸಿಯಾಯಿತು.\n\nಈ ಅನುಭವಗಳಿಂದ ಬದಲಾಗಿ, ಆ ಕುಟುಂಬವು ಈಗ ಅತ್ಯಂತ ಭಕ್ತಿಪೂರ್ವಕ ಜೀವನವನ್ನು ನಡೆಸುತ್ತಿದೆ, ಮತ್ತು ಬಿಬಿನ್ ಈಗ ಮನೆಯ ಪ್ರಾರ್ಥನೆಗಳನ್ನು ಲೀಡ್ ಮಾಡುತ್ತಿದ್ದಾನೆ. ಸ್ಟೆಫಿ ಇಸ್ರೇಲ್‌ನಲ್ಲಿ ಕೃಪಾಸನಂ ಮೆಟೀರಿಯಲ್ಸ್ ಹಂಚುವ ಮೂಲಕ, ವೃದ್ಧರನ್ನು ನೋಡಿಕೊಳ್ಳುವ ಮೂಲಕ ಮತ್ತು ಒಡಂಬಡಿಕೆಯ ಪವಿತ್ರ ವಸ್ತುಗಳನ್ನು ಬಳಸಿ ಅಗತ್ಯವಿರುವವರಿಗಾಗಿ ಪ್ರಾರ್ಥಿಸುವ ಮೂಲಕ ತನ್ನ ವಿಶ್ವಾಸವನ್ನು ಶೇರ್ ಮಾಡುವುದನ್ನು ಮುಂದುವರಿಸಿದ್ದಾಳೆ. ಅವರ ಈ ಸಾಕ್ಷ್ಯವು ಯೇಸು ಮತ್ತು ಮದರ್ ಮೇರಿಯ ಬಗ್ಗೆ ಅವರಿಗಿರುವ ಕೃತಜ್ಞತೆಯ ಒಂದು ಶಕ್ತಿಯುತವಾದ ಘೋಷಣೆಯಾಗಿದೆ, ಜೀವನದ ಅತಿದೊಡ್ಡ ಬಿಕ್ಕಟ್ಟುಗಳ ಸಮಯದಲ್ಲಿ ದೃಢವಾದ ವಿಶ್ವಾಸ ಮತ್ತು ಪ್ರಾರ್ಥನೆಯು ಹೇಗೆ ಸಂಪೂರ್ಣ ಬಿಡುಗಡೆ ಮತ್ತು ಆಧ್ಯಾತ್ಮಿಕ ನವೀಕರಣವನ್ನು ತರಬಲ್ಲದು ಎಂಬುದನ್ನು ಇದು ತೋರಿಸುತ್ತದೆ."
+},
+    "subtitles": "/assets/testimony-subtitle/24july26.json",
+    "duration": "17:32",
+    "overlay":{
+  "boxes": [
+    {
+      "x": 28,
+      "y": 4,
+      "w": 1010,
+      "h": 131,
+      "background": "#112d76",
+      "fontColor": "#f8f900"
+    },
+    {
+      "x": 50,
+      "y": 135,
+      "w": 769,
+      "h": 318,
+      "background": "#0a2059",
+      "fontColor": "#dfddde"
+    },
+    {
+      "x": 21,
+      "y": 463,
+      "w": 1043,
+      "h": 129,
+      "background": "#ba339a",
+      "fontColor": "#fffeff"
+    },
+    {
+      "x": 25,
+      "y": 593,
+      "w": 1037,
+      "h": 127,
+      "background": "#0f2763",
+      "fontColor": "#fcffff"
+    },
+    {
+      "x": 1075,
+      "y": 3,
+      "w": 195,
+      "h": 62,
+      "background": "#dee041",
+      "fontColor": "#dcdbd9"
+    }
+  ],
+  "texts": {
+  "en": [
+    "Through the Marian Covenant,",
+    "Kreupasanam Mother",
+    "pours out blessings far beyond what we ask for.",
+    "Let's hear the testimony of Bibin and Stephy.",
+    "Alappuzha"
+  ],
+  "hi": [
+    "मरियम वाचा के द्वारा,",
+    "कृपासनम माता",
+    "हमारी माँग से कहीं बढ़कर आशीषें बरसाती हैं।",
+    "आइए, बिबिन और स्टेफी की गवाही सुनते हैं।",
+    "आलप्पुझा"
+  ],
+  "ta": [
+    "மரிய அன்னையின் உடன்படிக்கையின் மூலம்,",
+    "கிருபாசனம் அன்னை",
+    "நாம் கேட்பதைவிட அளவற்ற ஆசீர்வாதங்களை வழங்குகிறார்.",
+    "பிபின் மற்றும் ஸ்டெபியின் சாட்சியத்தை கேட்போம்.",
+    "ஆലപ്പுழா"
+  ],
+  "bn": [
+    "মারিয়ান চুক্তির মাধ্যমে,",
+    "ক্রুপাসানাম মাতা",
+    "আমাদের চাওয়ার থেকেও অনেক বেশি আশীর্বাদ বর্ষণ করেন।",
+    "চলুন, বিবিন ও স্টেফির সাক্ষ্য শুনি।",
+    "আলাপ্পুঝা"
+  ],
+  "te": [
+    "మరియన్ ఒడంబడిక ద్వారా,",
+    "క్రుపాసనం మాత",
+    "మనం అడిగిన దానికంటే ఎంతో ఎక్కువ ఆశీర్వాదాలను కురిపిస్తుంది.",
+    "ఇప్పుడు బిబిన్ మరియు స్టెఫీ సాక్ష్యాన్ని విందాం.",
+    "అలప్పుజా"
+  ],
+  "mr": [
+    "मरियम कराराद्वारे,",
+    "क्रुपासनम माता",
+    "आपण मागतो त्यापेक्षाही कितीतरी अधिक आशीर्वाद देतात.",
+    "चला, बिबिन आणि स्टेफी यांची साक्ष ऐकूया.",
+    "अलप्पुझा"
+  ],
+  "fr": [
+    "Grâce à l'Alliance mariale,",
+    "Notre-Dame de Kreupasanam",
+    "répand des bénédictions bien au-delà de ce que nous demandons.",
+    "Écoutons le témoignage de Bibin et de Stephy.",
+    "Alappuzha"
+  ],
+  "es": [
+    "A través del Pacto Mariano,",
+    "Nuestra Señora de Kreupasanam",
+    "derrama bendiciones mucho más allá de lo que pedimos.",
+    "Escuchemos el testimonio de Bibin y Stephy.",
+    "Alappuzha"
+  ],
+  "zh": [
+    "借着圣母盟约，",
+    "克雷乌帕萨南圣母",
+    "赐下远超过我们所求的恩典。",
+    "让我们来听听比宾和斯蒂菲的见证。",
+    "阿拉普扎"
+  ],
+  "kn": [
+    "ಮರಿಯಮ್ಮನ ಒಡಂಬಡಿಕೆಯ ಮೂಲಕ,",
+    "ಕ್ರೆಉಪಾಸನಂ ಮಾತೆ",
+    "ನಾವು ಕೇಳುವುದಕ್ಕಿಂತಲೂ ಹೆಚ್ಚಿನ ಆಶೀರ್ವಾದಗಳನ್ನು ಧಾರಾಳವಾಗಿ ಸುರಿಸುತ್ತಾರೆ.",
+    "ಬಿಬಿನ್ ಮತ್ತು ಸ್ಟೆಫಿಯ ಸಾಕ್ಷ್ಯವನ್ನು ಕೇಳೋಣ.",
+    "ಅಲಪ್ಪುಳ"
+  ]
+}
+}
+}
 ]
