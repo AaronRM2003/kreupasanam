@@ -212,11 +212,10 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
 
  /* ===== DYNAMIC CAPSULE APP BAR (NEW MOBILE UI) ===== */
 /* ===== DYNAMIC CAPSULE APP BAR (NEW MOBILE UI) ===== */
+  /* ===== DYNAMIC CAPSULE APP BAR (NEW MOBILE UI) ===== */
   .app-bar {
-    position: fixed;
-    top: 16px;
-    left: 50%;
-    transform: translateX(-50%);
+    position: relative; 
+    margin-top: 16px;
     width: calc(100vw - 32px);
     height: 64px;
     padding: 0 0.5rem;
@@ -225,33 +224,50 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
     align-items: center;
     justify-content: space-between;
 
-    /* Slightly more opaque for better legibility */
     background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
 
     border-radius: 100px; 
-    
-    /* 🔑 THE FIX: A subtle dark border instead of white */
     border: 1px solid rgba(0, 0, 0, 0.272);
 
-    /* 🔑 THE DEPTH: A soft drop shadow + a sharp inner white highlight */
+    /* 🔑 SHADOW FIX: Standardized the spread to -8px to prevent animation tearing */
     box-shadow: 
-      0 12px 32px -10px rgba(0, 0, 0, 0.08),
+      0 12px 32px -8px rgba(0, 0, 0, 0.08),
       0 1px 0px 0px inset rgba(255, 255, 255, 1);
 
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    /* 🔑 GPU ACCELERATION FIX: Stops the bottom edge from flashing/tearing */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    
+    /* 🔑 OVERRIDE MASK: Completely kill the desktop mask-image */
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
+
+    will-change: width, height, margin-top, box-shadow, background-color;
+    
+    /* 🔑 TRANSITION FIX: Replaced 'all' with targeted properties */
+    transition: 
+      width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      margin-top 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.4s ease,
+      background-color 0.4s ease,
+      border-color 0.4s ease;
+      
     z-index: 99999 !important;
   }
 
   .app-bar.scrolled {
-    top: 8px;
+top:8px;
     width: calc(100vw - 64px); 
     height: 52px;
     background: rgba(255, 255, 255, 0.95);
     
-    /* Border gets just a tiny bit darker when scrolled to maintain contrast */
     border: 1px solid rgba(0, 0, 0, 0.12);
     
+    /* 🔑 SHADOW FIX: Spread radius (-8px) now matches the base state exactly */
     box-shadow: 
       0 8px 24px -8px rgba(0, 0, 0, 0.12),
       0 1px 0px 0px inset rgba(255, 255, 255, 1);
