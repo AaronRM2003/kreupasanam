@@ -1510,104 +1510,104 @@
     },
     "subtitles": "/assets/testimony-subtitle/06oct.json",
     "duration": "28:22",
-    "overlay":{
-  "boxes": [
-    {
-      "x": 16,
-      "y": 4,
-      "w": 1043,
-      "h": 197,
-      "background": "#ffffff",
-      "fontColor": "#c6316b"
-    },
-    {
-      "x": 18,
-      "y": 194,
-      "w": 1048,
-      "h": 137,
-      "background": "#1661be",
-      "fontColor": "#fcfd00"
-    },
-    {
-      "x": 23,
-      "y": 324,
-      "w": 908,
-      "h": 154,
-      "background": "#bb235c",
-      "fontColor": "#f5fbfb"
-    },
-    {
-      "x": 25,
-      "y": 477,
-      "w": 957,
-      "h": 221,
-      "background": "#fdfe00",
-      "fontColor": "#185caf"
+    "overlay": {
+      "boxes": [
+        {
+          "x": 16,
+          "y": 4,
+          "w": 1043,
+          "h": 197,
+          "background": "#ffffff",
+          "fontColor": "#c6316b"
+        },
+        {
+          "x": 18,
+          "y": 194,
+          "w": 1048,
+          "h": 137,
+          "background": "#1661be",
+          "fontColor": "#fcfd00"
+        },
+        {
+          "x": 23,
+          "y": 324,
+          "w": 908,
+          "h": 154,
+          "background": "#bb235c",
+          "fontColor": "#f5fbfb"
+        },
+        {
+          "x": 25,
+          "y": 477,
+          "w": 957,
+          "h": 221,
+          "background": "#fdfe00",
+          "fontColor": "#185caf"
+        }
+      ],
+      "texts": {
+        "en": [
+          "My daughter was asleep when she suffered a cardiac arrest and fell off the bed.",
+          "When the priest arrived to administer the Last Rites,",
+          "The people who were with me gave me Kreupasanam Covenant items.",
+          "Through the Online Covenant, she recovered from brain damage, became brighter than before, and is now standing at the Kreupasanam altar."
+        ],
+        "hi": [
+          "मेरी बेटी सो रही थी तभी उसे दिल का दौरा पड़ा और वह बिस्तर से नीचे गिर गई।",
+          "जब पादरी अंतिम अभिषेक (Last Rites) देने आए,",
+          "जो लोग मेरे साथ थे, उन्होंने मुझे क्रेउपासनम वाचा की वस्तुएँ दीं।",
+          "ऑनलाइन वाचा के द्वारा वह मस्तिष्क की क्षति से पूरी तरह ठीक हो गई, पहले से भी अधिक होशियार बन गई, और आज क्रेउपासनम वेदी पर गवाही दे रही है।"
+        ],
+        "ta": [
+          "என் மகள் தூங்கிக் கொண்டிருந்தபோது திடீரென இதயத் துடிப்பு நின்று படுக்கையிலிருந்து கீழே விழுந்தாள்.",
+          "அருட்தந்தை இறுதி அருள்பணி வழங்க வந்தபோது,",
+          "என்னுடன் இருந்தவர்கள் எனக்கு கிருபாசனம் உடன்படிக்கைப் பொருட்களை கொடுத்தார்கள்.",
+          "ஆன்லைன் உடன்படிக்கையின் மூலம் அவள் மூளை பாதிப்பிலிருந்து முழுமையாக குணமடைந்து, முன்பைவிட புத்திசாலியாகி, இன்று கிருபாசனம் பலிபீடத்தில் நிற்கிறாள்."
+        ],
+        "bn": [
+          "আমার মেয়ে ঘুমিয়ে ছিল। তখনই তার হার্ট অ্যাটাক হয় এবং সে খাট থেকে নিচে পড়ে যায়।",
+          "যখন ফাদার শেষ ধর্মীয় আচার (Last Rites) দিতে এলেন,",
+          "আমার সঙ্গে থাকা লোকেরা আমাকে ক্রুপাসানাম চুক্তির সামগ্রী দিয়েছিলেন।",
+          "অনলাইন চুক্তির মাধ্যমে সে মস্তিষ্কের ক্ষতি থেকে সুস্থ হয়ে ওঠে, আগের চেয়েও মেধাবী হয়ে যায়, আর আজ ক্রুপাসানামের বেদীর সামনে দাঁড়িয়ে সাক্ষ্য দিচ্ছে।"
+        ],
+        "te": [
+          "నా కుమార్తె నిద్రలో ఉండగా ఒక్కసారిగా గుండె ఆగిపోయి మంచం మీద నుంచి కింద పడిపోయింది.",
+          "ఫాదర్ చివరి అభిషేకం ఇవ్వడానికి వచ్చినప్పుడు,",
+          "నాతో ఉన్నవారు నాకు క్రుపాసనం ఒడంబడిక వస్తువులు ఇచ్చారు.",
+          "ఆన్‌లైన్ ఒడంబడిక ద్వారా ఆమె మెదడు దెబ్బతిన్న స్థితి నుంచి పూర్తిగా కోలుకుని, మునుపటి కంటే మరింత తెలివిగా మారి, ఇప్పుడు క్రుపాసనం బలిపీఠం వద్ద నిలబడి ఉంది."
+        ],
+        "mr": [
+          "माझी मुलगी झोपेत असताना तिला हृदयविकाराचा झटका आला आणि ती पलंगावरून खाली पडली.",
+          "फादर अंतिम अभिषेक देण्यासाठी आले तेव्हा,",
+          "माझ्यासोबत असलेल्या लोकांनी मला क्रुपासनम करारातील पवित्र वस्तू दिल्या.",
+          "ऑनलाइन करारामुळे ती मेंदूच्या दुखापतीतून पूर्णपणे बरी झाली, पूर्वीपेक्षा अधिक हुशार झाली आणि आज क्रुपासनमच्या वेदीसमोर उभी आहे."
+        ],
+        "fr": [
+          "Ma fille dormait lorsqu'elle a fait un arrêt cardiaque et est tombée du lit.",
+          "Lorsque le prêtre est arrivé pour lui administrer les derniers sacrements,",
+          "Les personnes qui étaient avec moi m'ont donné les objets de l'Alliance de Kreupasanam.",
+          "Grâce à l'Alliance en ligne, elle s'est remise de ses lésions cérébrales, elle est devenue plus vive qu'avant et aujourd'hui elle se tient devant l'autel de Kreupasanam."
+        ],
+        "es": [
+          "Mi hija estaba dormida cuando sufrió un paro cardíaco y se cayó de la cama.",
+          "Cuando el sacerdote llegó para administrarle la Unción de los Enfermos,",
+          "Las personas que estaban conmigo me dieron los artículos del Pacto de Kreupasanam.",
+          "A través del Pacto en Línea, se recuperó del daño cerebral, quedó más despierta que antes y hoy está de pie ante el altar de Kreupasanam."
+        ],
+        "zh": [
+          "我女儿睡觉时突然心脏骤停，从床上摔了下来。",
+          "当神父前来为她施行临终圣事时，",
+          "和我在一起的人把克雷乌帕萨南盟约圣物交给了我。",
+          "借着线上盟约，她从脑损伤中康复，比以前更加聪明，如今已经站在克雷乌帕萨南祭台前作见证。"
+        ],
+        "kn": [
+          "ನನ್ನ ಮಗಳು ಮಲಗಿದ್ದಾಗಲೇ ಆಕೆಗೆ ಹೃದಯಾಘಾತವಾಗಿ ಹಾಸಿಗೆಯಿಂದ ಕೆಳಗೆ ಬಿದ್ದಳು.",
+          "ಪಾದ್ರಿಯವರು ಅಂತಿಮ ಅಭಿಷೇಕ ನೀಡಲು ಬಂದಾಗ,",
+          "ನನ್ನ ಜೊತೆಯಲ್ಲಿದ್ದವರು ನನಗೆ ಕ್ರೆಉಪಾಸನಂ ಒಡಂಬಡಿಕೆಯ ವಸ್ತುಗಳನ್ನು ನೀಡಿದರು.",
+          "ಆನ್‌ಲೈನ್ ಒಡಂಬಡಿಕೆಯ ಮೂಲಕ ಆಕೆ ಮೆದುಳಿನ ಹಾನಿಯಿಂದ ಸಂಪೂರ್ಣವಾಗಿ ಚೇತರಿಸಿಕೊಂಡಳು, ಮೊದಲಿಗಿಂತ ಹೆಚ್ಚು ಚುರುಕಾದಳು ಮತ್ತು ಇಂದು ಕ್ರೆಉಪಾಸನಂ ಬಲಿಪೀಠದ ಮುಂದೆ ನಿಂತಿದ್ದಾಳೆ."
+        ]
+      }
     }
-  ],
-  "texts": {
-  "en": [
-    "My daughter was asleep when she suffered a cardiac arrest and fell off the bed.",
-    "When the priest arrived to administer the Last Rites,",
-    "The people who were with me gave me Kreupasanam Covenant items.",
-    "Through the Online Covenant, she recovered from brain damage, became brighter than before, and is now standing at the Kreupasanam altar."
-  ],
-  "hi": [
-    "मेरी बेटी सो रही थी तभी उसे दिल का दौरा पड़ा और वह बिस्तर से नीचे गिर गई।",
-    "जब पादरी अंतिम अभिषेक (Last Rites) देने आए,",
-    "जो लोग मेरे साथ थे, उन्होंने मुझे क्रेउपासनम वाचा की वस्तुएँ दीं।",
-    "ऑनलाइन वाचा के द्वारा वह मस्तिष्क की क्षति से पूरी तरह ठीक हो गई, पहले से भी अधिक होशियार बन गई, और आज क्रेउपासनम वेदी पर गवाही दे रही है।"
-  ],
-  "ta": [
-    "என் மகள் தூங்கிக் கொண்டிருந்தபோது திடீரென இதயத் துடிப்பு நின்று படுக்கையிலிருந்து கீழே விழுந்தாள்.",
-    "அருட்தந்தை இறுதி அருள்பணி வழங்க வந்தபோது,",
-    "என்னுடன் இருந்தவர்கள் எனக்கு கிருபாசனம் உடன்படிக்கைப் பொருட்களை கொடுத்தார்கள்.",
-    "ஆன்லைன் உடன்படிக்கையின் மூலம் அவள் மூளை பாதிப்பிலிருந்து முழுமையாக குணமடைந்து, முன்பைவிட புத்திசாலியாகி, இன்று கிருபாசனம் பலிபீடத்தில் நிற்கிறாள்."
-  ],
-  "bn": [
-    "আমার মেয়ে ঘুমিয়ে ছিল। তখনই তার হার্ট অ্যাটাক হয় এবং সে খাট থেকে নিচে পড়ে যায়।",
-    "যখন ফাদার শেষ ধর্মীয় আচার (Last Rites) দিতে এলেন,",
-    "আমার সঙ্গে থাকা লোকেরা আমাকে ক্রুপাসানাম চুক্তির সামগ্রী দিয়েছিলেন।",
-    "অনলাইন চুক্তির মাধ্যমে সে মস্তিষ্কের ক্ষতি থেকে সুস্থ হয়ে ওঠে, আগের চেয়েও মেধাবী হয়ে যায়, আর আজ ক্রুপাসানামের বেদীর সামনে দাঁড়িয়ে সাক্ষ্য দিচ্ছে।"
-  ],
-  "te": [
-    "నా కుమార్తె నిద్రలో ఉండగా ఒక్కసారిగా గుండె ఆగిపోయి మంచం మీద నుంచి కింద పడిపోయింది.",
-    "ఫాదర్ చివరి అభిషేకం ఇవ్వడానికి వచ్చినప్పుడు,",
-    "నాతో ఉన్నవారు నాకు క్రుపాసనం ఒడంబడిక వస్తువులు ఇచ్చారు.",
-    "ఆన్‌లైన్ ఒడంబడిక ద్వారా ఆమె మెదడు దెబ్బతిన్న స్థితి నుంచి పూర్తిగా కోలుకుని, మునుపటి కంటే మరింత తెలివిగా మారి, ఇప్పుడు క్రుపాసనం బలిపీఠం వద్ద నిలబడి ఉంది."
-  ],
-  "mr": [
-    "माझी मुलगी झोपेत असताना तिला हृदयविकाराचा झटका आला आणि ती पलंगावरून खाली पडली.",
-    "फादर अंतिम अभिषेक देण्यासाठी आले तेव्हा,",
-    "माझ्यासोबत असलेल्या लोकांनी मला क्रुपासनम करारातील पवित्र वस्तू दिल्या.",
-    "ऑनलाइन करारामुळे ती मेंदूच्या दुखापतीतून पूर्णपणे बरी झाली, पूर्वीपेक्षा अधिक हुशार झाली आणि आज क्रुपासनमच्या वेदीसमोर उभी आहे."
-  ],
-  "fr": [
-    "Ma fille dormait lorsqu'elle a fait un arrêt cardiaque et est tombée du lit.",
-    "Lorsque le prêtre est arrivé pour lui administrer les derniers sacrements,",
-    "Les personnes qui étaient avec moi m'ont donné les objets de l'Alliance de Kreupasanam.",
-    "Grâce à l'Alliance en ligne, elle s'est remise de ses lésions cérébrales, elle est devenue plus vive qu'avant et aujourd'hui elle se tient devant l'autel de Kreupasanam."
-  ],
-  "es": [
-    "Mi hija estaba dormida cuando sufrió un paro cardíaco y se cayó de la cama.",
-    "Cuando el sacerdote llegó para administrarle la Unción de los Enfermos,",
-    "Las personas que estaban conmigo me dieron los artículos del Pacto de Kreupasanam.",
-    "A través del Pacto en Línea, se recuperó del daño cerebral, quedó más despierta que antes y hoy está de pie ante el altar de Kreupasanam."
-  ],
-  "zh": [
-    "我女儿睡觉时突然心脏骤停，从床上摔了下来。",
-    "当神父前来为她施行临终圣事时，",
-    "和我在一起的人把克雷乌帕萨南盟约圣物交给了我。",
-    "借着线上盟约，她从脑损伤中康复，比以前更加聪明，如今已经站在克雷乌帕萨南祭台前作见证。"
-  ],
-  "kn": [
-    "ನನ್ನ ಮಗಳು ಮಲಗಿದ್ದಾಗಲೇ ಆಕೆಗೆ ಹೃದಯಾಘಾತವಾಗಿ ಹಾಸಿಗೆಯಿಂದ ಕೆಳಗೆ ಬಿದ್ದಳು.",
-    "ಪಾದ್ರಿಯವರು ಅಂತಿಮ ಅಭಿಷೇಕ ನೀಡಲು ಬಂದಾಗ,",
-    "ನನ್ನ ಜೊತೆಯಲ್ಲಿದ್ದವರು ನನಗೆ ಕ್ರೆಉಪಾಸನಂ ಒಡಂಬಡಿಕೆಯ ವಸ್ತುಗಳನ್ನು ನೀಡಿದರು.",
-    "ಆನ್‌ಲೈನ್ ಒಡಂಬಡಿಕೆಯ ಮೂಲಕ ಆಕೆ ಮೆದುಳಿನ ಹಾನಿಯಿಂದ ಸಂಪೂರ್ಣವಾಗಿ ಚೇತರಿಸಿಕೊಂಡಳು, ಮೊದಲಿಗಿಂತ ಹೆಚ್ಚು ಚುರುಕಾದಳು ಮತ್ತು ಇಂದು ಕ್ರೆಉಪಾಸನಂ ಬಲಿಪೀಠದ ಮುಂದೆ ನಿಂತಿದ್ದಾಳೆ."
-  ]
-}
-}
   },
   {
     "id": 39,
@@ -6308,397 +6308,526 @@
     },
     "subtitles": "/assets/testimony-subtitle/02june26.json",
     "duration": "14:38",
-    "overlay":{
-  "boxes": [
-    {
-      "x": 31,
-      "y": 21,
-      "w": 774,
-      "h": 380,
-      "background": "#1d4791",
-      "fontColor": "#fffffd"
-    },
-    {
-      "x": 13,
-      "y": 390,
-      "w": 777,
-      "h": 185,
-      "background": "#000000",
-      "fontColor": "#faf505"
-    },
-    {
-      "x": 26,
-      "y": 573,
-      "w": 1039,
-      "h": 138,
-      "background": "#ffffff",
-      "fontColor": "#ff4a04"
-    },
-    {
-      "x": 1066,
-      "y": 8,
-      "w": 202,
-      "h": 55,
-      "background": "#78863b",
-      "fontColor": "#fef7f1"
+    "overlay": {
+      "boxes": [
+        {
+          "x": 31,
+          "y": 21,
+          "w": 774,
+          "h": 380,
+          "background": "#1d4791",
+          "fontColor": "#fffffd"
+        },
+        {
+          "x": 13,
+          "y": 390,
+          "w": 777,
+          "h": 185,
+          "background": "#000000",
+          "fontColor": "#faf505"
+        },
+        {
+          "x": 26,
+          "y": 573,
+          "w": 1039,
+          "h": 138,
+          "background": "#ffffff",
+          "fontColor": "#ff4a04"
+        },
+        {
+          "x": 1066,
+          "y": 8,
+          "w": 202,
+          "h": 55,
+          "background": "#78863b",
+          "fontColor": "#fef7f1"
+        }
+      ],
+      "texts": {
+        "en": [
+          "Mother Mary Visited Our Home to Heal a Child with Blood Cancer!",
+          "An Empty Bottle of Covenant Oil Was Miraculously Refilled",
+          "Bindu's Astonishing Testimony",
+          "Kollam"
+        ],
+        "hi": [
+          "रक्त कैंसर से पीड़ित बच्चे को चंगा करने के लिए माता मरियम हमारे घर आईं!",
+          "खाली वाचा के तेल की बोतल चमत्कारिक रूप से फिर से भर गई",
+          "बिंदु की चौंका देने वाली गवाही",
+          "कोल्लम"
+        ],
+        "ta": [
+          "இரத்தப் புற்றுநோயால் பாதிக்கப்பட்ட குழந்தையை குணப்படுத்த அன்னை மரியா எங்கள் வீட்டிற்கு வந்தார்!",
+          "காலியான உடன்படிக்கை எண்ணெய் பாட்டில் அதிசயமாக மீண்டும் நிரம்பியது",
+          "பிந்துவின் ஆச்சரியமூட்டும் சாட்சி",
+          "கொல்லம்"
+        ],
+        "bn": [
+          "রক্তের ক্যান্সারে আক্রান্ত শিশুকে সুস্থ করতে মা মরিয়ম আমাদের বাড়িতে এসেছিলেন!",
+          "খালি চুক্তির তেলের বোতল অলৌকিকভাবে আবার ভরে গেল",
+          "বিন্দুর বিস্ময়কর সাক্ষ্য",
+          "কোল্লাম"
+        ],
+        "te": [
+          "రక్త క్యాన్సర్‌తో బాధపడుతున్న చిన్నారిని స్వస్థపరచడానికి మాత మరియమ్మ మా ఇంటికి వచ్చారు!",
+          "ఖాళీగా ఉన్న ఒడంబడిక నూనె సీసా అద్భుతంగా మళ్లీ నిండిపోయింది",
+          "బిందు యొక్క ఆశ్చర్యకరమైన సాక్ష్యం",
+          "కొల్లం"
+        ],
+        "mr": [
+          "रक्ताच्या कर्करोगाने ग्रस्त मुलाला बरे करण्यासाठी माता मरियम आमच्या घरी आल्या!",
+          "रिकामी झालेली कराराच्या तेलाची बाटली चमत्कारिकरित्या पुन्हा भरली",
+          "बिंदूची आश्चर्यचकित करणारी साक्ष",
+          "कोल्लम"
+        ],
+        "fr": [
+          "La Vierge Marie est venue chez nous pour guérir un enfant atteint d’un cancer du sang !",
+          "Une bouteille vide d’huile de l’Alliance s’est miraculeusement remplie à nouveau",
+          "Le témoignage étonnant de Bindu",
+          "Kollam"
+        ],
+        "es": [
+          "¡La Virgen María visitó nuestro hogar para sanar a un niño con cáncer de sangre!",
+          "Una botella vacía de aceite de la Alianza se llenó milagrosamente de nuevo",
+          "El asombroso testimonio de Bindu",
+          "Kollam"
+        ],
+        "zh": [
+          "圣母玛利亚来到我们家，医治患有血癌的孩子！",
+          "空了的盟约圣油瓶奇迹般地再次装满了",
+          "宾杜令人惊叹的见证",
+          "科拉姆"
+        ],
+        "kn": [
+          "ರಕ್ತ ಕ್ಯಾನ್ಸರ್‌ನಿಂದ ಬಳಲುತ್ತಿದ್ದ ಮಗುವನ್ನು ಗುಣಪಡಿಸಲು ತಾಯಿ ಮರಿಯಮ್ಮ ನಮ್ಮ ಮನೆಗೆ ಬಂದರು!",
+          "ಖಾಲಿಯಾಗಿದ್ದ ಒಡಂಬಡಿಕೆ ಎಣ್ಣೆಯ ಬಾಟಲಿ ಅದ್ಭುತವಾಗಿ ಮತ್ತೆ ತುಂಬಿತು",
+          "ಬಿಂದು ಅವರ ಆಶ್ಚರ್ಯಕರ ಸಾಕ್ಷ್ಯ",
+          "ಕೊಲ್ಲಂ"
+        ]
+      }
     }
-  ],
-  "texts": {
-  "en": [
-    "Mother Mary Visited Our Home to Heal a Child with Blood Cancer!",
-    "An Empty Bottle of Covenant Oil Was Miraculously Refilled",
-    "Bindu's Astonishing Testimony",
-    "Kollam"
-  ],
-  "hi": [
-    "रक्त कैंसर से पीड़ित बच्चे को चंगा करने के लिए माता मरियम हमारे घर आईं!",
-    "खाली वाचा के तेल की बोतल चमत्कारिक रूप से फिर से भर गई",
-    "बिंदु की चौंका देने वाली गवाही",
-    "कोल्लम"
-  ],
-  "ta": [
-    "இரத்தப் புற்றுநோயால் பாதிக்கப்பட்ட குழந்தையை குணப்படுத்த அன்னை மரியா எங்கள் வீட்டிற்கு வந்தார்!",
-    "காலியான உடன்படிக்கை எண்ணெய் பாட்டில் அதிசயமாக மீண்டும் நிரம்பியது",
-    "பிந்துவின் ஆச்சரியமூட்டும் சாட்சி",
-    "கொல்லம்"
-  ],
-  "bn": [
-    "রক্তের ক্যান্সারে আক্রান্ত শিশুকে সুস্থ করতে মা মরিয়ম আমাদের বাড়িতে এসেছিলেন!",
-    "খালি চুক্তির তেলের বোতল অলৌকিকভাবে আবার ভরে গেল",
-    "বিন্দুর বিস্ময়কর সাক্ষ্য",
-    "কোল্লাম"
-  ],
-  "te": [
-    "రక్త క్యాన్సర్‌తో బాధపడుతున్న చిన్నారిని స్వస్థపరచడానికి మాత మరియమ్మ మా ఇంటికి వచ్చారు!",
-    "ఖాళీగా ఉన్న ఒడంబడిక నూనె సీసా అద్భుతంగా మళ్లీ నిండిపోయింది",
-    "బిందు యొక్క ఆశ్చర్యకరమైన సాక్ష్యం",
-    "కొల్లం"
-  ],
-  "mr": [
-    "रक्ताच्या कर्करोगाने ग्रस्त मुलाला बरे करण्यासाठी माता मरियम आमच्या घरी आल्या!",
-    "रिकामी झालेली कराराच्या तेलाची बाटली चमत्कारिकरित्या पुन्हा भरली",
-    "बिंदूची आश्चर्यचकित करणारी साक्ष",
-    "कोल्लम"
-  ],
-  "fr": [
-    "La Vierge Marie est venue chez nous pour guérir un enfant atteint d’un cancer du sang !",
-    "Une bouteille vide d’huile de l’Alliance s’est miraculeusement remplie à nouveau",
-    "Le témoignage étonnant de Bindu",
-    "Kollam"
-  ],
-  "es": [
-    "¡La Virgen María visitó nuestro hogar para sanar a un niño con cáncer de sangre!",
-    "Una botella vacía de aceite de la Alianza se llenó milagrosamente de nuevo",
-    "El asombroso testimonio de Bindu",
-    "Kollam"
-  ],
-  "zh": [
-    "圣母玛利亚来到我们家，医治患有血癌的孩子！",
-    "空了的盟约圣油瓶奇迹般地再次装满了",
-    "宾杜令人惊叹的见证",
-    "科拉姆"
-  ],
-  "kn": [
-    "ರಕ್ತ ಕ್ಯಾನ್ಸರ್‌ನಿಂದ ಬಳಲುತ್ತಿದ್ದ ಮಗುವನ್ನು ಗುಣಪಡಿಸಲು ತಾಯಿ ಮರಿಯಮ್ಮ ನಮ್ಮ ಮನೆಗೆ ಬಂದರು!",
-    "ಖಾಲಿಯಾಗಿದ್ದ ಒಡಂಬಡಿಕೆ ಎಣ್ಣೆಯ ಬಾಟಲಿ ಅದ್ಭುತವಾಗಿ ಮತ್ತೆ ತುಂಬಿತು",
-    "ಬಿಂದು ಅವರ ಆಶ್ಚರ್ಯಕರ ಸಾಕ್ಷ್ಯ",
-    "ಕೊಲ್ಲಂ"
-  ]
-}
-}
   },
   {
     "id": 78,
     "title": {
-  "en": "A Stranger Named Maria Gave Me One Number That Changed My Life",
-  "hi": "मारिया नाम की एक अजनबी ने मुझे एक नंबर दिया जिसने मेरी ज़िंदगी बदल दी",
-  "ta": "மரியா என்ற அந்நிய பெண் எனக்கு ஒரு எண்ணைக் கொடுத்தார்; அது என் வாழ்க்கையை மாற்றியது",
-  "bn": "মারিয়া নামে এক অচেনা নারী আমাকে একটি নম্বর দিয়েছিলেন, যা আমার জীবন বদলে দিয়েছিল",
-  "te": "మారియా అనే అపరిచిత మహిళ నాకు ఒక నంబర్ ఇచ్చింది, అది నా జీవితాన్ని మార్చేసింది",
-  "mr": "मारिया नावाच्या एका अनोळखी महिलेने मला एक नंबर दिला आणि त्याने माझे आयुष्य बदलून टाकले",
-  "fr": "Une inconnue nommée Maria m’a donné un numéro qui a changé ma vie",
-  "es": "Una desconocida llamada María me dio un número que cambió mi vida",
-  "zh": "一位名叫玛利亚的陌生女子给了我一个号码，改变了我的人生",
-  "kn": "ಮರಿಯಾ ಎಂಬ ಅಪರಿಚಿತ ಮಹಿಳೆ ನನಗೆ ಒಂದು ಸಂಖ್ಯೆಯನ್ನು ನೀಡಿದರು; ಅದು ನನ್ನ ಜೀವನವನ್ನೇ ಬದಲಿಸಿತು"
-},
+      "en": "A Stranger Named Maria Gave Me One Number That Changed My Life",
+      "hi": "मारिया नाम की एक अजनबी ने मुझे एक नंबर दिया जिसने मेरी ज़िंदगी बदल दी",
+      "ta": "மரியா என்ற அந்நிய பெண் எனக்கு ஒரு எண்ணைக் கொடுத்தார்; அது என் வாழ்க்கையை மாற்றியது",
+      "bn": "মারিয়া নামে এক অচেনা নারী আমাকে একটি নম্বর দিয়েছিলেন, যা আমার জীবন বদলে দিয়েছিল",
+      "te": "మారియా అనే అపరిచిత మహిళ నాకు ఒక నంబర్ ఇచ్చింది, అది నా జీవితాన్ని మార్చేసింది",
+      "mr": "मारिया नावाच्या एका अनोळखी महिलेने मला एक नंबर दिला आणि त्याने माझे आयुष्य बदलून टाकले",
+      "fr": "Une inconnue nommée Maria m’a donné un numéro qui a changé ma vie",
+      "es": "Una desconocida llamada María me dio un número que cambió mi vida",
+      "zh": "一位名叫玛利亚的陌生女子给了我一个号码，改变了我的人生",
+      "kn": "ಮರಿಯಾ ಎಂಬ ಅಪರಿಚಿತ ಮಹಿಳೆ ನನಗೆ ಒಂದು ಸಂಖ್ಯೆಯನ್ನು ನೀಡಿದರು; ಅದು ನನ್ನ ಜೀವನವನ್ನೇ ಬದಲಿಸಿತು"
+    },
     "date": "June 19, 2026",
     "video": "https://youtu.be/8TFT8Sr73Do",
     "content": {
-  "en": "Nitha Raphael testifies that after leaving a secure nursing job in Dubai to pursue a CAP course in New Zealand, she remained unemployed for six months despite persistent prayer. She faithfully completed the Marian Covenant through daily Holy Mass, Scripture reading, and works of mercy, trusting that God and the Blessed Mother would provide. Just one week before her visa expired, she encountered a mysterious woman named Maria in a church who gave her a contact that led to a nursing interview. On her birthday, she received her first job offer, later obtained a full refund of her course fees, and successfully submitted her residency application within an impossible deadline, recognizing each event as the Blessed Mother's loving intervention.\n\nHer testimony continues with a series of blessings that strengthened her family's faith. Her husband and son joined her in New Zealand before Christmas, her husband later secured a good job, and after praying for another child, she conceived exactly during one of the months she had offered to the Blessed Mother as a sign. Honoring her promise, she named her daughter Hanna Mariam. God also provided a fully furnished home in an unexpected way when the family she was staying with migrated to Australia, allowing her family to settle without the usual struggles of finding accommodation.\n\nThe greatest miracle occurred during her pregnancy when doctors discovered a fibroid as large as the unborn baby and strongly recommended an abortion because of the danger to her life. Trusting completely in God's protection through the intercession of the Blessed Mother, she and her husband refused the abortion and continued praying. At a later scan, the fibroid had completely disappeared, leaving only a healthy baby. Nitha concludes that these miracles strengthened her faith in the Blessed Mother's constant intercession and inspired her family to remain faithful to prayer, the Marian Covenant, Holy Mass, and works of mercy while offering heartfelt thanksgiving for God's abundant blessings.",
-  "hi": "निथा राफेल गवाही देती हैं कि दुबई में एक सुरक्षित नर्सिंग जॉब छोड़कर न्यूज़ीलैंड में CAP कोर्स करने के बाद, लगातार प्रार्थना के बावजूद वे छह महीने तक बेरोजगार रहीं। उन्होंने रोज़ पवित्र मिस्सा में भाग लेकर, बाइबल पढ़कर और दया के कार्य करके मारियन वाचा को पूरी निष्ठा से निभाया और भरोसा रखा कि परमेश्वर और माता मरियम उनकी ज़रूरतें पूरी करेंगे। उनका वीज़ा खत्म होने से ठीक एक हफ़्ते पहले, चर्च में उनकी मुलाकात मारिया नाम की एक अनजान महिला से हुई, जिसने उन्हें एक कॉन्टैक्ट दिया जिससे उन्हें नर्सिंग इंटरव्यू मिला। उनके जन्मदिन पर, उन्हें अपना पहला जॉब ऑफर मिला, बाद में उनकी कोर्स की पूरी फीस वापस मिल गई, और उन्होंने एक नामुमकिन सी डेडलाइन के अंदर अपनी रेजीडेंसी एप्लीकेशन कामयाबी के साथ सबमिट कर दी। वे इन सब घटनाओं को माता मरियम का प्यार भरा हस्तक्षेप मानती हैं।\n\nउनकी गवाही आगे के उन आशीषों के बारे में बताती है जिन्होंने उनके परिवार का विश्वास मजबूत किया। क्रिसमस से पहले उनके पति और बेटा न्यूज़ीलैंड आ गए, बाद में उनके पति को एक अच्छी जॉब मिल गई, और एक और बच्चे के लिए प्रार्थना करने के बाद, उन्होंने ठीक उसी महीने गर्भधारण किया जो उन्होंने माता मरियम को एक संकेत के रूप में ऑफर किया था। अपना वादा निभाते हुए, उन्होंने अपनी बेटी का नाम हन्ना मरियम रखा। परमेश्वर ने उन्हें एक पूरी तरह से फर्निश्ड घर भी बहुत ही अनोखे तरीके से दिया, जब वह परिवार जिनके साथ वे रह रहे थे, ऑस्ट्रेलिया माइग्रेट हो गया, जिससे उनके परिवार को घर ढूँढ़ने की परेशानी के बिना सेटल होने का मौका मिल गया।\n\nसबसे बड़ा चमत्कार उनकी प्रेगनेंसी के दौरान हुआ जब डॉक्टरों को एक फाइब्रॉइड मिला जो अजन्मे बेबी जितना बड़ा था और उनकी जान को खतरा होने की वजह से अबॉर्शन की सख्त सलाह दी। माता मरियम की मध्यस्थता के ज़रिए परमेश्वर की सुरक्षा पर पूरा भरोसा करते हुए, उन्होंने और उनके पति ने अबॉर्शन के लिए मना कर दिया और प्रार्थना करते रहे। बाद में हुए एक स्कैन में, फाइब्रॉइड पूरी तरह से गायब हो गया था, और सिर्फ एक स्वस्थ बेबी बचा था। निथा अंत में कहती हैं कि इन चमत्कारों ने माता मरियम की लगातार मध्यस्थता में उनके विश्वास को और मजबूत किया और उनके परिवार को प्रार्थना, मारियन वाचा, पवित्र मिस्सा और दया के कार्यों में वफादार बने रहने की प्रेरणा दी, साथ ही परमेश्वर की अपार आशीषों के लिए दिल से धन्यवाद दिया।",
-  "ta": "நிதா ரபேல் சாட்சி சொல்கிறார், துபாயில் இருந்த ஒரு நல்ல நர்சிங் வேலையை விட்டுவிட்டு நியூசிலாந்தில் CAP கோர்ஸ் படிக்க வந்த பிறகு, தொடர்ந்து ஜெபித்தும் ஆறு மாதங்களாக வேலை கிடைக்காமல் இருந்தார். கடவுளும் அன்னை மரியாளும் பார்த்துக்கொள்வார்கள் என்று நம்பி, தினமும் திருப்பலி ஒப்புக்கொடுத்து, பைபிள் வாசித்து, இரக்கத்தின் செயல்களை செய்து, மரியாயின் உடன்படிக்கையை விசுவாசத்தோடு நிறைவேற்றினார். அவருடைய விசா முடிவதற்கு சரியாக ஒரு வாரத்திற்கு முன்பு, மாதா கோவிலில் மரியா என்ற ஒரு அறிமுகமில்லாத பெண்ணை சந்தித்தார். அவர் கொடுத்த ஒரு காண்டாக்ட் மூலம் அவருக்கு ஒரு நர்சிங் இன்டர்வியூ கிடைத்தது. அவருடைய பிறந்தநாளில், அவருக்கு முதல் ஜாப் ஆஃபர் கிடைத்தது. அதன் பிறகு அவருடைய கோர்ஸ் பீஸ் முழுமையாக திரும்ப கிடைத்தது. மேலும், மிகவும் குறுகிய டெர்லைன் நேரத்திற்குள் தன்னுடைய ரெசிடென்சி அப்ளிகேஷனை வெற்றிகரமாக சப்மிட் செய்தார். இது ஒவ்வொன்றும் அன்னை மரியாளின் அன்பான உதவி என்று அவர் உணர்ந்தார்.\n\nஅவருடைய சாட்சி தொடர்ந்து அவர்களின் குடும்பத்தின் விசுவாசத்தை பலப்படுத்திய ஆசீர்வாதங்களைச் சொல்கிறது. கிறிஸ்துமஸுக்கு முன்பாக அவருடைய கணவரும் மகனும் நியூசிலாந்துக்கு வந்தார்கள். சிறிது காலத்தில் கணவருக்கும் ஒரு நல்ல வேலை கிடைத்தது. இன்னொரு குழந்தைக்காக ஜெபித்த பிறகு, அவர் அன்னை மரியாளுக்கு அடையாளமாக ஒப்புக்கொடுத்த மாதங்களிலேயே சரியாக அவர் கன்சீவ் ஆனார். தான் கொடுத்த வாக்குறுதியின்படி, தன்னுடைய மகளுக்கு ஹன்னா மரியம் என்று பெயர் வைத்தார். அவர்கள் தங்கியிருந்த குடும்பத்தினர் ஆஸ்திரேலியாவுக்கு மைக்ரேட் ஆனதால், வீடு தேடும் கஷ்டம் இல்லாமல், கடவுள் அவர்களுக்கு எல்லா வசதிகளும் கொண்ட ஒரு பர்னிஷ்டு வீட்டை எதிர்பாராத விதமாக கொடுத்தார், இதனால் அவர்கள் எளிதாக செட்டில் ஆக முடிந்தது.\n\nமிகப்பெரிய அற்புதம் அவருடைய பிரக்னன்சி நேரத்தில் நடந்தது. வயிற்றில் இருந்த பேபி அளவுக்கு பெரியதாக ஒரு பைப்ராய்டு இருப்பதை டாக்டர்கள் கண்டுபிடித்தார்கள். தாயின் உயிருக்கு ஆபத்து என்பதால் உடனடியாக அபார்ஷன் செய்ய வேண்டும் என்று கட்டாயப்படுத்தினார்கள். ஆனால், அன்னை மரியாளின் பரிந்துரை மூலமாக கடவுளின் பாதுகாப்பில் முழுமையாக நம்பிக்கை வைத்து, அவரும் அவருடைய கணவரும் அபார்ஷன் செய்ய மறுத்து தொடர்ந்து ஜெபித்தார்கள். அடுத்த முறை ஸ்கேன் செய்தபோது, அந்த பைப்ராய்டு முழுவதுமாக மறைந்து, ஆரோக்கியமான பேபி மட்டும் இருந்தது. இந்த அற்புதங்கள் அன்னை மரியாளின் இடைவிடாத பரிந்துரையின் மீதுள்ள விசுவாசத்தை பலப்படுத்தியதாகவும், ஜெபம், மரியாயின் உடன்படிக்கை, திருப்பலி மற்றும் இரக்கத்தின் செயல்களில் தொடர்ந்து விசுவாசமாக இருக்கவும், கடவுளின் ஆசீர்வாதங்களுக்கு முழு மனதோடு நன்றி சொல்லவும் தன் குடும்பத்தை ஊக்கப்படுத்தியதாக நிதா சொல்லி முடிக்கிறார்.",
-  "bn": "নিথা রাফায়েল সাক্ষ্য দিচ্ছেন যে, দুবাইতে একটি নিরাপদ নার্সিং জব ছেড়ে নিউজিল্যান্ডে একটি CAP কোর্স করার জন্য যাওয়ার পর, টানা প্রার্থনা করা সত্ত্বেও তিনি ছয় মাস বেকার ছিলেন। তিনি প্রতিদিন পবিত্র মিসায় অংশগ্রহণ করে, বাইবেল পাঠ করে এবং দয়ার কাজ করে মারিয়ান চুক্তিটি বিশ্বস্ততার সাথে পালন করেছিলেন, এই বিশ্বাস রেখে যে ঈশ্বর এবং মা মেরি সবকিছুর ব্যবস্থা করবেন। তার ভিসা শেষ হওয়ার ঠিক এক সপ্তাহ আগে, চার্চে মারিয়া নামের এক অচেনা মহিলার সাথে তার দেখা হয়, যিনি তাকে একটি কন্ট্যাক্ট দেন যার মাধ্যমে তার একটি নার্সিং ইন্টারভিউ হয়। তার জন্মদিনে, তিনি তার প্রথম জব অফার পান, পরে তার কোর্স ফির পুরো টাকা রিফান্ড পান, এবং একটি অসম্ভব ডেডলাইনের মধ্যে সফলভাবে তার রেসিডেন্সি অ্যাপ্লিকেশন সাবমিট করেন, আর এই প্রতিটি ঘটনাকে তিনি মা মেরির ভালবাসাপূর্ণ সাহায্য বলে মনে করেন।\n\nতার সাক্ষ্য এমন অনেক আশীর্বাদের কথা বলে যা তার পরিবারের বিশ্বাসকে আরও মজবুত করেছে। ক্রিসমাসের আগে তার স্বামী এবং ছেলে নিউজিল্যান্ডে তার কাছে চলে আসে, পরে তার স্বামী একটি ভালো জব পায়, এবং অন্য একটি সন্তানের জন্য প্রার্থনা করার পর, তিনি ঠিক সেই মাসেই কনসিভ করেন যেটি তিনি মা মেরিকে একটি চিহ্ন হিসেবে অফার করেছিলেন। নিজের কথা রেখে, তিনি তার মেয়ের নাম হান্না মারিয়াম রাখেন। ঈশ্বর আশ্চর্যজনকভাবে তাদের একটি ফুল্লি ফার্নিশড বাড়িও দেন যখন তারা যে পরিবারের সাথে থাকছিল তারা অস্ট্রেলিয়ায় মাইগ্রেট করে, যার ফলে তাদের পরিবার থাকার জায়গা খোঁজার কষ্ট ছাড়াই সহজে সেটেল হতে পেরেছিল।\n\nসবচেয়ে বড় অলৌকিক ঘটনাটি তার প্রেগনেন্সির সময় ঘটেছিল যখন ডাক্তাররা গর্ভস্থ বেবির সমান বড় একটি ফাইব্রয়েড দেখতে পান এবং তার জীবনের ঝুঁকির কারণে তাকে অ্যাবরশন করার জোরালো পরামর্শ দেন। মা মেরির মধ্যস্থতার মাধ্যমে ঈশ্বরের সুরক্ষায় সম্পূর্ণ বিশ্বাস রেখে, তিনি এবং তার স্বামী অ্যাবরশন করতে অস্বীকার করেন এবং প্রার্থনা চালিয়ে যান। পরবর্তী একটি স্ক্যানে, ফাইব্রয়েডটি পুরোপুরি অদৃশ্য হয়ে যায়, শুধু একটি সুস্থ বেবি থেকে যায়। নিথা সবশেষে বলেন যে এই অলৌকিক ঘটনাগুলো মা মেরির অবিরাম মধ্যস্থতার ওপর তার বিশ্বাসকে আরও দৃঢ় করেছে এবং ঈশ্বরের প্রচুর আশীর্বাদের জন্য হৃদয় থেকে ধন্যবাদ জানিয়ে তার পরিবারকে প্রার্থনা, মারিয়ান চুক্তি, পবিত্র মিসা এবং দয়ার কাজগুলোর প্রতি বিশ্বস্ত থাকতে অনুপ্রাণিত করেছে।",
-  "te": "నితా రాఫెల్ తాను దుబాయ్‌లో ఉన్న సురక్షితమైన నర్సింగ్ జాబ్‌ను వదిలేసి, న్యూజిలాండ్‌లో CAP కోర్స్ చేయడానికి వెళ్ళిన తర్వాత, ఎంత ప్రార్థించినా ఆరు నెలల పాటు ఉద్యోగం లేకుండానే ఉన్నానని సాక్ష్యమిస్తున్నారు. దేవుడు మరియు మాతృమరియ తన అవసరాలు తీరుస్తారనే నమ్మకంతో, ప్రతిరోజూ పవిత్ర బలిపూజలో పాల్గొనడం, బైబిల్ చదవడం మరియు దయగల పనులు చేయడం ద్వారా ఆమె మారియన్ నిబంధనను నమ్మకంగా పూర్తి చేసింది. ఆమె వీసా ముగియడానికి సరిగ్గా ఒక వారం ముందు, చర్చిలో మరియా అనే ఒక గుర్తుతెలియని మహిళను కలిసింది. ఆమె ఇచ్చిన ఒక కాంటాక్ట్ వల్ల ఆమెకు ఒక నర్సింగ్ ఇంటర్వ్యూ దొరికింది. ఆమె పుట్టినరోజు నాడు మొదటి జాబ్ ఆఫర్ వచ్చింది, ఆ తర్వాత ఆమె కోర్స్ ఫీజు పూర్తిగా రిఫండ్ వచ్చింది, మరియు అసాధ్యమైన డెడ్‌లైన్ లోపల ఆమె రెసిడెన్సీ అప్లికేషన్ విజయవంతంగా సబ్‌మిట్ చేసింది. ఇవన్నీ మాతృమరియ ప్రేమతో చేసిన సహాయంగా ఆమె గుర్తించింది.\n\nఆమె సాక్ష్యం వారి కుటుంబ విశ్వాసాన్ని బలపరిచిన ఆశీర్వాదాలతో కొనసాగుతుంది. క్రిస్మస్‌కు ముందే ఆమె భర్త, కొడుకు న్యూజిలాండ్‌కు చేరుకున్నారు, తర్వాత ఆమె భర్తకు మంచి జాబ్ వచ్చింది, మరియు మరో బిడ్డ కోసం ప్రార్థించిన తర్వాత, ఆమె మాతృమరియకు ఒక సూచనగా అర్పించిన నెలల్లోనే ఆమె కన్సీవ్ అయింది. తన మాటకు కట్టుబడి, ఆమె తన కూతురికి హన్నా మరియమ్ అని పేరు పెట్టింది. వారు ఉంటున్న కుటుంబం ఆస్ట్రేలియాకు మైగ్రేట్ అవ్వడంతో, దేవుడు ఒక ఊహించని విధంగా వారికి ఒక ఫుల్లీ ఫర్నిష్డ్ ఇంటిని ఇచ్చాడు, దీనివల్ల వసతి వెతుక్కునే కష్టాలు లేకుండానే వారి కుటుంబం సెటిల్ అయింది.\n\nఅతిపెద్ద అద్భుతం ఆమె ప్రెగ్నెన్సీ సమయంలో జరిగింది, పుట్టబోయే బేబీ అంత పెద్ద ఫైబ్రాయిడ్ ఉన్నట్లు డాక్టర్లు గుర్తించారు. ఆమె ప్రాణాలకు ప్రమాదం ఉన్నందున అబార్షన్ చేసుకోవాలని గట్టిగా సలహా ఇచ్చారు. మాతృమరియ మధ్యవర్తిత్వం ద్వారా దేవుని రక్షణపై పూర్తి నమ్మకంతో, ఆమె మరియు ఆమె భర్త అబార్షన్ కు నిరాకరించి ప్రార్థన కొనసాగించారు. ఆ తర్వాత తీసిన ఒక స్కాన్ లో, ఫైబ్రాయిడ్ పూర్తిగా మాయమైపోయి, కేవలం ఒక ఆరోగ్యకరమైన బేబీ మాత్రమే ఉంది. ఈ అద్భుతాలు మాతృమరియ నిరంతర మధ్యవర్తిత్వంపై తన విశ్వాసాన్ని మరింత బలపరిచాయని, దేవుని అపారమైన ఆశీర్వాదాలకు హృదయపూర్వక కృతజ్ఞతలు తెలుపుతూ ప్రార్థన, మారియన్ నిబంధన, పవిత్ర బలిపూజ మరియు దయగల పనుల పట్ల నమ్మకంగా ఉండటానికి తన కుటుంబాన్ని ప్రేరేపించాయని నితా తన సాక్ష్యాన్ని ముగించారు.",
-  "mr": "निथा राफेल साक्ष देतात की दुबईतील सुरक्षित नर्सिंगची नोकरी सोडून न्यूझीलंडमध्ये CAP कोर्स करण्यासाठी गेल्यानंतर, सतत प्रार्थना करूनही त्या सहा महिने बेरोजगार राहिल्या. देव आणि माता मरिया आपल्या गरजा पूर्ण करतील या विश्वासावर, रोज पवित्र मिस्सा मध्ये भाग घेऊन, बायबल वाचून आणि दयेची कामे करून त्यांनी मारियन वाचा अत्यंत निष्ठेने पाळली. त्यांचा व्हिसा संपण्याच्या फक्त एक आठवडा आधी, चर्चमध्ये त्यांना मारिया नावाची एक अनोळखी स्त्री भेटली जिने त्यांना एक कॉन्टॅक्ट दिला, ज्यामुळे त्यांना नर्सिंगचा इंटरव्ह्यू मिळाला. त्यांच्या वाढदिवसाला, त्यांना त्यांची पहिली जॉब ऑफर मिळाली, नंतर त्यांच्या कोर्सची संपूर्ण फी परत मिळाली आणि त्यांनी एका अशक्य वाटणाऱ्या डेडलाइनच्या आत आपले रेसिडेन्सी ॲप्लिकेशन यशस्वीपणे सबमिट केले. या प्रत्येक घटनेला त्या माता मरियाची प्रेमळ मदत मानतात.\n\nत्यांच्या साक्षीत पुढे अशा आशीर्वादांचा उल्लेख आहे ज्यामुळे त्यांच्या कुटुंबाचा विश्वास आणखी दृढ झाला. नाताळच्या आधी त्यांचे पती आणि मुलगा न्यूझीलंडमध्ये त्यांच्याकडे आले, नंतर त्यांच्या पतीला एक चांगली जॉब मिळाली आणि आणखी एका मुलासाठी प्रार्थना केल्यानंतर, त्यांनी माता मरियाला एक चिन्ह म्हणून ऑफर केलेल्या महिन्यातच त्या प्रेग्नेंट राहिल्या. आपले वचन पाळून, त्यांनी आपल्या मुलीचे नाव हन्ना मरियम ठेवले. ज्या कुटुंबासोबत त्या राहत होत्या ते ऑस्ट्रेलियाला मायग्रेट झाल्यामुळे, देवाने त्यांना एका अनपेक्षित मार्गाने एक फुल्ली फर्निश्ड घर दिले, ज्यामुळे त्यांना घर शोधण्याच्या त्रासाशिवाय सेटल होण्याची संधी मिळाली.\n\nसर्वात मोठा चमत्कार त्यांच्या प्रेग्नेंसीच्या काळात घडला जेव्हा डॉक्टरांना गर्भातील बेबीइतका मोठा फायब्रॉइड आढळला आणि त्यांच्या जिवाला धोका असल्याने अबॉर्शन करण्याचा कडक सल्ला दिला. माता मरियाच्या मध्यस्थीद्वारे देवाच्या संरक्षणावर पूर्ण विश्वास ठेवून, त्यांनी आणि त्यांच्या पतीने अबॉर्शनला नकार दिला आणि प्रार्थना करत राहिले. नंतर केलेल्या एका स्कॅनमध्ये, फायब्रॉइड पूर्णपणे नाहीसा झाला होता आणि फक्त एक निरोगी बेबी तिथे होता. निथा शेवटी सांगतात की या चमत्कारांमुळे माता मरियाच्या सततच्या मध्यस्थीवर त्यांचा विश्वास आणखी दृढ झाला आणि देवाच्या भरघोस आशीर्वादांबद्दल मनापासून आभार मानत, प्रार्थना, मारियन वाचा, पवित्र मिस्सा आणि दयेच्या कामांशी एकनिष्ठ राहण्याची त्यांच्या कुटुंबाला प्रेरणा मिळाली.",
-  "fr": "Nitha Raphael témoigne qu'après avoir quitté un emploi d'infirmière sûr à Dubaï pour suivre une formation CAP en Nouvelle-Zélande, elle est restée au chômage pendant six mois malgré des prières persistantes. Elle a fidèlement accompli l'Alliance Mariale par la Sainte Messe quotidienne, la lecture des Écritures et les œuvres de miséricorde, confiante que Dieu et la Sainte Vierge pourvoiraient à ses besoins. Une semaine seulement avant l'expiration de son visa, elle a rencontré une femme mystérieuse nommée Maria dans une église qui lui a donné un contact l'ayant menée à un entretien d'infirmière. Le jour de son anniversaire, elle a reçu sa première offre d'emploi, a ensuite obtenu le remboursement intégral de ses frais de scolarité, et a soumis avec succès sa demande de résidence dans un délai impossible, reconnaissant chaque événement comme l'intervention aimante de la Sainte Vierge.\n\nSon témoignage se poursuit avec une série de bénédictions qui ont renforcé la foi de sa famille. Son mari et son fils l'ont rejointe en Nouvelle-Zélande avant Noël, son mari a ensuite trouvé un bon travail, et après avoir prié pour un autre enfant, elle a conçu exactement pendant l'un des mois qu'elle avait offerts à la Sainte Vierge comme signe. Honorant sa promesse, elle a appelé sa fille Hanna Mariam. Dieu a également fourni une maison entièrement meublée d'une manière inattendue lorsque la famille avec laquelle elle vivait a émigré en Australie, permettant à sa famille de s'installer sans les difficultés habituelles pour trouver un logement.\n\nLe plus grand miracle s'est produit pendant sa grossesse lorsque les médecins ont découvert un fibrome aussi gros que le bébé à naître et ont fortement recommandé un avortement en raison du danger pour sa vie. Faisant totalement confiance à la protection de Dieu par l'intercession de la Sainte Vierge, elle et son mari ont refusé l'avortement et ont continué à prier. Lors d'une échographie ultérieure, le fibrome avait complètement disparu, ne laissant qu'un bébé en bonne santé. Nitha conclut que ces miracles ont renforcé sa foi dans l'intercession constante de la Sainte Vierge et ont inspiré sa famille à rester fidèle à la prière, à l'Alliance Mariale, à la Sainte Messe et aux œuvres de miséricorde tout en offrant de sincères actions de grâces pour les abondantes bénédictions de Dieu.",
-  "es": "Nitha Raphael testifica que después de dejar un trabajo seguro como enfermera en Dubai para cursar un programa CAP en Nueva Zelanda, permaneció desempleada durante seis meses a pesar de sus persistentes oraciones. Ella cumplió fielmente con la Alianza Mariana a través de la Santa Misa diaria, la lectura de las Escrituras y las obras de misericordia, confiando en que Dios y la Santísima Virgen proveerían. Justo una semana antes de que expirara su visa, conoció a una misteriosa mujer llamada María en una iglesia, quien le dio un contacto que la llevó a una entrevista de enfermería. El día de su cumpleaños, recibió su primera oferta de trabajo, luego obtuvo un reembolso completo de los gastos de su curso, y presentó con éxito su solicitud de residencia en un plazo imposible, reconociendo cada evento como la amorosa intervención de la Santísima Virgen.\n\nSu testimonio continúa con una serie de bendiciones que fortalecieron la fe de su familia. Su esposo y su hijo se unieron a ella en Nueva Zelanda antes de Navidad, su esposo luego consiguió un buen trabajo, y después de rezar por otro hijo, concibió exactamente durante uno de los meses que había ofrecido a la Santísima Virgen como señal. Honrando su promesa, llamó a su hija Hanna Mariam. Dios también proveyó una casa completamente amueblada de una manera inesperada cuando la familia con la que se alojaba emigró a Australia, permitiendo a su familia establecerse sin las luchas habituales para encontrar alojamiento.\n\nEl mayor milagro ocurrió durante su embarazo cuando los médicos descubrieron un fibroma tan grande como el bebé por nacer y recomendaron encarecidamente un aborto debido al peligro para su vida. Confiando plenamente en la protección de Dios a través de la intercesión de la Santísima Virgen, ella y su esposo rechazaron el aborto y continuaron orando. En una ecografía posterior, el fibroma había desaparecido por completo, dejando solo a un bebé sano. Nitha concluye que estos milagros fortalecieron su fe en la intercesión constante de la Santísima Virgen e inspiraron a su familia a permanecer fieles a la oración, la Alianza Mariana, la Santa Misa y las obras de misericordia, mientras ofrecen sinceras acciones de gracias por las abundantes bendiciones de Dios.",
-  "zh": "尼莎·拉斐尔（Nitha Raphael）作证说，她辞去了迪拜一份稳定的护士工作，去新西兰读CAP课程，尽管她一直在祷告，但还是失业了六个月。她每天参与弥撒，阅读圣经，并做仁爱的工作，忠实地履行玛利亚誓约，相信天主和圣母一定会看顾她。就在她的签证过期前一周，她在教堂遇到了一位名叫玛丽亚的神秘女子，这位女子给了她一个联系方式，让她得到了一个护士面试的机会。在她生日那天，她收到了第一份工作录用通知，后来还拿到了课程全额退款，并在一个不可能的期限内成功提交了居留申请。她深深体会到，这些都是圣母充满爱的介入。\n\n她的见证还提到了许多坚固了她家人信德的恩典。圣诞节前，她的丈夫和儿子来到了新西兰和她团聚，她丈夫后来也找到了一份好工作。在为再生一个孩子祈祷后，她恰好在她作为印记奉献给圣母的那个月份里怀孕了。为了兑现承诺，她给女儿起名叫汉娜·玛丽亚（Hanna Mariam）。天主还以一种意想不到的方式给他们提供了一套家具齐全的房子——当时他们借住的那个家庭移民去了澳大利亚，这让她一家人不用再为了找住处而奔波，顺利安顿了下来。\n\n最大的奇迹发生在她怀孕期间。当时医生发现了一个和肚子里的宝宝一样大的肌瘤，因为对她的生命有危险，医生强烈建议她堕胎。但她和丈夫全心信靠天主的保护和圣母的代祷，拒绝了堕胎，并继续祈祷。在后来的B超检查中，那个肌瘤竟然完全消失了，只留下了一个健康的宝宝。尼莎在最后说，这些奇迹让她更加坚信圣母的不断代祷，也激励她的家人更加忠实于祈祷、玛利亚誓约、弥撒和仁爱的工作，同时对天主丰盛的恩典献上真心的感恩。",
-  "kn": "ನಿತಾ ರಾಫೆಲ್ ಅವರು ದುಬೈನಲ್ಲಿ ಸುರಕ್ಷಿತವಾದ ನರ್ಸಿಂಗ್ ಜಾಬ್ ಬಿಟ್ಟು ನ್ಯೂಜಿಲ್ಯಾಂಡ್‌ನಲ್ಲಿ CAP ಕೋರ್ಸ್ ಮಾಡಲು ಹೋದ ನಂತರ, ನಿರಂತರವಾಗಿ ಪ್ರಾರ್ಥನೆ ಮಾಡಿದರೂ ಆರು ತಿಂಗಳ ಕಾಲ ನಿರುದ್ಯೋಗಿಯಾಗಿದ್ದರು ಎಂದು ಸಾಕ್ಷಿ ಹೇಳುತ್ತಾರೆ. ದೇವರು ಮತ್ತು ಮಾತೆ ಮರಿಯಾ ಎಲ್ಲವನ್ನೂ ನೋಡಿಕೊಳ್ಳುತ್ತಾರೆ ಎಂಬ ನಂಬಿಕೆಯಿಂದ, ಅವರು ಪ್ರತಿದಿನ ಪವಿತ್ರ ಬಲಿಪೂಜೆಯಲ್ಲಿ ಭಾಗವಹಿಸಿ, ಬೈಬಲ್ ಓದಿ, ಕರುಣೆಯ ಕಾರ್ಯಗಳನ್ನು ಮಾಡುವ ಮೂಲಕ ಮೇರಿಯನ್ ಒಡಂಬಡಿಕೆಯನ್ನು ನಿಷ್ಠೆಯಿಂದ ಪಾಲಿಸಿದರು. ಅವರ ವೀಸಾ ಮುಗಿಯುವ ಒಂದು ವಾರದ ಮೊದಲು, ಚರ್ಚ್‌ನಲ್ಲಿ ಮರಿಯಾ ಎಂಬ ಅಪರಿಚಿತ ಮಹಿಳೆಯನ್ನು ಭೇಟಿಯಾದರು. ಅವರು ಕೊಟ್ಟ ಒಂದು ಕಾಂಟ್ಯಾಕ್ಟ್‌ನಿಂದ ಅವರಿಗೆ ನರ್ಸಿಂಗ್ ಇಂಟರ್ವ್ಯೂ ಸಿಕ್ಕಿತು. ಅವರ ಹುಟ್ಟುಹಬ್ಬದ ದಿನದಂದು, ಅವರಿಗೆ ಮೊದಲ ಜಾಬ್ ಆಫರ್ ಸಿಕ್ಕಿತು, ನಂತರ ಅವರ ಕೋರ್ಸ್ ಫೀಸ್ ಪೂರ್ತಿಯಾಗಿ ರಿಫಂಡ್ ಆಯಿತು, ಮತ್ತು ಅಸಾಧ್ಯವಾದ ಡೆಡ್‌ಲೈನ್ ಒಳಗೆ ತಮ್ಮ ರೆಸಿಡೆನ್ಸಿ ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಸಬ್‌ಮಿಟ್ ಮಾಡಿದರು. ಇವೆಲ್ಲವೂ ಮಾತೆ ಮರಿಯಾಳ ಪ್ರೀತಿಯ ಸಹಾಯ ಎಂದು ಅವರು ಗುರುತಿಸಿದ್ದಾರೆ.\n\nಅವರ ಸಾಕ್ಷ್ಯವು ತಮ್ಮ ಕುಟುಂಬದ ನಂಬಿಕೆಯನ್ನು ಬಲಪಡಿಸಿದ ಆಶೀರ್ವಾದಗಳೊಂದಿಗೆ ಮುಂದುವರಿಯುತ್ತದೆ. ಕ್ರಿಸ್‌ಮಸ್‌ಗಿಂತ ಮೊದಲು ಅವರ ಪತಿ ಮತ್ತು ಮಗ ನ್ಯೂಜಿಲ್ಯಾಂಡ್‌ಗೆ ಬಂದರು, ನಂತರ ಅವರ ಪತಿಗೆ ಒಳ್ಳೆ ಜಾಬ್ ಸಿಕ್ಕಿತು, ಮತ್ತು ಇನ್ನೊಂದು ಮಗುವಿಗಾಗಿ ಪ್ರಾರ್ಥಿಸಿದ ನಂತರ, ಅವರು ಮಾತೆ ಮರಿಯಾಗೆ ಸೂಚನೆಯಾಗಿ ಅರ್ಪಿಸಿದ ತಿಂಗಳಲ್ಲೇ ಅವರು ಕನ್ಸೀವ್ ಆದರು. ತಾವು ಕೊಟ್ಟ ಮಾತಿನಂತೆ, ಅವರು ತಮ್ಮ ಮಗಳಿಗೆ ಹನ್ನಾ ಮರಿಯಮ್ ಎಂದು ಹೆಸರಿಟ್ಟರು. ಅವರು ಉಳಿದುಕೊಂಡಿದ್ದ ಕುಟುಂಬವು ಆಸ್ಟ್ರೇಲಿಯಾಗೆ ಮೈಗ್ರೇಟ್ ಆದಾಗ, ದೇವರು ಅನಿರೀಕ್ಷಿತವಾಗಿ ಅವರಿಗೆ ಫುಲ್ಲಿ ಫರ್ನಿಶ್ಡ್ ಮನೆಯೊಂದನ್ನು ಕೊಟ್ಟನು, ಇದರಿಂದ ಅವರ ಕುಟುಂಬಕ್ಕೆ ಮನೆ ಹುಡುಕುವ ಕಷ್ಟವಿಲ್ಲದೆ ಸೆಟಲ್ ಆಗಲು ಸಾಧ್ಯವಾಯಿತು.\n\nಅತಿ ದೊಡ್ಡ ಪವಾಡವು ಅವರ ಪ್ರೆಗ್ನೆನ್ಸಿ ಸಮಯದಲ್ಲಿ ನಡೆಯಿತು, ಹುಟ್ಟಲಿರುವ ಬೇಬಿಯಷ್ಟೇ ದೊಡ್ಡ ಫೈಬ್ರಾಯ್ಡ್ ಇರುವುದನ್ನು ಡಾಕ್ಟರ್ಸ್ ಕಂಡುಹಿಡಿದರು ಮತ್ತು ಅವರ ಜೀವಕ್ಕೆ ಅಪಾಯವಿರುವುದರಿಂದ ಅಬಾರ್ಷನ್ ಮಾಡಲು ಕಟ್ಟುನಿಟ್ಟಾಗಿ ಸಲಹೆ ನೀಡಿದರು. ಮಾತೆ ಮರಿಯಾಳ ಮಧ್ಯಸ್ಥಿಕೆಯ ಮೂಲಕ ದೇವರ ರಕ್ಷಣೆಯಲ್ಲಿ ಸಂಪೂರ್ಣ ನಂಬಿಕೆಯಿಟ್ಟು, ಅವರು ಮತ್ತು ಅವರ ಪತಿ ಅಬಾರ್ಷನ್ ಮಾಡಲು ನಿರಾಕರಿಸಿ ಪ್ರಾರ್ಥನೆಯನ್ನು ಮುಂದುವರಿಸಿದರು. ನಂತರ ಮಾಡಿದ ಒಂದು ಸ್ಕ್ಯಾನ್ ನಲ್ಲಿ, ಫೈಬ್ರಾಯ್ಡ್ ಸಂಪೂರ್ಣವಾಗಿ ಮಾಯವಾಗಿ, ಕೇವಲ ಒಂದು ಆರೋಗ್ಯಕರ ಬೇಬಿ ಮಾತ್ರ ಉಳಿದಿತ್ತು. ಈ ಪವಾಡಗಳು ಮಾತೆ ಮರಿಯಾಳ ನಿರಂತರ ಮಧ್ಯಸ್ಥಿಕೆಯ ಮೇಲಿನ ತಮ್ಮ ನಂಬಿಕೆಯನ್ನು ಮತ್ತಷ್ಟು ಬಲಪಡಿಸಿದವು ಮತ್ತು ದೇವರ ಅಪಾರ ಆಶೀರ್ವಾದಗಳಿಗೆ ಹೃದಯಪೂರ್ವಕ ಕೃತಜ್ಞತೆ ಸಲ್ಲಿಸುತ್ತಾ ಪ್ರಾರ್ಥನೆ, ಮೇರಿಯನ್ ಒಡಂಬಡಿಕೆ, ಪವಿತ್ರ ಬಲಿಪೂಜೆ ಮತ್ತು ಕರುಣೆಯ ಕಾರ್ಯಗಳಲ್ಲಿ ನಂಬಿಗಸ್ತರಾಗಿರಲು ತಮ್ಮ ಕುಟುಂಬವನ್ನು ಪ್ರೇರೇಪಿಸಿದವು ಎಂದು ನಿತಾ ತಮ್ಮ ಸಾಕ್ಷ್ಯವನ್ನು ಮುಕ್ತಾಯಗೊಳಿಸುತ್ತಾರೆ."
-},
+      "en": "Nitha Raphael testifies that after leaving a secure nursing job in Dubai to pursue a CAP course in New Zealand, she remained unemployed for six months despite persistent prayer. She faithfully completed the Marian Covenant through daily Holy Mass, Scripture reading, and works of mercy, trusting that God and the Blessed Mother would provide. Just one week before her visa expired, she encountered a mysterious woman named Maria in a church who gave her a contact that led to a nursing interview. On her birthday, she received her first job offer, later obtained a full refund of her course fees, and successfully submitted her residency application within an impossible deadline, recognizing each event as the Blessed Mother's loving intervention.\n\nHer testimony continues with a series of blessings that strengthened her family's faith. Her husband and son joined her in New Zealand before Christmas, her husband later secured a good job, and after praying for another child, she conceived exactly during one of the months she had offered to the Blessed Mother as a sign. Honoring her promise, she named her daughter Hanna Mariam. God also provided a fully furnished home in an unexpected way when the family she was staying with migrated to Australia, allowing her family to settle without the usual struggles of finding accommodation.\n\nThe greatest miracle occurred during her pregnancy when doctors discovered a fibroid as large as the unborn baby and strongly recommended an abortion because of the danger to her life. Trusting completely in God's protection through the intercession of the Blessed Mother, she and her husband refused the abortion and continued praying. At a later scan, the fibroid had completely disappeared, leaving only a healthy baby. Nitha concludes that these miracles strengthened her faith in the Blessed Mother's constant intercession and inspired her family to remain faithful to prayer, the Marian Covenant, Holy Mass, and works of mercy while offering heartfelt thanksgiving for God's abundant blessings.",
+      "hi": "निथा राफेल गवाही देती हैं कि दुबई में एक सुरक्षित नर्सिंग जॉब छोड़कर न्यूज़ीलैंड में CAP कोर्स करने के बाद, लगातार प्रार्थना के बावजूद वे छह महीने तक बेरोजगार रहीं। उन्होंने रोज़ पवित्र मिस्सा में भाग लेकर, बाइबल पढ़कर और दया के कार्य करके मारियन वाचा को पूरी निष्ठा से निभाया और भरोसा रखा कि परमेश्वर और माता मरियम उनकी ज़रूरतें पूरी करेंगे। उनका वीज़ा खत्म होने से ठीक एक हफ़्ते पहले, चर्च में उनकी मुलाकात मारिया नाम की एक अनजान महिला से हुई, जिसने उन्हें एक कॉन्टैक्ट दिया जिससे उन्हें नर्सिंग इंटरव्यू मिला। उनके जन्मदिन पर, उन्हें अपना पहला जॉब ऑफर मिला, बाद में उनकी कोर्स की पूरी फीस वापस मिल गई, और उन्होंने एक नामुमकिन सी डेडलाइन के अंदर अपनी रेजीडेंसी एप्लीकेशन कामयाबी के साथ सबमिट कर दी। वे इन सब घटनाओं को माता मरियम का प्यार भरा हस्तक्षेप मानती हैं।\n\nउनकी गवाही आगे के उन आशीषों के बारे में बताती है जिन्होंने उनके परिवार का विश्वास मजबूत किया। क्रिसमस से पहले उनके पति और बेटा न्यूज़ीलैंड आ गए, बाद में उनके पति को एक अच्छी जॉब मिल गई, और एक और बच्चे के लिए प्रार्थना करने के बाद, उन्होंने ठीक उसी महीने गर्भधारण किया जो उन्होंने माता मरियम को एक संकेत के रूप में ऑफर किया था। अपना वादा निभाते हुए, उन्होंने अपनी बेटी का नाम हन्ना मरियम रखा। परमेश्वर ने उन्हें एक पूरी तरह से फर्निश्ड घर भी बहुत ही अनोखे तरीके से दिया, जब वह परिवार जिनके साथ वे रह रहे थे, ऑस्ट्रेलिया माइग्रेट हो गया, जिससे उनके परिवार को घर ढूँढ़ने की परेशानी के बिना सेटल होने का मौका मिल गया।\n\nसबसे बड़ा चमत्कार उनकी प्रेगनेंसी के दौरान हुआ जब डॉक्टरों को एक फाइब्रॉइड मिला जो अजन्मे बेबी जितना बड़ा था और उनकी जान को खतरा होने की वजह से अबॉर्शन की सख्त सलाह दी। माता मरियम की मध्यस्थता के ज़रिए परमेश्वर की सुरक्षा पर पूरा भरोसा करते हुए, उन्होंने और उनके पति ने अबॉर्शन के लिए मना कर दिया और प्रार्थना करते रहे। बाद में हुए एक स्कैन में, फाइब्रॉइड पूरी तरह से गायब हो गया था, और सिर्फ एक स्वस्थ बेबी बचा था। निथा अंत में कहती हैं कि इन चमत्कारों ने माता मरियम की लगातार मध्यस्थता में उनके विश्वास को और मजबूत किया और उनके परिवार को प्रार्थना, मारियन वाचा, पवित्र मिस्सा और दया के कार्यों में वफादार बने रहने की प्रेरणा दी, साथ ही परमेश्वर की अपार आशीषों के लिए दिल से धन्यवाद दिया।",
+      "ta": "நிதா ரபேல் சாட்சி சொல்கிறார், துபாயில் இருந்த ஒரு நல்ல நர்சிங் வேலையை விட்டுவிட்டு நியூசிலாந்தில் CAP கோர்ஸ் படிக்க வந்த பிறகு, தொடர்ந்து ஜெபித்தும் ஆறு மாதங்களாக வேலை கிடைக்காமல் இருந்தார். கடவுளும் அன்னை மரியாளும் பார்த்துக்கொள்வார்கள் என்று நம்பி, தினமும் திருப்பலி ஒப்புக்கொடுத்து, பைபிள் வாசித்து, இரக்கத்தின் செயல்களை செய்து, மரியாயின் உடன்படிக்கையை விசுவாசத்தோடு நிறைவேற்றினார். அவருடைய விசா முடிவதற்கு சரியாக ஒரு வாரத்திற்கு முன்பு, மாதா கோவிலில் மரியா என்ற ஒரு அறிமுகமில்லாத பெண்ணை சந்தித்தார். அவர் கொடுத்த ஒரு காண்டாக்ட் மூலம் அவருக்கு ஒரு நர்சிங் இன்டர்வியூ கிடைத்தது. அவருடைய பிறந்தநாளில், அவருக்கு முதல் ஜாப் ஆஃபர் கிடைத்தது. அதன் பிறகு அவருடைய கோர்ஸ் பீஸ் முழுமையாக திரும்ப கிடைத்தது. மேலும், மிகவும் குறுகிய டெர்லைன் நேரத்திற்குள் தன்னுடைய ரெசிடென்சி அப்ளிகேஷனை வெற்றிகரமாக சப்மிட் செய்தார். இது ஒவ்வொன்றும் அன்னை மரியாளின் அன்பான உதவி என்று அவர் உணர்ந்தார்.\n\nஅவருடைய சாட்சி தொடர்ந்து அவர்களின் குடும்பத்தின் விசுவாசத்தை பலப்படுத்திய ஆசீர்வாதங்களைச் சொல்கிறது. கிறிஸ்துமஸுக்கு முன்பாக அவருடைய கணவரும் மகனும் நியூசிலாந்துக்கு வந்தார்கள். சிறிது காலத்தில் கணவருக்கும் ஒரு நல்ல வேலை கிடைத்தது. இன்னொரு குழந்தைக்காக ஜெபித்த பிறகு, அவர் அன்னை மரியாளுக்கு அடையாளமாக ஒப்புக்கொடுத்த மாதங்களிலேயே சரியாக அவர் கன்சீவ் ஆனார். தான் கொடுத்த வாக்குறுதியின்படி, தன்னுடைய மகளுக்கு ஹன்னா மரியம் என்று பெயர் வைத்தார். அவர்கள் தங்கியிருந்த குடும்பத்தினர் ஆஸ்திரேலியாவுக்கு மைக்ரேட் ஆனதால், வீடு தேடும் கஷ்டம் இல்லாமல், கடவுள் அவர்களுக்கு எல்லா வசதிகளும் கொண்ட ஒரு பர்னிஷ்டு வீட்டை எதிர்பாராத விதமாக கொடுத்தார், இதனால் அவர்கள் எளிதாக செட்டில் ஆக முடிந்தது.\n\nமிகப்பெரிய அற்புதம் அவருடைய பிரக்னன்சி நேரத்தில் நடந்தது. வயிற்றில் இருந்த பேபி அளவுக்கு பெரியதாக ஒரு பைப்ராய்டு இருப்பதை டாக்டர்கள் கண்டுபிடித்தார்கள். தாயின் உயிருக்கு ஆபத்து என்பதால் உடனடியாக அபார்ஷன் செய்ய வேண்டும் என்று கட்டாயப்படுத்தினார்கள். ஆனால், அன்னை மரியாளின் பரிந்துரை மூலமாக கடவுளின் பாதுகாப்பில் முழுமையாக நம்பிக்கை வைத்து, அவரும் அவருடைய கணவரும் அபார்ஷன் செய்ய மறுத்து தொடர்ந்து ஜெபித்தார்கள். அடுத்த முறை ஸ்கேன் செய்தபோது, அந்த பைப்ராய்டு முழுவதுமாக மறைந்து, ஆரோக்கியமான பேபி மட்டும் இருந்தது. இந்த அற்புதங்கள் அன்னை மரியாளின் இடைவிடாத பரிந்துரையின் மீதுள்ள விசுவாசத்தை பலப்படுத்தியதாகவும், ஜெபம், மரியாயின் உடன்படிக்கை, திருப்பலி மற்றும் இரக்கத்தின் செயல்களில் தொடர்ந்து விசுவாசமாக இருக்கவும், கடவுளின் ஆசீர்வாதங்களுக்கு முழு மனதோடு நன்றி சொல்லவும் தன் குடும்பத்தை ஊக்கப்படுத்தியதாக நிதா சொல்லி முடிக்கிறார்.",
+      "bn": "নিথা রাফায়েল সাক্ষ্য দিচ্ছেন যে, দুবাইতে একটি নিরাপদ নার্সিং জব ছেড়ে নিউজিল্যান্ডে একটি CAP কোর্স করার জন্য যাওয়ার পর, টানা প্রার্থনা করা সত্ত্বেও তিনি ছয় মাস বেকার ছিলেন। তিনি প্রতিদিন পবিত্র মিসায় অংশগ্রহণ করে, বাইবেল পাঠ করে এবং দয়ার কাজ করে মারিয়ান চুক্তিটি বিশ্বস্ততার সাথে পালন করেছিলেন, এই বিশ্বাস রেখে যে ঈশ্বর এবং মা মেরি সবকিছুর ব্যবস্থা করবেন। তার ভিসা শেষ হওয়ার ঠিক এক সপ্তাহ আগে, চার্চে মারিয়া নামের এক অচেনা মহিলার সাথে তার দেখা হয়, যিনি তাকে একটি কন্ট্যাক্ট দেন যার মাধ্যমে তার একটি নার্সিং ইন্টারভিউ হয়। তার জন্মদিনে, তিনি তার প্রথম জব অফার পান, পরে তার কোর্স ফির পুরো টাকা রিফান্ড পান, এবং একটি অসম্ভব ডেডলাইনের মধ্যে সফলভাবে তার রেসিডেন্সি অ্যাপ্লিকেশন সাবমিট করেন, আর এই প্রতিটি ঘটনাকে তিনি মা মেরির ভালবাসাপূর্ণ সাহায্য বলে মনে করেন।\n\nতার সাক্ষ্য এমন অনেক আশীর্বাদের কথা বলে যা তার পরিবারের বিশ্বাসকে আরও মজবুত করেছে। ক্রিসমাসের আগে তার স্বামী এবং ছেলে নিউজিল্যান্ডে তার কাছে চলে আসে, পরে তার স্বামী একটি ভালো জব পায়, এবং অন্য একটি সন্তানের জন্য প্রার্থনা করার পর, তিনি ঠিক সেই মাসেই কনসিভ করেন যেটি তিনি মা মেরিকে একটি চিহ্ন হিসেবে অফার করেছিলেন। নিজের কথা রেখে, তিনি তার মেয়ের নাম হান্না মারিয়াম রাখেন। ঈশ্বর আশ্চর্যজনকভাবে তাদের একটি ফুল্লি ফার্নিশড বাড়িও দেন যখন তারা যে পরিবারের সাথে থাকছিল তারা অস্ট্রেলিয়ায় মাইগ্রেট করে, যার ফলে তাদের পরিবার থাকার জায়গা খোঁজার কষ্ট ছাড়াই সহজে সেটেল হতে পেরেছিল।\n\nসবচেয়ে বড় অলৌকিক ঘটনাটি তার প্রেগনেন্সির সময় ঘটেছিল যখন ডাক্তাররা গর্ভস্থ বেবির সমান বড় একটি ফাইব্রয়েড দেখতে পান এবং তার জীবনের ঝুঁকির কারণে তাকে অ্যাবরশন করার জোরালো পরামর্শ দেন। মা মেরির মধ্যস্থতার মাধ্যমে ঈশ্বরের সুরক্ষায় সম্পূর্ণ বিশ্বাস রেখে, তিনি এবং তার স্বামী অ্যাবরশন করতে অস্বীকার করেন এবং প্রার্থনা চালিয়ে যান। পরবর্তী একটি স্ক্যানে, ফাইব্রয়েডটি পুরোপুরি অদৃশ্য হয়ে যায়, শুধু একটি সুস্থ বেবি থেকে যায়। নিথা সবশেষে বলেন যে এই অলৌকিক ঘটনাগুলো মা মেরির অবিরাম মধ্যস্থতার ওপর তার বিশ্বাসকে আরও দৃঢ় করেছে এবং ঈশ্বরের প্রচুর আশীর্বাদের জন্য হৃদয় থেকে ধন্যবাদ জানিয়ে তার পরিবারকে প্রার্থনা, মারিয়ান চুক্তি, পবিত্র মিসা এবং দয়ার কাজগুলোর প্রতি বিশ্বস্ত থাকতে অনুপ্রাণিত করেছে।",
+      "te": "నితా రాఫెల్ తాను దుబాయ్‌లో ఉన్న సురక్షితమైన నర్సింగ్ జాబ్‌ను వదిలేసి, న్యూజిలాండ్‌లో CAP కోర్స్ చేయడానికి వెళ్ళిన తర్వాత, ఎంత ప్రార్థించినా ఆరు నెలల పాటు ఉద్యోగం లేకుండానే ఉన్నానని సాక్ష్యమిస్తున్నారు. దేవుడు మరియు మాతృమరియ తన అవసరాలు తీరుస్తారనే నమ్మకంతో, ప్రతిరోజూ పవిత్ర బలిపూజలో పాల్గొనడం, బైబిల్ చదవడం మరియు దయగల పనులు చేయడం ద్వారా ఆమె మారియన్ నిబంధనను నమ్మకంగా పూర్తి చేసింది. ఆమె వీసా ముగియడానికి సరిగ్గా ఒక వారం ముందు, చర్చిలో మరియా అనే ఒక గుర్తుతెలియని మహిళను కలిసింది. ఆమె ఇచ్చిన ఒక కాంటాక్ట్ వల్ల ఆమెకు ఒక నర్సింగ్ ఇంటర్వ్యూ దొరికింది. ఆమె పుట్టినరోజు నాడు మొదటి జాబ్ ఆఫర్ వచ్చింది, ఆ తర్వాత ఆమె కోర్స్ ఫీజు పూర్తిగా రిఫండ్ వచ్చింది, మరియు అసాధ్యమైన డెడ్‌లైన్ లోపల ఆమె రెసిడెన్సీ అప్లికేషన్ విజయవంతంగా సబ్‌మిట్ చేసింది. ఇవన్నీ మాతృమరియ ప్రేమతో చేసిన సహాయంగా ఆమె గుర్తించింది.\n\nఆమె సాక్ష్యం వారి కుటుంబ విశ్వాసాన్ని బలపరిచిన ఆశీర్వాదాలతో కొనసాగుతుంది. క్రిస్మస్‌కు ముందే ఆమె భర్త, కొడుకు న్యూజిలాండ్‌కు చేరుకున్నారు, తర్వాత ఆమె భర్తకు మంచి జాబ్ వచ్చింది, మరియు మరో బిడ్డ కోసం ప్రార్థించిన తర్వాత, ఆమె మాతృమరియకు ఒక సూచనగా అర్పించిన నెలల్లోనే ఆమె కన్సీవ్ అయింది. తన మాటకు కట్టుబడి, ఆమె తన కూతురికి హన్నా మరియమ్ అని పేరు పెట్టింది. వారు ఉంటున్న కుటుంబం ఆస్ట్రేలియాకు మైగ్రేట్ అవ్వడంతో, దేవుడు ఒక ఊహించని విధంగా వారికి ఒక ఫుల్లీ ఫర్నిష్డ్ ఇంటిని ఇచ్చాడు, దీనివల్ల వసతి వెతుక్కునే కష్టాలు లేకుండానే వారి కుటుంబం సెటిల్ అయింది.\n\nఅతిపెద్ద అద్భుతం ఆమె ప్రెగ్నెన్సీ సమయంలో జరిగింది, పుట్టబోయే బేబీ అంత పెద్ద ఫైబ్రాయిడ్ ఉన్నట్లు డాక్టర్లు గుర్తించారు. ఆమె ప్రాణాలకు ప్రమాదం ఉన్నందున అబార్షన్ చేసుకోవాలని గట్టిగా సలహా ఇచ్చారు. మాతృమరియ మధ్యవర్తిత్వం ద్వారా దేవుని రక్షణపై పూర్తి నమ్మకంతో, ఆమె మరియు ఆమె భర్త అబార్షన్ కు నిరాకరించి ప్రార్థన కొనసాగించారు. ఆ తర్వాత తీసిన ఒక స్కాన్ లో, ఫైబ్రాయిడ్ పూర్తిగా మాయమైపోయి, కేవలం ఒక ఆరోగ్యకరమైన బేబీ మాత్రమే ఉంది. ఈ అద్భుతాలు మాతృమరియ నిరంతర మధ్యవర్తిత్వంపై తన విశ్వాసాన్ని మరింత బలపరిచాయని, దేవుని అపారమైన ఆశీర్వాదాలకు హృదయపూర్వక కృతజ్ఞతలు తెలుపుతూ ప్రార్థన, మారియన్ నిబంధన, పవిత్ర బలిపూజ మరియు దయగల పనుల పట్ల నమ్మకంగా ఉండటానికి తన కుటుంబాన్ని ప్రేరేపించాయని నితా తన సాక్ష్యాన్ని ముగించారు.",
+      "mr": "निथा राफेल साक्ष देतात की दुबईतील सुरक्षित नर्सिंगची नोकरी सोडून न्यूझीलंडमध्ये CAP कोर्स करण्यासाठी गेल्यानंतर, सतत प्रार्थना करूनही त्या सहा महिने बेरोजगार राहिल्या. देव आणि माता मरिया आपल्या गरजा पूर्ण करतील या विश्वासावर, रोज पवित्र मिस्सा मध्ये भाग घेऊन, बायबल वाचून आणि दयेची कामे करून त्यांनी मारियन वाचा अत्यंत निष्ठेने पाळली. त्यांचा व्हिसा संपण्याच्या फक्त एक आठवडा आधी, चर्चमध्ये त्यांना मारिया नावाची एक अनोळखी स्त्री भेटली जिने त्यांना एक कॉन्टॅक्ट दिला, ज्यामुळे त्यांना नर्सिंगचा इंटरव्ह्यू मिळाला. त्यांच्या वाढदिवसाला, त्यांना त्यांची पहिली जॉब ऑफर मिळाली, नंतर त्यांच्या कोर्सची संपूर्ण फी परत मिळाली आणि त्यांनी एका अशक्य वाटणाऱ्या डेडलाइनच्या आत आपले रेसिडेन्सी ॲप्लिकेशन यशस्वीपणे सबमिट केले. या प्रत्येक घटनेला त्या माता मरियाची प्रेमळ मदत मानतात.\n\nत्यांच्या साक्षीत पुढे अशा आशीर्वादांचा उल्लेख आहे ज्यामुळे त्यांच्या कुटुंबाचा विश्वास आणखी दृढ झाला. नाताळच्या आधी त्यांचे पती आणि मुलगा न्यूझीलंडमध्ये त्यांच्याकडे आले, नंतर त्यांच्या पतीला एक चांगली जॉब मिळाली आणि आणखी एका मुलासाठी प्रार्थना केल्यानंतर, त्यांनी माता मरियाला एक चिन्ह म्हणून ऑफर केलेल्या महिन्यातच त्या प्रेग्नेंट राहिल्या. आपले वचन पाळून, त्यांनी आपल्या मुलीचे नाव हन्ना मरियम ठेवले. ज्या कुटुंबासोबत त्या राहत होत्या ते ऑस्ट्रेलियाला मायग्रेट झाल्यामुळे, देवाने त्यांना एका अनपेक्षित मार्गाने एक फुल्ली फर्निश्ड घर दिले, ज्यामुळे त्यांना घर शोधण्याच्या त्रासाशिवाय सेटल होण्याची संधी मिळाली.\n\nसर्वात मोठा चमत्कार त्यांच्या प्रेग्नेंसीच्या काळात घडला जेव्हा डॉक्टरांना गर्भातील बेबीइतका मोठा फायब्रॉइड आढळला आणि त्यांच्या जिवाला धोका असल्याने अबॉर्शन करण्याचा कडक सल्ला दिला. माता मरियाच्या मध्यस्थीद्वारे देवाच्या संरक्षणावर पूर्ण विश्वास ठेवून, त्यांनी आणि त्यांच्या पतीने अबॉर्शनला नकार दिला आणि प्रार्थना करत राहिले. नंतर केलेल्या एका स्कॅनमध्ये, फायब्रॉइड पूर्णपणे नाहीसा झाला होता आणि फक्त एक निरोगी बेबी तिथे होता. निथा शेवटी सांगतात की या चमत्कारांमुळे माता मरियाच्या सततच्या मध्यस्थीवर त्यांचा विश्वास आणखी दृढ झाला आणि देवाच्या भरघोस आशीर्वादांबद्दल मनापासून आभार मानत, प्रार्थना, मारियन वाचा, पवित्र मिस्सा आणि दयेच्या कामांशी एकनिष्ठ राहण्याची त्यांच्या कुटुंबाला प्रेरणा मिळाली.",
+      "fr": "Nitha Raphael témoigne qu'après avoir quitté un emploi d'infirmière sûr à Dubaï pour suivre une formation CAP en Nouvelle-Zélande, elle est restée au chômage pendant six mois malgré des prières persistantes. Elle a fidèlement accompli l'Alliance Mariale par la Sainte Messe quotidienne, la lecture des Écritures et les œuvres de miséricorde, confiante que Dieu et la Sainte Vierge pourvoiraient à ses besoins. Une semaine seulement avant l'expiration de son visa, elle a rencontré une femme mystérieuse nommée Maria dans une église qui lui a donné un contact l'ayant menée à un entretien d'infirmière. Le jour de son anniversaire, elle a reçu sa première offre d'emploi, a ensuite obtenu le remboursement intégral de ses frais de scolarité, et a soumis avec succès sa demande de résidence dans un délai impossible, reconnaissant chaque événement comme l'intervention aimante de la Sainte Vierge.\n\nSon témoignage se poursuit avec une série de bénédictions qui ont renforcé la foi de sa famille. Son mari et son fils l'ont rejointe en Nouvelle-Zélande avant Noël, son mari a ensuite trouvé un bon travail, et après avoir prié pour un autre enfant, elle a conçu exactement pendant l'un des mois qu'elle avait offerts à la Sainte Vierge comme signe. Honorant sa promesse, elle a appelé sa fille Hanna Mariam. Dieu a également fourni une maison entièrement meublée d'une manière inattendue lorsque la famille avec laquelle elle vivait a émigré en Australie, permettant à sa famille de s'installer sans les difficultés habituelles pour trouver un logement.\n\nLe plus grand miracle s'est produit pendant sa grossesse lorsque les médecins ont découvert un fibrome aussi gros que le bébé à naître et ont fortement recommandé un avortement en raison du danger pour sa vie. Faisant totalement confiance à la protection de Dieu par l'intercession de la Sainte Vierge, elle et son mari ont refusé l'avortement et ont continué à prier. Lors d'une échographie ultérieure, le fibrome avait complètement disparu, ne laissant qu'un bébé en bonne santé. Nitha conclut que ces miracles ont renforcé sa foi dans l'intercession constante de la Sainte Vierge et ont inspiré sa famille à rester fidèle à la prière, à l'Alliance Mariale, à la Sainte Messe et aux œuvres de miséricorde tout en offrant de sincères actions de grâces pour les abondantes bénédictions de Dieu.",
+      "es": "Nitha Raphael testifica que después de dejar un trabajo seguro como enfermera en Dubai para cursar un programa CAP en Nueva Zelanda, permaneció desempleada durante seis meses a pesar de sus persistentes oraciones. Ella cumplió fielmente con la Alianza Mariana a través de la Santa Misa diaria, la lectura de las Escrituras y las obras de misericordia, confiando en que Dios y la Santísima Virgen proveerían. Justo una semana antes de que expirara su visa, conoció a una misteriosa mujer llamada María en una iglesia, quien le dio un contacto que la llevó a una entrevista de enfermería. El día de su cumpleaños, recibió su primera oferta de trabajo, luego obtuvo un reembolso completo de los gastos de su curso, y presentó con éxito su solicitud de residencia en un plazo imposible, reconociendo cada evento como la amorosa intervención de la Santísima Virgen.\n\nSu testimonio continúa con una serie de bendiciones que fortalecieron la fe de su familia. Su esposo y su hijo se unieron a ella en Nueva Zelanda antes de Navidad, su esposo luego consiguió un buen trabajo, y después de rezar por otro hijo, concibió exactamente durante uno de los meses que había ofrecido a la Santísima Virgen como señal. Honrando su promesa, llamó a su hija Hanna Mariam. Dios también proveyó una casa completamente amueblada de una manera inesperada cuando la familia con la que se alojaba emigró a Australia, permitiendo a su familia establecerse sin las luchas habituales para encontrar alojamiento.\n\nEl mayor milagro ocurrió durante su embarazo cuando los médicos descubrieron un fibroma tan grande como el bebé por nacer y recomendaron encarecidamente un aborto debido al peligro para su vida. Confiando plenamente en la protección de Dios a través de la intercesión de la Santísima Virgen, ella y su esposo rechazaron el aborto y continuaron orando. En una ecografía posterior, el fibroma había desaparecido por completo, dejando solo a un bebé sano. Nitha concluye que estos milagros fortalecieron su fe en la intercesión constante de la Santísima Virgen e inspiraron a su familia a permanecer fieles a la oración, la Alianza Mariana, la Santa Misa y las obras de misericordia, mientras ofrecen sinceras acciones de gracias por las abundantes bendiciones de Dios.",
+      "zh": "尼莎·拉斐尔（Nitha Raphael）作证说，她辞去了迪拜一份稳定的护士工作，去新西兰读CAP课程，尽管她一直在祷告，但还是失业了六个月。她每天参与弥撒，阅读圣经，并做仁爱的工作，忠实地履行玛利亚誓约，相信天主和圣母一定会看顾她。就在她的签证过期前一周，她在教堂遇到了一位名叫玛丽亚的神秘女子，这位女子给了她一个联系方式，让她得到了一个护士面试的机会。在她生日那天，她收到了第一份工作录用通知，后来还拿到了课程全额退款，并在一个不可能的期限内成功提交了居留申请。她深深体会到，这些都是圣母充满爱的介入。\n\n她的见证还提到了许多坚固了她家人信德的恩典。圣诞节前，她的丈夫和儿子来到了新西兰和她团聚，她丈夫后来也找到了一份好工作。在为再生一个孩子祈祷后，她恰好在她作为印记奉献给圣母的那个月份里怀孕了。为了兑现承诺，她给女儿起名叫汉娜·玛丽亚（Hanna Mariam）。天主还以一种意想不到的方式给他们提供了一套家具齐全的房子——当时他们借住的那个家庭移民去了澳大利亚，这让她一家人不用再为了找住处而奔波，顺利安顿了下来。\n\n最大的奇迹发生在她怀孕期间。当时医生发现了一个和肚子里的宝宝一样大的肌瘤，因为对她的生命有危险，医生强烈建议她堕胎。但她和丈夫全心信靠天主的保护和圣母的代祷，拒绝了堕胎，并继续祈祷。在后来的B超检查中，那个肌瘤竟然完全消失了，只留下了一个健康的宝宝。尼莎在最后说，这些奇迹让她更加坚信圣母的不断代祷，也激励她的家人更加忠实于祈祷、玛利亚誓约、弥撒和仁爱的工作，同时对天主丰盛的恩典献上真心的感恩。",
+      "kn": "ನಿತಾ ರಾಫೆಲ್ ಅವರು ದುಬೈನಲ್ಲಿ ಸುರಕ್ಷಿತವಾದ ನರ್ಸಿಂಗ್ ಜಾಬ್ ಬಿಟ್ಟು ನ್ಯೂಜಿಲ್ಯಾಂಡ್‌ನಲ್ಲಿ CAP ಕೋರ್ಸ್ ಮಾಡಲು ಹೋದ ನಂತರ, ನಿರಂತರವಾಗಿ ಪ್ರಾರ್ಥನೆ ಮಾಡಿದರೂ ಆರು ತಿಂಗಳ ಕಾಲ ನಿರುದ್ಯೋಗಿಯಾಗಿದ್ದರು ಎಂದು ಸಾಕ್ಷಿ ಹೇಳುತ್ತಾರೆ. ದೇವರು ಮತ್ತು ಮಾತೆ ಮರಿಯಾ ಎಲ್ಲವನ್ನೂ ನೋಡಿಕೊಳ್ಳುತ್ತಾರೆ ಎಂಬ ನಂಬಿಕೆಯಿಂದ, ಅವರು ಪ್ರತಿದಿನ ಪವಿತ್ರ ಬಲಿಪೂಜೆಯಲ್ಲಿ ಭಾಗವಹಿಸಿ, ಬೈಬಲ್ ಓದಿ, ಕರುಣೆಯ ಕಾರ್ಯಗಳನ್ನು ಮಾಡುವ ಮೂಲಕ ಮೇರಿಯನ್ ಒಡಂಬಡಿಕೆಯನ್ನು ನಿಷ್ಠೆಯಿಂದ ಪಾಲಿಸಿದರು. ಅವರ ವೀಸಾ ಮುಗಿಯುವ ಒಂದು ವಾರದ ಮೊದಲು, ಚರ್ಚ್‌ನಲ್ಲಿ ಮರಿಯಾ ಎಂಬ ಅಪರಿಚಿತ ಮಹಿಳೆಯನ್ನು ಭೇಟಿಯಾದರು. ಅವರು ಕೊಟ್ಟ ಒಂದು ಕಾಂಟ್ಯಾಕ್ಟ್‌ನಿಂದ ಅವರಿಗೆ ನರ್ಸಿಂಗ್ ಇಂಟರ್ವ್ಯೂ ಸಿಕ್ಕಿತು. ಅವರ ಹುಟ್ಟುಹಬ್ಬದ ದಿನದಂದು, ಅವರಿಗೆ ಮೊದಲ ಜಾಬ್ ಆಫರ್ ಸಿಕ್ಕಿತು, ನಂತರ ಅವರ ಕೋರ್ಸ್ ಫೀಸ್ ಪೂರ್ತಿಯಾಗಿ ರಿಫಂಡ್ ಆಯಿತು, ಮತ್ತು ಅಸಾಧ್ಯವಾದ ಡೆಡ್‌ಲೈನ್ ಒಳಗೆ ತಮ್ಮ ರೆಸಿಡೆನ್ಸಿ ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಸಬ್‌ಮಿಟ್ ಮಾಡಿದರು. ಇವೆಲ್ಲವೂ ಮಾತೆ ಮರಿಯಾಳ ಪ್ರೀತಿಯ ಸಹಾಯ ಎಂದು ಅವರು ಗುರುತಿಸಿದ್ದಾರೆ.\n\nಅವರ ಸಾಕ್ಷ್ಯವು ತಮ್ಮ ಕುಟುಂಬದ ನಂಬಿಕೆಯನ್ನು ಬಲಪಡಿಸಿದ ಆಶೀರ್ವಾದಗಳೊಂದಿಗೆ ಮುಂದುವರಿಯುತ್ತದೆ. ಕ್ರಿಸ್‌ಮಸ್‌ಗಿಂತ ಮೊದಲು ಅವರ ಪತಿ ಮತ್ತು ಮಗ ನ್ಯೂಜಿಲ್ಯಾಂಡ್‌ಗೆ ಬಂದರು, ನಂತರ ಅವರ ಪತಿಗೆ ಒಳ್ಳೆ ಜಾಬ್ ಸಿಕ್ಕಿತು, ಮತ್ತು ಇನ್ನೊಂದು ಮಗುವಿಗಾಗಿ ಪ್ರಾರ್ಥಿಸಿದ ನಂತರ, ಅವರು ಮಾತೆ ಮರಿಯಾಗೆ ಸೂಚನೆಯಾಗಿ ಅರ್ಪಿಸಿದ ತಿಂಗಳಲ್ಲೇ ಅವರು ಕನ್ಸೀವ್ ಆದರು. ತಾವು ಕೊಟ್ಟ ಮಾತಿನಂತೆ, ಅವರು ತಮ್ಮ ಮಗಳಿಗೆ ಹನ್ನಾ ಮರಿಯಮ್ ಎಂದು ಹೆಸರಿಟ್ಟರು. ಅವರು ಉಳಿದುಕೊಂಡಿದ್ದ ಕುಟುಂಬವು ಆಸ್ಟ್ರೇಲಿಯಾಗೆ ಮೈಗ್ರೇಟ್ ಆದಾಗ, ದೇವರು ಅನಿರೀಕ್ಷಿತವಾಗಿ ಅವರಿಗೆ ಫುಲ್ಲಿ ಫರ್ನಿಶ್ಡ್ ಮನೆಯೊಂದನ್ನು ಕೊಟ್ಟನು, ಇದರಿಂದ ಅವರ ಕುಟುಂಬಕ್ಕೆ ಮನೆ ಹುಡುಕುವ ಕಷ್ಟವಿಲ್ಲದೆ ಸೆಟಲ್ ಆಗಲು ಸಾಧ್ಯವಾಯಿತು.\n\nಅತಿ ದೊಡ್ಡ ಪವಾಡವು ಅವರ ಪ್ರೆಗ್ನೆನ್ಸಿ ಸಮಯದಲ್ಲಿ ನಡೆಯಿತು, ಹುಟ್ಟಲಿರುವ ಬೇಬಿಯಷ್ಟೇ ದೊಡ್ಡ ಫೈಬ್ರಾಯ್ಡ್ ಇರುವುದನ್ನು ಡಾಕ್ಟರ್ಸ್ ಕಂಡುಹಿಡಿದರು ಮತ್ತು ಅವರ ಜೀವಕ್ಕೆ ಅಪಾಯವಿರುವುದರಿಂದ ಅಬಾರ್ಷನ್ ಮಾಡಲು ಕಟ್ಟುನಿಟ್ಟಾಗಿ ಸಲಹೆ ನೀಡಿದರು. ಮಾತೆ ಮರಿಯಾಳ ಮಧ್ಯಸ್ಥಿಕೆಯ ಮೂಲಕ ದೇವರ ರಕ್ಷಣೆಯಲ್ಲಿ ಸಂಪೂರ್ಣ ನಂಬಿಕೆಯಿಟ್ಟು, ಅವರು ಮತ್ತು ಅವರ ಪತಿ ಅಬಾರ್ಷನ್ ಮಾಡಲು ನಿರಾಕರಿಸಿ ಪ್ರಾರ್ಥನೆಯನ್ನು ಮುಂದುವರಿಸಿದರು. ನಂತರ ಮಾಡಿದ ಒಂದು ಸ್ಕ್ಯಾನ್ ನಲ್ಲಿ, ಫೈಬ್ರಾಯ್ಡ್ ಸಂಪೂರ್ಣವಾಗಿ ಮಾಯವಾಗಿ, ಕೇವಲ ಒಂದು ಆರೋಗ್ಯಕರ ಬೇಬಿ ಮಾತ್ರ ಉಳಿದಿತ್ತು. ಈ ಪವಾಡಗಳು ಮಾತೆ ಮರಿಯಾಳ ನಿರಂತರ ಮಧ್ಯಸ್ಥಿಕೆಯ ಮೇಲಿನ ತಮ್ಮ ನಂಬಿಕೆಯನ್ನು ಮತ್ತಷ್ಟು ಬಲಪಡಿಸಿದವು ಮತ್ತು ದೇವರ ಅಪಾರ ಆಶೀರ್ವಾದಗಳಿಗೆ ಹೃದಯಪೂರ್ವಕ ಕೃತಜ್ಞತೆ ಸಲ್ಲಿಸುತ್ತಾ ಪ್ರಾರ್ಥನೆ, ಮೇರಿಯನ್ ಒಡಂಬಡಿಕೆ, ಪವಿತ್ರ ಬಲಿಪೂಜೆ ಮತ್ತು ಕರುಣೆಯ ಕಾರ್ಯಗಳಲ್ಲಿ ನಂಬಿಗಸ್ತರಾಗಿರಲು ತಮ್ಮ ಕುಟುಂಬವನ್ನು ಪ್ರೇರೇಪಿಸಿದವು ಎಂದು ನಿತಾ ತಮ್ಮ ಸಾಕ್ಷ್ಯವನ್ನು ಮುಕ್ತಾಯಗೊಳಿಸುತ್ತಾರೆ."
+    },
     "subtitles": "/assets/testimony-subtitle/19june26.json",
     "duration": "11:01",
-    "overlay":{
-  "boxes": [
-    {
-      "x": 16,
-      "y": 4,
-      "w": 1190,
-      "h": 133,
-      "background": "#0d28b7",
-      "fontColor": "#f8ffff"
-    },
-    {
-      "x": 35,
-      "y": 117,
-      "w": 763,
-      "h": 273,
-      "background": "#0020b1",
-      "fontColor": "#fdd100"
-    },
-    {
-      "x": 35,
-      "y": 372,
-      "w": 587,
-      "h": 267,
-      "background": "#002cc0",
-      "fontColor": "#fffefc"
-    },
-    {
-      "x": 54,
-      "y": 616,
-      "w": 1039,
-      "h": 108,
-      "background": "#16165c",
-      "fontColor": "#ffd500"
-    },
-    {
-      "x": 1078,
-      "y": 115,
-      "w": 200,
-      "h": 64,
-      "background": "#0065e5",
-      "fontColor": "#fefefe"
+    "overlay": {
+      "boxes": [
+        {
+          "x": 16,
+          "y": 4,
+          "w": 1190,
+          "h": 133,
+          "background": "#0d28b7",
+          "fontColor": "#f8ffff"
+        },
+        {
+          "x": 35,
+          "y": 117,
+          "w": 763,
+          "h": 273,
+          "background": "#0020b1",
+          "fontColor": "#fdd100"
+        },
+        {
+          "x": 35,
+          "y": 372,
+          "w": 587,
+          "h": 267,
+          "background": "#002cc0",
+          "fontColor": "#fffefc"
+        },
+        {
+          "x": 54,
+          "y": 616,
+          "w": 1039,
+          "h": 108,
+          "background": "#16165c",
+          "fontColor": "#ffd500"
+        },
+        {
+          "x": 1078,
+          "y": 115,
+          "w": 200,
+          "h": 64,
+          "background": "#0065e5",
+          "fontColor": "#fefefe"
+        }
+      ],
+      "texts": {
+        "en": [
+          "To remain faithful to my Covenant",
+          "I went to church in New Zealand even while hailstones were falling",
+          "One day, after Holy Mass, a woman wearing a blue saree tapped me on the shoulder.",
+          "What Happened Next Was Shocking!",
+          "Wayanad"
+        ],
+        "hi": [
+          "अपनी वाचा के प्रति विश्वासयोग्य बने रहने के लिए",
+          "ओले गिर रहे थे, फिर भी मैं न्यूज़ीलैंड में चर्च गई।",
+          "एक दिन, पवित्र मिस्सा के बाद, नीली साड़ी पहनी एक महिला ने मेरे कंधे पर थपथपाया।",
+          "इसके बाद जो हुआ, वह चौंकाने वाला था!",
+          "वायनाड"
+        ],
+        "ta": [
+          "என் உடன்படிக்கைக்கு உண்மையாக இருக்க",
+          "ஆலங்கட்டி மழை பெய்துக்கொண்டிருந்தபோதும் நான் நியூசிலாந்தில் உள்ள தேவாலயத்திற்குச் சென்றேன்.",
+          "ஒருநாள், திருப்பலி முடிந்த பிறகு, நீல நிற சேலை அணிந்திருந்த ஒரு பெண் என் தோளில் தட்டினார்.",
+          "அதற்குப் பிறகு நடந்தது அதிர்ச்சியளிப்பதாக இருந்தது!",
+          "வயநாடு"
+        ],
+        "bn": [
+          "আমার চুক্তির প্রতি বিশ্বস্ত থাকতে",
+          "শিলাবৃষ্টি হচ্ছিল, তবুও আমি নিউজিল্যান্ডের গির্জায় গিয়েছিলাম।",
+          "একদিন, পবিত্র মিসা শেষে, নীল শাড়ি পরা এক মহিলা আমার কাঁধে আলতো করে টোকা দিলেন।",
+          "এরপর যা ঘটল, তা ছিল অবিশ্বাস্য!",
+          "ওয়ানাড়"
+        ],
+        "te": [
+          "నా ఒడంబడికకు నమ్మకంగా ఉండటానికి",
+          "వడగళ్ల వర్షం పడుతున్నప్పటికీ నేను న్యూజిలాండ్‌లోని చర్చికి వెళ్లాను.",
+          "ఒక రోజు పవిత్ర మాస్ ముగిసిన తర్వాత, నీలి చీర ధరించిన ఒక మహిళ నా భుజంపై తట్టింది.",
+          "తర్వాత జరిగినది ఆశ్చర్యపరిచింది!",
+          "వయనాడ్"
+        ],
+        "mr": [
+          "माझ्या कराराशी विश्वासू राहण्यासाठी",
+          "गारपीट होत असतानाही मी न्यूझीलंडमधील चर्चमध्ये गेले.",
+          "एके दिवशी पवित्र मिस्सानंतर निळी साडी घातलेल्या एका महिलेने माझ्या खांद्यावर हलकेच थाप दिली.",
+          "त्यानंतर जे घडले ते धक्कादायक होते!",
+          "वायनाड"
+        ],
+        "fr": [
+          "Pour rester fidèle à mon Alliance",
+          "Je suis allée à l'église en Nouvelle-Zélande malgré la grêle.",
+          "Un jour, après la Sainte Messe, une femme vêtue d'un sari bleu m'a tapoté l'épaule.",
+          "Ce qui s'est passé ensuite était bouleversant !",
+          "Wayanad"
+        ],
+        "es": [
+          "Para permanecer fiel a mi Alianza",
+          "Fui a la iglesia en Nueva Zelanda aunque estaba cayendo granizo.",
+          "Un día, después de la Santa Misa, una mujer con un sari azul me tocó el hombro.",
+          "¡Lo que sucedió después fue impactante!",
+          "Wayanad"
+        ],
+        "zh": [
+          "为了忠于我的盟约",
+          "尽管当时正下着冰雹，我还是去了新西兰的教堂。",
+          "有一天，弥撒结束后，一位穿着蓝色纱丽的女士轻轻拍了拍我的肩膀。",
+          "接下来发生的事情令人震惊！",
+          "瓦亚纳德"
+        ],
+        "kn": [
+          "ನನ್ನ ಒಡಂಬಡಿಕೆಗೆ ನಿಷ್ಠೆಯಿಂದ ಇರಲು",
+          "ಆಲಿಕಲ್ಲು ಮಳೆ ಸುರಿಯುತ್ತಿದ್ದರೂ ನಾನು ನ್ಯೂಜಿಲೆಂಡ್‌ನ ಚರ್ಚಿಗೆ ಹೋದೆ.",
+          "ಒಂದು ದಿನ ಪವಿತ್ರ ಬಲಿಪೂಜೆ ಮುಗಿದ ನಂತರ, ನೀಲಿ ಸೀರೆ ಧರಿಸಿದ್ದ ಒಬ್ಬ ಮಹಿಳೆ ನನ್ನ ಭುಜವನ್ನು ತಟ್ಟಿದರು.",
+          "ಮುಂದೆ ನಡೆದದ್ದು ಬೆಚ್ಚಿಬೀಳಿಸುವಂತಿತ್ತು!",
+          "ವಯನಾಡು"
+        ]
+      }
     }
-  ],
-  "texts": {
-  "en": [
-    "To remain faithful to my Covenant",
-    "I went to church in New Zealand even while hailstones were falling",
-    "One day, after Holy Mass, a woman wearing a blue saree tapped me on the shoulder.",
-    "What Happened Next Was Shocking!",
-    "Wayanad"
-  ],
-  "hi": [
-    "अपनी वाचा के प्रति विश्वासयोग्य बने रहने के लिए",
-    "ओले गिर रहे थे, फिर भी मैं न्यूज़ीलैंड में चर्च गई।",
-    "एक दिन, पवित्र मिस्सा के बाद, नीली साड़ी पहनी एक महिला ने मेरे कंधे पर थपथपाया।",
-    "इसके बाद जो हुआ, वह चौंकाने वाला था!",
-    "वायनाड"
-  ],
-  "ta": [
-    "என் உடன்படிக்கைக்கு உண்மையாக இருக்க",
-    "ஆலங்கட்டி மழை பெய்துக்கொண்டிருந்தபோதும் நான் நியூசிலாந்தில் உள்ள தேவாலயத்திற்குச் சென்றேன்.",
-    "ஒருநாள், திருப்பலி முடிந்த பிறகு, நீல நிற சேலை அணிந்திருந்த ஒரு பெண் என் தோளில் தட்டினார்.",
-    "அதற்குப் பிறகு நடந்தது அதிர்ச்சியளிப்பதாக இருந்தது!",
-    "வயநாடு"
-  ],
-  "bn": [
-    "আমার চুক্তির প্রতি বিশ্বস্ত থাকতে",
-    "শিলাবৃষ্টি হচ্ছিল, তবুও আমি নিউজিল্যান্ডের গির্জায় গিয়েছিলাম।",
-    "একদিন, পবিত্র মিসা শেষে, নীল শাড়ি পরা এক মহিলা আমার কাঁধে আলতো করে টোকা দিলেন।",
-    "এরপর যা ঘটল, তা ছিল অবিশ্বাস্য!",
-    "ওয়ানাড়"
-  ],
-  "te": [
-    "నా ఒడంబడికకు నమ్మకంగా ఉండటానికి",
-    "వడగళ్ల వర్షం పడుతున్నప్పటికీ నేను న్యూజిలాండ్‌లోని చర్చికి వెళ్లాను.",
-    "ఒక రోజు పవిత్ర మాస్ ముగిసిన తర్వాత, నీలి చీర ధరించిన ఒక మహిళ నా భుజంపై తట్టింది.",
-    "తర్వాత జరిగినది ఆశ్చర్యపరిచింది!",
-    "వయనాడ్"
-  ],
-  "mr": [
-    "माझ्या कराराशी विश्वासू राहण्यासाठी",
-    "गारपीट होत असतानाही मी न्यूझीलंडमधील चर्चमध्ये गेले.",
-    "एके दिवशी पवित्र मिस्सानंतर निळी साडी घातलेल्या एका महिलेने माझ्या खांद्यावर हलकेच थाप दिली.",
-    "त्यानंतर जे घडले ते धक्कादायक होते!",
-    "वायनाड"
-  ],
-  "fr": [
-    "Pour rester fidèle à mon Alliance",
-    "Je suis allée à l'église en Nouvelle-Zélande malgré la grêle.",
-    "Un jour, après la Sainte Messe, une femme vêtue d'un sari bleu m'a tapoté l'épaule.",
-    "Ce qui s'est passé ensuite était bouleversant !",
-    "Wayanad"
-  ],
-  "es": [
-    "Para permanecer fiel a mi Alianza",
-    "Fui a la iglesia en Nueva Zelanda aunque estaba cayendo granizo.",
-    "Un día, después de la Santa Misa, una mujer con un sari azul me tocó el hombro.",
-    "¡Lo que sucedió después fue impactante!",
-    "Wayanad"
-  ],
-  "zh": [
-    "为了忠于我的盟约",
-    "尽管当时正下着冰雹，我还是去了新西兰的教堂。",
-    "有一天，弥撒结束后，一位穿着蓝色纱丽的女士轻轻拍了拍我的肩膀。",
-    "接下来发生的事情令人震惊！",
-    "瓦亚纳德"
-  ],
-  "kn": [
-    "ನನ್ನ ಒಡಂಬಡಿಕೆಗೆ ನಿಷ್ಠೆಯಿಂದ ಇರಲು",
-    "ಆಲಿಕಲ್ಲು ಮಳೆ ಸುರಿಯುತ್ತಿದ್ದರೂ ನಾನು ನ್ಯೂಜಿಲೆಂಡ್‌ನ ಚರ್ಚಿಗೆ ಹೋದೆ.",
-    "ಒಂದು ದಿನ ಪವಿತ್ರ ಬಲಿಪೂಜೆ ಮುಗಿದ ನಂತರ, ನೀಲಿ ಸೀರೆ ಧರಿಸಿದ್ದ ಒಬ್ಬ ಮಹಿಳೆ ನನ್ನ ಭುಜವನ್ನು ತಟ್ಟಿದರು.",
-    "ಮುಂದೆ ನಡೆದದ್ದು ಬೆಚ್ಚಿಬೀಳಿಸುವಂತಿತ್ತು!",
-    "ವಯನಾಡು"
-  ]
-}
-}
   },
   {
     "id": 79,
     "title": {
-  "en": "From Addiction, Debt, and Despair to a Life of Miracles, Faith and Marian Presence",
-  "hi": "नशे, कर्ज़ और निराशा से चमत्कारों से भरे जीवन तक — विश्वास और मरियम की उपस्थिति",
-  "ta": "மதுபோதையும், கடனும், நம்பிக்கையிழப்பும் நிறைந்த வாழ்க்கையிலிருந்து அற்புதங்கள் நிறைந்த வாழ்விற்கு – விசுவாசமும் அன்னை மரியாவின் உடனிருப்பும்",
-  "bn": "আসক্তি, ঋণ ও হতাশা থেকে অলৌকিকতায় ভরা জীবনের পথে — বিশ্বাস ও মা মরিয়মের উপস্থিতি",
-  "te": "వ్యసనం, అప్పులు, నిరాశ నుంచి అద్భుతాలతో నిండిన జీవితానికి — విశ్వాసం మరియు మరియమ్మ సన్నిధి",
-  "mr": "व्यसन, कर्ज आणि निराशेतून चमत्कारांनी भरलेल्या जीवनाकडे — विश्वास आणि माता मरियेची सान्निध्यता",
-  "fr": "De l'addiction, des dettes et du désespoir à une vie de miracles — Foi et présence de Marie",
-  "es": "De la adicción, las deudas y la desesperación a una vida de milagros — Fe y presencia de María",
-  "zh": "从成瘾、债务与绝望，到充满奇迹的人生——信德与圣母玛利亚的临在",
-  "kn": "ವ್ಯಸನ, ಸಾಲ ಮತ್ತು ನಿರಾಶೆಯಿಂದ ಅದ್ಭುತಗಳಿಂದ ತುಂಬಿದ ಜೀವನದವರೆಗೆ — ನಂಬಿಕೆ ಮತ್ತು ಮಾತೆ ಮರಿಯಮ್ಮನ ಸಾನ್ನಿಧ್ಯ"
-},
+      "en": "From Addiction, Debt, and Despair to a Life of Miracles, Faith and Marian Presence",
+      "hi": "नशे, कर्ज़ और निराशा से चमत्कारों से भरे जीवन तक — विश्वास और मरियम की उपस्थिति",
+      "ta": "மதுபோதையும், கடனும், நம்பிக்கையிழப்பும் நிறைந்த வாழ்க்கையிலிருந்து அற்புதங்கள் நிறைந்த வாழ்விற்கு – விசுவாசமும் அன்னை மரியாவின் உடனிருப்பும்",
+      "bn": "আসক্তি, ঋণ ও হতাশা থেকে অলৌকিকতায় ভরা জীবনের পথে — বিশ্বাস ও মা মরিয়মের উপস্থিতি",
+      "te": "వ్యసనం, అప్పులు, నిరాశ నుంచి అద్భుతాలతో నిండిన జీవితానికి — విశ్వాసం మరియు మరియమ్మ సన్నిధి",
+      "mr": "व्यसन, कर्ज आणि निराशेतून चमत्कारांनी भरलेल्या जीवनाकडे — विश्वास आणि माता मरियेची सान्निध्यता",
+      "fr": "De l'addiction, des dettes et du désespoir à une vie de miracles — Foi et présence de Marie",
+      "es": "De la adicción, las deudas y la desesperación a una vida de milagros — Fe y presencia de María",
+      "zh": "从成瘾、债务与绝望，到充满奇迹的人生——信德与圣母玛利亚的临在",
+      "kn": "ವ್ಯಸನ, ಸಾಲ ಮತ್ತು ನಿರಾಶೆಯಿಂದ ಅದ್ಭುತಗಳಿಂದ ತುಂಬಿದ ಜೀವನದವರೆಗೆ — ನಂಬಿಕೆ ಮತ್ತು ಮಾತೆ ಮರಿಯಮ್ಮನ ಸಾನ್ನಿಧ್ಯ"
+    },
     "date": "July 24, 2026",
     "video": "https://youtu.be/H4ao-_ohMXE",
     "content": {
-  "en": "Stephy came to the Kreupasanam altar burdened by severe debt and took the Covenant in November 2024, initially praying for a local job to support her family. Against all odds, she received an opportunity to work as a caregiver in Israel, despite lacking a nursing background and facing insurmountable financial hurdles. Through her fervent prayers and deep faith in Mother Mary, she miraculously received the exact funds required for her visa and travel expenses. She also passed a challenging interview despite not knowing Hebrew and was ultimately blessed with a placement in an English-speaking family in Israel.\n\nThe miraculous interventions extended deeply into Stephy's family life, bringing profound healing and transformation. Her husband, Bibin, who had struggled with severe alcoholism for 12 years and previously mocked her faith, decided to take the Covenant himself and was completely delivered from his addiction within a month. Additionally, Bibin experienced a miraculous healing from debilitating leg pain during a Rosary rally, and their young son, Abel, was miraculously cured of a severe medical issue without the need for a previously recommended surgery after the family prayed using the Covenant oil and salt.\n\nTransformed by these experiences, the family now leads a deeply devout life, with Bibin actively leading their household prayers. Stephy continues to share her faith in Israel by distributing Kreupasanam materials, caring for the elderly, and praying for others in need using the Covenant sacramentals. Their shared testimony serves as a powerful declaration of their gratitude to Jesus and Mother Mary, illustrating how steadfast faith and prayer during life's greatest crises can bring about complete deliverance and spiritual renewal.",
-  "hi": "स्टेफी भारी कर्ज के बोझ तले कृपासनम वेदी पर आईं और अपने परिवार को सपोर्ट करने के लिए लोकल जॉब की प्रार्थना करते हुए नवंबर 2024 में वाचा लिया। सभी बाधाओं के बावजूद, नर्सिंग बैकग्राउंड न होने और भारी आर्थिक तंगी के बाद भी, उन्हें इज़राइल में केयरगिवर के रूप में काम करने का मौका मिला। मदर मैरी में अपने गहरे विश्वास और प्रार्थनाओं के द्वारा, उन्हें चमत्कारिक रूप से अपने वीज़ा और यात्रा खर्च के लिए आवश्यक पूरे पैसे मिल गए। हिब्रू न जानने के बावजूद उन्होंने एक कठिन इंटरव्यू पास किया और इज़राइल में एक इंग्लिश बोलने वाले परिवार में उन्हें प्लेसमेंट मिला।\n\nचमत्कारिक हस्तक्षेप स्टेफी के पारिवारिक जीवन तक भी पहुंचे, जिससे उन्हें गहरी चंगाई और बदलाव मिला। उनके पति बिबिन, जो 12 साल से शराब की लत से जूझ रहे थे और पहले उनके विश्वास का मजाक उड़ाते थे, उन्होंने खुद वाचा लेने का फैसला किया और एक महीने के भीतर अपनी लत से पूरी तरह मुक्त हो गए। इसके अलावा, एक रोज़री रैली के दौरान बिबिन को पैरों के भयंकर दर्द से चमत्कारिक चंगाई मिली, और उनके छोटे बेटे एबेल को एक गंभीर मेडिकल समस्या से बिना सर्जरी के चमत्कारिक रूप से ठीक कर दिया गया, जब परिवार ने वाचा तेल और नमक का उपयोग करके प्रार्थना की।\n\nइन अनुभवों से बदलकर, यह परिवार अब एक गहरा भक्तिपूर्ण जीवन जी रहा है, और बिबिन अब घर की प्रार्थनाओं की अगुवाई करते हैं। स्टेफी इज़राइल में कृपासनम सामग्री शेयर करके, बुजुर्गों की देखभाल करके और वाचा की पवित्र वस्तुओं का उपयोग करके जरूरतमंदों के लिए प्रार्थना करके अपने विश्वास को बांटना जारी रखती हैं। उनकी यह गवाही यीशु और मदर मैरी के प्रति उनकी कृतज्ञता की एक शक्तिशाली घोषणा है, जो यह दिखाती है कि जीवन के सबसे बड़े संकटों के दौरान अटूट विश्वास और प्रार्थना कैसे पूरी तरह से छुटकारा और आध्यात्मिक नवीनीकरण ला सकती है।",
-  "ta": "ஸ்டெஃபி கடுமையான கடனோடு கிருபாசனம் பீடத்திற்கு வந்து, தனது குடும்பத்தை சப்போர்ட் செய்ய ஒரு லோக்கல் வேலைக்காக வேண்டி நவம்பர் 2024-ல் உடன்படிக்கை எடுத்தார். நர்சிங் பின்னணி இல்லாத நிலையிலும், மிகப்பெரிய பண நெருக்கடிகளுக்கு மத்தியிலும், இஸ்ரேலில் ஒரு கேர்கிவராக வேலை செய்யும் வாய்ப்பு அவருக்கு கிடைத்தது. அன்னை மரியா மீதான அவரது ஆழ்ந்த விசுவாசம் மற்றும் ஜெபங்கள் வழியாக, அவரது விசா மற்றும் பயணச் செலவுகளுக்கான முழுப் பணமும் அற்புதமாக கிடைத்தது. எபிரேய மொழி தெரியாவிட்டாலும் அவர் ஒரு கடினமான இன்டர்வியூவை பாஸ் செய்தார், மேலும் இஸ்ரேலில் இங்கிலீஷ் பேசும் ஒரு குடும்பத்தில் பிளேஸ்மென்ட் பெற்றார்.\n\nஇந்த அற்புதமான தலையீடுகள் ஸ்டெஃபியின் குடும்ப வாழ்க்கையிலும் ஆழமாகப் பரவி, குணமளிப்பையும் மாற்றத்தையும் கொண்டுவந்தன. 12 ஆண்டுகளாக கடுமையான குடிப்பழக்கத்தால் பாதிக்கப்பட்டு, முன்பு அவரது விசுவாசத்தை கேலி செய்த அவரது கணவர் பிபின், தானும் உடன்படிக்கை எடுக்க முடிவு செய்து, ஒரு மாதத்திற்குள் தனது அடிமைத்தனத்திலிருந்து முழுமையாக விடுவிக்கப்பட்டார். மேலும், ஒரு ஜெபமாலை பவனியின் போது பிபினுக்கு இருந்த கடுமையான கால் வலி அற்புதமாக குணமாகியது. குடும்பத்தினர் உடன்படிக்கை எண்ணெய் மற்றும் உப்பைப் பயன்படுத்தி ஜெபித்த பிறகு, அவர்களின் இளைய மகன் ஆபேலுக்கு இருந்த ஒரு கடுமையான மெடிக்கல் பிரச்சினைக்கு, முன்பு பரிந்துரைக்கப்பட்ட சர்ஜரி இல்லாமலேயே அற்புதமாக சுகம் கிடைத்தது.\n\nஇந்த அனுபவங்களால் மாற்றப்பட்டு, குடும்பம் இப்போது ஒரு ஆழ்ந்த பக்திமிக்க வாழ்க்கையை வாழ்கிறது, பிபின் இப்போது வீட்டில் ஜெபங்களை லீட் செய்கிறார். ஸ்டெஃபி இஸ்ரேலில் கிருபாசனம் பொருட்களை விநியோகிப்பதன் மூலமும், முதியோர்களைக் கவனித்துக்கொள்வதன் மூலமும், உடன்படிக்கை அருளடையாளங்களைப் பயன்படுத்தி தேவைப்படுபவர்களுக்காக ஜெபிப்பதன் மூலமும் தனது விசுவாசத்தை தொடர்ந்து ஷேர் செய்கிறார். அவர்களின் இந்த சாட்சியம் இயேசுவுக்கும் அன்னை மரியாவுக்கும் அவர்கள் செலுத்தும் நன்றியின் சக்திவாய்ந்த அறிவிப்பாகும்; வாழ்க்கையின் மிகப்பெரிய நெருக்கடிகளில் உறுதியான விசுவாசமும் ஜெபமும் எவ்வாறு முழுமையான விடுதலையையும் ஆன்மீகப் புதுப்பித்தலையும் கொண்டுவரும் என்பதை இது காட்டுகிறது.",
-  "bn": "স্টেফি প্রচণ্ড ঋণের বোঝা নিয়ে কৃপাসনম বেদীতে এসেছিলেন এবং তার পরিবারকে সাপোর্ট করার জন্য একটি লোকাল চাকরির প্রার্থনা করে 2024 সালের নভেম্বরে বাচা গ্রহণ করেছিলেন। নার্সিং ব্যাকগ্রাউন্ড না থাকা এবং প্রবল আর্থিক সংকট সত্ত্বেও, তিনি ইসরায়েলে কেয়ারগিভার হিসেবে কাজ করার সুযোগ পান। মাদার মেরির প্রতি তার গভীর বিশ্বাস এবং প্রার্থনার মাধ্যমে, তিনি তার ভিসা এবং ভ্রমণের খরচের জন্য প্রয়োজনীয় পুরো টাকা অলৌকিকভাবে পেয়েছিলেন। হিব্রু না জানা সত্ত্বেও তিনি একটি কঠিন ইন্টারভিউ পাস করেন এবং ইসরায়েলে একটি ইংলিশভাষী পরিবারে প্লেসমেন্ট পান।\n\nএই অলৌকিক হস্তক্ষেপগুলি স্টেফির পারিবারিক জীবনেও গভীরভাবে প্রভাব ফেলেছিল, যা নিরাময় এবং রূপান্তর নিয়ে এসেছিল। তার স্বামী, বিবিন, যিনি 12 বছর ধরে মারাত্মক অ্যালকোহলিজমে ভুগছিলেন এবং আগে তার বিশ্বাসের উপহাস করতেন, তিনি নিজেই বাচা নেওয়ার সিদ্ধান্ত নেন এবং এক মাসের মধ্যে তার আসক্তি থেকে সম্পূর্ণ মুক্তি পান। এছাড়াও, একটি রোজারি র্যালির সময় বিবিন তার পায়ের মারাত্মক ব্যথা থেকে অলৌকিকভাবে নিরাময় লাভ করেন, এবং তাদের ছোট ছেলে আবেল একটি গুরুতর মেডিকেল সমস্যা থেকে অলৌকিকভাবে সুস্থ হয়ে ওঠে। পরিবার বাচা তেল এবং লবণ ব্যবহার করে প্রার্থনা করার পরে তার জন্য আগে সাজেস্ট করা সার্জারির আর প্রয়োজন হয়নি।\n\nএই অভিজ্ঞতাগুলির মাধ্যমে পরিবর্তিত হয়ে, পরিবারটি এখন একটি গভীর ভক্তিমূলক জীবনযাপন করছে, এবং বিবিন এখন তাদের বাড়ির প্রার্থনাগুলি লিড করেন। স্টেফি ইসরায়েলে কৃপাসনমের উপকরণ বিতরণ করে, বয়স্কদের যত্ন নিয়ে এবং বাচার পবিত্র বস্তুগুলি ব্যবহার করে অভাবগ্রস্তদের জন্য প্রার্থনা করে তার বিশ্বাস শেয়ার করে চলেছেন। তাদের এই সাক্ষ্য যীশু এবং মাদার মেরির প্রতি তাদের কৃতজ্ঞতার একটি শক্তিশালী ঘোষণা, যা প্রমাণ করে যে জীবনের সবচেয়ে বড় সংকটের সময় অবিচল বিশ্বাস এবং প্রার্থনা কীভাবে সম্পূর্ণ মুক্তি এবং আধ্যাত্মিক পুনর্নবীকরণ আনতে পারে।",
-  "te": "స్టెఫీ తీవ్రమైన అప్పుల భారంతో కృపాసనం బలిపీఠం వద్దకు వచ్చి, తన కుటుంబాన్ని సపోర్ట్ చేయడానికి లోకల్ జాబ్ కోసం ప్రార్థిస్తూ నవంబర్ 2024లో వాచా తీసుకుంది. నర్సింగ్ బ్యాక్‌గ్రౌండ్ లేకపోయినా మరియు తీవ్రమైన ఆర్థిక ఇబ్బందులు ఉన్నప్పటికీ, ఆమెకు ఇజ్రాయెల్‌లో కేర్‌గివర్‌గా పనిచేసే అవకాశం లభించింది. మదర్ మేరీపై ఉన్న ఆమె గాఢమైన విశ్వాసం మరియు ప్రార్థనల ద్వారా, తన వీసా మరియు ప్రయాణ ఖర్చులకు అవసరమైన డబ్బును ఆమె అద్భుతమైన రీతిలో పొందింది. హిబ్రూ భాష రాకపోయినా ఆమె ఒక కఠినమైన ఇంటర్వ్యూ పాస్ అయ్యింది మరియు ఇజ్రాయెల్‌లో ఇంగ్లీష్ మాట్లాడే కుటుంబంలో ప్లేస్‌మెంట్ పొందింది.\n\nఈ అద్భుతమైన జోక్యాలు స్టెఫీ కుటుంబ జీవితంలో కూడా లోతుగా వ్యాపించి, స్వస్థత మరియు మార్పును తీసుకువచ్చాయి. 12 సంవత్సరాలుగా తీవ్రమైన మద్యపాన వ్యసనంతో బాధపడుతూ, గతంలో ఆమె విశ్వాసాన్ని ఎగతాళి చేసిన ఆమె భర్త బిబిన్, స్వయంగా వాచా తీసుకోవాలని నిర్ణయించుకున్నాడు మరియు ఒక నెల వ్యవధిలో తన వ్యసనం నుండి పూర్తిగా విముక్తి పొందాడు. అదనంగా, ఒక రోజరీ ర్యాలీ సమయంలో బిబిన్ కాలి నొప్పి నుండి అద్భుతమైన స్వస్థత పొందాడు, మరియు వారి చిన్న కుమారుడు అబెల్ కు ఉన్న తీవ్రమైన మెడికల్ సమస్య, కుటుంబం వాచా నూనె మరియు ఉప్పును ఉపయోగించి ప్రార్థించిన తర్వాత, గతంలో సిఫార్సు చేసిన సర్జరీ అవసరం లేకుండానే అద్భుతంగా నయమైంది.\n\nఈ అనుభవాల ద్వారా రూపాంతరం చెంది, ఆ కుటుంబం ఇప్పుడు లోతైన భక్తితో జీవిస్తోంది, మరియు బిబిన్ ఇప్పుడు ఇంటి ప్రార్థనలను లీడ్ చేస్తున్నాడు. స్టెఫీ ఇజ్రాయెల్‌లో కృపాసనం మెటీరియల్స్ పంపిణీ చేయడం ద్వారా, వృద్ధులను చూసుకోవడం ద్వారా మరియు వాచా పవిత్ర వస్తువులను ఉపయోగించి అవసరంలో ఉన్నవారి కోసం ప్రార్థించడం ద్వారా తన విశ్వాసాన్ని షేర్ చేయడం కొనసాగిస్తోంది. వారి ఈ సాక్ష్యం యేసు మరియు మదర్ మేరీ పట్ల వారి కృతజ్ఞతకు ఒక శక్తివంతమైన ప్రకటనగా నిలుస్తుంది, జీవితంలోని అతిపెద్ద సంక్షోభాల సమయంలో స్థిరమైన విశ్వాసం మరియు ప్రార్థనలు ఎలా సంపూర్ణ విముక్తిని మరియు ఆధ్యాత్మిక నవీకరణను తీసుకువస్తాయో ఇది చూపిస్తుంది.",
-  "mr": "स्टेफी मोठ्या कर्जाच्या ओझ्याखाली कृपासनम वेदीवर आली आणि आपल्या कुटुंबाला सपोर्ट करण्यासाठी लोकल जॉब मिळवण्यासाठी तिने नोव्हेंबर 2024 मध्ये वाचा घेतला. नर्सिंग बॅकग्राउंड नसतानाही आणि मोठ्या आर्थिक अडचणी असूनही, तिला इस्रायलमध्ये केअरगिव्हर म्हणून काम करण्याची संधी मिळाली. मदर मेरीवरील तिचा गाढ विश्वास आणि प्रार्थनेमुळे, तिला तिचा विसा आणि प्रवासाच्या खर्चासाठी लागणारे सर्व पैसे चमत्कारिकरीत्या मिळाले. हिब्रू येत नसतानाही तिने एक कठीण इंटरव्ह्यू पास केला आणि इस्रायलमध्ये एका इंग्लिश बोलणाऱ्या कुटुंबात तिला प्लेसमेंट मिळाली.\n\nहे चमत्कारिक हस्तक्षेप स्टेफीच्या कौटुंबिक जीवनातही खोलवर पोहोचले, ज्यामुळे त्यांना मोठी चंगाई आणि परिवर्तन मिळाले. तिचे पती बिबिन, जे 12 वर्षांपासून दारूच्या व्यसनात अडकले होते आणि आधी तिच्या विश्वासाची चेष्टा करत होते, त्यांनी स्वतः वाचा घेण्याचा निर्णय घेतला आणि एका महिन्यात ते आपल्या व्यसनातून पूर्णपणे मुक्त झाले. याशिवाय, एका रोझरी रॅली दरम्यान बिबिनला त्याच्या पायाच्या भयंकर दुखण्यातून चमत्कारिक चंगाई मिळाली, आणि त्यांच्या लहान मुलाला, एबेलला असलेल्या गंभीर मेडिकल समस्येवर, कुटुंबाने वाचा तेल आणि मीठ वापरून प्रार्थना केल्यानंतर, आधी सुचवलेल्या सर्जरीची गरज न लागता तो चमत्कारिकरीत्या बरा झाला.\n\nया अनुभवांनी बदलून, हे कुटुंब आता एक अत्यंत भक्तीमय जीवन जगत आहे, आणि बिबिन आता घरातल्या प्रार्थना लीड करतात. स्टेफी इस्रायलमध्ये कृपासनमचे साहित्य वाटून, वृद्धांची काळजी घेऊन आणि वाचाच्या पवित्र वस्तूंचा वापर करून गरजूंसाठी प्रार्थना करून आपला विश्वास शेअर करत आहे. त्यांची ही साक्ष येशू आणि मदर मेरीबद्दलच्या त्यांच्या कृतज्ञतेची एक शक्तिशाली घोषणा आहे, जी दर्शवते की जीवनातील सर्वात मोठ्या संकटांच्या वेळी अढळ विश्वास आणि प्रार्थना कशा प्रकारे पूर्ण सुटका आणि आध्यात्मिक नूतनीकरण घडवून आणू शकतात.",
-  "fr": "Stephy est venue à l'autel de Kreupasanam accablée par de lourdes dettes et a pris l'Alliance en novembre 2024, priant initialement pour trouver un emploi local afin de soutenir sa famille. Contre toute attente, elle a reçu l'opportunité de travailler comme aide-soignante en Israël, bien qu'elle n'ait aucune formation d'infirmière et qu'elle fasse face à des obstacles financiers insurmontables. Grâce à ses prières ferventes et à sa foi profonde en la Vierge Marie, elle a reçu miraculeusement les fonds exacts nécessaires pour son visa et ses frais de voyage. Elle a également réussi un entretien difficile bien qu'elle ne parle pas hébreu et a finalement été bénie par un placement dans une famille anglophone en Israël.\n\nLes interventions miraculeuses se sont étendues profondément à la vie familiale de Stephy, apportant une guérison et une transformation profondes. Son mari, Bibin, qui luttait contre un alcoolisme sévère depuis 12 ans et qui se moquait auparavant de sa foi, a décidé de prendre l'Alliance lui-même et a été complètement délivré de son addiction en un mois. De plus, Bibin a connu une guérison miraculeuse d'une douleur débilitante à la jambe lors d'une procession du Rosaire, et leur jeune fils, Abel, a été miraculeusement guéri d'un grave problème médical sans avoir besoin de l'opération chirurgicale précédemment recommandée, après que la famille ait prié en utilisant l'huile et le sel de l'Alliance.\n\nTransformée par ces expériences, la famille mène maintenant une vie profondément dévote, Bibin dirigeant activement les prières de leur foyer. Stephy continue de partager sa foi en Israël en distribuant le matériel de Kreupasanam, en s'occupant des personnes âgées et en priant pour d'autres personnes dans le besoin en utilisant les sacramentaux de l'Alliance. Leur témoignage commun sert de puissante déclaration de leur gratitude envers Jésus et la Vierge Marie, illustrant comment une foi et une prière inébranlables lors des plus grandes crises de la vie peuvent apporter une délivrance complète et un renouveau spirituel.",
-  "es": "Stephy llegó al altar de Kreupasanam agobiada por graves deudas y tomó la Alianza en noviembre de 2024, rezando inicialmente por un trabajo local para mantener a su familia. Contra todo pronóstico, recibió la oportunidad de trabajar como cuidadora en Israel, a pesar de no tener experiencia en enfermería y de enfrentarse a obstáculos financieros insuperables. A través de sus fervientes oraciones y su profunda fe en la Virgen María, recibió milagrosamente los fondos exactos necesarios para su visa y gastos de viaje. También pasó una difícil entrevista a pesar de no saber hebreo y finalmente fue bendecida con un puesto en una familia de habla inglesa en Israel.\n\nLas intervenciones milagrosas se extendieron profundamente en la vida familiar de Stephy, trayendo una sanación y transformación profundas. Su esposo, Bibin, que había luchado contra el alcoholismo severo durante 12 años y antes se burlaba de su fe, decidió tomar la Alianza él mismo y fue completamente liberado de su adicción en un mes. Además, Bibin experimentó una sanación milagrosa de un dolor debilitante en la pierna durante una procesión del Rosario, y su hijo pequeño, Abel, se curó milagrosamente de un grave problema médico sin necesidad de una cirugía previamente recomendada, después de que la familia rezara utilizando el aceite y la sal de la Alianza.\n\nTransformada por estas experiencias, la familia lleva ahora una vida profundamente devota, y Bibin dirige activamente las oraciones en su hogar. Stephy sigue compartiendo su fe en Israel distribuyendo materiales de Kreupasanam, cuidando a los ancianos y rezando por otras personas necesitadas utilizando los sacramentales de la Alianza. Su testimonio compartido sirve como una poderosa declaración de su gratitud a Jesús y a la Virgen María, ilustrando cómo la fe y la oración inquebrantables durante las mayores crisis de la vida pueden lograr una completa liberación y renovación espiritual.",
-  "zh": "Stephy 带着沉重的债务负担来到 Kreupasanam 的祭台前，并于 2024 年 11 月立下了盟约（Covenant），起初她祈求能找到一份当地的工作来养家糊口。尽管困难重重，而且她没有护理背景并面临无法克服的经济障碍，她还是得到了去以色列做看护的机会。通过她热切的祈祷和对圣母玛利亚深厚的信仰，她奇迹般地获得了办理签证和旅行费用所需的确切资金。尽管不懂希伯来语，她还是通过了艰难的面试，最终蒙受祝福，被安置在以色列的一个英语家庭中。\n\n奇迹般的干预深深地延伸到了 Stephy 的家庭生活中，带来了深刻的医治和转变。她的丈夫 Bibin 曾与严重的酗酒问题抗争了 12 年，以前还嘲笑过她的信仰，但他决定亲自立下盟约，并在不到一个月的时间里完全摆脱了酒瘾。此外，在一次玫瑰经游行中，Bibin 令人衰弱的腿痛奇迹般地痊愈了；在家人使用盟约的油和盐进行祈祷后，他们的小儿子 Abel 严重的医疗问题也奇迹般地痊愈了，不需要进行之前建议的手术。\n\n这些经历使这个家庭发生了转变，他们现在过着非常虔诚的生活，Bibin 积极带领着他们家的祈祷。Stephy 在以色列继续分享她的信仰，分发 Kreupasanam 的材料，照顾老人，并使用盟约的圣物为其他有需要的人祈祷。他们共同的见证有力地宣告了他们对耶稣和圣母玛利亚的感激之情，表明在生命中最大的危机时刻，坚定的信仰和祈祷如何能够带来完全的解脱和灵性的更新。",
-  "kn": "ಸ್ಟೆಫಿ ಭಾರಿ ಸಾಲದ ಹೊರೆಯೊಂದಿಗೆ ಕೃಪಾಸನಂ ಬಲಿಪೀಠಕ್ಕೆ ಬಂದು, ತನ್ನ ಕುಟುಂಬವನ್ನು ಸಪೋರ್ಟ್ ಮಾಡಲು ಲೋಕಲ್ ಜಾಬ್‌ಗಾಗಿ ಪ್ರಾರ್ಥಿಸುತ್ತಾ ನವೆಂಬರ್ 2024 ರಲ್ಲಿ ಒಡಂಬಡಿಕೆ ತೆಗೆದುಕೊಂಡಳು. ನರ್ಸಿಂಗ್ ಬ್ಯಾಕ್‌ಗ್ರೌಂಡ್ ಇಲ್ಲದಿದ್ದರೂ ಮತ್ತು ಭಾರಿ ಆರ್ಥಿಕ ಕಷ್ಟಗಳಿದ್ದರೂ, ಅವಳಿಗೆ ಇಸ್ರೇಲ್‌ನಲ್ಲಿ ಕೇರ್‌ಗಿವರ್ ಆಗಿ ಕೆಲಸ ಮಾಡುವ ಅವಕಾಶ ಸಿಕ್ಕಿತು. ಮದರ್ ಮೇರಿಯ ಮೇಲಿನ ಅವಳ ಆಳವಾದ ವಿಶ್ವಾಸ ಮತ್ತು ಪ್ರಾರ್ಥನೆಗಳ ಮೂಲಕ, ತನ್ನ ವೀಸಾ ಮತ್ತು ಪ್ರಯಾಣದ ಖರ್ಚುಗಳಿಗೆ ಬೇಕಾದ ಸಂಪೂರ್ಣ ಹಣವನ್ನು ಅವಳು ಪವಾಡಸದೃಶವಾಗಿ ಪಡೆದಳು. ಹಿಬ್ರೂ ಭಾಷೆ ಬರದಿದ್ದರೂ ಅವಳು ಒಂದು ಕಷ್ಟಕರವಾದ ಇಂಟರ್ವ್ಯೂ ಪಾಸ್ ಮಾಡಿದಳು ಮತ್ತು ಇಸ್ರೇಲ್‌ನಲ್ಲಿ ಇಂಗ್ಲಿಷ್ ಮಾತನಾಡುವ ಕುಟುಂಬದಲ್ಲಿ ಪ್ಲೇಸ್‌ಮೆಂಟ್ ಪಡೆದಳು.\n\nಈ ಪವಾಡಸದೃಶವಾದ ಮಧ್ಯಸ್ಥಿಕೆಗಳು ಸ್ಟೆಫಿಯ ಕೌಟುಂಬಿಕ ಜೀವನಕ್ಕೂ ಆಳವಾಗಿ ತಲುಪಿ, ಸ್ವಸ್ಥತೆ ಮತ್ತು ಬದಲಾವಣೆಯನ್ನು ತಂದವು. 12 ವರ್ಷಗಳಿಂದ ತೀವ್ರವಾದ ಮದ್ಯಪಾನ ಚಟದಿಂದ ಬಳಲುತ್ತಿದ್ದ ಮತ್ತು ಮೊದಲು ಅವಳ ವಿಶ್ವಾಸವನ್ನು ಗೇಲಿ ಮಾಡುತ್ತಿದ್ದ ಅವಳ ಪತಿ ಬಿಬಿನ್, ತಾನೇ ಒಡಂಬಡಿಕೆ ತೆಗೆದುಕೊಳ್ಳಲು ನಿರ್ಧರಿಸಿದನು ಮತ್ತು ಒಂದು ತಿಂಗಳೊಳಗೆ ತನ್ನ ಚಟದಿಂದ ಸಂಪೂರ್ಣವಾಗಿ ಬಿಡುಗಡೆ ಹೊಂದಿದನು. ಜೊತೆಗೆ, ಒಂದು ರೋಸರಿ ರ್ಯಾಲಿಯ ಸಮಯದಲ್ಲಿ ಬಿಬಿನ್‌ಗೆ ತನ್ನ ಕಾಲಿನ ತೀವ್ರವಾದ ನೋವಿನಿಂದ ಪವಾಡಸದೃಶವಾಗಿ ಸ್ವಸ್ಥತೆ ಸಿಕ್ಕಿತು, ಮತ್ತು ಅವರ ಕಿರಿಯ ಮಗ ಅಬೆಲ್‌ಗೆ ಇದ್ದ ಒಂದು ಗಂಭೀರವಾದ ಮೆಡಿಕಲ್ ಸಮಸ್ಯೆಗೆ, ಕುಟುಂಬವು ಒಡಂಬಡಿಕೆ ಎಣ್ಣೆ ಮತ್ತು ಉಪ್ಪನ್ನು ಬಳಸಿ ಪ್ರಾರ್ಥಿಸಿದ ನಂತರ, ಮೊದಲು ಸೂಚಿಸಲಾಗಿದ್ದ ಸರ್ಜರಿ ಇಲ್ಲದೆಯೇ ಪವಾಡಸದೃಶವಾಗಿ ವಾಸಿಯಾಯಿತು.\n\nಈ ಅನುಭವಗಳಿಂದ ಬದಲಾಗಿ, ಆ ಕುಟುಂಬವು ಈಗ ಅತ್ಯಂತ ಭಕ್ತಿಪೂರ್ವಕ ಜೀವನವನ್ನು ನಡೆಸುತ್ತಿದೆ, ಮತ್ತು ಬಿಬಿನ್ ಈಗ ಮನೆಯ ಪ್ರಾರ್ಥನೆಗಳನ್ನು ಲೀಡ್ ಮಾಡುತ್ತಿದ್ದಾನೆ. ಸ್ಟೆಫಿ ಇಸ್ರೇಲ್‌ನಲ್ಲಿ ಕೃಪಾಸನಂ ಮೆಟೀರಿಯಲ್ಸ್ ಹಂಚುವ ಮೂಲಕ, ವೃದ್ಧರನ್ನು ನೋಡಿಕೊಳ್ಳುವ ಮೂಲಕ ಮತ್ತು ಒಡಂಬಡಿಕೆಯ ಪವಿತ್ರ ವಸ್ತುಗಳನ್ನು ಬಳಸಿ ಅಗತ್ಯವಿರುವವರಿಗಾಗಿ ಪ್ರಾರ್ಥಿಸುವ ಮೂಲಕ ತನ್ನ ವಿಶ್ವಾಸವನ್ನು ಶೇರ್ ಮಾಡುವುದನ್ನು ಮುಂದುವರಿಸಿದ್ದಾಳೆ. ಅವರ ಈ ಸಾಕ್ಷ್ಯವು ಯೇಸು ಮತ್ತು ಮದರ್ ಮೇರಿಯ ಬಗ್ಗೆ ಅವರಿಗಿರುವ ಕೃತಜ್ಞತೆಯ ಒಂದು ಶಕ್ತಿಯುತವಾದ ಘೋಷಣೆಯಾಗಿದೆ, ಜೀವನದ ಅತಿದೊಡ್ಡ ಬಿಕ್ಕಟ್ಟುಗಳ ಸಮಯದಲ್ಲಿ ದೃಢವಾದ ವಿಶ್ವಾಸ ಮತ್ತು ಪ್ರಾರ್ಥನೆಯು ಹೇಗೆ ಸಂಪೂರ್ಣ ಬಿಡುಗಡೆ ಮತ್ತು ಆಧ್ಯಾತ್ಮಿಕ ನವೀಕರಣವನ್ನು ತರಬಲ್ಲದು ಎಂಬುದನ್ನು ಇದು ತೋರಿಸುತ್ತದೆ."
-},
+      "en": "Stephy came to the Kreupasanam altar burdened by severe debt and took the Covenant in November 2024, initially praying for a local job to support her family. Against all odds, she received an opportunity to work as a caregiver in Israel, despite lacking a nursing background and facing insurmountable financial hurdles. Through her fervent prayers and deep faith in Mother Mary, she miraculously received the exact funds required for her visa and travel expenses. She also passed a challenging interview despite not knowing Hebrew and was ultimately blessed with a placement in an English-speaking family in Israel.\n\nThe miraculous interventions extended deeply into Stephy's family life, bringing profound healing and transformation. Her husband, Bibin, who had struggled with severe alcoholism for 12 years and previously mocked her faith, decided to take the Covenant himself and was completely delivered from his addiction within a month. Additionally, Bibin experienced a miraculous healing from debilitating leg pain during a Rosary rally, and their young son, Abel, was miraculously cured of a severe medical issue without the need for a previously recommended surgery after the family prayed using the Covenant oil and salt.\n\nTransformed by these experiences, the family now leads a deeply devout life, with Bibin actively leading their household prayers. Stephy continues to share her faith in Israel by distributing Kreupasanam materials, caring for the elderly, and praying for others in need using the Covenant sacramentals. Their shared testimony serves as a powerful declaration of their gratitude to Jesus and Mother Mary, illustrating how steadfast faith and prayer during life's greatest crises can bring about complete deliverance and spiritual renewal.",
+      "hi": "स्टेफी भारी कर्ज के बोझ तले कृपासनम वेदी पर आईं और अपने परिवार को सपोर्ट करने के लिए लोकल जॉब की प्रार्थना करते हुए नवंबर 2024 में वाचा लिया। सभी बाधाओं के बावजूद, नर्सिंग बैकग्राउंड न होने और भारी आर्थिक तंगी के बाद भी, उन्हें इज़राइल में केयरगिवर के रूप में काम करने का मौका मिला। मदर मैरी में अपने गहरे विश्वास और प्रार्थनाओं के द्वारा, उन्हें चमत्कारिक रूप से अपने वीज़ा और यात्रा खर्च के लिए आवश्यक पूरे पैसे मिल गए। हिब्रू न जानने के बावजूद उन्होंने एक कठिन इंटरव्यू पास किया और इज़राइल में एक इंग्लिश बोलने वाले परिवार में उन्हें प्लेसमेंट मिला।\n\nचमत्कारिक हस्तक्षेप स्टेफी के पारिवारिक जीवन तक भी पहुंचे, जिससे उन्हें गहरी चंगाई और बदलाव मिला। उनके पति बिबिन, जो 12 साल से शराब की लत से जूझ रहे थे और पहले उनके विश्वास का मजाक उड़ाते थे, उन्होंने खुद वाचा लेने का फैसला किया और एक महीने के भीतर अपनी लत से पूरी तरह मुक्त हो गए। इसके अलावा, एक रोज़री रैली के दौरान बिबिन को पैरों के भयंकर दर्द से चमत्कारिक चंगाई मिली, और उनके छोटे बेटे एबेल को एक गंभीर मेडिकल समस्या से बिना सर्जरी के चमत्कारिक रूप से ठीक कर दिया गया, जब परिवार ने वाचा तेल और नमक का उपयोग करके प्रार्थना की।\n\nइन अनुभवों से बदलकर, यह परिवार अब एक गहरा भक्तिपूर्ण जीवन जी रहा है, और बिबिन अब घर की प्रार्थनाओं की अगुवाई करते हैं। स्टेफी इज़राइल में कृपासनम सामग्री शेयर करके, बुजुर्गों की देखभाल करके और वाचा की पवित्र वस्तुओं का उपयोग करके जरूरतमंदों के लिए प्रार्थना करके अपने विश्वास को बांटना जारी रखती हैं। उनकी यह गवाही यीशु और मदर मैरी के प्रति उनकी कृतज्ञता की एक शक्तिशाली घोषणा है, जो यह दिखाती है कि जीवन के सबसे बड़े संकटों के दौरान अटूट विश्वास और प्रार्थना कैसे पूरी तरह से छुटकारा और आध्यात्मिक नवीनीकरण ला सकती है।",
+      "ta": "ஸ்டெஃபி கடுமையான கடனோடு கிருபாசனம் பீடத்திற்கு வந்து, தனது குடும்பத்தை சப்போர்ட் செய்ய ஒரு லோக்கல் வேலைக்காக வேண்டி நவம்பர் 2024-ல் உடன்படிக்கை எடுத்தார். நர்சிங் பின்னணி இல்லாத நிலையிலும், மிகப்பெரிய பண நெருக்கடிகளுக்கு மத்தியிலும், இஸ்ரேலில் ஒரு கேர்கிவராக வேலை செய்யும் வாய்ப்பு அவருக்கு கிடைத்தது. அன்னை மரியா மீதான அவரது ஆழ்ந்த விசுவாசம் மற்றும் ஜெபங்கள் வழியாக, அவரது விசா மற்றும் பயணச் செலவுகளுக்கான முழுப் பணமும் அற்புதமாக கிடைத்தது. எபிரேய மொழி தெரியாவிட்டாலும் அவர் ஒரு கடினமான இன்டர்வியூவை பாஸ் செய்தார், மேலும் இஸ்ரேலில் இங்கிலீஷ் பேசும் ஒரு குடும்பத்தில் பிளேஸ்மென்ட் பெற்றார்.\n\nஇந்த அற்புதமான தலையீடுகள் ஸ்டெஃபியின் குடும்ப வாழ்க்கையிலும் ஆழமாகப் பரவி, குணமளிப்பையும் மாற்றத்தையும் கொண்டுவந்தன. 12 ஆண்டுகளாக கடுமையான குடிப்பழக்கத்தால் பாதிக்கப்பட்டு, முன்பு அவரது விசுவாசத்தை கேலி செய்த அவரது கணவர் பிபின், தானும் உடன்படிக்கை எடுக்க முடிவு செய்து, ஒரு மாதத்திற்குள் தனது அடிமைத்தனத்திலிருந்து முழுமையாக விடுவிக்கப்பட்டார். மேலும், ஒரு ஜெபமாலை பவனியின் போது பிபினுக்கு இருந்த கடுமையான கால் வலி அற்புதமாக குணமாகியது. குடும்பத்தினர் உடன்படிக்கை எண்ணெய் மற்றும் உப்பைப் பயன்படுத்தி ஜெபித்த பிறகு, அவர்களின் இளைய மகன் ஆபேலுக்கு இருந்த ஒரு கடுமையான மெடிக்கல் பிரச்சினைக்கு, முன்பு பரிந்துரைக்கப்பட்ட சர்ஜரி இல்லாமலேயே அற்புதமாக சுகம் கிடைத்தது.\n\nஇந்த அனுபவங்களால் மாற்றப்பட்டு, குடும்பம் இப்போது ஒரு ஆழ்ந்த பக்திமிக்க வாழ்க்கையை வாழ்கிறது, பிபின் இப்போது வீட்டில் ஜெபங்களை லீட் செய்கிறார். ஸ்டெஃபி இஸ்ரேலில் கிருபாசனம் பொருட்களை விநியோகிப்பதன் மூலமும், முதியோர்களைக் கவனித்துக்கொள்வதன் மூலமும், உடன்படிக்கை அருளடையாளங்களைப் பயன்படுத்தி தேவைப்படுபவர்களுக்காக ஜெபிப்பதன் மூலமும் தனது விசுவாசத்தை தொடர்ந்து ஷேர் செய்கிறார். அவர்களின் இந்த சாட்சியம் இயேசுவுக்கும் அன்னை மரியாவுக்கும் அவர்கள் செலுத்தும் நன்றியின் சக்திவாய்ந்த அறிவிப்பாகும்; வாழ்க்கையின் மிகப்பெரிய நெருக்கடிகளில் உறுதியான விசுவாசமும் ஜெபமும் எவ்வாறு முழுமையான விடுதலையையும் ஆன்மீகப் புதுப்பித்தலையும் கொண்டுவரும் என்பதை இது காட்டுகிறது.",
+      "bn": "স্টেফি প্রচণ্ড ঋণের বোঝা নিয়ে কৃপাসনম বেদীতে এসেছিলেন এবং তার পরিবারকে সাপোর্ট করার জন্য একটি লোকাল চাকরির প্রার্থনা করে 2024 সালের নভেম্বরে বাচা গ্রহণ করেছিলেন। নার্সিং ব্যাকগ্রাউন্ড না থাকা এবং প্রবল আর্থিক সংকট সত্ত্বেও, তিনি ইসরায়েলে কেয়ারগিভার হিসেবে কাজ করার সুযোগ পান। মাদার মেরির প্রতি তার গভীর বিশ্বাস এবং প্রার্থনার মাধ্যমে, তিনি তার ভিসা এবং ভ্রমণের খরচের জন্য প্রয়োজনীয় পুরো টাকা অলৌকিকভাবে পেয়েছিলেন। হিব্রু না জানা সত্ত্বেও তিনি একটি কঠিন ইন্টারভিউ পাস করেন এবং ইসরায়েলে একটি ইংলিশভাষী পরিবারে প্লেসমেন্ট পান।\n\nএই অলৌকিক হস্তক্ষেপগুলি স্টেফির পারিবারিক জীবনেও গভীরভাবে প্রভাব ফেলেছিল, যা নিরাময় এবং রূপান্তর নিয়ে এসেছিল। তার স্বামী, বিবিন, যিনি 12 বছর ধরে মারাত্মক অ্যালকোহলিজমে ভুগছিলেন এবং আগে তার বিশ্বাসের উপহাস করতেন, তিনি নিজেই বাচা নেওয়ার সিদ্ধান্ত নেন এবং এক মাসের মধ্যে তার আসক্তি থেকে সম্পূর্ণ মুক্তি পান। এছাড়াও, একটি রোজারি র্যালির সময় বিবিন তার পায়ের মারাত্মক ব্যথা থেকে অলৌকিকভাবে নিরাময় লাভ করেন, এবং তাদের ছোট ছেলে আবেল একটি গুরুতর মেডিকেল সমস্যা থেকে অলৌকিকভাবে সুস্থ হয়ে ওঠে। পরিবার বাচা তেল এবং লবণ ব্যবহার করে প্রার্থনা করার পরে তার জন্য আগে সাজেস্ট করা সার্জারির আর প্রয়োজন হয়নি।\n\nএই অভিজ্ঞতাগুলির মাধ্যমে পরিবর্তিত হয়ে, পরিবারটি এখন একটি গভীর ভক্তিমূলক জীবনযাপন করছে, এবং বিবিন এখন তাদের বাড়ির প্রার্থনাগুলি লিড করেন। স্টেফি ইসরায়েলে কৃপাসনমের উপকরণ বিতরণ করে, বয়স্কদের যত্ন নিয়ে এবং বাচার পবিত্র বস্তুগুলি ব্যবহার করে অভাবগ্রস্তদের জন্য প্রার্থনা করে তার বিশ্বাস শেয়ার করে চলেছেন। তাদের এই সাক্ষ্য যীশু এবং মাদার মেরির প্রতি তাদের কৃতজ্ঞতার একটি শক্তিশালী ঘোষণা, যা প্রমাণ করে যে জীবনের সবচেয়ে বড় সংকটের সময় অবিচল বিশ্বাস এবং প্রার্থনা কীভাবে সম্পূর্ণ মুক্তি এবং আধ্যাত্মিক পুনর্নবীকরণ আনতে পারে।",
+      "te": "స్టెఫీ తీవ్రమైన అప్పుల భారంతో కృపాసనం బలిపీఠం వద్దకు వచ్చి, తన కుటుంబాన్ని సపోర్ట్ చేయడానికి లోకల్ జాబ్ కోసం ప్రార్థిస్తూ నవంబర్ 2024లో వాచా తీసుకుంది. నర్సింగ్ బ్యాక్‌గ్రౌండ్ లేకపోయినా మరియు తీవ్రమైన ఆర్థిక ఇబ్బందులు ఉన్నప్పటికీ, ఆమెకు ఇజ్రాయెల్‌లో కేర్‌గివర్‌గా పనిచేసే అవకాశం లభించింది. మదర్ మేరీపై ఉన్న ఆమె గాఢమైన విశ్వాసం మరియు ప్రార్థనల ద్వారా, తన వీసా మరియు ప్రయాణ ఖర్చులకు అవసరమైన డబ్బును ఆమె అద్భుతమైన రీతిలో పొందింది. హిబ్రూ భాష రాకపోయినా ఆమె ఒక కఠినమైన ఇంటర్వ్యూ పాస్ అయ్యింది మరియు ఇజ్రాయెల్‌లో ఇంగ్లీష్ మాట్లాడే కుటుంబంలో ప్లేస్‌మెంట్ పొందింది.\n\nఈ అద్భుతమైన జోక్యాలు స్టెఫీ కుటుంబ జీవితంలో కూడా లోతుగా వ్యాపించి, స్వస్థత మరియు మార్పును తీసుకువచ్చాయి. 12 సంవత్సరాలుగా తీవ్రమైన మద్యపాన వ్యసనంతో బాధపడుతూ, గతంలో ఆమె విశ్వాసాన్ని ఎగతాళి చేసిన ఆమె భర్త బిబిన్, స్వయంగా వాచా తీసుకోవాలని నిర్ణయించుకున్నాడు మరియు ఒక నెల వ్యవధిలో తన వ్యసనం నుండి పూర్తిగా విముక్తి పొందాడు. అదనంగా, ఒక రోజరీ ర్యాలీ సమయంలో బిబిన్ కాలి నొప్పి నుండి అద్భుతమైన స్వస్థత పొందాడు, మరియు వారి చిన్న కుమారుడు అబెల్ కు ఉన్న తీవ్రమైన మెడికల్ సమస్య, కుటుంబం వాచా నూనె మరియు ఉప్పును ఉపయోగించి ప్రార్థించిన తర్వాత, గతంలో సిఫార్సు చేసిన సర్జరీ అవసరం లేకుండానే అద్భుతంగా నయమైంది.\n\nఈ అనుభవాల ద్వారా రూపాంతరం చెంది, ఆ కుటుంబం ఇప్పుడు లోతైన భక్తితో జీవిస్తోంది, మరియు బిబిన్ ఇప్పుడు ఇంటి ప్రార్థనలను లీడ్ చేస్తున్నాడు. స్టెఫీ ఇజ్రాయెల్‌లో కృపాసనం మెటీరియల్స్ పంపిణీ చేయడం ద్వారా, వృద్ధులను చూసుకోవడం ద్వారా మరియు వాచా పవిత్ర వస్తువులను ఉపయోగించి అవసరంలో ఉన్నవారి కోసం ప్రార్థించడం ద్వారా తన విశ్వాసాన్ని షేర్ చేయడం కొనసాగిస్తోంది. వారి ఈ సాక్ష్యం యేసు మరియు మదర్ మేరీ పట్ల వారి కృతజ్ఞతకు ఒక శక్తివంతమైన ప్రకటనగా నిలుస్తుంది, జీవితంలోని అతిపెద్ద సంక్షోభాల సమయంలో స్థిరమైన విశ్వాసం మరియు ప్రార్థనలు ఎలా సంపూర్ణ విముక్తిని మరియు ఆధ్యాత్మిక నవీకరణను తీసుకువస్తాయో ఇది చూపిస్తుంది.",
+      "mr": "स्टेफी मोठ्या कर्जाच्या ओझ्याखाली कृपासनम वेदीवर आली आणि आपल्या कुटुंबाला सपोर्ट करण्यासाठी लोकल जॉब मिळवण्यासाठी तिने नोव्हेंबर 2024 मध्ये वाचा घेतला. नर्सिंग बॅकग्राउंड नसतानाही आणि मोठ्या आर्थिक अडचणी असूनही, तिला इस्रायलमध्ये केअरगिव्हर म्हणून काम करण्याची संधी मिळाली. मदर मेरीवरील तिचा गाढ विश्वास आणि प्रार्थनेमुळे, तिला तिचा विसा आणि प्रवासाच्या खर्चासाठी लागणारे सर्व पैसे चमत्कारिकरीत्या मिळाले. हिब्रू येत नसतानाही तिने एक कठीण इंटरव्ह्यू पास केला आणि इस्रायलमध्ये एका इंग्लिश बोलणाऱ्या कुटुंबात तिला प्लेसमेंट मिळाली.\n\nहे चमत्कारिक हस्तक्षेप स्टेफीच्या कौटुंबिक जीवनातही खोलवर पोहोचले, ज्यामुळे त्यांना मोठी चंगाई आणि परिवर्तन मिळाले. तिचे पती बिबिन, जे 12 वर्षांपासून दारूच्या व्यसनात अडकले होते आणि आधी तिच्या विश्वासाची चेष्टा करत होते, त्यांनी स्वतः वाचा घेण्याचा निर्णय घेतला आणि एका महिन्यात ते आपल्या व्यसनातून पूर्णपणे मुक्त झाले. याशिवाय, एका रोझरी रॅली दरम्यान बिबिनला त्याच्या पायाच्या भयंकर दुखण्यातून चमत्कारिक चंगाई मिळाली, आणि त्यांच्या लहान मुलाला, एबेलला असलेल्या गंभीर मेडिकल समस्येवर, कुटुंबाने वाचा तेल आणि मीठ वापरून प्रार्थना केल्यानंतर, आधी सुचवलेल्या सर्जरीची गरज न लागता तो चमत्कारिकरीत्या बरा झाला.\n\nया अनुभवांनी बदलून, हे कुटुंब आता एक अत्यंत भक्तीमय जीवन जगत आहे, आणि बिबिन आता घरातल्या प्रार्थना लीड करतात. स्टेफी इस्रायलमध्ये कृपासनमचे साहित्य वाटून, वृद्धांची काळजी घेऊन आणि वाचाच्या पवित्र वस्तूंचा वापर करून गरजूंसाठी प्रार्थना करून आपला विश्वास शेअर करत आहे. त्यांची ही साक्ष येशू आणि मदर मेरीबद्दलच्या त्यांच्या कृतज्ञतेची एक शक्तिशाली घोषणा आहे, जी दर्शवते की जीवनातील सर्वात मोठ्या संकटांच्या वेळी अढळ विश्वास आणि प्रार्थना कशा प्रकारे पूर्ण सुटका आणि आध्यात्मिक नूतनीकरण घडवून आणू शकतात.",
+      "fr": "Stephy est venue à l'autel de Kreupasanam accablée par de lourdes dettes et a pris l'Alliance en novembre 2024, priant initialement pour trouver un emploi local afin de soutenir sa famille. Contre toute attente, elle a reçu l'opportunité de travailler comme aide-soignante en Israël, bien qu'elle n'ait aucune formation d'infirmière et qu'elle fasse face à des obstacles financiers insurmontables. Grâce à ses prières ferventes et à sa foi profonde en la Vierge Marie, elle a reçu miraculeusement les fonds exacts nécessaires pour son visa et ses frais de voyage. Elle a également réussi un entretien difficile bien qu'elle ne parle pas hébreu et a finalement été bénie par un placement dans une famille anglophone en Israël.\n\nLes interventions miraculeuses se sont étendues profondément à la vie familiale de Stephy, apportant une guérison et une transformation profondes. Son mari, Bibin, qui luttait contre un alcoolisme sévère depuis 12 ans et qui se moquait auparavant de sa foi, a décidé de prendre l'Alliance lui-même et a été complètement délivré de son addiction en un mois. De plus, Bibin a connu une guérison miraculeuse d'une douleur débilitante à la jambe lors d'une procession du Rosaire, et leur jeune fils, Abel, a été miraculeusement guéri d'un grave problème médical sans avoir besoin de l'opération chirurgicale précédemment recommandée, après que la famille ait prié en utilisant l'huile et le sel de l'Alliance.\n\nTransformée par ces expériences, la famille mène maintenant une vie profondément dévote, Bibin dirigeant activement les prières de leur foyer. Stephy continue de partager sa foi en Israël en distribuant le matériel de Kreupasanam, en s'occupant des personnes âgées et en priant pour d'autres personnes dans le besoin en utilisant les sacramentaux de l'Alliance. Leur témoignage commun sert de puissante déclaration de leur gratitude envers Jésus et la Vierge Marie, illustrant comment une foi et une prière inébranlables lors des plus grandes crises de la vie peuvent apporter une délivrance complète et un renouveau spirituel.",
+      "es": "Stephy llegó al altar de Kreupasanam agobiada por graves deudas y tomó la Alianza en noviembre de 2024, rezando inicialmente por un trabajo local para mantener a su familia. Contra todo pronóstico, recibió la oportunidad de trabajar como cuidadora en Israel, a pesar de no tener experiencia en enfermería y de enfrentarse a obstáculos financieros insuperables. A través de sus fervientes oraciones y su profunda fe en la Virgen María, recibió milagrosamente los fondos exactos necesarios para su visa y gastos de viaje. También pasó una difícil entrevista a pesar de no saber hebreo y finalmente fue bendecida con un puesto en una familia de habla inglesa en Israel.\n\nLas intervenciones milagrosas se extendieron profundamente en la vida familiar de Stephy, trayendo una sanación y transformación profundas. Su esposo, Bibin, que había luchado contra el alcoholismo severo durante 12 años y antes se burlaba de su fe, decidió tomar la Alianza él mismo y fue completamente liberado de su adicción en un mes. Además, Bibin experimentó una sanación milagrosa de un dolor debilitante en la pierna durante una procesión del Rosario, y su hijo pequeño, Abel, se curó milagrosamente de un grave problema médico sin necesidad de una cirugía previamente recomendada, después de que la familia rezara utilizando el aceite y la sal de la Alianza.\n\nTransformada por estas experiencias, la familia lleva ahora una vida profundamente devota, y Bibin dirige activamente las oraciones en su hogar. Stephy sigue compartiendo su fe en Israel distribuyendo materiales de Kreupasanam, cuidando a los ancianos y rezando por otras personas necesitadas utilizando los sacramentales de la Alianza. Su testimonio compartido sirve como una poderosa declaración de su gratitud a Jesús y a la Virgen María, ilustrando cómo la fe y la oración inquebrantables durante las mayores crisis de la vida pueden lograr una completa liberación y renovación espiritual.",
+      "zh": "Stephy 带着沉重的债务负担来到 Kreupasanam 的祭台前，并于 2024 年 11 月立下了盟约（Covenant），起初她祈求能找到一份当地的工作来养家糊口。尽管困难重重，而且她没有护理背景并面临无法克服的经济障碍，她还是得到了去以色列做看护的机会。通过她热切的祈祷和对圣母玛利亚深厚的信仰，她奇迹般地获得了办理签证和旅行费用所需的确切资金。尽管不懂希伯来语，她还是通过了艰难的面试，最终蒙受祝福，被安置在以色列的一个英语家庭中。\n\n奇迹般的干预深深地延伸到了 Stephy 的家庭生活中，带来了深刻的医治和转变。她的丈夫 Bibin 曾与严重的酗酒问题抗争了 12 年，以前还嘲笑过她的信仰，但他决定亲自立下盟约，并在不到一个月的时间里完全摆脱了酒瘾。此外，在一次玫瑰经游行中，Bibin 令人衰弱的腿痛奇迹般地痊愈了；在家人使用盟约的油和盐进行祈祷后，他们的小儿子 Abel 严重的医疗问题也奇迹般地痊愈了，不需要进行之前建议的手术。\n\n这些经历使这个家庭发生了转变，他们现在过着非常虔诚的生活，Bibin 积极带领着他们家的祈祷。Stephy 在以色列继续分享她的信仰，分发 Kreupasanam 的材料，照顾老人，并使用盟约的圣物为其他有需要的人祈祷。他们共同的见证有力地宣告了他们对耶稣和圣母玛利亚的感激之情，表明在生命中最大的危机时刻，坚定的信仰和祈祷如何能够带来完全的解脱和灵性的更新。",
+      "kn": "ಸ್ಟೆಫಿ ಭಾರಿ ಸಾಲದ ಹೊರೆಯೊಂದಿಗೆ ಕೃಪಾಸನಂ ಬಲಿಪೀಠಕ್ಕೆ ಬಂದು, ತನ್ನ ಕುಟುಂಬವನ್ನು ಸಪೋರ್ಟ್ ಮಾಡಲು ಲೋಕಲ್ ಜಾಬ್‌ಗಾಗಿ ಪ್ರಾರ್ಥಿಸುತ್ತಾ ನವೆಂಬರ್ 2024 ರಲ್ಲಿ ಒಡಂಬಡಿಕೆ ತೆಗೆದುಕೊಂಡಳು. ನರ್ಸಿಂಗ್ ಬ್ಯಾಕ್‌ಗ್ರೌಂಡ್ ಇಲ್ಲದಿದ್ದರೂ ಮತ್ತು ಭಾರಿ ಆರ್ಥಿಕ ಕಷ್ಟಗಳಿದ್ದರೂ, ಅವಳಿಗೆ ಇಸ್ರೇಲ್‌ನಲ್ಲಿ ಕೇರ್‌ಗಿವರ್ ಆಗಿ ಕೆಲಸ ಮಾಡುವ ಅವಕಾಶ ಸಿಕ್ಕಿತು. ಮದರ್ ಮೇರಿಯ ಮೇಲಿನ ಅವಳ ಆಳವಾದ ವಿಶ್ವಾಸ ಮತ್ತು ಪ್ರಾರ್ಥನೆಗಳ ಮೂಲಕ, ತನ್ನ ವೀಸಾ ಮತ್ತು ಪ್ರಯಾಣದ ಖರ್ಚುಗಳಿಗೆ ಬೇಕಾದ ಸಂಪೂರ್ಣ ಹಣವನ್ನು ಅವಳು ಪವಾಡಸದೃಶವಾಗಿ ಪಡೆದಳು. ಹಿಬ್ರೂ ಭಾಷೆ ಬರದಿದ್ದರೂ ಅವಳು ಒಂದು ಕಷ್ಟಕರವಾದ ಇಂಟರ್ವ್ಯೂ ಪಾಸ್ ಮಾಡಿದಳು ಮತ್ತು ಇಸ್ರೇಲ್‌ನಲ್ಲಿ ಇಂಗ್ಲಿಷ್ ಮಾತನಾಡುವ ಕುಟುಂಬದಲ್ಲಿ ಪ್ಲೇಸ್‌ಮೆಂಟ್ ಪಡೆದಳು.\n\nಈ ಪವಾಡಸದೃಶವಾದ ಮಧ್ಯಸ್ಥಿಕೆಗಳು ಸ್ಟೆಫಿಯ ಕೌಟುಂಬಿಕ ಜೀವನಕ್ಕೂ ಆಳವಾಗಿ ತಲುಪಿ, ಸ್ವಸ್ಥತೆ ಮತ್ತು ಬದಲಾವಣೆಯನ್ನು ತಂದವು. 12 ವರ್ಷಗಳಿಂದ ತೀವ್ರವಾದ ಮದ್ಯಪಾನ ಚಟದಿಂದ ಬಳಲುತ್ತಿದ್ದ ಮತ್ತು ಮೊದಲು ಅವಳ ವಿಶ್ವಾಸವನ್ನು ಗೇಲಿ ಮಾಡುತ್ತಿದ್ದ ಅವಳ ಪತಿ ಬಿಬಿನ್, ತಾನೇ ಒಡಂಬಡಿಕೆ ತೆಗೆದುಕೊಳ್ಳಲು ನಿರ್ಧರಿಸಿದನು ಮತ್ತು ಒಂದು ತಿಂಗಳೊಳಗೆ ತನ್ನ ಚಟದಿಂದ ಸಂಪೂರ್ಣವಾಗಿ ಬಿಡುಗಡೆ ಹೊಂದಿದನು. ಜೊತೆಗೆ, ಒಂದು ರೋಸರಿ ರ್ಯಾಲಿಯ ಸಮಯದಲ್ಲಿ ಬಿಬಿನ್‌ಗೆ ತನ್ನ ಕಾಲಿನ ತೀವ್ರವಾದ ನೋವಿನಿಂದ ಪವಾಡಸದೃಶವಾಗಿ ಸ್ವಸ್ಥತೆ ಸಿಕ್ಕಿತು, ಮತ್ತು ಅವರ ಕಿರಿಯ ಮಗ ಅಬೆಲ್‌ಗೆ ಇದ್ದ ಒಂದು ಗಂಭೀರವಾದ ಮೆಡಿಕಲ್ ಸಮಸ್ಯೆಗೆ, ಕುಟುಂಬವು ಒಡಂಬಡಿಕೆ ಎಣ್ಣೆ ಮತ್ತು ಉಪ್ಪನ್ನು ಬಳಸಿ ಪ್ರಾರ್ಥಿಸಿದ ನಂತರ, ಮೊದಲು ಸೂಚಿಸಲಾಗಿದ್ದ ಸರ್ಜರಿ ಇಲ್ಲದೆಯೇ ಪವಾಡಸದೃಶವಾಗಿ ವಾಸಿಯಾಯಿತು.\n\nಈ ಅನುಭವಗಳಿಂದ ಬದಲಾಗಿ, ಆ ಕುಟುಂಬವು ಈಗ ಅತ್ಯಂತ ಭಕ್ತಿಪೂರ್ವಕ ಜೀವನವನ್ನು ನಡೆಸುತ್ತಿದೆ, ಮತ್ತು ಬಿಬಿನ್ ಈಗ ಮನೆಯ ಪ್ರಾರ್ಥನೆಗಳನ್ನು ಲೀಡ್ ಮಾಡುತ್ತಿದ್ದಾನೆ. ಸ್ಟೆಫಿ ಇಸ್ರೇಲ್‌ನಲ್ಲಿ ಕೃಪಾಸನಂ ಮೆಟೀರಿಯಲ್ಸ್ ಹಂಚುವ ಮೂಲಕ, ವೃದ್ಧರನ್ನು ನೋಡಿಕೊಳ್ಳುವ ಮೂಲಕ ಮತ್ತು ಒಡಂಬಡಿಕೆಯ ಪವಿತ್ರ ವಸ್ತುಗಳನ್ನು ಬಳಸಿ ಅಗತ್ಯವಿರುವವರಿಗಾಗಿ ಪ್ರಾರ್ಥಿಸುವ ಮೂಲಕ ತನ್ನ ವಿಶ್ವಾಸವನ್ನು ಶೇರ್ ಮಾಡುವುದನ್ನು ಮುಂದುವರಿಸಿದ್ದಾಳೆ. ಅವರ ಈ ಸಾಕ್ಷ್ಯವು ಯೇಸು ಮತ್ತು ಮದರ್ ಮೇರಿಯ ಬಗ್ಗೆ ಅವರಿಗಿರುವ ಕೃತಜ್ಞತೆಯ ಒಂದು ಶಕ್ತಿಯುತವಾದ ಘೋಷಣೆಯಾಗಿದೆ, ಜೀವನದ ಅತಿದೊಡ್ಡ ಬಿಕ್ಕಟ್ಟುಗಳ ಸಮಯದಲ್ಲಿ ದೃಢವಾದ ವಿಶ್ವಾಸ ಮತ್ತು ಪ್ರಾರ್ಥನೆಯು ಹೇಗೆ ಸಂಪೂರ್ಣ ಬಿಡುಗಡೆ ಮತ್ತು ಆಧ್ಯಾತ್ಮಿಕ ನವೀಕರಣವನ್ನು ತರಬಲ್ಲದು ಎಂಬುದನ್ನು ಇದು ತೋರಿಸುತ್ತದೆ."
+    },
     "subtitles": "/assets/testimony-subtitle/24july26.json",
     "duration": "17:32",
+    "overlay": {
+      "boxes": [
+        {
+          "x": 28,
+          "y": 4,
+          "w": 1010,
+          "h": 131,
+          "background": "#112d76",
+          "fontColor": "#f8f900"
+        },
+        {
+          "x": 50,
+          "y": 135,
+          "w": 769,
+          "h": 318,
+          "background": "#0a2059",
+          "fontColor": "#dfddde"
+        },
+        {
+          "x": 21,
+          "y": 463,
+          "w": 1043,
+          "h": 129,
+          "background": "#ba339a",
+          "fontColor": "#fffeff"
+        },
+        {
+          "x": 25,
+          "y": 593,
+          "w": 1037,
+          "h": 127,
+          "background": "#0f2763",
+          "fontColor": "#fcffff"
+        },
+        {
+          "x": 1075,
+          "y": 3,
+          "w": 195,
+          "h": 62,
+          "background": "#dee041",
+          "fontColor": "#dcdbd9"
+        }
+      ],
+      "texts": {
+        "en": [
+          "Through the Marian Covenant,",
+          "Kreupasanam Mother",
+          "pours out blessings far beyond what we ask for.",
+          "Let's hear the testimony of Bibin and Stephy.",
+          "Alappuzha"
+        ],
+        "hi": [
+          "मरियम वाचा के द्वारा,",
+          "कृपासनम माता",
+          "हमारी माँग से कहीं बढ़कर आशीषें बरसाती हैं।",
+          "आइए, बिबिन और स्टेफी की गवाही सुनते हैं।",
+          "आलप्पुझा"
+        ],
+        "ta": [
+          "மரிய அன்னையின் உடன்படிக்கையின் மூலம்,",
+          "கிருபாசனம் அன்னை",
+          "நாம் கேட்பதைவிட அளவற்ற ஆசீர்வாதங்களை வழங்குகிறார்.",
+          "பிபின் மற்றும் ஸ்டெபியின் சாட்சியத்தை கேட்போம்.",
+          "ஆലപ്പுழா"
+        ],
+        "bn": [
+          "মারিয়ান চুক্তির মাধ্যমে,",
+          "ক্রুপাসানাম মাতা",
+          "আমাদের চাওয়ার থেকেও অনেক বেশি আশীর্বাদ বর্ষণ করেন।",
+          "চলুন, বিবিন ও স্টেফির সাক্ষ্য শুনি।",
+          "আলাপ্পুঝা"
+        ],
+        "te": [
+          "మరియన్ ఒడంబడిక ద్వారా,",
+          "క్రుపాసనం మాత",
+          "మనం అడిగిన దానికంటే ఎంతో ఎక్కువ ఆశీర్వాదాలను కురిపిస్తుంది.",
+          "ఇప్పుడు బిబిన్ మరియు స్టెఫీ సాక్ష్యాన్ని విందాం.",
+          "అలప్పుజా"
+        ],
+        "mr": [
+          "मरियम कराराद्वारे,",
+          "क्रुपासनम माता",
+          "आपण मागतो त्यापेक्षाही कितीतरी अधिक आशीर्वाद देतात.",
+          "चला, बिबिन आणि स्टेफी यांची साक्ष ऐकूया.",
+          "अलप्पुझा"
+        ],
+        "fr": [
+          "Grâce à l'Alliance mariale,",
+          "Notre-Dame de Kreupasanam",
+          "répand des bénédictions bien au-delà de ce que nous demandons.",
+          "Écoutons le témoignage de Bibin et de Stephy.",
+          "Alappuzha"
+        ],
+        "es": [
+          "A través del Pacto Mariano,",
+          "Nuestra Señora de Kreupasanam",
+          "derrama bendiciones mucho más allá de lo que pedimos.",
+          "Escuchemos el testimonio de Bibin y Stephy.",
+          "Alappuzha"
+        ],
+        "zh": [
+          "借着圣母盟约，",
+          "克雷乌帕萨南圣母",
+          "赐下远超过我们所求的恩典。",
+          "让我们来听听比宾和斯蒂菲的见证。",
+          "阿拉普扎"
+        ],
+        "kn": [
+          "ಮರಿಯಮ್ಮನ ಒಡಂಬಡಿಕೆಯ ಮೂಲಕ,",
+          "ಕ್ರೆಉಪಾಸನಂ ಮಾತೆ",
+          "ನಾವು ಕೇಳುವುದಕ್ಕಿಂತಲೂ ಹೆಚ್ಚಿನ ಆಶೀರ್ವಾದಗಳನ್ನು ಧಾರಾಳವಾಗಿ ಸುರಿಸುತ್ತಾರೆ.",
+          "ಬಿಬಿನ್ ಮತ್ತು ಸ್ಟೆಫಿಯ ಸಾಕ್ಷ್ಯವನ್ನು ಕೇಳೋಣ.",
+          "ಅಲಪ್ಪುಳ"
+        ]
+      }
+    }
+  },
+  {
+    "id": 80,
+    "title": {
+  "en": "Holding My Child During the Interview That Changed My Life",
+  "hi": "मेरे बच्चे को गोद में लेकर दिया वह साक्षात्कार जिसने मेरी ज़िंदगी बदल दी",
+  "ta": "என் குழந்தையை மடியில் தழுவியபடி என் வாழ்க்கையை மாற்றிய நேர்முகத் தேர்வு",
+  "bn": "কোলে সন্তানকে নিয়ে দেওয়া সেই সাক্ষাৎকার, যা আমার জীবন বদলে দিয়েছিল",
+  "te": "నా బిడ్డను ఒడిలో పెట్టుకొని హాజరైన ఇంటర్వ్యూ నా జీవితాన్ని మార్చింది",
+  "mr": "माझ्या बाळाला कुशीत घेऊन दिलेली मुलाखत ज्याने माझे आयुष्य बदलले",
+  "fr": "Tenant mon enfant dans mes bras lors de l'entretien qui a changé ma vie",
+  "es": "Sosteniendo a mi hijo durante la entrevista que cambió mi vida",
+  "zh": "怀抱孩子参加那场改变我一生的面试",
+  "kn": "ನನ್ನ ಮಗುವನ್ನು ಮಡಿಲಲ್ಲಿ ಹಿಡಿದು ನನ್ನ ಜೀವನವನ್ನು ಬದಲಿಸಿದ ಸಂದರ್ಶನ"
+},
+    "date": "August 2, 2026",
+    "video": "https://youtu.be/Synj03ccXAs",
+    "content": {
+  "en": "Johnson Joseph from Delhi testified that God blessed his family through the intercession of Mother Mary during severe trials involving childbirth and employment. After a vow of thanksgiving at Kreupasanam, their first child was born safely despite medical concerns. Later, while expecting their second child, he lost his job on the same day doctors warned of possible complications. With no family support and great financial hardship, they entrusted everything to God, and their second child was born healthy through a normal delivery. Though he remained unemployed for nearly a year, they continued to trust in God's providence.\n\nIn June 2025, Johnson made the Marian Covenant online and prayed specifically for a six-figure salary job. Inspired by a testimony shared during a Kreupasanam retreat, he prayed in faith over a job posting using the blessed salt, and within a month he received an interview and secured that very job. When the company later demanded excessive working hours that affected his faith and family life, he chose to resign, believing that eternal salvation was more important than worldly success. Through God's Word and prayer, he found the courage to trust God again.\n\nDuring this journey, the Lord also transformed Johnson spiritually by healing his anger, correcting his attitudes toward family life, and helping him recognize his children as God's precious gifts. After sincere repentance and confession, he unexpectedly received a senior IT position despite lacking the required experience. Acknowledging that these blessings came not by merit but by God's grace, he now serves others through acts of charity, distributes Kreupasanam publications, and prays daily for the grace to remain faithful to the Marian Covenant until the end of his life.",
+  "hi": "दिल्ली के जॉनसन जोसेफ ने गवाही दी कि बच्चे के जन्म और नौकरी से जुड़ी कठिन परीक्षाओं के दौरान माता मरिया की मध्यस्थता के माध्यम से ईश्वर ने उनके परिवार को आशीष दी। कृपासनम में धन्यवाद की मन्नत मांगने के बाद, मेडिकल चिंताओं के बावजूद उनका पहला बच्चा सुरक्षित रूप से पैदा हुआ। बाद में, जब वे अपने दूसरे बच्चे की उम्मीद कर रहे थे, उसी दिन डॉक्टरों ने संभावित जटिलताओं की चेतावनी दी और उनकी नौकरी भी चली गई। बिना किसी पारिवारिक सहायता और भारी आर्थिक तंगी के बावजूद, उन्होंने सब कुछ ईश्वर पर सौंप दिया, और उनका दूसरा बच्चा नॉर्मल डिलीवरी के माध्यम से स्वस्थ पैदा हुआ। हालांकि वे लगभग एक साल तक बेरोजगार रहे, फिर भी वे ईश्वर के प्रावधान पर भरोसा रखते रहे।\n\nजून 2025 में, जॉनसन ने ऑनलाइन मरियाई वाचा (Marian Covenant) बनाई और विशेष रूप से सिक्स-फिगर सैलरी वाली नौकरी के लिए प्रार्थना की। कृपासनम रिट्रीट के दौरान साझा की गई एक गवाही से प्रेरित होकर, उन्होंने आशीष दिए हुए नमक (ब्लेस्ड साल्ट) का उपयोग करते हुए एक जॉब पोस्टिंग पर विश्वास के साथ प्रार्थना की, और एक महीने के भीतर उन्हें इंटरव्यू का बुलावा आया और वह नौकरी मिल गई। जब कंपनी ने बाद में अत्यधिक काम के घंटों की मांग की जिससे उनके विश्वास और पारिवारिक जीवन पर असर पड़ने लगा, तो उन्होंने इस्तीफा देने का फैसला किया, यह मानते हुए कि सांसारिक सफलता से अधिक महत्वपूर्ण अनंत मुक्ति है। ईश्वर के वचन और प्रार्थना के माध्यम से, उन्हें फिर से ईश्वर पर भरोसा करने का साहस मिला।\n\nइस यात्रा के दौरान, प्रभु ने जॉनसन के गुस्से को चंगा करके, पारिवारिक जीवन के प्रति उनके दृष्टिकोण को सुधारकर और उनके बच्चों को ईश्वर के अनमोल उपहार के रूप में पहचानने में मदद करके उनका आध्यात्मिक रूपांतरण भी किया। सच्चे पश्चाताप और पाप-स्वीकार (कन्फेशन) के बाद, आवश्यक अनुभव न होने के बावजूद उन्हें अप्रत्याशित रूप से एक सीनियर आईटी पोज़ीशन मिली। यह स्वीकार करते हुए कि ये आशीषें किसी योग्यता से नहीं बल्कि ईश्वर की कृपा से मिली हैं, वे अब दान-पुण्य के कार्यों के माध्यम से दूसरों की सेवा करते हैं, कृपासनम के प्रकाशनों का वितरण करते हैं, और अपने जीवन के अंत तक मरियाई वाचा के प्रति वफादार रहने की कृपा के लिए रोजाना प्रार्थना करते हैं।",
+  "ta": "டெல்லியைச் சேர்ந்த ஜான்சன் ஜோசப், குழந்தை பிறப்பு மற்றும் வேலைவாய்ப்பு தொடர்பான கடுமையான சோதனைகளின் போது, மாதா மரியாயின் பரிந்துரையால் கடவுள் තම குடும்பத்தை ஆசீர்வதித்தார் என்று சாட்சியமளித்தார். கிருபாசனத்தில் நன்றியறிதல் நேர்ச்சைக்குப் பிறகு, மருத்துவ கவலைகளுக்கு மத்தியிலும் அவர்களின் முதல் குழந்தை பாதுகாப்பாகப் பிறந்தது. பின்னர், தங்களது இரண்டாவது குழந்தையை எதிர்பார்த்திருந்த வேளையில், சிக்கல்கள் வரக்கூடும் என்று மருத்துவர்கள் எச்சரித்த அதே நாளில் அவர் தனது வேலையையும் இழந்தார். குடும்ப ஆதரவு ஏதுமின்றியும் கடுமையான நிதி நெருக்கடியிலும், அவர்கள் அனைத்தையும் கடவுளிடம் ஒப்படைத்தனர்; அவர்களின் இரண்டாவது குழந்தையும் சுகப்பிரசவத்தில் ஆரோக்கியமாகப் பிறந்தது. அவர் கிட்டத்தட்ட ஒரு வருடம் வேலையில்லாமல் இருந்தபோதிலும், அவர்கள் கடவுளின் பராமரிப்பில் தொடர்ந்து நம்பிக்கை வைத்திருந்தனர்.\n\nஜூன் 2025 இல், ஜான்சன் ஆன்லைனில் மரியான் உடன்படிக்கை (Marian Covenant) செய்து, ஆறு இலக்க சம்பளத்துடனான வேலைக்காக சிறப்பாக ஜெபித்தார். கிருபாசனம் ரிட்ரீட்டின் போது பகிரப்பட்ட ஒரு சாட்சியத்தால் ஈர்க்கப்பட்டு, அவர் ஆசீர்வதிக்கப்பட்ட உப்பைப் பயன்படுத்தி ஒரு ஜோப் போஸ்டிங்கிற்காக விசுவாசத்துடன் ஜெபித்தார்; ஒரு மாதத்திற்குள் அவருக்கு இன்டர்வியூ அழைப்பு வந்து, அந்த வேலையும் கிடைத்தது. பின்னர், நிறுவனம் அவரது விசுவாசத்தையும் குடும்ப வாழ்க்கையையும் பாதிக்கும் வகையில் அதிக வேலை நேரத்தைக் கோரியபோது, உலகியல் வெற்றியை விட நித்திய இரட்சிப்பே முக்கியம் என்று நம்பி அவர் ராஜினாமா செய்ய முடிவெடுத்தார். இறைவார்த்தை மற்றும் ஜெபத்தின் மூலம், கடவுளை மீண்டும் நம்புவதற்கான தைரியத்தைப் பெற்றார்.\n\nஇந்த பயணத்தின் போது, ஆண்டவர் ஜான்சனின் கோபத்தைக் குணப்படுத்தி, குடும்ப வாழ்க்கை பற்றிய அவரது மனப்பான்மையைச் சரிசெய்து, அவரது குழந்தைகளை கடவுளின் விலையேறப்பெற்ற பரிசுகளாக அடையாளம் காண உதவியதன் மூலம் அவரை ஆன்மீக ரீதியாக உருமாற்றினார். மனதார மனம்ந்திந்தி பாவசங்கீர்த்தனம் (கன்பெஷன்) செய்த பிறகு, தேவையான அனுபவம் இல்லாதபோதிலும் அவருக்கு எதிர்பாராத விதமாக ஒரு சீனியர் ஐடி போஸ்டிங் கிடைத்தது. இந்த ஆசீர்வாதங்கள் தகுதியினால் அல்ல, கடவுளின் கிருபையினாலேயே வந்தன என்பதை ஒப்புக்கொண்டு, அவர் இப்போது தொண்டு ஊழியங்கள் மூலம் மற்றவர்களுக்கு சேவை செய்கிறார், கிருபாசன வெளியீடுகளை விநியோகிக்கிறார், மேலும் தனது வாழ்நாளின் இறுதி வரை மரியான் உடன்படிக்கைக்கு உண்மையுள்ளவராக இருப்பதற்கான கிருபைக்காக தினமும் ஜெபிக்கிறார்.",
+  "bn": "দিল্লির জনসন জোসেফ সাক্ষ্য দিয়েছেন যে সন্তানসম্ভবা অবস্থা এবং চাকরি সংক্রান্ত কঠিন পরীক্ষার সময় মা মারীয়ার মধ্যস্থতায় ঈশ্বর তাঁর পরিবারকে আশীর্বাদ করেছিলেন। কৃপাসনমে এক ধন্যবাদ জ্ঞাপনের মানতের পর, চিকিৎসা সংক্রান্ত দুশ্চিন্তা সত্ত্বেও তাঁদের প্রথম সন্তান নিরাপদে জন্মগ্রহণ করে। পরবর্তীতে, তাঁদের দ্বিতীয় সন্তানের অপেক্ষায় থাকার সময়, চিকিৎসকরা জটিলতার আশঙ্কার কথা জানানোর একই দিনে তিনি চাকরি হারান। পারিবারিক কোনো সহায়তা না থাকা এবং চরম আর্থিক কষ্টের মধ্যেও তাঁরা সবকিছু ঈশ্বরের ওপর সমর্পণ করেন এবং স্বাভাবিক প্রসবের মাধ্যমে তাঁদের দ্বিতীয় সন্তান সুস্থভাবে জন্মগ্রহণ করে। যদিও তিনি প্রায় এক বছর বেকার ছিলেন, তবুও তাঁরা ঈশ্বরের বিধানের ওপর আস্থা বজায় রেখেছিলেন।\n\n২০২৫ সালের জুনে, জনসন অনলাইনে মারীয় বাক্য (Marian Covenant) গ্রহণ করেন এবং বিশেষ করে সিক্স-ফিগর সেলারির চাকরির জন্য প্রার্থনা করেন। কৃপাসনম রিট্রিটের সময় শেয়ার করা একটি সাক্ষ্য দ্বারা অনুপ্রাণিত হয়ে, তিনি আশীবাদপুষ্ট লবণ ব্যবহার করে একটি জব পোস্টিংয়ের ওপর বিশ্বাসের সাথে প্রার্থনা করেন এবং এক মাসের মধ্যে তিনি ইন্টারভিউয়ের ডাক পান ও সেই চাকরিটি অর্জন করেন। পরবর্তীতে কোম্পানি অতিরিক্ত সময় কাজ করার দাবি জানালে, যা তাঁর বিশ্বাস ও পারিবারিক জীবনকে প্রভাবিত করছিল, তিনি জাগতিক সাফল্যের চেয়ে অনন্ত মুক্তিকে বেশি গুরুত্বপূর্ণ মনে করে পদত্যাগ করার সিদ্ধান্ত নেন। ঈশ্বরের বাক্য এবং প্রার্থনার মাধ্যমে তিনি পুনরায় ঈশ্বরের ওপর ভরসা রাখার সাহস পান।\n\nএই যাত্রায়, প্রভু জনসনের রাগ নিরাময় করে, পারিবারিক জীবনের প্রতি তাঁর দৃষ্টিভঙ্গি সংশোধন করে এবং তাঁর সন্তানদের ঈশ্বরের অমূল্য উপহার হিসেবে চিনতে সাহায্য করে তাঁকে আধ্যাত্মিকভাবে রূপান্তরিত করেছিলেন। আন্তরিক অনুতাপ এবং পাপস্বীকারের (কনফেশন) পর, প্রয়োজনীয় অভিজ্ঞতা না থাকা সত্ত্বেও তিনি অপ্রত্যাশিতভাবে একটি সিনিয়র আইটি পজিশন লাভ করেন। এই আশীর্বাদগুলি নিজের যোগ্যতায় নয় বরং ঈশ্বরের অনুগ্রহে এসেছে তা স্বীকার করে, তিনি এখন দাতব্য কাজের মাধ্যমে অন্যদের সেবা করেন, কৃপাসনমের প্রকাশনা বিতরণ করেন এবং জীবনের শেষ দিন পর্যন্ত মারীয় বাক্যের প্রতি বিশ্বস্ত থাকার অনুগ্রহের জন্য প্রতিদিন প্রার্থনা করেন।",
+  "te": "ఢిల్లీకి చెందిన జాన్సన్ జోసెఫ్, ప్రసవం మరియు ఉద్యోగానికి సంబంధించిన తీవ్రమైన శోధనల సమయంలో తల్లి మరియా విజ్ఞాపన ద్వారా దేవుడు తన కుటుంబాన్ని ఆశీర్వదించాడని సాక్ష్యమిచ్చాడు. కృపాసనంలో కృతజ్ఞతా మ్రొక్కుబడి చేసుకున్న తర్వాత, వైద్యపరమైన ఆందోళనలు ఉన్నప్పటికీ వారి మొదటి బిడ్డ సురక్షితంగా జన్మించింది. తర్వాత, వారి రెండవ బిడ్డ కోసం ఎదురుచూస్తున్న సమయంలో, కాంప్లికేషన్స్ వచ్చే అవకాశం ఉందని వైద్యులు హెచ్చరించిన రోజే అతను ఉద్యోగం కోల్పోయాడు. కుటుంబ మద్దతు లేక, తీవ్రమైన ఆర్థిక ఇబ్బందులు ఉన్నప్పటికీ, వారు ప్రతిదానినీ దేవునికి అప్పగించారు, మరియు వారి రెండవ బిడ్డ సాధారణ ప్రసవం ద్వారా ఆరోగ్యంగా జన్మించింది. అతను దాదాపు ఒక సంవత్సరం పాటు నిరుద్యోగిగా ఉన్నప్పటికీ, వారు దేవుని దయపై నమ్మకం ఉంచడం కొనసాగించారు.\n\nజూన్ 2025లో, జాన్సన్ ఆన్‌లైన్‌లో మరియా నిబంధన (Marian Covenant) చేసుకుని, ప్రత్యేకంగా సిక్స్-ఫిగర్ శాలరీ ఉద్యోగం కోసం ప్రార్థించాడు. కృపాసనం రిట్రీట్ సమయంలో పంచుకున్న ఒక సాక్ష్యం నుండి ప్రేరణ పొంది, అతను ఆశీర్వదించిన ఉప్పును ఉపయోగిస్తూ ఒక జాబ్ పోస్టింగ్ పై విశ్వాసంతో ప్రార్థించాడు, మరియు ఒక నెలలోనే అతనికి ఇంటర్వ్యూ వచ్చి ఆ ఉద్యోగం లభించింది. తరువాత కంపెనీ అతని విశ్వాసాన్ని మరియు కుటుంబ జీవితాన్ని ప్రభావితం చేసేలా ఎక్కువ గంటలు పనిచేయాలని కోరినప్పుడు, లోకసంబంధమైన విజయం కంటే నిత్య రక్షణే ముఖ్యమని నమ్మి అతను రాజీనామా చేయడానికి ఎంచుకున్నాడు. దేవుని వాక్యం మరియు ప్రార్థన ద్వారా, అతను మళ్లీ దేవుడిని నమ్మే ధైర్యాన్ని పొందాడు.\n\nఈ ప్రయాణంలో, ప్రభువు జాన్సన్ కోపాన్ని స్వస్థపరిచి, కుటుంబ జీవితం పట్ల అతని వైఖరిని సరిదిద్ది, అతని పిల్లలను దేవుని అమూల్యమైన బహుమతులుగా గుర్తించడంలో సహాయపడటం ద్వారా అతనిని ఆధ్యాత్మికంగా రూపాంతరం చెందించాడు. నిజమైన పశ్చాత్తాపం మరియు పాపసంకీర్తనం (కన్ఫెషన్) తర్వాత, అవసరమైన అనుభవం లేకపోయినప్పటికీ అతనికి అనుకోకుండా ఒక సీనియర్ ఐటీ పొజిషన్ లభించింది. ఈ ఆశీర్వాదాలు సొంత అర్హత వల్ల కాక దేవుని కృప వల్లనే వచ్చాయని అంగీకరిస్తూ, అతను ఇప్పుడు స్వచ్ఛంద సేవా కార్యక్రమాల ద్వారా ఇతరులకు సేవ చేస్తున్నాడు, కృపాసనం ప్రచురణలను పంపిణీ చేస్తున్నాడు, మరియు తన జీవితాంతం మరియా నిబంధనకు నమ్మకంగా ఉండే కృప కోసం ప్రతిరోజూ ప్రార్థిస్తున్నాడు.",
+  "mr": "दिल्ली येथील जॉन्सन जोसेफ यांनी साक्ष दिली की, बाळंतपण आणि रोजगाराशी संबंधित कठीण प्रसंगांत माता मरिया यांच्या मध्यस्थीद्वारे देवाने त्यांच्या कुटुंबाला आशीर्वाद दिला. कृपासनम येथे उपकारस्तुतीचे नवस बोलल्यानंतर, वैद्यकीय चिंता असूनही त्यांचे पहिले मूल सुरक्षितपणे जन्माला आले. नंतर, त्यांच्या दुसऱ्या बाळाच्या आगमनाची वाट पाहत असताना, डॉक्टरांनी संभाव्य अडचणींची चेतावणी दिल्याच दिवशी त्यांची नोकरी गेली. कुटुंबाचा कोणताही पाठिंबा नसताना आणि मोठ्या आर्थिक अडचणीत असतानाही त्यांनी सर्व काही देवावर सोपवले, आणि त्यांचे दुसरे मूल नॉर्मल डिलिव्हरीद्वारे निरोगी जन्माला आले. ते जवळपास एक वर्ष बेरोजगार राहिले तरीही त्यांनी देवाच्या योजनेवर विश्वास ठेवणे चालू ठेवले.\n\nजून २०२५ मध्ये, जॉन्सन यांनी ऑनलाईन मरियाई वाचा (Marian Covenant) केली आणि विशेषतः सिक्स-फिगर सॅलरीच्या नोकरीसाठी प्रार्थना केली. कृपासनम रिट्रीटदरम्यान सांगण्यात आलेल्या एका साक्षीने प्रेरित होऊन, त्यांनी आशीर्वादित मिठाचा वापर करून एका जॉब पोस्टिंगवर विश्वासाने प्रार्थना केली, आणि एका महिन्याच्या आत त्यांना इंटरव्यूचा कॉल आला व ती नोकरी मिळाली. पुढे कंपनीने त्यांच्या विश्वासावर आणि कौटुंबिक जीवनावर परिणाम करतील अशा अतिरिक्त कामाच्या तासांची मागणी केल्यावर, सांसारिक यशापेक्षा अनंत मुक्ती अधिक महत्त्वाची आहे या विश्वासाने त्यांनी राजीनामा देण्याचे ठरवले. देवाचे वचन आणि प्रार्थनेद्वारे, त्यांना पुन्हा देवावर विश्वास ठेवण्याचे धैर्य मिळाले.\n\nया प्रवासात, प्रभूने जॉन्सन यांच्या रागाचे निवारण करून, कौटुंबिक जीवनाबद्दलचा त्यांचा दृष्टिकोन सुधारून आणि त्यांच्या मुलांना देवाच्या मौल्यवान भेटवस्तू म्हणून ओळखण्यास मदत करून त्यांचे आध्यात्मिक रूपांतर केले. मनःपूर्वक पश्चात्ताप आणि पापस्वीकारानंतर (कॉन्फेशन), आवश्यक अनुभव नसतानाही त्यांना अनपेक्षितपणे एक सीनिअर आयटी पोझिशन मिळाली. हे आशीर्वाद स्वतःच्या गुणवत्तेमुळे नव्हे तर देवाच्या कृपेने मिळाले आहेत हे मान्य करून, ते आता दानाची कामे करून इतरांची सेवा करतात, कृपासनमच्या प्रकाशनांचे वाटप करतात आणि आयुष्यभरासाठी मरियाई वाचेशी विश्वासू राहण्याच्या कृपेसाठी रोज प्रार्थना करतात.",
+  "fr": "Johnson Joseph, originaire de Delhi, a témoigné que Dieu a béni sa famille par l'intercession de la Mère de Dieu lors de graves épreuves liées à l'accouchement et à l'emploi. Après un vœu d'action de grâce à Kreupasanam, leur premier enfant est né en toute sécurité malgré les inquiétudes médicales. Plus tard, alors qu'ils attendaient leur deuxième enfant, il a perdu son emploi le jour même où les médecins l'ont averti de complications possibles. Sans aucun soutien familial et face à de grandes difficultés financières, ils ont tout confié à Dieu, et leur deuxième enfant est né en bonne santé par accouchement voie basse. Bien qu'il soit resté sans emploi pendant près d'un an, ils ont continué à faire confiance à la Providence divine.\n\nEn juin 2025, Johnson a conclu l'Alliance mariale (Marian Covenant) en ligne et a prié spécifiquement pour un emploi avec un salaire à six chiffres. Inspiré par un témoignage partagé lors d'une retraite de Kreupasanam, il a prié avec foi sur une offre d'emploi en utilisant le sel bénit, et en moins d'un mois, il a obtenu un entretien et décroché ce poste. Lorsque l'entreprise a exigé par la suite des heures de travail excessives affectant sa foi et sa vie de famille, il a choisi de démissionner, croyant que le salut éternel était plus important que le succès terrestre. Grâce à la Parole de Dieu et à la prière, il a trouvé le courage de refaire confiance à Dieu.\n\nAu cours de ce cheminement, le Seigneur a également transformé Johnson spirituellement en guérissant sa colère, en corrigeant ses attitudes envers la vie de famille et en l'aidant à reconnaître ses enfants comme de précieux dons de Dieu. Après une sincère repentance et la confession, il a reçu de manière inattendue un poste senior en IT malgré le manque d'expérience requise. Reconnaissant que ces bénédictions ne découlaient pas de ses mérites mais de la grâce de Dieu, il sert aujourd'hui les autres par des œuvres de charité, distribue des publications de Kreupasanam et prie chaque jour pour obtenir la grâce de rester fidèle à l'Alliance mariale jusqu'à la fin de sa vie.",
+  "es": "Johnson Joseph, de Delhi, testimonió que Dios bendijo a su familia a través de la intercesión de la Virgen María durante graves pruebas relacionadas con el parto y el empleo. Tras un voto de acción de gracias en Kreupasanam, su primer hijo nació a salvo a pesar de las preocupaciones médicas. Más tarde, mientras esperaban a su segundo hijo, perdió su trabajo el mismo día en que los médicos advirtieron sobre posibles complicaciones. Sin apoyo familiar y con grandes dificultades económicas, encomendaron todo a Dios, y su segundo hijo nació sano mediante un parto normal. Aunque permaneció desempleado durante casi un año, continuaron confiando en la providencia de Dios.\n\nEn junio de 2025, Johnson realizó la Alianza Marial (Marian Covenant) en línea y oró específicamente por un trabajo con un salario de seis cifras. Inspirado por un testimonio compartido durante un retiro de Kreupasanam, oró con fe sobre una oferta de empleo utilizando la sal bendita, y en menos de un mes recibió una entrevista y obtuvo ese mismo trabajo. Cuando más tarde la empresa exigió horarios de trabajo excesivos que afectaban su fe y su vida familiar, eligió renunciar, creyendo que la salvación eterna era más importante que el éxito terrenal. A través de la Palabra de Dios y la oración, encontró el coraje para volver a confiar en Dios.\n\nDurante este camino, el Señor también transformó a Johnson espiritualmente sanando su ira, corrigiendo sus actitudes hacia la vida familiar y ayudándole a reconocer a sus hijos como valiosos regalos de Dios. Tras un arrepentimiento sincero y la confesión, recibió inesperadamente un puesto sénior de TI a pesar de no contar con la experiencia requerida. Reconociendo que estas bendiciones no vinieron por mérito propio sino por la gracia de Dios, ahora sirve a los demás mediante obras de caridad, distribuye publicaciones de Kreupasanam y ora diariamente por la gracia de permanecer fiel a la Alianza Marial hasta el final de su vida.",
+  "zh": "來自德里的強森·喬瑟夫（Johnson Joseph）見證說，在涉及分娩和就業的嚴重考驗期間，天主藉著聖母瑪利亞的代禱祝福了他的家庭。在恩座（Kreupasanam）許下感恩許願後，儘管有醫療上的擔憂，他們的第一個孩子依然平安出生。後來，在期待第二個孩子降生時，他在醫生警告可能出現併發症的同一天失去了工作。在沒有家庭支持且面臨巨大經濟困難的情況下，他們將一切託付給天主，他們的第二個孩子通過順產健康出生。儘管他失業了近一年，他們仍繼續信任天主的攝理。\n\n2025年6月，強森在線上訂立了瑪利亞盟約（Marian Covenant），並特別祈求一份六位數薪水的工作。受恩座避靜期間分享的一則見證所啟發，他懷著信德使用聖鹽對著一份招聘信息祈禱，不到一個月他就獲得了面試並順利得到了那份工作。後來當公司要求過長的工時、影響到他的信仰和家庭生活時，他選擇辭職，相信永恆的救恩比世俗的成功更重要。透過天主的話語和祈禱，他重新獲得了信任天主的勇氣。\n\n在這段旅程中，主還透過治癒強森的憤怒、糾正他對家庭生活的態度，並幫助他將孩子視為天主珍貴的禮物，從而在精神上轉化了他。在真誠悔改和告解（和解聖事）之後，儘管缺乏所需經驗，他意想不到地獲得了一個高級IT職位。他承認這些祝福不是憑著個人的功績，而是靠著天主的恩寵，如今他透過慈善行為服務他人，分發恩座出版物，並每天祈求恩寵，好能在有生之年一直忠於瑪利亞盟約。",
+  "kn": "ದೆಹಲಿಯ ಜಾನ್ಸನ್ ಜೋಸೆಫ್ ಅವರು, ಹೆರಿಗೆ ಮತ್ತು ಉದ್ಯೋಗಕ್ಕೆ ಸಂಬಂಧಿಸಿದ ತೀವ್ರ ಸಂಕಷ್ಟಗಳ ಸಮಯದಲ್ಲಿ ತಾಯಿ ಮರಿಯಾರ ಮಧ್ಯಸ್ಥಿಕೆಯ ಮೂಲಕ ದೇವರು ತಮ್ಮ ಕುಟುಂಬವನ್ನು ಆಶೀರ್ವದಿಸಿದರು ಎಂದು ಸಾಕ್ಷಿ ನೀಡಿದರು. ಕೃಪಾಸನಮ್‌ನಲ್ಲಿ ಧನ್ಯವಾದಗಳ ಹರಿಕೆಯನ್ನು ತೀರಿಸಿದ ನಂತರ, ವೈದ್ಯಕೀಯ ಚಿಂತೆಗಳ ನಡುವೆಯೂ ಅವರ ಮೊದಲ ಮಗು ಸುರಕ್ಷಿತವಾಗಿ ಜನಿಸಿತು. ನಂತರ, ತಮ್ಮ ಎರಡನೇ ಮಗುವಿನ ನಿರೀಕ್ಷೆಯಲ್ಲಿದ್ದಾಗ, ತೊಂದರೆಗಳು ಬರಬಹುದು ಎಂದು ವೈದ್ಯರು ಎಚ್ಚರಿಸಿದ ಅದೇ ದಿನ ಅವರು ತಮ್ಮ ಕೆಲಸವನ್ನು ಕಳೆದುಕೊಂಡರು. ಯಾವುದೇ ಕೌಟುಂಬಿಕ ಬೆಂಬಲವಿಲ್ಲದೆ ಮತ್ತು ತೀವ್ರ ಹಣಕಾಸಿನ ಸಂಕಷ್ಟದಲ್ಲಿದ್ದರೂ, ಅವರು ಎಲ್ಲವನ್ನೂ ದೇವರಿಗೆ ಒಪ್ಪಿಸಿದರು, ಮತ್ತು ಅವರ ಎರಡನೇ ಮಗು ಸಾಧಾರಣ ಹೆರಿಗೆಯ ಮೂಲಕ ಆರೋಗ್ಯವಾಗಿ ಜನಿಸಿತು. ಅವರು প্রায় ಒಂದು ವರ್ಷ ಕೆಲಸವಿಲ್ಲದೆ ಇದ್ದರೂ, ಅವರು ದೇವರ ಕೃಪೆಯ ಮೇಲೆ ನಂಬಿಕೆ ಇಡುವುದನ್ನು ಮುಂದುವರಿಸಿದರು.\n\nಜೂನ್ 2025 ರಲ್ಲಿ, ಜಾನ್ಸನ್ ಆನ್‌ಲೈನ್‌ನಲ್ಲಿ ಮರಿಯಾನ್ ಒಡಂಬಡಿಕೆಯನ್ನು (Marian Covenant) ಮಾಡಿಕೊಂಡರು ಮತ್ತು ನಿರ್ದಿಷ್ಟವಾಗಿ ಸಿಕ್ಸ್-ಫಿಗರ್ ಸಂಬಳದ ಕೆಲಸಕ್ಕಾಗಿ ಪ್ರಾರ್ಥಿಸಿದರು. ಕೃಪಾಸನಮ್ ರಿಟ್ರೀಟ್ ಸಮಯದಲ್ಲಿ ಹಂಚಿಕೊಳ್ಳಲಾದ ಸಾಕ್ಷಿಯಿಂದ ಪ್ರೇರಿತರಾಗಿ, ಅವರು ಆಶೀರ್ವದಿಸಿದ ಉಪ್ಪನ್ನು ಬಳಸಿ ಜಾಬ್ ಪೋಸ್ಟಿಂಗ್ ಮೇಲೆ ವಿಶ್ವಾಸದಿಂದ ಪ್ರಾರ್ಥಿಸಿದರು, ಮತ್ತು ಒಂದು ತಿಂಗಳೊಳಗೆ ಅವರಿಗೆ ಇಂಟರ್ವ್ಯೂ ಕರೆ ಬಂದು ಆ ಕೆಲಸವೇ ದೊರೆಯಿತು. ನಂತರ ಕಂಪನಿಯು ಅವರ ವಿಶ್ವಾಸ ಮತ್ತು ಕೌಟುಂಬಿಕ ಜೀವನದ ಮೇಲೆ ಪರಿಣಾಮ ಬೀರುವಂತೆ ಹೆಚ್ಚಿನ ಕೆಲಸದ ಸಮಯವನ್ನು ಕೇಳಿದಾಗ, ಇಹಲೋಕದ ಯಶಸ್ಸಿಗಿಂತ ನಿತ್ಯ ರಕ್ಷಣೆಯೇ ಪ್ರಮುಖ ಎಂದು ನಂಬಿ ಅವರು ರಾಜೀನಾಮೆ ನೀಡಲು ನಿರ್ಧರಿಸಿದರು. ದೇವರ ವಾಕ್ಯ ಮತ್ತು ಪ್ರಾರ್ಥನೆಯ ಮೂಲಕ, ಅವರು ಮತ್ತೆ ದೇವರನ್ನು ನಂಬುವ ಧೈರ್ಯವನ್ನು ಪಡೆದರು.\n\nಈ ಪ್ರಯಾಣದಲ್ಲಿ, ಕರ್ತನು ಜಾನ್ಸನ್ ಅವರ ಕೋಪವನ್ನು ಸ್ವಸ್ಥಗೊಳಿಸಿ, ಕೌಟುಂಬಿಕ ಜೀವನದ ಕಡೆಗೆ ಅವರ ಮನೋಭಾವವನ್ನು ಸರಿಪಡಿಸಿ, ಮತ್ತು ಅವರ ಮಕ್ಕಳನ್ನು ದೇವರ ಅಮೂಲ್ಯ ಕೊಡುಗೆಗಳಾಗಿ ಗುರುತಿಸಲು ಸಹಾಯ ಮಾಡುವ ಮೂಲಕ ಅವರನ್ನು ಆಧ್ಯಾತ್ಮಿಕವಾಗಿ ರೂಪಾಂತರಿಸಿದನು. ಪ್ರಾಮಾಣಿಕ ಪಶ್ಚಾತ್ತಾಪ ಮತ್ತು ಪಾಪನಿವೇದನೆಯ (ಕನ್‌ಫೆಷನ್) ನಂತರ, ಅಗತ್ಯವಿರುವ ಅನುಭವವಿಲ್ಲದಿದ್ದರೂ ಅವರಿಗೆ ನಿರೀಕ್ಷಿಸದ ರೀತಿಯಲ್ಲಿ ಹಿರಿಯ ಐಟಿ ಪೋಸ್ಟಿಂಗ್ ಲಭಿಸಿತು. ಈ ಆಶೀರ್ವಾದಗಳು ಅರ್ಹತೆಯಿಂದಲ್ಲ, ಬದಲಿಗೆ ದೇವರ ಕೃಪೆಯಿಂದ ಬಂದವು ಎಂದು ಒಪ್ಪಿಕೊಳ್ಳುತ್ತಾ, ಅವರು ಈಗ ದಾನಧರ್ಮಗಳ ಮೂಲಕ ಇತರರಿಗೆ ಸೇವೆ ಸಲ್ಲಿಸುತ್ತಿದ್ದಾರೆ, ಕೃಪಾಸನಮ್ ಪ್ರಕಟಣೆಗಳನ್ನು ಹಂಚುತ್ತಿದ್ದಾರೆ, ಮತ್ತು ತಮ್ಮ ಜೀವಿತಾವಧಿಯ ಕೊನೆಯವರೆಗೂ ಮರಿಯಾನ್ ಒಡಂಬಡಿಕೆಗೆ ನಂಬಿಗಸ್ತರಾಗಿರಲು ಬೇಕಾದ ಕೃಪೆಗಾಗಿ ಪ್ರತಿದಿನ ಪ್ರಾರ್ಥಿಸುತ್ತಿದ್ದಾರೆ."
+},
+    "subtitles": "/assets/testimony-subtitle/02aug26.json",
+    "duration": "14:37",
     "overlay":{
   "boxes": [
     {
-      "x": 28,
-      "y": 4,
-      "w": 1010,
-      "h": 131,
-      "background": "#112d76",
-      "fontColor": "#f8f900"
+      "x": 35,
+      "y": 9,
+      "w": 954,
+      "h": 194,
+      "background": "#173152",
+      "fontColor": "#f0ca4d"
     },
     {
-      "x": 50,
-      "y": 135,
-      "w": 769,
-      "h": 318,
-      "background": "#0a2059",
-      "fontColor": "#dfddde"
+      "x": 34,
+      "y": 215,
+      "w": 856,
+      "h": 294,
+      "background": "#9b0141",
+      "fontColor": "#ffffff"
     },
     {
-      "x": 21,
-      "y": 463,
-      "w": 1043,
-      "h": 129,
-      "background": "#ba339a",
-      "fontColor": "#fffeff"
+      "x": 27,
+      "y": 511,
+      "w": 1041,
+      "h": 204,
+      "background": "#004684",
+      "fontColor": "#ffffff"
     },
     {
-      "x": 25,
-      "y": 593,
-      "w": 1037,
-      "h": 127,
-      "background": "#0f2763",
-      "fontColor": "#fcffff"
-    },
-    {
-      "x": 1075,
+      "x": 1114,
       "y": 3,
-      "w": 195,
-      "h": 62,
-      "background": "#dee041",
-      "fontColor": "#dcdbd9"
+      "w": 164,
+      "h": 64,
+      "background": "#2b6597",
+      "fontColor": "#feffff"
     }
   ],
   "texts": {
   "en": [
-    "Through the Marian Covenant,",
-    "Kreupasanam Mother",
-    "pours out blessings far beyond what we ask for.",
-    "Let's hear the testimony of Bibin and Stephy.",
-    "Alappuzha"
+    "Live! Flourish like a plant of the field!",
+    "The Our Daily Bread Message That Changed My Life",
+    "An IT Professional's Testimony of Covenantal Presence",
+    "Delhi"
   ],
   "hi": [
-    "मरियम वाचा के द्वारा,",
-    "कृपासनम माता",
-    "हमारी माँग से कहीं बढ़कर आशीषें बरसाती हैं।",
-    "आइए, बिबिन और स्टेफी की गवाही सुनते हैं।",
-    "आलप्पुझा"
+    "जीवित रहो! मैदान के पौधे की तरह फलो-फूलो!",
+    "‘आवर डेली ब्रेड’ के संदेश ने मेरा जीवन बदल दिया",
+    "एक आईटी प्रोफेशनल की वाचा की उपस्थिति की गवाही",
+    "दिल्ली"
   ],
   "ta": [
-    "மரிய அன்னையின் உடன்படிக்கையின் மூலம்,",
-    "கிருபாசனம் அன்னை",
-    "நாம் கேட்பதைவிட அளவற்ற ஆசீர்வாதங்களை வழங்குகிறார்.",
-    "பிபின் மற்றும் ஸ்டெபியின் சாட்சியத்தை கேட்போம்.",
-    "ஆലപ്പுழா"
+    "வாழ்க! வயல்வெளியின் செடியைப் போல செழித்து வளர்க!",
+    "‘அவர் டெய்லி பிரெட்’ செய்தி என் வாழ்க்கையை மாற்றியது",
+    "ஒரு தகவல் தொழில்நுட்ப நிபுணரின் உடன்படிக்கை சந்நிதி சாட்சி",
+    "டெல்லி"
   ],
   "bn": [
-    "মারিয়ান চুক্তির মাধ্যমে,",
-    "ক্রুপাসানাম মাতা",
-    "আমাদের চাওয়ার থেকেও অনেক বেশি আশীর্বাদ বর্ষণ করেন।",
-    "চলুন, বিবিন ও স্টেফির সাক্ষ্য শুনি।",
-    "আলাপ্পুঝা"
+    "বেঁচে থাকো! মাঠের গাছের মতো সমৃদ্ধ হয়ে বেড়ে ওঠো!",
+    "‘আওয়ার ডেইলি ব্রেড’-এর বার্তা আমার জীবন বদলে দিয়েছে",
+    "একজন আইটি পেশাজীবীর চুক্তির উপস্থিতির সাক্ষ্য",
+    "দিল্লি"
   ],
   "te": [
-    "మరియన్ ఒడంబడిక ద్వారా,",
-    "క్రుపాసనం మాత",
-    "మనం అడిగిన దానికంటే ఎంతో ఎక్కువ ఆశీర్వాదాలను కురిపిస్తుంది.",
-    "ఇప్పుడు బిబిన్ మరియు స్టెఫీ సాక్ష్యాన్ని విందాం.",
-    "అలప్పుజా"
+    "జీవించు! పొలంలోని మొక్కలాగా వర్ధిల్లుము!",
+    "‘అవర్ డైలీ బ్రెడ్’ సందేశం నా జీవితాన్ని మార్చింది",
+    "ఒక ఐటీ నిపుణుడి ఒడంబడిక సన్నిధి సాక్ష్యం",
+    "ఢిల్లీ"
   ],
   "mr": [
-    "मरियम कराराद्वारे,",
-    "क्रुपासनम माता",
-    "आपण मागतो त्यापेक्षाही कितीतरी अधिक आशीर्वाद देतात.",
-    "चला, बिबिन आणि स्टेफी यांची साक्ष ऐकूया.",
-    "अलप्पुझा"
+    "जग! शेतातील रोपासारखा बहरून वाढ!",
+    "‘आवर डेली ब्रेड’ संदेशाने माझे जीवन बदलले",
+    "एका आयटी व्यावसायिकाची करारसंबंधी उपस्थितीची साक्ष",
+    "दिल्ली"
   ],
   "fr": [
-    "Grâce à l'Alliance mariale,",
-    "Notre-Dame de Kreupasanam",
-    "répand des bénédictions bien au-delà de ce que nous demandons.",
-    "Écoutons le témoignage de Bibin et de Stephy.",
-    "Alappuzha"
+    "Vis ! Épanouis-toi comme une plante des champs !",
+    "Le message de « Our Daily Bread » qui a changé ma vie",
+    "Le témoignage d'un professionnel de l'informatique sur la présence de l'Alliance",
+    "Delhi"
   ],
   "es": [
-    "A través del Pacto Mariano,",
-    "Nuestra Señora de Kreupasanam",
-    "derrama bendiciones mucho más allá de lo que pedimos.",
-    "Escuchemos el testimonio de Bibin y Stephy.",
-    "Alappuzha"
+    "¡Vive! ¡Florece como una planta del campo!",
+    "El mensaje de «Our Daily Bread» que cambió mi vida",
+    "El testimonio de un profesional de TI sobre la Presencia de la Alianza",
+    "Delhi"
   ],
   "zh": [
-    "借着圣母盟约，",
-    "克雷乌帕萨南圣母",
-    "赐下远超过我们所求的恩典。",
-    "让我们来听听比宾和斯蒂菲的见证。",
-    "阿拉普扎"
+    "要活着！像田野的植物一样茁壮成长！",
+    "《Our Daily Bread》信息改变了我的人生",
+    "一位 IT 专业人士的盟约临在见证",
+    "德里"
   ],
   "kn": [
-    "ಮರಿಯಮ್ಮನ ಒಡಂಬಡಿಕೆಯ ಮೂಲಕ,",
-    "ಕ್ರೆಉಪಾಸನಂ ಮಾತೆ",
-    "ನಾವು ಕೇಳುವುದಕ್ಕಿಂತಲೂ ಹೆಚ್ಚಿನ ಆಶೀರ್ವಾದಗಳನ್ನು ಧಾರಾಳವಾಗಿ ಸುರಿಸುತ್ತಾರೆ.",
-    "ಬಿಬಿನ್ ಮತ್ತು ಸ್ಟೆಫಿಯ ಸಾಕ್ಷ್ಯವನ್ನು ಕೇಳೋಣ.",
-    "ಅಲಪ್ಪುಳ"
+    "ಬಾಳು! ಹೊಲದ ಸಸಿಯಂತೆ ಸಮೃದ್ಧಿಯಾಗಿ ಬೆಳೆಯು!",
+    "‘ಆವರ್ ಡೇಲಿ ಬ್ರೆಡ್’ ಸಂದೇಶವು ನನ್ನ ಜೀವನವನ್ನು ಬದಲಿಸಿತು",
+    "ಒಬ್ಬ ಐಟಿ ವೃತ್ತಿಪರರ ಒಡಂಬಡಿಕೆಯ ಸಾನ್ನಿಧ್ಯದ ಸಾಕ್ಷ್ಯ",
+    "ದೆಹಲಿ"
   ]
 }
 }
-}
+  }
 ]
