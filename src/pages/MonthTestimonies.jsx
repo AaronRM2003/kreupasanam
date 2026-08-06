@@ -19,7 +19,7 @@ function slugify(text) {
   return text.toString().toLowerCase().trim().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '').replace(/\-\-+/g, '-');
 }
 
-function MonthlyTestimonyCard({ id, videoId, title, image, date, lang, path, duration, overlayData, expectedIn, savedProgress }) {
+function MonthlyTestimonyCard({ id, videoId, title, image, date, lang, path, duration, overlayData, expectedIn, savedProgress, isFeatured }) {
   const navigate = useNavigate();
   const [isLoaded, setIsLoaded] = useState(false);
   const slug = slugify(title["en"]);
@@ -63,7 +63,19 @@ function MonthlyTestimonyCard({ id, videoId, title, image, date, lang, path, dur
   const t = translations[lang] || translations.en;
 
   return (
-    <div className={styles.testimoniesCard}>
+    <div 
+      className={styles.testimoniesCard}
+      style={{
+        ...(isFeatured
+          ? {
+              border: '1px solid rgba(218, 165, 32, 0.35)',
+              background: 'linear-gradient(145deg, rgba(255, 248, 220, 0.75) 0%, rgba(255, 255, 255, 1) 55%, rgba(255, 250, 235, 0.85) 100%)',
+              boxShadow: '0 12px 32px rgba(218, 165, 32, 0.18), 0 3px 10px rgba(0, 0, 0, 0.05)',
+              transform: 'translateY(-4px)',
+            }
+          : {})
+      }}
+    >
       <div className={`${styles.testimoniesImageWrapper} ${isComingSoon ? styles.blurEffect : ""}`}>
         {!isLoaded && <div className={styles.skeleton}></div>}
 
@@ -94,7 +106,22 @@ function MonthlyTestimonyCard({ id, videoId, title, image, date, lang, path, dur
 
       <h3 className={`${styles.testimoniesCardTitle} ${isLoaded ? styles.visible : ""}`}>{title[lang]}</h3>
       <p className={`${styles.testimoniesDate} ${isLoaded ? styles.visible : ""}`}>{date}</p>
-      <button className={`${styles.testimoniesVideoLink} ${isComingSoon ? styles.disabledBtn : ""}`} onClick={handleCardClick} disabled={!isLoaded || isComingSoon}>
+      
+      <button 
+        className={`${styles.testimoniesVideoLink} ${isComingSoon ? styles.disabledBtn : ""}`} 
+        onClick={handleCardClick} 
+        disabled={!isLoaded || isComingSoon}
+        style={{
+          ...(isFeatured && !isComingSoon
+            ? {
+                background: 'linear-gradient(135deg, #B8860B, #D4A017)',
+                color: '#FFFFFF',
+                border: 'none',
+                boxShadow: '0 5px 14px rgba(184, 134, 11, 0.25)',
+              }
+            : {})
+        }}
+      >
         {!isLoaded ? t.loading : isComingSoon ? t.coming : t.watch}
       </button>
     </div>
@@ -103,6 +130,7 @@ function MonthlyTestimonyCard({ id, videoId, title, image, date, lang, path, dur
 
 export default function MonthlyTestimonies({ lang: initialLang }) {
   const [lang, setLang] = useState(initialLang || 'en');
+  const [filterType, setFilterType] = useState('latest'); 
   const [selectedMonth, setSelectedMonth] = useState('All');
   const [selectedYear, setSelectedYear] = useState('All');
 
@@ -122,7 +150,7 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  useEffect(() => { setVisibleCount(12); }, [selectedMonth, selectedYear]);
+  useEffect(() => { setVisibleCount(12); }, [selectedMonth, selectedYear, filterType]);
 
   const months = ['All', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const years = ['All','2026', '2025', '2024', '2023', '2022', '2021', '2020'];
@@ -165,7 +193,6 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
     return () => { isMounted = false; };
   }, []); 
 
-  // 🚀 PERFECT SYNC: Event listeners
   useEffect(() => {
     if (testimonies.length === 0) return;
 
@@ -209,7 +236,7 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
   }, [testimonies]);
 
   const filteredTestimonies = useMemo(() => {
-    return testimonies
+    let baseFiltered = testimonies
       .filter(t => t.id !== continueWatchingItem?.id)
       .filter(({ date }) => {
         const d = new Date(date);
@@ -217,8 +244,14 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
         const y = d.getFullYear().toString();
         return (selectedMonth === "All" || m === selectedMonth) && (selectedYear === "All" || y === selectedYear);
       })
-      .sort((a, b) => new Date(b.date) - new Date(a.date));
-  }, [testimonies, selectedMonth, selectedYear, continueWatchingItem]);
+      .sort((a, b) => b.id - a.id); // Sorted by id descending
+
+    if (filterType === 'featured') {
+      return baseFiltered.filter(t => t.featured === true);
+    }
+
+    return baseFiltered;
+  }, [testimonies, selectedMonth, selectedYear, continueWatchingItem, filterType]);
 
   const displayedTestimonies = filteredTestimonies.slice(0, visibleCount);
 
@@ -251,6 +284,17 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
             <p className={styles.testimoniesSubtitle}>Stories of healing, grace...</p>
 
             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem', margin: '0.5rem' }}>
+              
+              <Dropdown onSelect={(e) => setFilterType(e)}>
+                <Dropdown.Toggle variant="outline-secondary">
+                  {filterType === 'featured' ? 'Featured' : 'Latest'}
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item eventKey="latest">Latest</Dropdown.Item>
+                  <Dropdown.Item eventKey="featured">Featured</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+
               <Dropdown onSelect={(e) => e !== lang && setLang(e)}>
                 <Dropdown.Toggle variant="outline-secondary">{languageMap[lang] ?? languageMap['en']}</Dropdown.Toggle>
                 <Dropdown.Menu>
@@ -284,10 +328,8 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
             </div>
           ) : (
             <>
-              {/* 🎬 MERGED GRID */}
               <div className={styles.testimoniesGrid}>
                 
-                {/* 1. Continue Watching Card */}
                 {continueWatchingItem && (
                   <div style={{ 
                     background: 'linear-gradient(135deg, rgba(36, 107, 253, 0.05), rgba(0, 179, 255, 0.1))', 
@@ -321,11 +363,11 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
                       overlayData={continueWatchingItem.finalOverlay} 
                       savedProgress={allProgressData[continueWatchingItem.extractedVideoId]} 
                       expectedIn={continueWatchingItem.expectedIn}
+                      isFeatured={continueWatchingItem.featured}
                     />
                   </div>
                 )}
 
-                {/* 2. Standard Cards */}
                 {displayedTestimonies.length > 0 ? (
                   displayedTestimonies.map((t) => (
                     <MonthlyTestimonyCard
@@ -341,6 +383,7 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
                       overlayData={t.finalOverlay} 
                       savedProgress={allProgressData[t.extractedVideoId]}
                       expectedIn={t.expectedIn}
+                      isFeatured={t.featured}
                     />
                   ))
                 ) : (
