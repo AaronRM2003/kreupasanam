@@ -262,7 +262,6 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
 
       <section
         className={styles.testimoniesSection}
-        style={{ marginBottom: '2rem', backgroundColor: windowWidth <= 768 ? '#fff' : 'transparent' }}
       >
         <div className={styles.testimoniesSectionContainer}>
           

@@ -36,7 +36,19 @@ export default function AppBar({ lang }) {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+// Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (navOpen && isMobile && !isLandscape) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = ""; // Restores default scrolling
+    }
 
+    // Cleanup function in case the component unmounts while menu is open
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [navOpen, isMobile, isLandscape]);
   // close on outside click
  // close on outside click
   useEffect(() => {
@@ -87,45 +99,46 @@ export default function AppBar({ lang }) {
 
   // Remove the "const navJSX = (...)" block entirely and replace your return statement with this:
 return (
-  <div className="app-bar-wrapper">
-    <header className={`app-bar ${scrolled ? "scrolled" : ""}`}>
-      <h1 className={`logo ${scrolled ? "scrolled" : ""}`}>
-        Kreupasanam Testimonies
-      </h1>
+    <div className="app-bar-wrapper">
+      <header className={`app-bar ${scrolled ? "scrolled" : ""} ${navOpen ? "nav-open" : ""}`}>
+        <h1 className={`logo ${scrolled ? "scrolled" : ""}`}>
+          Kreupasanam Testimonies
+        </h1>
 
-      <NavButton navOpen={navOpen} toggleNav={toggleNav} />
+        <NavButton navOpen={navOpen} toggleNav={toggleNav} />
 
-      {/* Desktop / Landscape Navigation */}
-      {(!isMobile || isLandscape) && (
+        {/* Desktop Navigation */}
+        {!isMobile && (
+          <nav ref={navRef} className={`nav-links ${navOpen ? "open" : ""}`}>
+            {navItems.map((item) => (
+              <NavLink 
+                key={item.path} 
+                to={`/${lang}/${item.path}`} 
+                onClick={closeNav}
+              >
+                {item.label}
+                {item.isNew && <span className="new-badge">NEW</span>}
+              </NavLink>
+            ))}
+          </nav>
+        )}
+      </header>
+
+      {/* Mobile Navigation (Handles BOTH Portrait and Landscape) */}
+      {isMobile && (
         <nav ref={navRef} className={`nav-links ${navOpen ? "open" : ""}`}>
           {navItems.map((item) => (
-            <NavLink 
-              key={item.path} 
-              to={`/${lang}/${item.path}`} 
+            <NavLink
+              key={item.path}
+              to={`/${lang}/${item.path}`}
               onClick={closeNav}
             >
               {item.label}
+              {item.isNew && <span className="new-badge">NEW</span>}
             </NavLink>
           ))}
         </nav>
       )}
-    </header>
-
-    {/* Mobile Portrait Navigation */}
-    {isMobile && !isLandscape && (
-      <nav ref={navRef} className={`nav-links ${navOpen ? "open" : ""}`}>
-        {navItems.map((item) => (
-          <NavLink
-  key={item.path}
-  to={`/${lang}/${item.path}`}
-  onClick={closeNav}
->
-  {item.label}
-  {item.isNew && <span className="new-badge">NEW</span>}
-</NavLink>
-        ))}
-      </nav>
-    )}
-  </div>
-);
+    </div>
+  );
 }

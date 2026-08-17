@@ -69,13 +69,6 @@
     /* Base color */
     background-color: #ffffff;
     
-    /* 🆕 The "Lines": Ultra-subtle, high-end tech grid */
-    background-image: 
-      linear-gradient(rgba(36, 107, 253, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(36, 107, 253, 0.04) 1px, transparent 1px);
-    background-size: 32px 32px; /* Perfect spacing for mobile */
-    background-position: center top;
-    
     border-radius: 0;
     box-shadow: none;
     overflow: hidden; /* Contains the grid */

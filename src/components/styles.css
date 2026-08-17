@@ -1,55 +1,90 @@
+/* ========================================================
+   GLOBAL BODY & PURE CSS BACKGROUND DESIGN
+   ======================================================== */
 body {
   margin: 0;
+  padding: 0;
   font-family: 'Poppins', sans-serif;
   color: #2c3e50;
-  min-height: 100%;
+  min-height: 100vh;
   position: relative;
   overflow-x: hidden;
-  
+  background-color: #f8fafc; 
 }
 
-/* Add blurred background using pseudo-element */
+/* Custom Premium Text Selection */
+::selection {
+  background: rgba(36, 107, 253, 0.2); /* Soft brand blue */
+  color: #123f7c; /* Deep blue text */
+}
+
+/* Sleek SaaS Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.25);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.4);
+}
+
+/* Layer 1: Fluid Aurora Mesh Gradient */
 body::before {
   content: "";
   position: fixed;
   top: 0;
   left: 0;
-  height: 100%;
-  width: 100%;
-  background: url('/assets/back3.webp') no-repeat center center / cover;
+  width: 100vw;
+  height: 100vh;
   z-index: -2;
+  
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(36, 107, 253, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(124, 58, 237, 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(0, 183, 255, 0.15) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(36, 107, 253, 0.1) 0px, transparent 50%);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  
+  /* Upgraded to float around smoothly */
+  animation: auroraBreathe 20s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
 }
 
-/* Optional: Add a semi-transparent overlay for contrast */
-/* Keep your existing styles for desktop intact */
+/* Layer 2: Spotlight Grid Overlay */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.5; /* Slightly increased because of the mask */
+  
+  background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='2' cy='2' r='1.5' fill='%2364748b' fill-opacity='0.2'/%3E%3C/svg%3E");
+  background-size: 24px 24px;
 
-/* Mobile-only fixes */
-@media (max-width: 768px){
-  html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    min-height: 100%;   /* Use min-height instead of fixed height */
-    overflow-x: hidden;
-    font-family: sans-serif;
-    position: relative;
-  }
-
-  body::before {
-    content: "";
-    position: absolute;           /* changed from fixed to absolute */
-    top: 0;
-    left: 0;
-    width: 100%;
-    min-height: 100%;             /* allows background to grow with content */
-    background: url('/assets/back4.webp') no-repeat center top / contain;
-    z-index: -2;
-    background-attachment: scroll; /* explicitly scrollable */
-  }
+  /* The Secret Sauce: Fades the grid out at the edges of the screen */
+  -webkit-mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 100%);
+  mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 100%);
 }
 
+/* Advanced Organic Movement */
+@keyframes auroraBreathe {
+  0% { transform: scale(1) translate(0%, 0%); }
+  50% { transform: scale(1.05) translate(1%, 2%); }
+  100% { transform: scale(1.02) translate(-1%, -1%); }
+}
 
-
+/* ========================================================
+   FLOATING LOGO
+   ======================================================== */
 .floating-logo {
   position: fixed;
   top: 20px;
@@ -57,87 +92,77 @@ body::before {
   height: 92px;
   width: auto;
   z-index: 10000;
-  pointer-events: none; /* allow clicks to go through */
+  pointer-events: none; 
   user-select: none;
+  /* Add a soft drop shadow so it pops off the background */
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
 }
+
 @media (max-width: 1280px) {
   .floating-logo {
-    height: 0px;
-  }
-}
-@media (orientation: landscape) and (max-width: 1024px) and (max-height: 768px) {
-  html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    min-height: 100%;   /* Use min-height instead of fixed height */
-    overflow-x: hidden;
-    font-family: sans-serif;
-    position: relative;
-  }
-  body::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    min-height: 100%;
-    background: url('/assets/back3.webp') no-repeat center top / contain;
-    z-index: -2;
-    background-attachment: scroll;
+    display: none; 
   }
 }
 
-
-
-
-/* Container for main content with glass effect */
+/* ========================================================
+   MAIN CONTENT & GLASS CONTAINERS
+   ======================================================== */
 .glass-container {
-  background: rgba(255, 255, 255, 0.4);       /* semi-transparent white */
-  backdrop-filter: blur(15px);                 /* background blur */
-  -webkit-backdrop-filter: blur(15px);         /* Safari support */
-  border-radius: 20px;                          /* rounded corners */
-  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37); /* subtle shadow */
-  border: 1px solid rgba(255, 255, 255, 0.18);    /* light border */
+  background: rgba(255, 255, 255, 0.6);        
+  border-radius: 20px;  
+  
+  /* Inner top highlight + soft outer shadow */
+  box-shadow: 
+    0 8px 32px rgba(36, 107, 253, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.3);
+
+  border: 1px solid rgba(255, 255, 255, 0.4);    
   padding: 2rem;
   margin: 3rem auto;
   max-width: 1100px;
-  color: #1a1a1a; /* darker text for contrast */
+  color: #1a1a1a; 
+  
+  /* Smooth interaction */
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
 }
 
-/* Example section title */
+/* Subtle physical lift on hover */
+.glass-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 16px 48px rgba(36, 107, 253, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* ========================================================
+   TYPOGRAPHY & ANIMATIONS
+   ======================================================== */
 .section-title {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
-  color: #123f7c; /* deep blue accent */
+  color: #123f7c; 
 }
-
-/* Testimony cards with subtle shadow and hover */
-
 
 main {
-  padding-top: 80px; /* approximate height of AppBar */
+  padding-top: 80px; 
 }
-
 
 .section {
   margin-top: 3rem;
 }
 
-.section-title {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-
+/* Smoother entrance animation */
 @keyframes fadeInScale {
   from {
     opacity: 0;
-    transform: scale(0.9);
+    transform: scale(0.95) translateY(10px);
   }
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: scale(1) translateY(0);
+ 
   }
 }

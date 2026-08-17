@@ -37,7 +37,7 @@ function slugify(text) {
 
 export function TestimonyCard({
   id,
-  videoId, 
+  videoId,
   title,
   image,
   date,
@@ -45,8 +45,8 @@ export function TestimonyCard({
   path,
   duration,
   overlayData,
-  expectedIn, 
-  isFeatured, 
+  expectedIn,
+  isFeatured,
 }) {
   const navigate = useNavigate();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -78,7 +78,7 @@ export function TestimonyCard({
   const isComingSoon = !!expectedIn;
 
   const handleCardClick = () => {
-    if (!isComingSoon) {
+    if (!isComingSoon && isLoaded) {
       navigate(`/${path}/${id}-${slug}`);
     }
   };
@@ -102,21 +102,8 @@ export function TestimonyCard({
   const t = translations[lang] || translations.en;
 
   return (
-    <div 
-      className={styles.testimoniesCard}
-style={{
-  ...(isFeatured
-    ? {
-        border: '1px solid rgba(218, 165, 32, 0.35)',
-        background:
-          'linear-gradient(145deg, rgba(255, 248, 220, 0.75) 0%, rgba(255, 255, 255, 1) 55%, rgba(255, 250, 235, 0.85) 100%)',
-        boxShadow:
-          '0 12px 32px rgba(218, 165, 32, 0.18), 0 3px 10px rgba(0, 0, 0, 0.05)',
-        transform: 'translateY(-4px)',
-      }
-    : {})
-}}
-
+    <div
+      className={`${styles.testimoniesCard} ${isFeatured ? styles.featuredCard : ""}`}
     >
       <div
         className={`${styles.testimoniesImageWrapper} ${
@@ -148,12 +135,8 @@ style={{
 
         {isComingSoon && isLoaded && (
           <div className={styles.comingSoonOverlay}>
-            <div className={styles.overlayText}>
-              {t.releasing}
-            </div>
-            <div className={styles.overlayTime}>
-              {formattedReleaseTime}
-            </div>
+            <div className={styles.overlayText}>{t.releasing}</div>
+            <div className={styles.overlayTime}>{formattedReleaseTime}</div>
           </div>
         )}
       </div>
@@ -180,16 +163,6 @@ style={{
         }`}
         onClick={handleCardClick}
         disabled={!isLoaded || isComingSoon}
-          style={{
-    ...(isFeatured && !isComingSoon
-      ? {
-          background: 'linear-gradient(135deg, #B8860B, #D4A017)',
-          color: '#FFFFFF',
-          border: 'none',
-          boxShadow: '0 5px 14px rgba(184, 134, 11, 0.25)',
-        }
-      : {})
-  }}
       >
         {!isLoaded
           ? t.loading

@@ -10,11 +10,11 @@
   justify-content: center;
   pointer-events: none;
   z-index: 9999;
-  
 }
+
 @media (hover: none) {
   .nav-links a::after {
-    display: none; /* or don't animate underline */
+    display: none;
   }
 }
 
@@ -53,12 +53,12 @@
   border: none;
   border-radius: 0;
 
-transition:
-  background 0.6s ease,
-  backdrop-filter 0.6s ease,
-  box-shadow 0.6s ease,
-  border 0.6s ease,
-  opacity 0.6s ease;
+  transition:
+    background 0.6s ease,
+    backdrop-filter 0.6s ease,
+    box-shadow 0.6s ease,
+    border 0.6s ease,
+    opacity 0.6s ease;
 }
 
 .app-bar.scrolled {
@@ -68,15 +68,14 @@ transition:
   max-width: 1160px;
   height: 60px;
   margin: 0;
-
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.05));
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.3));
+  border: 1px solid rgba(255, 255, 255, 0.5);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), 0 0 8px rgba(36, 107, 253, 0.15);
   border-radius: 20px;
   mask-image: none;
   -webkit-mask-image: none;
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .app-bar::before {
@@ -92,9 +91,9 @@ transition:
 .logo {
   font-size: 2rem;
   font-weight: 900;
-background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
-    -webkit-background-clip: text;
-    color: transparent;
+  background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
+  -webkit-background-clip: text;
+  color: transparent;
   letter-spacing: 0.5px;
   user-select: none;
   flex: none;
@@ -109,7 +108,7 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
   text-shadow: 0 0 12px rgba(18, 63, 124, 0.5);
 }
 
-/* Keep your existing .nav-links rules */
+/* Nav Links - Desktop */
 .nav-links {
   position: absolute;
   right: 2rem;
@@ -117,8 +116,6 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
   gap: 1.5rem;
   align-items: center;
   z-index: 2;
-  
-  /* 🔑 CHANGE THIS LINE: Do not use 'all' here */
   transition: right 0.3s ease, gap 0.3s ease, color 0.25s ease; 
 }
 
@@ -126,11 +123,10 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
   position: relative;
   color: #1f2937;
   text-decoration: none;
-  font-size: 0.80rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  padding: 2px 0;
+  padding: 4px 0;
   cursor: pointer;
-  /* Added transform to the transition for the click effect */
   transition: color 0.25s ease, transform 0.15s ease;
 }
 
@@ -138,40 +134,28 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
   content: '';
   position: absolute;
   left: 0;
-  bottom: -4px;
+  bottom: 0px;
   height: 2px;
   width: 0;
   background-color: #246bfd;
   transition: width 0.3s ease;
 }
 
-.nav-links a:hover {
-  color: #246bfd;
-}
-
-.nav-links a:hover::after {
-  width: 100%;
-}
-
-.nav-links a:focus-visible {
-  outline: 2px solid #246bfd;
-  outline-offset: 4px;
-}
-
-/* 🆕 NEW: Active State Styling */
+.nav-links a:hover,
 .nav-links a.active {
   color: #246bfd;
 }
 
+.nav-links a:hover::after,
 .nav-links a.active::after {
   width: 100%;
 }
 
-/* 🆕 NEW: Subtle click/tap effect for better tactile feedback */
 .nav-links a:active {
   transform: scale(0.95); 
 }
 
+/* Menu Toggle Button */
 .menu-toggle {
   position: absolute;
   top: 45%;
@@ -183,75 +167,51 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
   padding: 1px 12px;
   border-radius: 12px;
   cursor: pointer;
-  display: none; /* Default hidden; shown on mobile portrait */
+  display: none; 
   color: #2a9afc;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition:
-    background-color 0.3s ease,
-    box-shadow 0.3s ease,
-    transform 0.2s ease;
-  z-index: 3;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  z-index: 10001; /* Must sit above full-screen menu */
 }
 
-.menu-toggle:hover,
-.menu-toggle:focus {
-  background: rgba(42, 154, 252, 0.1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transform: translateY(-50%) scale(1.05);
-}
+/* ========================================================
+   MOBILE PORTRAIT & LANDSCAPE (Unified Glassmorphism)
+   ======================================================== */
+@media (max-width: 1200px) {
 
-.menu-toggle.active {
-  background: rgba(42, 154, 252, 0.15);
-  color: #2a9afc;
-  box-shadow: 0 6px 16px rgba(42, 154, 252, 0.2);
-  transform: translateY(-50%) scale(1.1);
-}
-
-/* Mobile Portrait Styles */
-@media (max-width: 1200px) and (orientation: portrait) {
-
- /* ===== DYNAMIC CAPSULE APP BAR (NEW MOBILE UI) ===== */
-/* ===== DYNAMIC CAPSULE APP BAR (NEW MOBILE UI) ===== */
-  /* ===== DYNAMIC CAPSULE APP BAR (NEW MOBILE UI) ===== */
+  /* ===== EDGE-TO-EDGE GLASS HEADER ===== */
   .app-bar {
     position: relative; 
-    margin-top: 16px;
-    width: calc(100vw - 32px);
-    height: 64px;
-    padding: 0 0.5rem;
-
+    margin-top: 0;       /* Flush to top */
+    top: 0;
+    width: 100vw;        /* Spans entire width */
+    height: 72px;        /* Taller default height for a premium mobile feel */
+    padding: 0 1.25rem;  /* Clean side padding */
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    background: rgba(255, 255, 255, 0.85);
+    /* YOUR CUSTOM OPACITY */
+    background: rgba(255, 255, 255, 0.303);
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
 
-    border-radius: 100px; 
-    border: 1px solid rgba(0, 0, 0, 0.272);
+    /* YOUR CUSTOM RADIUS */
+    border-radius: 0;    
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06); 
+    box-shadow: none;    
 
-    /* 🔑 SHADOW FIX: Standardized the spread to -8px to prevent animation tearing */
-    box-shadow: 
-      0 12px 32px -8px rgba(0, 0, 0, 0.08),
-      0 1px 0px 0px inset rgba(255, 255, 255, 1);
-
-    /* 🔑 GPU ACCELERATION FIX: Stops the bottom edge from flashing/tearing */
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     transform: translateZ(0);
     
-    /* 🔑 OVERRIDE MASK: Completely kill the desktop mask-image */
     mask-image: none !important;
     -webkit-mask-image: none !important;
 
-    will-change: width, height, margin-top, box-shadow, background-color;
-    
-    /* 🔑 TRANSITION FIX: Replaced 'all' with targeted properties */
+    will-change: height, box-shadow, background-color, border-color;
     transition: 
-      width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
       height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-      margin-top 0.4s cubic-bezier(0.16, 1, 0.3, 1),
       box-shadow 0.4s ease,
       background-color 0.4s ease,
       border-color 0.4s ease;
@@ -259,311 +219,215 @@ background: linear-gradient(90deg, hsl(218, 100%, 42%) 0%, #0095ff 100%);
     z-index: 99999 !important;
   }
 
+  /* Scrolled State */
   .app-bar.scrolled {
-top:8px;
-    width: calc(100vw - 64px); 
-    height: 52px;
-    background: rgba(255, 255, 255, 0.95);
+    top: 0;
+    margin-top: 0;
+    width: 100vw; 
+    height: 60px; 
     
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    /* YOUR CUSTOM OPACITY & RADIUS */
+    background: rgba(255, 255, 255, 0.513); 
+    border-radius: 0;
     
-    /* 🔑 SHADOW FIX: Spread radius (-8px) now matches the base state exactly */
-    box-shadow: 
-      0 8px 24px -8px rgba(0, 0, 0, 0.12),
-      0 1px 0px 0px inset rgba(255, 255, 255, 1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06); 
   }
 
-/* ===== LOGO ===== */
-.logo {
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: 0.2px;
-  line-height: 1;
-  margin: 0 auto;
+  /* =========================================
+     HIDE APP BAR UI WHEN MENU IS OPEN
+     ========================================= */
+  .app-bar.nav-open {
+    height: 72px !important; /* Locks height to prevent scroll glitching */
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
 
-  /* Keeps the blue gradient text */
-  background: linear-gradient(90deg, #246bfd, #00b3ff);
-  -webkit-background-clip: text;
-  color: transparent;
+  /* Fade out the logo when menu is open */
+  .app-bar.nav-open .logo {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.95); 
+  }
 
-  pointer-events: none;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
+  /* ===== LOGO ===== */
+  .logo {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin: 0 auto;
+    pointer-events: none;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
 
-/* Shrink logo subtly on scroll */
-.app-bar.scrolled .logo {
-  font-size: 0.95rem;
-}
+  .app-bar.scrolled .logo {
+    font-size: 1.05rem;
+  }
 
-/* ===== INVISIBLE SPACER ===== */
-/* This balances the flexbox so the logo stays exactly in the center */
-.app-bar::before {
-  content: "";
-  width: 42px; 
-  height: 1px;
-}
-
-/* ===== CIRCULAR MENU TOGGLE ===== */
-.menu-toggle {
-  position: relative;
-  right: 0;
-  top: auto;
-  transform: none; /* Reset desktop transform */
+  /* Balances flexbox for center logo */
+  .app-bar::before {
+    content: "";
+    width: 42px; 
+    height: 1px;
+    display: block;
+  }
   
-  width: 42px;
-  height: 42px;
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-
-  /* Perfect circle button inside the pill */
-  border-radius: 50%;
-  background: transparent;
-  color: #1f2937;
-  font-size: 1.4rem;
-  box-shadow: none;
-  
-  z-index: 10001; 
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.menu-toggle:active {
-  transform: scale(0.9);
-}
-
-.menu-toggle.active {
-  background: rgba(36, 107, 253, 0.12);
-  color: #246bfd;
-  /* Fun animation: Spins 90 degrees when opening the menu */
-  transform: rotate(90deg); 
-}
-/* Overrides the desktop hover/focus jump on mobile */
-  .menu-toggle:hover,
-  .menu-toggle:focus {
-    background: transparent;
-    box-shadow: none;
+  /* ===== MENU TOGGLE BUTTON ===== */
+  .menu-toggle {
+    position: relative;
+    right: 0;
+    top: auto;
     transform: none; 
+    width: 42px;
+    height: 42px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: transparent;
+    color: #1f2937;
+    font-size: 1.5rem;
+    box-shadow: none;
+    z-index: 100001; 
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
-  /* Ensures it stays rotated even if tapped while active */
-  .menu-toggle.active:hover,
-  .menu-toggle.active:focus {
+  .menu-toggle:active {
+    transform: scale(0.9);
+  }
+
+  .menu-toggle.active {
     background: rgba(36, 107, 253, 0.12);
-    transform: rotate(90deg);
+    color: #246bfd;
+    transform: rotate(90deg); 
   }
 
-/* Scrolled state shrinks the button slightly to fit the smaller pill */
-.app-bar.scrolled .menu-toggle {
-  width: 36px;
-  height: 36px;
-  font-size: 1.2rem;
-}
-.app-bar.scrolled::before {
-  width: 36px; /* Matches shrunk menu toggle */
-}
-/* ===== FULL-SCREEN GLASS REVEAL MENU (NEW MOBILE UI) ===== */
-.nav-links {
-  position: fixed; 
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  max-height: 100vh;
+  .app-bar.scrolled .menu-toggle {
+    width: 38px;
+    height: 38px;
+    font-size: 1.3rem;
+  }
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 0 2rem;
-  gap: 0.5rem;
+  .app-bar.scrolled::before {
+    width: 38px; 
+  }
 
-  /* 🔴 REMOVED background, backdrop-filter, and clip-path from here */
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
+  /* ===== FULL-SCREEN SAAS GLASSMORPHISM COVER ===== */
+  .nav-links {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100dvh; 
 
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  
-  transition:
-    opacity 0.4s ease,
-    visibility 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    /* Pushes links to the top so they scroll beautifully in landscape */
+    justify-content: flex-start; 
+    align-items: center;
+    padding: 100px 2rem 4rem 2rem;
+    gap: 0.8rem;
+    
+    /* Allows scrolling on landscape mode */
+    overflow-y: auto;
+    overflow-x: hidden;
 
-  z-index: 10000; 
-}
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
 
-/* 🔴 THE FIX: The Expanding Glass Circle */
-/* We create a hidden circle behind the menu button and scale it up 100x */
-.nav-links::before {
-  content: "";
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  
-  /* The heavy glass effect is applied here instead */
-  background: rgba(248, 250, 255, 0.95);
-  backdrop-filter: blur(30px) saturate(180%);
-  -webkit-backdrop-filter: blur(30px) saturate(180%);
-  
-  /* Starts tiny */
-  transform: scale(0);
-  transform-origin: center;
-  transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-  z-index: -1; /* Keeps it behind your text links */
-}
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
 
-/* Open State */
-.nav-links.open {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-}
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.4s;
+    z-index: 10000; 
+  }
 
-/* Expand the glass circle when open */
-.nav-links.open::before {
-  transform: scale(100); /* Blows up the circle to cover the entire screen */
-}
+  .nav-links.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
 
-/* ===== NAV ITEMS (MODERN MOBILE TYPOGRAPHY) ===== */
-.nav-links a {
-  width: 100%;
-  justify-content: center;
-  text-align: center;
-  font-size: 1.8rem; 
-  font-weight: 700;
-  letter-spacing: -0.5px;
-  color: #1f2937;
+  .nav-links::before {
+    display: none;
+  }
 
-  padding: 0.8rem;
-  background: transparent;
-  border-radius: 16px;
-  min-height: auto;
+  /* ===== NAV ITEMS ===== */
+  .nav-links a {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    font-size: 1.5rem; /* Slightly smaller to fit better on landscape */
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #111827; 
 
-  /* Hardware acceleration for ultra-smooth text staggered entrance */
-  will-change: transform, opacity;
-  
-  opacity: 0;
-  transform: translateY(30px) scale(0.95);
-  transition:
-    color 0.2s ease,
-    background 0.2s ease,
-    transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-    opacity 0.5s ease;
-}
+    padding: 0.8rem;
+    background: transparent;
+    border-radius: 16px;
+    min-height: auto;
+    flex-shrink: 0; /* Prevents text crushing on small heights */
 
-/* Animate items IN when menu is open */
-.nav-links.open a {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
+    will-change: transform, opacity;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 
+      color 0.2s ease, 
+      background 0.2s ease, 
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+      opacity 0.5s ease;
+  }
 
-/* Cascade delay for a high-end ripple effect */
-.nav-links.open a:nth-child(1) { transition-delay: 0.10s; }
-.nav-links.open a:nth-child(2) { transition-delay: 0.15s; }
-.nav-links.open a:nth-child(3) { transition-delay: 0.20s; }
-.nav-links.open a:nth-child(4) { transition-delay: 0.25s; }
-.nav-links.open a:nth-child(5) { transition-delay: 0.30s; }
-.nav-links.open a:nth-child(6) { transition-delay: 0.35s; }
-.nav-links.open a:nth-child(7) { transition-delay: 0.40s; }
+  .nav-links a::after {
+    display: none;
+  }
 
-/* Active Page Indicator */
-.nav-links a.active {
-  color: #246bfd;
-  background: rgba(36, 107, 253, 0.08); /* Soft highlight pill */
-}
+  .nav-links.open a {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
-/* Clean up desktop styles on mobile */
-.nav-links a::after { display: none; } /* Remove desktop underline */
-.nav-links a:nth-child(4) { margin-top: 0; }
-.nav-links a:nth-child(4)::before { display: none; }
+  /* Stagger delays */
+  .nav-links.open a:nth-child(1) { transition-delay: 0.10s; }
+  .nav-links.open a:nth-child(2) { transition-delay: 0.15s; }
+  .nav-links.open a:nth-child(3) { transition-delay: 0.20s; }
+  .nav-links.open a:nth-child(4) { transition-delay: 0.25s; }
+  .nav-links.open a:nth-child(5) { transition-delay: 0.30s; }
+  .nav-links.open a:nth-child(6) { transition-delay: 0.35s; }
+  .nav-links.open a:nth-child(7) { transition-delay: 0.40s; }
 
-
-  .main-content {
-    padding-top: 200px;
+  .nav-links a.active {
+    color: #246bfd;
+    background: rgba(36, 107, 253, 0.08); 
   }
 }
+
+/* Badge Settings */
 .new-badge {
   display: inline-block;
-  margin-left: 6px;
-  padding: 1px 5px;
-  font-size: 0.6rem;
-  font-weight: 700;
+  margin-left: 8px;
+  padding: 3px 8px;
+  font-size: 0.65rem;
+  font-weight: 800;
   color: #fff;
-  background: #ff3b30;
+  background: linear-gradient(135deg, #7c3aed 0%, #3b82f6 100%);
   border-radius: 999px;
   line-height: 1.4;
   vertical-align: middle;
-}
-/* Landscape Mobile = Desktop styles */
-/* Landscape Mobile = Desktop styles with adjustments */
-@media (max-width: 1200px) and (orientation: landscape) {
-  .app-bar {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 0.4rem;
-    align-items: center;
-    height: 60px;
-    border-radius: 20px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0.05));
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08), 0 0 8px rgba(36,107,253,0.15);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(15px);
-  }
-
-  .logo {
-    flex: 0 0 auto;
-    font-size: clamp(0.8rem, 3vw, 2.3rem);
-    margin-right: 2rem;
-  }
-
-  .nav-links {
-    flex: 1;
-    display: flex !important;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 1rem;
-    background: none !important;
-    box-shadow: none !important;
-    border: none !important;
-    padding: 0 !important;
-    position: static !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-  }
-
-  .nav-links a {
-    font-size: 0.8rem;
-    padding: 0.6rem 0rem;
-    white-space: nowrap;
-    border-radius: 12px;
-    background: transparent;
-    flex: none;
-  }
+  box-shadow: 0 2px 4px rgba(124, 58, 237, 0.2);
 }
 
-@media (max-width: 1200px) and (orientation: landscape) {
-  .app-bar {
-    height: 120px; /* taller than scrolled variant */
-    padding: 1rem 2rem;
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-    border-radius: 16px;
-  }
-
-  .app-bar.scrolled {
-    height: 50px; /* already set */
-    padding-left: 1rem;
-  }
-}
-
-
-/* Desktop Styles */
+/* ========================================================
+   DESKTOP STYLES
+   ======================================================== */
 @media (min-width: 1200px) {
   .nav-links {
     opacity: 1 !important;
@@ -575,25 +439,10 @@ top:8px;
     padding: 0 !important;
     box-shadow: none !important;
     display: flex !important;
-    gap: 1.2rem;
+    gap: 1.5rem;
   }
 
   .menu-toggle {
     display: none !important;
   }
-}
-
-@media (max-width: 1200px) and (orientation: landscape) {
-  .nav-links {
-    gap: 0.3rem;
-  }
-.nav-links a {
-  flex: 1;
-  text-align: center;
-  padding: 0.4rem 0;
-
-  font-size: clamp(0.2rem, 1.2vw, 1rem);
-}
-
-  
 }
