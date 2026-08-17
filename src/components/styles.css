@@ -166,3 +166,29 @@ main {
  
   }
 }
+
+/* ========================================================
+   DESKTOP SPECIFIC OVERRIDES (Screens > 1200px)
+   ======================================================== */
+@media (min-width: 1200px) {
+  
+  /* 1. Restore the background image on desktop */
+  body::before {
+    background-image: url('/assets/back3.webp') !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    animation: none !important; /* Stops the mobile aurora animation */
+  }
+
+  /* Hides the dot-grid overlay on desktop so it doesn't mess up your image */
+  body::after {
+    display: none !important;
+  }
+
+  /* 2. Hide the "NEW" badge on desktop */
+  .new-badge {
+    display: none !important;
+  }
+
+}
