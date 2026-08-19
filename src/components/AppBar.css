@@ -180,13 +180,19 @@
 @media (max-width: 1200px) {
 
   /* ===== EDGE-TO-EDGE GLASS HEADER ===== */
-  .app-bar {
+ .app-bar {
     position: relative; 
-    margin-top: 0;       /* Flush to top */
+    margin-top: 0;       
     top: 0;
-    width: 100vw;        /* Spans entire width */
-    height: 72px;        /* Taller default height for a premium mobile feel */
-    padding: 0 1.25rem;  /* Clean side padding */
+    
+    /* TWEAK 1: Math-perfect width to prevent accidental side-scrolling */
+    width: 100%;        
+    box-sizing: border-box;
+
+    /* TWEAK 2: Native App Notch Support (expands height for iPhones) */
+    height: calc(72px + env(safe-area-inset-top)); 
+    padding: env(safe-area-inset-top) 1.25rem 0 1.25rem; 
+    
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -196,11 +202,12 @@
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
 
-    /* YOUR CUSTOM RADIUS */
     border-radius: 0;    
     border: none;
     border-bottom: 1px solid rgba(0, 0, 0, 0.06); 
-    box-shadow: none;    
+    
+    /* TWEAK 3: The Inner Glass Edge Reflection */
+    box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.4); 
 
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
@@ -209,7 +216,7 @@
     mask-image: none !important;
     -webkit-mask-image: none !important;
 
-    will-change: height, box-shadow, background-color, border-color;
+    will-change: height, box-shadow, background-color, border-color, padding;
     transition: 
       height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
       box-shadow 0.4s ease,

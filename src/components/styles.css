@@ -1,21 +1,35 @@
 /* ========================================================
-   GLOBAL BODY & PURE CSS BACKGROUND DESIGN
+   GLOBAL HTML & BODY
    ======================================================== */
+html {
+  scroll-behavior: smooth; /* Smooth gliding for anchor links */
+}
+
 body {
   margin: 0;
   padding: 0;
   font-family: 'Poppins', sans-serif;
   color: #2c3e50;
-  min-height: 100vh;
+  min-height: 100dvh; /* 'dvh' prevents background jumping on mobile browsers */
   position: relative;
   overflow-x: hidden;
   background-color: #f8fafc; 
+
+  /* Premium Typography Rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Custom Premium Text Selection */
 ::selection {
-  background: rgba(36, 107, 253, 0.2); /* Soft brand blue */
-  color: #123f7c; /* Deep blue text */
+  background: rgba(36, 107, 253, 0.2); 
+  color: #123f7c; 
+}
+
+/* Beautiful Accessibility Focus State */
+*:focus-visible {
+  outline: 2px solid #246bfd;
+  outline-offset: 3px;
 }
 
 /* Sleek SaaS Scrollbar */
@@ -33,6 +47,9 @@ body {
   background: rgba(100, 116, 139, 0.4);
 }
 
+/* ========================================================
+   PURE CSS BACKGROUND DESIGN
+   ======================================================== */
 /* Layer 1: Fluid Aurora Mesh Gradient */
 body::before {
   content: "";
@@ -44,14 +61,15 @@ body::before {
   z-index: -2;
   
   background-image: 
-    radial-gradient(at 0% 0%, rgba(36, 107, 253, 0.15) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(124, 58, 237, 0.1) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(0, 183, 255, 0.15) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(36, 107, 253, 0.1) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(162, 193, 255, 0.313) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(148, 86, 255, 0.148) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(88, 208, 255, 0.232) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(123, 167, 255, 0.1) 0px, transparent 50%);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   
-  /* Upgraded to float around smoothly */
+  /* Hardware acceleration for buttery smooth performance */
+  will-change: transform;
   animation: auroraBreathe 20s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
 }
 
@@ -62,15 +80,15 @@ body::after {
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   z-index: -1;
   pointer-events: none;
-  opacity: 0.5; /* Slightly increased because of the mask */
+  opacity: 0.5; 
   
   background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='2' cy='2' r='1.5' fill='%2364748b' fill-opacity='0.2'/%3E%3C/svg%3E");
   background-size: 24px 24px;
 
-  /* The Secret Sauce: Fades the grid out at the edges of the screen */
+  /* Spotlight Fade at edges */
   -webkit-mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 100%);
   mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 100%);
 }
@@ -94,7 +112,6 @@ body::after {
   z-index: 10000;
   pointer-events: none; 
   user-select: none;
-  /* Add a soft drop shadow so it pops off the background */
   filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
 }
 
@@ -108,7 +125,7 @@ body::after {
    MAIN CONTENT & GLASS CONTAINERS
    ======================================================== */
 .glass-container {
-  background: rgba(255, 255, 255, 0.6);        
+  background: rgba(255, 255, 255, 0.6);           
   border-radius: 20px;  
   
   /* Inner top highlight + soft outer shadow */
@@ -123,7 +140,6 @@ body::after {
   max-width: 1100px;
   color: #1a1a1a; 
   
-  /* Smooth interaction */
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
 }
 
@@ -137,7 +153,7 @@ body::after {
 }
 
 /* ========================================================
-   TYPOGRAPHY & ANIMATIONS
+   TYPOGRAPHY & LAYOUT
    ======================================================== */
 .section-title {
   font-size: 2rem;
@@ -163,7 +179,6 @@ main {
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
- 
   }
 }
 
@@ -172,23 +187,19 @@ main {
    ======================================================== */
 @media (min-width: 1200px) {
   
-  /* 1. Restore the background image on desktop */
   body::before {
     background-image: url('/assets/back3.webp') !important;
     background-size: cover !important;
     background-position: center center !important;
     background-repeat: no-repeat !important;
-    animation: none !important; /* Stops the mobile aurora animation */
+    animation: none !important; 
   }
 
-  /* Hides the dot-grid overlay on desktop so it doesn't mess up your image */
   body::after {
     display: none !important;
   }
 
-  /* 2. Hide the "NEW" badge on desktop */
   .new-badge {
     display: none !important;
   }
-
 }
