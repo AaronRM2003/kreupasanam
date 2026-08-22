@@ -14,6 +14,7 @@ const languageMap = {
 };
 
 export default function Prayers({ lang: initialLang }) {
+  // 'lang' controls the local text and cards ONLY
   const [lang, setLang] = useState(initialLang || 'en');
   const [prayers, setPrayers] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
@@ -22,7 +23,10 @@ export default function Prayers({ lang: initialLang }) {
   // 👈 Stores the progress data for the red lines
   const [allProgressData, setAllProgressData] = useState({});
 
-  useEffect(() => { if (initialLang && initialLang !== lang) setLang(initialLang); }, [initialLang]);
+  // If the global URL changes, reset the local state to match
+  useEffect(() => { 
+    if (initialLang && initialLang !== lang) setLang(initialLang); 
+  }, [initialLang]);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -74,14 +78,15 @@ export default function Prayers({ lang: initialLang }) {
 
   return (
     <div>
-      <AppBar lang={lang} />
+      {/* 🔴 THE FIX: Pass `initialLang` to AppBar so its links NEVER change globally */}
+      <AppBar lang={initialLang || 'en'} />
       <img src="/assets/logo.png" alt="Logo" className="floating-logo" />
 
       <section className={styles.testimoniesSection} style={{ marginBottom: '2rem', backgroundColor: windowWidth <= 768 ? '#fff' : 'transparent' }}>
         <div className={styles.testimoniesSectionContainer}>
           
           <div className={styles.testimoniesHeader}>
-            <div style={{ position: 'relative', textAlign: 'center' }}>
+            <div style={{ position: 'relative', textAlign: 'center', width: '100%' }}>
               <button
                 className={styles.backButton} onClick={() => window.history.back()}
                 style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', display: windowWidth <= 768 ? 'none' : 'block' }}
@@ -93,12 +98,17 @@ export default function Prayers({ lang: initialLang }) {
             
             <p className={styles.testimoniesSubtitle}>Daily Bread uploaded within 7AM</p>
 
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem', margin: '0.5rem' }}>
+            {/* 🔴 APPLIED PREMIUM CSS CLASSES TO DROPDOWN */}
+            <div className={styles.controlsWrapper}>
               <Dropdown onSelect={(e) => e !== lang && setLang(e)}>
-                <Dropdown.Toggle variant="outline-secondary">{languageMap[lang] ?? languageMap['en']}</Dropdown.Toggle>
-                <Dropdown.Menu>
+                <Dropdown.Toggle variant="outline-secondary" className={styles.customDropdownToggle}>
+                  {languageMap[lang] ?? languageMap['en']}
+                </Dropdown.Toggle>
+                <Dropdown.Menu className={styles.customDropdownMenu}>
                   {Object.entries(languageMap).map(([key, label]) => (
-                    <Dropdown.Item key={key} eventKey={key}>{label}</Dropdown.Item>
+                    <Dropdown.Item key={key} eventKey={key} className={styles.customDropdownItem}>
+                      {label}
+                    </Dropdown.Item>
                   ))}
                 </Dropdown.Menu>
               </Dropdown>
@@ -122,8 +132,8 @@ export default function Prayers({ lang: initialLang }) {
                     title={t.title} 
                     image={t.thumbnail} 
                     date={t.date} 
-                    lang={lang}
-                    path={`${initialLang || 'en'}/prayers`} 
+                    lang={lang} /* Uses local lang for display */
+                    path={`${initialLang || 'en'}/prayers`} /* 🔴 THE FIX: Uses global url */
                     duration={t.duration} 
                     overlayData={t.finalOverlay} 
                     savedProgress={allProgressData[t.extractedVideoId]} // 👈 Powers the red line
@@ -140,7 +150,11 @@ export default function Prayers({ lang: initialLang }) {
           )}
         </div>
       </section>
-      <FadeInOnScroll delay={0.4}><Footer lang={lang} /></FadeInOnScroll>
+      
+      {/* 🔴 THE FIX: Pass `initialLang` to Footer so its links NEVER change globally */}
+      <FadeInOnScroll delay={0.4}>
+        <Footer lang={initialLang || 'en'} />
+      </FadeInOnScroll>
     </div>
   );
 }

@@ -14,6 +14,7 @@ const languageMap = {
 };
 
 export default function Oracles({ lang: initialLang }) {
+  // 'lang' controls the local text and cards ONLY
   const [lang, setLang] = useState(initialLang || 'en');
   const [dataList, setDataList] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
@@ -23,7 +24,10 @@ export default function Oracles({ lang: initialLang }) {
   const [allProgressData, setAllProgressData] = useState({});
   const [visibleCount, setVisibleCount] = useState(12);
 
-  useEffect(() => { if (initialLang && initialLang !== lang) setLang(initialLang); }, [initialLang]);
+  // If the global URL changes, reset the local state to match
+  useEffect(() => { 
+    if (initialLang && initialLang !== lang) setLang(initialLang); 
+  }, [initialLang]);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -116,14 +120,15 @@ export default function Oracles({ lang: initialLang }) {
 
   return (
     <div>
-      <AppBar lang={lang} />
+      {/* 🔴 THE FIX: Pass `initialLang` to AppBar so its links NEVER change globally */}
+      <AppBar lang={initialLang || 'en'} />
       <img src="/assets/logo.png" alt="Logo" className="floating-logo" />
 
       <section className={styles.testimoniesSection} style={{ marginBottom: '2rem', backgroundColor: windowWidth <= 768 ? '#fff' : 'transparent' }}>
         <div className={styles.testimoniesSectionContainer}>
           
           <div className={styles.testimoniesHeader}>
-            <div style={{ position: 'relative', textAlign: 'center' }}>
+            <div style={{ position: 'relative', textAlign: 'center', width: '100%' }}>
               <button
                 className={styles.backButton} onClick={() => window.history.back()}
                 style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', display: windowWidth <= 768 ? 'none' : 'block' }}
@@ -135,12 +140,17 @@ export default function Oracles({ lang: initialLang }) {
             
             <p className={styles.testimoniesSubtitle}>Divine Revelations and Guidance...</p>
 
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem', margin: '0.5rem' }}>
+            {/* 🔴 APPLIED PREMIUM CSS CLASSES TO DROPDOWN */}
+            <div className={styles.controlsWrapper}>
               <Dropdown onSelect={(e) => e !== lang && setLang(e)}>
-                <Dropdown.Toggle variant="outline-secondary">{languageMap[lang] ?? languageMap['en']}</Dropdown.Toggle>
-                <Dropdown.Menu>
+                <Dropdown.Toggle variant="outline-secondary" className={styles.customDropdownToggle}>
+                  {languageMap[lang] ?? languageMap['en']}
+                </Dropdown.Toggle>
+                <Dropdown.Menu className={styles.customDropdownMenu}>
                   {Object.entries(languageMap).map(([key, label]) => (
-                    <Dropdown.Item key={key} eventKey={key}>{label}</Dropdown.Item>
+                    <Dropdown.Item key={key} eventKey={key} className={styles.customDropdownItem}>
+                      {label}
+                    </Dropdown.Item>
                   ))}
                 </Dropdown.Menu>
               </Dropdown>
@@ -182,7 +192,8 @@ export default function Oracles({ lang: initialLang }) {
                     <TestimonyCard
                       key={`continue-${continueWatchingItem.id}`} id={continueWatchingItem.id} videoId={continueWatchingItem.extractedVideoId} 
                       title={continueWatchingItem.title} image={continueWatchingItem.thumbnail} date={continueWatchingItem.date} lang={lang}
-                      path={`${initialLang || 'en'}/oracles`} duration={continueWatchingItem.duration} overlayData={continueWatchingItem.finalOverlay} 
+                      path={`${initialLang || 'en'}/oracles`} /* 🔴 THE FIX: Uses global url */
+                      duration={continueWatchingItem.duration} overlayData={continueWatchingItem.finalOverlay} 
                       savedProgress={allProgressData[continueWatchingItem.extractedVideoId]} expectedIn={continueWatchingItem.expectedIn}
                     />
                   </div>
@@ -193,7 +204,8 @@ export default function Oracles({ lang: initialLang }) {
                   displayedData.map((t) => (
                     <TestimonyCard
                       key={t.id} id={t.id} videoId={t.extractedVideoId} title={t.title} image={t.thumbnail} date={t.date} lang={lang}
-                      path={`${initialLang || 'en'}/oracles`} duration={t.duration} overlayData={t.finalOverlay} 
+                      path={`${initialLang || 'en'}/oracles`} /* 🔴 THE FIX: Uses global url */
+                      duration={t.duration} overlayData={t.finalOverlay} 
                       savedProgress={allProgressData[t.extractedVideoId]} expectedIn={t.expectedIn}
                     />
                   ))
@@ -218,7 +230,9 @@ export default function Oracles({ lang: initialLang }) {
           )}
         </div>
       </section>
-      <FadeInOnScroll delay={0.4}><Footer lang={lang} /></FadeInOnScroll>
+      
+      {/* 🔴 THE FIX: Pass `initialLang` to Footer so its links NEVER change globally */}
+      <FadeInOnScroll delay={0.4}><Footer lang={initialLang || 'en'} /></FadeInOnScroll>
     </div>
   );
 }

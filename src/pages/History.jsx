@@ -14,6 +14,7 @@ const languageMap = {
 };
 
 export default function History({ lang: initialLang }) {
+  // 'lang' controls the local text and cards ONLY
   const [lang, setLang] = useState(initialLang || 'en');
   const [selectedMonth, setSelectedMonth] = useState('All');
   const [selectedYear, setSelectedYear] = useState('All');
@@ -26,7 +27,10 @@ export default function History({ lang: initialLang }) {
   const [allProgressData, setAllProgressData] = useState({});
   const [visibleCount, setVisibleCount] = useState(12);
 
-  useEffect(() => { if (initialLang && initialLang !== lang) setLang(initialLang); }, [initialLang]);
+  // If the global URL changes, reset the local state to match
+  useEffect(() => { 
+    if (initialLang && initialLang !== lang) setLang(initialLang); 
+  }, [initialLang]);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -130,14 +134,15 @@ export default function History({ lang: initialLang }) {
 
   return (
     <div>
-      <AppBar lang={lang} />
+      {/* 🔴 THE FIX: Pass `initialLang` to AppBar so its links NEVER change globally */}
+      <AppBar lang={initialLang || 'en'} />
       <img src="/assets/logo.png" alt="Logo" className="floating-logo" />
 
       <section className={styles.testimoniesSection} style={{ marginBottom: '2rem', backgroundColor: windowWidth <= 768 ? '#fff' : 'transparent' }}>
         <div className={styles.testimoniesSectionContainer}>
           
           <div className={styles.testimoniesHeader}>
-            <div style={{ position: 'relative', textAlign: 'center' }}>
+            <div style={{ position: 'relative', textAlign: 'center', width: '100%' }}>
               <button
                 className={styles.backButton} onClick={() => window.history.back()}
                 style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', display: windowWidth <= 768 ? 'none' : 'block' }}
@@ -149,27 +154,36 @@ export default function History({ lang: initialLang }) {
             
             <p className={styles.testimoniesSubtitle}>About the Apparition, Interviews...</p>
 
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem', margin: '0.5rem' }}>
+            {/* 🔴 APPLIED PREMIUM CSS CLASSES TO DROPDOWNS */}
+            <div className={styles.controlsWrapper}>
               <Dropdown onSelect={(e) => e !== lang && setLang(e)}>
-                <Dropdown.Toggle variant="outline-secondary">{languageMap[lang] ?? languageMap['en']}</Dropdown.Toggle>
-                <Dropdown.Menu>
+                <Dropdown.Toggle variant="outline-secondary" className={styles.customDropdownToggle}>
+                  {languageMap[lang] ?? languageMap['en']}
+                </Dropdown.Toggle>
+                <Dropdown.Menu className={styles.customDropdownMenu}>
                   {Object.entries(languageMap).map(([key, label]) => (
-                    <Dropdown.Item key={key} eventKey={key}>{label}</Dropdown.Item>
+                    <Dropdown.Item key={key} eventKey={key} className={styles.customDropdownItem}>
+                      {label}
+                    </Dropdown.Item>
                   ))}
                 </Dropdown.Menu>
               </Dropdown>
 
               <Dropdown onSelect={(e) => e !== selectedYear && setSelectedYear(e)}>
-                <Dropdown.Toggle variant="outline-secondary">{selectedYear}</Dropdown.Toggle>
-                <Dropdown.Menu>
-                  {years.map((year) => <Dropdown.Item key={year} eventKey={year}>{year}</Dropdown.Item>)}
+                <Dropdown.Toggle variant="outline-secondary" className={styles.customDropdownToggle}>
+                  {selectedYear}
+                </Dropdown.Toggle>
+                <Dropdown.Menu className={styles.customDropdownMenu}>
+                  {years.map((year) => <Dropdown.Item key={year} eventKey={year} className={styles.customDropdownItem}>{year}</Dropdown.Item>)}
                 </Dropdown.Menu>
               </Dropdown>
 
               <Dropdown onSelect={(e) => e !== selectedMonth && setSelectedMonth(e)}>
-                <Dropdown.Toggle variant="outline-secondary">{selectedMonth}</Dropdown.Toggle>
-                <Dropdown.Menu>
-                  {months.map((month) => <Dropdown.Item key={month} eventKey={month}>{month}</Dropdown.Item>)}
+                <Dropdown.Toggle variant="outline-secondary" className={styles.customDropdownToggle}>
+                  {selectedMonth}
+                </Dropdown.Toggle>
+                <Dropdown.Menu className={styles.customDropdownMenu}>
+                  {months.map((month) => <Dropdown.Item key={month} eventKey={month} className={styles.customDropdownItem}>{month}</Dropdown.Item>)}
                 </Dropdown.Menu>
               </Dropdown>
             </div>
@@ -209,8 +223,10 @@ export default function History({ lang: initialLang }) {
 
                     <TestimonyCard
                       key={`continue-${continueWatchingItem.id}`} id={continueWatchingItem.id} videoId={continueWatchingItem.extractedVideoId} 
-                      title={continueWatchingItem.title} image={continueWatchingItem.thumbnail} date={continueWatchingItem.date} lang={lang}
-                      path={`${initialLang || 'en'}/history`} duration={continueWatchingItem.duration} overlayData={continueWatchingItem.finalOverlay} 
+                      title={continueWatchingItem.title} image={continueWatchingItem.thumbnail} date={continueWatchingItem.date} 
+                      lang={lang} /* Local rendering */
+                      path={`${initialLang || 'en'}/history`} /* 🔴 THE FIX: Uses global url */
+                      duration={continueWatchingItem.duration} overlayData={continueWatchingItem.finalOverlay} 
                       savedProgress={allProgressData[continueWatchingItem.extractedVideoId]} expectedIn={continueWatchingItem.expectedIn}
                     />
                   </div>
@@ -220,8 +236,10 @@ export default function History({ lang: initialLang }) {
                 {displayedData.length > 0 ? (
                   displayedData.map((t) => (
                     <TestimonyCard
-                      key={t.id} id={t.id} videoId={t.extractedVideoId} title={t.title} image={t.thumbnail} date={t.date} lang={lang}
-                      path={`${initialLang || 'en'}/history`} duration={t.duration} overlayData={t.finalOverlay} 
+                      key={t.id} id={t.id} videoId={t.extractedVideoId} title={t.title} image={t.thumbnail} date={t.date} 
+                      lang={lang} /* Local rendering */
+                      path={`${initialLang || 'en'}/history`} /* 🔴 THE FIX: Uses global url */
+                      duration={t.duration} overlayData={t.finalOverlay} 
                       savedProgress={allProgressData[t.extractedVideoId]} expectedIn={t.expectedIn}
                     />
                   ))
@@ -246,7 +264,9 @@ export default function History({ lang: initialLang }) {
           )}
         </div>
       </section>
-      <FadeInOnScroll delay={0.4}><Footer lang={lang} /></FadeInOnScroll>
+      
+      {/* 🔴 THE FIX: Pass `initialLang` to Footer so its links NEVER change globally */}
+      <FadeInOnScroll delay={0.4}><Footer lang={initialLang || 'en'} /></FadeInOnScroll>
     </div>
   );
 }

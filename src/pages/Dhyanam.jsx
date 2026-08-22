@@ -14,6 +14,7 @@ const languageMap = {
 };
 
 export default function Dhyanam({ lang: initialLang }) {
+  // 'lang' controls the local text and cards ONLY
   const [lang, setLang] = useState(initialLang || 'en');
   const [filterType, setFilterType] = useState('latest'); 
   const [dataList, setDataList] = useState([]);
@@ -23,7 +24,10 @@ export default function Dhyanam({ lang: initialLang }) {
   const [allProgressData, setAllProgressData] = useState({});
   const [visibleCount, setVisibleCount] = useState(12);
 
-  useEffect(() => { if (initialLang && initialLang !== lang) setLang(initialLang); }, [initialLang]);
+  // If the global URL changes, reset the local state to match
+  useEffect(() => { 
+    if (initialLang && initialLang !== lang) setLang(initialLang); 
+  }, [initialLang]);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -115,7 +119,6 @@ export default function Dhyanam({ lang: initialLang }) {
   const filteredData = useMemo(() => {
     let baseFiltered = dataList
       .filter(t => t.id !== continueWatchingItem?.id)
-      // 🔴 SORT BY ID DESCENDING INSTEAD OF DATE
       .sort((a, b) => b.id - a.id);
 
     if (filterType === 'featured') {
@@ -129,7 +132,8 @@ export default function Dhyanam({ lang: initialLang }) {
 
   return (
     <div>
-      <AppBar lang={lang} />
+      {/* 🔴 THE FIX: Pass `initialLang` to AppBar so its links NEVER change globally */}
+      <AppBar lang={initialLang || 'en'} />
       <img src="/assets/logo.png" alt="Logo" className="floating-logo" />
 
       <section className={styles.testimoniesSection} style={{ marginBottom: '2rem', backgroundColor: windowWidth <= 768 ? '#fff' : 'transparent' }}>
@@ -148,22 +152,27 @@ export default function Dhyanam({ lang: initialLang }) {
             
             <p className={styles.testimoniesSubtitle}>Usually Uploaded on Wednesday...</p>
 
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem', margin: '0.5rem' }}>
+            <div className={styles.controlsWrapper}>
               <Dropdown onSelect={(e) => setFilterType(e)}>
-                <Dropdown.Toggle variant="outline-secondary">
+                <Dropdown.Toggle variant="outline-secondary" className={styles.customDropdownToggle}>
                   {filterType === 'featured' ? 'Featured' : 'Latest'}
                 </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item eventKey="latest">Latest</Dropdown.Item>
-                  <Dropdown.Item eventKey="featured">Featured</Dropdown.Item>
+                <Dropdown.Menu className={styles.customDropdownMenu}>
+                  <Dropdown.Item eventKey="latest" className={styles.customDropdownItem}>Latest</Dropdown.Item>
+                  <Dropdown.Item eventKey="featured" className={styles.customDropdownItem}>Featured</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
 
+              {/* The simple local setLang restores your temporary preview behavior */}
               <Dropdown onSelect={(e) => e !== lang && setLang(e)}>
-                <Dropdown.Toggle variant="outline-secondary">{languageMap[lang] ?? languageMap['en']}</Dropdown.Toggle>
-                <Dropdown.Menu>
+                <Dropdown.Toggle variant="outline-secondary" className={styles.customDropdownToggle}>
+                  {languageMap[lang] ?? languageMap['en']}
+                </Dropdown.Toggle>
+                <Dropdown.Menu className={styles.customDropdownMenu}>
                   {Object.entries(languageMap).map(([key, label]) => (
-                    <Dropdown.Item key={key} eventKey={key}>{label}</Dropdown.Item>
+                    <Dropdown.Item key={key} eventKey={key} className={styles.customDropdownItem}>
+                      {label}
+                    </Dropdown.Item>
                   ))}
                 </Dropdown.Menu>
               </Dropdown>
@@ -208,8 +217,8 @@ export default function Dhyanam({ lang: initialLang }) {
                     title={continueWatchingItem.title} 
                     image={continueWatchingItem.thumbnail} 
                     date={continueWatchingItem.date} 
-                    lang={lang}
-                    path={`${initialLang || 'en'}/retreat`} 
+                    lang={lang} /* Uses local lang for display */
+                    path={`${initialLang || 'en'}/retreat`} /* 🔴 THE FIX: Uses initialLang so clicking a video doesn't change global URL */
                     duration={continueWatchingItem.duration} 
                     overlayData={continueWatchingItem.finalOverlay} 
                     expectedIn={continueWatchingItem.expectedIn}
@@ -218,7 +227,7 @@ export default function Dhyanam({ lang: initialLang }) {
                 </div>
               )}
 
-             {displayedData.length > 0 ? (
+              {displayedData.length > 0 ? (
                 displayedData.map((t) => (
                   <div key={t.id} style={{ position: 'relative', transition: 'all 0.3s ease' }}>
                     <TestimonyCard
@@ -227,8 +236,8 @@ export default function Dhyanam({ lang: initialLang }) {
                       title={t.title} 
                       image={t.thumbnail} 
                       date={t.date} 
-                      lang={lang}
-                      path={`${initialLang || 'en'}/retreat`} 
+                      lang={lang} /* Uses local lang for display */
+                      path={`${initialLang || 'en'}/retreat`} /* 🔴 THE FIX: Uses initialLang so clicking a video doesn't change global URL */
                       duration={t.duration} 
                       overlayData={t.finalOverlay} 
                       expectedIn={t.expectedIn}
@@ -258,7 +267,9 @@ export default function Dhyanam({ lang: initialLang }) {
 
         </div>
       </section>
-      <FadeInOnScroll delay={0.4}><Footer lang={lang} /></FadeInOnScroll>
+      
+      {/* 🔴 THE FIX: Pass `initialLang` to Footer so its links NEVER change globally */}
+      <FadeInOnScroll delay={0.4}><Footer lang={initialLang || 'en'} /></FadeInOnScroll>
     </div>
   );
 }

@@ -131,8 +131,9 @@ function MonthlyTestimonyCard({ id, videoId, title, image, date, lang, path, dur
 export default function MonthlyTestimonies({ lang: initialLang }) {
   const [lang, setLang] = useState(initialLang || 'en');
   const [filterType, setFilterType] = useState('latest'); 
-  const [selectedMonth, setSelectedMonth] = useState('All');
-  const [selectedYear, setSelectedYear] = useState('All');
+  
+  // 🔴 1. SINGLE STATE FOR DATE
+  const [selectedDate, setSelectedDate] = useState('All');
 
   const [testimonies, setTestimonies] = useState([]);
   const [loadingTestimonies, setLoadingTestimonies] = useState(true);
@@ -150,10 +151,7 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  useEffect(() => { setVisibleCount(12); }, [selectedMonth, selectedYear, filterType]);
-
-  const months = ['All', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  const years = ['All','2026', '2025', '2024', '2023', '2022', '2021', '2020'];
+  useEffect(() => { setVisibleCount(12); }, [selectedDate, filterType]);
 
   useEffect(() => {
     let isMounted = true; 
@@ -235,38 +233,53 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
     };
   }, [testimonies]);
 
+  // 🔴 2. DYNAMICALLY GENERATE AVAILABLE DATES
+  const availableDates = useMemo(() => {
+    const dates = new Set();
+    testimonies.forEach(t => {
+      if (t.date) {
+        const d = new Date(t.date);
+        const m = d.toLocaleString("en", { month: "long" });
+        const y = d.getFullYear().toString();
+        dates.add(`${m} ${y}`);
+      }
+    });
+    // Sort them descending (newest first) and add 'All' to the front
+    return ['All', ...Array.from(dates).sort((a, b) => new Date(b) - new Date(a))];
+  }, [testimonies]);
+
   const filteredTestimonies = useMemo(() => {
     let baseFiltered = testimonies
       .filter(t => t.id !== continueWatchingItem?.id)
       .filter(({ date }) => {
+        if (selectedDate === 'All') return true;
         const d = new Date(date);
         const m = d.toLocaleString("en", { month: "long" });
         const y = d.getFullYear().toString();
-        return (selectedMonth === "All" || m === selectedMonth) && (selectedYear === "All" || y === selectedYear);
+        // 🔴 3. MATCH AGAINST THE COMBINED STRING
+        return `${m} ${y}` === selectedDate;
       })
-      .sort((a, b) => b.id - a.id); // Sorted by id descending
+      .sort((a, b) => b.id - a.id); 
 
     if (filterType === 'featured') {
       return baseFiltered.filter(t => t.featured === true);
     }
 
     return baseFiltered;
-  }, [testimonies, selectedMonth, selectedYear, continueWatchingItem, filterType]);
+  }, [testimonies, selectedDate, continueWatchingItem, filterType]);
 
   const displayedTestimonies = filteredTestimonies.slice(0, visibleCount);
 
   return (
     <div>
-      <AppBar lang={lang} />
+      <AppBar lang={initialLang || 'en'} />
       <img src="/assets/logo.png" alt="Logo" className="floating-logo" />
 
-      <section
-        className={styles.testimoniesSection}
-      >
+      <section className={styles.testimoniesSection}>
         <div className={styles.testimoniesSectionContainer}>
           
           <div className={styles.testimoniesHeader}>
-            <div style={{ position: 'relative', textAlign: 'center' }}>
+            <div style={{ position: 'relative', textAlign: 'center', width: '100%' }}>
               <button
                 className={styles.backButton}
                 onClick={() => window.history.back()}
@@ -282,40 +295,45 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
 
             <p className={styles.testimoniesSubtitle}>Stories of healing, grace...</p>
 
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem', margin: '0.5rem' }}>
+            <div className={styles.controlsWrapper}>
               
               <Dropdown onSelect={(e) => setFilterType(e)}>
-                <Dropdown.Toggle variant="outline-secondary">
+                <Dropdown.Toggle variant="outline-secondary" className={styles.customDropdownToggle}>
                   {filterType === 'featured' ? 'Featured' : 'Latest'}
                 </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item eventKey="latest">Latest</Dropdown.Item>
-                  <Dropdown.Item eventKey="featured">Featured</Dropdown.Item>
+                <Dropdown.Menu className={styles.customDropdownMenu}>
+                  <Dropdown.Item eventKey="latest" className={styles.customDropdownItem}>Latest</Dropdown.Item>
+                  <Dropdown.Item eventKey="featured" className={styles.customDropdownItem}>Featured</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
 
               <Dropdown onSelect={(e) => e !== lang && setLang(e)}>
-                <Dropdown.Toggle variant="outline-secondary">{languageMap[lang] ?? languageMap['en']}</Dropdown.Toggle>
-                <Dropdown.Menu>
+                <Dropdown.Toggle variant="outline-secondary" className={styles.customDropdownToggle}>
+                  {languageMap[lang] ?? languageMap['en']}
+                </Dropdown.Toggle>
+                <Dropdown.Menu className={styles.customDropdownMenu}>
                   {Object.entries(languageMap).map(([key, label]) => (
-                    <Dropdown.Item key={key} eventKey={key}>{label}</Dropdown.Item>
+                    <Dropdown.Item key={key} eventKey={key} className={styles.customDropdownItem}>
+                      {label}
+                    </Dropdown.Item>
                   ))}
                 </Dropdown.Menu>
               </Dropdown>
 
-              <Dropdown onSelect={(e) => e !== selectedYear && setSelectedYear(e)}>
-                <Dropdown.Toggle variant="outline-secondary">{selectedYear}</Dropdown.Toggle>
-                <Dropdown.Menu>
-                  {years.map((year) => <Dropdown.Item key={year} eventKey={year}>{year}</Dropdown.Item>)}
+              {/* 🔴 4. THE SINGLE COMBINED DATE DROPDOWN */}
+              <Dropdown onSelect={(e) => e !== selectedDate && setSelectedDate(e)}>
+                <Dropdown.Toggle variant="outline-secondary" className={styles.customDropdownToggle}>
+                  {selectedDate === 'All' ? 'All Dates' : selectedDate}
+                </Dropdown.Toggle>
+                <Dropdown.Menu className={styles.customDropdownMenu}>
+                  {availableDates.map((dateStr) => (
+                    <Dropdown.Item key={dateStr} eventKey={dateStr} className={styles.customDropdownItem}>
+                      {dateStr === 'All' ? 'All Dates' : dateStr}
+                    </Dropdown.Item>
+                  ))}
                 </Dropdown.Menu>
               </Dropdown>
 
-              <Dropdown onSelect={(e) => e !== selectedMonth && setSelectedMonth(e)}>
-                <Dropdown.Toggle variant="outline-secondary">{selectedMonth}</Dropdown.Toggle>
-                <Dropdown.Menu>
-                  {months.map((month) => <Dropdown.Item key={month} eventKey={month}>{month}</Dropdown.Item>)}
-                </Dropdown.Menu>
-              </Dropdown>
             </div>
           </div>
 
@@ -356,7 +374,7 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
                       title={continueWatchingItem.title}
                       image={continueWatchingItem.thumbnail} 
                       date={continueWatchingItem.date}
-                      lang={lang}
+                      lang={lang} 
                       path={`${initialLang || 'en'}/testimony`}
                       duration={continueWatchingItem.duration}
                       overlayData={continueWatchingItem.finalOverlay} 
@@ -376,7 +394,7 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
                       title={t.title}
                       image={t.thumbnail}
                       date={t.date}
-                      lang={lang}
+                      lang={lang} 
                       path={`${initialLang || 'en'}/testimony`}
                       duration={t.duration}
                       overlayData={t.finalOverlay} 
@@ -422,8 +440,9 @@ export default function MonthlyTestimonies({ lang: initialLang }) {
           )}
         </div>
       </section>
+      
       <FadeInOnScroll delay={0.4}>
-        <Footer lang={lang} />
+        <Footer lang={initialLang || 'en'} />
       </FadeInOnScroll>
     </div>
   );

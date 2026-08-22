@@ -631,3 +631,165 @@
 .featuredCard:hover .testimoniesVideoLink {
   background: linear-gradient(135deg, #e5b32a, #cca01d);
 }
+
+/* ========================================================
+   MOBILE ONLY: ULTRA-PREMIUM TITLE & DROPDOWNS (STATIC)
+   ======================================================== */
+@media (max-width: 768px) {
+
+  /* ========================================================
+     1. Refined Mobile Typography (Frosted Glass Badge)
+     ======================================================== */
+  .testimoniesTitle {
+    font-size: clamp(2.2rem, 9vw, 3rem) !important;
+    line-height: 1.15 !important;
+    background: linear-gradient(135deg, #0f172a 0%, #246bfd 50%, #00b3ff 100%) !important;
+    -webkit-background-clip: text !important;
+    color: transparent !important;
+    letter-spacing: -1px !important; 
+    margin-bottom: 1.25rem !important; 
+    text-shadow: none !important;
+  }
+
+  .testimoniesSubtitle {
+    font-style: normal !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    line-height: 1.5 !important;
+    letter-spacing: 0.3px !important;
+    
+    display: inline-block !important; 
+    background: linear-gradient(135deg, rgba(36, 107, 253, 0.08), rgba(0, 179, 255, 0.03)) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    
+    border: 1px solid rgba(36, 107, 253, 0.2) !important; 
+    border-radius: 20px !important; 
+    padding: 0.7rem 1.5rem !important; 
+    color: #1e2b5a !important; 
+    text-align: center !important;
+    
+    width: auto !important;
+    max-width: 90% !important; 
+    margin: 0 auto 0.5rem auto !important; 
+    
+    box-shadow: 
+      0 4px 12px rgba(36, 107, 253, 0.06), 
+      inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+  }
+
+  /* ========================================================
+     2. Dropdown Layout
+     ======================================================== */
+  .controlsWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-top: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ========================================================
+     3. Static Pill Buttons & Custom Caret
+     ======================================================== */
+  .customDropdownToggle {
+    background: #ffffff !important;
+    color: #334155 !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    border-radius: 100px !important; 
+    padding: 0.55rem 1.25rem !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Just color changes on active/open, no shrinking/moving */
+  .customDropdownToggle:active,
+  .customDropdownToggle[aria-expanded="true"] {
+    background: #f8fafc !important;
+    color: #111827 !important;
+    border-color: rgba(36, 107, 253, 0.3) !important;
+    box-shadow: 0 4px 16px rgba(36, 107, 253, 0.12) !important;
+  }
+
+  /* Custom Sleek Chevron */
+  .customDropdownToggle::after {
+    content: "" !important;
+    border: solid #64748b !important;
+    border-width: 0 2px 2px 0 !important;
+    display: inline-block !important;
+    padding: 3px !important;
+    margin-left: 8px !important;
+    vertical-align: middle !important;
+    transform: rotate(45deg) translateY(-2px) !important;
+  }
+
+  /* Instantly point up when open */
+  .customDropdownToggle[aria-expanded="true"]::after {
+    transform: rotate(-135deg) translateY(-2px) !important;
+    border-color: #246bfd !important;
+  }
+
+  /* ========================================================
+     4. Glass Menu Popups (Static Appearance)
+     ======================================================== */
+  .customDropdownMenu {
+    margin-top: 8px !important; 
+    z-index: 1000 !important;      
+    
+    background: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(24px) saturate(200%);
+    -webkit-backdrop-filter: blur(24px) saturate(200%);
+    
+    border: 1px solid rgba(255, 255, 255, 0.6) !important;
+    border-radius: 20px !important; 
+    
+    box-shadow: 
+      0 16px 32px -8px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.3) !important;
+      
+    padding: 0.5rem !important;
+    min-width: 160px;
+  }
+
+  /* ========================================================
+     5. Mobile Menu Items
+     ======================================================== */
+  .customDropdownItem {
+    border-radius: 12px !important;
+    padding: 0.7rem 1rem !important;
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    color: #475569 !important;
+  }
+
+  .customDropdownItem:active {
+    background: rgba(36, 107, 253, 0.08) !important;
+    color: #246bfd !important;
+  }
+
+  .customDropdownItem.active {
+    background: #246bfd !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 10px rgba(36, 107, 253, 0.2) !important;
+  }
+}
+
+/* ========================================================
+   GLOBAL CONTROLS LAYOUT (Keeps desktop dropdowns in a row)
+   ======================================================== */
+.controlsWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
