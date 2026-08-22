@@ -608,3 +608,26 @@
 }
 
 
+/* ========================================================
+   FEATURED CARD (Premium Tier Look)
+   ======================================================== */
+.featuredCard {
+  background: linear-gradient(145deg, rgba(255, 248, 220, 0.4) 0%, rgba(255, 255, 255, 1) 100%);
+  border: 1px solid rgba(218, 165, 32, 0.35);
+  box-shadow: 0 8px 24px rgba(218, 165, 32, 0.08);
+}
+
+.featuredCard:hover {
+  border-color: rgba(218, 165, 32, 0.8);
+  box-shadow: 0 16px 32px -10px rgba(218, 165, 32, 0.2);
+}
+
+/* Featured Button Overrides */
+.featuredCard .testimoniesVideoLink {
+  background: linear-gradient(135deg, #d4a017, #b8860b);
+  box-shadow: 0 4px 12px rgba(218, 165, 32, 0.3);
+}
+
+.featuredCard:hover .testimoniesVideoLink {
+  background: linear-gradient(135deg, #e5b32a, #cca01d);
+}
