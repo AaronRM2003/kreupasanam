@@ -222,19 +222,20 @@ export default function Testimonies({ lang: initialLang }) {
         <div className={styles.testimoniesHeader}>
           <h2 className={styles.testimoniesTitle}>More Powerful Testimonies</h2>
           <p className={styles.testimoniesSubtitle}>Stories of healing, grace...</p>
-
-          <Dropdown onSelect={(e) => setLang(e)}>
-            <Dropdown.Toggle variant="outline-secondary" id="dropdown-lang">
+      <div className={styles.controlsWrapper}>
+         <Dropdown onSelect={(e) => setLang(e)}>
+            <Dropdown.Toggle variant="outline-secondary" id="dropdown-lang" className={styles.customDropdownToggle}>
               {languageMap[lang] || lang}
             </Dropdown.Toggle>
-            <Dropdown.Menu>
+            <Dropdown.Menu className={styles.customDropdownMenu}>
               {Object.entries(languageMap).map(([key, label]) => (
-                <Dropdown.Item key={key} eventKey={key}>
+                <Dropdown.Item key={key} eventKey={key} className={styles.customDropdownItem}>
                   {label}
                 </Dropdown.Item>
               ))}
             </Dropdown.Menu>
           </Dropdown>
+          </div>
         </div>
 
         <div className={styles.testimoniesGrid}>
