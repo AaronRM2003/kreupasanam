@@ -1,6 +1,29 @@
-/assets/*
-  Cache-Control: public, max-age=3600, must-revalidate
-/*/share/*  Cache-Control: no-cache, no-store, must-revalidate
-/sitemap.xml        Cache-Control: public, max-age=3600
+# 1. Never cache HTML (The skeleton of your app)
 /*
   Cache-Control: public, max-age=0, must-revalidate
+
+# 2. Never cache CSS, JS, or JSON (Updates show instantly to all users)
+/assets/*.css
+  Cache-Control: public, max-age=0, must-revalidate
+/assets/*.js
+  Cache-Control: public, max-age=0, must-revalidate
+/assets/*.json
+  Cache-Control: public, max-age=0, must-revalidate
+
+# 3. ONLY cache images (They rarely change and are heavy)
+/assets/*.png
+  Cache-Control: public, max-age=31536000, immutable
+/assets/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+/assets/*.svg
+  Cache-Control: public, max-age=31536000, immutable
+/assets/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+# 4. Never cache share links
+/*/share/*
+  Cache-Control: no-cache, no-store, must-revalidate
+
+# 5. Sitemap cache
+/sitemap.xml
+  Cache-Control: public, max-age=3600
