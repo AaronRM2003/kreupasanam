@@ -65,17 +65,9 @@ export function useYouTubePlayer(videoId, isPlaying) {
           autoplay: 1, controls: 1, modestbranding: 1, cc_load_policy: 0, fs: 0,
           start: startSeconds, 
         },
-       events: {
+        events: {
           onReady: (event) => {
             const player = event.target;
-            
-            // 🚀 FORCE CAPTIONS OFF
-            try {
-              player.unloadModule('captions');
-            } catch (e) {
-              console.warn("Could not unload captions", e);
-            }
-
             const dur = player.getDuration?.();
             if (dur) setDuration(dur);
 
@@ -106,15 +98,6 @@ export function useYouTubePlayer(videoId, isPlaying) {
             }, 500); 
           },
           onStateChange: (event) => {
-            // 🚀 RE-ENFORCE CAPTIONS OFF ON PLAY (Sometimes YouTube tries to reload them)
-            if (event.data === 1) { // 1 = PLAYING
-               try {
-                 event.target.unloadModule('captions');
-                 // Fallback if unloadModule fails on some API versions
-                 event.target.setOption('captions', 'track', {}); 
-               } catch (e) {}
-            }
-
             if (event.data === 1 && !hasSeeked && startSeconds > 3) {
               hasSeeked = true; 
               event.target.seekTo(startSeconds, true);
