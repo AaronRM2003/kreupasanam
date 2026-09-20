@@ -127,7 +127,8 @@ export default function History({ lang: initialLang }) {
         const y = d.getFullYear().toString();
         return (selectedMonth === "All" || m === selectedMonth) && (selectedYear === "All" || y === selectedYear);
       })
-      .sort((a, b) => new Date(b.date) - new Date(a.date));
+      // Sort by ID in descending order (highest/latest first)
+      .sort((a, b) => Number(b.id) - Number(a.id));
   }, [history, selectedMonth, selectedYear, continueWatchingItem]);
 
   const displayedData = filteredData.slice(0, visibleCount);
