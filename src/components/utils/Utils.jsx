@@ -333,13 +333,19 @@ export function formatDuration(startTime) {
   return `${m}:${String(s).padStart(2, "0")}`;
 }
 
-// Convert time string (HH:MM:SS or MM:SS) to seconds
 export function timeStringToSeconds(timeStr) {
   if (typeof timeStr !== 'string') return 0;
-  const parts = timeStr.split(':').map(Number);
-  if (parts.length === 2) return parts[0] * 60 + parts[1];
-  if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
-  return 0;
+
+  const parts = timeStr.trim().split(':');
+
+  if (parts.length !== 2) return 0;
+
+  const minutes = Number(parts[0]);
+  const seconds = Number(parts[1]);
+
+  if (isNaN(minutes) || isNaN(seconds)) return 0;
+
+  return minutes * 60 + seconds;
 }
 
 // utils/browserTranslate.js
@@ -546,15 +552,23 @@ export function preloadImages(imageUrls, onAllLoaded) {
 // Get current subtitle text given current time and language
 export function getCurrentSubtitle(subtitles, currentTime, lang) {
   if (!subtitles.length) return '';
+
   for (let i = 0; i < subtitles.length; i++) {
     const startSec = timeStringToSeconds(subtitles[i].start);
+
     const endSec = i + 1 < subtitles.length
       ? timeStringToSeconds(subtitles[i + 1].start)
       : startSec + 5;
+
     if (currentTime >= startSec && currentTime < endSec) {
-      return subtitles[i].text[lang] || subtitles[i].text['en'] || '';
+      return (
+        subtitles[i].text[lang] ||
+        subtitles[i].text['en'] ||
+        ''
+      );
     }
   }
+
   return '';
 }
 
