@@ -286,7 +286,7 @@
   transform: translateY(-1px);
 }
 .subtitleBox {
-  transition: opacity 0.2s ease;
+  transition: opacity 0.1s ease;
 }
 
 .subtitleHidden {
