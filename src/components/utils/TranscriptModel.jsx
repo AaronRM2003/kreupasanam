@@ -27,25 +27,33 @@ const cleanSubtitles = useMemo(() => {
   }, [cleanSubtitles, lang]);
 
   // Convert "0:10" or "1:02" → "00:00:10,000"
+  // Convert "0:10", "1:02", or "3:45.94" → "00:00:10,000", "00:03:45,940"
   const toSrtTime = (time = '0:00') => {
-  const parts = time.split(':').map(Number);
+    // 1. Ensure time is a string and split into time and fractional seconds
+    const [timePart, fraction = '0'] = String(time).split('.');
 
-  let totalSeconds = 0;
+    // 2. Parse HH:MM:SS from the time part
+    const parts = timePart.split(':').map(Number);
+    let totalSeconds = 0;
 
-  if (parts.length === 3) {
-    totalSeconds = parts[0] * 3600 + parts[1] * 60 + parts[2];
-  } else if (parts.length === 2) {
-    totalSeconds = parts[0] * 60 + parts[1];
-  } else if (parts.length === 1) {
-    totalSeconds = parts[0];
-  }
+    if (parts.length === 3) {
+      totalSeconds = parts[0] * 3600 + parts[1] * 60 + parts[2];
+    } else if (parts.length === 2) {
+      totalSeconds = parts[0] * 60 + parts[1];
+    } else if (parts.length === 1) {
+      totalSeconds = parts[0];
+    }
 
-  const h = Math.floor(totalSeconds / 3600);
-  const m = Math.floor((totalSeconds % 3600) / 60);
-  const s = totalSeconds % 60;
+    const h = Math.floor(totalSeconds / 3600);
+    const m = Math.floor((totalSeconds % 3600) / 60);
+    const s = totalSeconds % 60;
 
-  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')},000`;
-};
+    // 3. Format milliseconds (e.g., "94" -> "940", "5" -> "500", "05" -> "050")
+    const ms = fraction.padEnd(3, '0').slice(0, 3);
+
+    return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')},${ms}`;
+  };
+  
   // SRT content
   const srtText = useMemo(() => {
     return cleanSubtitles
