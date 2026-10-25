@@ -310,7 +310,8 @@ export function getYouTubeVideoID(url) {
   return match ? match[1] : null;
 }
 export function formatDuration(startTime) {
-  // startTime like "27:41" or "1:05:20"
+  if (!startTime || typeof startTime !== 'string') return "0:00";
+  
   const parts = startTime.split(":").map(Number);
   
   let totalSeconds = 0;
@@ -323,9 +324,10 @@ export function formatDuration(startTime) {
   // Add ~5s buffer
   totalSeconds += 5;
 
+  // FLOOR the values so fractional seconds (.99) don't bleed into the visual UI
   const h = Math.floor(totalSeconds / 3600);
   const m = Math.floor((totalSeconds % 3600) / 60);
-  const s = totalSeconds % 60;
+  const s = Math.floor(totalSeconds % 60); 
 
   if (h > 0) {
     return `${h}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
@@ -337,15 +339,21 @@ export function timeStringToSeconds(timeStr) {
   if (typeof timeStr !== 'string') return 0;
 
   const parts = timeStr.trim().split(':');
+  let totalSeconds = 0;
 
-  if (parts.length !== 2) return 0;
+  // JavaScript's Number() natively handles decimals like "31.99" -> 31.99
+  if (parts.length === 3) {
+    // HH:MM:SS.mm
+    totalSeconds = Number(parts[0]) * 3600 + Number(parts[1]) * 60 + Number(parts[2]);
+  } else if (parts.length === 2) {
+    // MM:SS.mm
+    totalSeconds = Number(parts[0]) * 60 + Number(parts[1]);
+  } else if (parts.length === 1) {
+    // SS.mm
+    totalSeconds = Number(parts[0]);
+  }
 
-  const minutes = Number(parts[0]);
-  const seconds = Number(parts[1]);
-
-  if (isNaN(minutes) || isNaN(seconds)) return 0;
-
-  return minutes * 60 + seconds;
+  return isNaN(totalSeconds) ? 0 : totalSeconds;
 }
 
 // utils/browserTranslate.js
@@ -549,24 +557,16 @@ export function preloadImages(imageUrls, onAllLoaded) {
   });
 }
 
-// Get current subtitle text given current time and language
 export function getCurrentSubtitle(subtitles, currentTime, lang) {
-  if (!subtitles.length) return '';
+  if (!subtitles || !subtitles.length) return '';
 
-  for (let i = 0; i < subtitles.length; i++) {
-    const startSec = timeStringToSeconds(subtitles[i].start);
+  // Use the precomputed startSeconds and endSeconds instead of recalculating!
+  const currentSub = subtitles.find(
+    (sub) => currentTime >= sub.startSeconds && currentTime < sub.endSeconds
+  );
 
-    const endSec = i + 1 < subtitles.length
-      ? timeStringToSeconds(subtitles[i + 1].start)
-      : startSec + 5;
-
-    if (currentTime >= startSec && currentTime < endSec) {
-      return (
-        subtitles[i].text[lang] ||
-        subtitles[i].text['en'] ||
-        ''
-      );
-    }
+  if (currentSub) {
+    return currentSub.text[lang] || currentSub.text['en'] || '';
   }
 
   return '';
