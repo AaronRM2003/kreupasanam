@@ -285,9 +285,7 @@
   border-color: rgba(90, 59, 30, 0.4);
   transform: translateY(-1px);
 }
-.subtitleBox {
-  transition: opacity 0.1s ease;
-}
+
 
 .subtitleHidden {
   opacity: 0;
@@ -1217,22 +1215,6 @@ input[type="range"]::-webkit-slider-thumb:hover {
     height: 100dvh;
   }
 }
-@media (orientation: portrait) {
-  .subtitleBox {
-    position: fixed !important; 
-    left: 50%;
-    top: 60%;
-    transform: translateX(-50%);
-    width: 100vw;
-    max-width: 960px;  /* Limit max width for symmetry */
-    margin: 0;         /* Reset margin to zero for no offset */
-    padding: 8px 16px; /* Equal horizontal padding */
-    pointer-events: none;
-    z-index: 10;
-    box-sizing: border-box; /* Include padding inside width */
-    text-align: center;     /* Center text inside */
-  }
-}
 
 
 
@@ -1301,34 +1283,8 @@ input[type="range"]::-webkit-slider-thumb:hover {
   border-color: transparent !important;
   text-shadow: none !important;
 }
-/* Remove absolute positioning for subtitle box */
-.subtitleBox {
-  /* Typography: Larger, crisper, and more legible */
-  font-family: 'Poppins', -apple-system, sans-serif;
-  font-weight: 600;
-  color: #ffffff;
-  letter-spacing: 0.3px;
-  line-height: 1.45;
-  text-align: center;
-  
-  /* Cinematic Background: Deeper contrast, higher blur */
-  background: rgba(0, 0, 0, 0.75); 
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  
-  /* Sleek Borders & Spacing */
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 10px 24px;
-  
-  /* Shadow: Sharp drop shadow directly on the text for max readability */
-  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.85);
-  
-  /* Pure fade-in appearance with absolutely zero movement */
-  opacity: 0;
-  animation: pureFadeIn 350ms ease-in forwards; 
-  transition: transform 0.3s ease, opacity 0.3s ease, background 0.3s ease;
-}
+
+
 
 /* A strict, opacity-only transition */
 @keyframes pureFadeIn {
@@ -1339,59 +1295,105 @@ input[type="range"]::-webkit-slider-thumb:hover {
     opacity: 1;
   }
 }
-@media (orientation: landscape) {
-  .subtitleBox {
-    position: absolute;
-    bottom: 5%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    max-width: none;
-    margin-top: 0;      /* remove margin */
-    padding: 8px 16px;
-    font-size: clamp(0.85rem, 1.5vw, 1.2rem);
-    background-color: rgba(0, 0, 0, 0.6);
-    border-radius: 12px;
-    pointer-events: none;
-    white-space: normal;
-    box-sizing: border-box;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
-    z-index: 10;
+
+.subtitleBox {
+  /* Typography: crisp legibility & safe across Latin, Indic, and CJK scripts */
+  font-family: 'Inter', 'Poppins', 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.96);
+  letter-spacing: normal; /* keeps Indic ligatures intact */
+  line-height: 1.5;       /* prevents clipping on tall diacritics/matras */
+  text-align: center;
+  text-wrap: balance;     /* avoids awkward single-word last lines */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+
+  /* Sizing: hugs short lines instead of stretching an empty dark bar */
+  width: fit-content;
+  max-width: min(92vw, 760px);
+  margin-inline: auto;
+  box-sizing: border-box;
+  white-space: normal;
+
+  /* Background: dark translucent glass with subtle hairline border */
+  background: rgba(10, 10, 14, 0.72);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 10px 20px;
+
+  /* Subtle text contrast without muddy halos */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65);
+
+  /* Pure fade transition for show/hide & buffering ducking */
+  opacity: 1;
+  transition: opacity 180ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity;
+  pointer-events: none;
+  user-select: none;
+}
+
+.subtitleText {
+  display: block;
+  animation: subtitleFadeIn 160ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: opacity;
+}
+
+.subtitleEmpty {
+  opacity: 0;
+}
+
+.subtitleDucked {
+  opacity: 0.25;
+}
+
+@keyframes subtitleFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
+
 
 /* Mobile portrait */
 @media (max-width: 768px) and (orientation: portrait) {
   .subtitleBox {
-    width: 95vw;
-    max-width: none;
-    font-size: clamp(0.75rem, 3vw, 1rem);
+    max-width: 94vw;
+    font-size: clamp(0.875rem, 3.4vw, 1.05rem);
     margin-top: 0.75rem;
-    padding: 6px 10px;
-    border-radius: 8px;
-    background-color: rgba(0, 0, 0, 0.6);
+    padding: 8px 14px;
+    border-radius: 10px;
+  }
+}
+
+/* Landscape overlay positioning (mobile landscape, tablet landscape, desktop) */
+@media (orientation: landscape) {
+  .subtitleBox {
+    position: absolute;
+    bottom: 5%;
+    left: 0;
+    right: 0;
+    margin-inline: auto;
+    width: fit-content;
+    max-width: min(90vw, 900px);
+    margin-top: 0;
+    padding: 8px 18px;
+    font-size: clamp(0.9rem, 1.55vw, 1.15rem);
+    z-index: 10;
   }
 }
 
 /* Mobile landscape */
 @media (max-height: 500px) and (orientation: landscape) and (max-width: 768px) {
   .subtitleBox {
-    width: 95vw;
-    font-size: clamp(0.75rem, 2vw, 0.9rem);
-    margin-top: 0.5rem;
-    padding: 6px 12px;
-  }
-}
-
-/* Tablet portrait */
-@media (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
-  .subtitleBox {
-    max-width: 720px;
-    width: 85vw;
-    font-size: clamp(0.85rem, 1.8vw, 1.1rem);
-    margin-top: 1rem;
-    padding: 8px 14px;
-    background-color: rgba(0, 0, 0, 0.65);
+    bottom: 4%;
+    max-width: 92vw;
+    font-size: clamp(0.8rem, 2.2vw, 0.95rem);
+    padding: 6px 14px;
     border-radius: 10px;
   }
 }
@@ -1399,33 +1401,32 @@ input[type="range"]::-webkit-slider-thumb:hover {
 /* Tablet landscape */
 @media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
   .subtitleBox {
-    max-width: 900px;
-    width: 85vw;
-    font-size: clamp(1rem, 1.5vw, 1.15rem);
-    margin-top: 1rem;
-    padding: 10px 16px;
-    background-color: rgba(0, 0, 0, 0.7);
-    border-radius: 12px;
+    max-width: min(85vw, 900px);
+    font-size: clamp(1rem, 1.55vw, 1.15rem);
+    padding: 10px 20px;
   }
 }
 
 /* Desktop */
 @media (min-width: 1025px) {
   .subtitleBox {
-    max-width: 960px;
-    width: 70vw;
-    font-size: clamp(1rem, 1vw, 1.2rem);
-    margin-top: 1.25rem;
-    padding: 12px 20px;
-    background-color: rgba(0, 0, 0, 0.75);
+    max-width: min(75vw, 960px);
+    font-size: clamp(1.05rem, 1.15vw, 1.25rem);
+    padding: 11px 24px;
     border-radius: 14px;
   }
 }
 
-.subtitleBox {
-  opacity: 0;
-  animation: subtitleFade 350ms ease-in-out forwards;
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .subtitleBox {
+    transition: none;
+  }
+  .subtitleText {
+    animation: none;
+  }
 }
+
 
 @keyframes subtitleFade {
   from {
@@ -1434,19 +1435,6 @@ input[type="range"]::-webkit-slider-thumb:hover {
   to {
     opacity: 1;
   }
-}
-@media (max-width: 768px) {
-  .subtitleBox {
-    animation-duration: 450ms;
-  }
-}
-.subtitleBox {
-  color: #f5f5f5; /* off-white */
-  background: rgba(20, 20, 20, 0.55);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(6px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
 }
 
 

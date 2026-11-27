@@ -273,18 +273,20 @@ export default function FloatingVideoPlayer({
           />
         )}
 
-        <div id="subtitle-wrapper">
-          {!hideSubtitles && currentSubtitle && isVideoReady && (
-            <div
-              key={subtitleKey}
-              id="subtitle-dom"
-              // Only apply ducked styling when the player state shifts to Seeking/Paused/Buffering
-              className={`${styles.subtitleBox} ${isPlayerDucked ? styles.subtitleDucked : ''}`}
-            >
-              {currentSubtitle}
-            </div>
-          )}
-        </div>
+      <div id="subtitle-wrapper">
+  {!hideSubtitles && isVideoReady && (
+    <div
+      id="subtitle-dom"
+      className={`${styles.subtitleBox} ${isPlayerDucked ? styles.subtitleDucked : ''}`}
+      style={{
+        opacity: currentSubtitle ? 1 : 0,
+        transition: 'opacity 120ms ease',
+      }}
+    >
+      <span key={currentSubtitle}>{currentSubtitle}</span>
+    </div>
+  )}
+</div>
       </div>
       {warningDialog}
     </>

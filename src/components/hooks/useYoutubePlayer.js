@@ -4,30 +4,42 @@ export function useYouTubePlayer(videoId, isPlaying) {
   const playerRef = useRef(null);
   const intervalRef = useRef(null);
   const lastSavedTimeRef = useRef(0);
+
+  // Interpolation & deduplication refs
+  const lastYtTimeRef = useRef(-1);
+  const lastSyncPerfRef = useRef(0);
+  const lastEmittedTimeRef = useRef(-1);
+  const durationRef = useRef(0);
+
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
   // 🚀 BULLETPROOF CATEGORY DETECTION
-// 🚀 BULLETPROOF CATEGORY DETECTION
   const getCategory = () => {
     if (typeof window === 'undefined') return 'general';
-    
-    // 🛡️ THE FIX: Use .pathname instead of .href so it ignores the domain name!
+
     const path = window.location.pathname.toLowerCase();
-    
-    // Adding slashes makes it even safer
+
     if (path.includes('/testimony') || path.includes('/testimonies')) return 'testimony';
     if (path.includes('/oracles')) return 'oracles';
     if (path.includes('/prayers')) return 'prayers';
     if (path.includes('/retreat')) return 'dhyanam';
     if (path.includes('/history')) return 'history';
-    
-    return 'general'; 
+
+    return 'general';
   };
-  
+
   const PROGRESS_KEY = `yt_watch_progress_${getCategory()}`;
 
   useEffect(() => {
+    const resetTracking = () => {
+      lastSavedTimeRef.current = 0;
+      lastYtTimeRef.current = -1;
+      lastSyncPerfRef.current = 0;
+      lastEmittedTimeRef.current = -1;
+      durationRef.current = 0;
+    };
+
     if (!isPlaying) {
       if (playerRef.current) {
         try {
@@ -38,7 +50,7 @@ export function useYouTubePlayer(videoId, isPlaying) {
       if (intervalRef.current) clearInterval(intervalRef.current);
       setCurrentTime(0);
       setDuration(0);
-      lastSavedTimeRef.current = 0;
+      resetTracking();
       return;
     }
 
@@ -54,7 +66,7 @@ export function useYouTubePlayer(videoId, isPlaying) {
       try {
         const stored = JSON.parse(localStorage.getItem(PROGRESS_KEY) || '{}');
         const data = stored[videoId];
-        if (data && (!data.duration || (data.progress / data.duration) < 0.95)) {
+        if (data && (!data.duration || data.progress / data.duration < 0.95)) {
           startSeconds = Math.floor(data.progress);
         }
       } catch (e) {}
@@ -62,47 +74,86 @@ export function useYouTubePlayer(videoId, isPlaying) {
       playerRef.current = new window.YT.Player('yt-player', {
         videoId,
         playerVars: {
-          autoplay: 1, controls: 1, modestbranding: 1, cc_load_policy: 0, fs: 0,
-          start: startSeconds, 
+          autoplay: 1,
+          controls: 1,
+          modestbranding: 1,
+          cc_load_policy: 0,
+          fs: 0,
+          start: startSeconds,
         },
         events: {
           onReady: (event) => {
             const player = event.target;
-            const dur = player.getDuration?.();
-            if (dur) setDuration(dur);
+            const dur = player.getDuration?.() || 0;
+            if (dur) {
+              durationRef.current = dur;
+              setDuration(dur);
+            }
 
-            // Fast 500ms interval for perfect TTS sync
+            // 100ms poll + interpolation between YouTube's ~200ms postMessage updates
             intervalRef.current = setInterval(() => {
-              if (playerRef.current?.getCurrentTime) {
-                const currTime = playerRef.current.getCurrentTime();
-                
-                // 1. UPDATE STATE FAST (For TTS)
-                setCurrentTime(currTime);
+              const p = playerRef.current;
+              if (!p?.getCurrentTime) return;
 
-                const d = playerRef.current.getDuration?.() || 0;
-                if (d && d !== duration) setDuration(d);
+              const ytTime = p.getCurrentTime();
+              const state = p.getPlayerState?.();
+              const now = performance.now();
 
-                // 2. SAVE TO DISK SLOWLY (Every 3 seconds to prevent crashes)
-                if (currTime > 3 && d > 0 && Math.abs(currTime - lastSavedTimeRef.current) >= 3) {
-                  lastSavedTimeRef.current = currTime; 
-                  
-                  try {
-                    const storedProgress = JSON.parse(localStorage.getItem(PROGRESS_KEY) || '{}');
-                    storedProgress[videoId] = { progress: currTime, duration: d, lastWatched: Date.now() };
-                    localStorage.setItem(PROGRESS_KEY, JSON.stringify(storedProgress));
-                    
-                    window.dispatchEvent(new CustomEvent('yt_progress_updated'));
-                  } catch (e) {}
+              let smoothTime = ytTime;
+
+              if (state === 1) {
+                if (ytTime !== lastYtTimeRef.current) {
+                  // Fresh timestamp from YouTube — reset anchor
+                  lastYtTimeRef.current = ytTime;
+                  lastSyncPerfRef.current = now;
+                } else {
+                  // Estimate time elapsed since YouTube's last tick (capped at 0.5s to prevent drift on stalls)
+                  const rate = p.getPlaybackRate?.() || 1;
+                  const elapsed = Math.min((now - lastSyncPerfRef.current) / 1000, 0.5);
+                  smoothTime = lastYtTimeRef.current + elapsed * rate;
                 }
+              } else {
+                // Paused / buffering / ended — stay pinned to exact YouTube time
+                lastYtTimeRef.current = ytTime;
+                lastSyncPerfRef.current = now;
               }
-            }, 500); 
+
+              // 1. UPDATE STATE ONLY WHEN TIME ACTUALLY CHANGES
+              if (smoothTime !== lastEmittedTimeRef.current) {
+                lastEmittedTimeRef.current = smoothTime;
+                setCurrentTime(smoothTime);
+              }
+
+              const d = p.getDuration?.() || 0;
+              if (d && d !== durationRef.current) {
+                durationRef.current = d;
+                setDuration(d);
+              }
+
+              // 2. SAVE TO DISK SLOWLY (Every 3 seconds)
+              if (ytTime > 3 && d > 0 && Math.abs(ytTime - lastSavedTimeRef.current) >= 3) {
+                lastSavedTimeRef.current = ytTime;
+
+                try {
+                  const storedProgress = JSON.parse(localStorage.getItem(PROGRESS_KEY) || '{}');
+                  storedProgress[videoId] = {
+                    progress: ytTime,
+                    duration: d,
+                    lastWatched: Date.now(),
+                  };
+                  localStorage.setItem(PROGRESS_KEY, JSON.stringify(storedProgress));
+
+                  window.dispatchEvent(new CustomEvent('yt_progress_updated'));
+                } catch (e) {}
+              }
+            }, 100);
           },
           onStateChange: (event) => {
             if (event.data === 1 && !hasSeeked && startSeconds > 3) {
-              hasSeeked = true; 
+              hasSeeked = true;
               event.target.seekTo(startSeconds, true);
             }
-          }
+          },
         },
       });
     };
@@ -130,6 +181,7 @@ export function useYouTubePlayer(videoId, isPlaying) {
         playerRef.current = null;
       }
       if (intervalRef.current) clearInterval(intervalRef.current);
+      resetTracking();
     };
   }, [videoId, isPlaying]);
 
